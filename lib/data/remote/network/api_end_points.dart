@@ -1,0 +1,35 @@
+class ApiEndPoints {
+  final String onBoarding = "/items/onboarding";
+  final String login = "/auth/login";
+  final String usersMe = '/users/me';
+  final String userData = '/users';
+  final String getRoles = '/roles?filter[name][_neq]=Administrator';
+  final String userRegister = '/authentication/registerUser';
+  final String userUpdate = '/users';
+  final String files = '/files';
+  final String getCategories = '/items/categories?fields=*.*.*.*';
+  final String getServices = '/items/services?fields=*.*.*.*.*';
+  final String getJobs = '/items/jobs?fields=*.*.*';
+  final String supplierProfile = '/items/supplier_info';
+  final String countryRates = '/items/country_rates';
+  final String customerProfile = '/items/customer_info';
+  final String supplierInProgressJobs = '/suppliers/supplierInProgressJobs';
+  final String supplierBookedJobs = '/suppliers/supplierBookedJobs';
+  final String supplierCompletedJobs = '/suppliers/supplierCompletedJobs';
+  final String supplierOpenJobs = '/suppliers/supplierOpenJobs';
+  final String supplierFinishJob = '/suppliers/finishJob';
+  final String supplierStartJob = '/suppliers/startJob';
+  final String supplierAcceptJob = '/suppliers/bookJob';
+  final String updateJob = '/suppliers/updateJob';
+  final String updateJobCustomer = '/customers/updateJob';
+  final String supplierCancelBooking = '/suppliers/cancelBooking';
+  final String customerCancelJobNoPenalty = '/customers/cancelJobNoPenalty';
+  final String customerCancelJobWithPenalty = '/customers/cancelJobWithPenalty';
+  final String getCustomerJobs = '/customers/myJobs';
+  final String addPaymentCard = '/customers/addPaymentCard';
+  final String payJob = '/customers/payJob';
+  final String getAllPayments = '/items/customer_payment_cards?fields=*.*';
+  final String downloadInvoice = '/invoices/downloadInvoice';
+  // final String apiSendReset = '/email/reset-test';
+  final String apiSendReset = '/email/reset-email';
+}
