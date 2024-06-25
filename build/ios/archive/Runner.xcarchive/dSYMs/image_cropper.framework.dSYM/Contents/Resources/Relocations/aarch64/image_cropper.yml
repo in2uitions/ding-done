@@ -1,0 +1,18 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/souheiljabbour/Library/Developer/Xcode/DerivedData/Runner-fwjodnzchsbblbefnzzapgoqpbdc/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/UninstalledProducts/iphoneos/image_cropper.framework/image_cropper'
+relocations:
+  - { offsetInCU: 0x34, offset: 0x710FD, size: 0x8, addend: 0x0, symName: _image_cropperVersionString, symObjAddr: 0x0, symBinAddr: 0xA720, symSize: 0x0 }
+  - { offsetInCU: 0x69, offset: 0x71132, size: 0x8, addend: 0x0, symName: _image_cropperVersionNumber, symObjAddr: 0x30, symBinAddr: 0xA750, symSize: 0x0 }
+  - { offsetInCU: 0x27, offset: 0x7116F, size: 0x8, addend: 0x0, symName: '+[FLTImageCropperPlugin registerWithRegistrar:]', symObjAddr: 0x0, symBinAddr: 0x8000, symSize: 0x118 }
+  - { offsetInCU: 0xF8, offset: 0x71240, size: 0x8, addend: 0x0, symName: '+[FLTImageCropperPlugin registerWithRegistrar:]', symObjAddr: 0x0, symBinAddr: 0x8000, symSize: 0x118 }
+  - { offsetInCU: 0x167, offset: 0x712AF, size: 0x8, addend: 0x0, symName: '-[FLTImageCropperPlugin initWithViewController:]', symObjAddr: 0x118, symBinAddr: 0x8118, symSize: 0x78 }
+  - { offsetInCU: 0x1AE, offset: 0x712F6, size: 0x8, addend: 0x0, symName: '-[FLTImageCropperPlugin handleMethodCall:result:]', symObjAddr: 0x190, symBinAddr: 0x8190, symSize: 0x7F8 }
+  - { offsetInCU: 0x319, offset: 0x71461, size: 0x8, addend: 0x0, symName: '-[FLTImageCropperPlugin setupUiCustomizedOptions:forViewController:]', symObjAddr: 0x988, symBinAddr: 0x8988, symSize: 0x688 }
+  - { offsetInCU: 0x488, offset: 0x715D0, size: 0x8, addend: 0x0, symName: '-[FLTImageCropperPlugin parseAspectRatioPresetFromName:]', symObjAddr: 0x1010, symBinAddr: 0x9010, symSize: 0x110 }
+  - { offsetInCU: 0x4CB, offset: 0x71613, size: 0x8, addend: 0x0, symName: '-[FLTImageCropperPlugin cropViewController:didCropToImage:withRect:angle:]', symObjAddr: 0x1120, symBinAddr: 0x9120, symSize: 0x2F4 }
+  - { offsetInCU: 0x65E, offset: 0x717A6, size: 0x8, addend: 0x0, symName: '-[FLTImageCropperPlugin cropViewController:didFinishCancelled:]', symObjAddr: 0x1414, symBinAddr: 0x9414, symSize: 0x50 }
+  - { offsetInCU: 0x6C0, offset: 0x71808, size: 0x8, addend: 0x0, symName: '-[FLTImageCropperPlugin normalizedImage:]', symObjAddr: 0x1464, symBinAddr: 0x9464, symSize: 0xB0 }
+  - { offsetInCU: 0x77A, offset: 0x718C2, size: 0x8, addend: 0x0, symName: '-[FLTImageCropperPlugin scaledImage:maxWidth:maxHeight:]', symObjAddr: 0x1514, symBinAddr: 0x9514, symSize: 0x200 }
+  - { offsetInCU: 0x947, offset: 0x71A8F, size: 0x8, addend: 0x0, symName: '-[FLTImageCropperPlugin .cxx_destruct]', symObjAddr: 0x1714, symBinAddr: 0x9714, symSize: 0x48 }
+...
