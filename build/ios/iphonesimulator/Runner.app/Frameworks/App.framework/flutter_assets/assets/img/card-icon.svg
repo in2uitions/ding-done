@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="50" viewBox="0 0 64 50">
+  <defs>
+    <filter id="Mask" x="0" y="0" width="64" height="50" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-color="#0021a3" flood-opacity="0.631"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Mask-2" x="0" y="0" width="64" height="50" filterUnits="userSpaceOnUse">
+      <feOffset dy="1" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-color="#0021a3" flood-opacity="0.631"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <clipPath id="clip-path">
+      <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Mask)">
+        <rect id="Mask-3" data-name="Mask" width="46" height="32" rx="4" fill="#002885"/>
+      </g>
+    </clipPath>
+  </defs>
+  <g id="card-icon" transform="translate(9 8)">
+    <g id="Path_2" data-name="Path 2">
+      <g transform="matrix(1, 0, 0, 1, -9, -8)" filter="url(#Mask-2)">
+        <rect id="Mask-4" data-name="Mask" width="46" height="32" rx="4" transform="translate(9 8)" fill="#002885"/>
+      </g>
+      <g id="Path_2-2" data-name="Path 2" clip-path="url(#clip-path)">
+        <path id="Path_2-3" data-name="Path 2" d="M1.544,20.882C5.038,12.989,13.657,8.294,20.6,12.49s12.338-.831,16.2-5.883S54.666-3.606,57.651,3.441s-5.1,23.012-5.1,23.012H2.464S-1.95,28.775,1.544,20.882Z" transform="translate(-6 7.146)" fill="#0041a8"/>
+      </g>
+    </g>
+    <circle id="Oval" cx="5.5" cy="5.5" r="5.5" transform="translate(22.727 17)" fill="#ff8900"/>
+    <circle id="Oval_Copy_12" data-name="Oval Copy 12" cx="5.5" cy="5.5" r="5.5" transform="translate(29.727 17)" fill="#ffcf00"/>
+  </g>
+</svg>

@@ -365,7 +365,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           widget.servicesViewModel
               .setParentCategory('${parentServices?["title"]}');
           debugPrint('search filter ${services?["title"]}');
-          categoriesViewModel.sortCategories(services?["title"]);
+          // categoriesViewModel.sortCategories(services?["title"]);
         },
       ),
     );
