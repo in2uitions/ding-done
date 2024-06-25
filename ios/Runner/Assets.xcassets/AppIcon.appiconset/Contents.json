@@ -1,115 +1,115 @@
 {
   "images" : [
     {
-      "filename" : "DingDone-LOGO.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "20x20"
     },
     {
-      "filename" : "DingDone-LOGO 2.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 5.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "20x20"
+    },
+    {
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 8.png",
+      "idiom" : "iphone",
+      "scale" : "1x",
+      "size" : "29x29"
     },
     {
       "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 12.png",
       "idiom" : "iphone",
-      "scale" : "1x",
-      "size" : "29x29"
-    },
-    {
-      "filename" : "DingDone-LOGO 4.png",
-      "idiom" : "iphone",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
-      "filename" : "DingDone-LOGO 6.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 16.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "29x29"
     },
     {
-      "filename" : "DingDone-LOGO 8.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 11.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
-      "filename" : "DingDone-LOGO 10.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 15.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
-      "filename" : "DingDone-LOGO 11.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 17.png",
       "idiom" : "iphone",
       "scale" : "2x",
       "size" : "60x60"
     },
     {
-      "filename" : "DingDone-LOGO 13.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 18.png",
       "idiom" : "iphone",
       "scale" : "3x",
       "size" : "60x60"
     },
     {
-      "filename" : "DingDone-LOGO 7.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 14.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "20x20"
     },
     {
-      "filename" : "DingDone-LOGO 1.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 1.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "20x20"
+    },
+    {
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 9.png",
+      "idiom" : "ipad",
+      "scale" : "1x",
+      "size" : "29x29"
     },
     {
       "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 13.png",
       "idiom" : "ipad",
-      "scale" : "1x",
-      "size" : "29x29"
-    },
-    {
-      "filename" : "DingDone-LOGO 5.png",
-      "idiom" : "ipad",
       "scale" : "2x",
       "size" : "29x29"
     },
     {
-      "filename" : "DingDone-LOGO 3.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 7.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "40x40"
     },
     {
-      "filename" : "DingDone-LOGO 9.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 10.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "40x40"
     },
     {
-      "filename" : "DingDone-LOGO 14.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 4.png",
       "idiom" : "ipad",
       "scale" : "1x",
       "size" : "76x76"
     },
     {
-      "filename" : "DingDone-LOGO 12.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 6.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "76x76"
     },
     {
-      "filename" : "DingDone-LOGO 15.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 3.png",
       "idiom" : "ipad",
       "scale" : "2x",
       "size" : "83.5x83.5"
     },
     {
-      "filename" : "DingDone-LOGO 16.png",
+      "filename" : "Screenshot 2024-05-13 at 6.07.35 PM 2.png",
       "idiom" : "ios-marketing",
       "scale" : "1x",
       "size" : "1024x1024"
