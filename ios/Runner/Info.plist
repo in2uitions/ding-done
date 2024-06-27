@@ -54,7 +54,13 @@
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>We need access to save files in the documents folder</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Using location when in use</string>
+    <string>Need location when in use</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Always and when in use!</string>
+    <key>NSLocationUsageDescription</key>
+    <string>Older devices need location.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Can I have location always?</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Example: You should fill this in</string>
 	<key>NSPhotoLibraryUsageDescription</key>
