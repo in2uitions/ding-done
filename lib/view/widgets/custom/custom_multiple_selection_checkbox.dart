@@ -54,6 +54,11 @@ class _CustomMultipleSelectionCheckBoxListState
 
   getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
+    if(lang==null){
+      setState(() {
+        lang='en-US';
+      });
+    }
   }
 
   @override
@@ -78,7 +83,6 @@ class _CustomMultipleSelectionCheckBoxListState
 
                     var categoryTitle;
                     Map<String, dynamic>? categories;
-
                     if (servicesViewModel.listOfServices[index].isNotEmpty) {
                       for (Map<String, dynamic> translation
                       in servicesViewModel.listOfServices[index][0]["category"]["translations"]) {

@@ -165,7 +165,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
                                 context.resources.color.colorYellow,
                           ),
                           child: Text(
-                            'Log In',
+                            'Sign Up',
                             style: getPrimaryRegularStyle(
                               fontSize: 15,
                               color: context.resources.color.btnColorBlue,

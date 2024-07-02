@@ -36,10 +36,11 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
 
   void _fetchServices() {
     if (!widget.servicesViewModel.servicesFetched) { // Check if services are not already fetched
+      widget.servicesViewModel.setFetchedServices(true); // Set the flag to true after fetching services
+
       for (var e in widget.list) {
         widget.servicesViewModel.getServicesByCategoryID(int.parse(e.id!), widget.data["supplier_services"]);
       }
-      widget.servicesViewModel.setFetchedServices(true); // Set the flag to true after fetching services
     }
   }
 
