@@ -2,6 +2,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:intl/intl.dart';
 
 class DateAndTimeWidget extends StatefulWidget {
   var dateTime;
@@ -33,7 +34,7 @@ class _DateAndTimeWidgetState extends State<DateAndTimeWidget> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: context.appValues.appPadding.p10,
+                  horizontal: context.appValues.appPadding.p0,
                   vertical: context.appValues.appPadding.p10),
               child: Text(
                 translate('bookService.dateAndTime'),
@@ -64,7 +65,9 @@ class _DateAndTimeWidgetState extends State<DateAndTimeWidget> {
                   horizontal: context.appValues.appPadding.p20,
                 ),
                 child: Text(
-                  '${widget.dateTime}',
+                  '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(widget.dateTime.toString()))}',
+
+                  // '${widget.dateTime}',
                   style: getPrimaryRegularStyle(
                     fontSize: 18,
                     color: const Color(0xff180C38),

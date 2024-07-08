@@ -26,11 +26,14 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/update_job_request_customer/actual_end_time_widget.dart';
+
 class JobDetailsSupplier extends StatefulWidget {
   var data;
   var fromWhere;
+  var title;
 
-  JobDetailsSupplier({super.key, required this.data, required this.fromWhere});
+  JobDetailsSupplier({super.key, required this.data, required this.fromWhere, required this.title});
 
   @override
   State<JobDetailsSupplier> createState() => _JobDetailsSupplierState();
@@ -56,7 +59,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       textDirection: TextDirection.ltr,
                       child: Padding(
                         padding:
-                            EdgeInsets.all(context.appValues.appPadding.p20),
+                        EdgeInsets.fromLTRB(context.appValues.appPadding.p20,0,context.appValues.appPadding.p20,0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -83,13 +86,196 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                   ),
                 ],
               ),
-              JobStatusWidget(status: widget.data.status),
+
+              widget.fromWhere==translate('jobs.active') || widget.fromWhere==translate('jobs.booked')?
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: context.appValues.appPadding.p10),
+                      child: Text(
+                        translate('bookService.customerName'),
+                        style: getPrimaryBoldStyle(
+                          fontSize: 20,
+                          color: const Color(0xff180C38),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p0,
+                      ),
+                      child:Padding(
+                        padding:
+                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
+                        child: Text(
+                          widget.data.customer!=null?'${widget.data.customer["first_name"]} ${widget.data.customer["last_name"]}':'',
+                          style: getPrimaryRegularStyle(
+                            // color: context.resources.color.colorYellow,
+                            color: const Color(0xff180C38),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ):Container(),
+
+              widget.fromWhere==translate('jobs.active')?
+                  Gap(20)
+                  :Container(),
+
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: context.appValues.appPadding.p10),
+                      child: Text(
+                        translate('bookService.jobTitle'),
+                        style: getPrimaryBoldStyle(
+                          fontSize: 20,
+                          color: const Color(0xff180C38),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p0,
+                      ),
+                      child:Padding(
+                        padding:
+                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
+                        child: Text(
+                          widget.title,
+                          style: getPrimaryRegularStyle(
+                            // color: context.resources.color.colorYellow,
+                            color: const Color(0xff180C38),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Gap(20),
+              widget.fromWhere==translate('jobs.completed')?
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: context.appValues.appPadding.p10),
+                      child: Text(
+                        translate('bookService.jobDescription'),
+                        style: getPrimaryBoldStyle(
+                          fontSize: 20,
+                          color: const Color(0xff180C38),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p0,
+                      ),
+                      child:Padding(
+                        padding:
+                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
+                        child: Text(
+                          widget.data.service['description'],
+                          style: getPrimaryRegularStyle(
+                            // color: context.resources.color.colorYellow,
+                            color: const Color(0xff180C38),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ):Container(),
+
+              JobDescriptionWidget(
+                  image:widget.data.service["uploaded_media"],
+                  description: widget.data.job_description),
+              Gap(20),
+              AddressWidget(address: widget.data.address),
+
+              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked')?
+              ActualStartTimeWidget(
+                  actual_start_date: widget.data.actual_start_date ?? '',
+                  actual_end_date: widget.data.finish_date ?? ''):Container(),
+               widget.fromWhere==translate('jobs.completed')?
+              ActualEndTimeWidget(
+                  actual_start_date: widget.data.actual_start_date ?? '',
+                  actual_end_date: widget.data.finish_date ?? ''):Container(),
+              widget.fromWhere==translate('jobs.completed')?
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: context.appValues.appPadding.p10),
+                      child: Text(
+                        translate('bookService.job_duration'),
+                        style: getPrimaryBoldStyle(
+                          fontSize: 20,
+                          color: const Color(0xff180C38),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p0,
+                      ),
+                      child:Padding(
+                        padding:
+                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
+                        child: Text(
+                          _getFormattedDuration(widget.data.actual_start_date, widget.data.finish_date),
+                          style: getPrimaryRegularStyle(
+                            // color: context.resources.color.colorYellow,
+                            color: const Color(0xff180C38),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ):Container(),
+
+              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
+              JobStatusWidget(status: widget.data.status):
+              Container(),
+
+              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
               JobTypeWidget(
                 service: widget.data.service,
                 job_type: widget.data.job_type,
                 tab: widget.fromWhere,
-              ),
+              ):Container(),
               // JobCategorieAndServiceWidget(category:widget.data.service["category"]["title"],service:widget.data.service["title"]),
+              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
               ServiceRateAndCurrnecyWidget(
                 currency: widget.data.service["country_rates"].isNotEmpty?
                 widget.data.service["country_rates"][0]["country"]["curreny"]:'',
@@ -97,8 +283,11 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                 service_rate: widget.data.job_type=='inspection'?widget.data.service["country_rates"][0]['inspection_rate']:widget.data.service["country_rates"].isNotEmpty?'${widget.data.service["country_rates"][0]['unit_rate']} ${widget.data.service["country_rates"][0]['unit_type']}':'',
                 fromWhere: widget.fromWhere,
                 userRole: Constants.supplierRoleId,
-              ),
-              DateAndTimeWidget(dateTime: widget.data.start_date),
+              ):Container(),
+              widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
+              DateAndTimeWidget(dateTime: widget.data.start_date):Container(),
+
+              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: context.appValues.appPadding.p10,
@@ -120,15 +309,13 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                   //   paymentViewModel: paymentViewModel,
                   //   jobsViewModel:jobsViewModel ,);
                 }),
-              ),
-              AddressWidget(address: widget.data.address),
-              JobDescriptionWidget(
-                  image:widget.data.service["uploaded_media"],
-                  description: widget.data.service["description"]),
+              ):Container(),
+
               // CustomerFullNameWidget(
               //   user:
               //       '${widget.data.customer["first_name"]} ${widget.data.customer["last_name"]}',
               // ),
+              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked')?
               JobSizeWidget(
                 completed_units: widget.data.completed_units ?? '',
                 number_of_units: widget.data.number_of_units ?? '',
@@ -136,12 +323,56 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                 extra_fees_reason: widget.data.extra_fees_reason ?? '',
                 userRole: Constants.supplierRoleId,
                 fromWhere: widget.fromWhere,
-              ),
-              ActualStartTimeWidget(
-                  actual_start_date: widget.data.actual_start_date ?? '',
-                  actual_end_date: widget.data.finish_date ?? ''),
-              RatingStarsWidget(stars: widget.data.rating_stars ?? 0.0),
-              ReviewWidget(review: widget.data.rating_comment ?? ''),
+              ):Container(),
+
+
+              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked')?
+              RatingStarsWidget(stars: widget.data.rating_stars ?? 0.0):
+              Container(),
+
+              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active')?
+              ReviewWidget(review: widget.data.rating_comment ?? '')
+              :Container(),
+              widget.fromWhere==translate('jobs.active') || widget.fromWhere==translate('jobs.completed')?
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: context.appValues.appPadding.p10),
+                      child: Text(
+                        translate('home_screen.totalPrice'),
+                        style: getPrimaryBoldStyle(
+                          fontSize: 20,
+                          color: const Color(0xff180C38),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p0,
+                      ),
+                      child:Padding(
+                        padding:
+                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
+                        child: Text(
+                          widget.data.total_amount!=null? '${widget.data.total_amount} ${widget.data.service["country_rates"].isNotEmpty?
+                          widget.data.service["country_rates"][0]["country"]["curreny"]:''}':'',
+                          style: getPrimaryRegularStyle(
+                            // color: context.resources.color.colorYellow,
+                            color: const Color(0xff180C38),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ):Container(),
               SizedBox(height: context.appValues.appSizePercent.h2),
               Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
                 return SizedBox(
@@ -358,11 +589,24 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       ],
                     ));
               }),
+
             ],
           ),
         ],
       ),
     );
+  }
+
+  String _getFormattedDuration(String startDateStr, String endDateStr) {
+    final DateTime startDate = DateTime.parse(startDateStr);
+    final DateTime endDate = DateTime.parse(endDateStr);
+
+    final Duration difference = endDate.difference(startDate);
+
+    final int hours = difference.inHours;
+    final int minutes = difference.inMinutes.remainder(60);
+
+    return '$hours ${translate('jobs.hours')} $minutes ${translate('jobs.minutes')}';
   }
 
   Widget simpleAlert(BuildContext context, String message, String message2) {

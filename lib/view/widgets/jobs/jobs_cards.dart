@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../res/app_prefs.dart';
@@ -98,7 +99,7 @@ class _JobsCardsState extends State<JobsCards> {
                             ? translate('jobs.active')
                             : widget.active == 'completedJobs'
                                 ? translate('jobs.completed')
-                                : translate('jobs.booked'),
+                                : translate('jobs.booked'), title: services?["title"].toString(),
                       )))
                     : Navigator.of(context)
                         .push(_createRoute(UpdateJobRequestCustomer(
@@ -247,7 +248,8 @@ class _JobsCardsState extends State<JobsCards> {
                                                     .total_amount
                                                     .toString() !=
                                                 ''
-                                        ? '${data[index].total_amount}'
+                                        ? '${data[index].total_amount} ${data[index].service["country_rates"].isNotEmpty?
+                                    data[index].service["country_rates"][0]["country"]["curreny"]:''}'
                                         : '',
                                     style: getPrimaryRegularStyle(
                                         fontSize: 15,
@@ -256,6 +258,37 @@ class _JobsCardsState extends State<JobsCards> {
                                   ),
                                 ]),
                           ),
+                          widget.active == 'bookedJobs'
+                              ? Padding(
+                            padding: EdgeInsets.only(right: context.appValues.appPadding.p8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  translate('updateJob.address'),
+                                  style: getPrimaryRegularStyle(
+                                      fontSize: 18, color: context.resources.color.secondColorBlue),
+                                ),
+                                Gap(30),
+                                Expanded(
+                                  child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Text(
+                                      data[index].address != null && data[index].address.toString() != ''
+                                          ? '${data[index].address}'
+                                          : '',
+                                      style: getPrimaryRegularStyle(
+                                          fontSize: 15, color: context.resources.color.btnColorBlue),
+                                      overflow: TextOverflow.visible, // Ensure the text wraps to the next line
+                                      softWrap: true, // Enable soft wrapping
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          )
+                              : Container(),
+
                           Padding(
                             padding: EdgeInsets.only(
                                 right: context.appValues.appPadding.p8),
@@ -263,6 +296,14 @@ class _JobsCardsState extends State<JobsCards> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
+                                  widget.active == 'activeJobs'?
+                                  Text(
+                                    translate('jobs.startTime'),
+                                    style: getPrimaryRegularStyle(
+                                        fontSize: 18,
+                                        color: context
+                                            .resources.color.secondColorBlue),
+                                  ):
                                   Text(
                                     translate('jobs.dateTime'),
                                     style: getPrimaryRegularStyle(
@@ -270,8 +311,16 @@ class _JobsCardsState extends State<JobsCards> {
                                         color: context
                                             .resources.color.secondColorBlue),
                                   ),
+                                  widget.active == 'activeJobs'?
                                   Text(
-                                    '${data[index].start_date}',
+                                    '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date.toString()))}',
+                                    style: getPrimaryRegularStyle(
+                                        fontSize: 15,
+                                        color: context
+                                            .resources.color.btnColorBlue),
+                                  )
+                                  :Text(
+                                    '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].start_date.toString()))}',
                                     style: getPrimaryRegularStyle(
                                         fontSize: 15,
                                         color: context
@@ -295,12 +344,13 @@ class _JobsCardsState extends State<JobsCards> {
                                                   .secondColorBlue),
                                         ),
                                         Text(
-                                          '${data[index].supplier_to_job_distance != null ? data[index].supplier_to_job_distance / 1000 : 0} km',
+                                          '${(data[index].supplier_to_job_distance != null ? (data[index].supplier_to_job_distance / 1000).toStringAsFixed(3) : "0")} km',
                                           style: getPrimaryRegularStyle(
-                                              fontSize: 15,
-                                              color: context.resources.color
-                                                  .btnColorBlue),
+                                            fontSize: 15,
+                                            color: context.resources.color.btnColorBlue,
+                                          ),
                                         ),
+
                                       ]),
                                 )
                               : Container(),

@@ -35,10 +35,10 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
           children: [
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: context.appValues.appPadding.p20,
+                  horizontal: context.appValues.appPadding.p0,
                   vertical: context.appValues.appPadding.p10),
               child: Text(
-                translate('bookService.jobDescription'),
+                translate('bookService.jobDescriptionByUser'),
                 style: getPrimaryBoldStyle(
                   fontSize: 20,
                   color: const Color(0xff180C38),
@@ -99,7 +99,7 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                           vertical: context.appValues.appPadding.p10,
                         ),
                         child: Text(
-                          '${widget.description}',
+                          widget.description!=null?'${widget.description}':'No Job Description',
                           maxLines: 4,
                           overflow: TextOverflow.ellipsis,
                           style: getPrimaryRegularStyle(

@@ -90,6 +90,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                   ),
                 ],
               ),
+
+              JobDescriptionWidget(
+                description: widget.data.job_description, image: widget.data.service["uploaded_media"],
+              ),
               JobStatusWidget(
                 status: widget.data.status,
               ),
@@ -130,9 +134,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                 }),
               ),
               AddressWidget(address: widget.data.address),
-              JobDescriptionWidget(
-                description: widget.data.service["description"], image: widget.data.service["uploaded_media"],
-              ),
+
               // CurrentSupplierWidget(user: '${widget.data.supplier["first_name"]} ${widget.data.supplier["last_name"]}'),
               CurrentSupplierWidget(
                   user: widget.data.supplier != null

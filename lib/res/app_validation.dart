@@ -27,6 +27,16 @@ class AppValidation {
       return "Enter a valid password";
     }
   }
+  String? isValidPhoneNumber(String val) {
+    // Regular expression for validating phone number (adjust as needed)
+    RegExp phoneRegExp = RegExp(r'^\+?[0-9]{6,15}$');
+
+    if (val.isNotEmpty && phoneRegExp.hasMatch(val)) {
+      return null;
+    } else {
+      return "Enter a valid phone number";
+    }
+  }
   String? isValidLoginPassword(String val) {
     // final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     // RegExp passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');

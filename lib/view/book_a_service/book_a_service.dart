@@ -405,10 +405,10 @@ class _BookAServiceState extends State<BookAService> {
                                 body: profileViewModel.getProfileBody,
                                 longitude: profileViewModel
                                     .getProfileBody['current_address']!=null? profileViewModel
-                                    .getProfileBody['current_address']["longitude"]:23,
+                                    .getProfileBody['current_address']["longitude"]:25.3,
                                 latitude: profileViewModel
                                     .getProfileBody['current_address']!=null?profileViewModel
-                                    .getProfileBody['current_address']["latitude"]:89,
+                                    .getProfileBody['current_address']["latitude"]:51.1,
                               ):Container(),
                             ),
                             onTap: () {

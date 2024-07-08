@@ -24,8 +24,8 @@ class _MapDisplayState extends State<MapDisplay> {
   @override
   void initState() {
     super.initState();
-    lon = widget.longitude.isFinite ? widget.longitude : 23.0;
-    lat = widget.latitude.isFinite ? widget.latitude : 89.0;
+    lon = widget.longitude.isFinite ? widget.longitude : 25.3;
+    lat = widget.latitude.isFinite ? widget.latitude : 51.52;
     debugPrint('Initial coordinates: lat=$lat, lon=$lon');
   }
 
@@ -34,8 +34,8 @@ class _MapDisplayState extends State<MapDisplay> {
     super.didUpdateWidget(oldWidget);
     if (widget.longitude != oldWidget.longitude || widget.latitude != oldWidget.latitude) {
       setState(() {
-        lat = widget.latitude.isFinite ? widget.latitude : 89.0;
-        lon = widget.longitude.isFinite ? widget.longitude : 23.0;
+        lat = widget.latitude.isFinite ? widget.latitude : 51.52;
+        lon = widget.longitude.isFinite ? widget.longitude : 25.3;
         debugPrint('Updated coordinates: lat=$lat, lon=$lon');
       });
     }

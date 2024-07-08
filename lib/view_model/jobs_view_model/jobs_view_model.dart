@@ -221,7 +221,7 @@ class JobsViewModel with ChangeNotifier {
 
   Future<bool?> acceptJob(dynamic data) async {
     try {
-      // debugPrint('Estimated time to reach currentPosition: ${data} minutes');
+      debugPrint('Estimated time to reach currentPosition: ${data} minutes');
       try {
         Position currentPosition = await Geolocator.getCurrentPosition();
         // debugPrint('Estimated customer address: ${data.customer["address"]} minutes');

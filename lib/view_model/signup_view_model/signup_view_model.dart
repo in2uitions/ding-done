@@ -111,9 +111,9 @@ class SignUpViewModel with ChangeNotifier {
       }
 
       if (index == 1) {
-        phoneMessage = AppValidation().isNotEmpty(
-            value: signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
-            index: 'Phone number');
+        phoneMessage = AppValidation().isValidPhoneNumber(
+           signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+           );
 
 
         emailMessage = AppValidation().isEmailValid(
@@ -218,9 +218,9 @@ class SignUpViewModel with ChangeNotifier {
             index: 'Last name');
         emailMessage = AppValidation().isEmailValid(
             signUpBody[EnglishStrings().formKeys['email']!] ?? '');
-        phoneMessage = AppValidation().isNotEmpty(
-            value: signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
-            index: 'Phone number');
+        phoneMessage = AppValidation().isValidPhoneNumber(
+             signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+          );
         dobMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
             index: 'Date of birth');
@@ -327,10 +327,10 @@ class SignUpViewModel with ChangeNotifier {
         if (index == 1) {
           emailMessage = AppValidation().isEmailValid(
               signUpBody[EnglishStrings().formKeys['email']!] ?? '');
-          phoneMessage = AppValidation().isNotEmpty(
-              value:
+          phoneMessage = AppValidation().isValidPhoneNumber(
+
               signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
-              index: 'Phone number');
+          );
 
           if (emailMessage == null && phoneMessage == null) {
             notifyListeners();
@@ -424,9 +424,9 @@ class SignUpViewModel with ChangeNotifier {
               index: 'Last name');
           emailMessage = AppValidation().isEmailValid(
               signUpBody[EnglishStrings().formKeys['email']!] ?? '');
-          phoneMessage = AppValidation().isNotEmpty(
-              value: signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
-              index: 'Phone number');
+          phoneMessage = AppValidation().isValidPhoneNumber(
+              signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+            );
           dobMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
               index: 'Date of birth');
@@ -511,6 +511,7 @@ class SignUpViewModel with ChangeNotifier {
 
   void setInputValues({required String index,required dynamic value}) {
     signUpBody[index] = value;
+    debugPrint('si8gnup body $signUpBody');
     notifyListeners();
 
     debugPrint('signup body ${signUpBody}');

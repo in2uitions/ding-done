@@ -1,4 +1,5 @@
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/jobs/CircleButton.dart';
 import 'package:dingdone/view/widgets/jobs/jobs_cards.dart';
@@ -44,21 +45,34 @@ class _JobsPageState extends State<JobsPage> {
       backgroundColor: const Color(0xffFEFEFE),
       body: Tabs(
         tabtitle: [
-          translate('jobs.activeJobs'),
+
+          // widget.userRole==Constants.supplierRoleId?
+              // '':
+          // translate('jobs.bookedJobs'),
           translate('jobs.bookedJobs'),
+          translate('jobs.activeJobs'),
           translate('jobs.completedJobs'),
         ],
         tabContent: [
+          // widget.userRole==Constants.supplierRoleId?
+          // Container():
+          // Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+          //   return JobsCards(
+          //       active: "requestedJobs",
+          //       userRole: widget.userRole,
+          //       jobsViewModel: jobsViewModel,
+          //       lang: widget.lang);
+          // }),
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
-                active: "activeJobs",
+                active: "bookedJobs",
                 userRole: widget.userRole,
                 jobsViewModel: jobsViewModel,
                 lang: widget.lang);
           }),
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
-                active: "bookedJobs",
+                active: "activeJobs",
                 userRole: widget.userRole,
                 jobsViewModel: jobsViewModel,
                 lang: widget.lang);

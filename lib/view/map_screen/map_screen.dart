@@ -42,12 +42,12 @@ class _MapScreenState extends State<MapScreen> {
                   ? double.parse(widget.latitude.toString())
                   : (profileViewModel.getProfileBody['current_address'] != null
                   ? profileViewModel.getProfileBody['current_address']['latitude']
-                  : 23),
+                  : 25.3),
               widget.longitude != null
                   ? double.parse(widget.longitude.toString())
                   : (profileViewModel.getProfileBody['current_address'] != null
                   ? profileViewModel.getProfileBody['current_address']['longitude']
-                  : 89),
+                  : 51.52),
             ),
             selectLocationButtonStyle: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
@@ -57,7 +57,7 @@ class _MapScreenState extends State<MapScreen> {
             selectLocationButtonLeadingIcon: const Icon(Icons.check),
             initZoom: 11,
             minZoomLevel: 5,
-            maxZoomLevel: 16,
+            maxZoomLevel: 18,
             trackMyPosition: true,
             onError: (e) => debugPrint('Error while trying to build map: $e'),
             onPicked: (pickedData) async {

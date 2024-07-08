@@ -1,5 +1,6 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/view/widgets/custom/custom_date_picker.dart';
+import 'package:dingdone/view/widgets/custom/custom_date_picker2.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:date_picker_timeline/date_picker_timeline.dart';
@@ -19,7 +20,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
       return Padding(
         padding:
             EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p10),
-        child: CustomDatePicker(
+        child: CustomDatePicker2(
           index: 'date',
           viewModel: jobsViewModel.setInputValues,
         ),

@@ -4,6 +4,7 @@ import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class JobRequests extends StatefulWidget {
@@ -101,23 +102,23 @@ class _JobRequestsState extends State<JobRequests> {
                                 ),
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  top: context.appValues.appPadding.p5),
-                              child: SizedBox(
-                                width: context.appValues.appSizePercent.w50,
-                                child: Text(
-                                  widget.description,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: getPrimaryRegularStyle(
-                                    fontSize: 10,
-                                    color:
-                                        context.resources.color.secondColorBlue,
-                                  ),
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: EdgeInsets.only(
+                            //       top: context.appValues.appPadding.p5),
+                            //   child: SizedBox(
+                            //     width: context.appValues.appSizePercent.w50,
+                            //     child: Text(
+                            //       widget.description,
+                            //       maxLines: 2,
+                            //       overflow: TextOverflow.ellipsis,
+                            //       style: getPrimaryRegularStyle(
+                            //         fontSize: 10,
+                            //         color:
+                            //             context.resources.color.secondColorBlue,
+                            //       ),
+                            //     ),
+                            //   ),
+                            // ),
                             SizedBox(height: context.appValues.appSize.s2),
                             Row(
                               children: [
@@ -166,7 +167,7 @@ class _JobRequestsState extends State<JobRequests> {
                         SizedBox(
                           width: context.appValues.appSizePercent.w50,
                           child: Text(
-                            widget.date,
+                            '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(widget.date.toString()))}',
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: getPrimaryRegularStyle(

@@ -222,6 +222,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                           jobsViewModel.supplierOpenJobs[index].customer["id"]);
                       Navigator.of(context).push(_createRoute(
                           JobDetailsSupplier(
+                            title:'${services!["title"]}',
                           data: jobsViewModel.supplierOpenJobs[index],
                           fromWhere: 'request')));
                     },

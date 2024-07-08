@@ -421,11 +421,109 @@ class _SignUpSupplierOnBoardingScreenState
                             ),
                           )),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: context.appValues.appPadding.p20,
+                            vertical: context.appValues.appPadding.p10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              translate('formHints.location'),
+                              style: getPrimaryRegularStyle(
+                                fontSize: 15,
+                                color: context.resources.color.secondColorBlue,
+                              ),
+                            ),
+                            InkWell(
+                              child: Text(
+                                translate('signUp.chooseLocation'),
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 15,
+                                  color: context.resources.color.btnColorBlue,
+                                ),
+                              ),
+                              onTap: () {
+                                Navigator.of(context)
+                                    .push(_createRoute(MapScreen(
+                                  viewModel: signupViewModel,
+                                  longitude: 25.3,
+                                  latitude: 51.52,
+                                )));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: context.appValues.appPadding.p20),
+                        child: SizedBox(
+                            height: 300,
+                            child: FutureBuilder(
+                                future: Provider.of<SignUpViewModel>(context,
+                                    listen: false)
+                                    .getData(),
+                                builder: (context, AsyncSnapshot data) {
+                                  if (data.connectionState ==
+                                      ConnectionState.done) {
+                                    return GestureDetector(
+                                      onTap: (){
+                                        Navigator.of(context)
+                                            .push(_createRoute(MapScreen(
+                                          viewModel: signupViewModel,
+                                          longitude: 25.3,
+                                          latitude: 51.52,
+                                        )));
+                                      },
+                                      child: MapDisplay(
+                                        body: signupViewModel.signUpBody,
+                                        longitude: signupViewModel
+                                            .signUpBody["longitude"] !=
+                                            null &&  signupViewModel
+                                            .signUpBody["longitude"] !=
+                                            ''
+                                            ? double.parse(signupViewModel
+                                            .signUpBody["longitude"])
+                                            : 25.3,
+                                        latitude: signupViewModel
+                                            .signUpBody["latitude"] !=
+                                            null&&  signupViewModel
+                                            .signUpBody["latitude"] !=
+                                            ''
+                                            ? double.parse(signupViewModel
+                                            .signUpBody["latitude"])
+                                            : 51.52,
+                                      ),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                })),
+                      ),
+                      if (signupViewModel.signUpErrors[context.resources.strings.formKeys['longitude']] != null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                          child: Text(
+                            signupViewModel.signUpErrors[context.resources.strings.formKeys['longitude']]!,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      if (signupViewModel.signUpErrors[context.resources.strings.formKeys['latitude']] != null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                          child: Text(
+                            signupViewModel.signUpErrors[context.resources.strings.formKeys['latitude']]!,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
                         child: CustomTextField(
                             index: 'street_number',
+
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.street_number'),
+                            hintText: translate('formHints.street'),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['street_number']!],
@@ -438,7 +536,7 @@ class _SignUpSupplierOnBoardingScreenState
                         child: CustomTextField(
                             index: 'building_number',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.building_number'),
+                            hintText: translate('formHints.building'),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['building_number']!],
@@ -465,7 +563,7 @@ class _SignUpSupplierOnBoardingScreenState
                         child: CustomTextField(
                             index: 'apartment_number',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.apartment_number'),
+                            hintText: translate('formHints.apartment'),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['apartment_number']!],
@@ -524,92 +622,6 @@ class _SignUpSupplierOnBoardingScreenState
                       //           .resources.strings.formKeys['postal_code']!],
                       //       keyboardType: TextInputType.text),
                       // ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: context.appValues.appPadding.p20,
-                            vertical: context.appValues.appPadding.p10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              translate('formHints.location'),
-                              style: getPrimaryRegularStyle(
-                                fontSize: 15,
-                                color: context.resources.color.secondColorBlue,
-                              ),
-                            ),
-                            InkWell(
-                              child: Text(
-                                translate('signUp.chooseLocation'),
-                                style: getPrimaryRegularStyle(
-                                  fontSize: 15,
-                                  color: context.resources.color.btnColorBlue,
-                                ),
-                              ),
-                              onTap: () {
-                                Navigator.of(context)
-                                    .push(_createRoute(MapScreen(
-                                  viewModel: signupViewModel,
-                                  longitude: 23,
-                                  latitude: 89,
-                                )));
-                              },
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: context.appValues.appPadding.p20),
-                        child: SizedBox(
-                            height: 300,
-                            child: FutureBuilder(
-                                future: Provider.of<SignUpViewModel>(context,
-                                        listen: false)
-                                    .getData(),
-                                builder: (context, AsyncSnapshot data) {
-                                  if (data.connectionState ==
-                                      ConnectionState.done) {
-                                    return MapDisplay(
-                                      body: signupViewModel.signUpBody,
-                                      longitude: signupViewModel
-                                                  .signUpBody["longitude"] !=
-                                              null &&  signupViewModel
-                                                  .signUpBody["longitude"] !=
-                                              ''
-                                          ? double.parse(signupViewModel
-                                              .signUpBody["longitude"])
-                                          : 23,
-                                      latitude: signupViewModel
-                                                  .signUpBody["latitude"] !=
-                                              null&&  signupViewModel
-                                          .signUpBody["latitude"] !=
-                                          ''
-                                          ? double.parse(signupViewModel
-                                              .signUpBody["latitude"])
-                                          : 89,
-                                    );
-                                  } else {
-                                    return Container();
-                                  }
-                                })),
-                      ),
-                      if (signupViewModel.signUpErrors[context.resources.strings.formKeys['longitude']] != null)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                          child: Text(
-                            signupViewModel.signUpErrors[context.resources.strings.formKeys['longitude']]!,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
-                      if (signupViewModel.signUpErrors[context.resources.strings.formKeys['latitude']] != null)
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                          child: Text(
-                            signupViewModel.signUpErrors[context.resources.strings.formKeys['latitude']]!,
-                            style: TextStyle(color: Colors.red),
-                          ),
-                        ),
 
 
                     ],

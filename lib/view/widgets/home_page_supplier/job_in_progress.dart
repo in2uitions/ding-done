@@ -5,6 +5,7 @@ import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 import '../../../res/app_prefs.dart';
@@ -105,7 +106,7 @@ class _JobInProgressState extends State<JobInProgress> {
                               ),
                             ),
                             Text(
-                              '${services!["title"]}',
+                              '${services!=null?services!["title"]:''}',
                               style: getPrimaryBoldStyle(
                                 fontSize: 22,
                                 color: const Color(0xff190C39),
@@ -160,8 +161,11 @@ class _JobInProgressState extends State<JobInProgress> {
                             color: const Color(0xff9E9AB7),
                           ),
                         ),
+
                         Text(
-                          '${jobsViewModel.supplierInProgressJobs[index].start_date}',
+                          '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(jobsViewModel.supplierInProgressJobs[index].start_date.toString()))}',
+
+                          // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
                           style: getPrimaryRegularStyle(
                             fontSize: 18,
                             color: const Color(0xff180C39),
