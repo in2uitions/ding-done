@@ -43,26 +43,96 @@ class _JobsPageState extends State<JobsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFEFEFE),
-      body: Tabs(
+      body:          widget.userRole==Constants.supplierRoleId?
+      Tabs(
         tabtitle: [
 
-          // widget.userRole==Constants.supplierRoleId?
-              // '':
-          // translate('jobs.bookedJobs'),
           translate('jobs.bookedJobs'),
           translate('jobs.activeJobs'),
           translate('jobs.completedJobs'),
         ],
         tabContent: [
-          // widget.userRole==Constants.supplierRoleId?
-          // Container():
-          // Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
-          //   return JobsCards(
-          //       active: "requestedJobs",
-          //       userRole: widget.userRole,
-          //       jobsViewModel: jobsViewModel,
-          //       lang: widget.lang);
-          // }),
+
+
+          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+            return JobsCards(
+                active: "bookedJobs",
+                userRole: widget.userRole,
+                jobsViewModel: jobsViewModel,
+                lang: widget.lang);
+          }),
+          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+            return JobsCards(
+                active: "activeJobs",
+                userRole: widget.userRole,
+                jobsViewModel: jobsViewModel,
+                lang: widget.lang);
+          }),
+          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+            return JobsCards(
+                active: "completedJobs",
+                userRole: widget.userRole,
+                jobsViewModel: jobsViewModel,
+                lang: widget.lang);
+          }),
+        ],
+        content: Consumer<LoginViewModel>(builder: (context, loginViewModel, _) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SafeArea(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.all(context.appValues.appPadding.p20),
+                      child: InkWell(
+                        child: SvgPicture.asset('assets/img/back.svg'),
+                        onTap: () async {
+                          Navigator.pop(context);
+
+                              final prefs = await SharedPreferences.getInstance();
+                              final role = prefs.getString(userRoleKey);
+
+
+                          Navigator.of(context).push(_createRoute(
+                              BottomBar(userRole:role)));
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: context.appValues.appPadding.p20),
+                  child: Text(
+                    translate('bottom_bar.jobs'),
+                    style: getPrimaryRegularStyle(
+                        color: context.resources.color.btnColorBlue, fontSize: 32),
+                  ),
+                ),
+              ],
+            );
+          }
+        ),
+      )
+      :Tabs(
+        tabtitle: [
+
+
+          translate('jobs.requestedJobs'),
+          translate('jobs.confirmedJobs'),
+          translate('jobs.activeJobs'),
+          translate('jobs.completedJobs'),
+        ],
+        tabContent: [
+
+          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+            return JobsCards(
+                active: "requestedJobs",
+                userRole: widget.userRole,
+                jobsViewModel: jobsViewModel,
+                lang: widget.lang);
+          }),
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
                 active: "bookedJobs",

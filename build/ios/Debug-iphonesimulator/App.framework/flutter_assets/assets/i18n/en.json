@@ -79,6 +79,8 @@
   "jobs": {
     "activeJobs": "Active Jobs",
     "bookedJobs": "Booked Jobs",
+    "confirmedJobs": "Confirmed Jobs",
+    "requestedJobs": "Requested Jobs",
     "completedJobs": "Completed Jobs",
     "active": "active",
     "completed": "completed",
@@ -89,6 +91,7 @@
     "estimatedDistance": "Estimated Distance",
     "estimatedTime": "Estimated Time of arrival",
     "minutes": "minutes",
+    "hours": "hours",
     "provideReasonToCancelBooking": "Please provide a reason to cancel Booking",
     "provideReasonToCancelJob": "Please provide a reason to cancel Job",
     "changeOfPlans": "Change of Plans",
@@ -142,6 +145,8 @@
     "jobType": "Job Type",
     "jobTitle": "Job Title",
     "jobDescription": "Job Description",
+    "job_duration": "Job Duration",
+    "jobDescriptionByUser": "Job Description By User",
     "dateAndTime": "Date and Time",
     "location": "Location",
     "addMedia": "Add Media",
@@ -149,6 +154,7 @@
     "scheduleForLater": "Schedule for later",
     "requestService": "Request Service",
     "chat": "Chat",
+    "customerName": "Customer Name",
     "serviceRequestConfirmed": "Service Request Confirmed",
     "serviceRequestConfirmedMsg": "We are looking for the best match now and you will receive an update once confirmed"
   },

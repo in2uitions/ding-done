@@ -79,6 +79,8 @@
   "jobs": {
     "activeJobs": "Ενεργές Εργασίες",
     "bookedJobs": "Κρατημένες Εργασίες",
+    "confirmedJobs": "επιβεβαίωσε τον Jobs",
+    "requestedJobs": "ζήτησε θέσεις εργασίας",
     "completedJobs": "Ολοκληρωμένες Εργασίες",
     "active": "ενεργές",
     "completed": "ολοκληρωμένες",
@@ -89,6 +91,7 @@
     "estimatedDistance": "Εκτιμώμενη Απόσταση",
     "estimatedTime": "Προβλεπόμενη ώρα άφιξης",
     "minutes": "λεπτά",
+    "hours": "ώρες",
     "provideReasonToCancelBooking": "Παρακαλώ δώστε λόγο για την ακύρωση της κράτησης",
     "provideReasonToCancelJob": "Παρακαλώ δώστε λόγο για την ακύρωση της εργασίας",
     "changeOfPlans": "Αλλαγή Σχεδίων",
@@ -142,6 +145,8 @@
     "jobType": "Τύπος Εργασίας",
     "jobTitle": "όνομα της εργασίας",
     "jobDescription": "Περιγραφή Εργασίας",
+    "job_duration": "διάρκεια εργασίας",
+    "jobDescriptionByUser": "Περιγραφή εργασίας Κατά Χρήστη",
     "dateAndTime": "Ημερομηνία και Ώρα",
     "location": "Τοποθεσία",
     "addMedia": "Προσθήκη Πολυμέσων",
@@ -149,6 +154,7 @@
     "scheduleForLater": "Προγραμματίστε για αργότερα",
     "requestService": "Αίτηση Υπηρεσίας",
     "chat": "Συνομιλία",
+    "customerName": "Όνομα πελάτη",
     "serviceRequestConfirmed": "Επιβεβαίωση Αίτησης Υπηρεσίας",
     "serviceRequestConfirmedMsg": "Ψάχνουμε για την καλύτερη αντιστοίχιση τώρα και θα λάβετε ενημέρωση αφού επιβεβαιωθεί."
   },

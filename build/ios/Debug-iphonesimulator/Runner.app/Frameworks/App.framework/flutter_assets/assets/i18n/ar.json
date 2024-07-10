@@ -79,6 +79,8 @@
   "jobs": {
     "activeJobs": "الوظائف النشطة",
     "bookedJobs": "الوظائف المحجوزة",
+    "confirmedJobs": "الوظائف المؤكدة",
+    "requestedJobs": "الوظائف المطلوبة",
     "completedJobs": "الوظائف المكتملة",
     "active": "نشطة",
     "completed": "مكتملة",
@@ -89,6 +91,7 @@
     "estimatedDistance": "المسافة المقدرة",
     "estimatedTime": "الوقت المقدر للوصول",
     "minutes": "دقائق",
+    "hours": "ساعات",
     "provideReasonToCancelBooking": "الرجاء تقديم سبب لإلغاء الحجز",
     "provideReasonToCancelJob": "الرجاء تقديم سبب لإلغاء الوظيفة",
     "changeOfPlans": "تغيير الخطط",
@@ -142,6 +145,8 @@
     "jobType": "نوع الوظيفة",
     "jobTitle": "اسم الوظيفة",
     "jobDescription": "وصف الوظيفة",
+    "job_duration": "مدة الوظيفة",
+    "jobDescriptionByUser": "الوصف الوظيفي من قبل المستخدم",
     "dateAndTime": "التاريخ والوقت",
     "location": "الموقع",
     "addMedia": "إضافة وسائط",
@@ -149,6 +154,7 @@
     "scheduleForLater": "جدولة لاحقًا",
     "requestService": "طلب الخدمة",
     "chat": "الدردشة",
+    "customerName": "اسم الزبون",
     "serviceRequestConfirmed": "تم تأكيد طلب الخدمة",
     "serviceRequestConfirmedMsg": "نحن نبحث عن أفضل تطابق الآن وستتلقى تحديثًا عند التأكيد"
   },

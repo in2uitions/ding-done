@@ -63,6 +63,10 @@ class _JobsCardsState extends State<JobsCards> {
                   ? widget.jobsViewModel.getcustomerJobs
                       .where((e) => e.status == 'completed')
                       .toList()
+              : widget.active == 'requestedJobs'
+                  ? widget.jobsViewModel.getcustomerJobs
+                      .where((e) => e.status == 'circulating')
+                      .toList()
                   : widget.jobsViewModel.getcustomerJobs
                       .where((e) => e.status == 'booked')
                       .toList();
@@ -99,15 +103,19 @@ class _JobsCardsState extends State<JobsCards> {
                             ? translate('jobs.active')
                             : widget.active == 'completedJobs'
                                 ? translate('jobs.completed')
-                                : translate('jobs.booked'), title: services?["title"].toString(),
+                                : translate('jobs.booked'),
+                  title: services?["title"].toString(),
                       )))
                     : Navigator.of(context)
                         .push(_createRoute(UpdateJobRequestCustomer(
                         data: data[index],
+                        title:'${data[index].service != null ?data[index].service['title']: services!["title"]}',
                         fromWhere: widget.active == 'activeJobs'
                             ? 'active'
                             : widget.active == 'completedJobs'
                                 ? translate('jobs.completed')
+                            : widget.active == 'requestedJobs'
+                            ? translate('jobs.requestedJobs')
                                 : translate('jobs.booked'),
                       )));
               },
@@ -258,7 +266,7 @@ class _JobsCardsState extends State<JobsCards> {
                                   ),
                                 ]),
                           ),
-                          widget.active == 'bookedJobs'
+                          widget.active == 'bookedJobs' || widget.active == 'requestedJobs'
                               ? Padding(
                             padding: EdgeInsets.only(right: context.appValues.appPadding.p8),
                             child: Row(
@@ -304,14 +312,18 @@ class _JobsCardsState extends State<JobsCards> {
                                         color: context
                                             .resources.color.secondColorBlue),
                                   ):
+                                      widget.userRole==Constants.supplierRoleId || widget.active == 'requestedJobs'?
                                   Text(
                                     translate('jobs.dateTime'),
                                     style: getPrimaryRegularStyle(
                                         fontSize: 18,
                                         color: context
                                             .resources.color.secondColorBlue),
-                                  ),
-                                  widget.active == 'activeJobs'?
+                                  ):
+                                  Container(),
+                                  widget.userRole==Constants.supplierRoleId || widget.active == 'requestedJobs'?
+                                  widget.active == 'activeJobs' ?
+
                                   Text(
                                     '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date.toString()))}',
                                     style: getPrimaryRegularStyle(
@@ -325,9 +337,42 @@ class _JobsCardsState extends State<JobsCards> {
                                         fontSize: 15,
                                         color: context
                                             .resources.color.btnColorBlue),
-                                  ),
+                                  ):Container(),
                                 ]),
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: context.appValues.appPadding.p8),
+                            child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  widget.active == 'completedJobs' && widget.userRole==Constants.customerRoleId?
+                                  Text(
+                                    translate('jobs.dateTime'),
+                                    style: getPrimaryRegularStyle(
+                                        fontSize: 18,
+                                        color: context
+                                            .resources.color.secondColorBlue),
+                                  ):
+
+                                  Container(),
+                                  widget.active == 'completedJobs' && widget.userRole==Constants.customerRoleId?
+
+
+                                  Text(
+                                    '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date.toString()))}',
+                                    style: getPrimaryRegularStyle(
+                                        fontSize: 15,
+                                        color: context
+                                            .resources.color.btnColorBlue),
+                                  )
+                                     :Container(),
+                                ]),
+                          ),
+
+                          widget.userRole==Constants.supplierRoleId?
+
                           widget.active == 'bookedJobs'
                               ? Padding(
                                   padding: EdgeInsets.only(
@@ -353,7 +398,9 @@ class _JobsCardsState extends State<JobsCards> {
 
                                       ]),
                                 )
-                              : Container(),
+                              : Container()
+                          :Container(),
+                          widget.userRole==Constants.supplierRoleId?
                           widget.active == 'bookedJobs'
                               ? Padding(
                                   padding: EdgeInsets.only(
@@ -378,7 +425,7 @@ class _JobsCardsState extends State<JobsCards> {
                                         ),
                                       ]),
                                 )
-                              : Container(),
+                              : Container():Container(),
 
                                   widget.active == 'bookedJobs'
                               ? Padding(

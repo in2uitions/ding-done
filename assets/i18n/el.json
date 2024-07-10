@@ -79,6 +79,8 @@
   "jobs": {
     "activeJobs": "Ενεργές Εργασίες",
     "bookedJobs": "Κρατημένες Εργασίες",
+    "confirmedJobs": "επιβεβαίωσε τον Jobs",
+    "requestedJobs": "ζήτησε θέσεις εργασίας",
     "completedJobs": "Ολοκληρωμένες Εργασίες",
     "active": "ενεργές",
     "completed": "ολοκληρωμένες",

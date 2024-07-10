@@ -79,6 +79,8 @@
   "jobs": {
     "activeJobs": "الوظائف النشطة",
     "bookedJobs": "الوظائف المحجوزة",
+    "confirmedJobs": "الوظائف المؤكدة",
+    "requestedJobs": "الوظائف المطلوبة",
     "completedJobs": "الوظائف المكتملة",
     "active": "نشطة",
     "completed": "مكتملة",

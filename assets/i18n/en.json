@@ -79,6 +79,8 @@
   "jobs": {
     "activeJobs": "Active Jobs",
     "bookedJobs": "Booked Jobs",
+    "confirmedJobs": "Confirmed Jobs",
+    "requestedJobs": "Requested Jobs",
     "completedJobs": "Completed Jobs",
     "active": "active",
     "completed": "completed",

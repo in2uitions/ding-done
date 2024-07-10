@@ -79,6 +79,8 @@
   "jobs": {
     "activeJobs": "Активные задания",
     "bookedJobs": "Забронированные задания",
+    "confirmedJobs": "подтвердил Джобс",
+    "requestedJobs": "запросил вакансии",
     "completedJobs": "Завершенные задания",
     "active": "активные",
     "completed": "завершенные",

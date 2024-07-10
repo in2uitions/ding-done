@@ -79,6 +79,8 @@
   "jobs": {
     "activeJobs": "Активные задания",
     "bookedJobs": "Забронированные задания",
+    "confirmedJobs": "подтвердил Джобс",
+    "requestedJobs": "запросил вакансии",
     "completedJobs": "Завершенные задания",
     "active": "активные",
     "completed": "завершенные",
@@ -89,6 +91,7 @@
     "estimatedDistance": "Оценочное расстояние",
     "estimatedTime": "Примерное время прибытия",
     "minutes": "минут",
+    "hours": "часы",
     "provideReasonToCancelBooking": "Пожалуйста, укажите причину отмены бронирования",
     "provideReasonToCancelJob": "Пожалуйста, укажите причину отмены работы",
     "changeOfPlans": "Изменение планов",
@@ -142,6 +145,8 @@
     "jobType": "Тип задания",
     "jobTitle": "название работы",
     "jobDescription": "Описание задания",
+    "job_duration": "продолжительность работы",
+    "jobDescriptionByUser": "Описание вакансии Пользователь",
     "dateAndTime": "Дата и время",
     "location": "Местоположение",
     "addMedia": "Добавить медиа",
@@ -149,6 +154,7 @@
     "scheduleForLater": "Запланировать на будущее",
     "requestService": "Запросить услугу",
     "chat": "Чат",
+    "customerName": "Имя Клиента",
     "serviceRequestConfirmed": "Запрос на услугу подтвержден",
     "serviceRequestConfirmedMsg": "Мы ищем лучшее соответствие, и вы получите обновление, как только это будет подтверждено"
   },

@@ -5,6 +5,7 @@ import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/book_a_service/payment_method.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_area.dart';
+import 'package:dingdone/view/widgets/update_job_request_customer/actual_end_time_widget.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/actual_start_time_widget.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/address_widget.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/current_supplier_widget.dart';
@@ -30,8 +31,9 @@ class UpdateJobRequestCustomer extends StatefulWidget {
   var data;
 
   var fromWhere;
+  var title;
 
-  UpdateJobRequestCustomer({super.key, required this.data, this.fromWhere});
+  UpdateJobRequestCustomer({super.key, required this.data, this.fromWhere, this.title});
 
   @override
   State<UpdateJobRequestCustomer> createState() =>
@@ -90,22 +92,115 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                   ),
                 ],
               ),
-
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: context.appValues.appPadding.p10),
+                      child: Text(
+                        translate('bookService.jobTitle'),
+                        style: getPrimaryBoldStyle(
+                          fontSize: 20,
+                          color: const Color(0xff180C38),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p0,
+                      ),
+                      child:Padding(
+                        padding:
+                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
+                        child: Text(
+                          widget.title.toString(),
+                          style: getPrimaryRegularStyle(
+                            // color: context.resources.color.colorYellow,
+                            color: const Color(0xff180C38),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Gap(20),
+              widget.fromWhere==translate('jobs.completed') ||  widget.fromWhere==translate('jobs.active')?
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: context.appValues.appPadding.p10),
+                      child: Text(
+                        translate('bookService.jobDescription'),
+                        style: getPrimaryBoldStyle(
+                          fontSize: 20,
+                          color: const Color(0xff180C38),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p0,
+                      ),
+                      child:Padding(
+                        padding:
+                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
+                        child: Text(
+                          widget.data.service['description'],
+                          style: getPrimaryRegularStyle(
+                            // color: context.resources.color.colorYellow,
+                            color: const Color(0xff180C38),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ):Container(),
+              widget.fromWhere!=translate('jobs.active')?
               JobDescriptionWidget(
                 description: widget.data.job_description, image: widget.data.service["uploaded_media"],
-              ),
+              ):Container(),
+              widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
+              AddressWidget(address: widget.data.address)
+              :Container(),
+              widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active')  &&  widget.fromWhere!=translate('jobs.completed')?
+              DateAndTimeWidget(dateTime: widget.data.start_date)
+              :Container(),
+
+              widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active')   &&  widget.fromWhere!=translate('jobs.completed')?
               JobStatusWidget(
                 status: widget.data.status,
-              ),
+              ):Container(),
+              widget.fromWhere!=translate('jobs.requestedJobs')  &&  widget.fromWhere!=translate('jobs.booked')  &&  widget.fromWhere!=translate('jobs.completed') && widget.fromWhere!=translate('jobs.active')?
               JobTypeWidget(
                 job_type: widget.data.job_type["code"],
                 tab: widget.fromWhere,
                 service: widget.data.service,
-              ),
+              )
+              :Container(),
+
+              widget.fromWhere!=translate('jobs.requestedJobs') &&  widget.fromWhere!=translate('jobs.booked')  &&  widget.fromWhere!=translate('jobs.completed') && widget.fromWhere!=translate('jobs.active')?
               JobCategorieAndServiceWidget(
                 category: widget.data.service["category"]["title"],
                 service: widget.data.service["title"],
-              ),
+              )
+              :Container(),
+
+              widget.fromWhere!=translate('jobs.requestedJobs') && widget.fromWhere!=translate('jobs.active')  &&  widget.fromWhere!=translate('jobs.completed')?
               ServiceRateAndCurrnecyWidget(
                   currency: widget.data.service["country_rates"][0]["country"]["curreny"],
                   // currency: widget.data.currency,
@@ -114,9 +209,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                   // currency: widget.data.currency,
                   // service_rate: widget.data.service["service_rates"],
                   fromWhere: widget.fromWhere,
-                  userRole: Constants.customerRoleId),
+                  userRole: Constants.customerRoleId)
+              :Container(),
 
-              DateAndTimeWidget(dateTime: widget.data.start_date),
+              widget.fromWhere!=translate('jobs.requestedJobs')  &&  widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active')  &&  widget.fromWhere!=translate('jobs.completed')?
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: context.appValues.appPadding.p10,
@@ -132,14 +228,18 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     role: Constants.customerRoleId,
                   );
                 }),
-              ),
-              AddressWidget(address: widget.data.address),
+              )
+              :Container(),
 
-              // CurrentSupplierWidget(user: '${widget.data.supplier["first_name"]} ${widget.data.supplier["last_name"]}'),
+
+              widget.fromWhere!=translate('jobs.requestedJobs')  &&  widget.fromWhere!=translate('jobs.completed')?
               CurrentSupplierWidget(
                   user: widget.data.supplier != null
                       ? '${widget.data.supplier["first_name"]} ${widget.data.supplier["last_name"]}'
-                      : ""),
+                      : "")
+              :Container(),
+
+              widget.fromWhere!=translate('jobs.requestedJobs')  &&  widget.fromWhere!=translate('jobs.booked')?
               JobSizeWidget(
                 completed_units: widget.data.completed_units ?? '',
                 number_of_units: widget.data.number_of_units ?? '',
@@ -147,11 +247,58 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                 extra_fees_reason: widget.data.extra_fees_reason ?? '',
                 userRole: Constants.customerRoleId,
                 fromWhere: widget.fromWhere,
-              ),
+              ):Container(),
+
+              widget.fromWhere!=translate('jobs.requestedJobs') &&  widget.fromWhere!=translate('jobs.booked')?
               ActualStartTimeWidget(
                   actual_start_date: widget.data.actual_start_date,
-                  actual_end_date: widget.data.finish_date),
-
+                  actual_end_date: widget.data.finish_date)
+              :Container(),
+              widget.fromWhere==translate('jobs.completed')?
+              ActualEndTimeWidget(
+                  actual_start_date: widget.data.actual_start_date,
+                  actual_end_date: widget.data.finish_date)
+              :Container(),
+              widget.fromWhere==translate('jobs.active') || widget.fromWhere==translate('jobs.completed')?
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: context.appValues.appPadding.p10),
+                      child: Text(
+                        translate('home_screen.totalPrice'),
+                        style: getPrimaryBoldStyle(
+                          fontSize: 20,
+                          color: const Color(0xff180C38),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p0,
+                      ),
+                      child:Padding(
+                        padding:
+                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
+                        child: Text(
+                          widget.data.total_amount!=null? '${widget.data.total_amount} ${widget.data.service["country_rates"].isNotEmpty?
+                          widget.data.service["country_rates"][0]["country"]["curreny"]:''}':'',
+                          style: getPrimaryRegularStyle(
+                            // color: context.resources.color.colorYellow,
+                            color: const Color(0xff180C38),
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ):Container(),
               // SizedBox(height: context.appValues.appSizePercent.h2),
 
               //
@@ -174,6 +321,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // widget.fromWhere!='completed'?
+
+                      widget.fromWhere!=translate('jobs.requestedJobs')?
                       Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: context.appValues.appPadding.p10,
@@ -233,7 +382,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   ),
                           ),
                         ),
-                      ),
+                      )
+                      :Container(),
                       //     :
                       // Container(),
                       Consumer2<JobsViewModel, PaymentViewModel>(builder:
@@ -249,8 +399,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                               onPressed: () {
                                 debugPrint(
                                     'payment_card ${widget.data.payment_card}');
-
-                                widget.fromWhere == 'booked'
+                                widget.fromWhere == 'booked' || widget.fromWhere==translate('jobs.requestedJobs')
                                     ? showDialog(
                                         context: context,
                                         builder: (BuildContext context) =>
@@ -367,158 +516,165 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
 
     return AlertDialog(
       elevation: 15,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  child: SvgPicture.asset('assets/img/x.svg'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
+      content:SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p0,
           ),
-          SvgPicture.asset('assets/img/service-popup-image.svg'),
-          SizedBox(height: context.appValues.appSize.s40),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              message,
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: context.resources.color.btnColorBlue,
-              ),
-            ),
-          ),
-          SizedBox(height: context.appValues.appSize.s20),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            // child: CustomTextArea(
-            //   index: 'cancellation_reason',
-            //   viewModel: jobsViewModel.setInputValues,
-            //   keyboardType: TextInputType.text,
-            //   maxlines: 8,
-            // ),
-
-            child:
-                Consumer<JobsViewModel>(builder: (context, jobsViewModel1, _) {
-              return Column(
-                children: [
-                  // Radio buttons
-                  for (int i = 0; i < reasons.length; i++)
-                    RadioListTile(
-                      title: Text(reasons[i]),
-                      value: reasons[i],
-                      groupValue: jobsViewModel1.selectedReason,
-                      onChanged: (value) {
-                        setState(() {
-                          // You can perform additional actions based on the selected reason if needed
-                        });
-                        jobsViewModel1.setInputValues(
-                            index: 'cancellation_reason',
-                            value: value.toString());
-                        if (value == 'Other') {
-                          // If "Other" is selected, show the CustomTextArea
-                          jobsViewModel1.setShowCustomTextArea(true);
-                        } else {
-                          // If any other reason is selected, hide the CustomTextArea
-                          jobsViewModel1.setShowCustomTextArea(false);
-                        }
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            // crossAxisAlignment: CrossAxisAlignment.center,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      child: SvgPicture.asset('assets/img/x.svg'),
+                      onTap: () {
+                        Navigator.pop(context);
                       },
                     ),
-                  // Your other widgets can go here
-                  if (jobsViewModel1.showCustomTextArea)
-                    CustomTextArea(
-                      index: 'cancellation_reason',
-                      viewModel: jobsViewModel.setInputValues,
-                      keyboardType: TextInputType.text,
-                      maxlines: 8,
-                    ),
-                ],
-              );
-            }),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: ElevatedButton(
-              onPressed: () async {
-                if (tab == 'booked') {
-                  if (await jobsViewModel.cancelJobNoPenalty(job_id) == true) {
-                    Navigator.pop(context);
+                  ],
+                ),
+              ),
+              SvgPicture.asset('assets/img/service-popup-image.svg'),
+              SizedBox(height: context.appValues.appSize.s40),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p32,
+                ),
+                child: Text(
+                  message,
+                  textAlign: TextAlign.center,
+                  style: getPrimaryRegularStyle(
+                    fontSize: 17,
+                    color: context.resources.color.btnColorBlue,
+                  ),
+                ),
+              ),
+              SizedBox(height: context.appValues.appSize.s20),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p32,
+                ),
+                // child: CustomTextArea(
+                //   index: 'cancellation_reason',
+                //   viewModel: jobsViewModel.setInputValues,
+                //   keyboardType: TextInputType.text,
+                //   maxlines: 8,
+                // ),
 
-                    Future.delayed(const Duration(seconds: 0));
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            simpleAlert(context, translate('button.success')));
-                  } else {
-                    Navigator.pop(context);
+                child:
+                    Consumer<JobsViewModel>(builder: (context, jobsViewModel1, _) {
+                  return Column(
+                    children: [
+                      // Radio buttons
+                      for (int i = 0; i < reasons.length; i++)
+                        RadioListTile(
+                          title: Text(reasons[i]),
+                          value: reasons[i],
+                          groupValue: jobsViewModel1.selectedReason,
+                          onChanged: (value) {
+                            setState(() {
+                              // You can perform additional actions based on the selected reason if needed
+                            });
+                            jobsViewModel1.setInputValues(
+                                index: 'cancellation_reason',
+                                value: value.toString());
+                            if (value == 'Other') {
+                              // If "Other" is selected, show the CustomTextArea
+                              jobsViewModel1.setShowCustomTextArea(true);
+                            } else {
+                              // If any other reason is selected, hide the CustomTextArea
+                              jobsViewModel1.setShowCustomTextArea(false);
+                            }
+                          },
+                        ),
+                      // Your other widgets can go here
+                      if (jobsViewModel1.showCustomTextArea)
+                        CustomTextArea(
+                          index: 'cancellation_reason',
+                          viewModel: jobsViewModel.setInputValues,
+                          keyboardType: TextInputType.text,
+                          maxlines: 8,
+                        ),
+                    ],
+                  );
+                }),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p32,
+                ),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    if (tab == 'booked' || tab==translate('jobs.requestedJobs')) {
+                      if (await jobsViewModel.cancelJobNoPenalty(job_id) == true) {
+                        Navigator.pop(context);
 
-                    Future.delayed(const Duration(seconds: 0));
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            simpleAlert(context, translate('button.failure')));
-                  }
-                } else {
-                  if (tab == 'active') {
-                    if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
-                        true) {
-                      Navigator.pop(context);
+                        Future.delayed(const Duration(seconds: 0));
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                simpleAlert(context, translate('button.success')));
+                      } else {
+                        Navigator.pop(context);
 
-                      Future.delayed(const Duration(seconds: 0));
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => simpleAlert(
-                              context, translate('button.success')));
+                        Future.delayed(const Duration(seconds: 0));
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                simpleAlert(context, translate('button.failure')));
+                      }
                     } else {
-                      Navigator.pop(context);
+                      if (tab == 'active') {
+                        if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
+                            true) {
+                          Navigator.pop(context);
 
-                      Future.delayed(const Duration(seconds: 0));
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => simpleAlert(
-                              context, translate('button.failure')));
+                          Future.delayed(const Duration(seconds: 0));
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => simpleAlert(
+                                  context, translate('button.success')));
+                        } else {
+                          Navigator.pop(context);
+
+                          Future.delayed(const Duration(seconds: 0));
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => simpleAlert(
+                                  context, translate('button.failure')));
+                        }
+                      }
                     }
-                  }
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 0.0,
-                shadowColor: Colors.transparent,
-                backgroundColor: const Color(0xffFFD105),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                fixedSize: Size(
-                  context.appValues.appSizePercent.w30,
-                  context.appValues.appSizePercent.h5,
+                  },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    shadowColor: Colors.transparent,
+                    backgroundColor: const Color(0xffFFD105),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    fixedSize: Size(
+                      context.appValues.appSizePercent.w30,
+                      context.appValues.appSizePercent.h5,
+                    ),
+                  ),
+                  child: Text(
+                    translate('button.send'),
+                    style: getPrimaryRegularStyle(
+                      fontSize: 15,
+                      color: context.resources.color.btnColorBlue,
+                    ),
+                  ),
                 ),
               ),
-              child: Text(
-                translate('button.send'),
-                style: getPrimaryRegularStyle(
-                  fontSize: 15,
-                  color: context.resources.color.btnColorBlue,
-                ),
-              ),
-            ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
