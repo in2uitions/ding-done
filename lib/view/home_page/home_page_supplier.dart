@@ -25,6 +25,7 @@ class HomePageSupplier extends StatefulWidget {
 String? lang;
 
 class _HomePageSupplierState extends State<HomePageSupplier> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -72,7 +73,135 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
     jobsViewModel.getSupplierOpenJobs();
 
     return Scaffold(
+      key: _scaffoldKey,
       backgroundColor: const Color(0xffFEFEFE),
+      drawer: Drawer(
+        child: Container(
+          color: Colors.white,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: EdgeInsets.fromLTRB(16.0, 75.0, 16.0, 8.0), // Adjust top and bottom padding
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: IconButton(
+                        icon: Icon(Icons.close),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ),
+                    // Additional header content if needed
+                  ],
+                ),
+              ),
+              ListTile(
+                title: Text(
+                  'My Account',
+                  style: getPrimaryBoldStyle(
+                    fontSize: 18,
+                    color: const Color(0xff180C38),
+                  ),
+                ),
+                onTap: () {
+                  // Handle My Account tap
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Order History',
+                  style: getPrimaryBoldStyle(
+                    fontSize: 18,
+                    color: const Color(0xff180C38),
+                  ),
+                ),
+                onTap: () {
+                  // Handle Order History tap
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'My Address Book',
+                  style: getPrimaryBoldStyle(
+                    fontSize: 18,
+                    color: const Color(0xff180C38),
+                  ),
+                ),
+                onTap: () {
+                  // Handle My Address Book tap
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'App Settings',
+                  style: getPrimaryBoldStyle(
+                    fontSize: 18,
+                    color: const Color(0xff180C38),
+                  ),
+                ),
+                onTap: () {
+                  // Handle App Settings tap
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Help!',
+                  style: getPrimaryBoldStyle(
+                    fontSize: 18,
+                    color: const Color(0xff180C38),
+                  ),
+                ),
+                onTap: () {
+                  // Handle Help! tap
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'About DingDone',
+                  style: getPrimaryBoldStyle(
+                    fontSize: 18,
+                    color: const Color(0xff180C38),
+                  ),
+                ),
+                onTap: () {
+                  // Handle About DingDone tap
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text(
+                  'Terms and Conditions',
+                  style: getPrimaryBoldStyle(
+                    fontSize: 18,
+                    color: const Color(0xff180C38),
+                  ),
+                ),
+                onTap: () {
+                  // Handle Terms and Conditions tap
+                  Navigator.pop(context);
+                },
+              ),
+              Spacer(),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Image.asset(
+                  'assets/img/DingDone-LOGO.png', // Update the path to your DingDone logo
+                  height: 50,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+
       body: RefreshIndicator(
         onRefresh: _handleRefresh,
         child: ListView(
@@ -102,8 +231,15 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
+
                             Row(
                               children: [
+                                IconButton(
+                                  icon: Icon(Icons.menu),
+                                  onPressed: () {
+                                    _scaffoldKey.currentState?.openDrawer();
+                                  },
+                                ),
                                 Text(
                                   translate('home_screen.hi'),
                                   style: getPrimaryRegularStyle(

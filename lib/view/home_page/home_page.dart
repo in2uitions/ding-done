@@ -25,8 +25,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  dynamic image = {};
   Future<void> _handleRefresh() async {
     try {
       String? role = await AppPreferences().get(key: userRoleKey, isModel: false);
@@ -35,8 +35,6 @@ class _HomePageState extends State<HomePage> {
       await Future.delayed(Duration(seconds: 2));
       // Update the list of items and refresh the UI
       Navigator.of(context).push(_createRoute(BottomBar(userRole: role)));
-
-
     } catch (error) {
       // Handle the error, e.g., by displaying a snackbar
       ScaffoldMessenger.of(context).showSnackBar(
@@ -49,104 +47,191 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color(0xffFEFEFE),
-      body:  RefreshIndicator(
-        onRefresh: _handleRefresh,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: context.resources.color.colorWhite,
-                borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)),
+    return Consumer3<ProfileViewModel, ServicesViewModel,CategoriesViewModel>(
+        builder: (context, profileViewModel, servicesViewModel,categoriesViewModel, _) {
+        return Scaffold(
+          key: _scaffoldKey,
+          backgroundColor: const Color(0xffFEFEFE),
+          drawer:Drawer(
+            child: Container(
+              color: Colors.white,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(16.0, 75.0, 16.0, 8.0), // Adjust top and bottom padding
+                    child: Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            icon: Icon(Icons.close),
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                          ),
+                        ),
+                        // Additional header content if needed
+                      ],
+                    ),
+                  ),
+                  ListTile(
+                    title: Text(
+                      'My Account',
+                      style: getPrimaryBoldStyle(
+                        fontSize: 18,
+                        color: const Color(0xff180C38),
+                      ),
+                    ),
+                    onTap: () {
+                      // Handle My Account tap
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Order History',
+                      style: getPrimaryBoldStyle(
+                        fontSize: 18,
+                        color: const Color(0xff180C38),
+                      ),
+                    ),
+                    onTap: () {
+                      // Handle Order History tap
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'My Address Book',
+                      style: getPrimaryBoldStyle(
+                        fontSize: 18,
+                        color: const Color(0xff180C38),
+                      ),
+                    ),
+                    onTap: () {
+                      // Handle My Address Book tap
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'App Settings',
+                      style: getPrimaryBoldStyle(
+                        fontSize: 18,
+                        color: const Color(0xff180C38),
+                      ),
+                    ),
+                    onTap: () {
+                      // Handle App Settings tap
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Help!',
+                      style: getPrimaryBoldStyle(
+                        fontSize: 18,
+                        color: const Color(0xff180C38),
+                      ),
+                    ),
+                    onTap: () {
+                      // Handle Help! tap
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'About DingDone',
+                      style: getPrimaryBoldStyle(
+                        fontSize: 18,
+                        color: const Color(0xff180C38),
+                      ),
+                    ),
+                    onTap: () {
+                      // Handle About DingDone tap
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
+                      'Terms and Conditions',
+                      style: getPrimaryBoldStyle(
+                        fontSize: 18,
+                        color: const Color(0xff180C38),
+                      ),
+                    ),
+                    onTap: () {
+                      // Handle Terms and Conditions tap
+                      Navigator.pop(context);
+                    },
+                  ),
+                  Spacer(),
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Image.asset(
+                      'assets/img/DingDone-LOGO.png', // Update the path to your DingDone logo
+                      height: 50,
+                    ),
+                  ),
+                ],
               ),
-              child: Consumer3<ProfileViewModel, ServicesViewModel,CategoriesViewModel>(
-                  builder: (context, profileViewModel, servicesViewModel,categoriesViewModel, _) {
-                return SafeArea(
-                  child: Column(
+            ),
+          ),
+
+          body: RefreshIndicator(
+            onRefresh: _handleRefresh,
+            child: CustomScrollView(
+              slivers: [
+                SliverAppBar(
+                  pinned: true,
+                  backgroundColor: const Color(0xffFEFEFE),
+                  elevation: 0,
+                  title: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //     color: context.resources.color.btnColorBlue,
-                      //     borderRadius: const BorderRadius.only(
-                      //         bottomLeft: Radius.circular(20),
-                      //         bottomRight: Radius.circular(20)),
-                      //   ),
-                      //   child: SafeArea(
-                      //       child: Padding(
-                      //     padding: EdgeInsets.all(context.appValues.appPadding.p20),
-                      //     child: Column(
-                      //       children: [
-                      //         Row(
-                      //           children: [
-                      //             const Text(
-                      //               "🏡",
-                      //               style: TextStyle(fontSize: 20),
-                      //             ),
-                      //             SizedBox(width: context.appValues.appSize.s5),
-                      //             // Text(
-                      //             //   "Lordou Vyrona 57, Larnaca 6023, Cyprus",
-                      //             //   style: getPrimaryBoldStyle(
-                      //             //       color: const Color(0xffEDF1F7), fontSize: 13),
-                      //             // ),
-                      //             Consumer<ProfileViewModel>(
-                      //                 builder: (context, profileViewModel, _) {
-                      //               return CustomLocationDropDown(
-                      //                   profileViewModel: profileViewModel);
-                      //             }),
-                      //           ],
-                      //         ),
-                      //         SizedBox(height: context.appValues.appSize.s15),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: context.appValues.appPadding.p20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            // Text(
-                            //   // 'Hey,',
-                            //   translate('home_screen.hi'),
-                            //   style: getPrimaryRegularStyle(
-                            //       color: context.resources.color.colorYellow,
-                            //       fontSize: 17),
-                            // ),
-                            // SizedBox(width: context.appValues.appSize.s5),
-                            Text(
-                              profileViewModel.getProfileBody["user"] != null
-                                  ? 'Hi ${profileViewModel.getProfileBody["user"]["first_name"]}!'
-                                  : '',
-                              style: getPrimaryRegularStyle(
-                                color: context.resources.color.btnColorBlue,
-                                fontSize: 32,
-                              ),
+                      Row(
+                        children: [
+                          // IconButton(
+                          //   icon: Icon(Icons.menu),
+                          //   onPressed: () {
+                          //     _scaffoldKey.currentState?.openDrawer();
+                          //   },
+                          // ),
+                          // SizedBox(width: 8),
+                          Text(
+                            profileViewModel.getProfileBody["user"] != null
+                                ? 'Hi ${profileViewModel.getProfileBody["user"]["first_name"]}!'
+                                : '',
+                            style: getPrimaryRegularStyle(
+                              color: context.resources.color.btnColorBlue,
+                              fontSize: 32,
                             ),
-                            Container(
-                              width: context.appValues.appSizePercent.w10p5,
-                              // width: 41,
-                              height: context.appValues.appSizePercent.h5p1,
-                              // height: 41,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                    profileViewModel.getProfileBody['user'] !=
-                                                null &&
-                                            profileViewModel.getProfileBody['user']
-                                                    ['avatar'] !=
-                                                null
-                                        ? '${context.resources.image.networkImagePath2}${profileViewModel.getProfileBody['user']['avatar']}'
-                                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                  ),
-                                ),
-                              ),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: context.appValues.appSizePercent.w10p5,
+                        height: context.appValues.appSizePercent.h5p1,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(50),
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: NetworkImage(
+                              profileViewModel.getProfileBody['user'] != null &&
+                                  profileViewModel.getProfileBody['user']['avatar'] != null
+                                  ? '${context.resources.image.networkImagePath2}${profileViewModel.getProfileBody['user']['avatar']}'
+                                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
                             ),
-                          ],
+                          ),
                         ),
                       ),
+                    ],
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    [
                       Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: context.appValues.appPadding.p20,
@@ -158,48 +243,14 @@ class _HomePageState extends State<HomePage> {
                           viewModel: servicesViewModel.searchData,
                         ),
                       ),
-                      //       ],
-                      //     ),
-                      //   )),
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.all(context.appValues.appPadding.p20),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //     children: [
-                      //       Text(
-                      //         // 'Categories',
-                      //         translate('home_screen.categories'),
-                      //         style: getPrimaryRegularStyle(
-                      //             fontSize: 17, color: const Color(0xff222B45)),
-                      //       ),
-                      //       InkWell(
-                      //         child: Text(
-                      //           // 'View All',
-                      //           translate('home_screen.viewAll'),
-                      //           style: getPrimaryRegularStyle(
-                      //               fontSize: 15,
-                      //               color: context.resources.color.btnColorBlue),
-                      //         ),
-                      //         onTap: () {
-                      //           servicesViewModel.filterData(
-                      //               index: 'search_services', value: '');
-                      //           // Navigator.of(context)
-                      //           //     .push(_createRoute(CategoriesPage()));
-                      //         },
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
                       SizedBox(height: context.appValues.appSize.s15),
-                      ParentCategoriesWidget(
-                          servicesViewModel: servicesViewModel),
+                      ParentCategoriesWidget(servicesViewModel: servicesViewModel),
                       Padding(
                         padding: EdgeInsets.fromLTRB(
                           context.appValues.appPadding.p20,
                           context.appValues.appPadding.p20,
                           context.appValues.appPadding.p20,
-                          context.appValues.appPadding.p10,
+                          context.appValues.appPadding.p0,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -207,8 +258,9 @@ class _HomePageState extends State<HomePage> {
                             Text(
                               translate('home_screen.categories'),
                               style: getPrimaryRegularStyle(
-                                  fontSize: 28,
-                                  color: context.resources.color.btnColorBlue),
+                                fontSize: 28,
+                                color: context.resources.color.btnColorBlue,
+                              ),
                             ),
                             InkWell(
                               child: Text(
@@ -219,10 +271,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                               ),
                               onTap: () {
-                                // servicesViewModel.filterData(
-                                //     index: 'search_services', value: '');
-                                Navigator.of(context)
-                                    .push(_createRoute(CategoriesScreen(categoriesViewModel: categoriesViewModel,)));
+                                Navigator.of(context).push(_createRoute(
+                                  CategoriesScreen(categoriesViewModel: categoriesViewModel,initialTabIndex: 0,),
+                                ));
                               },
                             ),
                           ],
@@ -231,54 +282,43 @@ class _HomePageState extends State<HomePage> {
                       CategoriesWidget(servicesViewModel: servicesViewModel),
                     ],
                   ),
-                );
-              }),
-            ),
-            Consumer<ServicesViewModel>(builder: (context, servicesViewModel, _) {
-              return Padding(
-                padding: EdgeInsets.all(context.appValues.appPadding.p20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      servicesViewModel.searchBody["search_services"] != null &&
-                              servicesViewModel.searchBody["search_services"] !=
-                                  ''
-                          ? servicesViewModel.searchBody["search_services"]
-                          : translate('home_screen.featuredServices'),
-                      style: getPrimaryRegularStyle(
-                          fontSize: 28,
-                          color: context.resources.color.btnColorBlue),
-                    ),
-                    // InkWell(
-                    //   child: Text(
-                    //     // 'View All',
-                    //     translate('home_screen.seeAll'),
-                    //     style: getPrimaryRegularStyle(
-                    //       fontSize: 18,
-                    //       color: const Color(0xff9E9BB8),
-                    //     ),
-                    //   ),
-                    //   onTap: () {
-                    //     Navigator.of(context).push(_createRoute(ServicesPage()));
-                    //   },
-                    // ),
-                  ],
                 ),
-              );
-            }),
-            const ServicesWidget(),
-          ],
-        ),
-      ),
+                SliverToBoxAdapter(
+                  child: Padding(
+                    padding: EdgeInsets.all(context.appValues.appPadding.p20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          servicesViewModel.searchBody["search_services"] != null &&
+                              servicesViewModel.searchBody["search_services"] != ''
+                              ? servicesViewModel.searchBody["search_services"]
+                              : translate('home_screen.featuredServices'),
+                          style: getPrimaryRegularStyle(
+                            fontSize: 28,
+                            color: context.resources.color.btnColorBlue,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverToBoxAdapter(
+                  child: const ServicesWidget(),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
     );
   }
 
-  void showDemoActionSheet(
-      {required BuildContext context, required Widget child}) {
+  void showDemoActionSheet({required BuildContext context, required Widget child}) {
     showCupertinoModalPopup<String>(
-        context: context,
-        builder: (BuildContext context) => child).then((String? value) {
+      context: context,
+      builder: (BuildContext context) => child,
+    ).then((String? value) {
       if (value != null) changeLocale(context, value);
     });
   }
@@ -287,16 +327,13 @@ class _HomePageState extends State<HomePage> {
     showDemoActionSheet(
       context: context,
       child: CupertinoActionSheet(
-        // title: Text(translate('language.selection.title')),
         title: Text('Title'),
-        // message: Text(translate('language.selection.message')),
         message: Text('Message'),
         actions: <Widget>[
           CupertinoActionSheetAction(
             child: Text(translate('language.name.en-US')),
             onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'en', isModel: false);
+              await AppPreferences().save(key: language, value: 'en', isModel: false);
               Navigator.pop(context, 'en');
               RestartWidget.restartApp(context);
             },
@@ -304,8 +341,7 @@ class _HomePageState extends State<HomePage> {
           CupertinoActionSheetAction(
             child: Text(translate('language.name.ar-SA')),
             onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'ar', isModel: false);
+              await AppPreferences().save(key: language, value: 'ar', isModel: false);
               Navigator.pop(context, 'ar');
               RestartWidget.restartApp(context);
             },
@@ -313,8 +349,7 @@ class _HomePageState extends State<HomePage> {
           CupertinoActionSheetAction(
             child: Text(translate('language.name.el-GR')),
             onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'el', isModel: false);
+              await AppPreferences().save(key: language, value: 'el', isModel: false);
               Navigator.pop(context, 'el');
               RestartWidget.restartApp(context);
             },
@@ -322,38 +357,41 @@ class _HomePageState extends State<HomePage> {
           CupertinoActionSheetAction(
             child: Text(translate('language.name.ru-RU')),
             onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'ru', isModel: false);
+              await AppPreferences().save(key: language, value: 'ru', isModel: false);
               Navigator.pop(context, 'ru');
               RestartWidget.restartApp(context);
             },
           ),
         ],
         cancelButton: CupertinoActionSheetAction(
-          // child: Text(translate('button.cancel')),
           child: Text('Cancel'),
-          isDefaultAction: true,
-          onPressed: () => Navigator.pop(context, null),
+          onPressed: () {
+            Navigator.pop(context, 'Cancel');
+          },
         ),
       ),
     );
   }
-}
 
-Route _createRoute(dynamic classname) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => classname,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(1.0, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
+  Route _createRoute(Widget child) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
 
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        final tween = Tween(begin: begin, end: end);
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: curve,
+        );
 
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
+        return SlideTransition(
+          position: tween.animate(curvedAnimation),
+          child: child,
+        );
+      },
+    );
+  }
 }

@@ -43,17 +43,14 @@ class _JobsPageState extends State<JobsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFEFEFE),
-      body:          widget.userRole==Constants.supplierRoleId?
+      body: widget.userRole==Constants.supplierRoleId?
       Tabs(
         tabtitle: [
-
           translate('jobs.bookedJobs'),
           translate('jobs.activeJobs'),
           translate('jobs.completedJobs'),
         ],
         tabContent: [
-
-
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
                 active: "bookedJobs",
@@ -117,8 +114,6 @@ class _JobsPageState extends State<JobsPage> {
       )
       :Tabs(
         tabtitle: [
-
-
           translate('jobs.requestedJobs'),
           translate('jobs.confirmedJobs'),
           translate('jobs.activeJobs'),
@@ -195,79 +190,7 @@ class _JobsPageState extends State<JobsPage> {
         ),
       ),
     );
-    // return Scaffold(
-    //   backgroundColor: const Color(0xffFEFEFE),
-    //   body: ListView(
-    //     padding: EdgeInsets.zero,
-    //     children: [
-    //       SafeArea(
-    //           child: Padding(
-    //         padding: EdgeInsets.all(context.appValues.appPadding.p20),
-    //         child: Column(
-    //           crossAxisAlignment: CrossAxisAlignment.start,
-    //           children: [
-    //             Align(
-    //               alignment: Alignment.centerLeft,
-    //               child: Padding(
-    //                 padding: EdgeInsets.all(context.appValues.appPadding.p20),
-    //                 child: InkWell(
-    //                   child: SvgPicture.asset('assets/img/back.svg'),
-    //                   onTap: () {
-    //                     Navigator.pop(context);
-    //                   },
-    //                 ),
-    //               ),
-    //             ),
-    //             Padding(
-    //               padding: EdgeInsets.symmetric(
-    //                   horizontal: context.appValues.appPadding.p20),
-    //               child: Text(
-    //                 translate('bottom_bar.jobs'),
-    //                 style: getPrimaryBoldStyle(
-    //                   color: context.resources.color.btnColorBlue,
-    //                   fontSize: 32,
-    //                 ),
-    //               ),
-    //             ),
-    //             SizedBox(height: context.appValues.appSize.s15),
-    //             Row(
-    //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    //               children: <CircleButton>[
-    //                 CircleButton(
-    //                   action: active, //pass data from child to parent
-    //                   tag: "activeJobs", //specifies attribute of button
-    //                   active: _active == "activeJobs"
-    //                       ? true
-    //                       : false, //set button active based on value in this parent
-    //                   text: translate('jobs.activeJobs'),
-    //                 ),
-    //                 CircleButton(
-    //                   action: active, //pass data from child to parent
-    //                   tag: "bookedJobs", //specifies attribute of button
-    //                   active: _active == "bookedJobs" ? true : false,
-    //                   text: translate('jobs.bookedJobs'),
-    //                 ),
-    //                 CircleButton(
-    //                   action: active,
-    //                   tag: "completedJobs",
-    //                   active: _active == "completedJobs" ? true : false,
-    //                   text: translate('jobs.completedJobs'),
-    //                 ),
-    //               ],
-    //             ),
-    //           ],
-    //         ),
-    //       )),
-    //       Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
-    //         return JobsCards(
-    //             active: _active,
-    //             userRole: widget.userRole,
-    //             jobsViewModel: jobsViewModel,
-    //             lang: widget.lang);
-    //       }),
-    //     ],
-    //   ),
-    // );
+
   }
 }
 

@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
 import '../../../res/app_prefs.dart';
+import '../../categories_screen/categories_screen.dart';
 
 class CategoriesWidget extends StatefulWidget {
   var servicesViewModel;
@@ -42,33 +43,30 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             context.appValues.appPadding.p0,
             context.appValues.appPadding.p0,
             context.appValues.appPadding.p0,
-            context.appValues.appPadding.p20,
+            context.appValues.appPadding.p0,
           ),
           child: Column(
             children: [
               SizedBox(
                 width: context.appValues.appSizePercent.w100,
-                height: context.appValues.appSizePercent.h19p5,
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  // physics: const NeverScrollableScrollPhysics(),
-                  // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  //   crossAxisCount: 4,
-                  //   mainAxisSpacing:
-                  //       8, // Adjust this value to add vertical spacing
-                  //   crossAxisSpacing:
-                  //       8, // Adjust this value to add horizontal spacing
-                  // ),
+                height: context.appValues.appSizePercent.h70,
+                child:  GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3, // Number of items in each row
+                    crossAxisSpacing: 4, // Spacing between items horizontally
+                    mainAxisSpacing: 4, // Spacing between items vertically
+                    childAspectRatio: 1, // Aspect ratio of each grid item
+                  ),
+                  physics: NeverScrollableScrollPhysics(), // Disable grid view scrolling
+                  shrinkWrap: true, // Wrap content inside the Column
                   itemCount: categoriesViewModel.categoriesList.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Padding(
                       padding: EdgeInsets.only(
-                          left: context.appValues.appPadding.p20),
+                          left: context.appValues.appPadding.p5,right:context.appValues.appPadding.p5 ),
                       child: buildServiceWidget(
                           categoriesViewModel.categoriesList[index],
-                          categoriesViewModel),
+                          categoriesViewModel,index),
                     );
                   },
                 ),
@@ -83,7 +81,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   }
 
   Widget buildServiceWidget(
-      DropdownRoleModel service, CategoriesViewModel categoriesViewModel) {
+      DropdownRoleModel service, CategoriesViewModel categoriesViewModel,var index) {
     Map<String, dynamic>? services;
     Map<String, dynamic>? parentServices;
     for (Map<String, dynamic> translation in service.translations) {
@@ -331,31 +329,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                         ),
                       ),
                     ),
-                    // Positioned(
-                    //   // right: -constraints.maxWidth * .25,
-                    //   // bottom: constraints.maxHeight * .4,
-                    //   right:50,
-                    //   bottom:50,
-                    //   top:50,
-                    //   child:  Container(
-                    //     width: context.appValues.appSizePercent.w15,
-                    //     height: context.appValues.appSizePercent.h1,
-                    //     decoration: BoxDecoration(
-                    //       image: DecorationImage(
-                    //         image: NetworkImage(
-                    //           service.image != null
-                    //               ? '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}'
-                    //               : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg', // Specify the URL of your alternative image here
-                    //         ),
-                    //         fit: BoxFit.cover,
-                    //       ),
-                    //       borderRadius: const BorderRadius.only(
-                    //         topLeft: Radius.circular(15),
-                    //         topRight: Radius.circular(15),
-                    //       ),
-                    //     ),
-                    //   ),
-                    // ),
+
                   ],
                 ),
         ),
@@ -365,6 +339,9 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           widget.servicesViewModel
               .setParentCategory('${parentServices?["title"]}');
           debugPrint('search filter ${services?["title"]}');
+          Navigator.of(context).push(_createRoute(
+            CategoriesScreen(categoriesViewModel: categoriesViewModel,initialTabIndex: index,),
+          ));
           // categoriesViewModel.sortCategories(services?["title"]);
         },
       ),

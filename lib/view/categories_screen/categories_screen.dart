@@ -19,8 +19,9 @@ import '../book_a_service/book_a_service.dart';
 
 class CategoriesScreen extends StatefulWidget {
   var categoriesViewModel;
+  var initialTabIndex;
 
-  CategoriesScreen({super.key, required this.categoriesViewModel});
+  CategoriesScreen({super.key, required this.categoriesViewModel, required this.initialTabIndex});
 
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
@@ -32,14 +33,16 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   final bool isSelected = false;
   String? lang;
 
-  @override
+
   void initState() {
     super.initState();
     _tabController = TabController(
-        length: widget.categoriesViewModel.categoriesList.length, vsync: this);
+      length: widget.categoriesViewModel.categoriesList.length,
+      vsync: this,
+      initialIndex: widget.initialTabIndex, // Set initial tab index here
+    );
     initializeLanguage();
   }
-
   void initializeLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
     setState(() {}); // Trigger a rebuild after initializing the language
@@ -100,6 +103,13 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 fontSize: 17,
                 color: context.resources.color.btnColorBlue,
               ),
+              unselectedLabelColor: const Color(0xffBEC2CE),
+              indicator: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: const Color(0xffF3D347), // Yellow color
+              ),
+              indicatorSize: TabBarIndicatorSize.tab,
+              indicatorWeight:3,
               indicatorColor: context.resources.color
                   .colorYellow, // Set the color of the indicator
               tabs: widget.categoriesViewModel.categoriesList
