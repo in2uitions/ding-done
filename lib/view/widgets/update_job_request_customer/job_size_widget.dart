@@ -3,6 +3,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/widgets/custom/custom_increment_number.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:flutter/material.dart';
@@ -107,7 +108,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             )
                           : Consumer<JobsViewModel>(
                               builder: (context, jobsViewModel, _) {
-                              return CustomTextField(
+                              return CustomIncrementField(
                                 index: 'completed_units',
                                 value: '${widget.completed_units}',
                                 // hintText: 'Job Type',
@@ -218,7 +219,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             )
                           : Consumer<JobsViewModel>(
                               builder: (context, jobsViewModel, _) {
-                              return CustomTextField(
+                              return CustomIncrementField(
                                 index: 'number_of_units',
                                 value: '${widget.number_of_units}',
                                 // hintText: 'Job Type',

@@ -1,21 +1,30 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/categories/parent_categories.dart';
 import 'package:dingdone/view/categories_screen/categories_screen.dart';
+import 'package:dingdone/view/confirm_address/confirm_address.dart';
+import 'package:dingdone/view/profile_page/profile_page.dart';
 import 'package:dingdone/view/widgets/custom/custom_search_bar.dart';
 import 'package:dingdone/view/widgets/home_page/categories.dart';
 import 'package:dingdone/view/widgets/home_page/services.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
+import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
+import '../../view_model/dispose_view_model/app_view_model.dart';
 import '../bottom_bar/bottom_bar.dart';
+import '../edit_account/edit_account.dart';
+import '../jobs_page/jobs_page.dart';
+import '../login/login.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -23,9 +32,27 @@ class HomePage extends StatefulWidget {
   @override
   State<HomePage> createState() => _HomePageState();
 }
+String? lang;
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getLanguage();
+
+  }
+
+  getLanguage() async {
+    lang = await AppPreferences().get(key: dblang, isModel: false);
+    if(lang==null){
+      setState(() {
+        lang='en-US';
+      });
+    }
+  }
 
   Future<void> _handleRefresh() async {
     try {
@@ -47,8 +74,8 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<ProfileViewModel, ServicesViewModel,CategoriesViewModel>(
-        builder: (context, profileViewModel, servicesViewModel,categoriesViewModel, _) {
+    return Consumer4<ProfileViewModel, ServicesViewModel,CategoriesViewModel,JobsViewModel>(
+        builder: (context, profileViewModel, servicesViewModel,categoriesViewModel,jobsViewModel, _) {
         return Scaffold(
           key: _scaffoldKey,
           backgroundColor: const Color(0xffFEFEFE),
@@ -85,7 +112,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onTap: () {
                       // Handle My Account tap
-                      Navigator.pop(context);
+
+                      Navigator.of(context).push(_createRoute(
+                          const EditAccount()));
+                      // Navigator.pop(context);
                     },
                   ),
                   ListTile(
@@ -97,10 +127,20 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     onTap: () {
-                      // Handle Order History tap
-                      Navigator.pop(context);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JobsPage(
+                            userRole: Constants.customerRoleId,
+                            lang: lang!,
+                            initialActiveTab:'completedJobs',
+                            initialIndex: 3,
+                          ),
+                        ),
+                      );
                     },
                   ),
+
                   ListTile(
                     title: Text(
                       'My Address Book',
@@ -111,25 +151,26 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onTap: () {
                       // Handle My Address Book tap
-                      Navigator.pop(context);
+                      Navigator.of(context).push(_createRoute(
+                          ConfirmAddress()));
                     },
                   ),
+                  // ListTile(
+                  //   title: Text(
+                  //     'App Settings',
+                  //     style: getPrimaryBoldStyle(
+                  //       fontSize: 18,
+                  //       color: const Color(0xff180C38),
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     // Handle App Settings tap
+                  //     Navigator.pop(context);
+                  //   },
+                  // ),
                   ListTile(
                     title: Text(
-                      'App Settings',
-                      style: getPrimaryBoldStyle(
-                        fontSize: 18,
-                        color: const Color(0xff180C38),
-                      ),
-                    ),
-                    onTap: () {
-                      // Handle App Settings tap
-                      Navigator.pop(context);
-                    },
-                  ),
-                  ListTile(
-                    title: Text(
-                      'Help!',
+                      'Support',
                       style: getPrimaryBoldStyle(
                         fontSize: 18,
                         color: const Color(0xff180C38),
@@ -137,7 +178,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onTap: () {
                       // Handle Help! tap
-                      Navigator.pop(context);
+                      // Navigator.pop(context);
+                      jobsViewModel.launchWhatsApp();
+
                     },
                   ),
                   ListTile(
@@ -166,7 +209,84 @@ class _HomePageState extends State<HomePage> {
                       Navigator.pop(context);
                     },
                   ),
+
                   Spacer(),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        top: context.appValues.appPadding.p5,
+                        left: context.appValues.appPadding.p15,
+                        right: context.appValues.appPadding.p15),
+                    child: InkWell(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              Container(
+                                width: 40,
+                                height: 40,
+                                decoration: const BoxDecoration(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(50),
+                                    ),
+                                    color: Color(0xffEDF1F7)),
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: SvgPicture.asset(
+                                    'assets/img/sign-out.svg',
+                                    color: const Color(0xff04043E),
+                                    width: 16,
+                                    height: 16,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: context.appValues.appSize.s10),
+                              Text(
+                                translate('profile.logOut'),
+                                style: getPrimaryRegularStyle(
+                                    fontSize: 20,
+                                    color: context.resources.color.btnColorBlue),
+                              ),
+                            ],
+                          ),
+                          // SvgPicture.asset('assets/img/right-arrow.svg'),
+                        ],
+                      ),
+                      onTap: () async {
+                        String? lang =
+                        await AppPreferences().get(key: language, isModel: false);
+                        AppPreferences().clear();
+                        AppProviders.disposeAllDisposableProviders(context);
+                        Navigator.of(context).push(_createRoute(const LoginScreen()));
+                        await AppPreferences()
+                            .save(key: language, value: lang, isModel: false);
+                        if (lang == null) {
+                          lang = "en";
+                          await AppPreferences()
+                              .save(key: language, value: "en", isModel: false);
+                          await AppPreferences()
+                              .save(key: dblang, value: 'en-US', isModel: false);
+                        }
+
+                        if (lang == 'en') {
+                          await AppPreferences()
+                              .save(key: dblang, value: 'en-US', isModel: false);
+                        }
+                        if (lang == 'ar') {
+                          await AppPreferences()
+                              .save(key: dblang, value: 'ar-SA', isModel: false);
+                        }
+                        if (lang == 'ru') {
+                          await AppPreferences()
+                              .save(key: dblang, value: 'ru-RU', isModel: false);
+                        }
+                        if (lang == 'el') {
+                          await AppPreferences()
+                              .save(key: dblang, value: 'el-GR', isModel: false);
+                        }
+                      },
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Image.asset(

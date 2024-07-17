@@ -52,6 +52,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
             padding: EdgeInsets.zero,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Container(
                     // decoration: BoxDecoration(
@@ -78,7 +80,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                               ),
                               const Gap(20),
                               Text(
-                                translate('updateJob.updateJob'),
+                                translate('jobDetails.jobDetails'),
                                 style: getPrimaryRegularStyle(
                                   color: const Color(0xff180C38),
                                   fontSize: 32,
@@ -287,7 +289,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                         EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
                         child: Text(
                           widget.data.total_amount!=null? '${widget.data.total_amount} ${widget.data.service["country_rates"].isNotEmpty?
-                          widget.data.service["country_rates"][0]["country"]["curreny"]:''}':'',
+                          widget.data.service["country_rates"][0]["country"]["curreny"]:''}':'${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"]["curreny"]} ${widget.data.service["country_rates"][0]["unit_type"]["code"]}',
                           style: getPrimaryRegularStyle(
                             // color: context.resources.color.colorYellow,
                             color: const Color(0xff180C38),
@@ -322,7 +324,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     children: [
                       // widget.fromWhere!='completed'?
 
-                      widget.fromWhere!=translate('jobs.requestedJobs')?
+                      widget.fromWhere!=translate('jobs.requestedJobs') && widget.fromWhere!=translate('jobs.active') && widget.fromWhere!=translate('jobs.booked')?
                       Padding(
                         padding: EdgeInsets.symmetric(
                             vertical: context.appValues.appPadding.p10,
@@ -386,6 +388,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                       :Container(),
                       //     :
                       // Container(),
+                      widget.fromWhere!=translate('jobs.active')?
                       Consumer2<JobsViewModel, PaymentViewModel>(builder:
                           (context, jobsViewModel, paymentViewModel, _) {
                         return Padding(
@@ -448,7 +451,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   borderRadius: BorderRadius.circular(15),
                                 ),
                               ),
-                              child: widget.fromWhere == 'active'
+                              child:
+                              widget.fromWhere == 'active'
                                   ? Text(
                                       translate('button.finish'),
                                       style: getPrimaryBoldStyle(
@@ -457,7 +461,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                             context.resources.color.colorWhite,
                                       ),
                                     )
-                                  : widget.fromWhere == 'completed'
+                                  :
+                              widget.fromWhere == 'completed'
                                       ? Text(
                                           widget.data.is_paid != null
                                               ? (widget.fromWhere ==
@@ -483,7 +488,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             ),
                           ),
                         );
-                      }),
+                      })
+                      :Container(),
                     ],
                   ),
                 );

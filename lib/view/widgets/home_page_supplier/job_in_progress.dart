@@ -134,13 +134,18 @@ class _JobInProgressState extends State<JobInProgress> {
                             color: const Color(0xff9E9AB7),
                           ),
                         ),
-                        // Text(
-                        //   '\$${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] : ''} ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_type"] : ''}',
-                        //   style: getPrimaryRegularStyle(
-                        //     fontSize: 18,
-                        //     color: const Color(0xff180C39),
-                        //   ),
-                        // ),
+                        Text(
+                          '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ?
+                          jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] : ''}'
+                              ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ?
+                          jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["curreny"] : ''}'
+                              ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ?
+                          jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_type"] : ''}',
+                          style: getPrimaryRegularStyle(
+                            fontSize: 18,
+                            color: const Color(0xff180C39),
+                          ),
+                        ),
                       ],
                     ),
                   ),

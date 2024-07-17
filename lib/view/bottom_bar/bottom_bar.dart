@@ -30,6 +30,7 @@ class BottomBar extends StatefulWidget {
 
 class _BottomBarState extends State<BottomBar> {
   // Properties & Variables needed
+  String? lang;
 
   int currentTab = 0;
   late Widget currentScreen;
@@ -179,7 +180,7 @@ class _BottomBarState extends State<BottomBar> {
                           onPressed: () {
                             setState(() {
                               currentScreen = JobsPage(
-                                  userRole: widget.userRole, lang: lang);
+                                  userRole: widget.userRole, lang:lang!,initialActiveTab: 'activeJobs', initialIndex: 0,);
                               currentTab = 1;
                             });
                           },

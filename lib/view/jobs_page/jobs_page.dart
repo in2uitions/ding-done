@@ -16,18 +16,27 @@ import '../../res/app_prefs.dart';
 import '../../view_model/profile_view_model/profile_view_model.dart';
 import '../bottom_bar/bottom_bar.dart';
 
-class JobsPage extends StatefulWidget {
-  var userRole;
-  var lang;
 
-  JobsPage({super.key, required this.userRole, required this.lang});
+class JobsPage extends StatefulWidget {
+  final String userRole;
+  final String lang;
+  final String initialActiveTab;
+  final int initialIndex;
+
+  JobsPage({
+    Key? key,
+    required this.userRole,
+    required this.lang,
+    required this.initialActiveTab ,
+    required this.initialIndex ,
+  }) : super(key: key);
 
   @override
   State<JobsPage> createState() => _JobsPageState();
 }
 
 class _JobsPageState extends State<JobsPage> {
-  String? _active;
+  late String _active;
 
   void active(String btn) {
     setState(() => _active = btn);
@@ -35,16 +44,17 @@ class _JobsPageState extends State<JobsPage> {
 
   @override
   void initState() {
-    active('bookedJobs');
     super.initState();
+    _active = widget.initialActiveTab;
+    Provider.of<JobsViewModel>(context, listen: false).getCustomerJobs();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFEFEFE),
-      body: widget.userRole==Constants.supplierRoleId?
-      Tabs(
+      body: widget.userRole == Constants.supplierRoleId
+          ? Tabs(
         tabtitle: [
           translate('jobs.bookedJobs'),
           translate('jobs.activeJobs'),
@@ -52,28 +62,35 @@ class _JobsPageState extends State<JobsPage> {
         ],
         tabContent: [
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+
             return JobsCards(
-                active: "bookedJobs",
-                userRole: widget.userRole,
-                jobsViewModel: jobsViewModel,
-                lang: widget.lang);
+              active: "bookedJobs",
+              userRole: widget.userRole,
+              jobsViewModel: jobsViewModel,
+              lang: widget.lang,
+            );
           }),
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
-                active: "activeJobs",
-                userRole: widget.userRole,
-                jobsViewModel: jobsViewModel,
-                lang: widget.lang);
+              active: "activeJobs",
+              userRole: widget.userRole,
+              jobsViewModel: jobsViewModel,
+              lang: widget.lang,
+            );
           }),
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
-                active: "completedJobs",
-                userRole: widget.userRole,
-                jobsViewModel: jobsViewModel,
-                lang: widget.lang);
+              active: "completedJobs",
+              userRole: widget.userRole,
+              jobsViewModel: jobsViewModel,
+              lang: widget.lang,
+            );
           }),
         ],
-        content: Consumer<LoginViewModel>(builder: (context, loginViewModel, _) {
+        initialActiveTab: _active,
+        initialIndex: widget.initialIndex,// Pass the active tab here
+        content: Consumer<LoginViewModel>(
+          builder: (context, loginViewModel, _) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -81,18 +98,20 @@ class _JobsPageState extends State<JobsPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: EdgeInsets.all(context.appValues.appPadding.p20),
+                      padding:
+                      EdgeInsets.all(context.appValues.appPadding.p20),
                       child: InkWell(
                         child: SvgPicture.asset('assets/img/back.svg'),
                         onTap: () async {
                           Navigator.pop(context);
 
-                              final prefs = await SharedPreferences.getInstance();
-                              final role = prefs.getString(userRoleKey);
+                          final prefs =
+                          await SharedPreferences.getInstance();
+                          final role = prefs.getString(userRoleKey);
 
-
-                          Navigator.of(context).push(_createRoute(
-                              BottomBar(userRole:role)));
+                          Navigator.of(context).push(
+                            _createRoute(BottomBar(userRole: role)),
+                          );
                         },
                       ),
                     ),
@@ -104,15 +123,17 @@ class _JobsPageState extends State<JobsPage> {
                   child: Text(
                     translate('bottom_bar.jobs'),
                     style: getPrimaryRegularStyle(
-                        color: context.resources.color.btnColorBlue, fontSize: 32),
+                      color: context.resources.color.btnColorBlue,
+                      fontSize: 32,
+                    ),
                   ),
                 ),
               ],
             );
-          }
+          },
         ),
       )
-      :Tabs(
+          : Tabs(
         tabtitle: [
           translate('jobs.requestedJobs'),
           translate('jobs.confirmedJobs'),
@@ -120,37 +141,44 @@ class _JobsPageState extends State<JobsPage> {
           translate('jobs.completedJobs'),
         ],
         tabContent: [
+          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
 
-          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
-                active: "requestedJobs",
-                userRole: widget.userRole,
-                jobsViewModel: jobsViewModel,
-                lang: widget.lang);
+              active: "requestedJobs",
+              userRole: widget.userRole,
+              jobsViewModel: jobsViewModel,
+              lang: widget.lang,
+            );
           }),
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
-                active: "bookedJobs",
-                userRole: widget.userRole,
-                jobsViewModel: jobsViewModel,
-                lang: widget.lang);
+              active: "bookedJobs",
+              userRole: widget.userRole,
+              jobsViewModel: jobsViewModel,
+              lang: widget.lang,
+            );
           }),
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
-                active: "activeJobs",
-                userRole: widget.userRole,
-                jobsViewModel: jobsViewModel,
-                lang: widget.lang);
+              active: "activeJobs",
+              userRole: widget.userRole,
+              jobsViewModel: jobsViewModel,
+              lang: widget.lang,
+            );
           }),
           Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
             return JobsCards(
-                active: "completedJobs",
-                userRole: widget.userRole,
-                jobsViewModel: jobsViewModel,
-                lang: widget.lang);
+              active: "completedJobs",
+              userRole: widget.userRole,
+              jobsViewModel: jobsViewModel,
+              lang: widget.lang,
+            );
           }),
         ],
-        content: Consumer<LoginViewModel>(builder: (context, loginViewModel, _) {
+        initialActiveTab: _active,
+        initialIndex: widget.initialIndex,// Pass the active tab here
+        content: Consumer<LoginViewModel>(
+          builder: (context, loginViewModel, _) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -158,18 +186,20 @@ class _JobsPageState extends State<JobsPage> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
-                      padding: EdgeInsets.all(context.appValues.appPadding.p20),
+                      padding:
+                      EdgeInsets.all(context.appValues.appPadding.p20),
                       child: InkWell(
                         child: SvgPicture.asset('assets/img/back.svg'),
                         onTap: () async {
                           Navigator.pop(context);
 
-                              final prefs = await SharedPreferences.getInstance();
-                              final role = prefs.getString(userRoleKey);
+                          final prefs =
+                          await SharedPreferences.getInstance();
+                          final role = prefs.getString(userRoleKey);
 
-
-                          Navigator.of(context).push(_createRoute(
-                              BottomBar(userRole:role)));
+                          Navigator.of(context).push(
+                            _createRoute(BottomBar(userRole: role)),
+                          );
                         },
                       ),
                     ),
@@ -181,16 +211,17 @@ class _JobsPageState extends State<JobsPage> {
                   child: Text(
                     translate('bottom_bar.jobs'),
                     style: getPrimaryRegularStyle(
-                        color: context.resources.color.btnColorBlue, fontSize: 32),
+                      color: context.resources.color.btnColorBlue,
+                      fontSize: 32,
+                    ),
                   ),
                 ),
               ],
             );
-          }
+          },
         ),
       ),
     );
-
   }
 }
 

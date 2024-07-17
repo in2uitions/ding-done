@@ -473,11 +473,13 @@ class _BookAServiceState extends State<BookAService> {
                             onPressed: () async {
                               if (await jobsViewModel.requestService() ==
                                   true) {
+
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) =>
                                       _buildPopupDialog(context),
                                 );
+
                               } else {
                                 showDialog(
                                   context: context,

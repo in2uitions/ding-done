@@ -13,7 +13,11 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
+import '../../res/constants.dart';
+import '../../view_model/dispose_view_model/app_view_model.dart';
 import '../bottom_bar/bottom_bar.dart';
+import '../jobs_page/jobs_page.dart';
+import '../login/login.dart';
 
 class HomePageSupplier extends StatefulWidget {
   const HomePageSupplier({super.key});
@@ -98,19 +102,19 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                   ],
                 ),
               ),
-              ListTile(
-                title: Text(
-                  'My Account',
-                  style: getPrimaryBoldStyle(
-                    fontSize: 18,
-                    color: const Color(0xff180C38),
-                  ),
-                ),
-                onTap: () {
-                  // Handle My Account tap
-                  Navigator.pop(context);
-                },
-              ),
+              // ListTile(
+              //   title: Text(
+              //     'My Account',
+              //     style: getPrimaryBoldStyle(
+              //       fontSize: 18,
+              //       color: const Color(0xff180C38),
+              //     ),
+              //   ),
+              //   onTap: () {
+              //     // Handle My Account tap
+              //     Navigator.pop(context);
+              //   },
+              // ),
               ListTile(
                 title: Text(
                   'Order History',
@@ -121,38 +125,48 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                 ),
                 onTap: () {
                   // Handle Order History tap
-                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => JobsPage(
+                        userRole: Constants.supplierRoleId,
+                        lang: lang!,
+                        initialActiveTab:'completedJobs',
+                        initialIndex: 2,
+                      ),
+                    ),
+                  );
                 },
               ),
+              // ListTile(
+              //   title: Text(
+              //     'My Address Book',
+              //     style: getPrimaryBoldStyle(
+              //       fontSize: 18,
+              //       color: const Color(0xff180C38),
+              //     ),
+              //   ),
+              //   onTap: () {
+              //     // Handle My Address Book tap
+              //     Navigator.pop(context);
+              //   },
+              // ),
+              // ListTile(
+              //   title: Text(
+              //     'App Settings',
+              //     style: getPrimaryBoldStyle(
+              //       fontSize: 18,
+              //       color: const Color(0xff180C38),
+              //     ),
+              //   ),
+              //   onTap: () {
+              //     // Handle App Settings tap
+              //     Navigator.pop(context);
+              //   },
+              // ),
               ListTile(
                 title: Text(
-                  'My Address Book',
-                  style: getPrimaryBoldStyle(
-                    fontSize: 18,
-                    color: const Color(0xff180C38),
-                  ),
-                ),
-                onTap: () {
-                  // Handle My Address Book tap
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'App Settings',
-                  style: getPrimaryBoldStyle(
-                    fontSize: 18,
-                    color: const Color(0xff180C38),
-                  ),
-                ),
-                onTap: () {
-                  // Handle App Settings tap
-                  Navigator.pop(context);
-                },
-              ),
-              ListTile(
-                title: Text(
-                  'Help!',
+                  'Support',
                   style: getPrimaryBoldStyle(
                     fontSize: 18,
                     color: const Color(0xff180C38),
@@ -160,7 +174,8 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                 ),
                 onTap: () {
                   // Handle Help! tap
-                  Navigator.pop(context);
+                  jobsViewModel.launchWhatsApp();
+
                 },
               ),
               ListTile(
@@ -189,7 +204,63 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                   Navigator.pop(context);
                 },
               ),
+
               Spacer(),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: context.appValues.appPadding.p15,
+                  left: context.appValues.appPadding.p20,
+                  right: context.appValues.appPadding.p20,
+                ),
+                child: InkWell(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(50),
+                              ),
+                              color: Color(0xffEDF1F7),
+                            ),
+                            child: Align(
+                              alignment: Alignment.center,
+                              child: SvgPicture.asset(
+                                'assets/img/sign-out.svg',
+                                width: 16,
+                                height: 16,
+                                color: Color(0xff04043E),
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: context.appValues.appSize.s10),
+                          Text(
+                            translate('drawer.logout'),
+                            style: getPrimaryRegularStyle(
+                              fontSize: 20,
+                              color: const Color(0xff180C38),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SvgPicture.asset(
+                        'assets/img/right-arrow.svg',
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    AppPreferences().clear();
+                    AppProviders.disposeAllDisposableProviders(context);
+                    Navigator.of(context)
+                        .push(_createRoute(const LoginScreen()));
+                  },
+                ),
+              ),
+
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: Image.asset(

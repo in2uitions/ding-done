@@ -8,7 +8,7 @@ class Tabs extends StatefulWidget {
     required this.tabtitle,
     required this.tabContent,
     required this.content,
-    this.initialIndex = 0,
+    this.initialIndex = 0, required String initialActiveTab,
   }) : super(key: key);
 
   final List<dynamic> tabtitle;

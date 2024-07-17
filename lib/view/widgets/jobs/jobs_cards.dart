@@ -65,7 +65,7 @@ class _JobsCardsState extends State<JobsCards> {
                       .toList()
               : widget.active == 'requestedJobs'
                   ? widget.jobsViewModel.getcustomerJobs
-                      .where((e) => e.status == 'circulating')
+                      .where((e) => e.status == 'circulating' || e.status == 'draft')
                       .toList()
                   : widget.jobsViewModel.getcustomerJobs
                       .where((e) => e.status == 'booked')
@@ -258,7 +258,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                 ''
                                         ? '${data[index].total_amount} ${data[index].service["country_rates"].isNotEmpty?
                                     data[index].service["country_rates"][0]["country"]["curreny"]:''}'
-                                        : '',
+                                        : '${data[index].service["country_rates"][0]["unit_rate"]}  ${data[index].service["country_rates"][0]["country"]["curreny"]}',
                                     style: getPrimaryRegularStyle(
                                         fontSize: 15,
                                         color: context
@@ -337,7 +337,15 @@ class _JobsCardsState extends State<JobsCards> {
                                         fontSize: 15,
                                         color: context
                                             .resources.color.btnColorBlue),
-                                  ):Container(),
+                                  ): widget.active == 'activeJobs'?
+                                  Text(
+                                    '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date.toString()))}',
+                                    style: getPrimaryRegularStyle(
+                                        fontSize: 15,
+                                        color: context
+                                            .resources.color.btnColorBlue),
+                                  ):
+                                  Container(),
                                 ]),
                           ),
                           Padding(
@@ -741,29 +749,29 @@ class _JobsCardsState extends State<JobsCards> {
                                 translate('button.somethingWentWrong')));
                   }
                 } else {
-                  if (tab == 'bookedJobs') {
-                    if (await jobsViewModel.cancelJobNoPenalty(job_id) ==
-                        true) {
-                      Navigator.pop(context);
-
-                      Future.delayed(const Duration(seconds: 0));
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => simpleAlert(
-                              context, translate('button.success')));
-                    } else {
-                      Navigator.pop(context);
-
-                      Future.delayed(const Duration(seconds: 0));
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              simpleAlertWithMessage2(
-                                  context,
-                                  translate('button.failure'),
-                                  translate('button.somethingWentWrong')));
-                    }
-                  } else {
+                  // if (tab == 'bookedJobs') {
+                  //   if (await jobsViewModel.cancelJobNoPenalty(job_id) ==
+                  //       true) {
+                  //     Navigator.pop(context);
+                  //
+                  //     Future.delayed(const Duration(seconds: 0));
+                  //     showDialog(
+                  //         context: context,
+                  //         builder: (BuildContext context) => simpleAlert(
+                  //             context, translate('button.success')));
+                  //   } else {
+                  //     Navigator.pop(context);
+                  //
+                  //     Future.delayed(const Duration(seconds: 0));
+                  //     showDialog(
+                  //         context: context,
+                  //         builder: (BuildContext context) =>
+                  //             simpleAlertWithMessage2(
+                  //                 context,
+                  //                 translate('button.failure'),
+                  //                 translate('button.somethingWentWrong')));
+                  //   }
+                  // } else {
                     if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
                         true) {
                       Navigator.pop(context);
@@ -788,7 +796,7 @@ class _JobsCardsState extends State<JobsCards> {
                                   translate('button.failure'),
                                   translate('button.somethingWentWrong')));
                     }
-                  }
+                  // }
                 }
               },
               style: ElevatedButton.styleFrom(

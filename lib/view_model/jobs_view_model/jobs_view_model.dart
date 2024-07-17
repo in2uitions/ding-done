@@ -310,7 +310,7 @@ class JobsViewModel with ChangeNotifier {
     return true;
   }
   Future<bool?> cancelBooking(int id) async {
-    debugPrint('cancellation reason ${jobsBody['cancellation_reason']}');
+    debugPrint('cancellation reason bookik ${jobsBody['cancellation_reason']}');
     try {
       dynamic response=await _jobsRepository.cancelBooking(id,jobsBody['cancellation_reason']);
       readJson();
@@ -330,9 +330,9 @@ class JobsViewModel with ChangeNotifier {
   }
 
   Future<bool?> cancelJobNoPenalty(int id) async {
-    debugPrint('cancellation reason ${jobsBody['cancellation_reason']}');
+    debugPrint('cancellation reason no penalty${jobsBody['cancellation_reason']}');
     try {
-      dynamic response=await _jobsRepository.cancelJobNoPenalty(id,jobsBody['cancellation_reason']);
+      dynamic response=await _jobsRepository.cancelJobNoPenalty(id,jobsBody['cancellation_reason'].toString());
       readJson();
       notifyListeners();
       if(response["status"]=="OK"){
@@ -348,7 +348,7 @@ class JobsViewModel with ChangeNotifier {
   }
 
   Future<bool?> cancelJobWithPenalty(int id) async {
-    debugPrint('cancellation reason ${jobsBody['cancellation_reason']}');
+    debugPrint('cancellation reason with penalty  ${jobsBody['cancellation_reason']}');
     try {
       dynamic response = await _jobsRepository.cancelJobWithPenalty(id,jobsBody['cancellation_reason']);
       readJson();
@@ -371,7 +371,14 @@ class JobsViewModel with ChangeNotifier {
       int year = selectedDate.year;
       int month = selectedDate.month;
       int day = selectedDate.day;
+      debugPrint('tiiiimee iss ${jobsBody['time']}');
+      if (jobsBody['time'] == null) {
+        // Get the current time directly using TimeOfDay.now()
+        TimeOfDay now = TimeOfDay.now();
+        selectedTime = now;
 
+        debugPrint('Selected time: $selectedTime'); // Your selected time
+      }
       int hour = selectedTime.hour;
       int minute = selectedTime.minute;
 
