@@ -50,7 +50,8 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
   @override
   void initState() {
     super.initState();
-    currentValue = int.parse(widget.value.toString()) ?? 0;
+    debugPrint('value is ${widget.value}');
+    currentValue = widget.value!=null && widget.value!=''?int.parse(widget.value.toString()):0;
     _customController.text = currentValue.toString();
     _customController.addListener(() {
       widget.viewModel(index: widget.index, value: _customController.text);
