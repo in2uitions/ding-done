@@ -62,6 +62,9 @@ class _BottomBarState extends State<BottomBar> {
 
   getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
+    if(lang==null){
+      lang='en-US';
+    }
   }
 
   @override

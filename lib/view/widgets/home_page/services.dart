@@ -83,6 +83,9 @@ class _ServicesWidgetState extends State<ServicesWidget> {
   Widget buildServiceWidget(ServicesModel service) {
     Map<String, dynamic>? services;
     Map<String, dynamic>? categories;
+    if(lang==null){
+      lang="en-US";
+    }
     for (Map<String, dynamic> translation in service.translations) {
       if (translation["languages_code"]["code"] == lang) {
         services = translation;

@@ -2,6 +2,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/about/about_dingdone.dart';
 import 'package:dingdone/view/categories/parent_categories.dart';
 import 'package:dingdone/view/categories_screen/categories_screen.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
@@ -21,6 +22,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../../view_model/dispose_view_model/app_view_model.dart';
+import '../agreement/user_agreement.dart';
 import '../bottom_bar/bottom_bar.dart';
 import '../edit_account/edit_account.dart';
 import '../jobs_page/jobs_page.dart';
@@ -42,6 +44,8 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
     super.initState();
     getLanguage();
+    Provider.of<CategoriesViewModel>(context, listen: false).readJson();
+
 
   }
 
@@ -193,7 +197,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onTap: () {
                       // Handle About DingDone tap
-                      Navigator.pop(context);
+                      Navigator.of(context)
+                          .push(_createRoute(About()));
                     },
                   ),
                   ListTile(
@@ -206,7 +211,8 @@ class _HomePageState extends State<HomePage> {
                     ),
                     onTap: () {
                       // Handle Terms and Conditions tap
-                      Navigator.pop(context);
+                      Navigator.of(context)
+                          .push(_createRoute(UserAgreement(index: null)));
                     },
                   ),
 

@@ -82,6 +82,9 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 
   Widget buildServiceWidget(
       DropdownRoleModel service, CategoriesViewModel categoriesViewModel,var index) {
+    if(lang==null){
+      lang="en-US";
+    }
     Map<String, dynamic>? services;
     Map<String, dynamic>? parentServices;
     for (Map<String, dynamic> translation in service.translations) {

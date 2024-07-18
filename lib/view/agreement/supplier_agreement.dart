@@ -42,6 +42,26 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
         return SafeArea(
           child: ListView(
             children: [
+              widget.index==null?
+              SafeArea(
+                child: Directionality(
+                  textDirection: TextDirection.ltr,
+                  child: Padding(
+                    padding:
+                    EdgeInsets.all(context.appValues.appPadding.p20),
+                    child: Row(
+                      children: [
+                        InkWell(
+                          child: SvgPicture.asset('assets/img/back.svg'),
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ):Container(),
               Align(
                 alignment: Alignment.center,
                 child: Text(
@@ -103,6 +123,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
                     SizedBox(height: context.appValues.appSize.s20),
                     GeneralProvisionSupplier(),
                     SizedBox(height: context.appValues.appSize.s10),
+                    widget.index!=null?
                     CheckboxListTile(
                       value: check,
                       controlAffinity: ListTileControlAffinity.leading,
@@ -118,8 +139,9 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
                         "Agree to the agreement",
                         style: getPrimaryRegularStyle(fontSize: 15),
                       ),
-                    ),
+                    ):Container(),
                     SizedBox(height: context.appValues.appSize.s10),
+                    widget.index!=null?
                     Align(
                       alignment: Alignment.center,
                       child: Container(
@@ -173,7 +195,8 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
                           ),
                         ),
                       ),
-                    ),
+                    )
+                    :Container(),
                   ],
                 ),
               ),

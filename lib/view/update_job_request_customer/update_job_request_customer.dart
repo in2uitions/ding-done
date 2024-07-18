@@ -777,7 +777,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
             padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p10,
             ),
-            child: Row(
+            child: widget.data.payment_card!=null?
+            Row(
               children: [
                 Text(
                   translate('updateJob.payUsingCard'),
@@ -796,6 +797,19 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                   ),
                 ),
               ],
+            ) : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Make Sure to pay Cash',
+              textAlign: TextAlign.center,
+                  style: getPrimaryRegularStyle(
+                    fontSize: 17,
+                    color: context.resources.color.btnColorBlue,
+                  ),
+                ),
+
+              ],
             ),
           ),
           SizedBox(height: context.appValues.appSize.s10),
@@ -806,17 +820,25 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
             ),
             child: ElevatedButton(
               onPressed: () async {
-                if (await jobsViewModel.payFees(widget.data.id) == true) {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) =>
-                          simpleAlert(context, translate('button.success')));
-                } else {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) => simpleAlert(context,
-                          '${translate('button.failure')} \n${jobsViewModel.errorMessage}'));
-                }
+               if (widget.data.payment_card!=null){
+                 if (await jobsViewModel.payFees(widget.data.id) == true) {
+                   showDialog(
+                       context: context,
+                       builder: (BuildContext context) =>
+                           simpleAlert(context, translate('button.success')));
+                 } else {
+                   showDialog(
+                       context: context,
+                       builder: (BuildContext context) => simpleAlert(context,
+                           '${translate('button.failure')} \n${jobsViewModel.errorMessage}'));
+                 }
+               }else{
+                 showDialog(
+                     context: context,
+                     builder: (BuildContext context) =>
+                         simpleAlert(context, translate('button.success')));
+               }
+
                 // Future.delayed(Duration(seconds: 0));
                 // Navigator.pop(context);
                 //

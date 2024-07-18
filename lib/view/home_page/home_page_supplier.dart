@@ -15,6 +15,8 @@ import 'package:provider/provider.dart';
 import '../../res/app_prefs.dart';
 import '../../res/constants.dart';
 import '../../view_model/dispose_view_model/app_view_model.dart';
+import '../about/about_dingdone.dart';
+import '../agreement/supplier_agreement.dart';
 import '../bottom_bar/bottom_bar.dart';
 import '../jobs_page/jobs_page.dart';
 import '../login/login.dart';
@@ -188,8 +190,9 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                 ),
                 onTap: () {
                   // Handle About DingDone tap
-                  Navigator.pop(context);
-                },
+                  Navigator.of(context)
+                      .push(_createRoute(About()));
+                  },
               ),
               ListTile(
                 title: Text(
@@ -201,7 +204,9 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                 ),
                 onTap: () {
                   // Handle Terms and Conditions tap
-                  Navigator.pop(context);
+                  Navigator.of(context)
+                      .push(_createRoute(SupplierAgreement(index: null)));
+                  // Navigator.pop(context);
                 },
               ),
 

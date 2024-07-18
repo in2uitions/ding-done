@@ -87,6 +87,9 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
       DropdownRoleModel service, CategoriesViewModel categoriesViewModel) {
     Map<String, dynamic>? services;
     Map<String, dynamic>? parentServices;
+    if(lang==null){
+      lang="en-US";
+    }
     for (Map<String, dynamic> translation in service.translations) {
       if (translation["languages_code"]["code"] == lang) {
         services = translation;
