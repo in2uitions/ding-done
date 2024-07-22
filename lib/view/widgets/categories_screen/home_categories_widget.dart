@@ -1,28 +1,33 @@
-import 'package:dingdone/models/roles_model.dart';
-import 'package:dingdone/res/app_context_extension.dart';
-import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:skeletons/skeletons.dart';
 
+import '../../../models/roles_model.dart';
+import '../../../models/services_model.dart';
+import '../../../res/app_context_extension.dart';
+import '../../../res/fonts/styles_manager.dart';
+import '../../../view_model/categories_view_model/categories_view_model.dart';
+import '../../../view_model/services_view_model/services_view_model.dart';
 import '../../../res/app_prefs.dart';
+import '../../book_a_service/book_a_service.dart';
+import '../../categories_screen/categories_screen.dart';
+import 'categories_screen_cards.dart';
 
-class ParentCategoriesWidget extends StatefulWidget {
-  var servicesViewModel;
+class HomeCategoriesWidget extends StatefulWidget {
+  final ServicesViewModel servicesViewModel;
 
-  ParentCategoriesWidget({super.key, required this.servicesViewModel});
+  HomeCategoriesWidget({super.key, required this.servicesViewModel});
 
   @override
-  State<ParentCategoriesWidget> createState() => _ParentCategoriesWidgetState();
+  State<HomeCategoriesWidget> createState() => _HomeCategoriesWidgetState();
 }
 
-String? lang;
-
-class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
-  final bool _isLoading = false;
-
+class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
+  String? lang;
+  bool _isLoading = false;
+  DropdownRoleModel? selectedParentCategory;
   @override
   void initState() {
     super.initState();
@@ -31,7 +36,6 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
 
   getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
-    setState(() {}); // Trigger a rebuild after fetching the language
   }
 
   @override
@@ -40,28 +44,39 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
       builder: (context, categoriesViewModel, _) {
         return Padding(
           padding: EdgeInsets.fromLTRB(
-            context.appValues.appPadding.p8,
+            context.appValues.appPadding.p20,
             context.appValues.appPadding.p0,
-            context.appValues.appPadding.p8,
+            context.appValues.appPadding.p0,
             context.appValues.appPadding.p0,
           ),
           child: Column(
             children: [
-              GridView.builder(
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
+              SizedBox(
+                width: context.appValues.appSizePercent.w100,
+                height: 64,
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  physics: const ScrollPhysics(),
+                  // gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  //   crossAxisCount: 2,
+                  //   mainAxisSpacing: 8,
+                  //   crossAxisSpacing: 8,
+                  // ),
+                  itemCount: categoriesViewModel.parentCategoriesList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: EdgeInsets.only(
+                        right: context.appValues.appPadding.p20,
+                        // left: context.appValues.appPadding.p10,
+                      ),
+                      child: buildServiceWidget(
+                          categoriesViewModel.parentCategoriesList[index],
+                          categoriesViewModel),
+                    );
+                  },
                 ),
-                itemCount: categoriesViewModel.parentCategoriesList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return buildCategoryWidget(
-                      categoriesViewModel.parentCategoriesList[index],
-                      categoriesViewModel);
-                },
               ),
               const SizedBox(height: 15),
             ],
@@ -71,13 +86,14 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
     );
   }
 
-  Widget buildCategoryWidget(
-      DropdownRoleModel category, CategoriesViewModel categoriesViewModel) {
+  Widget buildServiceWidget(
+      DropdownRoleModel service, CategoriesViewModel categoriesViewModel) {
     Map<String, dynamic>? services;
-    if (lang == null) {
-      lang = "en-US";
+    Map<String, dynamic>? parentServices;
+    if(lang==null){
+      lang="en-US";
     }
-    for (Map<String, dynamic> translation in category.translations) {
+    for (Map<String, dynamic> translation in service.translations) {
       if (translation["languages_code"]["code"] == lang) {
         services = translation;
         break; // Break the loop once the translation is found
@@ -85,6 +101,8 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
     }
     return InkWell(
       child: Container(
+        width: context.appValues.appSizePercent.w36,
+        height: 100,
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(
             Radius.circular(22),
@@ -97,28 +115,26 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
                   .toString()
                   .toLowerCase() ==
                   services?["title"].toString().toLowerCase()
-              ? const Color(0xffBEC2CE)
+              ? const Color(0xff57527A)
               : widget.servicesViewModel.searchBody["search_services"] == '' ||
               widget.servicesViewModel.searchBody["search_services"] ==
                   null
-              ? Color(0xffF3D347)
-              : Color(0xffF3D347),
+              ? const Color(0xff9F9AB7)
+              : const Color(0xff9F9AB7),
         ),
         child: _isLoading
             ? SkeletonListView()
             : Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            SvgPicture.network(
-              '${context.resources.image.networkImagePath}/${category.image["filename_disk"]}',
-              height: 40,
-              width: 40,
-            ),
-            const SizedBox(height: 10),
+            // SvgPicture.network(
+            //   '${context.resources.image.networkImagePath}/${service.image["filename_disk"]}',
+            // ),
             Text(
               services?["title"] ?? '',
               textAlign: TextAlign.center,
-              maxLines: 5,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: getPrimaryBoldStyle(
                 fontSize: 18,
@@ -130,7 +146,6 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
       ),
       onTap: () {
         debugPrint('search filter ${widget.servicesViewModel.searchBody}');
-        widget.servicesViewModel.setParentCategoryExistence(true);
         widget.servicesViewModel
             .filterData(index: 'search_services', value: services?["title"]);
         debugPrint(

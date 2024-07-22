@@ -20,8 +20,9 @@ import '../book_a_service/book_a_service.dart';
 class CategoriesScreen extends StatefulWidget {
   var categoriesViewModel;
   var initialTabIndex;
+  var serviceViewModel;
 
-  CategoriesScreen({super.key, required this.categoriesViewModel, required this.initialTabIndex});
+  CategoriesScreen({super.key, required this.categoriesViewModel, required this.initialTabIndex, required this.serviceViewModel});
 
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
@@ -74,18 +75,21 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 child: InkWell(
                   child: SvgPicture.asset('assets/img/back.svg'),
                   onTap: () {
+                    widget.serviceViewModel.setParentCategoryExistence(false);
+
                     Navigator.pop(context);
                   },
                 ),
               ),
             ),
           ),
+
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p20,
             ),
             child: Text(
-              "Categories",
+              translate('home_screen.categories'),
               style: getPrimaryRegularStyle(
                 color: context.resources.color.btnColorBlue,
                 fontSize: 32,

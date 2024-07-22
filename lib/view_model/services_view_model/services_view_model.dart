@@ -29,6 +29,7 @@ class ServicesViewModel with ChangeNotifier {
   List<List<bool>> _checkboxValues = [];
   dynamic _parentCategory = '';
   bool _servicesFetched = false;
+  bool _chosenParent = false;
 
   ServicesViewModel() {
     readJson();
@@ -170,6 +171,17 @@ class ServicesViewModel with ChangeNotifier {
     try {
       debugPrint('parent Category  $data');
       _parentCategory = data;
+      notifyListeners();
+    } catch (error) {
+      debugPrint('Error fetching services 1${error}');
+    }
+    notifyListeners();
+  }
+
+  Future<void> setParentCategoryExistence(bool isChosen) async {
+    try {
+      debugPrint('parent Category chosen $isChosen');
+      _chosenParent = isChosen;
       notifyListeners();
     } catch (error) {
       debugPrint('Error fetching services 1${error}');
@@ -329,4 +341,5 @@ class ServicesViewModel with ChangeNotifier {
   get checkboxValues => _checkboxValues;
   get parentCategory => _parentCategory;
   get servicesFetched => _servicesFetched;
+  get chosenParent => _chosenParent;
 }

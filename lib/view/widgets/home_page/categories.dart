@@ -38,43 +38,54 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   Widget build(BuildContext context) {
     return Consumer<CategoriesViewModel>(
       builder: (context, categoriesViewModel, _) {
-        return Padding(
-          padding: EdgeInsets.fromLTRB(
-            context.appValues.appPadding.p0,
-            context.appValues.appPadding.p0,
-            context.appValues.appPadding.p0,
-            context.appValues.appPadding.p0,
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                width: context.appValues.appSizePercent.w100,
-                height: context.appValues.appSizePercent.h70,
-                child:  GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3, // Number of items in each row
-                    crossAxisSpacing: 4, // Spacing between items horizontally
-                    mainAxisSpacing: 4, // Spacing between items vertically
-                    childAspectRatio: 1, // Aspect ratio of each grid item
-                  ),
-                  physics: NeverScrollableScrollPhysics(), // Disable grid view scrolling
-                  shrinkWrap: true, // Wrap content inside the Column
-                  itemCount: categoriesViewModel.categoriesList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: EdgeInsets.only(
-                          left: context.appValues.appPadding.p5,right:context.appValues.appPadding.p5 ),
-                      child: buildServiceWidget(
-                          categoriesViewModel.categoriesList[index],
-                          categoriesViewModel,index),
-                    );
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: Padding(
+                padding: EdgeInsets.only(left:context.appValues.appPadding.p20,top: context.appValues.appPadding.p10),
+                child: InkWell(
+                  child: SvgPicture.asset('assets/img/back.svg'),
+                  onTap: () {
+                    widget.servicesViewModel.setParentCategoryExistence(false);
                   },
                 ),
               ),
-              const SizedBox(
-                  height: 15), // Add space between the first and second row
-            ],
-          ),
+            ),
+            SizedBox(
+              width: context.appValues.appSizePercent.w100,
+              height: context.appValues.appSizePercent.h70,
+              child:  GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3, // Number of items in each row
+                  crossAxisSpacing: 4, // Spacing between items horizontally
+                  mainAxisSpacing: 4, // Spacing between items vertically
+                  childAspectRatio: 1, // Aspect ratio of each grid item
+                ),
+                padding:   EdgeInsets.fromLTRB(
+                      context.appValues.appPadding.p10,
+                      context.appValues.appPadding.p10,
+                      context.appValues.appPadding.p0,
+                      context.appValues.appPadding.p10,
+                    ),
+                physics: NeverScrollableScrollPhysics(), // Disable grid view scrolling
+                shrinkWrap: true, // Wrap content inside the Column
+                itemCount: categoriesViewModel.categoriesList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return Padding(
+                    padding: EdgeInsets.only(
+                        left: context.appValues.appPadding.p5,right:context.appValues.appPadding.p5 ),
+                    child: buildServiceWidget(
+                        categoriesViewModel.categoriesList[index],
+                        categoriesViewModel,index),
+                  );
+                },
+              ),
+            ),
+            const SizedBox(
+                height: 15), // Add space between the first and second row
+          ],
         );
       },
     );
@@ -101,7 +112,14 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
       }
     }
 
-    return Padding(
+    return widget.servicesViewModel.searchBody["search_services"]
+        .toString()
+        .toLowerCase() ==
+        services?["title"].toString().toLowerCase() ||
+        widget.servicesViewModel.searchBody["search_services"]
+            .toString()
+            .toLowerCase() ==
+            parentServices?["title"].toString().toLowerCase()? Padding(
       padding: EdgeInsets.only(
         top: context.appValues.appPadding.p10,
         bottom: context.appValues.appPadding.p10,
@@ -343,12 +361,12 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               .setParentCategory('${parentServices?["title"]}');
           debugPrint('search filter ${services?["title"]}');
           Navigator.of(context).push(_createRoute(
-            CategoriesScreen(categoriesViewModel: categoriesViewModel,initialTabIndex: index,),
+            CategoriesScreen(categoriesViewModel: categoriesViewModel,initialTabIndex: index,serviceViewModel: widget.servicesViewModel,),
           ));
           // categoriesViewModel.sortCategories(services?["title"]);
         },
       ),
-    );
+    ) :Container();
   }
 }
 

@@ -37,7 +37,7 @@ class NetworkApiService extends BaseApiService {
       }else{
         headers[HttpHeaders.contentTypeHeader] = 'application/json';
         headers[HttpHeaders.authorizationHeader] =
-        'Bearer FVKZamSq0AEXX-gcHM-J1Xb4xX3bFBxj';
+        'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
 
 
       }
@@ -75,7 +75,7 @@ class NetworkApiService extends BaseApiService {
 
     headers[HttpHeaders.contentTypeHeader] = 'application/json';
     headers[HttpHeaders.authorizationHeader] =
-        'Bearer FVKZamSq0AEXX-gcHM-J1Xb4xX3bFBxj';
+        'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
 
     String finalUrl = baseUrl + url;
     debugPrint('final ${finalUrl}');
@@ -111,7 +111,7 @@ class NetworkApiService extends BaseApiService {
     }
     headers[HttpHeaders.contentTypeHeader] = 'application/json';
     headers[HttpHeaders.authorizationHeader] =
-        'Bearer FVKZamSq0AEXX-gcHM-J1Xb4xX3bFBxj';
+        'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
 
     String finalUrl = baseUrl + url;
     if (params != '') {
@@ -166,7 +166,7 @@ class NetworkApiService extends BaseApiService {
     dynamic responseJson;
     // headers[HttpHeaders.authorizationHeader] = await getToken();
     headers[HttpHeaders.authorizationHeader] =
-        'Bearer FVKZamSq0AEXX-gcHM-J1Xb4xX3bFBxj';
+        'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
     headers[HttpHeaders.contentTypeHeader] = 'application/json';
     String finalUrl = id != '' ? '$baseUrl$url/$id' : '$baseUrl$url';
     if (params != '') {

@@ -110,7 +110,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                             ? jobsViewModel.getjobsBody["longitude"] is String
                             ? double.parse(jobsViewModel.getjobsBody["longitude"])
                             : jobsViewModel.getjobsBody["longitude"]
-                            : profileViewModel.getProfileBody['current_address']["longitude"] != null
+                            : profileViewModel.getProfileBody['current_address']!=null && profileViewModel.getProfileBody['current_address']["longitude"] != null
                             ? profileViewModel.getProfileBody['current_address']["longitude"] is String
                             ? double.parse(profileViewModel.getProfileBody['current_address']["longitude"])
                             : profileViewModel.getProfileBody['current_address']["longitude"]
@@ -119,7 +119,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                             ? jobsViewModel.getjobsBody["latitude"] is String
                             ? double.parse(jobsViewModel.getjobsBody["latitude"])
                             : jobsViewModel.getjobsBody["latitude"]
-                            : profileViewModel.getProfileBody['current_address']["latitude"] != null
+                            : profileViewModel.getProfileBody['current_address']!=null && profileViewModel.getProfileBody['current_address']["latitude"] != null
                             ? profileViewModel.getProfileBody['current_address']["latitude"] is String
                             ? double.parse(profileViewModel.getProfileBody['current_address']["latitude"])
                             : profileViewModel.getProfileBody['current_address']["latitude"]
@@ -136,12 +136,12 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                           body: profileViewModel.getProfileBody,
                           longitude: jobsViewModel.getjobsBody["longitude"] != null
                               ? double.parse(jobsViewModel.getjobsBody["longitude"].toString())
-                              : profileViewModel.getProfileBody['current_address']["longitude"] != null
+                              : profileViewModel.getProfileBody['current_address']!=null &&profileViewModel.getProfileBody['current_address']["longitude"] != null
                               ? double.parse(profileViewModel.getProfileBody['current_address']["longitude"].toString())
                               : 23.0,
                           latitude: jobsViewModel.getjobsBody["latitude"] != null
                               ? double.parse(jobsViewModel.getjobsBody["latitude"].toString())
-                              : profileViewModel.getProfileBody['current_address']["latitude"] != null
+                              : profileViewModel.getProfileBody['current_address']!=null && profileViewModel.getProfileBody['current_address']["latitude"] != null
                               ? double.parse(profileViewModel.getProfileBody['current_address']["latitude"].toString())
                               : 89.0,
                         ),

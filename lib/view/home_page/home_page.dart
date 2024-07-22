@@ -7,6 +7,7 @@ import 'package:dingdone/view/categories/parent_categories.dart';
 import 'package:dingdone/view/categories_screen/categories_screen.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
 import 'package:dingdone/view/profile_page/profile_page.dart';
+import 'package:dingdone/view/widgets/categories_screen/home_categories_widget.dart';
 import 'package:dingdone/view/widgets/custom/custom_search_bar.dart';
 import 'package:dingdone/view/widgets/home_page/categories.dart';
 import 'package:dingdone/view/widgets/home_page/services.dart';
@@ -370,25 +371,28 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: context.appValues.appSize.s15),
-                      ParentCategoriesWidget(servicesViewModel: servicesViewModel),
+                      // HomeCategoriesWidget(servicesViewModel: servicesViewModel),
+                      // SizedBox(height: context.appValues.appSize.s15),
                       Padding(
                         padding: EdgeInsets.fromLTRB(
                           context.appValues.appPadding.p20,
                           context.appValues.appPadding.p20,
                           context.appValues.appPadding.p20,
-                          context.appValues.appPadding.p0,
+                          context.appValues.appPadding.p10,
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              translate('home_screen.categories'),
+                              servicesViewModel.chosenParent?
+                              translate('home_screen.categories'):
+                              'Parent Categories',
                               style: getPrimaryRegularStyle(
                                 fontSize: 28,
                                 color: context.resources.color.btnColorBlue,
                               ),
                             ),
-                            InkWell(
+                            servicesViewModel.chosenParent?InkWell(
                               child: Text(
                                 translate('home_screen.seeAll'),
                                 style: getPrimaryRegularStyle(
@@ -398,14 +402,18 @@ class _HomePageState extends State<HomePage> {
                               ),
                               onTap: () {
                                 Navigator.of(context).push(_createRoute(
-                                  CategoriesScreen(categoriesViewModel: categoriesViewModel,initialTabIndex: 0,),
+                                  CategoriesScreen(categoriesViewModel: categoriesViewModel,initialTabIndex: 0,serviceViewModel:servicesViewModel),
                                 ));
                               },
-                            ),
+                            ):Container(),
                           ],
                         ),
                       ),
-                      CategoriesWidget(servicesViewModel: servicesViewModel),
+                      servicesViewModel.chosenParent?
+                      CategoriesWidget(servicesViewModel: servicesViewModel):
+                      ParentCategoriesWidget(servicesViewModel: servicesViewModel),
+
+
                     ],
                   ),
                 ),
