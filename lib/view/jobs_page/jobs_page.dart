@@ -16,7 +16,6 @@ import '../../res/app_prefs.dart';
 import '../../view_model/profile_view_model/profile_view_model.dart';
 import '../bottom_bar/bottom_bar.dart';
 
-
 class JobsPage extends StatefulWidget {
   final String userRole;
   final String lang;
@@ -27,8 +26,8 @@ class JobsPage extends StatefulWidget {
     Key? key,
     required this.userRole,
     required this.lang,
-    required this.initialActiveTab ,
-    required this.initialIndex ,
+    required this.initialActiveTab,
+    required this.initialIndex,
   }) : super(key: key);
 
   @override
@@ -53,174 +52,158 @@ class _JobsPageState extends State<JobsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFEFEFE),
-      body: widget.userRole == Constants.supplierRoleId
-          ? Tabs(
-        tabtitle: [
-          translate('jobs.bookedJobs'),
-          translate('jobs.activeJobs'),
-          translate('jobs.completedJobs'),
-        ],
-        tabContent: [
-          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+      body: Consumer<JobsViewModel>(
+        builder: (context, jobsViewModel, _) {
+          List<int> jobCounts = getJobCounts(jobsViewModel);
+          debugPrint('job counts  is $jobCounts');
 
-            return JobsCards(
-              active: "bookedJobs",
-              userRole: widget.userRole,
-              jobsViewModel: jobsViewModel,
-              lang: widget.lang,
-            );
-          }),
-          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
-            return JobsCards(
-              active: "activeJobs",
-              userRole: widget.userRole,
-              jobsViewModel: jobsViewModel,
-              lang: widget.lang,
-            );
-          }),
-          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
-            return JobsCards(
-              active: "completedJobs",
-              userRole: widget.userRole,
-              jobsViewModel: jobsViewModel,
-              lang: widget.lang,
-            );
-          }),
-        ],
-        initialActiveTab: _active,
-        initialIndex: widget.initialIndex,// Pass the active tab here
-        content: Consumer<LoginViewModel>(
-          builder: (context, loginViewModel, _) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SafeArea(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding:
-                      EdgeInsets.all(context.appValues.appPadding.p20),
-                      child: InkWell(
-                        child: SvgPicture.asset('assets/img/back.svg'),
-                        onTap: () async {
-                          Navigator.pop(context);
-
-                          final prefs =
-                          await SharedPreferences.getInstance();
-                          final role = prefs.getString(userRoleKey);
-
-                          Navigator.of(context).push(
-                            _createRoute(BottomBar(userRole: role)),
-                          );
-                        },
-                      ),
+          return widget.userRole == Constants.supplierRoleId
+              ? Tabs(
+                  tabtitle: [
+                    translate('jobs.bookedJobs'),
+                    translate('jobs.activeJobs'),
+                    translate('jobs.completedJobs'),
+                  ],
+                  tabContent: [
+                    JobsCards(
+                      active: "bookedJobs",
+                      userRole: widget.userRole,
+                      jobsViewModel: jobsViewModel,
+                      lang: widget.lang,
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: context.appValues.appPadding.p20),
-                  child: Text(
-                    translate('bottom_bar.jobs'),
-                    style: getPrimaryRegularStyle(
-                      color: context.resources.color.btnColorBlue,
-                      fontSize: 32,
+                    JobsCards(
+                      active: "activeJobs",
+                      userRole: widget.userRole,
+                      jobsViewModel: jobsViewModel,
+                      lang: widget.lang,
                     ),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
-      )
-          : Tabs(
-        tabtitle: [
-          translate('jobs.requestedJobs'),
-          translate('jobs.confirmedJobs'),
-          translate('jobs.activeJobs'),
-          translate('jobs.completedJobs'),
-        ],
-        tabContent: [
-          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
-
-            return JobsCards(
-              active: "requestedJobs",
-              userRole: widget.userRole,
-              jobsViewModel: jobsViewModel,
-              lang: widget.lang,
-            );
-          }),
-          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
-            return JobsCards(
-              active: "bookedJobs",
-              userRole: widget.userRole,
-              jobsViewModel: jobsViewModel,
-              lang: widget.lang,
-            );
-          }),
-          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
-            return JobsCards(
-              active: "activeJobs",
-              userRole: widget.userRole,
-              jobsViewModel: jobsViewModel,
-              lang: widget.lang,
-            );
-          }),
-          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
-            return JobsCards(
-              active: "completedJobs",
-              userRole: widget.userRole,
-              jobsViewModel: jobsViewModel,
-              lang: widget.lang,
-            );
-          }),
-        ],
-        initialActiveTab: _active,
-        initialIndex: widget.initialIndex,// Pass the active tab here
-        content: Consumer<LoginViewModel>(
-          builder: (context, loginViewModel, _) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SafeArea(
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding:
-                      EdgeInsets.all(context.appValues.appPadding.p20),
-                      child: InkWell(
-                        child: SvgPicture.asset('assets/img/back.svg'),
-                        onTap: () async {
-                          Navigator.pop(context);
-
-                          final prefs =
-                          await SharedPreferences.getInstance();
-                          final role = prefs.getString(userRoleKey);
-
-                          Navigator.of(context).push(
-                            _createRoute(BottomBar(userRole: role)),
-                          );
-                        },
-                      ),
+                    JobsCards(
+                      active: "completedJobs",
+                      userRole: widget.userRole,
+                      jobsViewModel: jobsViewModel,
+                      lang: widget.lang,
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: context.appValues.appPadding.p20),
-                  child: Text(
-                    translate('bottom_bar.jobs'),
-                    style: getPrimaryRegularStyle(
-                      color: context.resources.color.btnColorBlue,
-                      fontSize: 32,
+                  ],
+                  jobCounts: jobCounts,
+                  initialActiveTab: _active,
+                  initialIndex: widget.initialIndex,
+                  // Pass the active tab here
+                  content: buildHeader(context),
+                )
+              : Tabs(
+                  tabtitle: [
+                    translate('jobs.requestedJobs'),
+                    translate('jobs.confirmedJobs'),
+                    translate('jobs.activeJobs'),
+                    translate('jobs.completedJobs'),
+                  ],
+                  tabContent: [
+                    JobsCards(
+                      active: "requestedJobs",
+                      userRole: widget.userRole,
+                      jobsViewModel: jobsViewModel,
+                      lang: widget.lang,
                     ),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
+                    JobsCards(
+                      active: "bookedJobs",
+                      userRole: widget.userRole,
+                      jobsViewModel: jobsViewModel,
+                      lang: widget.lang,
+                    ),
+                    JobsCards(
+                      active: "activeJobs",
+                      userRole: widget.userRole,
+                      jobsViewModel: jobsViewModel,
+                      lang: widget.lang,
+                    ),
+                    JobsCards(
+                      active: "completedJobs",
+                      userRole: widget.userRole,
+                      jobsViewModel: jobsViewModel,
+                      lang: widget.lang,
+                    ),
+                  ],
+                  jobCounts: jobCounts,
+                  initialActiveTab: _active,
+                  initialIndex: widget.initialIndex,
+                  // Pass the active tab here
+                  content: buildHeader(context),
+                );
+        },
       ),
+    );
+  }
+
+  List<int> getJobCounts(JobsViewModel jobsViewModel) {
+    List<int> a = Constants.supplierRoleId == widget.userRole
+        ? [
+            jobsViewModel.supplierBookedJobs.length,
+            jobsViewModel.supplierInProgressJobs.length,
+            jobsViewModel.supplierCompletedJobs.length,
+          ]
+        : [
+            jobsViewModel.getcustomerJobs
+                .where((e) => e.status == 'circulating' || e.status == 'draft')
+                .toList()
+                .length,
+            jobsViewModel.getcustomerJobs
+                .where((e) => e.status == 'booked')
+                .toList()
+                .length,
+            jobsViewModel.getcustomerJobs
+                .where((e) => e.status == 'inprogress')
+                .toList()
+                .length,
+            jobsViewModel.getcustomerJobs
+                .where((e) => e.status == 'completed')
+                .toList()
+                .length,
+          ];
+    return a;
+  }
+
+  Widget buildHeader(BuildContext context) {
+    return Consumer<LoginViewModel>(
+      builder: (context, loginViewModel, _) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SafeArea(
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.all(context.appValues.appPadding.p20),
+                  child: InkWell(
+                    child: SvgPicture.asset('assets/img/back.svg'),
+                    onTap: () async {
+                      Navigator.pop(context);
+
+                      final prefs = await SharedPreferences.getInstance();
+                      final role = prefs.getString(userRoleKey);
+
+                      Navigator.of(context).push(
+                        _createRoute(BottomBar(userRole: role)),
+                      );
+                    },
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.appValues.appPadding.p20,
+              ),
+              child: Text(
+                translate('bottom_bar.jobs'),
+                style: getPrimaryRegularStyle(
+                  color: context.resources.color.btnColorBlue,
+                  fontSize: 32,
+                ),
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }

@@ -213,37 +213,37 @@ class _BookAServiceState extends State<BookAService> {
                   ],
                 ),
                 SizedBox(height: context.appValues.appSize.s20),
-                Padding(
-                  padding: EdgeInsets.all(context.appValues.appPadding.p20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: context.appValues.appPadding.p0,
-                            vertical: context.appValues.appPadding.p10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              translate('bookService.jobType'),
-                              style: getPrimaryBoldStyle(
-                                  fontSize: 20,
-                                  color: context.resources.color.btnColorBlue),
-                            ),
-                          ],
-                        ),
-                      ),
-                      JobTypeButtons(
-                        service: widget.service,
-                        country_code: profileViewModel.getProfileBody["address"][0]
-                            ["country"],
-                        servicesViewModel: servicesViewModel,
-                        job_type: null,
-                      ),
-                    ],
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.all(context.appValues.appPadding.p20),
+                //   child: Column(
+                //     crossAxisAlignment: CrossAxisAlignment.start,
+                //     children: [
+                //       Padding(
+                //         padding: EdgeInsets.symmetric(
+                //             horizontal: context.appValues.appPadding.p0,
+                //             vertical: context.appValues.appPadding.p10),
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.start,
+                //           children: [
+                //             Text(
+                //               translate('bookService.jobType'),
+                //               style: getPrimaryBoldStyle(
+                //                   fontSize: 20,
+                //                   color: context.resources.color.btnColorBlue),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //       JobTypeButtons(
+                //         service: widget.service,
+                //         country_code: profileViewModel.getProfileBody["address"][0]
+                //             ["country"],
+                //         servicesViewModel: servicesViewModel,
+                //         job_type: null,
+                //       ),
+                //     ],
+                //   ),
+                // ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: context.appValues.appPadding.p20),
@@ -471,6 +471,7 @@ class _BookAServiceState extends State<BookAService> {
                           height: context.appValues.appSizePercent.h100,
                           child: ElevatedButton(
                             onPressed: () async {
+
                               if (await jobsViewModel.requestService() ==
                                   true) {
 

@@ -178,6 +178,7 @@ class NetworkApiService extends BaseApiService {
 
       response = await http.patch(Uri.parse(finalUrl),
           headers: headers, body: jsonEncode(data));
+      debugPrint('response json ${response.body}');
 
       responseJson = returnResponse(response);
     } on SocketException {

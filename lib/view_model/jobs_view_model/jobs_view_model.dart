@@ -372,6 +372,8 @@ class JobsViewModel with ChangeNotifier {
       int month = selectedDate.month;
       int day = selectedDate.day;
       debugPrint('tiiiimee iss ${jobsBody['time']}');
+      jobsBody['job_type']='work';
+
       if (jobsBody['time'] == null) {
         // Get the current time directly using TimeOfDay.now()
         TimeOfDay now = TimeOfDay.now();

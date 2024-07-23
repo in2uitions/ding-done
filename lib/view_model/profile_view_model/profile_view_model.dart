@@ -126,7 +126,7 @@ class ProfileViewModel extends DisposableViewModel {
  Future<void> setCurrentAddress(dynamic body) async {
     try {
       String userId = await getUserId();
-
+      debugPrint('current address data $body');
       ProfileModel? response = await _homeRepository.patchProfile(
           id: profileBody["id"],
           body: {

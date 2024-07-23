@@ -21,7 +21,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import '../../view_model/dispose_view_model/app_view_model.dart';
 import '../agreement/user_agreement.dart';
 import '../bottom_bar/bottom_bar.dart';
@@ -76,7 +76,13 @@ class _HomePageState extends State<HomePage> {
       );
     }
   }
-
+  int _current = 0;
+  final CarouselController _controller = CarouselController();
+  final List<String> imgList = [
+    'https://via.placeholder.com/800x400.png?text=Image+1',
+    'https://via.placeholder.com/800x400.png?text=Image+2',
+    'https://via.placeholder.com/800x400.png?text=Image+3',
+  ];
   @override
   Widget build(BuildContext context) {
     return Consumer4<ProfileViewModel, ServicesViewModel,CategoriesViewModel,JobsViewModel>(
@@ -385,8 +391,8 @@ class _HomePageState extends State<HomePage> {
                           children: [
                             Text(
                               servicesViewModel.chosenParent?
-                              translate('home_screen.categories'):
-                              'Parent Categories',
+                              translate('home_screen.servicesCategories'):
+                              translate('home_screen.categories'),
                               style: getPrimaryRegularStyle(
                                 fontSize: 28,
                                 color: context.resources.color.btnColorBlue,
@@ -424,10 +430,11 @@ class _HomePageState extends State<HomePage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          servicesViewModel.searchBody["search_services"] != null &&
-                              servicesViewModel.searchBody["search_services"] != ''
-                              ? servicesViewModel.searchBody["search_services"]
-                              : translate('home_screen.featuredServices'),
+                          // servicesViewModel.searchBody["search_services"] != null &&
+                          //     servicesViewModel.searchBody["search_services"] != ''
+                          //     ? servicesViewModel.searchBody["search_services"]
+                          //     :
+                          translate('home_screen.featuredServices'),
                           style: getPrimaryRegularStyle(
                             fontSize: 28,
                             color: context.resources.color.btnColorBlue,
@@ -437,8 +444,125 @@ class _HomePageState extends State<HomePage> {
                     ),
                   ),
                 ),
+
+
                 SliverToBoxAdapter(
-                  child: const ServicesWidget(),
+                  // child: const ServicesWidget(),
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 8.0,left: 8.0),
+                    child: Column(
+                      children: [
+                        Stack(
+                          children: [
+                            CarouselSlider(
+                              options: CarouselOptions(
+                                height: 300.0,
+                                autoPlay: true,
+                                enlargeCenterPage: true,
+                                viewportFraction: 1.0,
+                                autoPlayAnimationDuration: const Duration(milliseconds: 700),
+                                onPageChanged: (index, reason) {
+                                  setState(() {
+                                    _current = index;
+                                  });
+                                },
+                              ),
+                              items: imgList
+                                  .map((item) => Container(
+                                color: context.resources.color.btnColorBlue,
+                                child: const Center(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.image,
+                                        color: Colors.white,
+                                        size: 50,
+                                      ),
+                                      Text(
+                                        'ADS - UPDATES CAROUSEL AREA',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 18.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ))
+                                  .toList(),
+                            ),
+                            Positioned(
+                              bottom: 15,
+                              left: 0,
+                              right: 0,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: imgList.asMap().entries.map((entry) {
+                                  return GestureDetector(
+                                    onTap: () => _controller.animateToPage(entry.key),
+                                    child: Container(
+                                      width: 12.0,
+                                      height: 12.0,
+                                      margin: const EdgeInsets.symmetric(
+                                          vertical: 8.0, horizontal: 4.0),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: _current == entry.key
+                                            ? Colors.white
+                                            : Colors.white.withOpacity(0.4),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                          ],
+                        ),
+                        Container(
+                          padding: const EdgeInsets.all(8.0),
+                          color: Colors.white,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: const Text(
+                                  'We are available Sat to Thur\nfrom 9 to 5, Fri from 2 to 5',
+                                  style: TextStyle(fontSize: 13.0),
+                                ),
+                              ),
+                              Expanded(
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10, vertical: 15.0),
+                                    decoration: BoxDecoration(
+                                      color: Colors.green,
+                                      borderRadius: BorderRadius.circular(5.0),
+                                    ),
+                                    child: const Row(
+                                      children: [
+                                        Icon(Icons.abc),
+                                        SizedBox(width: 10.0),
+                                        Text(
+                                          'CONTACT US',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 18.0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ],
             ),

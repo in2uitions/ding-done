@@ -68,7 +68,15 @@ class ProfileRepository {
       rethrow;
     }
   }
-
+// Function to recursively remove the 'token' field
+  void removeToken(Map<String, dynamic> map) {
+    map.remove('token');
+    map.forEach((key, value) {
+      if (value is Map<String, dynamic>) {
+        removeToken(value);
+      }
+    });
+  }
   Future<ProfileModel?> patchProfile({required int id, dynamic body}) async {
     try {
       String userId = await getUserId();
@@ -82,8 +90,20 @@ class ProfileRepository {
         debugPrint('customer ${response}');
       } else {
         if (Constants.supplierRoleId == role) {
+          // Make a copy of the body to avoid mutating the original data
+          var cleanedBody = Map<String, dynamic>.from(body);
+
+          // Remove the 'token' field from the cleanedBody
+          removeToken(cleanedBody);
+
+          // Call the patchResponse method with the cleanedBody
           response = await _apiSupplierProfile.patchResponse(
-              id: id, data: body, params: '?fields=*.*.*');
+            id: id,
+            data: cleanedBody,
+            params: '?fields=*.*',
+          );
+
+          debugPrint('supplier ${response}');
         }
       }
       final jsonData = ProfileModel.fromJson(response['data']);
