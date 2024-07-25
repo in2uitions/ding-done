@@ -643,150 +643,103 @@ class _JobsCardsState extends State<JobsCards> {
       translate('jobs.other')
     ];
 
-    return AlertDialog(
-      elevation: 15,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  child: SvgPicture.asset('assets/img/x.svg'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          ),
-          SvgPicture.asset('assets/img/service-popup-image.svg'),
-          SizedBox(height: context.appValues.appSize.s40),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              message,
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: context.resources.color.btnColorBlue,
+    return SingleChildScrollView(
+      child: AlertDialog(
+        elevation: 15,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    child: SvgPicture.asset('assets/img/x.svg'),
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ],
               ),
             ),
-          ),
-          SizedBox(height: context.appValues.appSize.s20),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
+            SvgPicture.asset('assets/img/service-popup-image.svg'),
+            SizedBox(height: context.appValues.appSize.s40),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.appValues.appPadding.p32,
+              ),
+              child: Text(
+                message,
+                textAlign: TextAlign.center,
+                style: getPrimaryRegularStyle(
+                  fontSize: 17,
+                  color: context.resources.color.btnColorBlue,
+                ),
+              ),
             ),
-            child:
-                Consumer<JobsViewModel>(builder: (context, jobsViewModel1, _) {
-              return Column(
-                children: [
-                  // Radio buttons
-                  for (int i = 0; i < reasons.length; i++)
-                    RadioListTile(
-                      title: Text(reasons[i]),
-                      value: reasons[i],
-                      groupValue: jobsViewModel1.selectedReason,
-                      onChanged: (value) {
-                        setState(() {
-                          // You can perform additional actions based on the selected reason if needed
-                        });
-                        jobsViewModel1.setInputValues(
-                            index: 'cancellation_reason',
-                            value: value.toString());
-                        if (value == 'Other') {
-                          // If "Other" is selected, show the CustomTextArea
-                          jobsViewModel1.setShowCustomTextArea(true);
-                        } else {
-                          // If any other reason is selected, hide the CustomTextArea
-                          jobsViewModel1.setShowCustomTextArea(false);
-                        }
-                      },
-                    ),
-                  // Your other widgets can go here
-                  if (jobsViewModel1.showCustomTextArea)
-                    CustomTextArea(
-                      index: 'cancellation_reason',
-                      viewModel: jobsViewModel.setInputValues,
-                      keyboardType: TextInputType.text,
-                      maxlines: 8,
-                    ),
-                ],
-              );
-            }),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
+            SizedBox(height: context.appValues.appSize.s20),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.appValues.appPadding.p32,
+              ),
+              child:
+                  Consumer<JobsViewModel>(builder: (context, jobsViewModel1, _) {
+                return Column(
+                  children: [
+                    // Radio buttons
+                    for (int i = 0; i < reasons.length; i++)
+                      RadioListTile(
+                        title: Text(reasons[i]),
+                        value: reasons[i],
+                        groupValue: jobsViewModel1.selectedReason,
+                        onChanged: (value) {
+                          setState(() {
+                            // You can perform additional actions based on the selected reason if needed
+                          });
+                          jobsViewModel1.setInputValues(
+                              index: 'cancellation_reason',
+                              value: value.toString());
+                          if (value == 'Other') {
+                            // If "Other" is selected, show the CustomTextArea
+                            jobsViewModel1.setShowCustomTextArea(true);
+                          } else {
+                            // If any other reason is selected, hide the CustomTextArea
+                            jobsViewModel1.setShowCustomTextArea(false);
+                          }
+                        },
+                      ),
+                    // Your other widgets can go here
+                    if (jobsViewModel1.showCustomTextArea)
+                      CustomTextArea(
+                        index: 'cancellation_reason',
+                        viewModel: jobsViewModel.setInputValues,
+                        keyboardType: TextInputType.text,
+                        maxlines: 8,
+                      ),
+                  ],
+                );
+              }),
             ),
-            child: ElevatedButton(
-              onPressed: () async {
-                if (widget.userRole == Constants.supplierRoleId) {
-                  if (await jobsViewModel.cancelBooking(job_id) == true) {
-                    Navigator.pop(context);
-
-                    Future.delayed(const Duration(seconds: 0));
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            simpleAlert(context, translate('button.success')));
-                  } else {
-                    Navigator.pop(context);
-
-                    Future.delayed(const Duration(seconds: 0));
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            simpleAlertWithMessage2(
-                                context,
-                                translate('button.failure'),
-                                translate('button.somethingWentWrong')));
-                  }
-                } else {
-                  // if (tab == 'bookedJobs') {
-                  //   if (await jobsViewModel.cancelJobNoPenalty(job_id) ==
-                  //       true) {
-                  //     Navigator.pop(context);
-                  //
-                  //     Future.delayed(const Duration(seconds: 0));
-                  //     showDialog(
-                  //         context: context,
-                  //         builder: (BuildContext context) => simpleAlert(
-                  //             context, translate('button.success')));
-                  //   } else {
-                  //     Navigator.pop(context);
-                  //
-                  //     Future.delayed(const Duration(seconds: 0));
-                  //     showDialog(
-                  //         context: context,
-                  //         builder: (BuildContext context) =>
-                  //             simpleAlertWithMessage2(
-                  //                 context,
-                  //                 translate('button.failure'),
-                  //                 translate('button.somethingWentWrong')));
-                  //   }
-                  // } else {
-                    if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
-                        true) {
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.appValues.appPadding.p32,
+              ),
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (widget.userRole == Constants.supplierRoleId) {
+                    if (await jobsViewModel.cancelBooking(job_id) == true) {
                       Navigator.pop(context);
-
+      
                       Future.delayed(const Duration(seconds: 0));
                       showDialog(
                           context: context,
                           builder: (BuildContext context) =>
-                              simpleAlertWithMessage2(
-                                  context,
-                                  translate('button.success'),
-                                  translate('button.jobCanceledMsg')));
+                              simpleAlert(context, translate('button.success')));
                     } else {
                       Navigator.pop(context);
-
+      
                       Future.delayed(const Duration(seconds: 0));
                       showDialog(
                           context: context,
@@ -796,31 +749,80 @@ class _JobsCardsState extends State<JobsCards> {
                                   translate('button.failure'),
                                   translate('button.somethingWentWrong')));
                     }
-                  // }
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 1.0,
-                shadowColor: Colors.black,
-                backgroundColor: const Color(0xffFFD105),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
+                  } else {
+                    // if (tab == 'bookedJobs') {
+                    //   if (await jobsViewModel.cancelJobNoPenalty(job_id) ==
+                    //       true) {
+                    //     Navigator.pop(context);
+                    //
+                    //     Future.delayed(const Duration(seconds: 0));
+                    //     showDialog(
+                    //         context: context,
+                    //         builder: (BuildContext context) => simpleAlert(
+                    //             context, translate('button.success')));
+                    //   } else {
+                    //     Navigator.pop(context);
+                    //
+                    //     Future.delayed(const Duration(seconds: 0));
+                    //     showDialog(
+                    //         context: context,
+                    //         builder: (BuildContext context) =>
+                    //             simpleAlertWithMessage2(
+                    //                 context,
+                    //                 translate('button.failure'),
+                    //                 translate('button.somethingWentWrong')));
+                    //   }
+                    // } else {
+                      if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
+                          true) {
+                        Navigator.pop(context);
+      
+                        Future.delayed(const Duration(seconds: 0));
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                simpleAlertWithMessage2(
+                                    context,
+                                    translate('button.success'),
+                                    translate('button.jobCanceledMsg')));
+                      } else {
+                        Navigator.pop(context);
+      
+                        Future.delayed(const Duration(seconds: 0));
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                simpleAlertWithMessage2(
+                                    context,
+                                    translate('button.failure'),
+                                    translate('button.somethingWentWrong')));
+                      }
+                    // }
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 1.0,
+                  shadowColor: Colors.black,
+                  backgroundColor: const Color(0xffFFD105),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  fixedSize: Size(
+                    context.appValues.appSizePercent.w30,
+                    context.appValues.appSizePercent.h5,
+                  ),
                 ),
-                fixedSize: Size(
-                  context.appValues.appSizePercent.w30,
-                  context.appValues.appSizePercent.h5,
-                ),
-              ),
-              child: Text(
-                translate('button.send'),
-                style: getPrimaryRegularStyle(
-                  fontSize: 15,
-                  color: context.resources.color.btnColorBlue,
+                child: Text(
+                  translate('button.send'),
+                  style: getPrimaryRegularStyle(
+                    fontSize: 15,
+                    color: context.resources.color.btnColorBlue,
+                  ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

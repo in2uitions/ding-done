@@ -54,6 +54,7 @@
   },
   "home_screen": {
     "categories": "الفئات",
+    "servicesCategories": "فئات الخدمات",
     "viewAll": "عرض الكل",
     "seeAll": "اظهار الكل",
     "hey": "مرحبًا، ",
