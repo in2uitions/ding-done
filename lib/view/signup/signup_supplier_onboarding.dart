@@ -58,6 +58,7 @@ class _SignUpSupplierOnBoardingScreenState
           child: InkWell(
             borderRadius: defaultSkipButtonBorderRadius,
             onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
               if (signupViewModel.validate(index: index) && setIndex != null) {
                 index = index + 1;
                 setIndex(index);

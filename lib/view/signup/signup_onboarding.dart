@@ -53,6 +53,8 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
           child: InkWell(
             borderRadius: defaultSkipButtonBorderRadius,
             onTap: () {
+              FocusManager.instance.primaryFocus?.unfocus();
+
               if (signupViewModel2.validate(index: index) && setIndex != null) {
                 index = index + 1;
                 setIndex(index);
