@@ -40,9 +40,9 @@ class CategoriesViewModel with ChangeNotifier {
 
       _apiCategoriesResponse = ApiResponse.completed(response);
       _categoriesList = _apiCategoriesResponse.data?.dropDownList;
-      _parentCategoriesList = _categoriesList!.where((category) => category.classs == null).toList();
+      _parentCategoriesList = _categoriesList!.where((category) => category.classs == null && category.status=='published').toList();
 
-      _categoriesList = _categoriesList!.where((category) => category.classs != null).toList();
+      _categoriesList = _categoriesList!.where((category) => category.classs != null && category.status=='published').toList();
 
       notifyListeners();
 

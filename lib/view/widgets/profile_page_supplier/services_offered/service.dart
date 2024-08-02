@@ -83,6 +83,7 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
                   ),
                   children: [
                     for (int innerIndex = 0; innerIndex < servicesInCategory.length; innerIndex++)
+                      servicesInCategory[innerIndex]["status"]=='published'?
                       CheckboxListTile(
                         value: widget.servicesViewModel.checkboxValues[index][innerIndex],
                         activeColor: context.resources.color.btnColorBlue,
@@ -111,7 +112,7 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
                             color: context.resources.color.secondColorBlue,
                           ),
                         ),
-                      ),
+                      ):Container(),
                   ],
                 );
               },

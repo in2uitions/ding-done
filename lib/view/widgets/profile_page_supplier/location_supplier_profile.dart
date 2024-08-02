@@ -7,6 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
+import '../../confirm_address/confirm_address.dart';
+
 class LoacationSupplierProfile extends StatefulWidget {
   const LoacationSupplierProfile({super.key});
 
@@ -75,48 +77,60 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
                 thickness: 2,
                 color: Color(0xffEDF1F7),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(
-                  context.appValues.appPadding.p20,
-                  context.appValues.appPadding.p10,
-                  context.appValues.appPadding.p20,
-                  context.appValues.appPadding.p10,
-                ),
-                child: Text(
-                  '${profileViewModel.getProfileBody['address'][0]["street_name"]} ${profileViewModel.getProfileBody['address'][0]["building_number"]}, ${profileViewModel.getProfileBody['address'][0]["city"]}, ${profileViewModel.getProfileBody['address'][0]["state"]}',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: getPrimaryRegularStyle(
-                    fontSize: 16,
-                    color: const Color(0xff190C39),
-                  ),
+
+              InkWell(
+                onTap: (){
+                  Navigator.of(context).push(_createRoute(
+                      ConfirmAddress()));
+                },
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.fromLTRB(
+                        context.appValues.appPadding.p20,
+                        context.appValues.appPadding.p10,
+                        context.appValues.appPadding.p20,
+                        context.appValues.appPadding.p10,
+                      ),
+                      child: Text(
+                        '${profileViewModel.getProfileBody['address'][0]["street_name"]} ${profileViewModel.getProfileBody['address'][0]["building_number"]}, ${profileViewModel.getProfileBody['address'][0]["city"]}, ${profileViewModel.getProfileBody['address'][0]["state"]}',
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: getPrimaryRegularStyle(
+                          fontSize: 16,
+                          color: const Color(0xff190C39),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p20),
+                      child: SizedBox(
+                          height: context.appValues.appSizePercent.h25,
+                          width: context.appValues.appSizePercent.w90,
+                          child: MapDisplay(
+                              body: profileViewModel.getProfileBody,
+                              longitude:
+                                  profileViewModel.getProfileBody["address"] != null &&
+                                          profileViewModel.getProfileBody["address"]
+                                                  [0]["longitude"] !=
+                                              null
+                                      ? profileViewModel.getProfileBody["address"]
+                                          [0]["longitude"]
+                                      : 23,
+                              latitude:
+                                  profileViewModel.getProfileBody["address"] != null &&
+                                          profileViewModel.getProfileBody["address"]
+                                                  [0]["latitude"] !=
+                                              null
+                                      ? profileViewModel.getProfileBody["address"]
+                                          [0]["latitude"]
+                                      : 89)),
+                    ),
+                  ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p20),
-                child: SizedBox(
-                    height: context.appValues.appSizePercent.h25,
-                    width: context.appValues.appSizePercent.w90,
-                    child: MapDisplay(
-                        body: profileViewModel.getProfileBody,
-                        longitude: profileViewModel.getProfileBody["address"] !=
-                                    null &&
-                                profileViewModel.getProfileBody["address"][0]
-                                        ["longitude"] !=
-                                    null
-                            ? profileViewModel.getProfileBody["address"][0]
-                                ["longitude"]
-                            : 23,
-                        latitude:
-                            profileViewModel.getProfileBody["address"] != null &&
-                                    profileViewModel.getProfileBody["address"][0]
-                                            ["latitude"] !=
-                                        null
-                                ? profileViewModel.getProfileBody["address"][0]
-                                    ["latitude"]
-                                : 89)),
-              ),
+
               // Align(
               //   alignment: Alignment.center,
               //   child: SvgPicture.asset('assets/img/map-iamge.svg'),
@@ -127,4 +141,22 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
       );
     });
   }
+}
+
+Route _createRoute(dynamic classname) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => classname,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

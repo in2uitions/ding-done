@@ -25,12 +25,13 @@ class DropDownModelMain {
 }
 
 class DropdownRoleModel {
-  DropdownRoleModel({this.id, this.name, this.icon,this.title,this.image,this.category,this.description,this.translations,this.classs});
+  DropdownRoleModel({this.id, this.name,this.status, this.icon,this.title,this.image,this.category,this.description,this.translations,this.classs});
   String? id;
   String? name;
   String? icon;
   String? title;
   dynamic image;
+  dynamic status;
   Map<String,dynamic>? category;
   String? description;
   dynamic translations;
@@ -40,6 +41,7 @@ class DropdownRoleModel {
       DropdownRoleModel(
           id: json['id'].toString(),
           name: json['name'],
+        status: json['status'],
           icon: json['icon'],
           title: json['title'],
           image: json['image'],
@@ -52,6 +54,7 @@ class DropdownRoleModel {
   Map<String, dynamic> toJson() => {"id": id, "name": name, "icon": icon,"title":title,
     "image":image,
     "category":category,
+    "status":status,
     "description":description,
     "translations":translations,
     "classs":classs,

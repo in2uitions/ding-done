@@ -73,7 +73,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                 shrinkWrap: true, // Wrap content inside the Column
                 itemCount: categoriesViewModel.categoriesList.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Padding(
+                  return
+                  Padding(
                     padding: EdgeInsets.only(
                         left: context.appValues.appPadding.p5,right:context.appValues.appPadding.p5 ),
                     child: buildServiceWidget(
@@ -119,7 +120,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         widget.servicesViewModel.searchBody["search_services"]
             .toString()
             .toLowerCase() ==
-            parentServices?["title"].toString().toLowerCase()? Padding(
+            parentServices?["title"].toString().toLowerCase()
+
+        ?
+    Padding(
       padding: EdgeInsets.only(
         top: context.appValues.appPadding.p10,
         bottom: context.appValues.appPadding.p10,

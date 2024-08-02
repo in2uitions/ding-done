@@ -19,7 +19,7 @@ class AppValidation {
 
   String? isValidPassword(String val) {
     // final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    RegExp passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');
+    RegExp passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&:()-_<>])[A-Za-z\d@$!%*#?&:()-_<>]{8,}$');
 
     if (val.isNotEmpty && passwordRegExp.hasMatch(val)) {
       return null;
