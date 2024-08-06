@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_typing_uninitialized_variables
 
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/add_new_payment_method.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/card_info.dart';
@@ -109,6 +110,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                   fromWhere: 'confirm_payment',
                   role: widget.role,
                 ),
+
               ],
             ),
             Positioned(
@@ -138,8 +140,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                             await widget.paymentViewModel.createPaymentMethod();
                             await widget.paymentViewModel.getPaymentMethods();
                             Navigator.of(context).pop();
-                            // new Future.delayed(const Duration(seconds: 0), () => Navigator.of(context)
-                            //     .push(_createRoute(ConfirmPaymentMethod(payment_method:widget.payment_method,paymentViewModel: widget.paymentViewModel,))));
+                            new Future.delayed(const Duration(seconds: 0), () => Navigator.of(context)
+                                .push(_createRoute(ConfirmPaymentMethod(payment_method:widget.payment_method,paymentViewModel: widget.paymentViewModel, role: Constants.customerRoleId,))));
                           },
                           style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xffF3D347),

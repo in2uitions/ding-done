@@ -1,5 +1,6 @@
 import 'package:dingdone/models/roles_model.dart';
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/app_validation.dart';
 import 'package:dingdone/view/widgets/custom/custom_dropdown.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
@@ -35,6 +36,8 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
               index: 'card-number',
               viewModel: paymentViewModel.setInputValues,
               hintText: translate('paymentMethod.cardNumber'),
+              validator: (val) => paymentViewModel.paymentError[''],
+              errorText: paymentViewModel.paymentError['card-number'],
               keyboardType: TextInputType.text,
             ),
             SizedBox(height: context.appValues.appSize.s15),

@@ -27,6 +27,17 @@ class AppValidation {
       return "Enter a valid password";
     }
   }
+  String? cardNumberValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your card number';
+    }
+    // Basic card number validation (Luhn algorithm can be added for more accuracy)
+    if (!RegExp(r'^[0-9]{16}$').hasMatch(value.replaceAll(' ', ''))) {
+      return 'Please enter a valid card number';
+    }
+    return null;
+  }
+
   String? isValidPhoneNumber(String val) {
     // Regular expression for validating phone number (adjust as needed)
     RegExp phoneRegExp = RegExp(r'^\+?[0-9]{6,15}$');

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
+import '../../../view_model/payment_view_model/payment_view_model.dart';
+
 class PaymentMethodButtons extends StatefulWidget {
   var body;
   var payment_method;
@@ -65,38 +67,45 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        ListView.builder(
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          itemCount:
-              widget.payment_method.length + 1, // Add 1 for the static button
-          physics: NeverScrollableScrollPhysics(),
-          itemBuilder: (BuildContext context, int index) {
-            if (index == 0) {
-              // Render the static and initially selected button
-              return GestureDetector(
-                  onTap: () {
-                    // widget.jobsViewModel.setInputValues(index: 'payment_method', value: "Cash On Delivery");
-                  },
-                  child: Column(
-                    children: [
-                      (widget.fromWhere == 'completed' && data != null) ||
-                              (widget.role == Constants.supplierRoleId &&
-                                  data != null)
-                          ? ButtonConfirmPaymentMethod(
+    return FutureBuilder(
+        future:
+        Provider.of<PaymentViewModel>(context, listen: false)
+        .getPaymentMethods(),
+    builder: (context, AsyncSnapshot snapshot) {
+      if (snapshot.connectionState == ConnectionState.done) {
+        if (snapshot.hasData && snapshot.data != null) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 100),
+            child: Column(
+              children: [
+                ListView.builder(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  itemCount: snapshot.data!.length + 1,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (BuildContext context, int index) {
+                    if (index == 0) {
+                      return GestureDetector(
+                        onTap: () {
+                          // Handle tap
+                        },
+                        child: Column(
+                          children: [
+                            (widget.fromWhere == 'completed' && data != null) ||
+                                (widget.role == Constants.supplierRoleId &&
+                                    data != null)
+                                ? ButtonConfirmPaymentMethod(
                               action: active,
-                              tag: "${data["id"]}",
+                              tag: "${snapshot.data![0].id}",
                               active: true,
-                              text: "${data["brand"]}",
+                              text: "${snapshot.data![0].brand}",
                               image: 'assets/img/card-icon.svg',
                               jobsViewModel: widget.jobsViewModel,
-                              data: data["id"],
-                              last_digits: data["last_digits"],
+                              data: snapshot.data![0].id,
+                              last_digits: snapshot.data![0].lastDigits,
                               payment_method: "Card",
                             )
-                          : ButtonCahsOnDelevery(
+                                : ButtonCahsOnDelevery(
                               action: active,
                               tag: "cash",
                               active: _active == "cash" ? true : false,
@@ -107,42 +116,56 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                               jobsViewModel: widget.jobsViewModel,
                               last_digits: '',
                             ),
-                      SizedBox(height: context.appValues.appSize.s10),
-                    ],
-                  ));
-            } else {
-              if (widget.role == Constants.customerRoleId) {
-                var card = widget.payment_method[index - 1];
-
-                return widget.fromWhere != 'completed'
-                    ? GestureDetector(
-                        onTap: () {
-                          // widget.jobsViewModel.setInputValues(index: 'payment_method', value: "Card");
-                          // widget.jobsViewModel.setInputValues(index: 'payment_card', value:card["id"]);
-                        },
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            ButtonConfirmPaymentMethod(
-                              action: active,
-                              tag: "${card["id"]}",
-                              active: _active == "${card["id"]}" ? true : false,
-                              text: '${card["brand"]}',
-                              image: 'assets/img/card-icon.svg',
-                              jobsViewModel: widget.jobsViewModel,
-                              data: card["id"],
-                              last_digits: card["last_digits"],
-                              payment_method: "Card",
-                            ),
                             SizedBox(height: context.appValues.appSize.s10),
                           ],
-                        ))
-                    : Container();
-              }
-            }
-          },
-        ),
-      ],
+                        ),
+                      );
+                    } else {
+                      if (widget.role == Constants.customerRoleId) {
+                        var card = snapshot.data![index - 1];
+
+                        return widget.fromWhere != 'completed'
+                            ? GestureDetector(
+                          onTap: () {
+                            // Handle tap
+                          },
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              ButtonConfirmPaymentMethod(
+                                action: active,
+                                tag: "${card['id']}",
+                                active: _active == "${card['id']}"
+                                    ? true
+                                    : false,
+                                text: '${card['brand']}',
+                                image: 'assets/img/card-icon.svg',
+                                jobsViewModel: widget.jobsViewModel,
+                                data: card['id'],
+                                last_digits: card['last_digits'],
+                                payment_method: "Card",
+                              ),
+                              SizedBox(height: context.appValues.appSize.s10),
+                            ],
+                          ),
+                        )
+                            : Container();
+                      }
+                    }
+                  },
+                ),
+              ],
+            ),
+          );
+        } else {
+          return Center(child: Text('No payment methods available.'));
+        }
+      } else if (snapshot.connectionState == ConnectionState.waiting) {
+        return Center(child: CircularProgressIndicator());
+      } else {
+        return Center(child: Text('Error loading payment methods.'));
+      }
+      }
     );
   }
 }

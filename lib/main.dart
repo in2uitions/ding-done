@@ -89,7 +89,6 @@ class _MyAppState extends State<MyApp> {
     OneSignal.Debug.setAlertLevel(OSLogLevel.none);
     OneSignal.initialize("357d957a-ed36-4ab5-a29e-cfbe93536a64");
     OneSignal.Notifications.requestPermission(true);
-
     WidgetsFlutterBinding.ensureInitialized();
     const stripePublishableKey =
         "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";

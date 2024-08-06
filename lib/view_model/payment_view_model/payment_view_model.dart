@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:http/http.dart' as http;
+import '../../res/app_validation.dart';
 import '../profile_view_model/profile_view_model.dart';
 
 
@@ -25,6 +26,7 @@ class PaymentViewModel extends DisposableViewModel {
 
   List<dynamic> _paymentsList = List.empty();
 
+  Map<String?, String?> paymentError = {};
 
 
   PaymentViewModel(ProfileViewModel profileViewModel) {
@@ -53,11 +55,10 @@ class PaymentViewModel extends DisposableViewModel {
 
   Future<List<dynamic>?> getPaymentMethods() async {
     try {
-
       var response=await _paymentsRepository.getPayments(int.parse('${_profileViewModel.getProfileBody["id"]}'));
       _paymentsResponse = await ApiResponse.completed(response);
       _paymentsList = _paymentsResponse.data?.toJson()["payments"];
-      notifyListeners();
+      // notifyListeners();
       return _paymentsList;
     } catch (e) {
       debugPrint('error in getting payments $e');
@@ -80,66 +81,85 @@ class PaymentViewModel extends DisposableViewModel {
   Future<void> createPaymentMethod() async {
     Map<String, dynamic> body = {};
     Map<String, dynamic> bodyattach = {};
-    try {
-      await Stripe.instance.dangerouslyUpdateCardDetails(CardDetails(
-        number: '${paymentBody["card-number"]}',
-        cvc: '${paymentBody["last_digits"]}',
-        expirationMonth: int.parse('${paymentBody["expiry_month"]}'),
-        expirationYear: int.parse('${paymentBody["expiry_year"]}'),
-      ));
-      // paymentIntent = await createPaymentIntent('100', 'INR');
-      // debugPrint('payment intent $paymentIntent');
+    String? cardNumberMessage = '';
+    cardNumberMessage = AppValidation().cardNumberValidator(
+        paymentBody["card-number"] ?? '' );
 
-      var response=await Stripe.instance.createPaymentMethod(
-        params:  PaymentMethodParams.card(
-          paymentMethodData: PaymentMethodData(
-            billingDetails: BillingDetails(
-              name: '${_profileViewModel.getProfileBody["user"]["first_name"]} ${_profileViewModel.getProfileBody["user"]["last_name"]}',
-              email: '${_profileViewModel.getProfileBody["user"]["email"]}',
-              phone: '${_profileViewModel.getProfileBody["user"]["phone_number"]}',
-              // address: Address(
-              //   city: 'Houston',
-              //   country: 'US',
-              //   line1: '1459  Circle Drive',
-              //   line2: '',
-              //   state: 'Texas',
-              //   postalCode: '77063',
-              // ),
+    if (cardNumberMessage == null || cardNumberMessage == '') {
+      try {
+        await Stripe.instance.dangerouslyUpdateCardDetails(CardDetails(
+          number: '${paymentBody["card-number"]}',
+          cvc: '${paymentBody["last_digits"]}',
+          expirationMonth: int.parse('${paymentBody["expiry_month"]}'),
+          expirationYear: int.parse('${paymentBody["expiry_year"]}'),
+        ));
+        // paymentIntent = await createPaymentIntent('100', 'INR');
+        // debugPrint('payment intent $paymentIntent');
+
+        var response = await Stripe.instance.createPaymentMethod(
+          params: PaymentMethodParams.card(
+            paymentMethodData: PaymentMethodData(
+              billingDetails: BillingDetails(
+                name: '${_profileViewModel
+                    .getProfileBody["user"]["first_name"]} ${_profileViewModel
+                    .getProfileBody["user"]["last_name"]}',
+                email: '${_profileViewModel.getProfileBody["user"]["email"]}',
+                phone: '${_profileViewModel
+                    .getProfileBody["user"]["phone_number"]}',
+                // address: Address(
+                //   city: 'Houston',
+                //   country: 'US',
+                //   line1: '1459  Circle Drive',
+                //   line2: '',
+                //   state: 'Texas',
+                //   postalCode: '77063',
+                // ),
+              ),
             ),
+
           ),
+        );
+        debugPrint('response in creating payment card $response');
+        //     .then((value) {
+        //       debugPrint('value ${value}');
+        // });
+        body["customer_info"] =
+            int.parse('${_profileViewModel.getProfileBody["id"]}');
+        body["payment_method_id"] = response.id;
+        body["brand"] = response.card.brand;
+        body["country"] = response.card.country;
+        body["expiry_month"] = response.card.expMonth;
+        body["expiry_year"] = response.card.expYear;
+        body["funding"] = response.card.funding;
+        body["last_digits"] = response.card.last4;
 
-        ),
-      );
-      //     .then((value) {
-      //       debugPrint('value ${value}');
-      // });
-      body["customer_info"]=int.parse('${_profileViewModel.getProfileBody["id"]}');
-      body["payment_method_id"]=response.id;
-      body["brand"]=response.card.brand;
-      body["country"]=response.card.country;
-      body["expiry_month"]=response.card.expMonth;
-      body["expiry_year"]=response.card.expYear;
-      body["funding"]=response.card.funding;
-      body["last_digits"]=response.card.last4;
+        debugPrint('bodyy $body');
 
-      if(_profileViewModel.getProfileBody["stripe_customer_id"]==null){
-        var response1=await createCustomerId();
-        debugPrint('id of the new customer ${response1["id"]}');
-        debugPrint('id of the new customer ${response1["id"]}');
-        body["stripe_customer_id"]='${response1["id"]}';
-        bodyattach["customer"]='${response1["id"]}';
 
-      }else{
-        bodyattach["customer"]='${_profileViewModel.getProfileBody["stripe_customer_id"]}';
 
+        if (_profileViewModel.getProfileBody["stripe_customer_id"] == null) {
+          var response1 = await createCustomerId();
+          debugPrint('id of the new customer ${response1["id"]}');
+          debugPrint('id of the new customer ${response1["id"]}');
+          body["stripe_customer_id"] = '${response1["id"]}';
+          bodyattach["customer"] = '${response1["id"]}';
+        } else {
+          bodyattach["customer"] =
+          '${_profileViewModel.getProfileBody["stripe_customer_id"]}';
+        }
+
+        debugPrint('bodyy $body');
+        await _paymentsRepository.addPaymentCard(body);
+        await attachCustomerToPaymentMethod(bodyattach, response.id);
+        // await getCustomerPayments(_profileViewModel.getProfileBody["user"]["id"]);
+
+      } catch (e) {
+        debugPrint('error in create payment $e');
       }
-
-      debugPrint('bodyy $body');
-      await _paymentsRepository.addPaymentCard(body);
-      await attachCustomerToPaymentMethod(bodyattach,response.id);
-
-    } catch (e) {
-      debugPrint('error in make payment $e');
+    }else{
+      paymentError['card-number'] =
+          cardNumberMessage;
+      notifyListeners();
     }
   }
 

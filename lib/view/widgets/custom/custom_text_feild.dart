@@ -1,6 +1,8 @@
+import 'package:dingdone/res/app_validation.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -90,7 +92,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
         obscureText: widget.hintText == "Password" ? obscureText : false,
         // maxLength: 32,
         // onSaved: widget.onSaved,
-        // validator: widget.validator,
+        validator:  widget.hintText == translate('paymentMethod.cardNumber')
+            ?
+        AppValidation().cardNumberValidator:
+        widget.validator,
         // onFieldSubmitted: widget.onFieldSubmitted,
         // onChanged: widget.onChanged,
         keyboardType: widget.keyboardType,
