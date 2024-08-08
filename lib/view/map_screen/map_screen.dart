@@ -76,9 +76,12 @@ class _MapScreenState extends State<MapScreen> {
               await widget.viewModel.setInputValues(
                   index: "address",
                   value: pickedData.address ?? '');
+              // await widget.viewModel.setInputValues(
+              //     index: "city",
+              //     value: pickedData.addressData['state_district'] ?? '');
               await widget.viewModel.setInputValues(
                   index: "city",
-                  value: pickedData.addressData['state_district'] ?? '');
+                  value: pickedData.addressData['state'] ?? '');
               await widget.viewModel.setInputValues(
                   index: "state",
                   value: pickedData.addressData['state'] ?? '');
