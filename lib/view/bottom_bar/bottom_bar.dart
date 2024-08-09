@@ -134,47 +134,51 @@ class _BottomBarState extends State<BottomBar> {
                       //   // mainAxisAlignment: MainAxisAlignment.spaceAround,
                       //   crossAxisAlignment: CrossAxisAlignment.start,
                       //   children: <Widget>[
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          setState(() {
-                            currentScreen =
-                                // HomePage(); // if user taps on this dashboard tab will be active
-                                widget.userRole == Constants.supplierRoleId
-                                    ? const HomePageSupplier()
-                                    : const HomePage();
-                            currentTab = 0;
-                          });
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            // Icon(
-                            //   Icons.home_outlined,
-                            //   size: context.appValues.appSize.s25,
-                            //   color: currentTab == 0
-                            //       ? const Color(0xff9F9AB7)
-                            //       : Color(0xff180C39),
-                            // ),
-                            SvgPicture.asset(
-                              'assets/img/home-new.svg',
-                              fit: BoxFit.contain,
-                              height: context.appValues.appSizePercent.h3,
-                              color: currentTab == 0
-                                  ? const Color(0xff9F9AB7)
-                                  : const Color(0xff180C39),
+                      Builder(
+                        builder: (context) {
+                          return MaterialButton(
+                            minWidth: 40,
+                            onPressed: () {
+                              setState(() {
+                                currentScreen =
+                                    // HomePage(); // if user taps on this dashboard tab will be active
+                                    widget.userRole == Constants.supplierRoleId
+                                        ? const HomePageSupplier()
+                                        : const HomePage();
+                                currentTab = 0;
+                              });
+                            },
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                // Icon(
+                                //   Icons.home_outlined,
+                                //   size: context.appValues.appSize.s25,
+                                //   color: currentTab == 0
+                                //       ? const Color(0xff9F9AB7)
+                                //       : Color(0xff180C39),
+                                // ),
+                                SvgPicture.asset(
+                                  'assets/img/home-new.svg',
+                                  fit: BoxFit.contain,
+                                  height: context.appValues.appSizePercent.h3,
+                                  color: currentTab == 0
+                                      ? const Color(0xff9F9AB7)
+                                      : const Color(0xff180C39),
+                                ),
+                                // SizedBox(height: context.appValues.appSize.s5),
+                                // Text(
+                                //   translate('bottom_bar.home'),
+                                //   style: getPrimaryRegularStyle(
+                                //     color: currentTab == 0
+                                //         ? const Color(0xff9F9AB7)
+                                //         : const Color(0xff180C39),
+                                //   ),
+                                // ),
+                              ],
                             ),
-                            // SizedBox(height: context.appValues.appSize.s5),
-                            // Text(
-                            //   translate('bottom_bar.home'),
-                            //   style: getPrimaryRegularStyle(
-                            //     color: currentTab == 0
-                            //         ? const Color(0xff9F9AB7)
-                            //         : const Color(0xff180C39),
-                            //   ),
-                            // ),
-                          ],
-                        ),
+                          );
+                        }
                       ),
                       Consumer<JobsViewModel>(
                           builder: (context, jobsViewModel, _) {

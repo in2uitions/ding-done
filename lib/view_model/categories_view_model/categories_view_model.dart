@@ -1,5 +1,6 @@
 import 'package:dingdone/models/categories_model.dart';
 import 'package:dingdone/models/roles_model.dart';
+import 'package:dingdone/models/services_model.dart';
 import 'package:dingdone/repository/categories/categories_repo.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class CategoriesViewModel with ChangeNotifier {
   final CategoriesRepo _categoriesRepository = CategoriesRepo();
   ApiResponse<CategoriesModelMain> _categoriesResponse = ApiResponse.loading();
   List<DropdownRoleModel>? _categoriesList = List.empty();
+  List<DropdownRoleModel>? _categoriesList2 = List.empty();
   List<DropdownRoleModel>? _parentCategoriesList = List.empty();
   ApiResponse<DropDownModelMain> _apiCategoriesResponse = ApiResponse.loading();
   ApiResponse<DropDownModelMain> _apiParentCategoriesResponse = ApiResponse.loading();
@@ -37,12 +39,13 @@ class CategoriesViewModel with ChangeNotifier {
 
       // _jobsResponseList =
       // _apiJobsResponse.data?.toCarouselJson()["jobs_carousel"];
+      ServicesViewModel servicesViewModel =ServicesViewModel();
 
       _apiCategoriesResponse = ApiResponse.completed(response);
       _categoriesList = _apiCategoriesResponse.data?.dropDownList;
       _parentCategoriesList = _categoriesList!.where((category) => category.classs == null && category.status=='published').toList();
-
       _categoriesList = _categoriesList!.where((category) => category.classs != null && category.status=='published').toList();
+      // _categoriesList2 = _categoriesList!.where((category) => category.classs == servicesViewModel.searchBody['search_services']).toList();
 
       notifyListeners();
 
@@ -57,7 +60,29 @@ class CategoriesViewModel with ChangeNotifier {
   Future<void> sortCategories(dynamic serv) async {
     try {
 
-      ServicesViewModel servicesViewModel =ServicesViewModel();
+      // Filter the categories list to only include those with the chosen parent category
+      _categoriesList2 = _categoriesList?.where((category) {
+        Map<String, dynamic>? services;
+        Map<String, dynamic>? parentServices;
+
+        // Find the translation for the current language
+        for (Map<String, dynamic> translation in category.translations) {
+          if (translation["languages_code"]["code"] == lang) {
+            services = translation;
+            break; // Break the loop once the translation is found
+          }
+        }
+        for (Map<String, dynamic> translationParent in category.classs["translations"]) {
+          if (translationParent["languages_code"]["code"] == lang) {
+            parentServices = translationParent;
+            break; // Break the loop once the translation is found
+          }
+        }
+
+        // Check if the category or its parent matches the chosen parent category
+        return serv.toString().toLowerCase() == services?["title"].toString().toLowerCase() ||
+            serv.toString().toLowerCase() == parentServices?["title"].toString().toLowerCase();
+      }).toList();
 
       _categoriesList?.sort((a, b) {
 
@@ -148,6 +173,7 @@ class CategoriesViewModel with ChangeNotifier {
 
   // get isActive => _userModelResponse.data?.status == 'active';
   get categoriesList => _categoriesList;
+  get categoriesList2 => _categoriesList2;
   get parentCategoriesList => _parentCategoriesList;
 
 }

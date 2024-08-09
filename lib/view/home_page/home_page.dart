@@ -46,6 +46,7 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     getLanguage();
     Provider.of<CategoriesViewModel>(context, listen: false).readJson();
+    Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(Provider.of<ServicesViewModel>(context, listen: false).searchBody['search_services']);
 
 
   }
@@ -62,11 +63,13 @@ class _HomePageState extends State<HomePage> {
   Future<void> _handleRefresh() async {
     try {
       String? role = await AppPreferences().get(key: userRoleKey, isModel: false);
-
       // Simulate network fetch or database query
       await Future.delayed(Duration(seconds: 2));
       // Update the list of items and refresh the UI
       Navigator.of(context).push(_createRoute(BottomBar(userRole: role)));
+      Provider.of<CategoriesViewModel>(context, listen: false).readJson();
+      Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(Provider.of<ServicesViewModel>(context, listen: false).searchBody['search_services']);
+
     } catch (error) {
       // Handle the error, e.g., by displaying a snackbar
       ScaffoldMessenger.of(context).showSnackBar(

@@ -28,10 +28,13 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   void initState() {
     super.initState();
     getLanguage();
+    Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(widget.servicesViewModel.searchBody["search_services"]);
+
   }
 
   getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
+
   }
 
   @override
@@ -71,14 +74,14 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                     ),
                 physics: NeverScrollableScrollPhysics(), // Disable grid view scrolling
                 shrinkWrap: true, // Wrap content inside the Column
-                itemCount: categoriesViewModel.categoriesList.length,
+                itemCount: categoriesViewModel.categoriesList2.length,
                 itemBuilder: (BuildContext context, int index) {
                   return
                   Padding(
                     padding: EdgeInsets.only(
                         left: context.appValues.appPadding.p5,right:context.appValues.appPadding.p5 ),
                     child: buildServiceWidget(
-                        categoriesViewModel.categoriesList[index],
+                        categoriesViewModel.categoriesList2[index],
                         categoriesViewModel,index),
                   );
                 },
@@ -102,6 +105,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
     for (Map<String, dynamic> translation in service.translations) {
       if (translation["languages_code"]["code"] == lang) {
         services = translation;
+        // Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(widget.servicesViewModel.searchBody["search_services"]);
+
         break; // Break the loop once the translation is found
       }
     }
@@ -370,7 +375,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           // categoriesViewModel.sortCategories(services?["title"]);
         },
       ),
-    ) :Container();
+    ) :
+    Container();
   }
 }
 
