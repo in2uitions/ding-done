@@ -511,10 +511,8 @@ class SignUpViewModel with ChangeNotifier {
 
   void setInputValues({required String index,required dynamic value}) {
     signUpBody[index] = value;
-    debugPrint('si8gnup body $signUpBody');
+    debugPrint('signup body $signUpBody');
     notifyListeners();
-
-    debugPrint('signup body ${signUpBody}');
   }
   Future<dynamic> getData() async{
     return signUpBody;
