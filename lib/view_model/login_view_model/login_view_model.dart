@@ -55,7 +55,6 @@ class LoginViewModel with ChangeNotifier {
   }
 
   Future<void> splashLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
     await checkAndRefreshToken();
 
     if (await isTokenNotEmpty() && !await isTokenExpired()) {
