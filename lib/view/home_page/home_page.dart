@@ -6,11 +6,8 @@ import 'package:dingdone/view/about/about_dingdone.dart';
 import 'package:dingdone/view/categories/parent_categories.dart';
 import 'package:dingdone/view/categories_screen/categories_screen.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
-import 'package:dingdone/view/profile_page/profile_page.dart';
-import 'package:dingdone/view/widgets/categories_screen/home_categories_widget.dart';
 import 'package:dingdone/view/widgets/custom/custom_search_bar.dart';
 import 'package:dingdone/view/widgets/home_page/categories.dart';
-import 'package:dingdone/view/widgets/home_page/services.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -20,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../view_model/dispose_view_model/app_view_model.dart';
@@ -47,6 +45,7 @@ class _HomePageState extends State<HomePage> {
     getLanguage();
     Provider.of<CategoriesViewModel>(context, listen: false).readJson();
     Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(Provider.of<ServicesViewModel>(context, listen: false).searchBody['search_services']);
+
 
 
   }

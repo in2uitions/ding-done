@@ -35,7 +35,6 @@ class LoginViewModel with ChangeNotifier {
   }
   Future<void> readJson() async {
     // AppPreferences().clear();
-
   }
 
   Future<void> checkAndRefreshToken() async {

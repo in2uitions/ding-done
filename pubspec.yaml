@@ -77,6 +77,7 @@ dependencies:
   flutter_translate: ^4.0.4
   flutter_localization: ^0.2.0
   gap: ^3.0.1
+  geocoding: ^3.0.0
 
 flutter_launcher_icons:
   android: "launcher_icon"

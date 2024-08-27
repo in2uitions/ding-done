@@ -21,6 +21,7 @@ ${BUILT_PRODUCTS_DIR}/flutter_image_compress_common/flutter_image_compress_commo
 ${BUILT_PRODUCTS_DIR}/flutter_localization/flutter_localization.framework
 ${BUILT_PRODUCTS_DIR}/flutter_native_splash/flutter_native_splash.framework
 ${BUILT_PRODUCTS_DIR}/flutter_pdfview/flutter_pdfview.framework
+${BUILT_PRODUCTS_DIR}/geocoding_ios/geocoding_ios.framework
 ${BUILT_PRODUCTS_DIR}/geolocator_apple/geolocator_apple.framework
 ${BUILT_PRODUCTS_DIR}/image_cropper/image_cropper.framework
 ${BUILT_PRODUCTS_DIR}/image_picker_ios/image_picker_ios.framework

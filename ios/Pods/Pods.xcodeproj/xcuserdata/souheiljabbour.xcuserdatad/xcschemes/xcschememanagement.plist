@@ -209,6 +209,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>geocoding_ios-geocoding_ios_privacy.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>geocoding_ios.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>geolocator_apple-geolocator_apple_privacy.xcscheme</key>
 		<dict>
 			<key>isShown</key>

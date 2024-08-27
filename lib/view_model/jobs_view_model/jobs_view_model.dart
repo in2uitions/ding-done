@@ -62,6 +62,7 @@ class JobsViewModel with ChangeNotifier {
       await getCustomerJobs();
 
     }
+
   }
   Future<void> getRole() async {
     try {

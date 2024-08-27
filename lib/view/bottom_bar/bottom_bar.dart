@@ -15,6 +15,7 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
@@ -34,28 +35,23 @@ class _BottomBarState extends State<BottomBar> {
 
   int currentTab = 0;
   late Widget currentScreen;
-  // to keep track of active tab index
-  // final List<Widget> screens = [
-  //   // HomePage(),
-  //   HomePageSupplier(),
-  //   JobsPage(),
-  //   InboxPage(),
-  //   ProfilePage(),
-  //   // HomePage(),
-  // ]; // to store nested tabs
   final PageStorageBucket bucket = PageStorageBucket();
   final JobsViewModel _jobsViewModel = JobsViewModel();
 
+  String? _currentAddress;
+  Position? _currentPosition;
   @override
   void initState() {
     super.initState();
     getLanguage();
     Provider.of<CategoriesViewModel>(context, listen: false).readJson();
-
+    _handleLocationPermission();
+    _getCurrentPosition();
     _jobsViewModel.readJson();
     currentScreen = widget.userRole == Constants.supplierRoleId
         ? const HomePageSupplier()
         : const HomePage();
+
   }
   // Widget currentScreen = HomePage(); // Our first view in viewport
   // Widget currentScreen = HomePageSupplier(); // Our first view in viewport
@@ -65,6 +61,47 @@ class _BottomBarState extends State<BottomBar> {
     if(lang==null){
       lang='en-US';
     }
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+    debugPrint('has location permission $hasPermission');
+    if (!hasPermission) return;
+    await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+      AppPreferences().save(key: currentPositionKey, value: position, isModel: false);
+      debugPrint('current location $position');
+    }).catchError((e) {
+      debugPrint(e);
+    });
+  }
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
   }
 
   @override

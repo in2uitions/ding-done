@@ -20,6 +20,7 @@ const String SHARED_PASSWORD = "PASSWORD";
 const String otpNumber = "OTP";
 const String userIdTochangePassword = "userIdTochangePassword";
 const String language = "LANGUAGE";
+const String currentPositionKey = "CURRENT_POSITION";
 const String dblang = "DBLANG";
 const String userRefreshToken = "REFRESH_TOKEN";
 const String loginTime = '';

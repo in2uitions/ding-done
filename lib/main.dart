@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,7 +51,6 @@ class _MyAppState extends State<MyApp> {
   String? userRole;
   String? _userId;
   bool _doLogin = false;
-
   @override
   void initState() {
     super.initState();
@@ -58,13 +58,13 @@ class _MyAppState extends State<MyApp> {
     checkUserIsLogged();
     getLanguage();
     WidgetsFlutterBinding.ensureInitialized();
-
     // Future.delayed(const Duration(seconds: 3), () => checkUserIsLogged());
     initPlatformState();
   }
 
+
   void checkUserIsLogged() async {
-    final prefs = await SharedPreferences.getInstance();
+    // final prefs = await SharedPreferences.getInstance();
     // final role = prefs.getString(userRoleKey);
     final role = await AppPreferences().get(key: userRoleKey, isModel: false);
     // final userId = prefs.getString(userIdKey);
@@ -120,6 +120,7 @@ class _MyAppState extends State<MyApp> {
       await AppPreferences().save(key: dblang,value: 'el-GR', isModel: false);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
