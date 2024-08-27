@@ -62,6 +62,26 @@ class ProfileViewModel extends DisposableViewModel {
     }
   }
 
+  Future<void> changeCurrentLocation(dynamic latitude,dynamic longitude) async {
+    try {
+      dynamic response = await _homeRepository.changeCurrentLocation(
+          // id: profileBody["id"],
+          body: {
+            "latitude" :latitude,
+            "longitude" :longitude,
+            "supplier_id" :getUserId(),
+      });
+      // _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
+      // profileBody = _apiProfileResponse.data?.toJson() ?? {};
+      debugPrint('response view model change location $response');
+      notifyListeners();
+    } catch (error) {
+      debugPrint('error while changing locationn $error');
+      // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
+      notifyListeners();
+    }
+  }
+
   Future<void> patchProfileData(dynamic body) async {
     try {
       String userId = await getUserId();

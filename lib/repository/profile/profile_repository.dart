@@ -13,6 +13,8 @@ class ProfileRepository {
       NetworkApiService(url: ApiEndPoints().supplierProfile);
   final BaseApiService _apiCustomerProfile =
       NetworkApiService(url: ApiEndPoints().customerProfile);
+  final BaseApiService _apiSupplierLocation =
+      NetworkApiService(url: ApiEndPoints().supplierChangeLocation);
   final BaseApiService _userApi =
   NetworkApiService(url: ApiEndPoints().userData);
 
@@ -57,7 +59,7 @@ class ProfileRepository {
             id: id, data: body, params: '?fields=*.*');
       } else {
         if (Constants.supplierRoleId == role) {
-          debugPrint('supplier ${body}');
+          debugPrint('supplier body ${body}');
           response = await _apiSupplierProfile.patchResponse(
               id: id, data: body, params: '?fields=*,supplier_info.*');
         }
@@ -68,12 +70,44 @@ class ProfileRepository {
       rethrow;
     }
   }
+  Future<dynamic> changeCurrentLocation(
+      {dynamic body}) async {
+    try {
+      String userId = await getUserId();
+      body["supplier_id"] = userId;
+      String role = await getRole();
+      dynamic response;
+      if (Constants.customerRoleId == role) {
+        debugPrint('customer change location ');
+        // response = await _apiCustomerLocation.postResponse(
+        //    data: body);
+      } else {
+        if (Constants.supplierRoleId == role) {
+          debugPrint('supplier change location ');
+          debugPrint('supplier body ${body}');
+          response = await _apiSupplierLocation.postResponse(
+            data: body);
+        }
+      }
+      debugPrint('response of change location $response');
+      return response;
+    } catch (error) {
+      debugPrint('error in repo change location $error');
+      rethrow;
+    }
+  }
 // Function to recursively remove the 'token' field
   void removeToken(Map<String, dynamic> map) {
-    map.remove('token');
+    map.remove('token'); // Remove the 'token' at the current level
     map.forEach((key, value) {
       if (value is Map<String, dynamic>) {
-        removeToken(value);
+        removeToken(value); // Recursively remove 'token' from nested maps
+      } else if (value is List) {
+        for (var item in value) {
+          if (item is Map<String, dynamic>) {
+            removeToken(item); // Remove 'token' from each map in a list
+          }
+        }
       }
     });
   }
@@ -95,7 +129,7 @@ class ProfileRepository {
 
           // Remove the 'token' field from the cleanedBody
           removeToken(cleanedBody);
-
+          debugPrint('supplier clean body ${cleanedBody}');
           // Call the patchResponse method with the cleanedBody
           response = await _apiSupplierProfile.patchResponse(
             id: id,

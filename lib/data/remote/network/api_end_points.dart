@@ -20,6 +20,7 @@ class ApiEndPoints {
   final String supplierFinishJob = '/suppliers/finishJob';
   final String supplierStartJob = '/suppliers/startJob';
   final String supplierAcceptJob = '/suppliers/bookJob';
+  final String supplierChangeLocation = '/suppliers/myLocation';
   final String updateJob = '/suppliers/updateJob';
   final String updateJobCustomer = '/customers/updateJob';
   final String supplierCancelBooking = '/suppliers/cancelBooking';

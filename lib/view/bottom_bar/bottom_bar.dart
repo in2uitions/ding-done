@@ -70,10 +70,13 @@ class _BottomBarState extends State<BottomBar> {
     await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
-      setState(() => _currentPosition = position);
-      AppPreferences().save(key: currentPositionKey, value: position, isModel: false);
       debugPrint('current location $position');
+      setState(() => _currentPosition = position);
+      // AppPreferences().save(key: currentPositionKey, value: position, isModel: false);
+      debugPrint('current location $position');
+      Provider.of<ProfileViewModel>(context, listen: false).changeCurrentLocation(position.latitude,position.longitude);
     }).catchError((e) {
+      debugPrint('error getting position $e');
       debugPrint(e);
     });
   }
