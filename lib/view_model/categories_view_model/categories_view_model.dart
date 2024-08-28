@@ -20,7 +20,7 @@ class CategoriesViewModel with ChangeNotifier {
 
 
   CategoriesViewModel() {
-    readJson();
+    // readJson();
   }
   Future<void> readJson() async {
     await getCategories();

@@ -133,6 +133,8 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                   return ListView.builder(
                     itemCount: servicesViewModel.servicesList.length,
                     itemBuilder: (context, index) {
+
+
                       ServicesModel service =
                           servicesViewModel.servicesList[index];
                       if (service.category["id"].toString() ==
@@ -154,6 +156,8 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                             return CategoriesScreenCards(
                               category: category,
                               title: services != null ? services["title"] : '',
+                              cost: '${service.country_rates[0]["unit_rate"] } ${service.country_rates[0]["country"]["curreny"]}',
+
                               image: service.image != null
                                   ? '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}'
                                   : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',

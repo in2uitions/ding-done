@@ -64,6 +64,7 @@ class ProfileViewModel extends DisposableViewModel {
 
   Future<void> changeCurrentLocation(dynamic latitude,dynamic longitude) async {
     try {
+      debugPrint('Changing current location');
       dynamic response = await _homeRepository.changeCurrentLocation(
           // id: profileBody["id"],
           body: {

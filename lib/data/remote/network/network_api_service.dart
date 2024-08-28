@@ -42,11 +42,6 @@ class NetworkApiService extends BaseApiService {
 
       }
 
-
-      //
-      // headers[HttpHeaders.contentTypeHeader] = 'application/json';
-      // headers[HttpHeaders.authorizationHeader] = 'Bearer FVKZamSq0AEXX-gcHM-J1Xb4xX3bFBxj';
-      // headers[HttpHeaders.authorizationHeader] = 'Bearer FVKZamSq0AEXX-gcHM-J1Xb4xX3bFBxj';
       final response;
       response = await http.get(Uri.parse(finalUrl), headers: headers);
       // debugPrint('response in api network $response');

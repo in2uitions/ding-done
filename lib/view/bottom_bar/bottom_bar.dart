@@ -12,6 +12,7 @@ import 'package:dingdone/view/profile_page_supplier/profile_page_supplier.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -45,6 +46,7 @@ class _BottomBarState extends State<BottomBar> {
     super.initState();
     getLanguage();
     Provider.of<CategoriesViewModel>(context, listen: false).readJson();
+    Provider.of<ServicesViewModel>(context, listen: false).readJson();
     _handleLocationPermission();
     _getCurrentPosition();
     _jobsViewModel.readJson();
@@ -58,15 +60,16 @@ class _BottomBarState extends State<BottomBar> {
 
   getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
-    if(lang==null){
-      lang='en-US';
-    }
+    lang ??= 'en-US';
+    debugPrint('language in bottom bar $lang');
+
   }
 
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
     debugPrint('has location permission $hasPermission');
     if (!hasPermission) return;
+
     await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {

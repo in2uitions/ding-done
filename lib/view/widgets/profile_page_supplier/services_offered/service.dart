@@ -103,7 +103,8 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
                         title: Text(
                           servicesInCategory[innerIndex]["translations"]
                               .firstWhere(
-                                  (translation) => translation["languages_code"]["code"] == lang,
+                                  (translation) => translation["languages_code"]!=null?
+                                  translation["languages_code"]["code"] == lang:true,
                               orElse: () => servicesInCategory[innerIndex]["translations"][0])
                           ["title"]
                               .toString(),

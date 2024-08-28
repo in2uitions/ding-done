@@ -32,15 +32,16 @@ class ServicesViewModel with ChangeNotifier {
   bool _chosenParent = false;
 
   ServicesViewModel() {
-    readJson();
-    _checkboxValues = List.generate(listOfLists.length, (index) {
-      var servicesInCategory = listOfLists[index];
-      return List.generate(servicesInCategory.length, (innerIndex) => false);
-    });
+    // readJson();
+
   }
 
   Future<void> readJson() async {
     await getServices();
+    _checkboxValues = List.generate(listOfLists.length, (index) {
+      var servicesInCategory = listOfLists[index];
+      return List.generate(servicesInCategory.length, (innerIndex) => false);
+    });
   }
 
   void setInputValues({required String index, dynamic value}) {

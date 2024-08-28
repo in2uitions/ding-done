@@ -8,10 +8,12 @@ class Categoriescard extends StatefulWidget {
     super.key,
     required this.title,
     required this.image,
+    required this.cost,
     required this.onTap,
   });
   String title, image;
   dynamic onTap;
+  dynamic cost;
 
   @override
   State<Categoriescard> createState() => _CategoriescardState();
@@ -61,14 +63,29 @@ class _CategoriescardState extends State<Categoriescard> {
               ),
               const Gap(30),
               Flexible(
-                child: Text(
-                  widget.title,
-                  maxLines: 2, // Limit the number of lines to 1
-                  overflow: TextOverflow.ellipsis,
-                  style: getPrimaryBoldStyle(
-                    fontSize: 20,
-                    color: context.resources.color.btnColorBlue,
-                  ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.title,
+                      maxLines: 2, // Limit the number of lines to 1
+                      overflow: TextOverflow.ellipsis,
+                      style: getPrimaryBoldStyle(
+                        fontSize: 18,
+                        color: context.resources.color.btnColorBlue,
+                      ),
+                    ),
+                    Text(
+                      'Cost: ${widget.cost}',
+                      maxLines: 1, // Limit the number of lines to 1
+                      overflow: TextOverflow.ellipsis,
+                      style: getPrimaryRegularStyle(
+                        fontSize: 16,
+                        color: context.resources.color.btnColorBlue,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

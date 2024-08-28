@@ -17,10 +17,12 @@ class CategoriesScreenCards extends StatefulWidget {
     required this.image,
     required this.onTap,
     required this.category,
+    required this.cost,
   });
   String title, image;
   dynamic onTap;
   dynamic category;
+  dynamic cost;
 
   @override
   State<CategoriesScreenCards> createState() => _CategoriesScreenCardsState();
@@ -49,6 +51,7 @@ class _CategoriesScreenCardsState extends State<CategoriesScreenCards> {
               return Categoriescard(
                 title: widget.title,
                 image: widget.image,
+                cost: widget.cost,
                 onTap: widget.onTap,
               );
             // });
