@@ -40,13 +40,15 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     _tabController = TabController(
       length: widget.categoriesViewModel.categoriesList.length,
       vsync: this,
-      initialIndex: widget.initialTabIndex, // Set initial tab index here
+      initialIndex: 0, // Set initial tab index here
     );
     initializeLanguage();
   }
   void initializeLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
+    lang ??= 'en-US';
     setState(() {}); // Trigger a rebuild after initializing the language
+
   }
 
   @override
@@ -112,6 +114,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 borderRadius: BorderRadius.circular(10),
                 color: const Color(0xffF3D347), // Yellow color
               ),
+
               indicatorSize: TabBarIndicatorSize.tab,
               indicatorWeight:3,
               indicatorColor: context.resources.color
@@ -131,18 +134,16 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 children: widget.categoriesViewModel.categoriesList
                     .map<Widget>((category) {
                   return ListView.builder(
-                    itemCount: servicesViewModel.servicesList.length,
+                    itemCount: widget.categoriesViewModel.servicesList.length,
                     itemBuilder: (context, index) {
-
-
-                      ServicesModel service =
-                          servicesViewModel.servicesList[index];
-                      if (service.category["id"].toString() ==
-                          category.id.toString()) {
+                      Map<String,dynamic> service =
+                      widget.categoriesViewModel.servicesList[index];
+                      if (service["category"]["translations"][0]['categories_id'].toString() ==
+                          category["id"].toString()) {
                         dynamic services;
                         for (Map<String, dynamic> translation
-                            in service.translations) {
-                          if (translation["languages_code"]["code"] == lang) {
+                            in service["translations"]) {
+                          if (translation["languages_code"] == lang) {
                             services = translation;
                             break; // Break the loop once the translation is found
                           }
@@ -156,14 +157,13 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                             return CategoriesScreenCards(
                               category: category,
                               title: services != null ? services["title"] : '',
-                              cost: '${service.country_rates[0]["unit_rate"] } ${service.country_rates[0]["country"]["curreny"]}',
-
-                              image: service.image != null
-                                  ? '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}'
+                              cost: '${service["country_rates"][0]["unit_rate"] } ${service["country_rates"][0]["country"]["curreny"]}',
+                              image: service["image"] != null
+                                  ? '${context.resources.image.networkImagePath2}${service["image"]}'
                                   : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
                               onTap: () {
                                 jobsViewModel.setInputValues(
-                                    index: 'service', value: service.id);
+                                    index: 'service', value: service["id"]);
                                 jobsViewModel.setInputValues(
                                   index: 'job_address',
                                   value: profileViewModel.getProfileBody['current_address'],
@@ -193,8 +193,8 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                                     .push(_createRoute(BookAService(
                                   service: service,
                                   lang: lang,
-                                  image: service.image != null
-                                      ? '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}'
+                                  image: service["image"] != null
+                                      ? '${context.resources.image.networkImagePath2}${service["image"]}'
                                       : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
                                 )));
                               },
@@ -217,18 +217,18 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   }
 
   Widget buildCategoryWidget(
-      DropdownRoleModel category, CategoriesViewModel categoriesViewModel) {
+      Map<String, dynamic> category, CategoriesViewModel categoriesViewModel) {
     Map<String, dynamic>? categories;
     Map<String, dynamic>? parentServices;
-    for (Map<String, dynamic> translation in category.translations) {
-      if (translation["languages_code"]["code"] == lang) {
+    for (Map<String, dynamic> translation in category["translations"]) {
+      if (translation["languages_code"] == lang) {
         categories = translation;
         break; // Break the loop once the translation is found
       }
     }
     for (Map<String, dynamic> translationParent
-        in category.classs["translations"]) {
-      if (translationParent["languages_code"]["code"] == lang) {
+        in category["class"]["translations"]) {
+      if (translationParent["languages_code"] == lang) {
         parentServices = translationParent;
         break; // Break the loop once the translation is found
       }

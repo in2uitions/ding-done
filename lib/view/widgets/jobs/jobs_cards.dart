@@ -49,6 +49,7 @@ class _JobsCardsState extends State<JobsCards> {
   Widget build(BuildContext context) {
     return Consumer3<LoginViewModel, JobsViewModel, PaymentViewModel>(
         builder: (context, loginViewModel, jobsViewModel, paymentViewModel, _) {
+
       data = Constants.supplierRoleId == widget.userRole
           ? widget.active == 'activeJobs'
               ? widget.jobsViewModel.supplierInProgressJobs
@@ -256,9 +257,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                     .total_amount
                                                     .toString() !=
                                                 ''
-                                        ? '${data[index].total_amount} ${data[index].service["country_rates"].isNotEmpty?
+                                        ? '${data[index].total_amount} ${ data[index].service["country_rates"]!=null && data[index].service["country_rates"].isNotEmpty ?
                                     data[index].service["country_rates"][0]["country"]["curreny"]:''}'
-                                        : '${data[index].service["country_rates"][0]["unit_rate"]}  ${data[index].service["country_rates"][0]["country"]["curreny"]}',
+                                        : '${data[index].service["country_rates"]!=null ? data[index].service["country_rates"][0]["unit_rate"] :''} ${ data[index].service["country_rates"]!=null ? data[index].service["country_rates"][0]["country"]["curreny"]:''}',
                                     style: getPrimaryRegularStyle(
                                         fontSize: 15,
                                         color: context

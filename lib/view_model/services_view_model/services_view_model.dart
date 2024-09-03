@@ -63,33 +63,40 @@ class ServicesViewModel with ChangeNotifier {
       String firstTranslationClass = '';
       Map<String, dynamic>? parentServices;
       for (Map<String, dynamic> translation in element.translations) {
-        if (translation["languages_code"]["code"] == lang) {
-          firstTranslationDescription = translation["description"];
-          firstTranslationTitle = translation["title"];
-          firstTranslationCategoryTitle = translation["title"];
+        for (Map<String,
+            dynamic> translation1 in translation["services_id"]["translations"]) {
+          if (translation1["languages_code"] == lang) {
+            firstTranslationDescription = translation1["description"];
+            firstTranslationTitle = translation1["title"];
+            firstTranslationCategoryTitle = translation1["title"];
 
-          break; // Break the loop once the translation is found
+            break; // Break the loop once the translation is found
+          }
+
         }
       }
 
       for (Map<String, dynamic> translation
           in element.category["translations"]) {
-        if (translation["languages_code"]["code"] == lang) {
-          debugPrint('category title ${translation["title"].toString()}');
 
-          firstTranslationCategoryTitle = translation["title"];
-          break; // Break the loop once the translation is found
+          if (translation["languages_code"] == lang) {
+            debugPrint('category title ${translation["title"].toString()}');
+
+            firstTranslationCategoryTitle = translation["title"];
+            break; // Break the loop once the translation is found
+          }
         }
-      }
+
       for (Map<String, dynamic> translation
           in element.category["translations"]) {
-        if (translation["languages_code"]["code"] == lang) {
-          // debugPrint(translation["title"].toString());
 
-          firstTranslationCategoryTitle = translation["title"];
-          break; // Break the loop once the translation is found
+          if (translation["languages_code"] == lang) {
+            // debugPrint(translation["title"].toString());
+
+            firstTranslationCategoryTitle = translation["title"];
+            break; // Break the loop once the translation is found
+          }
         }
-      }
 
       return firstTranslationDescription
                   .toLowerCase()
@@ -120,31 +127,40 @@ class ServicesViewModel with ChangeNotifier {
       String firstTranslationClass = '';
       Map<String, dynamic>? parentServices;
       for (Map<String, dynamic> translation in element.translations) {
-        if (translation["languages_code"]["code"] == lang) {
-          firstTranslationDescription = translation["description"];
-          firstTranslationTitle = translation["title"];
-          firstTranslationCategoryTitle = translation["title"];
+        for (Map<String,
+            dynamic> translation1 in translation["services_id"]["translations"]) {
+          if (translation1["languages_code"] == lang) {
+            firstTranslationDescription = translation1["description"];
+            firstTranslationTitle = translation1["title"];
+            firstTranslationCategoryTitle = translation1["title"];
 
-          break; // Break the loop once the translation is found
+            break; // Break the loop once the translation is found
+          }
         }
       }
 
       for (Map<String, dynamic> translation
           in element.category["translations"]) {
-        if (translation["languages_code"]["code"] == lang) {
-          debugPrint('category title ${translation["title"].toString()}');
+        for (Map<String,
+            dynamic> translation1 in translation["services_id"]["translations"]) {
+          if (translation1["languages_code"] == lang) {
+            debugPrint('category title ${translation1["title"].toString()}');
 
-          firstTranslationCategoryTitle = translation["title"];
-          break; // Break the loop once the translation is found
+            firstTranslationCategoryTitle = translation1["title"];
+            break; // Break the loop once the translation is found
+          }
         }
       }
       for (Map<String, dynamic> translation
           in element.category["translations"]) {
-        if (translation["languages_code"]["code"] == lang) {
-          // debugPrint(translation["title"].toString());
+        for (Map<String,
+            dynamic> translation1 in translation["services_id"]["translations"]) {
+          if (translation1["languages_code"] == lang) {
+            // debugPrint(translation["title"].toString());
 
-          firstTranslationCategoryTitle = translation["title"];
-          break; // Break the loop once the translation is found
+            firstTranslationCategoryTitle = translation1["title"];
+            break; // Break the loop once the translation is found
+          }
         }
       }
 

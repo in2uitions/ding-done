@@ -360,7 +360,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                         padding:
                         EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
                         child: Text(
-                          widget.data.total_amount!=null? '${widget.data.total_amount} ${widget.data.service["country_rates"].isNotEmpty?
+                          widget.data.total_amount!=null? '${widget.data.total_amount} ${widget.data.service["country_rates"]!=null && widget.data.service["country_rates"].isNotEmpty?
                           widget.data.service["country_rates"][0]["country"]["curreny"]:''}':'',
                           style: getPrimaryRegularStyle(
                             // color: context.resources.color.colorYellow,

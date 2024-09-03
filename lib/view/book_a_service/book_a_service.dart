@@ -48,16 +48,16 @@ class _BookAServiceState extends State<BookAService> {
       Map<String, dynamic>? services;
       Map<String, dynamic>? categories;
 
-      for (Map<String, dynamic> translation in widget.service.translations) {
-        debugPrint('transss ${translation["languages_code"]["code"]}');
-        if (translation["languages_code"]["code"] == widget.lang) {
+      for (Map<String, dynamic> translation in widget.service["translations"]) {
+        debugPrint('transss ${translation}');
+        if (translation["languages_code"] == widget.lang) {
           services = translation;
           break; // Break the loop once the translation is found
         }
       }
       for (Map<String, dynamic> translations
-          in widget.service.category["translations"]) {
-        if (translations["languages_code"]["code"] == widget.lang) {
+          in widget.service["category"]["translations"]) {
+        if (translations["languages_code"] == widget.lang) {
           categories = translations;
           break; // Break the loop once the translation is found
         }

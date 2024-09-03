@@ -96,23 +96,25 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   }
 
   Widget buildServiceWidget(
-      DropdownRoleModel service, CategoriesViewModel categoriesViewModel,var index) {
+      dynamic service, CategoriesViewModel categoriesViewModel,var index) {
     if(lang==null){
       lang="en-US";
     }
     Map<String, dynamic>? services;
     Map<String, dynamic>? parentServices;
-    for (Map<String, dynamic> translation in service.translations) {
-      if (translation["languages_code"]["code"] == lang) {
-        services = translation;
-        // Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(widget.servicesViewModel.searchBody["search_services"]);
+    for (Map<String, dynamic> translation in service["translations"]) {
+      // for (Map<String, dynamic> translation1 in translation["categories_id"]["translations"]) {
+        if (translation["languages_code"] == lang) {
+          services = translation;
+          Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(widget.servicesViewModel.searchBody["search_services"]);
 
-        break; // Break the loop once the translation is found
-      }
+          break; // Break the loop once the translation is found
+        }
+      // }
     }
     for (Map<String, dynamic> translationParent
-        in service.classs["translations"]) {
-      if (translationParent["languages_code"]["code"] == lang) {
+        in service["class"]["translations"]) {
+        if (translationParent["languages_code"] == lang) {
         parentServices = translationParent;
         break; // Break the loop once the translation is found
       }
@@ -190,14 +192,13 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                             right: -constraints.maxWidth * .25,
                             bottom: constraints.maxHeight * .4,
                             top: constraints.maxHeight * .01,
-                            child: service.image != null && service.image['filename_disk'] != null && service.image['filename_disk'].endsWith('.svg')
+                            child: service["image"] != null
                                 ? ClipRRect(
                               borderRadius: const BorderRadius.only(
                                 topRight: Radius.circular(150),
                                 bottomRight: Radius.circular(20),
                               ),
-                              child: SvgPicture.network(
-                                '${context.resources.image.networkImagePath2}/${service.image["filename_disk"]}',
+                              child: SvgPicture.network('${context.resources.image.networkImagePath2}/${service["image"]}',
                                 colorFilter: ColorFilter.mode(
                                   widget.servicesViewModel.searchBody["search_services"]
                                       .toString()
@@ -259,37 +260,38 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 20),
-                              child: service.image != null && service.image['filename_disk'] != null && service.image['filename_disk'].endsWith('.svg')
-                                  ? SvgPicture.network(
-                                '${context.resources.image.networkImagePath2}/${service.image["filename_disk"]}',
-                                colorFilter: const ColorFilter.mode(
-                                  Colors.white,
-                                  BlendMode.srcIn,
-                                ),
-                                width: 43,
-                                height: 40,
-                              )
-                                  : Container(
-                                width: context.appValues.appSizePercent.w20,
-                                height: context.appValues.appSizePercent.h5,
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      service.image != null
-                                          ? '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}'
-                                          : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg', // Specify the URL of your alternative image here
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                  // borderRadius: const BorderRadius.only(
-                                  //   topLeft: Radius.circular(15),
-                                  //   topRight: Radius.circular(15),
-                                  // ),
-                                ),
-                              ),
-                            ),
+                            // Padding(
+                            //   padding: const EdgeInsets.only(bottom: 20),
+                            //   child:
+                            //   service["image"] != null && service["image"]['filename_disk'] != null && service["image"]['filename_disk'].endsWith('.svg')
+                            //       ? SvgPicture.network(
+                            //     '${context.resources.image.networkImagePath2}/${service["image"]["filename_disk"]}',
+                            //     colorFilter: const ColorFilter.mode(
+                            //       Colors.white,
+                            //       BlendMode.srcIn,
+                            //     ),
+                            //     width: 43,
+                            //     height: 40,
+                            //   )
+                            //       : Container(
+                            //     width: context.appValues.appSizePercent.w20,
+                            //     height: context.appValues.appSizePercent.h5,
+                            //     decoration: BoxDecoration(
+                            //       image: DecorationImage(
+                            //         image: NetworkImage(
+                            //           service.image != null
+                            //               ? '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}'
+                            //               : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg', // Specify the URL of your alternative image here
+                            //         ),
+                            //         fit: BoxFit.cover,
+                            //       ),
+                            //       // borderRadius: const BorderRadius.only(
+                            //       //   topLeft: Radius.circular(15),
+                            //       //   topRight: Radius.circular(15),
+                            //       // ),
+                            //     ),
+                            //   ),
+                            // ),
                             Text(
                               services?["title"] ?? '',
                               textAlign: TextAlign.center,
@@ -317,9 +319,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                           children: [
                             Padding(
                               padding: const EdgeInsets.only(bottom: 20),
-                              child: service.image != null && service.image['filename_disk'] != null && service.image['filename_disk'].endsWith('.svg')
-                                  ? SvgPicture.network(
-                                '${context.resources.image.networkImagePath2}/${service.image["filename_disk"]}',
+                              child: service["image"] != null
+                                  ? SvgPicture.network('${context.resources.image.networkImagePath2}/${service["image"]}',
                                 colorFilter: const ColorFilter.mode(
                                   Colors.white,
                                   BlendMode.srcIn,
@@ -333,8 +334,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      service.image != null
-                                          ? '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}'
+                                      service["image"] != null
+                                          ? '${context.resources.image.networkImagePath2}${service["image"]}'
                                           : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg', // Specify the URL of your alternative image here
                                     ),
                                     fit: BoxFit.cover,
@@ -345,7 +346,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                   // ),
                                 ),
                               ),
-                            ),                            Text(
+                            ),
+                            Text(
                               services?["title"] ?? '',
                               textAlign: TextAlign.center,
                               maxLines: 2,
@@ -372,8 +374,9 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           Navigator.of(context).push(_createRoute(
             CategoriesScreen(categoriesViewModel: categoriesViewModel,initialTabIndex: index,serviceViewModel: widget.servicesViewModel,),
           ));
-          // categoriesViewModel.sortCategories(services?["title"]);
+          categoriesViewModel.sortCategories(services?["title"]);
         },
+
       ),
     ) :
     Container();

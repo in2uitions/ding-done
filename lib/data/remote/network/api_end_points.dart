@@ -3,12 +3,14 @@ class ApiEndPoints {
   final String login = "/auth/login";
   final String usersMe = '/users/me';
   final String userData = '/users';
+  final String refreshToken = "auth/refresh";
   final String getRoles = '/roles?filter[name][_neq]=Administrator';
   final String userRegister = '/authentication/registerUser';
   final String userUpdate = '/users';
   final String files = '/files';
   final String getCategories = '/items/categories?fields=*.*.*.*';
-  final String getServices = '/items/services?fields=*.*.*.*.*';
+  final String getCategoriesAndServices = '/suppliers/categories';
+  final String getServices = '/items/services?fields=*.*.*.*';
   final String getJobs = '/items/jobs?fields=*.*.*';
   final String supplierProfile = '/items/supplier_info';
   final String countryRates = '/items/country_rates';

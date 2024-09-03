@@ -72,16 +72,19 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
   }
 
   Widget buildCategoryWidget(
-      DropdownRoleModel category, CategoriesViewModel categoriesViewModel) {
+      Map<String, dynamic> category, CategoriesViewModel categoriesViewModel) {
     Map<String, dynamic>? services;
     if (lang == null) {
       lang = "en-US";
     }
-    for (Map<String, dynamic> translation in category.translations) {
-      if (translation["languages_code"]["code"] == lang) {
+    for (Map<String, dynamic> translation in category["translations"]) {
+      // for (Map<String, dynamic> translation1 in translation["categories_id"]["translations"]) {
+      //   debugPrint('translation 1 is ${translation1}');
+        if (translation["languages_code"] == lang) {
         services = translation;
         break; // Break the loop once the translation is found
       }
+      // }
     }
     return InkWell(
       child: Container(
@@ -110,7 +113,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.network(
-              '${context.resources.image.networkImagePath}/${category.image["filename_disk"]}',
+              '${context.resources.image.networkImagePath}/${category["image"]}',
               height: 40,
               width: 40,
             ),

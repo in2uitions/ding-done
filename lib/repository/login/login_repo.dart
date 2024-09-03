@@ -20,6 +20,8 @@ class LoginRepository {
       NetworkApiService(url: ApiEndPoints().usersMe);
   final BaseApiService _apiUser =
       NetworkApiService(url: ApiEndPoints().userData);
+  final BaseApiService _refreshToken = NetworkApiService(url: ApiEndPoints().refreshToken);
+
   final BaseApiService _apiSendReset =
       NetworkApiService(url: ApiEndPoints().apiSendReset);
 
@@ -42,7 +44,7 @@ class LoginRepository {
       final prefs = await SharedPreferences.getInstance();
 
       // Get the old refresh token from SharedPreferences
-      String? oldRefreshToken = prefs.getString(userRefreshToken);
+      String? oldRefreshToken =await AppPreferences().get(key: userRefreshToken, isModel: false);
 
       print('Old Refresh Token: $oldRefreshToken');
 
@@ -52,38 +54,16 @@ class LoginRepository {
       }
 
       var body = {"refresh_token": "$oldRefreshToken", "mode": "json"};
-      // dynamic response = await _refreshTokenService.postResponse(data: body);
-      dynamic response = await http.post(
-          Uri.parse('https://cms.dingdone.app'),
-          headers: {'Content-type': 'application/json'},
-          body: jsonEncode(body));
-      dynamic responseJson = jsonDecode(response.body);
 
-      debugPrint('data in login repo response ${responseJson["data"]}');
-      final newTokenData = LoginModel.fromJson(responseJson['data']);
-
-      // if (response['data'] != null) {
-      //   final newTokenData = LoginModel.fromJson(response['data']);
-
-      //   await AppPreferences().save(
-      //       key: userTokenKey, value: newTokenData.accessToken, isModel: false);
-      //   await prefs.setString('access_token', newTokenData.accessToken ?? '');
-      //   await prefs.setString('refresh_token', newTokenData.refreshToken ?? '');
-
-      //   int currentTime = DateTime.now().millisecondsSinceEpoch;
-      //   int newExpiryTime = currentTime + (newTokenData.expires?.toInt() ?? 0);
-      //   await prefs.setInt('expires', newExpiryTime);
-
-      print('Old Refresh Token: $oldRefreshToken');
-      // print('New Refresh Token: ${newTokenData.refreshToken ?? ''}');
-
+      dynamic response =
+      await _refreshToken.postResponse(data: body, sendToken: true);
+      debugPrint('response is $response');
+      final newTokenData = LoginModel.fromJson(response['data']);
+      debugPrint('newTokenData is $newTokenData');
       return newTokenData;
-      // } else {
-      //   debugPrint('Error refreshing access token: No data received');
-      //   return null;
-      // }
+
     } catch (e) {
-      debugPrint('Error refreshing access token: $e');
+      debugPrint('Error refreshing access token repo: $e');
       return null;
     }
   }

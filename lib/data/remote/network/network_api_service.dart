@@ -36,12 +36,12 @@ class NetworkApiService extends BaseApiService {
         headers[HttpHeaders.authorizationHeader] = tokenValue;
       }else{
         headers[HttpHeaders.contentTypeHeader] = 'application/json';
-        headers[HttpHeaders.authorizationHeader] =
-        'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
-
+        headers[HttpHeaders.authorizationHeader] = tokenValue;
 
       }
-
+      debugPrint('final url $finalUrl');
+      // headers[HttpHeaders.authorizationHeader] =
+      // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
       final response;
       response = await http.get(Uri.parse(finalUrl), headers: headers);
       // debugPrint('response in api network $response');
@@ -69,9 +69,9 @@ class NetworkApiService extends BaseApiService {
     debugPrint('final kkk}');
 
     headers[HttpHeaders.contentTypeHeader] = 'application/json';
-    headers[HttpHeaders.authorizationHeader] =
-        'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
-
+    headers[HttpHeaders.authorizationHeader] = await getToken();
+    // headers[HttpHeaders.authorizationHeader] =
+    // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
     String finalUrl = baseUrl + url;
     debugPrint('final ${finalUrl}');
 
@@ -105,8 +105,9 @@ class NetworkApiService extends BaseApiService {
       headers[HttpHeaders.authorizationHeader] = await getToken();
     }
     headers[HttpHeaders.contentTypeHeader] = 'application/json';
-    headers[HttpHeaders.authorizationHeader] =
-        'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
+    // headers[HttpHeaders.authorizationHeader] =
+    //     'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
+    headers[HttpHeaders.authorizationHeader] = await getToken();
 
     String finalUrl = baseUrl + url;
     if (params != '') {
@@ -159,9 +160,9 @@ class NetworkApiService extends BaseApiService {
   Future patchResponse(
       {required dynamic id, dynamic data, String params = ''}) async {
     dynamic responseJson;
-    // headers[HttpHeaders.authorizationHeader] = await getToken();
-    headers[HttpHeaders.authorizationHeader] =
-        'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
+    headers[HttpHeaders.authorizationHeader] = await getToken();
+    // headers[HttpHeaders.authorizationHeader] =
+    //     'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
     headers[HttpHeaders.contentTypeHeader] = 'application/json';
     String finalUrl = id != '' ? '$baseUrl$url/$id' : '$baseUrl$url';
     if (params != '') {
@@ -195,6 +196,8 @@ class NetworkApiService extends BaseApiService {
       String tokenValue = await getToken();
       if (tokenValue != '') {
         headers[HttpHeaders.authorizationHeader] = tokenValue;
+        // headers[HttpHeaders.authorizationHeader] =
+        // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
       }
       final response = await http.delete(Uri.parse(finalUrl), headers: headers);
       return response.body;
@@ -241,6 +244,8 @@ class NetworkApiService extends BaseApiService {
               headers[HttpHeaders.authorizationHeader] != token) &&
           token != null &&
           token != '') {
+        debugPrint('token is $token');
+
         return "Bearer $token";
       }
       return '';
