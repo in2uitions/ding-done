@@ -169,6 +169,7 @@ class NetworkApiService extends BaseApiService {
       finalUrl = '$finalUrl$params';
     }
     debugPrint('final ${finalUrl}');
+    debugPrint('data ${data}');
     try {
       final response;
 
