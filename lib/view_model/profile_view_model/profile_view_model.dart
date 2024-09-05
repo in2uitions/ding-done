@@ -96,6 +96,7 @@ class ProfileViewModel extends DisposableViewModel {
         "postal_code": body["postal_code"],
         "longitude": body["longitude"],
         "latitude": body["latitude"],
+        //Here we have to add the country
         // "country": body["country"].toString(),
       };
       debugPrint('adding new address $newAddress');

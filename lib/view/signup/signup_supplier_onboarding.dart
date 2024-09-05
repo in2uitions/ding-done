@@ -407,13 +407,7 @@ class _SignUpSupplierOnBoardingScreenState
                       color: const Color(0xffFEFEFE),
                     ),
                   ),
-                  child: FutureBuilder(
-                      future:
-                          Provider.of<SignUpViewModel>(context, listen: false)
-                              .getData(),
-                      builder: (context, AsyncSnapshot data) {
-                        if (data.connectionState == ConnectionState.done) {
-                          return ListView(
+                  child: ListView(
                             children: [
                               Padding(
                                   padding:
@@ -555,107 +549,149 @@ class _SignUpSupplierOnBoardingScreenState
                                   ),
                                 ),
 
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                                child: CustomTextField(
-                                    index: 'street_number',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.street'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['street_number']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['street_number']!],
-                                    keyboardType: TextInputType.text),
+                              FutureBuilder(
+                                  future: Provider.of<SignUpViewModel>(context,
+                                      listen: false)
+                                      .getData(),
+                                  builder: (context, AsyncSnapshot data) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                                    child: CustomTextField(
+                                        index: 'street_number',
+                                        viewModel: signupViewModel.setInputValues,
+                                        hintText: translate('formHints.street'),
+                                        validator: (val) =>
+                                            signupViewModel.signUpErrors[context
+                                                .resources
+                                                .strings
+                                                .formKeys['street_number']!],
+                                        errorText: signupViewModel.signUpErrors[
+                                            context.resources.strings
+                                                .formKeys['street_number']!],
+                                        keyboardType: TextInputType.text),
+                                  );
+                                }
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    index: 'building_number',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.building'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['building_number']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['building_number']!],
-                                    keyboardType: TextInputType.text),
+                              FutureBuilder(
+                                  future: Provider.of<SignUpViewModel>(context,
+                                      listen: false)
+                                      .getData(),
+                                  builder: (context, AsyncSnapshot data) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                    child: CustomTextField(
+                                        index: 'building_number',
+                                        viewModel: signupViewModel.setInputValues,
+                                        hintText: translate('formHints.building'),
+                                        validator: (val) =>
+                                            signupViewModel.signUpErrors[context
+                                                .resources
+                                                .strings
+                                                .formKeys['building_number']!],
+                                        errorText: signupViewModel.signUpErrors[
+                                            context.resources.strings
+                                                .formKeys['building_number']!],
+                                        keyboardType: TextInputType.text),
+                                  );
+                                }
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    index: 'floor',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.floor'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['floor']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['floor']!],
-                                    keyboardType: TextInputType.text),
+                              FutureBuilder(
+                                  future: Provider.of<SignUpViewModel>(context,
+                                      listen: false)
+                                      .getData(),
+                                  builder: (context, AsyncSnapshot data) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                    child: CustomTextField(
+                                        index: 'floor',
+                                        viewModel: signupViewModel.setInputValues,
+                                        hintText: translate('formHints.floor'),
+                                        validator: (val) =>
+                                            signupViewModel.signUpErrors[context
+                                                .resources
+                                                .strings
+                                                .formKeys['floor']!],
+                                        errorText: signupViewModel.signUpErrors[
+                                            context.resources.strings
+                                                .formKeys['floor']!],
+                                        keyboardType: TextInputType.text),
+                                  );
+                                }
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    index: 'apartment_number',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.apartment'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['apartment_number']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['apartment_number']!],
-                                    keyboardType: TextInputType.text),
+                              FutureBuilder(
+                                  future: Provider.of<SignUpViewModel>(context,
+                                      listen: false)
+                                      .getData(),
+                                  builder: (context, AsyncSnapshot data) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                    child: CustomTextField(
+                                        index: 'apartment_number',
+                                        viewModel: signupViewModel.setInputValues,
+                                        hintText: translate('formHints.apartment'),
+                                        validator: (val) =>
+                                            signupViewModel.signUpErrors[context
+                                                .resources
+                                                .strings
+                                                .formKeys['apartment_number']!],
+                                        errorText: signupViewModel.signUpErrors[
+                                            context.resources.strings
+                                                .formKeys['apartment_number']!],
+                                        keyboardType: TextInputType.text),
+                                  );
+                                }
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    index: 'city',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.city'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['city']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['city']!],
-                                    keyboardType: TextInputType.text),
+                              FutureBuilder(
+                                  future: Provider.of<SignUpViewModel>(context,
+                                      listen: false)
+                                      .getData(),
+                                  builder: (context, AsyncSnapshot data) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                    child: CustomTextField(
+                                        index: 'city',
+                                        viewModel: signupViewModel.setInputValues,
+                                        hintText: translate('formHints.city'),
+                                        validator: (val) =>
+                                            signupViewModel.signUpErrors[context
+                                                .resources
+                                                .strings
+                                                .formKeys['city']!],
+                                        errorText: signupViewModel.signUpErrors[
+                                            context.resources.strings
+                                                .formKeys['city']!],
+                                        keyboardType: TextInputType.text),
+                                  );
+                                }
                               ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    index: 'zone',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.zone'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['zone']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['zone']!],
-                                    keyboardType: TextInputType.text),
+                              FutureBuilder(
+                                  future: Provider.of<SignUpViewModel>(context,
+                                      listen: false)
+                                      .getData(),
+                                  builder: (context, AsyncSnapshot data) {
+                                  return Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                    child: CustomTextField(
+                                        index: 'zone',
+                                        viewModel: signupViewModel.setInputValues,
+                                        hintText: translate('formHints.zone'),
+                                        validator: (val) =>
+                                            signupViewModel.signUpErrors[context
+                                                .resources
+                                                .strings
+                                                .formKeys['zone']!],
+                                        errorText: signupViewModel.signUpErrors[
+                                            context.resources.strings
+                                                .formKeys['zone']!],
+                                        keyboardType: TextInputType.text),
+                                  );
+                                }
                               ),
                               // Padding(
                               //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -683,11 +719,8 @@ class _SignUpSupplierOnBoardingScreenState
                               //       keyboardType: TextInputType.text),
                               // ),
                             ],
-                          );
-                        } else {
-                          return Container();
-                        }
-                      }),
+                          ),
+
                 ),
               ),
 

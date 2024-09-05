@@ -248,6 +248,7 @@ class ServicesViewModel with ChangeNotifier {
   Future<void> getServicesByCategoryID(int id,dynamic supplier_services) async {
     try {
       dynamic response = await _servicesRepository.getServicesByCategoryID(id);
+      debugPrint('response is $response');
       _apiServicesCategoryResponse = ApiResponse.completed(response);
       _servicesCategoryList = _apiServicesResponse.data?.services;
       // _servicesCategoryList = _servicesCategoryList!.where((service) => service.status.toString().toLowerCase() == 'published').toList();
@@ -275,6 +276,7 @@ class ServicesViewModel with ChangeNotifier {
           return List.generate(servicesInCategory.length, (innerIndex) => false);
         });
       }
+      debugPrint('list of lists ${listOfLists}');
       notifyListeners();
       // return listOfLists;
     } catch (error) {

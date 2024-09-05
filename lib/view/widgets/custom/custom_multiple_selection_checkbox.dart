@@ -1,6 +1,7 @@
 import 'package:dingdone/models/roles_model.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +22,7 @@ class CustomMultipleSelectionCheckBoxList extends StatefulWidget {
     this.validator,
   });
 
-  final List<DropdownRoleModel> list;
+  final List<dynamic> list;
   final Function(List<String>) onChange;
   final List<String>? selectedValues;
   final String index;
@@ -45,7 +46,7 @@ class _CustomMultipleSelectionCheckBoxListState
   void initState() {
     super.initState();
     _selectedValues = widget.selectedValues ?? [];
-
+    debugPrint('list of categories ${widget.list}');
     widget.list.forEach((e) {
       widget.servicesViewModel.getServicesByCategoryID(int.parse(e.id!), null);
     });
@@ -63,8 +64,8 @@ class _CustomMultipleSelectionCheckBoxListState
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<ServicesViewModel>(
-        builder: (context, servicesViewModel, _) {
+    return Consumer2<ServicesViewModel,CategoriesViewModel>(
+        builder: (context, servicesViewModel,categoriesViewModel, _) {
           return Padding(
             padding: EdgeInsets.all(context.appValues.appPadding.p10),
             child: Column(
@@ -84,9 +85,13 @@ class _CustomMultipleSelectionCheckBoxListState
                     var categoryTitle;
                     Map<String, dynamic>? categories;
                     if (servicesViewModel.listOfServices[index].isNotEmpty) {
+                      debugPrint('list offff is ${servicesViewModel.listOfServices}');
+
                       for (Map<String, dynamic> translation
                       in servicesViewModel.listOfServices[index][0]["category"]["translations"]) {
-                        if (translation["languages_code"]["code"] == lang) {
+                        debugPrint('lang is $lang');
+                        debugPrint('translation["languages_code"] is ${translation["code"]}');
+                        if (translation["code"] == lang) {
                           categoryTitle = translation["title"];
                           categories = translation;
                           break; // Break the loop once the translation is found
@@ -101,7 +106,7 @@ class _CustomMultipleSelectionCheckBoxListState
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            categoryTitle ?? '',
+                            servicesViewModel.listOfServices[index][0]["category"]["translations"][0]['title'] ?? '',
                             style: getPrimaryRegularStyle(
                               fontSize: 15,
                               color: context.resources.color.btnColorBlue,
@@ -123,7 +128,7 @@ class _CustomMultipleSelectionCheckBoxListState
 
                             for (Map<String, dynamic> translation
                             in servicesInCategory[innerIndex]["translations"]) {
-                              if (translation["languages_code"]["code"] == lang) {
+                              if (translation["languages_code"] == lang) {
                                 services = translation;
                                 break; // Break the loop once the translation is found
                               }

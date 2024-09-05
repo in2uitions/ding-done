@@ -345,54 +345,68 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                       color: const Color(0xffFEFEFE),
                     ),
                   ),
-                  child: FutureBuilder(
-                      future:
-                          Provider.of<SignUpViewModel>(context, listen: false)
-                              .getData(),
-                      builder: (context, AsyncSnapshot data) {
-                        if (data.connectionState == ConnectionState.done) {
-                          return ListView(
-                            children: [
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 30, 20, 20),
-                                child: SizedBox(
-                                  width: context.appValues.appSizePercent.w100,
-                                  child: Text(
-                                    translate('signUp.addressInformation'),
-                                    style: getPrimaryBoldStyle(
-                                      color: const Color(0xff180C38),
-                                      fontSize: 28,
-                                    ),
-                                  ),
+                  child: ListView(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
+                        child: SizedBox(
+                          width: context.appValues.appSizePercent.w100,
+                          child: Text(
+                            translate('signUp.addressInformation'),
+                            style: getPrimaryBoldStyle(
+                              color: const Color(0xff180C38),
+                              fontSize: 28,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: context.appValues.appPadding.p20,
+                            vertical: context.appValues.appPadding.p10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              translate('bookService.location'),
+                              style: getPrimaryRegularStyle(
+                                fontSize: 15,
+                                color: context.resources.color.secondColorBlue,
+                              ),
+                            ),
+                            InkWell(
+                              child: Text(
+                                translate('signUp.chooseLocation'),
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 15,
+                                  color: context.resources.color.btnColorBlue,
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        context.appValues.appPadding.p20,
-                                    vertical: context.appValues.appPadding.p10),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      translate('bookService.location'),
-                                      style: getPrimaryRegularStyle(
-                                        fontSize: 15,
-                                        color: context
-                                            .resources.color.secondColorBlue,
-                                      ),
-                                    ),
-                                    InkWell(
-                                      child: Text(
-                                        translate('signUp.chooseLocation'),
-                                        style: getPrimaryRegularStyle(
-                                          fontSize: 15,
-                                          color: context
-                                              .resources.color.btnColorBlue,
-                                        ),
-                                      ),
+                              onTap: () {
+                                Navigator.of(context)
+                                    .push(_createRoute(MapScreen(
+                                  viewModel: signupViewModel,
+                                  longitude: 25.3,
+                                  latitude: 51.52,
+                                )));
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: context.appValues.appPadding.p20),
+                        child: SizedBox(
+                            height: 300,
+                            child: FutureBuilder(
+                                future: Provider.of<SignUpViewModel>(context,
+                                        listen: false)
+                                    .getData(),
+                                builder: (context, AsyncSnapshot data) {
+                                  if (data.connectionState ==
+                                      ConnectionState.done) {
+                                    return GestureDetector(
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(_createRoute(MapScreen(
@@ -401,90 +415,56 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                           latitude: 51.52,
                                         )));
                                       },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        context.appValues.appPadding.p20),
-                                child: SizedBox(
-                                    height: 300,
-                                    child: FutureBuilder(
-                                        future: Provider.of<SignUpViewModel>(
-                                                context,
-                                                listen: false)
-                                            .getData(),
-                                        builder: (context, AsyncSnapshot data) {
-                                          if (data.connectionState ==
-                                              ConnectionState.done) {
-                                            return GestureDetector(
-                                              onTap: () {
-                                                Navigator.of(context).push(
-                                                    _createRoute(MapScreen(
-                                                  viewModel: signupViewModel,
-                                                  longitude: 25.3,
-                                                  latitude: 51.52,
-                                                )));
-                                              },
-                                              child: MapDisplay(
-                                                body: signupViewModel
-                                                    .getSignUpBody,
-                                                longitude: signupViewModel
-                                                                .getSignUpBody[
-                                                            "longitude"] !=
-                                                        null
-                                                    ? double.parse(
-                                                        signupViewModel
-                                                                .getSignUpBody[
-                                                            "longitude"])
-                                                    : 25.3,
-                                                latitude: signupViewModel
-                                                                .getSignUpBody[
-                                                            "latitude"] !=
-                                                        null
-                                                    ? double.parse(
-                                                        signupViewModel
-                                                                .getSignUpBody[
-                                                            "latitude"])
-                                                    : 51.52,
-                                              ),
-                                            );
-                                          } else {
-                                            return Container();
-                                          }
-                                        })),
-                              ),
-                              if (signupViewModel.signUpErrors[context.resources
-                                      .strings.formKeys['longitude']] !=
-                                  null)
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 0, 20, 5),
-                                  child: Text(
-                                    signupViewModel.signUpErrors[context
-                                        .resources
-                                        .strings
-                                        .formKeys['longitude']]!,
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                              if (signupViewModel.signUpErrors[context.resources
-                                      .strings.formKeys['latitude']] !=
-                                  null)
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                  child: Text(
-                                    signupViewModel.signUpErrors[context
-                                        .resources
-                                        .strings
-                                        .formKeys['latitude']]!,
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                              Padding(
+                                      child: MapDisplay(
+                                        body: signupViewModel.getSignUpBody,
+                                        longitude:
+                                            signupViewModel.getSignUpBody[
+                                                        "longitude"] !=
+                                                    null
+                                                ? double.parse(signupViewModel
+                                                    .getSignUpBody["longitude"])
+                                                : 25.3,
+                                        latitude: signupViewModel.getSignUpBody[
+                                                    "latitude"] !=
+                                                null
+                                            ? double.parse(signupViewModel
+                                                .getSignUpBody["latitude"])
+                                            : 51.52,
+                                      ),
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                })),
+                      ),
+                      if (signupViewModel.signUpErrors[context
+                              .resources.strings.formKeys['longitude']] !=
+                          null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
+                          child: Text(
+                            signupViewModel.signUpErrors[context
+                                .resources.strings.formKeys['longitude']]!,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      if (signupViewModel.signUpErrors[
+                              context.resources.strings.formKeys['latitude']] !=
+                          null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                          child: Text(
+                            signupViewModel.signUpErrors[context
+                                .resources.strings.formKeys['latitude']]!,
+                            style: TextStyle(color: Colors.red),
+                          ),
+                        ),
+                      FutureBuilder(
+                          future: Provider.of<SignUpViewModel>(context,
+                                  listen: false)
+                              .getData(),
+                          builder: (context, AsyncSnapshot data) {
+                              return Padding(
                                 padding:
                                     const EdgeInsets.fromLTRB(20, 20, 20, 20),
                                 child: CustomTextField(
@@ -503,113 +483,121 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                         context.resources.strings
                                             .formKeys['street_number']!],
                                     keyboardType: TextInputType.text),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    value: signupViewModel
-                                            .getSignUpBody['building_number'] ??
-                                        '',
-                                    index: 'building_number',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.building'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['building_number']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['building_number']!],
-                                    keyboardType: TextInputType.text),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    value: signupViewModel
-                                            .getSignUpBody['floor'] ??
-                                        '',
-                                    index: 'floor',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.floor'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['floor']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['floor']!],
-                                    keyboardType: TextInputType.text),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    value: signupViewModel.getSignUpBody[
-                                            'apartment_number'] ??
-                                        '',
-                                    index: 'apartment_number',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.apartment'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['apartment_number']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['apartment_number']!],
-                                    keyboardType: TextInputType.text),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    index: 'city',
-                                    value:
-                                        signupViewModel.getSignUpBody['city'] ??
-                                            '',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.city'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['city']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['city']!],
-                                    keyboardType: TextInputType.text),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                                child: CustomTextField(
-                                    value:
-                                        signupViewModel.getSignUpBody['zone'] ??
-                                            '',
-                                    index: 'zone',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.zone'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['zone']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['zone']!],
-                                    keyboardType: TextInputType.text),
-                              ),
-                            ],
+                              );
+
+                          }),
+                      FutureBuilder(
+                          future: Provider.of<SignUpViewModel>(context,
+                              listen: false)
+                              .getData(),
+                          builder: (context, AsyncSnapshot data) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            child: CustomTextField(
+                                value: signupViewModel
+                                        .getSignUpBody['building_number'] ??
+                                    '',
+                                index: 'building_number',
+                                viewModel: signupViewModel.setInputValues,
+                                hintText: translate('formHints.building'),
+                                validator: (val) => signupViewModel.signUpErrors[
+                                    context.resources.strings
+                                        .formKeys['building_number']!],
+                                errorText: signupViewModel.signUpErrors[context
+                                    .resources
+                                    .strings
+                                    .formKeys['building_number']!],
+                                keyboardType: TextInputType.text),
                           );
-                        } else {
-                          return Container();
                         }
-                      }),
+                      ),
+                      FutureBuilder(
+                          future: Provider.of<SignUpViewModel>(context,
+                              listen: false)
+                              .getData(),
+                          builder: (context, AsyncSnapshot data) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            child: CustomTextField(
+                                value: signupViewModel.getSignUpBody['floor'] ?? '',
+                                index: 'floor',
+                                viewModel: signupViewModel.setInputValues,
+                                hintText: translate('formHints.floor'),
+                                validator: (val) => signupViewModel.signUpErrors[
+                                    context.resources.strings.formKeys['floor']!],
+                                errorText: signupViewModel.signUpErrors[
+                                    context.resources.strings.formKeys['floor']!],
+                                keyboardType: TextInputType.text),
+                          );
+                        }
+                      ),
+                      FutureBuilder(
+                          future: Provider.of<SignUpViewModel>(context,
+                              listen: false)
+                              .getData(),
+                          builder: (context, AsyncSnapshot data) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            child: CustomTextField(
+                                value: signupViewModel
+                                        .getSignUpBody['apartment_number'] ??
+                                    '',
+                                index: 'apartment_number',
+                                viewModel: signupViewModel.setInputValues,
+                                hintText: translate('formHints.apartment'),
+                                validator: (val) => signupViewModel.signUpErrors[
+                                    context.resources.strings
+                                        .formKeys['apartment_number']!],
+                                errorText: signupViewModel.signUpErrors[context
+                                    .resources
+                                    .strings
+                                    .formKeys['apartment_number']!],
+                                keyboardType: TextInputType.text),
+                          );
+                        }
+                      ),
+                      FutureBuilder(
+                          future: Provider.of<SignUpViewModel>(context,
+                              listen: false)
+                              .getData(),
+                          builder: (context, AsyncSnapshot data) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            child: CustomTextField(
+                                index: 'city',
+                                value: signupViewModel.getSignUpBody['city'] ?? '',
+                                viewModel: signupViewModel.setInputValues,
+                                hintText: translate('formHints.city'),
+                                validator: (val) => signupViewModel.signUpErrors[
+                                    context.resources.strings.formKeys['city']!],
+                                errorText: signupViewModel.signUpErrors[
+                                    context.resources.strings.formKeys['city']!],
+                                keyboardType: TextInputType.text),
+                          );
+                        }
+                      ),
+                      FutureBuilder(
+                          future: Provider.of<SignUpViewModel>(context,
+                              listen: false)
+                              .getData(),
+                          builder: (context, AsyncSnapshot data) {
+                          return Padding(
+                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            child: CustomTextField(
+                                value: signupViewModel.getSignUpBody['zone'] ?? '',
+                                index: 'zone',
+                                viewModel: signupViewModel.setInputValues,
+                                hintText: translate('formHints.zone'),
+                                validator: (val) => signupViewModel.signUpErrors[
+                                    context.resources.strings.formKeys['zone']!],
+                                errorText: signupViewModel.signUpErrors[
+                                    context.resources.strings.formKeys['zone']!],
+                                keyboardType: TextInputType.text),
+                          );
+                        }
+                      ),
+                    ],
+                  ),
                 ),
               ),
               PageModel(

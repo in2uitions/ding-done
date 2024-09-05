@@ -39,7 +39,7 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
       widget.servicesViewModel.setFetchedServices(true); // Set the flag to true after fetching services
 
       for (var e in widget.list) {
-        widget.servicesViewModel.getServicesByCategoryID(int.parse(e.id!), widget.data["supplier_services"]);
+        widget.servicesViewModel.getServicesByCategoryID(int.parse(e['id'].toString()), widget.data["supplier_services"]);
       }
     }
   }
