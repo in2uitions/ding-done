@@ -218,7 +218,8 @@
     "individual": "فرد",
     "company": "شركة",
     "companyId": "معرف الشركة",
-    "selectYourSkills": "اختر مهاراتك"
+    "selectYourSkills": "اختر مهاراتك",
+    "identificationCard": "قم بتحميل معرفك"
   },
   "formHints": {
     "email_address": "عنوان بريدك الإلكتروني",

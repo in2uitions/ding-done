@@ -72,11 +72,12 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
   }
 
   Widget buildCategoryWidget(
-      Map<String, dynamic> category, CategoriesViewModel categoriesViewModel) {
+      dynamic category, CategoriesViewModel categoriesViewModel) {
     Map<String, dynamic>? services;
     if (lang == null) {
       lang = "en-US";
     }
+    debugPrint('category $category');
     for (Map<String, dynamic> translation in category["translations"]) {
       // for (Map<String, dynamic> translation1 in translation["categories_id"]["translations"]) {
       //   debugPrint('translation 1 is ${translation1}');
@@ -92,7 +93,8 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
           borderRadius: const BorderRadius.all(
             Radius.circular(22),
           ),
-          color: widget.servicesViewModel.searchBody["search_services"]
+          color:
+          widget.servicesViewModel.searchBody["search_services"]
               .toString()
               .toLowerCase() ==
               services?["title"].toString().toLowerCase() ||

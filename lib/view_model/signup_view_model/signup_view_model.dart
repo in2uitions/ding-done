@@ -267,7 +267,8 @@ class SignUpViewModel with ChangeNotifier {
             cityMessage == null &&
             zoneMessage == null &&
             floorMessage == null &&
-            signUpBody["avatar"]!=null && signUpBody['longitude']!=null && signUpBody['latitude']!=null) {
+            signUpBody["avatar"]!=null&&
+            signUpBody["id_image"]!=null && signUpBody['longitude']!=null && signUpBody['latitude']!=null) {
           notifyListeners();
           return true;
         }

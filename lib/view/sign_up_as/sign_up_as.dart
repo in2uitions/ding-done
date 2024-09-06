@@ -80,7 +80,7 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                             value: Constants.customerRoleId,
                           );
                           Navigator.of(context)
-                              .push(_createRoute(SignUpOnBoardingScreen()));
+                              .push(_createRoute(SignUpOnBoardingScreen(initialIndex: 0,)));
                         },
                         child: Container(
                           width: context.appValues.appSizePercent.w75,
@@ -123,9 +123,9 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                                 index: 'role',
                                 value: Constants.supplierRoleId,
                               );
-                              await categoriesViewModel.getCategories();
+                              await categoriesViewModel.getCategoriesAndServices();
                               Navigator.of(context).push(
-                                _createRoute(SignUpSupplierOnBoardingScreen()),
+                                _createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 0,)),
                               );
                             },
                             child: Container(

@@ -1,9 +1,13 @@
+import 'package:dingdone/view/signup/signup_onboarding.dart';
+import 'package:dingdone/view/signup/signup_supplier_onboarding.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
 import 'package:provider/provider.dart';
+
+import '../../res/constants.dart';
 
 class MapScreen extends StatefulWidget {
   final dynamic viewModel;
@@ -97,10 +101,39 @@ class _MapScreenState extends State<MapScreen> {
 
 
               Navigator.pop(context);
+              if(signupViewModel.signUpBody['role']==Constants.supplierRoleId){
+                Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 3,)));
+
+              }
+              if(signupViewModel.signUpBody['role']==Constants.customerRoleId){
+                Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(initialIndex: 3,)));
+
+              }
             },
           );
         },
       ),
     );
   }
+}
+Route _createRoute(Widget child) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => child,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      final tween = Tween(begin: begin, end: end);
+      final curvedAnimation = CurvedAnimation(
+        parent: animation,
+        curve: curve,
+      );
+
+      return SlideTransition(
+        position: tween.animate(curvedAnimation),
+        child: child,
+      );
+    },
+  );
 }

@@ -33,32 +33,32 @@ class CategoriesViewModel with ChangeNotifier {
     lang = await AppPreferences().get(key: dblang, isModel: false);
   }
 
-  Future<List<dynamic>?> getCategories() async {
-    try {
-
-      dynamic response = await _categoriesRepository.getAllCategories();
-      // _categoriesResponse = ApiResponse.completed(response);
-      // _categoriesList = _categoriesResponse.data?.toJson()["categories"];
-
-      // _jobsResponseList =
-      // _apiJobsResponse.data?.toCarouselJson()["jobs_carousel"];
-      ServicesViewModel servicesViewModel =ServicesViewModel();
-
-      _apiCategoriesResponse = ApiResponse.completed(response);
-      _categoriesList = _apiCategoriesResponse.data?.dropDownList;
-      _parentCategoriesList = _categoriesList!.where((category) => category.classs == null && category.status=='published').toList();
-      _categoriesList = _categoriesList!.where((category) => category.classs != null && category.status=='published').toList();
-      // _categoriesList2 = _categoriesList!.where((category) => category.classs == servicesViewModel.searchBody['search_services']).toList();
-
-      notifyListeners();
-
-
-    } catch (error) {
-      debugPrint('Error fetching categories ${error}');
-    }
-    notifyListeners();
-    return _categoriesList;
-  }
+  // Future<List<dynamic>?> getCategories() async {
+  //   try {
+  //
+  //     dynamic response = await _categoriesRepository.getAllCategories();
+  //     // _categoriesResponse = ApiResponse.completed(response);
+  //     // _categoriesList = _categoriesResponse.data?.toJson()["categories"];
+  //
+  //     // _jobsResponseList =
+  //     // _apiJobsResponse.data?.toCarouselJson()["jobs_carousel"];
+  //     ServicesViewModel servicesViewModel =ServicesViewModel();
+  //
+  //     _apiCategoriesResponse = ApiResponse.completed(response);
+  //     _categoriesList = _apiCategoriesResponse.data?.dropDownList;
+  //     _parentCategoriesList = _categoriesList!.where((category) => category.classs == null && category.status=='published').toList();
+  //     _categoriesList = _categoriesList!.where((category) => category.classs != null && category.status=='published').toList();
+  //     // _categoriesList2 = _categoriesList!.where((category) => category.classs == servicesViewModel.searchBody['search_services']).toList();
+  //
+  //     notifyListeners();
+  //
+  //
+  //   } catch (error) {
+  //     debugPrint('Error fetching categories ${error}');
+  //   }
+  //   notifyListeners();
+  //   return _categoriesList;
+  // }
 
   Future<List<dynamic>?> getCategoriesAndServices() async {
     try {

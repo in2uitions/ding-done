@@ -99,6 +99,10 @@ class ProfileRepository {
 // Function to recursively remove the 'token' field
   void removeToken(Map<String, dynamic> map) {
     map.remove('token'); // Remove the 'token' at the current level
+    map.remove('user_updated');
+    map.remove('user_created');
+    map.remove('supplier_info');
+    map.remove('customer_info');
     map.forEach((key, value) {
       if (value is Map<String, dynamic>) {
         removeToken(value); // Recursively remove 'token' from nested maps
@@ -119,6 +123,15 @@ class ProfileRepository {
       dynamic response;
       debugPrint('patching daa $body');
       if (Constants.customerRoleId == role) {
+        // // Make a copy of the body to avoid mutating the original data
+        // var cleanedBody = Map<String, dynamic>.from(body);
+        // // Remove the 'token' field from the cleanedBody
+        // removeToken(cleanedBody);
+        // Call the patchResponse method with the cleanedBody
+        // var finalBody = <String, dynamic>{};
+        // finalBody["user"]=cleanedBody["user"];
+        // debugPrint('supplier finalBody body ${finalBody}');
+
         response = await _apiCustomerProfile.patchResponse(
             id: id, data: body, params: '?fields=*.*');
         debugPrint('customer ${response}');
@@ -126,14 +139,25 @@ class ProfileRepository {
         if (Constants.supplierRoleId == role) {
           // Make a copy of the body to avoid mutating the original data
           var cleanedBody = Map<String, dynamic>.from(body);
-
           // Remove the 'token' field from the cleanedBody
           removeToken(cleanedBody);
-          debugPrint('supplier clean body ${cleanedBody}');
+          debugPrint('clean body address ${cleanedBody["address"]}');
+          debugPrint('clean body current address ${cleanedBody["current_address"]}');
+
           // Call the patchResponse method with the cleanedBody
+          var finalBody = <String, dynamic>{};
+          finalBody["user"]=cleanedBody["user"];
+          finalBody["current_address"]=cleanedBody["current_address"];
+          debugPrint('address is ${cleanedBody['address']}');
+          if(cleanedBody["address"]!=null){
+            finalBody["address"]=cleanedBody["address"];
+
+          }
+          debugPrint('supplier finalBody body ${finalBody}');
+
           response = await _apiSupplierProfile.patchResponse(
             id: id,
-            data: cleanedBody,
+            data: finalBody,
             params: '?fields=*.*',
           );
 

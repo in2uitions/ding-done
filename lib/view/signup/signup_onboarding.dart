@@ -18,7 +18,9 @@ import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
 
 class SignUpOnBoardingScreen extends StatefulWidget {
-  const SignUpOnBoardingScreen({super.key});
+  var initialIndex;
+
+  SignUpOnBoardingScreen({super.key, required this.initialIndex});
 
   @override
   State<SignUpOnBoardingScreen> createState() => _SignUpOnBoardingScreenState();
@@ -33,7 +35,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
   void initState() {
     super.initState();
     materialButton = _skipButton();
-    index = 0;
+    index = widget.initialIndex;
   }
 
   Material _skipButton({void Function(int)? setIndex}) {
@@ -459,142 +461,96 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                             style: TextStyle(color: Colors.red),
                           ),
                         ),
-                      FutureBuilder(
-                          future: Provider.of<SignUpViewModel>(context,
-                                  listen: false)
-                              .getData(),
-                          builder: (context, AsyncSnapshot data) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(20, 20, 20, 20),
-                                child: CustomTextField(
-                                    value: signupViewModel
-                                            .getSignUpBody['street_number'] ??
-                                        '',
-                                    index: 'street_number',
-                                    viewModel: signupViewModel.setInputValues,
-                                    hintText: translate('formHints.street'),
-                                    validator: (val) =>
-                                        signupViewModel.signUpErrors[context
-                                            .resources
-                                            .strings
-                                            .formKeys['street_number']!],
-                                    errorText: signupViewModel.signUpErrors[
-                                        context.resources.strings
-                                            .formKeys['street_number']!],
-                                    keyboardType: TextInputType.text),
-                              );
-
-                          }),
-                      FutureBuilder(
-                          future: Provider.of<SignUpViewModel>(context,
-                              listen: false)
-                              .getData(),
-                          builder: (context, AsyncSnapshot data) {
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                            child: CustomTextField(
-                                value: signupViewModel
-                                        .getSignUpBody['building_number'] ??
-                                    '',
-                                index: 'building_number',
-                                viewModel: signupViewModel.setInputValues,
-                                hintText: translate('formHints.building'),
-                                validator: (val) => signupViewModel.signUpErrors[
-                                    context.resources.strings
-                                        .formKeys['building_number']!],
-                                errorText: signupViewModel.signUpErrors[context
-                                    .resources
-                                    .strings
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
+                        child: CustomTextField(
+                            value: signupViewModel
+                                    .getSignUpBody['street_number'] ??
+                                '',
+                            index: 'street_number',
+                            viewModel: signupViewModel.setInputValues,
+                            hintText: translate('formHints.street'),
+                            validator: (val) => signupViewModel.signUpErrors[
+                                context.resources.strings
+                                    .formKeys['street_number']!],
+                            errorText: signupViewModel.signUpErrors[context
+                                .resources.strings.formKeys['street_number']!],
+                            keyboardType: TextInputType.text),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child: CustomTextField(
+                            value: signupViewModel
+                                    .getSignUpBody['building_number'] ??
+                                '',
+                            index: 'building_number',
+                            viewModel: signupViewModel.setInputValues,
+                            hintText: translate('formHints.building'),
+                            validator: (val) => signupViewModel.signUpErrors[
+                                context.resources.strings
                                     .formKeys['building_number']!],
-                                keyboardType: TextInputType.text),
-                          );
-                        }
+                            errorText: signupViewModel.signUpErrors[context
+                                .resources
+                                .strings
+                                .formKeys['building_number']!],
+                            keyboardType: TextInputType.text),
                       ),
-                      FutureBuilder(
-                          future: Provider.of<SignUpViewModel>(context,
-                              listen: false)
-                              .getData(),
-                          builder: (context, AsyncSnapshot data) {
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                            child: CustomTextField(
-                                value: signupViewModel.getSignUpBody['floor'] ?? '',
-                                index: 'floor',
-                                viewModel: signupViewModel.setInputValues,
-                                hintText: translate('formHints.floor'),
-                                validator: (val) => signupViewModel.signUpErrors[
-                                    context.resources.strings.formKeys['floor']!],
-                                errorText: signupViewModel.signUpErrors[
-                                    context.resources.strings.formKeys['floor']!],
-                                keyboardType: TextInputType.text),
-                          );
-                        }
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child: CustomTextField(
+                            value: signupViewModel.getSignUpBody['floor'] ?? '',
+                            index: 'floor',
+                            viewModel: signupViewModel.setInputValues,
+                            hintText: translate('formHints.floor'),
+                            validator: (val) => signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['floor']!],
+                            errorText: signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['floor']!],
+                            keyboardType: TextInputType.text),
                       ),
-                      FutureBuilder(
-                          future: Provider.of<SignUpViewModel>(context,
-                              listen: false)
-                              .getData(),
-                          builder: (context, AsyncSnapshot data) {
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                            child: CustomTextField(
-                                value: signupViewModel
-                                        .getSignUpBody['apartment_number'] ??
-                                    '',
-                                index: 'apartment_number',
-                                viewModel: signupViewModel.setInputValues,
-                                hintText: translate('formHints.apartment'),
-                                validator: (val) => signupViewModel.signUpErrors[
-                                    context.resources.strings
-                                        .formKeys['apartment_number']!],
-                                errorText: signupViewModel.signUpErrors[context
-                                    .resources
-                                    .strings
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child: CustomTextField(
+                            value: signupViewModel
+                                    .getSignUpBody['apartment_number'] ??
+                                '',
+                            index: 'apartment_number',
+                            viewModel: signupViewModel.setInputValues,
+                            hintText: translate('formHints.apartment'),
+                            validator: (val) => signupViewModel.signUpErrors[
+                                context.resources.strings
                                     .formKeys['apartment_number']!],
-                                keyboardType: TextInputType.text),
-                          );
-                        }
+                            errorText: signupViewModel.signUpErrors[context
+                                .resources
+                                .strings
+                                .formKeys['apartment_number']!],
+                            keyboardType: TextInputType.text),
                       ),
-                      FutureBuilder(
-                          future: Provider.of<SignUpViewModel>(context,
-                              listen: false)
-                              .getData(),
-                          builder: (context, AsyncSnapshot data) {
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                            child: CustomTextField(
-                                index: 'city',
-                                value: signupViewModel.getSignUpBody['city'] ?? '',
-                                viewModel: signupViewModel.setInputValues,
-                                hintText: translate('formHints.city'),
-                                validator: (val) => signupViewModel.signUpErrors[
-                                    context.resources.strings.formKeys['city']!],
-                                errorText: signupViewModel.signUpErrors[
-                                    context.resources.strings.formKeys['city']!],
-                                keyboardType: TextInputType.text),
-                          );
-                        }
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child: CustomTextField(
+                            index: 'city',
+                            value: signupViewModel.getSignUpBody['city'] ?? '',
+                            viewModel: signupViewModel.setInputValues,
+                            hintText: translate('formHints.city'),
+                            validator: (val) => signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['city']!],
+                            errorText: signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['city']!],
+                            keyboardType: TextInputType.text),
                       ),
-                      FutureBuilder(
-                          future: Provider.of<SignUpViewModel>(context,
-                              listen: false)
-                              .getData(),
-                          builder: (context, AsyncSnapshot data) {
-                          return Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                            child: CustomTextField(
-                                value: signupViewModel.getSignUpBody['zone'] ?? '',
-                                index: 'zone',
-                                viewModel: signupViewModel.setInputValues,
-                                hintText: translate('formHints.zone'),
-                                validator: (val) => signupViewModel.signUpErrors[
-                                    context.resources.strings.formKeys['zone']!],
-                                errorText: signupViewModel.signUpErrors[
-                                    context.resources.strings.formKeys['zone']!],
-                                keyboardType: TextInputType.text),
-                          );
-                        }
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child: CustomTextField(
+                            value: signupViewModel.getSignUpBody['zone'] ?? '',
+                            index: 'zone',
+                            viewModel: signupViewModel.setInputValues,
+                            hintText: translate('formHints.zone'),
+                            validator: (val) => signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['zone']!],
+                            errorText: signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['zone']!],
+                            keyboardType: TextInputType.text),
                       ),
                     ],
                   ),
@@ -676,7 +632,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
             onPageChange: (int pageIndex) {
               index = pageIndex;
             },
-            startPageIndex: 0,
+            startPageIndex: widget.initialIndex,
             footerBuilder: (context, dragDistance, pagesLength, setIndex) {
               return DecoratedBox(
                 decoration: BoxDecoration(

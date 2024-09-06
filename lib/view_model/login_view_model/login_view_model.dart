@@ -38,7 +38,7 @@ class LoginViewModel with ChangeNotifier {
   }
 
   Future<void> checkAndRefreshToken() async {
-    if (await isTokenExpired()) {
+    if (await isTokenExpired) {
       bool refreshSuccess = await refreshAccessToken();
       print('refreshing token from check and refresh');
       if (!refreshSuccess) {
@@ -57,7 +57,7 @@ class LoginViewModel with ChangeNotifier {
     await checkAndRefreshToken();
 
     if (await isTokenNotEmpty() && !await isTokenExpired()) {
-      if (await isTokenExpired()) {
+      if (await isTokenExpired) {
         bool refreshSuccess = await refreshAccessToken();
         print('refreshed access token from splash login');
         if (!refreshSuccess) {

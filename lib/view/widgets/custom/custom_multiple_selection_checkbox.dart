@@ -48,7 +48,7 @@ class _CustomMultipleSelectionCheckBoxListState
     _selectedValues = widget.selectedValues ?? [];
     debugPrint('list of categories ${widget.list}');
     widget.list.forEach((e) {
-      widget.servicesViewModel.getServicesByCategoryID(int.parse(e.id!), null);
+      widget.servicesViewModel.getServicesByCategoryID(int.parse(e["id"]!.toString()), null);
     });
     getLanguage();
   }
@@ -84,29 +84,36 @@ class _CustomMultipleSelectionCheckBoxListState
 
                     var categoryTitle;
                     Map<String, dynamic>? categories;
-                    if (servicesViewModel.listOfServices[index].isNotEmpty) {
-                      debugPrint('list offff is ${servicesViewModel.listOfServices}');
+                    // if (servicesViewModel.listOfServices[index].isNotEmpty) {
+                    //   debugPrint('list offff is ${servicesViewModel.listOfServices}');
+                    //
+                    //   for (Map<String, dynamic> translation
+                    //   in servicesViewModel.listOfServices[index][0]["category"]["translations"]) {
+                    //     debugPrint('lang is $lang');
+                    //     debugPrint('translation["languages_code"] is ${translation["code"]}');
+                    //     if (translation["code"] == lang) {
+                    //       categoryTitle = translation["title"];
+                    //       categories = translation;
+                    //       break; // Break the loop once the translation is found
+                    //     }
+                    //   }
+                    // }
+                    var servicesInCategory = widget.servicesViewModel.listOfServices[index];
 
-                      for (Map<String, dynamic> translation
-                      in servicesViewModel.listOfServices[index][0]["category"]["translations"]) {
-                        debugPrint('lang is $lang');
-                        debugPrint('translation["languages_code"] is ${translation["code"]}');
-                        if (translation["code"] == lang) {
-                          categoryTitle = translation["title"];
-                          categories = translation;
-                          break; // Break the loop once the translation is found
-                        }
-                      }
-                    }
+                    var cTitle = servicesInCategory[0]["category"]["translations"]
+                        .firstWhere(
+                            (translation) => translation["languages_code"] == lang,
+                        orElse: () => servicesInCategory[0]["category"]["translations"][0])
+                    ["title"]
+                        .toString();
 
-                    var servicesInCategory = servicesViewModel.listOfServices[index];
 
                     return ExpansionTile(
                       title: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            servicesViewModel.listOfServices[index][0]["category"]["translations"][0]['title'] ?? '',
+                            cTitle,
                             style: getPrimaryRegularStyle(
                               fontSize: 15,
                               color: context.resources.color.btnColorBlue,

@@ -228,7 +228,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (await loginViewModel.isActiveUser()) {
                                     if (loginViewModel.isLoggedIn) {
                                       await loginViewModel.setCredentials();
-                                      await categoriesViewModel.getCategories();
+                                      await categoriesViewModel.getCategoriesAndServices();
                                       await jobsViewModel.readJson();
                                       Navigator.of(context).push(_createRoute(
                                           BottomBar(
