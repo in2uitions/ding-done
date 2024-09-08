@@ -218,7 +218,8 @@
     "individual": "Физическое лицо",
     "company": "Компания",
     "companyId": "Идентификационный номер компании",
-    "selectYourSkills": "Выберите ваши навыки"
+    "selectYourSkills": "Выберите ваши навыки",
+    "identificationCard": "Загрузите свой идентификатор"
   },
   "formHints": {
     "email_address": "Ваш адрес электронной почты",

@@ -218,7 +218,8 @@
     "individual": "Individual",
     "company": "Company",
     "companyId": "Company Id",
-    "selectYourSkills": "Select your Skills"
+    "selectYourSkills": "Select your Skills",
+    "identificationCard": "Upload Your ID"
   },
   "formHints": {
     "email_address": "Your Email Address",

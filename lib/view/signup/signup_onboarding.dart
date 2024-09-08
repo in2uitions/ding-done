@@ -183,6 +183,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
+                          value: signupViewModel.signUpBody['first_name']??'' ,
                           index: 'first_name',
                           viewModel: signupViewModel.setInputValues,
                           hintText: translate('formHints.first_name'),
@@ -197,6 +198,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
+                          value: signupViewModel.signUpBody['last_name']??'' ,
                           index: 'last_name',
                           viewModel: signupViewModel.setInputValues,
                           hintText: translate('formHints.last_name'),
@@ -213,6 +215,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           vertical: 0.0,
                         ),
                         child: CustomDatePicker(
+                          value: signupViewModel.signUpBody['dob']??'' ,
                           index: 'dob',
                           viewModel: signupViewModel.setInputValues,
                           hintText: translate('formHints.dob'),
@@ -248,6 +251,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomPhoneFeild(
+                          value: signupViewModel.signUpBody['phone_number']??'' ,
                           index: 'phone_number',
                           viewModel: signupViewModel.setInputValues,
                           validator: (val) => signupViewModel.signUpErrors[
@@ -264,6 +268,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           vertical: 0.0,
                         ),
                         child: CustomTextField(
+                            value: signupViewModel.signUpBody['email']??'' ,
                             index: 'email',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.email'),
@@ -305,6 +310,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
+                            value: signupViewModel.signUpBody['password']??'' ,
                             index: 'password',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.password'),

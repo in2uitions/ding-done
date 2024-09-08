@@ -197,6 +197,7 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
+                          value:signupViewModel.signUpBody["first_name"]??'',
                           index: 'first_name',
                           viewModel: signupViewModel.setInputValues,
                           hintText: translate('formHints.first_name'),
@@ -211,6 +212,7 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
+                          value:signupViewModel.signUpBody["last_name"]??'',
                           index: 'last_name',
                           viewModel: signupViewModel.setInputValues,
                           hintText: translate('formHints.last_name'),
@@ -224,6 +226,7 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                           child: CustomDatePicker(
+                            value:signupViewModel.signUpBody["dob"]??'',
                             index: 'dob',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.dob'),
@@ -286,6 +289,7 @@ class _SignUpSupplierOnBoardingScreenState
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: CustomTextField(
+                                value:signupViewModel.signUpBody["company_id"]??'',
                                 index: 'company',
                                 viewModel: signupViewModel.setInputValues,
                                 hintText: translate('signUp.companyId'),
@@ -397,6 +401,7 @@ class _SignUpSupplierOnBoardingScreenState
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                           child: CustomPhoneFeild(
                             index: 'phone_number',
+                            value: signupViewModel.signUpBody['phone_number']??'' ,
                             viewModel: signupViewModel.setInputValues,
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
@@ -408,6 +413,7 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
+                            value: signupViewModel.signUpBody['email']??'' ,
                             index: 'email',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.email'),
@@ -448,6 +454,7 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
+                            value: signupViewModel.signUpBody['password']??'' ,
                             index: 'password',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.password'),

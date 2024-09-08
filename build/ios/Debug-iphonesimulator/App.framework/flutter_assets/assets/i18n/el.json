@@ -218,7 +218,8 @@
     "individual": "Ατομικό",
     "company": "Εταιρεία",
     "companyId": "Αριθμός Εταιρείας",
-    "selectYourSkills": "Επιλέξτε τις δεξιότητές σας"
+    "selectYourSkills": "Επιλέξτε τις δεξιότητές σας",
+    "identificationCard": "Ανεβάστε την ταυτότητά σας"
   },
   "formHints": {
     "email_address": "Ηλεκτρονική Διεύθυνση",
