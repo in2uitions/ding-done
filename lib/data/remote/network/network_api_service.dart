@@ -36,10 +36,13 @@ class NetworkApiService extends BaseApiService {
         headers[HttpHeaders.authorizationHeader] = tokenValue;
       }else{
         headers[HttpHeaders.contentTypeHeader] = 'application/json';
-        headers[HttpHeaders.authorizationHeader] = tokenValue;
+
 
       }
+
+      headers[HttpHeaders.authorizationHeader] = tokenValue;
       debugPrint('final url $finalUrl');
+      debugPrint('token value $tokenValue');
       // headers[HttpHeaders.authorizationHeader] =
       // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
       final response;

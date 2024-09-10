@@ -22,7 +22,7 @@ class CategoriesViewModel with ChangeNotifier {
 
 
   CategoriesViewModel() {
-    // readJson();
+    readJson();
   }
   Future<void> readJson() async {
     // await getCategories();
@@ -82,7 +82,7 @@ class CategoriesViewModel with ChangeNotifier {
       _servicesList2 = _servicesList;
 
       notifyListeners();
-
+      return _categoriesList;
 
     } catch (error) {
       debugPrint('Error fetching categories and services ${error}');
