@@ -275,6 +275,7 @@ class _SignUpSupplierOnBoardingScreenState
                                     setState(() {
                                       selectedOption = value;
                                     });
+                                    signupViewModel.setInputValues(index: 'selectedOption', value: selectedOption);
                                   },
                                 ),
                                 Text(
@@ -391,7 +392,7 @@ class _SignUpSupplierOnBoardingScreenState
                       ),
                       if (signupViewModel.signUpErrors[context
                           .resources.strings.formKeys['id_image']] !=
-                          null)
+                          null && signupViewModel.getSignUpBody['selectedOption']=='individual')
                         Padding(
                           padding: const EdgeInsets.fromLTRB(55, 0, 20, 20),
                           child: Text(
@@ -401,10 +402,23 @@ class _SignUpSupplierOnBoardingScreenState
                           ),
                         ),
 
+                      if (signupViewModel.signUpErrors[context
+                          .resources.strings.formKeys['company_id']] !=
+                          null && signupViewModel.getSignUpBody['selectedOption']=='company')
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(55, 0, 20, 20),
+                          child: Text(
+                            signupViewModel.signUpErrors[context
+                                .resources.strings.formKeys['company_id']]!,
+                            style: TextStyle(color: Colors.red[700],fontSize: 12),
+                          ),
+                        ),
+
                     ],
                   ),
                 ),
               ),
+
               PageModel(
                 widget: DecoratedBox(
                   decoration: BoxDecoration(

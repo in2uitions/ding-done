@@ -97,9 +97,14 @@ class SignUpViewModel with ChangeNotifier {
         dobMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
             index: 'Date of birth');
-        QIDMessage = AppValidation().isNotEmpty(
+        QIDMessage = signUpBody['selectedOption'] =='individual'?
+        AppValidation().isNotEmpty(
             value: signUpBody['id_image'] ?? '',
-            index: 'QID');
+            index: 'QID'):
+        signUpBody['selectedOption'] =='company'?
+        AppValidation().isNotEmpty(
+            value: signUpBody['company_id'] ?? '',
+            index: 'company_id'):'Please select a profile type';
         if (firstnameMessage == null && lastnameMessage == null && dobMessage == null&& QIDMessage == null) {
           notifyListeners();
           return true;
@@ -108,7 +113,9 @@ class SignUpViewModel with ChangeNotifier {
             firstnameMessage;
         signUpErrors[EnglishStrings().formKeys['last_name']!] = lastnameMessage;
         signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
-        signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage;
+        signUpBody['selectedOption'] =='individual'?
+        signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage:
+        signUpErrors[EnglishStrings().formKeys['company_id']!] = QIDMessage;
 
         notifyListeners();
         return false;
@@ -258,9 +265,14 @@ class SignUpViewModel with ChangeNotifier {
         latitudeMessage = AppValidation().isNotEmpty(
             value: signUpBody['latitude'] ?? '',
             index: 'Latitude');
-          QIDMessage = AppValidation().isNotEmpty(
+        QIDMessage = signUpBody['selectedOption'] =='individual'?
+        AppValidation().isNotEmpty(
             value: signUpBody['id_image'] ?? '',
-            index: 'QID');
+            index: 'QID'):
+        signUpBody['selectedOption'] =='company'?
+        AppValidation().isNotEmpty(
+            value: signUpBody['company_id'] ?? '',
+            index: 'company_id'):'Please select a profile type';
         if (
             firstnameMessage == null &&
             lastnameMessage == null &&
@@ -274,8 +286,10 @@ class SignUpViewModel with ChangeNotifier {
             cityMessage == null &&
             zoneMessage == null &&
             floorMessage == null &&
+            QIDMessage == null &&
             signUpBody["avatar"]!=null&&
-            signUpBody["id_image"]!=null && signUpBody['longitude']!=null && signUpBody['latitude']!=null) {
+             signUpBody['longitude']!=null && signUpBody['latitude']!=null) {
+
           notifyListeners();
           return true;
         }
@@ -298,7 +312,9 @@ class SignUpViewModel with ChangeNotifier {
         signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
         signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
         signUpErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
-        signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage;
+        signUpBody['selectedOption'] =='individual'?
+        signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage:
+        signUpErrors[EnglishStrings().formKeys['company_id']!] = QIDMessage;
 
         notifyListeners();
         return false;
