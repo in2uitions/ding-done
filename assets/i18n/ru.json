@@ -197,7 +197,8 @@
     "signUpInstead": "Зарегистрироваться вместо этого",
     "rememberMe": "Запомнить меня",
     "connectWithApple": "Подключиться через Apple",
-    "connectWithGoogle": "Подключиться через Google"
+    "connectWithGoogle": "Подключиться через Google",
+    "swipe": "Проведите пальцем вправо, чтобы вернуться назад"
   },
   "resetPassword_screen": {
     "resetPassword": "Сбросить пароль",

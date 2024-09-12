@@ -197,7 +197,8 @@
     "signUpInstead": "Εγγραφή Αντί για Σύνδεση",
     "rememberMe": "Να με θυμάστε",
     "connectWithApple": "Σύνδεση με Apple",
-    "connectWithGoogle": "Σύνδεση με Google"
+    "connectWithGoogle": "Σύνδεση με Google",
+    "swipe": "Σύρετε προς τα δεξιά για να επιστρέψετε"
   },
   "resetPassword_screen": {
     "resetPassword": "Επαναφορά Κωδικού",

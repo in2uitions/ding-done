@@ -133,10 +133,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
       title: translate('login_screen.signUp'),
       home: Scaffold(
         appBar: AppBar(
-          elevation: 0,
           backgroundColor: const Color(0xffFEFEFE),
-          // Set the background color to transparent
-
           leading: Padding(
             padding: EdgeInsets.fromLTRB(
               context.appValues.appPadding.p20,
@@ -152,7 +149,14 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
               },
             ),
           ),
+          title: Text(
+            translate('login_screen.swipe'),
+
+            style: getPrimaryBoldStyle(fontSize: 13,color:const Color(0xff180C38),), // Customize text style
+          ),
+          centerTitle: true,  // Centers the text
         ),
+
         body: Consumer<SignUpViewModel>(builder: (context, signupViewModel, _) {
           return Onboarding(
             pages: [

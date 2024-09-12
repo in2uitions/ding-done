@@ -197,7 +197,8 @@
     "signUpInstead": "التسجيل بدلاً من ذلك",
     "rememberMe": "تذكرني",
     "connectWithApple": "الاتصال مع Apple",
-    "connectWithGoogle": "الاتصال مع Google"
+    "connectWithGoogle": "الاتصال مع Google",
+    "swipe": "اسحب لليمين للعودة"
   },
   "resetPassword_screen": {
     "resetPassword": "إعادة تعيين كلمة المرور",

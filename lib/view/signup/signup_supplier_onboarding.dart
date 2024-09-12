@@ -142,7 +142,7 @@ class _SignUpSupplierOnBoardingScreenState
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'Sign up ',
       theme: ThemeData(
         primarySwatch: Colors.blue,
         visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -167,7 +167,13 @@ class _SignUpSupplierOnBoardingScreenState
                 },
               ),
             ),
+            title: Text(
+              translate('login_screen.swipe'),
+              style: getPrimaryBoldStyle(fontSize: 13,color:const Color(0xff180C38),), // Customize text style
+            ),
+            centerTitle: true,  // Centers the text
           ),
+
           body: Onboarding(
             pages: [
               PageModel(
@@ -224,13 +230,25 @@ class _SignUpSupplierOnBoardingScreenState
                         ),
                       ),
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
                           child: CustomDatePicker(
                             value:signupViewModel.signUpBody["dob"]??'',
                             index: 'dob',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.dob'),
                           )),
+                      if (signupViewModel.signUpErrors[context
+                          .resources.strings.formKeys['dob']] !=
+                          null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(30, 0, 20, 20),
+                          child: Text(
+                            signupViewModel.signUpErrors[context
+                                .resources.strings.formKeys['dob']]!,
+                            style: TextStyle(color: Colors.red[700],fontSize: 12),
+                          ),
+                        ),
+
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: SizedBox(
@@ -368,8 +386,21 @@ class _SignUpSupplierOnBoardingScreenState
                                 ),
                               ),
                             ),
+
                         ],
                       ),
+                      if (signupViewModel.signUpErrors[context
+                          .resources.strings.formKeys['id_image']] !=
+                          null)
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(55, 0, 20, 20),
+                          child: Text(
+                            signupViewModel.signUpErrors[context
+                                .resources.strings.formKeys['id_image']]!,
+                            style: TextStyle(color: Colors.red[700],fontSize: 12),
+                          ),
+                        ),
+
                     ],
                   ),
                 ),

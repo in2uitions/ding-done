@@ -197,7 +197,8 @@
     "signUpInstead": "Sign Up Instead",
     "rememberMe": "Remember me",
     "connectWithApple": "Connect with Apple",
-    "connectWithGoogle": "Connect with Google"
+    "connectWithGoogle": "Connect with Google",
+    "swipe": "Swipe right to go back"
   },
   "resetPassword_screen": {
     "resetPassword": "Reset Password",

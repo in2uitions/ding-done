@@ -79,6 +79,7 @@ class SignUpViewModel with ChangeNotifier {
     String? passwordMessage = '';
     String? phoneMessage = '';
     String? dobMessage = '';
+    String? QIDMessage = '';
     String? paymentinfoMessage = '';
     String? categoriesMessage = '';
     String? idMessage = '';
@@ -96,8 +97,10 @@ class SignUpViewModel with ChangeNotifier {
         dobMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
             index: 'Date of birth');
-
-        if (firstnameMessage == null && lastnameMessage == null && dobMessage == null) {
+        QIDMessage = AppValidation().isNotEmpty(
+            value: signUpBody['id_image'] ?? '',
+            index: 'QID');
+        if (firstnameMessage == null && lastnameMessage == null && dobMessage == null&& QIDMessage == null) {
           notifyListeners();
           return true;
         }
@@ -105,6 +108,7 @@ class SignUpViewModel with ChangeNotifier {
             firstnameMessage;
         signUpErrors[EnglishStrings().formKeys['last_name']!] = lastnameMessage;
         signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
+        signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage;
 
         notifyListeners();
         return false;
@@ -254,6 +258,9 @@ class SignUpViewModel with ChangeNotifier {
         latitudeMessage = AppValidation().isNotEmpty(
             value: signUpBody['latitude'] ?? '',
             index: 'Latitude');
+          QIDMessage = AppValidation().isNotEmpty(
+            value: signUpBody['id_image'] ?? '',
+            index: 'QID');
         if (
             firstnameMessage == null &&
             lastnameMessage == null &&
@@ -291,6 +298,7 @@ class SignUpViewModel with ChangeNotifier {
         signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
         signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
         signUpErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
+        signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage;
 
         notifyListeners();
         return false;
