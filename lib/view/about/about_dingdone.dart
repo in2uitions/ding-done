@@ -3,6 +3,7 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -64,7 +65,8 @@ class _AboutState extends State<About> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'About',
+                  translate('formHints.about'),
+
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.secondColorBlue,
                       fontSize: 24),
