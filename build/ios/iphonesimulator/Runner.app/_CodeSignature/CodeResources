@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		ub0WQJINb6y3zwNfdhqWN3AWwiA=
+		Pn1Q0Rtptsazh3B0Nz14hdJ9Abs=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		VfoFCYgp9tBv02/gOh1icwVnFZQ=
+		fietkETdzhbCAx0HybB3ImcfFg8=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
@@ -78,7 +78,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		RPLbEa9MSG2GUkyEPLlJdo3ChYc=
+		it7swjfoae2qB2RxXv6RE0o789M=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/.env</key>
 		<data>
@@ -98,19 +98,19 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/ar.json</key>
 		<data>
-		r0oRsKbQ898IuxRldkBp581B8J4=
+		0GEvv7g+e8w24KuoPehvVVQ4LuY=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/el.json</key>
 		<data>
-		7pr9kRK6XuI5CFNPNePofbTqa7c=
+		5UGeMVEkN1C43kWb04yC4zLiccc=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/en.json</key>
 		<data>
-		msfb/u5zGK2DqliTnaf3o/M1WeU=
+		eJJ2KFrItKjAoTQmPJWci9E0n4M=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/ru.json</key>
 		<data>
-		kT4XFyPI9r/YypuOn1BtmwA9EOA=
+		2/annj++g9ZPiztElwiQh+ICpjE=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/014-google.svg</key>
 		<data>
@@ -382,7 +382,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		pMXZKe/BH+kHdgL2BOdyINGcU6A=
+		gzNV/tk4LvDXwKHfIidqStJUz2k=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -3321,11 +3321,11 @@
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet</key>
 		<data>
-		B0aukNFrfgm4PpzYdH/zp3VBlSQ=
+		8w2hpc/gcjx4+TXZ0BMeDer824Y=
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet.bundle/Assets.car</key>
 		<data>
-		d/dPApv6Q9QGjA2hlnpXwVD5gcA=
+		LbDFQxjoX9PqZzfwrzTy2dEZvUg=
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet.bundle/Info.plist</key>
 		<data>
@@ -3715,7 +3715,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/_CodeSignature/CodeResources</key>
 		<data>
-		O7sn74FKYYmWk7810szGOpAx3vA=
+		JrAqj/Q4sa12Lx3UM5ftKgR2UMY=
 		</data>
 		<key>Frameworks/StripePayments.framework/Info.plist</key>
 		<data>
@@ -4494,11 +4494,11 @@
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI</key>
 		<data>
-		Vmo2aU3qWmZCEvhEGnXGeR9usK4=
+		+nRDcfAN0ZbvRxEHkjwrhwaKx5E=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Assets.car</key>
 		<data>
-		WWbtXewZnW9ykyuppGmHS/fGbEI=
+		mRZp0E/cF6kESv/3pB5/A7B9mQ4=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Info.plist</key>
 		<data>
@@ -4888,7 +4888,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/_CodeSignature/CodeResources</key>
 		<data>
-		iLR4fXogzD0+Ln50U8Lr+LO70kQ=
+		I4T1NiNP7Thp9myU2reRU7lhXOg=
 		</data>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
 		<data>
@@ -5776,6 +5776,18 @@
 		<data>
 		OPP64rNjaFDmhzOhk3iBUSPN13M=
 		</data>
+		<key>Frameworks/package_info_plus.framework/Info.plist</key>
+		<data>
+		m1ospI1tICiplRwqhtFBEyR/Wco=
+		</data>
+		<key>Frameworks/package_info_plus.framework/_CodeSignature/CodeResources</key>
+		<data>
+		JPbzuES5Rpt7zZwHjV/BmZrJtQI=
+		</data>
+		<key>Frameworks/package_info_plus.framework/package_info_plus</key>
+		<data>
+		BUUp61PKgaAHiQw71ChxM2DtgzQ=
+		</data>
 		<key>Frameworks/path_provider_foundation.framework/Info.plist</key>
 		<data>
 		iKI3DmbhE7taemevS/QwB920Ygk=
@@ -5826,7 +5838,7 @@
 		</data>
 		<key>Frameworks/stripe_ios.framework/stripe_ios</key>
 		<data>
-		CleDeWm1L/csd5RLEPPhsAEWvCQ=
+		tmgRN+Fu+PwxgmAguk2sMkLTq34=
 		</data>
 		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>
 		<data>
@@ -6795,7 +6807,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JMoYe6+FqDf+p85n6H/vRag/fxGl0rqJlcjWyL8SmBY=
+			IM+GL21E35JqArJThyvLafPL1/3re7y1MQQxDc7Rdyg=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -6809,7 +6821,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			QR59Tpvw6kEYknRlauj92rPzt5HdcJbhWOnoh8z+b6k=
+			b5gR/N74ATBGiRNaBphd2NddzD3NnrTl6tjk/0EqiZo=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
@@ -6837,7 +6849,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			X55hA2sh9cfthNaVxgtjAyrUpN27xMYWlfuW9HIPwqM=
+			YUcbNTD32j/t11MasJg64CJVw0iMnLoUG4A12Jfh9pg=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/.env</key>
@@ -6872,28 +6884,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			mXUNrRsqF03foLKVX11JMdB0jdyaoyjcMML+X6VNg+Y=
+			6obBzvJ1IRO/G0tioei5daQOtTVnPOPoP83xgwkg1Jw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			F9uO4UW1ui9kXR2iRHmbhog0BOP7ar6bVrf//oNwbbc=
+			mljA5rdc0vWiwalRF2Wfeo3M9wZptU8oo0irtmsq6Qc=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/en.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KcUVsOnvU0CTOxSFNQTvBcJXH42g9ZFOIyE1CZ7gUSE=
+			PV+ztt0rUybhT7548Ls3uudYygiqRKb2V0bo02WSvpw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			At5crRoZTy0XvD5ba3VvsUvVpqNmm7HqQ0bPdU6x08M=
+			52m5nLPUC9QiJQ/c3fR6ru6o7HBdFkrpVIdYsbRLc4s=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/014-google.svg</key>
@@ -7369,7 +7381,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xwSY5qm3RNNB4FKmiuXrmiygF2xmHAcdK9JxQS7xhfE=
+			8Bh2gtWXdIxrbPCkhz9Bj1Dh/UPeqMQNq2efd8tOc0E=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -11520,14 +11532,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			p3xyd/ZIPR/6cjuZDXxy10sz8iMO1465u8pZhDyJC9g=
+			mX7A5ZHPS9ISB0QVK27l4NaUs2zZGAGe1MNgBKuJDVY=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0xUtddefF36wAgy7S9XCDT3mFb52vaBe78+MRYfQRvY=
+			uxcwPat1DlmKVgDjT1f76TkTOO1IVGBf1PHHv4971lo=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet.bundle/Info.plist</key>
@@ -11926,7 +11938,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			GvycLDgRqYYx1Tp/UDRP5WsKWernoVulj1gDiXeOM30=
+			JB/l6RNGsNw3N6viAeSCzWiJlSOO8cblgkWucN800LQ=
 			</data>
 		</dict>
 		<key>Frameworks/StripePayments.framework/Info.plist</key>
@@ -12729,14 +12741,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1RXZLrFxAcr946JPxGUBJ9y/auX0HgOyNAQIhq+DZbA=
+			tyHX6gI5gTe8gePtHuupb38X/jQQ9KqrHLmCF/K9bV0=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JZ5QnbDSaEJjMFiVJO2uP+scmDy0wIT0jA+aTtIeMfk=
+			J+Ra7VIYV38cn4aEK4hd3dHSae6pr19Vz3B3InvhoVw=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Info.plist</key>
@@ -13135,7 +13147,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9xXF1O4QlAdJy7P2huM0I2Dz7ohGpNjB0E7E5aEbaq4=
+			0rr9wNN/fsrkIOPrmLtFomx7x/+zeSqIjZ5Z0aSCC3o=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
@@ -14216,6 +14228,27 @@
 			YYqGGQVD51+by/HOv9LrRm7dGqwDJfrlHm5bnBB86KA=
 			</data>
 		</dict>
+		<key>Frameworks/package_info_plus.framework/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			NomhlBIurSRlfzzUrfu4V3Qt0/Yc9QOsW6w4QZNZZ5U=
+			</data>
+		</dict>
+		<key>Frameworks/package_info_plus.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			c8GRIe9jefMnzMXx1RNV5Oiskloop2Hz6m2npsmArSk=
+			</data>
+		</dict>
+		<key>Frameworks/package_info_plus.framework/package_info_plus</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			hg4hwsJDFt//OqTx3KL4i4lArxIAFCCRGd4tlDTvq8w=
+			</data>
+		</dict>
 		<key>Frameworks/path_provider_foundation.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
@@ -14304,7 +14337,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			o4b+tcfcRjhVvZ3Lo5r+qtIGSRa7cBMyLjLu07tGUvU=
+			JhllZfuWH7uAPMKtvTpdK2VK98vLo1WKFBCpiPBQvLc=
 			</data>
 		</dict>
 		<key>Frameworks/url_launcher_ios.framework/Info.plist</key>

@@ -692,6 +692,18 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "package_info_plus",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/package_info_plus-5.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "package_info_plus_platform_interface",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/package_info_plus_platform_interface-2.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "path",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/path-1.8.3",
       "packageUri": "lib/",
@@ -1124,7 +1136,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-09-10T07:48:09.023997Z",
+  "generated": "2024-09-16T07:26:25.894813Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }

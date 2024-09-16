@@ -115,22 +115,22 @@ class _HomePageState extends State<HomePage> {
                       ],
                     ),
                   ),
-                  ListTile(
-                    title: Text(
-                      'My Account',
-                      style: getPrimaryBoldStyle(
-                        fontSize: 18,
-                        color: const Color(0xff180C38),
-                      ),
-                    ),
-                    onTap: () {
-                      // Handle My Account tap
-
-                      Navigator.of(context).push(_createRoute(
-                          const EditAccount()));
-                      // Navigator.pop(context);
-                    },
-                  ),
+                  // ListTile(
+                  //   title: Text(
+                  //     'My Account',
+                  //     style: getPrimaryBoldStyle(
+                  //       fontSize: 18,
+                  //       color: const Color(0xff180C38),
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     // Handle My Account tap
+                  //
+                  //     Navigator.of(context).push(_createRoute(
+                  //         const EditAccount()));
+                  //     // Navigator.pop(context);
+                  //   },
+                  // ),
                   ListTile(
                     title: Text(
                       'Order History',

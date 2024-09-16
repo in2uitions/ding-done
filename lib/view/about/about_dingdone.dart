@@ -1,53 +1,53 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:dingdone/view/login/login.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/acceptable_use.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/acceptance.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/booking_system.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/changes_andCancellations.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/definitions_and_interpretation.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/dispute_resolution_policy.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/general_provisions.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/indemnity_and_liability.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/intellectual_property.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/payment.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/prices_and_estimates.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/privacy.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/security_of_payment.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/services.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/termination.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/terms_and_conditions.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/user_profile.dart';
-import 'package:dingdone/view/widgets/agreements/user_agreement/warranties_and_representaions.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
 class About extends StatefulWidget {
-
-  About({super.key,});
+  About({
+    super.key,
+  });
 
   @override
   State<About> createState() => _AboutState();
 }
 
 class _AboutState extends State<About> {
+  late PackageInfo packageInfo;
+  bool isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    getPackageInfo();
+  }
+
+  Future<void> getPackageInfo() async {
+    debugPrint('package info ');
+
+    packageInfo = await PackageInfo.fromPlatform();
+    debugPrint('package info $packageInfo');
+    setState(() {
+      isLoading = false; // Data loaded, stop loading indicator
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF0F3F8),
       body: Consumer<SignUpViewModel>(builder: (context, signupViewModel, _) {
         return SafeArea(
-
           child: ListView(
             children: [
-             SafeArea(
+              SafeArea(
                 child: Directionality(
                   textDirection: TextDirection.ltr,
                   child: Padding(
-                    padding:
-                    EdgeInsets.all(context.appValues.appPadding.p20),
+                    padding: EdgeInsets.all(context.appValues.appPadding.p20),
                     child: Row(
                       children: [
                         InkWell(
@@ -71,7 +71,6 @@ class _AboutState extends State<About> {
                 ),
               ),
               SizedBox(height: context.appValues.appSize.s10),
-
               Padding(
                 padding: EdgeInsets.all(
                   context.appValues.appPadding.p20,
@@ -87,12 +86,22 @@ class _AboutState extends State<About> {
                           fontSize: 18),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
-                    Text(
-                      'Ding Done 1.0.22(42)',
-                      style: getPrimaryRegularStyle(
-                          color: context.resources.color.btnColorBlue,
-                          fontSize: 15),
-                    ),
+                    isLoading
+                        ? Center(child: CircularProgressIndicator())
+                        : packageInfo != null // Ensure packageInfo is not null
+                            ?
+                                    Text(
+                                      "${packageInfo!.appName} ${packageInfo!.version} (${packageInfo!.buildNumber})",
+                                      style: getPrimaryRegularStyle(
+                                          color: context.resources.color.btnColorBlue,
+                                          fontSize: 15),)
+                                    // Text(
+                                    //     "Package Name: ${packageInfo!.packageName}"),
+
+                            : Center(
+                                child:
+                                    Text('Failed to load package information'),
+                              ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
                       'Developer Details',
@@ -110,7 +119,6 @@ class _AboutState extends State<About> {
                   ],
                 ),
               ),
-
             ],
           ),
         );

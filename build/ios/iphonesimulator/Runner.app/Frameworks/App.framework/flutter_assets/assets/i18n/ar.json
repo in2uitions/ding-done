@@ -139,7 +139,9 @@
     "expiryYear": "سنة الانتهاء",
     "expiryMonth": "شهر الانتهاء",
     "CVC": "رمز التحقق من البطاقة (CVC)",
-    "cashOnDelivery": "الدفع عند الاستلام"
+    "cashOnDelivery": "الدفع عند الاستلام",
+    "noPaymentMethod": "لا توجد طرق الدفع"
+
   },
   "bookService": {
     "bookService": "حجز خدمة",
@@ -197,7 +199,8 @@
     "signUpInstead": "التسجيل بدلاً من ذلك",
     "rememberMe": "تذكرني",
     "connectWithApple": "الاتصال مع Apple",
-    "connectWithGoogle": "الاتصال مع Google"
+    "connectWithGoogle": "الاتصال مع Google",
+    "swipe": "اسحب لليمين للعودة"
   },
   "resetPassword_screen": {
     "resetPassword": "إعادة تعيين كلمة المرور",

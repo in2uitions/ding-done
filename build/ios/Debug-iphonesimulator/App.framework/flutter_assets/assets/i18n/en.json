@@ -139,7 +139,8 @@
     "expiryYear": "Expiry Year",
     "expiryMonth": "Expiry Month",
     "CVC": "CVC",
-    "cashOnDelivery": "Cash On Delivery"
+    "cashOnDelivery": "Cash On Delivery",
+    "noPaymentMethod": "No Payment Methods"
   },
   "bookService": {
     "bookService": "Book a service",
@@ -197,7 +198,8 @@
     "signUpInstead": "Sign Up Instead",
     "rememberMe": "Remember me",
     "connectWithApple": "Connect with Apple",
-    "connectWithGoogle": "Connect with Google"
+    "connectWithGoogle": "Connect with Google",
+    "swipe": "Swipe right to go back"
   },
   "resetPassword_screen": {
     "resetPassword": "Reset Password",

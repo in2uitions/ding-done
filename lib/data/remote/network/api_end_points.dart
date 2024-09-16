@@ -21,6 +21,7 @@ class ApiEndPoints {
   final String supplierOpenJobs = '/suppliers/supplierOpenJobs';
   final String supplierFinishJob = '/suppliers/finishJob';
   final String supplierStartJob = '/suppliers/startJob';
+  final String supplierIgnoreJob = '/suppliers/ignoreJob';
   final String supplierAcceptJob = '/suppliers/bookJob';
   final String supplierChangeLocation = '/suppliers/myLocation';
   final String updateJob = '/suppliers/updateJob';

@@ -215,9 +215,29 @@ class JobsViewModel with ChangeNotifier {
       }
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
+      return false;
     }
-    notifyListeners();
-    return true;
+    // notifyListeners();
+    // return true;
+  }
+
+  Future<bool?> ignoreJob(int id) async {
+    try {
+      dynamic response=await _jobsRepository.ignoreJob(id);
+      // readJson();
+      // notifyListeners();
+      if(response["status"]=="OK"){
+        readJson();
+        return true;
+      }else{
+        _errorMessage=response["reason"];
+        return false;
+      }
+    } catch (error) {
+      debugPrint('Error ignoring jobs ${error}');
+      return false;
+    }
+
   }
 
   Future<bool?> acceptJob(dynamic data) async {

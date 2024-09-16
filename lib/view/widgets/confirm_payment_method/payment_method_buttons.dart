@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
+import '../../../res/fonts/styles_manager.dart';
 import '../../../view_model/payment_view_model/payment_view_model.dart';
 
 class PaymentMethodButtons extends StatefulWidget {
@@ -91,31 +92,46 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                         },
                         child: Column(
                           children: [
+                            // Removed by Rim to be added later on Cash on Delivery
                             (widget.fromWhere == 'completed' && data != null) ||
                                 (widget.role == Constants.supplierRoleId &&
                                     data != null)
-                                ? ButtonConfirmPaymentMethod(
+                                ?
+                            // snapshot.data.isNotEmpty?
+                            ButtonConfirmPaymentMethod(
                               action: active,
-                              tag: "${snapshot.data![0].id}",
+                              tag: "${snapshot.data![0]['id']}",
                               active: true,
-                              text: "${snapshot.data![0].brand}",
+                              text: "${snapshot.data![0]['brand']}",
                               image: 'assets/img/card-icon.svg',
                               jobsViewModel: widget.jobsViewModel,
-                              data: snapshot.data![0].id,
-                              last_digits: snapshot.data![0].lastDigits,
+                              data: snapshot.data![0]['id'],
+                              last_digits: snapshot.data![0]['lastDigits'],
                               payment_method: "Card",
                             )
-                                : ButtonCahsOnDelevery(
-                              action: active,
-                              tag: "cash",
-                              active: _active == "cash" ? true : false,
-                              text: translate('paymentMethod.cashOnDelivery'),
-                              image: 'assets/img/cod-icon-new.svg',
-                              data: '',
-                              payment_method: 'Cash On Delivery',
-                              jobsViewModel: widget.jobsViewModel,
-                              last_digits: '',
-                            ),
+
+                            :
+                            snapshot.data.isNotEmpty?
+                                Container():
+                            Text(translate('paymentMethod.noPaymentMethod'),
+                              style: getPrimaryRegularStyle(
+                            fontSize: 18,
+                        color: Color(0xff180C38),
+                      ),),
+                            //Removed by Rim to be added later on Cash on Delivery
+
+                            //     :
+                            // ButtonCahsOnDelevery(
+                            //   action: active,
+                            //   tag: "cash",
+                            //   active: _active == "cash" ? true : false,
+                            //   text: translate('paymentMethod.cashOnDelivery'),
+                            //   image: 'assets/img/cod-icon-new.svg',
+                            //   data: '',
+                            //   payment_method: 'Cash On Delivery',
+                            //   jobsViewModel: widget.jobsViewModel,
+                            //   last_digits: '',
+                            // ),
                             SizedBox(height: context.appValues.appSize.s10),
                           ],
                         ),

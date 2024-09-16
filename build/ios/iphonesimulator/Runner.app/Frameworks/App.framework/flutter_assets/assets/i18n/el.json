@@ -139,7 +139,9 @@
     "expiryYear": "Έτος Λήξης",
     "expiryMonth": "Μήνας Λήξης",
     "CVC": "Κωδικός CVC",
-    "cashOnDelivery": "Πληρωμή Κατά Την Παράδοση"
+    "cashOnDelivery": "Πληρωμή Κατά Την Παράδοση",
+    "noPaymentMethod": "δεν υπάρχουν τρόποι πληρωμής"
+
   },
   "bookService": {
     "bookService": "Κάντε κράτηση υπηρεσίας",
@@ -197,7 +199,8 @@
     "signUpInstead": "Εγγραφή Αντί για Σύνδεση",
     "rememberMe": "Να με θυμάστε",
     "connectWithApple": "Σύνδεση με Apple",
-    "connectWithGoogle": "Σύνδεση με Google"
+    "connectWithGoogle": "Σύνδεση με Google",
+    "swipe": "Σύρετε προς τα δεξιά για να επιστρέψετε"
   },
   "resetPassword_screen": {
     "resetPassword": "Επαναφορά Κωδικού",

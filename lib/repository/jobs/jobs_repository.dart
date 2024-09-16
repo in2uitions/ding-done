@@ -26,6 +26,8 @@ class JobsRepository {
       NetworkApiService(url: ApiEndPoints().payJob);
   final BaseApiService _apiStartJob =
       NetworkApiService(url: ApiEndPoints().supplierStartJob);
+  final BaseApiService _apiIgnoreJob =
+      NetworkApiService(url: ApiEndPoints().supplierIgnoreJob);
   final BaseApiService _apiAcceptJob =
       NetworkApiService(url: ApiEndPoints().supplierAcceptJob);
   final BaseApiService _apiUpdateJob =
@@ -152,6 +154,18 @@ class JobsRepository {
 
     } catch (error) {
       debugPrint('error in getting start jobs $error');
+      rethrow;
+    }
+  }
+  Future<dynamic> ignoreJob(int job_id) async {
+    try {
+      String? id = await getUserId();
+
+      dynamic response = await _apiIgnoreJob.postResponse(data: {"supplier_id": id,"job_id":job_id});
+      return response;
+
+    } catch (error) {
+      debugPrint('error in ignoring jobs $error');
       rethrow;
     }
   }

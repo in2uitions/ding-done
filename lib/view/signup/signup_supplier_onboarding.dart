@@ -104,7 +104,15 @@ class _SignUpSupplierOnBoardingScreenState
               if (signupViewModel.validate(index: index)) {
                 Navigator.of(context)
                     .push(_createRoute(SupplierAgreement(index: index)));
+              }else{
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) =>
+                      _buildPopupDialog(
+                          context, 'Make Sure to provide all your informtation'),
+                );
               }
+
             },
             child: Center(
               child: Text(
@@ -118,6 +126,50 @@ class _SignUpSupplierOnBoardingScreenState
           ),
         );
       }),
+    );
+  }
+  Widget _buildPopupDialog(BuildContext context, String message) {
+    return AlertDialog(
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Align(
+            alignment: Alignment.topRight,
+            child: TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SvgPicture.asset('assets/img/x.svg'),
+                ],
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  width:context.appValues.appSizePercent.w50,
+                  child: Text(
+                    message,
+                    style: getPrimaryRegularStyle(
+                        color: const Color(0xff3D3D3D), fontSize: 15),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // Padding(
+          //   padding: EdgeInsets.only(top: context.appValues.appPadding.p20),
+          //   child: SvgPicture.asset('assets/img/cleaning.svg'),
+          // ),
+        ],
+      ),
     );
   }
 

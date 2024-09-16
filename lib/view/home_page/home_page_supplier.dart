@@ -109,28 +109,28 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                       ],
                     ),
                   ),
-                  ListTile(
-                    title: Text(
-                      'My Account',
-                      style: getPrimaryBoldStyle(
-                        fontSize: 18,
-                        color: const Color(0xff180C38),
-                      ),
-                    ),
-                    onTap: () {
-                      // Handle My Account tap
-                      Navigator.pop(context);
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) =>ProfilePageSupplier(
-                                    data: profileViewModel.getProfileBody,
-                                    list:
-                                    categoriesViewModel.categoriesList),
-                              ),
-                            );
-                    },
-                  ),
+                  // ListTile(
+                  //   title: Text(
+                  //     'My Account',
+                  //     style: getPrimaryBoldStyle(
+                  //       fontSize: 18,
+                  //       color: const Color(0xff180C38),
+                  //     ),
+                  //   ),
+                  //   onTap: () {
+                  //     // Handle My Account tap
+                  //     Navigator.pop(context);
+                  //           Navigator.push(
+                  //             context,
+                  //             MaterialPageRoute(
+                  //               builder: (context) =>ProfilePageSupplier(
+                  //                   data: profileViewModel.getProfileBody,
+                  //                   list:
+                  //                   categoriesViewModel.categoriesList),
+                  //             ),
+                  //           );
+                  //   },
+                  // ),
                   ListTile(
                     title: Text(
                       'Order History',

@@ -436,10 +436,10 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                     height: context.appValues.appSizePercent.h7,
                                     child: ElevatedButton(
                                       onPressed: () async {
-                                        // if (await jobsViewModel
-                                        //         .cancelJobNoPenalty(
-                                        //             widget.data.id) ==
-                                        //     true) {
+                                        if (await jobsViewModel
+                                                .ignoreJob(
+                                                    widget.data.id) ==
+                                            true) {
                                           showDialog(
                                               context: context,
                                               builder: (BuildContext context) =>
@@ -449,17 +449,17 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                           'button.success'),
                                                       translate(
                                                           'jobDetails.jobIgnored')));
-                                        // } else {
-                                        //   showDialog(
-                                        //       context: context,
-                                        //       builder: (BuildContext context) =>
-                                        //           simpleAlert(
-                                        //               context,
-                                        //               translate(
-                                        //                   'button.failure'),
-                                        //               translate(
-                                        //                   'jobDetails.couldNotIgnored')));
-                                        // }
+                                        } else {
+                                          showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) =>
+                                                  simpleAlert(
+                                                      context,
+                                                      translate(
+                                                          'button.failure'),
+                                                      translate(
+                                                          'jobDetails.couldNotIgnored')));
+                                        }
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:

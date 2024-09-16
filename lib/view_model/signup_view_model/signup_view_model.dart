@@ -207,7 +207,7 @@ class SignUpViewModel with ChangeNotifier {
         categoriesMessage = AppValidation().isNotListEmpty(
             value:
             signUpBody[EnglishStrings().formKeys['supplier_services']!] ??
-                '',
+                [],
             index: 'Categories');
         if (categoriesMessage == null) {
           notifyListeners();
