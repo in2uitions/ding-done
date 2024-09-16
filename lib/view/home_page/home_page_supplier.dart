@@ -20,6 +20,7 @@ import '../about/about_dingdone.dart';
 import '../agreement/supplier_agreement.dart';
 import '../bottom_bar/bottom_bar.dart';
 import '../confirm_address/confirm_address.dart';
+import '../confirm_payment_method/payments.dart';
 import '../jobs_page/jobs_page.dart';
 import '../login/login.dart';
 import '../profile_page_supplier/profile_page_supplier.dart';
@@ -133,6 +134,20 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                   // ),
                   ListTile(
                     title: Text(
+                      'Pay with scan ',
+                      style: getPrimaryBoldStyle(
+                        fontSize: 18,
+                        color: const Color(0xff180C38),
+                      ),
+                    ),
+                    onTap: () {
+                      // Handle My Account tap
+                      Navigator.of(context).push(_createRoute(
+                          InitialScreen()));
+                    },
+                  ),
+                  ListTile(
+                    title: Text(
                       'Order History',
                       style: getPrimaryBoldStyle(
                         fontSize: 18,
@@ -206,7 +221,9 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                     ),
                     onTap: () {
                       // Handle About DingDone tap
-                      Navigator.of(context)
+                      // Navigator.of(context)
+                      //     .push(_createRoute(About()));
+                       Navigator.of(context)
                           .push(_createRoute(About()));
                       },
                   ),
