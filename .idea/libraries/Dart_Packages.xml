@@ -1094,6 +1094,13 @@
             </list>
           </value>
         </entry>
+        <entry key="stripe_terminal">
+          <value>
+            <list>
+              <option value="$USER_HOME$/.pub-cache/hosted/pub.dev/stripe_terminal-1.5.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="syncfusion_flutter_core">
           <value>
             <list>
@@ -1472,6 +1479,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/stripe_android-10.1.1/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/stripe_ios-10.1.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/stripe_platform_interface-10.1.1/lib" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/stripe_terminal-1.5.0/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_core-22.2.12/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/syncfusion_flutter_maps-22.2.12/lib" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/synchronized-3.1.0+1/lib" />
