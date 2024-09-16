@@ -184,7 +184,69 @@ class PaymentViewModel extends DisposableViewModel {
       }
     }
   }
+  Future<void> makePayment() async {
+    try {
+      //STEP 1: Create Payment Intent
+      paymentIntent = await createPaymentIntent1('100', 'USD');
 
+      //STEP 2: Initialize Payment Sheet
+      await Stripe.instance
+          .initPaymentSheet(
+
+          paymentSheetParameters: SetupPaymentSheetParameters(
+              paymentIntentClientSecret: paymentIntent![
+              'client_secret'], //Gotten from payment intent
+              style: ThemeMode.light,
+              merchantDisplayName: 'Ikay'))
+          .then((value) {});
+
+      //STEP 3: Display Payment sheet
+      displayPaymentSheet1();
+    } catch (err) {
+      throw Exception(err);
+    }
+  }
+  createPaymentIntent1(String amount, String currency) async {
+    try {
+      //Request body
+      Map<String, dynamic> body = {
+        'amount': calculateAmount(amount),
+        'currency': currency,
+      };
+
+      //Make post request to Stripe
+      var response = await http.post(
+        Uri.parse('https://api.stripe.com/v1/payment_intents'),
+        headers: {
+          'Authorization': 'Bearer ${dotenv.env['STRIPE_SECRET']}',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: body,
+      );
+      return json.decode(response.body);
+    } catch (err) {
+      throw Exception(err.toString());
+    }
+  }
+  displayPaymentSheet1() async {
+    try {
+      await Stripe.instance.presentPaymentSheet().then((value) {
+
+        //Clear paymentIntent variable after successful payment
+        paymentIntent = null;
+
+      })
+          .onError((error, stackTrace) {
+        throw Exception(error);
+      });
+    }
+    on StripeException catch (e) {
+      print('Error is:---> $e');
+    }
+    catch (e) {
+      print('$e');
+    }
+  }
   Future<void> stripeMakePayment(dynamic payment_card) async {
     try {
       await getCustomerPayments(_profileViewModel.getProfileBody["user"]["id"]);
