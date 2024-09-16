@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="22.819" height="24.751" viewBox="0 0 22.819 24.751">
+  <g id="payment-method" transform="translate(-36.043 -340.221)">
+    <path id="Vector" d="M0,2.9a2.9,2.9,0,1,1,5.795,0" transform="translate(41.604 341.061)" fill="none" stroke="#ffc500" stroke-width="1.68"/>
+    <path id="Vector-2" data-name="Vector" d="M0,2.9a2.9,2.9,0,0,1,5.795,0" transform="translate(47.399 341.061)" fill="none" stroke="#ffc500" stroke-width="1.68"/>
+    <path id="Vector-3" data-name="Vector" d="M0,0V18.993" transform="translate(47.399 344.816)" fill="none" stroke="#ffc500" stroke-width="1.68"/>
+    <path id="Vector-4" data-name="Vector" d="M18.564,19.315H2.575A2.611,2.611,0,0,1,0,16.74V2.575A2.611,2.611,0,0,1,2.575,0H18.564a2.611,2.611,0,0,1,2.575,2.575V16.74A2.611,2.611,0,0,1,18.564,19.315Z" transform="translate(36.883 344.816)" fill="none" stroke="#4100e3" stroke-width="1.68"/>
+    <path id="Vector-5" data-name="Vector" d="M0,0H21.032" transform="translate(36.883 351.791)" fill="none" stroke="#4100e3" stroke-width="1.68"/>
+  </g>
+</svg>

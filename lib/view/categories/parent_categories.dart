@@ -1,4 +1,3 @@
-import 'package:dingdone/models/roles_model.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -52,7 +51,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
+                  crossAxisCount: 4,
                   mainAxisSpacing: 8,
                   crossAxisSpacing: 8,
                 ),
@@ -81,7 +80,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
     for (Map<String, dynamic> translation in category["translations"]) {
       // for (Map<String, dynamic> translation1 in translation["categories_id"]["translations"]) {
       //   debugPrint('translation 1 is ${translation1}');
-        if (translation["languages_code"] == lang) {
+      if (translation["languages_code"] == lang) {
         services = translation;
         break; // Break the loop once the translation is found
       }
@@ -93,45 +92,44 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
           borderRadius: const BorderRadius.all(
             Radius.circular(22),
           ),
-          color:
-          widget.servicesViewModel.searchBody["search_services"]
-              .toString()
-              .toLowerCase() ==
-              services?["title"].toString().toLowerCase() ||
-              widget.servicesViewModel.parentCategory
-                  .toString()
-                  .toLowerCase() ==
-                  services?["title"].toString().toLowerCase()
+          color: widget.servicesViewModel.searchBody["search_services"]
+                          .toString()
+                          .toLowerCase() ==
+                      services?["title"].toString().toLowerCase() ||
+                  widget.servicesViewModel.parentCategory
+                          .toString()
+                          .toLowerCase() ==
+                      services?["title"].toString().toLowerCase()
               ? const Color(0xffBEC2CE)
               : widget.servicesViewModel.searchBody["search_services"] == '' ||
-              widget.servicesViewModel.searchBody["search_services"] ==
-                  null
-              ? Color(0xffF3D347)
-              : Color(0xffF3D347),
+                      widget.servicesViewModel.searchBody["search_services"] ==
+                          null
+                  ? const Color(0xffF3D347)
+                  : const Color(0xffF3D347),
         ),
         child: _isLoading
             ? SkeletonListView()
             : Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SvgPicture.network(
-              '${context.resources.image.networkImagePath}/${category["image"]}',
-              height: 40,
-              width: 40,
-            ),
-            const SizedBox(height: 10),
-            Text(
-              services?["title"] ?? '',
-              textAlign: TextAlign.center,
-              maxLines: 5,
-              overflow: TextOverflow.ellipsis,
-              style: getPrimaryBoldStyle(
-                fontSize: 18,
-                color: context.resources.color.colorWhite,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SvgPicture.network(
+                    '${context.resources.image.networkImagePath}/${category["image"]}',
+                    height: 40,
+                    width: 40,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    services?["title"] ?? '',
+                    textAlign: TextAlign.center,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: getPrimaryBoldStyle(
+                      fontSize: 12,
+                      color: const Color(0xff180D38),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
       onTap: () {
         debugPrint('search filter ${widget.servicesViewModel.searchBody}');

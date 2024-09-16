@@ -2,7 +2,6 @@
 
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
-import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/home_page/home_page.dart';
 import 'package:dingdone/view/home_page/home_page_supplier.dart';
 import 'package:dingdone/view/inbox_page/inbox_page.dart';
@@ -15,7 +14,6 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
@@ -53,7 +51,6 @@ class _BottomBarState extends State<BottomBar> {
     currentScreen = widget.userRole == Constants.supplierRoleId
         ? const HomePageSupplier()
         : const HomePage();
-
   }
   // Widget currentScreen = HomePage(); // Our first view in viewport
   // Widget currentScreen = HomePageSupplier(); // Our first view in viewport
@@ -62,7 +59,6 @@ class _BottomBarState extends State<BottomBar> {
     lang = await AppPreferences().get(key: dblang, isModel: false);
     lang ??= 'en-US';
     debugPrint('language in bottom bar $lang');
-
   }
 
   Future<void> _getCurrentPosition() async {
@@ -70,19 +66,20 @@ class _BottomBarState extends State<BottomBar> {
     debugPrint('has location permission $hasPermission');
     if (!hasPermission) return;
 
-    await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high)
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((Position position) {
       debugPrint('current location $position');
       setState(() => _currentPosition = position);
       // AppPreferences().save(key: currentPositionKey, value: position, isModel: false);
       debugPrint('current location $position');
-      Provider.of<ProfileViewModel>(context, listen: false).changeCurrentLocation(position.latitude,position.longitude);
+      Provider.of<ProfileViewModel>(context, listen: false)
+          .changeCurrentLocation(position.latitude, position.longitude);
     }).catchError((e) {
       debugPrint('error getting position $e');
       debugPrint(e);
     });
   }
+
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -90,7 +87,8 @@ class _BottomBarState extends State<BottomBar> {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location services are disabled. Please enable the services')));
+          content: Text(
+              'Location services are disabled. Please enable the services')));
       return false;
     }
     permission = await Geolocator.checkPermission();
@@ -104,7 +102,8 @@ class _BottomBarState extends State<BottomBar> {
     }
     if (permission == LocationPermission.deniedForever) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location permissions are permanently denied, we cannot request permissions.')));
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
       return false;
     }
     return true;
@@ -177,52 +176,50 @@ class _BottomBarState extends State<BottomBar> {
                       //   // mainAxisAlignment: MainAxisAlignment.spaceAround,
                       //   crossAxisAlignment: CrossAxisAlignment.start,
                       //   children: <Widget>[
-                      Builder(
-                        builder: (context) {
-                          return MaterialButton(
-                            minWidth: 40,
-                            onPressed: () {
-                              setState(() {
-                                currentScreen =
-                                    // HomePage(); // if user taps on this dashboard tab will be active
-                                    widget.userRole == Constants.supplierRoleId
-                                        ? const HomePageSupplier()
-                                        : const HomePage();
-                                currentTab = 0;
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                // Icon(
-                                //   Icons.home_outlined,
-                                //   size: context.appValues.appSize.s25,
-                                //   color: currentTab == 0
-                                //       ? const Color(0xff9F9AB7)
-                                //       : Color(0xff180C39),
-                                // ),
-                                SvgPicture.asset(
-                                  'assets/img/home-new.svg',
-                                  fit: BoxFit.contain,
-                                  height: context.appValues.appSizePercent.h3,
-                                  color: currentTab == 0
-                                      ? const Color(0xff9F9AB7)
-                                      : const Color(0xff180C39),
-                                ),
-                                // SizedBox(height: context.appValues.appSize.s5),
-                                // Text(
-                                //   translate('bottom_bar.home'),
-                                //   style: getPrimaryRegularStyle(
-                                //     color: currentTab == 0
-                                //         ? const Color(0xff9F9AB7)
-                                //         : const Color(0xff180C39),
-                                //   ),
-                                // ),
-                              ],
-                            ),
-                          );
-                        }
-                      ),
+                      Builder(builder: (context) {
+                        return MaterialButton(
+                          minWidth: 40,
+                          onPressed: () {
+                            setState(() {
+                              currentScreen =
+                                  // HomePage(); // if user taps on this dashboard tab will be active
+                                  widget.userRole == Constants.supplierRoleId
+                                      ? const HomePageSupplier()
+                                      : const HomePage();
+                              currentTab = 0;
+                            });
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              // Icon(
+                              //   Icons.home_outlined,
+                              //   size: context.appValues.appSize.s25,
+                              //   color: currentTab == 0
+                              //       ? const Color(0xff9F9AB7)
+                              //       : Color(0xff180C39),
+                              // ),
+                              SvgPicture.asset(
+                                'assets/img/home-new.svg',
+                                fit: BoxFit.contain,
+                                height: context.appValues.appSizePercent.h3,
+                                color: currentTab == 0
+                                    ? const Color(0xff6A39E5)
+                                    : const Color(0xffE5E5E5),
+                              ),
+                              // SizedBox(height: context.appValues.appSize.s5),
+                              // Text(
+                              //   translate('bottom_bar.home'),
+                              //   style: getPrimaryRegularStyle(
+                              //     color: currentTab == 0
+                              //         ? const Color(0xff9F9AB7)
+                              //         : const Color(0xff180C39),
+                              //   ),
+                              // ),
+                            ],
+                          ),
+                        );
+                      }),
                       Consumer<JobsViewModel>(
                           builder: (context, jobsViewModel, _) {
                         return MaterialButton(
@@ -230,7 +227,11 @@ class _BottomBarState extends State<BottomBar> {
                           onPressed: () {
                             setState(() {
                               currentScreen = JobsPage(
-                                  userRole: widget.userRole, lang:lang!,initialActiveTab: 'activeJobs', initialIndex: 0,);
+                                userRole: widget.userRole,
+                                lang: lang!,
+                                initialActiveTab: 'activeJobs',
+                                initialIndex: 0,
+                              );
                               currentTab = 1;
                             });
                           },
@@ -247,8 +248,8 @@ class _BottomBarState extends State<BottomBar> {
                                       height:
                                           context.appValues.appSizePercent.h3,
                                       color: currentTab == 1
-                                          ? const Color(0xff9F9AB7)
-                                          : const Color(0xff180C39),
+                                          ? const Color(0xff6A39E5)
+                                          : const Color(0xffE5E5E5),
                                     ),
                                     // SizedBox(
                                     //     height: context.appValues.appSize.s5),
@@ -330,8 +331,8 @@ class _BottomBarState extends State<BottomBar> {
                               fit: BoxFit.contain,
                               height: context.appValues.appSizePercent.h3,
                               color: currentTab == 2
-                                  ? const Color(0xff9F9AB7)
-                                  : const Color(0xff180C39),
+                                  ? const Color(0xff6A39E5)
+                                  : const Color(0xffE5E5E5),
                             ),
                             // SizedBox(height: context.appValues.appSize.s5),
                             // Text(
@@ -374,8 +375,8 @@ class _BottomBarState extends State<BottomBar> {
                               fit: BoxFit.contain,
                               height: context.appValues.appSizePercent.h3,
                               color: currentTab == 3
-                                  ? const Color(0xff9F9AB7)
-                                  : const Color(0xff180C39),
+                                  ? const Color(0xff6A39E5)
+                                  : const Color(0xffE5E5E5),
                             ),
                             // SizedBox(height: context.appValues.appSize.s5),
                             // Text(

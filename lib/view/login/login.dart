@@ -67,339 +67,370 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: context.resources.color.btnColorBlue,
-      body: SafeArea(
-        child: ListView(
-          children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: context.appValues.appPadding.p10,
-                right: context.appValues.appPadding.p10,
-              ),
-              child: Align(
-                alignment: Alignment.topRight,
-                child: InkWell(
-                  child: const Icon(
-                    Icons.language,
-                    color: Colors.white,
+      // backgroundColor: context.resources.color.btnColorBlue,
+      body: Container(
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/img/bglogin.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: SafeArea(
+          child: ListView(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(
+                  top: context.appValues.appPadding.p10,
+                  right: context.appValues.appPadding.p10,
+                ),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: InkWell(
+                    child: const Icon(
+                      Icons.language,
+                      color: Colors.white,
+                    ),
+                    onTap: () => _onActionSheetPress(context),
                   ),
-                  onTap: () => _onActionSheetPress(context),
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                left: context.appValues.appPadding.p10,
-                right: context.appValues.appPadding.p10,
-                top: context.appValues.appPadding.p15,
-              ),
-              child: Column(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/img/logo-new.svg',
-                  ),
-                  SizedBox(height: context.appValues.appSize.s25),
-                  Consumer3<LoginViewModel, CategoriesViewModel, JobsViewModel>(
-                      builder: (context, loginViewModel, categoriesViewModel,
-                          jobsViewModel, error) {
-                    return Column(
-                      children: [
-                        CustomTextField(
-                          viewModel: loginViewModel.setInputValues,
-                          index: context.resources.strings.formKeys['email']!,
-                          // hintText: context
-                          //     .resources.strings.formHints['email_address']!,
-                          hintText: translate('formHints.email'),
-                          validator: (val) => loginViewModel.loginErrors[
-                              context.resources.strings.formKeys['email']!],
-                          errorText: loginViewModel.loginErrors[
-                              context.resources.strings.formKeys['email']!],
-                          keyboardType: TextInputType.emailAddress,
-                          value: email != null ? email : '',
-                        ),
-                        SizedBox(height: context.appValues.appSize.s15),
-                        CustomTextField(
+              Padding(
+                padding: EdgeInsets.only(
+                  left: context.appValues.appPadding.p20,
+                  right: context.appValues.appPadding.p20,
+                  top: context.appValues.appPadding.p15,
+                ),
+                child: Column(
+                  // mainAxisAlignment: MainAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/img/logo-new.svg',
+                    ),
+                    SizedBox(height: context.appValues.appSize.s25),
+                    Consumer3<LoginViewModel, CategoriesViewModel,
+                            JobsViewModel>(
+                        builder: (context, loginViewModel, categoriesViewModel,
+                            jobsViewModel, error) {
+                      return Column(
+                        children: [
+                          CustomTextField(
                             viewModel: loginViewModel.setInputValues,
-                            index:
-                                context.resources.strings.formKeys['password']!,
+                            index: context.resources.strings.formKeys['email']!,
                             // hintText: context
-                            //     .resources.strings.formHints['password']!,
-                            hintText: translate('formHints.password'),
-                            errorText: loginViewModel.loginErrors[context
-                                .resources.strings.formKeys['password']!],
-                            keyboardType: TextInputType.visiblePassword,
-                            value: password != null ? password : ''),
-                        SizedBox(height: context.appValues.appSize.s25),
-                        loginViewModel.errorMsg != null
-                            ? Text(
-                                loginViewModel.errorMsg,
-                                style: getPrimaryRegularStyle(
-                                    color: context
-                                        .resources.color.colorText['red']),
-                              )
-                            : Container(),
-                        SizedBox(height: context.appValues.appSize.s10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                width: context.appValues.appSizePercent.w45,
-                                child: CheckboxListTile(
-                                  title: Text(
-                                    translate('login_screen.rememberMe'),
+                            //     .resources.strings.formHints['email_address']!,
+                            hintText: translate('formHints.email'),
+                            validator: (val) => loginViewModel.loginErrors[
+                                context.resources.strings.formKeys['email']!],
+                            errorText: loginViewModel.loginErrors[
+                                context.resources.strings.formKeys['email']!],
+                            keyboardType: TextInputType.emailAddress,
+                            value: email != null ? email : '',
+                          ),
+                          SizedBox(height: context.appValues.appSize.s15),
+                          CustomTextField(
+                              viewModel: loginViewModel.setInputValues,
+                              index: context
+                                  .resources.strings.formKeys['password']!,
+                              // hintText: context
+                              //     .resources.strings.formHints['password']!,
+                              hintText: translate('formHints.password'),
+                              errorText: loginViewModel.loginErrors[context
+                                  .resources.strings.formKeys['password']!],
+                              keyboardType: TextInputType.visiblePassword,
+                              value: password != null ? password : ''),
+                          SizedBox(height: context.appValues.appSize.s25),
+                          loginViewModel.errorMsg != null
+                              ? Text(
+                                  loginViewModel.errorMsg,
+                                  style: getPrimaryRegularStyle(
+                                      color: context
+                                          .resources.color.colorText['red']),
+                                )
+                              : Container(),
+                          SizedBox(height: context.appValues.appSize.s10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  width: context.appValues.appSizePercent.w45,
+                                  child: CheckboxListTile(
+                                    title: Text(
+                                      translate('login_screen.rememberMe'),
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 18,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    side: const BorderSide(color: Colors.white),
+                                    contentPadding: EdgeInsets.zero,
+                                    activeColor: Colors.white,
+                                    checkColor:
+                                        context.resources.color.btnColorBlue,
+                                    // Remove padding
+                                    dense: true,
+                                    // Make the ListTile more compact
+                                    controlAffinity:
+                                        ListTileControlAffinity.trailing,
+                                    // Align checkbox to the right
+                                    value: _isChecked,
+                                    onChanged: (newValue) async {
+                                      setState(() {
+                                        _isChecked = newValue!;
+                                      });
+                                      // if (_isChecked) {
+                                      //   // await loginViewModel.setCredentials();
+                                      //   debugPrint('isChecked');
+                                      //
+                                      // } else {
+                                      //   loginViewModel.removePasswordCredential();
+                                      //
+                                      // }
+                                    },
+                                  ),
+                                ),
+                              ),
+                              // SizedBox(height: context.appValues.appSize.s15),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: InkWell(
+                                  child: Text(
+                                    translate('login_screen.forgotPassword'),
                                     style: getPrimaryRegularStyle(
+                                      color: const Color(0xffB4B4B4),
                                       fontSize: 18,
-                                      color: Colors.white,
                                     ),
                                   ),
-                                  side: const BorderSide(color: Colors.white),
-                                  contentPadding: EdgeInsets.zero,
-                                  activeColor: Colors.white,
-                                  checkColor:
-                                      context.resources.color.btnColorBlue,
-                                  // Remove padding
-                                  dense: true,
-                                  // Make the ListTile more compact
-                                  controlAffinity:
-                                      ListTileControlAffinity.trailing,
-                                  // Align checkbox to the right
-                                  value: _isChecked,
-                                  onChanged: (newValue) async {
-                                    setState(() {
-                                      _isChecked = newValue!;
-                                    });
-                                    // if (_isChecked) {
-                                    //   // await loginViewModel.setCredentials();
-                                    //   debugPrint('isChecked');
-                                    //
-                                    // } else {
-                                    //   loginViewModel.removePasswordCredential();
-                                    //
-                                    // }
+                                  onTap: () {
+                                    Navigator.of(context).push(_createRoute(
+                                        const ForgotPasswordScreen()));
                                   },
                                 ),
                               ),
+                            ],
+                          ),
+                          SizedBox(height: context.appValues.appSize.s35),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.appValues.appPadding.p25,
                             ),
-                            // SizedBox(height: context.appValues.appSize.s15),
-                            Align(
-                              alignment: Alignment.centerRight,
-                              child: InkWell(
-                                child: Text(
-                                  translate('login_screen.forgotPassword'),
-                                  style: getPrimaryRegularStyle(
-                                    color: const Color(0xffB4B4B4),
-                                    fontSize: 18,
-                                  ),
-                                ),
-                                onTap: () {
-                                  Navigator.of(context).push(_createRoute(
-                                      const ForgotPasswordScreen()));
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: context.appValues.appSize.s35),
-                        SizedBox(
-                          height: 56,
-                          width: context.appValues.appSizePercent.w100,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  context.resources.color.colorYellow,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                      context.appValues.appSize.s10),
-                                ),
-                              ),
-                            ),
-                            onPressed: () async {
-                              setState(() {
-                                isLoading = true;
-                              });
-
-                              if (loginViewModel.validate()) {
-                                if (await loginViewModel.login()) {
-                                  if (await loginViewModel.isActiveUser()) {
-                                    if (loginViewModel.isLoggedIn) {
-                                      await loginViewModel.setCredentials();
-                                      await categoriesViewModel.getCategoriesAndServices();
-                                      await jobsViewModel.readJson();
-                                      Navigator.of(context).push(_createRoute(
-                                          BottomBar(
-                                              userRole:
-                                                  loginViewModel.userRole)));
-                                    } else {
-                                      const CircularProgressIndicator();
-                                    }
-                                  }
-                                }
-                              }
-                              setState(() {
-                                isLoading = false;
-                              });
-                            },
-                            child: (isLoading)
-                                ? const SizedBox(
-                                    width: 16,
-                                    height: 16,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 1.5,
-                                    ))
-                                : Text(
-                                    translate('login_screen.signIn'),
-                                    style: getPrimaryRegularStyle(
-                                      color: context.resources.color.colorWhite,
-                                      fontSize: 22,
+                            child: SizedBox(
+                              height: 56,
+                              width: context.appValues.appSizePercent.w100,
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor:
+                                      context.resources.color.colorYellow,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(
+                                          context.appValues.appSize.s10),
                                     ),
                                   ),
+                                ),
+                                onPressed: () async {
+                                  setState(() {
+                                    isLoading = true;
+                                  });
+
+                                  if (loginViewModel.validate()) {
+                                    if (await loginViewModel.login()) {
+                                      if (await loginViewModel.isActiveUser()) {
+                                        if (loginViewModel.isLoggedIn) {
+                                          await loginViewModel.setCredentials();
+                                          await categoriesViewModel
+                                              .getCategoriesAndServices();
+                                          await jobsViewModel.readJson();
+                                          Navigator.of(context).push(
+                                              _createRoute(BottomBar(
+                                                  userRole: loginViewModel
+                                                      .userRole)));
+                                        } else {
+                                          const CircularProgressIndicator();
+                                        }
+                                      }
+                                    }
+                                  }
+                                  setState(() {
+                                    isLoading = false;
+                                  });
+                                },
+                                child: (isLoading)
+                                    ? const SizedBox(
+                                        width: 16,
+                                        height: 16,
+                                        child: CircularProgressIndicator(
+                                          color: Colors.white,
+                                          strokeWidth: 1.5,
+                                        ))
+                                    : Text(
+                                        translate('login_screen.signIn'),
+                                        style: getPrimaryRegularStyle(
+                                          color: context
+                                              .resources.color.colorWhite,
+                                          fontSize: 22,
+                                        ),
+                                      ),
+                              ),
+                            ),
                           ),
+                        ],
+                      );
+                    }),
+                    SizedBox(height: context.appValues.appSize.s15),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p25,
+                      ),
+                      child: SizedBox(
+                        height: 56,
+                        width: context.appValues.appSizePercent.w100,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: context.resources.color.colorWhite,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(context.appValues.appSize.s10),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isLoadingGoogle = true;
+                            });
+                            setState(() {
+                              isLoadingGoogle = false;
+                            });
+                          },
+                          child: (isLoadingGoogle)
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 1.5,
+                                  ))
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/img/014-google.svg'),
+                                    SizedBox(
+                                        width: context.appValues.appSize.s10),
+                                    Text(
+                                      translate(
+                                          'login_screen.connectWithGoogle'),
+                                      style: getPrimaryRegularStyle(
+                                        color: context
+                                            .resources.color.secondColorBlue,
+                                        fontSize: 22,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: context.appValues.appSize.s15),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p25,
+                      ),
+                      child: SizedBox(
+                        height: 56,
+                        width: context.appValues.appSizePercent.w100,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: context.resources.color.colorWhite,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(context.appValues.appSize.s10),
+                              ),
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              isLoadingApple = true;
+                            });
+                            setState(() {
+                              isLoadingApple = false;
+                            });
+                          },
+                          child: (isLoadingApple)
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 1.5,
+                                  ))
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/img/applelogo.svg',
+                                      width: 24,
+                                    ),
+                                    SizedBox(
+                                        width: context.appValues.appSize.s10),
+                                    Text(
+                                      translate(
+                                          'login_screen.connectWithApple'),
+                                      style: getPrimaryRegularStyle(
+                                        color: context
+                                            .resources.color.secondColorBlue,
+                                        fontSize: 22,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: context.appValues.appSize.s15),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        // Text(
+                        //   // "You don't have an account?",
+                        //   translate('login_screen.signUpMessage'),
+                        //   style: getPrimaryRegularStyle(
+                        //       color: context.resources.color.secondColorBlue,
+                        //       fontSize: 15),
+                        // ),
+                        InkWell(
+                          child: Text(
+                            translate('login_screen.signUp'),
+                            style: TextStyle(
+                              color: context.resources.color.colorWhite,
+                              fontSize: 18,
+                              fontFamily: 'Popins',
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
+                              // height: 0.5,
+                            ),
+                            // getPrimaryRegularStyle(
+                            //   color: context.resources.color.colorWhite,
+                            //   fontSize: 18,
+                            // ),
+                          ),
+                          onTap: () {
+                            // Navigator.of(context).push(_createRoute(SignUpScreen()));
+                            Navigator.of(context)
+                                // .push(_createRoute(SignUpOnBoardingScreen()));
+                                .push(_createRoute(const SignUpAsScreen()));
+                          },
                         ),
                       ],
-                    );
-                  }),
-                  SizedBox(height: context.appValues.appSize.s25),
-                  SizedBox(
-                    height: 56,
-                    width: context.appValues.appSizePercent.w100,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: context.resources.color.colorWhite,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(context.appValues.appSize.s10),
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isLoadingGoogle = true;
-                        });
-                        setState(() {
-                          isLoadingGoogle = false;
-                        });
-                      },
-                      child: (isLoadingGoogle)
-                          ? const SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 1.5,
-                              ))
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset('assets/img/014-google.svg'),
-                                SizedBox(width: context.appValues.appSize.s10),
-                                Text(
-                                  translate('login_screen.connectWithGoogle'),
-                                  style: getPrimaryRegularStyle(
-                                    color:
-                                        context.resources.color.secondColorBlue,
-                                    fontSize: 22,
-                                  ),
-                                ),
-                              ],
-                            ),
                     ),
-                  ),
-                  SizedBox(height: context.appValues.appSize.s15),
-                  SizedBox(
-                    height: 56,
-                    width: context.appValues.appSizePercent.w100,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: context.resources.color.colorWhite,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(context.appValues.appSize.s10),
-                          ),
-                        ),
-                      ),
-                      onPressed: () {
-                        setState(() {
-                          isLoadingApple = true;
-                        });
-                        setState(() {
-                          isLoadingApple = false;
-                        });
-                      },
-                      child: (isLoadingApple)
-                          ? const SizedBox(
-                              width: 16,
-                              height: 16,
-                              child: CircularProgressIndicator(
-                                color: Colors.white,
-                                strokeWidth: 1.5,
-                              ))
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                SvgPicture.asset(
-                                  'assets/img/applelogo.svg',
-                                  width: 24,
-                                ),
-                                SizedBox(width: context.appValues.appSize.s10),
-                                Text(
-                                  translate('login_screen.connectWithApple'),
-                                  style: getPrimaryRegularStyle(
-                                    color:
-                                        context.resources.color.secondColorBlue,
-                                    fontSize: 22,
-                                  ),
-                                ),
-                              ],
-                            ),
-                    ),
-                  ),
-                  SizedBox(height: context.appValues.appSize.s15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // Text(
-                      //   // "You don't have an account?",
-                      //   translate('login_screen.signUpMessage'),
-                      //   style: getPrimaryRegularStyle(
-                      //       color: context.resources.color.secondColorBlue,
-                      //       fontSize: 15),
-                      // ),
-                      InkWell(
-                        child: Text(
-                          translate('login_screen.signUp'),
-                          style: TextStyle(
-                            color: context.resources.color.colorWhite,
-                            fontSize: 18,
-                            fontFamily: 'Popins',
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
-                            // height: 0.5,
-                          ),
-                          // getPrimaryRegularStyle(
-                          //   color: context.resources.color.colorWhite,
-                          //   fontSize: 18,
-                          // ),
-                        ),
-                        onTap: () {
-                          // Navigator.of(context).push(_createRoute(SignUpScreen()));
-                          Navigator.of(context)
-                              // .push(_createRoute(SignUpOnBoardingScreen()));
-                              .push(_createRoute(const SignUpAsScreen()));
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: context.appValues.appSize.s35),
-                ],
+                    SizedBox(height: context.appValues.appSize.s35),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

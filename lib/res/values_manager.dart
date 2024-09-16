@@ -34,6 +34,7 @@ class AppPadding {
   final double p20 = 20.0;
   final double p25 = 25.0;
   final double p32 = 32.0;
+  final double p35 = 35.0;
   final double p40 = 40.0;
   final double p50 = 50.0;
   final double p70 = 70.0;
@@ -41,6 +42,7 @@ class AppPadding {
   final double p80 = 80.0;
   final double p100 = 100.0;
   final double p110 = 110.0;
+  final double p115 = 115.0;
   final double p150 = 150.0;
 }
 

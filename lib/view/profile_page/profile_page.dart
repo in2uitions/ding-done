@@ -83,14 +83,25 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 ),
                 SizedBox(height: context.appValues.appSizePercent.h4),
-               ProfileComponent(
-                            // payment_method: data.data,
-                            role: profileViewModel.getProfileBody["user"] != null
-                                ? profileViewModel.getProfileBody["user"]["role"]
-                                : '',
-                          ),
+                ProfileComponent(
+                  // payment_method: data.data,
+                  role: profileViewModel.getProfileBody["user"] != null
+                      ? profileViewModel.getProfileBody["user"]["role"]
+                      : '',
+                ),
 
-                SizedBox(height: context.appValues.appSizePercent.h2),
+                // SizedBox(height: context.appValues.appSizePercent.h2),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: context.appValues.appPadding.p35,
+                    right: context.appValues.appPadding.p115,
+                  ),
+                  child: const Divider(
+                    height: 50,
+                    thickness: 2,
+                    color: Color(0xffEAEAFF),
+                  ),
+                ),
                 const ProfileSeconComponent(),
               ],
             ),
