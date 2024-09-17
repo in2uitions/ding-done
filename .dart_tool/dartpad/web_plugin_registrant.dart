@@ -7,7 +7,9 @@
 // ignore_for_file: type=lint
 
 import 'package:audioplayers_web/audioplayers_web.dart';
+import 'package:camera_web/camera_web.dart';
 import 'package:file_picker/_internal/file_picker_web.dart';
+import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:flutter_image_compress_web/flutter_image_compress_web.dart';
 import 'package:flutter_localization/flutter_localization_web.dart';
 import 'package:flutter_native_splash/flutter_native_splash_web.dart';
@@ -25,7 +27,9 @@ import 'package:flutter_web_plugins/flutter_web_plugins.dart';
 void registerPlugins([final Registrar? pluginRegistrar]) {
   final Registrar registrar = pluginRegistrar ?? webPluginRegistrar;
   AudioplayersPlugin.registerWith(registrar);
+  CameraPlugin.registerWith(registrar);
   FilePickerWeb.registerWith(registrar);
+  FirebaseCoreWeb.registerWith(registrar);
   FlutterImageCompressWeb.registerWith(registrar);
   FlutterLocalizationWeb.registerWith(registrar);
   FlutterNativeSplashWeb.registerWith(registrar);

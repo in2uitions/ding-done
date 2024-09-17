@@ -132,20 +132,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                   //           );
                   //   },
                   // ),
-                  ListTile(
-                    title: Text(
-                      'Pay with scan ',
-                      style: getPrimaryBoldStyle(
-                        fontSize: 18,
-                        color: const Color(0xff180C38),
-                      ),
-                    ),
-                    onTap: () {
-                      // Handle My Account tap
-                      Navigator.of(context).push(_createRoute(
-                          InitialScreen()));
-                    },
-                  ),
+
                   ListTile(
                     title: Text(
                       'Order History',

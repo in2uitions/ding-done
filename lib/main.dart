@@ -15,6 +15,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -94,6 +95,9 @@ class _MyAppState extends State<MyApp> {
         "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
     Stripe.publishableKey = stripePublishableKey;
     await dotenv.load(fileName: "assets/.env");
+    PermissionStatus cameraPermission = await Permission.camera.request();
+    debugPrint('status $cameraPermission');
+
   }
 
   Locale localLang = const Locale('en');

@@ -79,6 +79,7 @@ dependencies:
   gap: ^3.0.1
   geocoding: ^3.0.0
   package_info_plus: ^5.0.1
+  ml_card_scanner: ^0.0.5
 
 flutter_launcher_icons:
   android: "launcher_icon"
