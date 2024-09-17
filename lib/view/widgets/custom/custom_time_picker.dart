@@ -102,6 +102,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 
 class CustomTimePicker extends StatefulWidget {
@@ -151,8 +152,8 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
                 decoration: const BoxDecoration(
                   border: Border(
                     bottom: BorderSide(
-                      color: Color(0xff9E9AB7), // Bottom border color
-                      width: 2, // Bottom border width
+                      color: Color(0xffEAEAFF),
+                      width: 2,
                     ),
                   ),
                 ),
@@ -161,9 +162,14 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
                     Row(
                       children: [
                         const Gap(15),
-                        const Icon(
-                          Icons.access_time_rounded,
-                          color: Color(0xff57537A),
+                        // const Icon(
+                        //   Icons.access_time_rounded,
+                        //   color: Color(0xff57537A),
+                        // ),
+                        SvgPicture.asset(
+                          'assets/img/clock.svg',
+                          width: 20,
+                          height: 20,
                         ),
                         const Gap(12),
                         Text(

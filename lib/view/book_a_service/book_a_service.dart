@@ -6,11 +6,8 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
 import 'package:dingdone/view/map_screen/map_display.dart';
 import 'package:dingdone/view/widgets/book_a_service/add_media.dart';
-import 'package:dingdone/view/widgets/book_a_service/date_and_time_buttons.dart';
 import 'package:dingdone/view/widgets/book_a_service/date_picker.dart';
-import 'package:dingdone/view/widgets/book_a_service/job_type/job_type_buttons.dart';
 import 'package:dingdone/view/widgets/book_a_service/payment_method.dart';
-import 'package:dingdone/view/widgets/book_a_service/time_picker.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_area.dart';
 import 'package:dingdone/view/widgets/custom/custom_time_picker.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -55,8 +52,8 @@ class _BookAServiceState extends State<BookAService> {
           break; // Break the loop once the translation is found
         }
       }
-      for (Map<String, dynamic> translations
-          in widget.service["category"]["translations"]) {
+      for (Map<String, dynamic> translations in widget.service["category"]
+          ["translations"]) {
         if (translations["languages_code"] == widget.lang) {
           categories = translations;
           break; // Break the loop once the translation is found
@@ -68,589 +65,540 @@ class _BookAServiceState extends State<BookAService> {
         // backgroundColor: const Color(0xffF0F3F8),
         body: Stack(
           children: [
-            ListView(
-              padding: EdgeInsets.zero,
+            Column(
               children: [
-                Column(
-                  children: [
-                    SafeArea(
-                      child: Directionality(
-                        textDirection: TextDirection.ltr,
+                // SafeArea(
+                //   child: Directionality(
+                //     textDirection: TextDirection.ltr,
+                //     child: Padding(
+                //       padding: EdgeInsets.all(context.appValues.appPadding.p20),
+                //       child: Row(
+                //         children: [
+                //           InkWell(
+                //             child: SvgPicture.asset('assets/img/back.svg'),
+                //             onTap: () {
+                //               Navigator.pop(context);
+                //             },
+                //           ),
+                //         ],
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // Padding(
+                //   padding: EdgeInsets.only(
+                //     left: context.appValues.appPadding.p20,
+                //   ),
+                //   child: Align(
+                //     alignment: Alignment.centerLeft,
+                //     child: Text(
+                //       translate('bookService.bookService'),
+                //       style: getPrimaryRegularStyle(
+                //         color: context.resources.color.btnColorBlue,
+                //         fontSize: 32,
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                Padding(
+                  padding: EdgeInsets.all(context.appValues.appPadding.p0),
+                  child: Stack(
+                    children: [
+                      Container(
+                        width: context.appValues.appSizePercent.w100,
+                        height: context.appValues.appSizePercent.h50,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(widget.image),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: context.appValues.appSizePercent.w100,
+                        height: context.appValues.appSizePercent.h20,
+                        decoration: ShapeDecoration(
+                          gradient: LinearGradient(
+                            begin: const Alignment(0.00, 1),
+                            end: const Alignment(0, 0),
+                            colors: [
+                              // const Color(0x00D9D9D9),
+                              const Color(0xffEECB0B).withOpacity(0),
+                              const Color(0xffEECB0B).withOpacity(0.4),
+                              const Color(0xffEECB0B).withOpacity(0.6),
+                              const Color(0xffEECB0B).withOpacity(0.9),
+                            ],
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(0),
+                          ),
+                        ),
                         child: Padding(
-                          padding:
-                              EdgeInsets.all(context.appValues.appPadding.p20),
-                          child: Row(
+                          padding: EdgeInsets.only(
+                            top: context.appValues.appPadding.p20,
+                            left: context.appValues.appPadding.p20,
+                            right: context.appValues.appPadding.p20,
+                          ),
+                          child: Stack(
                             children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  // InkWell(
+                                  //   child: Padding(
+                                  //     padding: const EdgeInsets.only(top: 5),
+                                  //     child: SvgPicture.asset(
+                                  //         'assets/img/back-new.svg'),
+                                  //   ),
+                                  //   onTap: () {
+                                  //     Navigator.pop(context);
+                                  //   },
+                                  // ),
+                                  // const Gap(10),
+                                  Text(
+                                    translate('bookService.bookService'),
+                                    style: getPrimaryBoldStyle(
+                                      color: context.resources.color.colorWhite,
+                                      fontSize: 28,
+                                    ),
+                                  ),
+                                ],
+                              ),
                               InkWell(
-                                child: SvgPicture.asset('assets/img/back.svg'),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: context.appValues.appPadding.p8,
+                                  ),
+                                  child: SvgPicture.asset(
+                                      'assets/img/back-new.svg'),
+                                ),
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
                               ),
                             ],
                           ),
+                          // Column(
+                          //   crossAxisAlignment: CrossAxisAlignment.start,
+                          //   children: [
+                          //     Text(
+                          //       '${categories!["title"]}',
+                          //       style: getPrimaryBoldStyle(
+                          //         fontSize: 20,
+                          //         color: context.resources.color.colorWhite,
+                          //       ),
+                          //     ),
+                          //     Text(
+                          //       '${services!["title"]}',
+                          //       style: getPrimaryBoldStyle(
+                          //         fontSize: 30,
+                          //         color: context.resources.color.colorWhite,
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(
-                        left: context.appValues.appPadding.p20,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          translate('bookService.bookService'),
-                          style: getPrimaryRegularStyle(
-                            color: context.resources.color.btnColorBlue,
-                            fontSize: 32,
-                          ),
-                        ),
-                      ),
-                    ),
-                    // SvgPicture.network(
-                    //   '${context.resources.image.networkImagePath}/${widget.service.category["image"]["filename_disk"]}',
-                    //   placeholderBuilder: (context) =>
-                    //       const CircularProgressIndicator(),
-                    // ),
-                    Padding(
-                      padding: EdgeInsets.all(context.appValues.appPadding.p0),
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: context.appValues.appSizePercent.w100,
-                            height: context.appValues.appSizePercent.h31,
-                            decoration: BoxDecoration(
-                              // boxShadow: [
-                              //   BoxShadow(
-                              //     color: Color(0xffF3D347),
-                              //     offset: Offset(5, 0),
-                              //     blurRadius: 5,
-                              //   ),
-                              // ],
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                    // '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}',
-                                    widget.image
-                                    // "https://www.armorplumbing.net/wp-content/uploads/2021/12/Cost-to-Repair-a-Plumbing-Leak-5.jpg",
-                                    ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            // child: Padding(
-                            //   padding: EdgeInsets.only(
-                            //     top: context.appValues.appPadding.p10,
-                            //     left: context.appValues.appPadding.p20,
-                            //   ),
-                            //   child: Column(
-                            //     crossAxisAlignment: CrossAxisAlignment.start,
-                            //     children: [
-                            //       Text(
-                            //         '${categories!["title"]}',
-                            //         style: getPrimaryBoldStyle(
-                            //           fontSize: 20,
-                            //           color: context.resources.color.colorWhite,
-                            //         ),
-                            //       ),
-                            //       Text(
-                            //         '${services!["title"]}',
-                            //         style: getPrimaryBoldStyle(
-                            //           fontSize: 30,
-                            //           color: context.resources.color.colorWhite,
-                            //         ),
-                            //       ),
-                            //     ],
-                            //   ),
-                            // ),
-                          ),
-                          Container(
-                            width: context.appValues.appSizePercent.w100,
-                            height: context.appValues.appSizePercent.h15,
-                            decoration: ShapeDecoration(
-                              gradient: LinearGradient(
-                                begin: const Alignment(0.00, 1),
-                                end: const Alignment(0, 0),
-                                colors: [
-                                  // const Color(0x00D9D9D9),
-                                  const Color(0xffF3D347).withOpacity(0),
-                                  const Color(0xffF3D347).withOpacity(0.4),
-                                  const Color(0xffF3D347).withOpacity(0.6),
-                                  const Color(0xffF3D347).withOpacity(0.9),
-                                ],
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(0),
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                top: context.appValues.appPadding.p10,
-                                left: context.appValues.appPadding.p20,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    '${categories!["title"]}',
-                                    style: getPrimaryBoldStyle(
-                                      fontSize: 20,
-                                      color: context.resources.color.colorWhite,
-                                    ),
-                                  ),
-                                  Text(
-                                    '${services!["title"]}',
-                                    style: getPrimaryBoldStyle(
-                                      fontSize: 30,
-                                      color: context.resources.color.colorWhite,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: context.appValues.appSize.s20),
-                // Padding(
-                //   padding: EdgeInsets.all(context.appValues.appPadding.p20),
-                //   child: Column(
-                //     crossAxisAlignment: CrossAxisAlignment.start,
-                //     children: [
-                //       Padding(
-                //         padding: EdgeInsets.symmetric(
-                //             horizontal: context.appValues.appPadding.p0,
-                //             vertical: context.appValues.appPadding.p10),
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.start,
-                //           children: [
-                //             Text(
-                //               translate('bookService.jobType'),
-                //               style: getPrimaryBoldStyle(
-                //                   fontSize: 20,
-                //                   color: context.resources.color.btnColorBlue),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //       JobTypeButtons(
-                //         service: widget.service,
-                //         country_code: profileViewModel.getProfileBody["address"][0]
-                //             ["country"],
-                //         servicesViewModel: servicesViewModel,
-                //         job_type: null,
-                //       ),
-                //     ],
-                //   ),
-                // ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: context.appValues.appPadding.p20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p0,
-                          vertical: context.appValues.appPadding.p10,
-                        ),
-                        child: Text(
-                          translate('bookService.jobDescription'),
-                          style: getPrimaryBoldStyle(
-                              fontSize: 20,
-                              color: context.resources.color.btnColorBlue),
-                        ),
-                      ),
-                      CustomTextArea(
-                        index: 'job_description',
-                        viewModel: jobsViewModel.setInputValues,
-                        keyboardType: TextInputType.text,
-                        maxlines: 7,
-                      ),
-                    ],
-                  ),
-                ),
-
-                const AddMedia(),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: context.appValues.appPadding.p20),
-                  child: Container(
-                    width: context.appValues.appSizePercent.w100,
-                    // height: context.appValues.appSizePercent.h20,
-                    // height: context.appValues.appSizePercent.h30,
-                    decoration: BoxDecoration(
-                      color: context.resources.color.colorWhite,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
+                      Positioned(
+                        bottom: 50,
+                        child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: context.appValues.appPadding.p20,
-                              vertical: context.appValues.appPadding.p10),
-                          child: Text(
-                            // translate('bookService.dateAndTime'),
-                            "Working Day",
-                            style: getPrimaryBoldStyle(
-                              fontSize: 20,
-                              color: context.resources.color.btnColorBlue,
-                            ),
+                            horizontal: context.appValues.appPadding.p20,
                           ),
-                        ),
-                        // DateAndTimeButtons(),
-                        const DatePickerWidget(),
-                        SizedBox(height: context.appValues.appSizePercent.h3),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: context.appValues.appPadding.p20,
-                              vertical: context.appValues.appPadding.p10),
-                          child: Text(
-                            // translate('bookService.dateAndTime'),
-                            "Start Time",
-                            style: getPrimaryBoldStyle(
-                              fontSize: 20,
-                              color: context.resources.color.btnColorBlue,
-                            ),
-                          ),
-                        ),
-                        CustomTimePicker(
-                          index: 'time',
-                          viewModel: jobsViewModel.setInputValues,),
-                        // const TimePickerWidget(),
-                        SizedBox(height: context.appValues.appSizePercent.h1),
-                      ],
-                    ),
-                  ),
-                ),
-                // const ButtonsBookService(),
-                const Gap(20),
-                Padding(
-                  padding: EdgeInsets.all(context.appValues.appPadding.p0),
-                  child: Container(
-                    width: context.appValues.appSizePercent.w100,
-                    // height: context.appValues.appSizePercent.h,
-                    decoration: BoxDecoration(
-                      color: context.resources.color.colorWhite,
-                      borderRadius: const BorderRadius.all(Radius.circular(20)),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: context.appValues.appPadding.p40,
-                              vertical: context.appValues.appPadding.p0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                translate('bookService.location'),
-                                style: getPrimaryBoldStyle(
-                                    fontSize: 20,
-                                    color:
-                                        context.resources.color.btnColorBlue),
-                              ),
-                              // InkWell(
-                              //   child: Text(
-                              //     translate('profile.changeLocation'),
-                              //     style: getPrimaryRegularStyle(
-                              //       fontSize: 15,
-                              //       color: context.resources.color.btnColorBlue,
-                              //     ),
-                              //   ),
-                              //   onTap: () {
-                              //     Navigator.of(context).push(_createRoute(
-                              //         // MapScreen(viewModel: jobsViewModel)));
-                              //         ConfirmAddress()));
-                              //   },
-                              // ),
-                            ],
-                          ),
-                        ),
-                        const Gap(10),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: context.appValues.appPadding.p40),
-                          child: Row(
-                            children: [
-                              SvgPicture.asset('assets/img/location.svg'),
-                              const Gap(10),
-                              Expanded(
-                                child: Text(
-                                  '${profileViewModel.getProfileBody['current_address']["street_name"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']["city"]}, ${profileViewModel.getProfileBody['current_address']["state"]}',
-                                  style: getPrimaryRegularStyle(
-                                    fontSize: 18,
-                                    color: const Color(0xff190C39),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        const Gap(15),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: context.appValues.appPadding.p40,
-                              vertical: context.appValues.appPadding.p0),
-                          child: InkWell(
-                            child: SizedBox(
-                              height: context.appValues.appSizePercent.h30,
-                              child: profileViewModel
-                                  .getProfileBody['current_address']!=null?
-                              MapDisplay(
-                                body: profileViewModel.getProfileBody,
-                                longitude: profileViewModel
-                                    .getProfileBody['current_address']!=null? profileViewModel
-                                    .getProfileBody['current_address']["longitude"]:25.3,
-                                latitude: profileViewModel
-                                    .getProfileBody['current_address']!=null?profileViewModel
-                                    .getProfileBody['current_address']["latitude"]:51.1,
-                              ):Container(),
-                            ),
-                            onTap: () {
-                              Navigator.of(context).push(
-                                _createRoute(
-                                  // MapScreen(viewModel: jobsViewModel)));
-                                  ConfirmAddress(),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-
-                PaymentMethod(
-                  fromWhere: 'book a service',
-                  jobsViewModel: jobsViewModel,
-                  paymentViewModel: paymentViewModel,
-                  payment_method: paymentViewModel.paymentList,
-                  role: Constants.customerRoleId,
-                ),
-                SizedBox(height: context.appValues.appSize.s10),
-                Container(
-                  height: context.appValues.appSizePercent.h10,
-                  width: context.appValues.appSizePercent.w100,
-                  color: Colors.transparent,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: context.appValues.appPadding.p10,
-                        horizontal: context.appValues.appPadding.p15),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              servicesViewModel.countryRatesList.isNotEmpty
-                                  ? '${servicesViewModel.countryRatesList[0].unit_rate}€'
-                                  : '',
-                              style: getPrimaryRegularStyle(
-                                  color: context.resources.color.colorYellow,
-                                  fontSize: 20),
-                            ),
-                            Text(
-                              servicesViewModel.countryRatesList.isNotEmpty
-                                  ? ' ${servicesViewModel.countryRatesList[0].unit_type}'
-                                  : '',
-                              style: getPrimaryRegularStyle(
-                                  color:
-                                      context.resources.color.secondColorBlue,
-                                  fontSize: 10),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          width: context.appValues.appSizePercent.w55,
-                          height: context.appValues.appSizePercent.h100,
-                          child: ElevatedButton(
-                            onPressed: () async {
-
-                              if (await jobsViewModel.requestService() ==
-                                  true) {
-
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      _buildPopupDialog(context),
-                                );
-
-                              } else {
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      _buildPopupDialogNo(context),
-                                );
-                              }
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xffF3D347),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: Text(
-                              translate('bookService.requestService'),
-                              style: getPrimaryBoldStyle(
-                                fontSize: 18,
-                                color: context.resources.color.colorWhite,
-                              ),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: context.appValues.appSizePercent.w30,
-                          height: context.appValues.appSizePercent.h100,
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            style: ElevatedButton.styleFrom(
-                              elevation: 0,
-                              backgroundColor: Colors.transparent,
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                  color: Color(0xff190C39),
-                                  width: 3,
-                                ),
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          child: Container(
+                            width: context.appValues.appSizePercent.w80,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                SvgPicture.asset('assets/img/chat.svg'),
-                                // SizedBox(
-                                //   height: context.appValues.appSize.s5,
-                                // ),
                                 Text(
-                                  translate('bookService.chat'),
-                                  style: getPrimaryRegularStyle(
-                                    fontSize: 19,
-                                    color: const Color(0xff190C39),
+                                  '${categories!["title"]}',
+                                  style: getPrimaryBoldStyle(
+                                    fontSize: 18,
+                                    color: context.resources.color.colorWhite,
+                                  ),
+                                ),
+                                Text(
+                                  '${services!["title"]}',
+                                  style: getPrimaryBoldStyle(
+                                    fontSize: 25,
+                                    color: context.resources.color.colorWhite,
                                   ),
                                 ),
                               ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(height: context.appValues.appSize.s20),
               ],
             ),
-            // Positioned(
-            //   bottom: 0,
-            //   child: Container(
-            //     height: context.appValues.appSizePercent.h10,
-            //     width: context.appValues.appSizePercent.w100,
-            //     color: Colors.transparent,
-            //     child: Padding(
-            //       padding: EdgeInsets.symmetric(
-            //           vertical: context.appValues.appPadding.p10,
-            //           horizontal: context.appValues.appPadding.p15),
-            //       child: Row(
-            //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //         children: [
-            //           Row(
-            //             children: [
-            //               Text(
-            //                 servicesViewModel.countryRatesList.isNotEmpty
-            //                     ? '${servicesViewModel.countryRatesList[0].unit_rate}€'
-            //                     : '',
-            //                 style: getPrimaryRegularStyle(
-            //                     color: context.resources.color.colorYellow,
-            //                     fontSize: 20),
-            //               ),
-            //               Text(
-            //                 servicesViewModel.countryRatesList.isNotEmpty
-            //                     ? ' ${servicesViewModel.countryRatesList[0].unit_type}'
-            //                     : '',
-            //                 style: getPrimaryRegularStyle(
-            //                     color: context.resources.color.secondColorBlue,
-            //                     fontSize: 10),
-            //               ),
-            //             ],
-            //           ),
-            //           SizedBox(
-            //             width: context.appValues.appSizePercent.w55,
-            //             height: context.appValues.appSizePercent.h100,
-            //             child: ElevatedButton(
-            //               onPressed: () async {
-            //                 if (await jobsViewModel.requestService() == true) {
-            //                   showDialog(
-            //                     context: context,
-            //                     builder: (BuildContext context) =>
-            //                         _buildPopupDialog(context),
-            //                   );
-            //                 } else {
-            //                   showDialog(
-            //                     context: context,
-            //                     builder: (BuildContext context) =>
-            //                         _buildPopupDialogNo(context),
-            //                   );
-            //                 }
-            //               },
-            //               style: ElevatedButton.styleFrom(
-            //                 backgroundColor: const Color(0xffF3D347),
-            //                 shape: RoundedRectangleBorder(
-            //                   borderRadius: BorderRadius.circular(12),
-            //                 ),
-            //               ),
-            //               child: Text(
-            //                 translate('bookService.requestService'),
-            //                 style: getPrimaryBoldStyle(
-            //                   fontSize: 18,
-            //                   color: context.resources.color.colorWhite,
-            //                 ),
-            //               ),
-            //             ),
-            //           ),
-            //           SizedBox(
-            //             width: context.appValues.appSizePercent.w30,
-            //             height: context.appValues.appSizePercent.h100,
-            //             child: ElevatedButton(
-            //               onPressed: () {},
-            //               style: ElevatedButton.styleFrom(
-            //                 elevation: 0,
-            //                 backgroundColor: Colors.transparent,
-            //                 shape: RoundedRectangleBorder(
-            //                   side: const BorderSide(
-            //                     color: Color(0xff190C39),
-            //                     width: 3,
-            //                   ),
-            //                   borderRadius: BorderRadius.circular(12),
-            //                 ),
-            //               ),
-            //               child: Row(
-            //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            //                 children: [
-            //                   SvgPicture.asset('assets/img/chat.svg'),
-            //                   // SizedBox(
-            //                   //   height: context.appValues.appSize.s5,
-            //                   // ),
-            //                   Text(
-            //                     translate('bookService.chat'),
-            //                     style: getPrimaryRegularStyle(
-            //                       fontSize: 19,
-            //                       color: const Color(0xff190C39),
-            //                     ),
-            //                   ),
-            //                 ],
-            //               ),
-            //             ),
-            //           ),
-            //         ],
-            //       ),
-            //     ),
-            //   ),
-            // ),
+            DraggableScrollableSheet(
+                initialChildSize: 0.55,
+                minChildSize: 0.55,
+                maxChildSize: 1,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Container(
+                    // height: context.appValues.appSizePercent.h70,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                      color: Color(0xffFEFEFE),
+                    ),
+                    child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        context.appValues.appPadding.p20),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            context.appValues.appPadding.p0,
+                                        vertical:
+                                            context.appValues.appPadding.p10,
+                                      ),
+                                      child: Text(
+                                        translate('bookService.jobDescription'),
+                                        style: getPrimaryBoldStyle(
+                                          fontSize: 20,
+                                          color: context
+                                              .resources.color.btnColorBlue,
+                                        ),
+                                      ),
+                                    ),
+                                    CustomTextArea(
+                                      index: 'job_description',
+                                      viewModel: jobsViewModel.setInputValues,
+                                      keyboardType: TextInputType.text,
+                                      maxlines: 7,
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              const AddMedia(),
+
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        context.appValues.appPadding.p20),
+                                child: Container(
+                                  width: context.appValues.appSizePercent.w100,
+                                  // height: context.appValues.appSizePercent.h20,
+                                  // height: context.appValues.appSizePercent.h30,
+                                  decoration: BoxDecoration(
+                                    color: context.resources.color.colorWhite,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(20)),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: context
+                                                .appValues.appPadding.p20,
+                                            vertical: context
+                                                .appValues.appPadding.p10),
+                                        child: Text(
+                                          // translate('bookService.dateAndTime'),
+                                          "Working Day",
+                                          style: getPrimaryBoldStyle(
+                                            fontSize: 20,
+                                            color: const Color(0xff1F1F39),
+                                          ),
+                                        ),
+                                      ),
+                                      // DateAndTimeButtons(),
+                                      const DatePickerWidget(),
+                                      SizedBox(
+                                          height: context
+                                              .appValues.appSizePercent.h3),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: context
+                                                .appValues.appPadding.p20,
+                                            vertical: context
+                                                .appValues.appPadding.p10),
+                                        child: Text(
+                                          // translate('bookService.dateAndTime'),
+                                          "Start Time",
+                                          style: getPrimaryBoldStyle(
+                                            fontSize: 20,
+                                            color: const Color(0xff1F1F39),
+                                          ),
+                                        ),
+                                      ),
+                                      CustomTimePicker(
+                                        index: 'time',
+                                        viewModel: jobsViewModel.setInputValues,
+                                      ),
+                                      // const TimePickerWidget(),
+                                      SizedBox(
+                                          height: context
+                                              .appValues.appSizePercent.h1),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              // const ButtonsBookService(),
+                              const Gap(20),
+                              Padding(
+                                padding: EdgeInsets.all(
+                                    context.appValues.appPadding.p0),
+                                child: Container(
+                                  width: context.appValues.appSizePercent.w100,
+                                  // height: context.appValues.appSizePercent.h,
+                                  decoration: BoxDecoration(
+                                    color: context.resources.color.colorWhite,
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(20)),
+                                  ),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal:
+                                              context.appValues.appPadding.p40,
+                                          vertical:
+                                              context.appValues.appPadding.p0,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              translate('bookService.location'),
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 20,
+                                                color: context.resources.color
+                                                    .btnColorBlue,
+                                              ),
+                                            ),
+                                            // InkWell(
+                                            //   child: Text(
+                                            //     translate('profile.changeLocation'),
+                                            //     style: getPrimaryRegularStyle(
+                                            //       fontSize: 15,
+                                            //       color: context.resources.color.btnColorBlue,
+                                            //     ),
+                                            //   ),
+                                            //   onTap: () {
+                                            //     Navigator.of(context).push(_createRoute(
+                                            //         // MapScreen(viewModel: jobsViewModel)));
+                                            //         ConfirmAddress()));
+                                            //   },
+                                            // ),
+                                          ],
+                                        ),
+                                      ),
+                                      const Gap(10),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: context
+                                                .appValues.appPadding.p40),
+                                        child: Column(
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                Navigator.of(context).push(
+                                                  _createRoute(
+                                                    // MapScreen(viewModel: jobsViewModel)));
+                                                    ConfirmAddress(),
+                                                  ),
+                                                );
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    'assets/img/locationbookservice.svg',
+                                                  ),
+                                                  const Gap(10),
+                                                  Expanded(
+                                                    child: Text(
+                                                      '${profileViewModel.getProfileBody['current_address']["street_name"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']["city"]}, ${profileViewModel.getProfileBody['current_address']["state"]}',
+                                                      style:
+                                                          getPrimaryRegularStyle(
+                                                        fontSize: 18,
+                                                        color: const Color(
+                                                            0xff190C39),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            const Divider(
+                                              color: Color(0xffEAEAFF),
+                                              thickness: 2,
+                                              height: 5,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const Gap(15),
+                                    ],
+                                  ),
+                                ),
+                              ),
+
+                              PaymentMethod(
+                                fromWhere: 'book a service',
+                                jobsViewModel: jobsViewModel,
+                                paymentViewModel: paymentViewModel,
+                                payment_method: paymentViewModel.paymentList,
+                                role: Constants.customerRoleId,
+                              ),
+                              SizedBox(height: context.appValues.appSize.s10),
+                              Container(
+                                height: context.appValues.appSizePercent.h10,
+                                width: context.appValues.appSizePercent.w100,
+                                color: Colors.transparent,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          context.appValues.appPadding.p10,
+                                      horizontal:
+                                          context.appValues.appPadding.p15),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Text(
+                                            servicesViewModel
+                                                    .countryRatesList.isNotEmpty
+                                                ? '${servicesViewModel.countryRatesList[0].unit_rate}€'
+                                                : '',
+                                            style: getPrimaryRegularStyle(
+                                                color: context.resources.color
+                                                    .colorYellow,
+                                                fontSize: 20),
+                                          ),
+                                          Text(
+                                            servicesViewModel
+                                                    .countryRatesList.isNotEmpty
+                                                ? ' ${servicesViewModel.countryRatesList[0].unit_type}'
+                                                : '',
+                                            style: getPrimaryRegularStyle(
+                                                color: context.resources.color
+                                                    .secondColorBlue,
+                                                fontSize: 10),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: context
+                                            .appValues.appSizePercent.w55,
+                                        height: context
+                                            .appValues.appSizePercent.h100,
+                                        child: ElevatedButton(
+                                          onPressed: () async {
+                                            if (await jobsViewModel
+                                                    .requestService() ==
+                                                true) {
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext
+                                                        context) =>
+                                                    _buildPopupDialog(context),
+                                              );
+                                            } else {
+                                              showDialog(
+                                                context: context,
+                                                builder:
+                                                    (BuildContext context) =>
+                                                        _buildPopupDialogNo(
+                                                            context),
+                                              );
+                                            }
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor:
+                                                const Color(0xffF3D347),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          child: Text(
+                                            translate(
+                                                'bookService.requestService'),
+                                            style: getPrimaryBoldStyle(
+                                              fontSize: 18,
+                                              color: context
+                                                  .resources.color.colorWhite,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: context
+                                            .appValues.appSizePercent.w30,
+                                        height: context
+                                            .appValues.appSizePercent.h100,
+                                        child: ElevatedButton(
+                                          onPressed: () {},
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            backgroundColor: Colors.transparent,
+                                            shape: RoundedRectangleBorder(
+                                              side: const BorderSide(
+                                                color: Color(0xff190C39),
+                                                width: 3,
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SvgPicture.asset(
+                                                  'assets/img/chat.svg'),
+                                              // SizedBox(
+                                              //   height: context.appValues.appSize.s5,
+                                              // ),
+                                              Text(
+                                                translate('bookService.chat'),
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 19,
+                                                  color:
+                                                      const Color(0xff190C39),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              SizedBox(height: context.appValues.appSize.s20),
+                            ],
+                          );
+                        }),
+                  );
+                }),
           ],
         ),
       );

@@ -44,7 +44,8 @@ class CustomTextArea extends StatefulWidget {
 }
 
 class _CustomTextAreaState extends State<CustomTextArea> {
-  final GlobalKey<FormFieldState<String>> globalKey = GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> globalKey =
+      GlobalKey<FormFieldState<String>>();
   bool obscureText = true;
 
   final TextEditingController _customController = TextEditingController();
@@ -79,41 +80,70 @@ class _CustomTextAreaState extends State<CustomTextArea> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xff000000).withOpacity(0.1),
-            spreadRadius: 1,
-            blurRadius: 5,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
-      child: TextFormField(
-        controller: _customController,
-        textAlignVertical: TextAlignVertical.center,
-        // key: globalKey,
-        obscureText: widget.hintText == "Password" ? obscureText : false,
-        maxLines: widget.maxlines,
-        // onSaved: widget.onSaved,
-        validator: widget.validator,
-        // onFieldSubmitted: widget.onFieldSubmitted,
-        onChanged: widget.onChanged,
-        keyboardType: widget.keyboardType,
-        autofocus: false,
-        // onTap: widget.onTap,
-        style: getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
-        decoration: InputDecoration(
-          hintStyle: getPrimaryRegularStyle(fontSize: 15, color: context.resources.color.secondColorBlue),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(Radius.circular(context.appValues.appSize.s10)),
-            borderSide: BorderSide.none,
-          ),
-          filled: true,
-          fillColor: context.resources.color.colorWhite,
-          hintText: widget.hintText,
+        // decoration: BoxDecoration(
+        //   boxShadow: [
+        //     BoxShadow(
+        //       color: const Color(0xff000000).withOpacity(0.1),
+        //       spreadRadius: 1,
+        //       blurRadius: 5,
+        //       offset: const Offset(0, 3), // changes position of shadow
+        //     ),
+        //   ],
+        // ),
+        child: TextFormField(
+      controller: _customController,
+      textAlignVertical: TextAlignVertical.center,
+      obscureText: widget.hintText == "Password" ? obscureText : false,
+      maxLines: widget.maxlines,
+      validator: widget.validator,
+      onChanged: widget.onChanged,
+      keyboardType: widget.keyboardType,
+      cursorColor: context.resources.color.btnColorBlue,
+      autofocus: false,
+      style:
+          getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
+      decoration: InputDecoration(
+        hintStyle: getPrimaryRegularStyle(
+          fontSize: 15,
+          color: const Color(0xffEAEAFF),
         ),
+        // border: const OutlineInputBorder(
+        //   borderRadius: BorderRadius.only(
+        //     topRight: Radius.circular(30),
+        //     bottomLeft: Radius.circular(30),
+        //     bottomRight: Radius.circular(30),
+        //   ),
+        //   borderSide: BorderSide(
+        //     color: Color(0xffEAEAFF),
+        //     width: 1.0,
+        //   ),
+        // ),
+        enabledBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(30),
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+          ),
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 1.0,
+          ),
+        ),
+        focusedBorder: const OutlineInputBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(30),
+            bottomLeft: Radius.circular(30),
+            bottomRight: Radius.circular(30),
+          ),
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 1.0,
+          ),
+        ),
+        filled: true,
+        fillColor: context.resources.color.colorWhite,
+        hintText: widget.hintText,
       ),
-    );
+    ));
   }
 }

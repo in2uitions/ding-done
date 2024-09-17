@@ -7,6 +7,7 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
@@ -34,7 +35,7 @@ class _AddMediaState extends State<AddMedia> {
 
     if (pickedFile != null) {
       // Delay the layout update by a short duration
-      await Future.delayed(Duration(milliseconds: 100));
+      await Future.delayed(const Duration(milliseconds: 100));
       setState(() {
         images.add(pickedFile.path);
         allImages.add(XFile(pickedFile.path));
@@ -150,145 +151,118 @@ class _AddMediaState extends State<AddMedia> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.appValues.appPadding.p20,
-        vertical: context.appValues.appPadding.p20,
-      ),
-      child: Container(
-        width: context.appValues.appSizePercent.w100,
-        // height: context.appValues.appSizePercent.h15,
-        // height: context.appValues.appSizePercent.h30,
-        decoration: BoxDecoration(
-          color: context.resources.color.colorWhite,
-          boxShadow: [
-            BoxShadow(
-              color: const Color(0xff000000).withOpacity(0.1),
-              spreadRadius: 1,
-              blurRadius: 5,
-              offset: const Offset(0, 3), // changes position of shadow
-            ),
-          ],
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
+    return Consumer<JobsViewModel>(builder: (context, jobsViewModel, error) {
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.appValues.appPadding.p40,
+          vertical: context.appValues.appPadding.p20,
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Consumer<JobsViewModel>(builder: (context, jobsViewModel, error) {
-              return Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.appValues.appPadding.p20,
+            InkWell(
+              onTap: () async {
+                _pickImage(jobsViewModel);
+              },
+              child: Container(
+                width: context.appValues.appSizePercent.w100,
+                // height: context.appValues.appSizePercent.h15,
+                // height: context.appValues.appSizePercent.h30,
+                decoration: const BoxDecoration(
+                  color: Color(0xffF4F3FD),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(15),
+                  ),
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: context.appValues.appPadding.p10,
-                          ),
-                          child: Text(
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p20,
+                        vertical: context.appValues.appPadding.p15,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset('assets/img/addmedia.svg'),
+                          const Gap(10),
+                          Text(
                             translate('bookService.addMedia'),
                             style: getPrimaryBoldStyle(
-                                fontSize: 20,
-                                color: context.resources.color.btnColorBlue),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                            top: 10,
-                          ),
-                          child: InkWell(
-                            child: Container(
-                              width: context.appValues.appSizePercent.w12,
-                              height: context.appValues.appSizePercent.h6,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(50),
-                                color: const Color(0xffF3D347),
-                              ),
-                              child: Icon(
-                                Icons.add,
-                                color: context.resources.color.colorWhite,
-                                size: 25,
-                              ),
-                            ),
-                            onTap: () async {
-                              _pickImage(jobsViewModel);
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                    Stack(
-                      children: [
-                        if (images.isNotEmpty)
-                          GestureDetector(
-                            onHorizontalDragEnd: (details) {
-                              if (details.velocity.pixelsPerSecond.dx > 0) {
-                                // Swipe right
-                                if (currentIndex > 0) {
-                                  _navigateToImage(currentIndex - 1);
-                                }
-                              } else if (details.velocity.pixelsPerSecond.dx <
-                                  0) {
-                                // Swipe left
-                                if (currentIndex < images.length - 1) {
-                                  _navigateToImage(currentIndex + 1);
-                                }
-                              }
-                            },
-                            child: Image.file(
-                              File(images[currentIndex]),
-                              width: context.appValues.appSizePercent.w16p7,
-                              height: context.appValues.appSizePercent.h8,
-                              fit: BoxFit.cover,
+                              fontSize: 18,
+                              color: const Color(0xff583EF2),
                             ),
                           ),
-                        images.isNotEmpty
-                            ? Positioned(
-                                top: 2,
-                                right: 0,
-                                child: currentIndex >= 0
-                                    ? InkWell(
-                                        child: Icon(
-                                          Icons.delete,
-                                          color: context
-                                              .resources.color.secondColorBlue,
-                                        ),
-                                        onTap: () async {
-                                          setState(() {
-                                            images.removeAt(currentIndex);
-                                            allImages.removeAt(currentIndex);
-                                            uploadedImageIds
-                                                ?.removeAt(currentIndex);
-                                            if (images.isNotEmpty) {
-                                              currentIndex = 0;
-                                            } else {
-                                              currentIndex = -1;
-                                            }
-                                          });
-
-                                          jobsViewModel.setInputValues(
-                                            index: "uploaded_media",
-                                            value: uploadedImageIds,
-                                          );
-                                        },
-                                      )
-                                    : Container(),
-                              )
-                            : Container(),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              );
-            }),
-            const Gap(15),
+              ),
+            ),
+            const Gap(10),
+            Stack(
+              children: [
+                if (images.isNotEmpty)
+                  GestureDetector(
+                    onHorizontalDragEnd: (details) {
+                      if (details.velocity.pixelsPerSecond.dx > 0) {
+                        // Swipe right
+                        if (currentIndex > 0) {
+                          _navigateToImage(currentIndex - 1);
+                        }
+                      } else if (details.velocity.pixelsPerSecond.dx < 0) {
+                        // Swipe left
+                        if (currentIndex < images.length - 1) {
+                          _navigateToImage(currentIndex + 1);
+                        }
+                      }
+                    },
+                    child: Image.file(
+                      File(images[currentIndex]),
+                      width: context.appValues.appSizePercent.w16p7,
+                      height: context.appValues.appSizePercent.h8,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                images.isNotEmpty
+                    ? Positioned(
+                        top: 2,
+                        right: 0,
+                        child: currentIndex >= 0
+                            ? InkWell(
+                                child: Icon(
+                                  Icons.delete,
+                                  color:
+                                      context.resources.color.secondColorBlue,
+                                ),
+                                onTap: () async {
+                                  setState(() {
+                                    images.removeAt(currentIndex);
+                                    allImages.removeAt(currentIndex);
+                                    uploadedImageIds?.removeAt(currentIndex);
+                                    if (images.isNotEmpty) {
+                                      currentIndex = 0;
+                                    } else {
+                                      currentIndex = -1;
+                                    }
+                                  });
+
+                                  jobsViewModel.setInputValues(
+                                    index: "uploaded_media",
+                                    value: uploadedImageIds,
+                                  );
+                                },
+                              )
+                            : Container(),
+                      )
+                    : Container(),
+              ],
+            ),
           ],
         ),
-      ),
-    );
+      );
+    });
   }
 }

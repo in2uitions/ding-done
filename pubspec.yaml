@@ -51,7 +51,7 @@ dependencies:
   directus: ^0.11.0
   flutter_native_splash: ^2.3.1
   date_picker_timeline: ^1.2.5
-#  time_range: ^1.1.0
+  #  time_range: ^1.1.0
   carousel_slider: ^4.0.0
   geolocator: ^9.0.2
   syncfusion_flutter_maps: ^22.2.5

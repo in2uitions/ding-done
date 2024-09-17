@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16.386" height="16.188" viewBox="0 0 16.386 16.188">
+  <g id="calendar" transform="translate(0.657)">
+    <g id="Frame">
+      <path id="Vector" d="M0,0H15" transform="translate(0 11.093)" fill="none" stroke="#ffc500" stroke-width="1.315"/>
+      <path id="Vector-2" data-name="Vector" d="M0,0V9.41" transform="translate(4.743 6.121)" fill="none" stroke="#ffc500" stroke-width="1.315"/>
+      <path id="Vector-3" data-name="Vector" d="M0,0V9.41" transform="translate(9.946 6.121)" fill="none" stroke="#ffc500" stroke-width="1.315"/>
+      <path id="Vector-4" data-name="Vector" d="M13.236,13.771H1.836A1.862,1.862,0,0,1,0,11.935V1.836A1.862,1.862,0,0,1,1.836,0h11.4a1.862,1.862,0,0,1,1.836,1.836v10.1A1.862,1.862,0,0,1,13.236,13.771Z" transform="translate(0 1.76)" fill="none" stroke="#4100e3" stroke-width="1.315"/>
+      <path id="Vector-5" data-name="Vector" d="M0,0H15" transform="translate(0 6.733)" fill="none" stroke="#4100e3" stroke-width="1.315"/>
+      <path id="Vector-6" data-name="Vector" d="M0,0V3.6" transform="translate(4.743)" fill="none" stroke="#ffc500" stroke-width="1.315"/>
+      <path id="Vector-7" data-name="Vector" d="M0,0V3.6" transform="translate(9.946)" fill="none" stroke="#ffc500" stroke-width="1.315"/>
+    </g>
+  </g>
+</svg>
