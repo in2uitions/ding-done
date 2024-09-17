@@ -2,16 +2,9 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-    <key>CFBundleIconName</key>
-    <string>AppIcon</string>
-    <key>CFBundleIconFile</key>
-    <string>icon.png</string>
-    <key>UIPrerenderedIcon</key>
-    <true/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>FirebaseAppDelegateProxyEnabled</key>
-	<false/>
+	<key>FirebaseAppDelegateProxyEnabled</key><false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
@@ -21,7 +14,10 @@
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>NSAppTransportSecurity</key>
-	<string>NSAllowsArbitraryLoads</string>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -47,20 +43,25 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>NSAppTransportSecurity</key>
+    <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+    </dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSAppTransportSecurity</key>
+	<string>NSAllowsArbitraryLoads</string>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>Play videos while in the app</string>
 	<key>NSCameraUsageDescription</key>
-    <string>This app needs access to your camera to scan cards.</string>
-    <key>NSDocumentsFolderUsageDescription</key>
+	<string>This app requires access to your camera for allowing users to upload logos and media (photos, videos)</string>
+	<key>NSDocumentsFolderUsageDescription</key>
 	<string>We need access to save files in the documents folder</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>Need location when in use</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Always and when in use!</string>
-    <key>NSLocationUsageDescription</key>
-    <string>Older devices need location.</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>Can I have location always?</string>
+	<string>Using location when in use</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>This app requires access to microphone for uploading audio</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>Example: You should fill this in</string>
 	<key>NSPhotoLibraryUsageDescription</key>

@@ -80,6 +80,7 @@ dependencies:
   geocoding: ^3.0.0
   package_info_plus: ^5.0.1
   ml_card_scanner: ^0.0.5
+  camera: ^0.10.5+9
 
 flutter_launcher_icons:
   android: "launcher_icon"
