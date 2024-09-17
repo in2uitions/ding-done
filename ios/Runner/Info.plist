@@ -10,8 +10,6 @@
     <true/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>NSCameraUsageDescription</key>
-    <string>We need access to your camera for scanning cards</string>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
 	<key>CFBundleDevelopmentRegion</key>
@@ -52,8 +50,8 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to your camera for allowing users to upload logos and media (photos, videos)</string>
-	<key>NSDocumentsFolderUsageDescription</key>
+    <string>This app needs access to your camera to scan cards.</string>
+    <key>NSDocumentsFolderUsageDescription</key>
 	<string>We need access to save files in the documents folder</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
     <string>Need location when in use</string>

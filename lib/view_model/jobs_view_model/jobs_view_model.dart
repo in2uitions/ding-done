@@ -464,7 +464,7 @@ class JobsViewModel with ChangeNotifier {
     notifyListeners();
   }
   void launchWhatsApp() async {
-    String phoneNumber = '+96171806049'; // Replace with the actual WhatsApp number
+    String phoneNumber = '+974 3301 9741'; // Replace with the actual WhatsApp number
     String message = 'Hello, I would like to inquire about online consultation.'; // Your default message
 
     String whatsappUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeQueryComponent(message)}';

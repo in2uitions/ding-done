@@ -8,10 +8,6 @@
 		<data>
 		SCJJ9afERbF/tdpKYgJGEeDTKcQ=
 		</data>
-		<key>._Info.plist</key>
-		<data>
-		Zl0KET5kXsBV4XuNxCZPvDa0ZZo=
-		</data>
 		<key>._Modules</key>
 		<data>
 		mwfZ8yyRx0grmuH2P1OvoPbqyz4=
@@ -19,74 +15,6 @@
 		<key>.__CodeSignature</key>
 		<data>
 		mF5bGdFS3kcTvsFsiggK1kJFX7U=
-		</data>
-		<key>._icudtl.dat</key>
-		<data>
-		vTG6QwP5akMAzT2sGL9D1/Wtsg8=
-		</data>
-		<key>Headers/._Flutter.h</key>
-		<data>
-		ZjhjGp2P+MGCKwaD3QEsjLMoW2o=
-		</data>
-		<key>Headers/._FlutterAppDelegate.h</key>
-		<data>
-		JPphErAcS69qL8Yv9Fmg/nxmkPg=
-		</data>
-		<key>Headers/._FlutterBinaryMessenger.h</key>
-		<data>
-		RKWBNaFiJ3H4ZERyb3IkTauL3Ls=
-		</data>
-		<key>Headers/._FlutterCallbackCache.h</key>
-		<data>
-		FaB3+16ylkrcelV4bG6tkvbj908=
-		</data>
-		<key>Headers/._FlutterChannels.h</key>
-		<data>
-		THkjktrVZnmv/VQrMM5OrP4MEuY=
-		</data>
-		<key>Headers/._FlutterCodecs.h</key>
-		<data>
-		udJs/mgfuoezOuNW0DWgFWE6ctU=
-		</data>
-		<key>Headers/._FlutterDartProject.h</key>
-		<data>
-		NuGXp8VwJgFdf0BhLxcscno6fM4=
-		</data>
-		<key>Headers/._FlutterEngine.h</key>
-		<data>
-		J58jgH46XZKjNXhmf50OdlQcDX4=
-		</data>
-		<key>Headers/._FlutterEngineGroup.h</key>
-		<data>
-		B5yVs6KY10OZngR5dHzfNZ1LyvI=
-		</data>
-		<key>Headers/._FlutterHeadlessDartRunner.h</key>
-		<data>
-		o7X7S+1LX6qi/OE+/RZcCY1FaOE=
-		</data>
-		<key>Headers/._FlutterMacros.h</key>
-		<data>
-		ya73lBFV9x6dqupn3DCp8pKlBjU=
-		</data>
-		<key>Headers/._FlutterPlatformViews.h</key>
-		<data>
-		LgCYxaKiIP4K3ULWMzBxH3kQoqk=
-		</data>
-		<key>Headers/._FlutterPlugin.h</key>
-		<data>
-		FKl/V6ysEJ+4x7oOR1vyh6URemE=
-		</data>
-		<key>Headers/._FlutterPluginAppLifeCycleDelegate.h</key>
-		<data>
-		wIoONCqljRTSD48+vO6AvdnsJWI=
-		</data>
-		<key>Headers/._FlutterTexture.h</key>
-		<data>
-		wO5eF2AR5QmuPhLTUuyt9qa69fI=
-		</data>
-		<key>Headers/._FlutterViewController.h</key>
-		<data>
-		gBIQLQDgeK/1XzH9MOgz/Wz8HKk=
 		</data>
 		<key>Headers/Flutter.h</key>
 		<data>
@@ -156,10 +84,6 @@
 		<data>
 		S+Kn7WK9ObhdXv0VL6WrMTgWBZg=
 		</data>
-		<key>Modules/._module.modulemap</key>
-		<data>
-		1w1Ww58z4SD7LXw6BFSDb/G4+jI=
-		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
 		wJV5dCKEGl+FAtDc8wJJh/fvKXs=
@@ -178,13 +102,6 @@
 			EjTKsh6B0PCmwpLnhIeoDm3/MtaUA3zEcTjiN3d7u90=
 			</data>
 		</dict>
-		<key>._Info.plist</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			FTWuuCo1Vvnp0mQBukgZWysn9HqEcaTYIK572FFEx6M=
-			</data>
-		</dict>
 		<key>._Modules</key>
 		<dict>
 			<key>hash2</key>
@@ -197,125 +114,6 @@
 			<key>hash2</key>
 			<data>
 			53+3DWa7JWn7wAEzJ1anopCl7AclvEKQ+wkiWr/5DS0=
-			</data>
-		</dict>
-		<key>._icudtl.dat</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			z1rPZUzh9ZAPUEL8j7i58faRFPAKr+yXY7Te/LYlXFI=
-			</data>
-		</dict>
-		<key>Headers/._Flutter.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			hUqBYmjGiXe1OWis8EMO0Hb2AFRp43dWLKFz+LrdbR4=
-			</data>
-		</dict>
-		<key>Headers/._FlutterAppDelegate.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			KSw656CT8ZD7oUB6LtEmQ0FEa43Tz4ssuggUkLa0Uic=
-			</data>
-		</dict>
-		<key>Headers/._FlutterBinaryMessenger.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			NOmZymZ98Tzs+KzIlVRoK+6gXeky46JId57W2snczjw=
-			</data>
-		</dict>
-		<key>Headers/._FlutterCallbackCache.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			k1y46eePALketQRzaFv6nj739IFyO3JudT2t8IGZnSo=
-			</data>
-		</dict>
-		<key>Headers/._FlutterChannels.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			rZQnalis4wQ+OfcUKXSgNd1O/agH1DOA32BwCe6iEPc=
-			</data>
-		</dict>
-		<key>Headers/._FlutterCodecs.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			A6NVgC4vV4lkXoMfB9psPJuMD2bt3U440Ma/5velS2U=
-			</data>
-		</dict>
-		<key>Headers/._FlutterDartProject.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			ajxjGFhmzuXeiV/UQhPBjZKUjq9EsFcVwTZUlDjmo98=
-			</data>
-		</dict>
-		<key>Headers/._FlutterEngine.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			Gt15HvQgakTF5ARn9QSBTc9F2LbUK7XrGZQOCYnmM80=
-			</data>
-		</dict>
-		<key>Headers/._FlutterEngineGroup.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			d7HFdsZc4G+1GxoiA5f5hbtJXXVLxkjyzIpiThAQQKs=
-			</data>
-		</dict>
-		<key>Headers/._FlutterHeadlessDartRunner.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			bzPcPCXwqBnwtDi/Kid8Zl8QvBVmpqDsJqZVMBb+t0M=
-			</data>
-		</dict>
-		<key>Headers/._FlutterMacros.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			qRyd6Ab+6Y9W/hbPkHfqE1MldWNHBqpVJpYzAkMP+jQ=
-			</data>
-		</dict>
-		<key>Headers/._FlutterPlatformViews.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			3Q4tc0lqkDJZGCyL9+CkWOW2whnJbmELoPSCSuddgzY=
-			</data>
-		</dict>
-		<key>Headers/._FlutterPlugin.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			e+apEzUseu2f3PAHL4McW7sXT6umRNPSKJT6Rm+OsOE=
-			</data>
-		</dict>
-		<key>Headers/._FlutterPluginAppLifeCycleDelegate.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			p3HFfuxgxBTevJjwlBPgu3bwqRWRrONvGlMlo6Qgg8A=
-			</data>
-		</dict>
-		<key>Headers/._FlutterTexture.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			m3JaL1FHhAGHb7dXMBcSNkntODeRtk4TOC+IuayS0gg=
-			</data>
-		</dict>
-		<key>Headers/._FlutterViewController.h</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			MwWel6EgU92P9FATmwXsqmcpHFDsc/92AeF5bqTsLTQ=
 			</data>
 		</dict>
 		<key>Headers/Flutter.h</key>
@@ -428,13 +226,6 @@
 			<key>hash2</key>
 			<data>
 			P0GsFW0zzP6Yi8y8zBx1bdWpXoBcaVpIbO3lgDBZoDY=
-			</data>
-		</dict>
-		<key>Modules/._module.modulemap</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			UVpHwzk3dq1y9b59Pr/t3ueLvSA8c7RptAbWNcMS3Dg=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>

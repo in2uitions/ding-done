@@ -76,7 +76,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                   ),
                 ),
                 const Gap(30),
-                const CardInfo(),
+                const CardInfo1(),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: context.appValues.appPadding.p20,
@@ -89,7 +89,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                         color: context.resources.color.btnColorBlue),
                   ),
                 ),
-                const AddNewPaymentMethodWidget(),
+                AddNewPaymentMethodWidget(payment_method:widget.payment_method),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
                     context.appValues.appPadding.p20,
@@ -104,6 +104,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                         color: context.resources.color.btnColorBlue),
                   ),
                 ),
+
                 PaymentMethodButtons(
                   payment_method: widget.payment_method,
                   jobsViewModel: jobsViewModel,

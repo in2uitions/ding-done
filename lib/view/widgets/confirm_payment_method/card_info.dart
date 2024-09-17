@@ -2,14 +2,14 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/cards_info_widget.dart';
 import 'package:flutter/material.dart';
 
-class CardInfo extends StatefulWidget {
-  const CardInfo({super.key});
+class CardInfo1 extends StatefulWidget {
+  const CardInfo1({super.key});
 
   @override
-  State<CardInfo> createState() => _CardInfoState();
+  State<CardInfo1> createState() => _CardInfoState();
 }
 
-class _CardInfoState extends State<CardInfo> {
+class _CardInfoState extends State<CardInfo1> {
   @override
   Widget build(BuildContext context) {
     return Padding(

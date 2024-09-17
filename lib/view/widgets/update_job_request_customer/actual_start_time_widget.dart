@@ -81,8 +81,9 @@ class _ActualStartTimeWidgetState extends State<ActualStartTimeWidget> {
                         alignment: Alignment.centerLeft,
                         child: Text(
                           widget.actual_start_date != null
-                              ? '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(widget.actual_start_date.toString()))}'
+                              ? DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(widget.actual_start_date.toString() + 'Z').toUtc().toLocal())
                               : '',
+
                           style: getPrimaryRegularStyle(
                             fontSize: 18,
                             color: const Color(0xff180C38),

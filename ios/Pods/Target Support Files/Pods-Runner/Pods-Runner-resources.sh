@@ -98,14 +98,17 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/GoogleMaps/GoogleMapsResources.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/MLKitTextRecognition/LatinOCRResources.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/google_maps_flutter_ios/google_maps_flutter_ios_privacy.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/GoogleMaps/GoogleMapsResources.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/MLKitTextRecognition/LatinOCRResources.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/google_maps_flutter_ios/google_maps_flutter_ios_privacy.bundle"
 fi
 if [[ "$CONFIGURATION" == "Profile" ]]; then
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/GoogleMaps/GoogleMapsResources.bundle"
+  install_resource "${PODS_CONFIGURATION_BUILD_DIR}/MLKitTextRecognition/LatinOCRResources.bundle"
   install_resource "${PODS_CONFIGURATION_BUILD_DIR}/google_maps_flutter_ios/google_maps_flutter_ios_privacy.bundle"
 fi
 
