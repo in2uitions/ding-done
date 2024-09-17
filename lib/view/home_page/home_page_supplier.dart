@@ -169,20 +169,20 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                     );
                   },
                 ),
-                ListTile(
-                  title: Text(
-                    'My Address Book',
-                    style: getPrimaryBoldStyle(
-                      fontSize: 18,
-                      color: const Color(0xff180C38),
-                    ),
-                  ),
-                  onTap: () {
-                    // Handle My Address Book tap
-                    // Navigator.pop(context);
-                    Navigator.of(context).push(_createRoute(ConfirmAddress()));
-                  },
-                ),
+                // ListTile(
+                //   title: Text(
+                //     'My Address Book',
+                //     style: getPrimaryBoldStyle(
+                //       fontSize: 18,
+                //       color: const Color(0xff180C38),
+                //     ),
+                //   ),
+                //   onTap: () {
+                //     // Handle My Address Book tap
+                //     // Navigator.pop(context);
+                //     Navigator.of(context).push(_createRoute(ConfirmAddress()));
+                //   },
+                // ),
                 // ListTile(
                 //   title: Text(
                 //     'App Settings',

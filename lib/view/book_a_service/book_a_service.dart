@@ -565,7 +565,9 @@ class _BookAServiceState extends State<BookAService> {
                                         height: context
                                             .appValues.appSizePercent.h100,
                                         child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            jobsViewModel.launchWhatsApp();
+                                          },
                                           style: ElevatedButton.styleFrom(
                                             elevation: 0,
                                             backgroundColor: Colors.transparent,

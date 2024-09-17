@@ -139,7 +139,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                   ),
                 ),
                 const Gap(30),
-                 AboutSupplier(profileViewModel: profileViewModel,),
+                //  AboutSupplier(profileViewModel: profileViewModel,),
                 const LoacationSupplierProfile(),
                 ServicesOfferedSupplierProfile(
                   profileViewModel: profileViewModel,
