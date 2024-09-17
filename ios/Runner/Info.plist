@@ -55,7 +55,7 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play videos while in the app</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to your camera for allowing users to upload logos and media (photos, videos)</string>
+	<string>This app requires access to your camera for allowing users to scan credit card</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>We need access to save files in the documents folder</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
