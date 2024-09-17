@@ -87,6 +87,7 @@ class _JobsCardsState extends State<JobsCards> {
                 break; // Break the loop once the translation is found
               }
             }
+            debugPrint('111111${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date + 'Z').toUtc().toLocal())}');
 
             return InkWell(
               onTap: () {
@@ -326,21 +327,27 @@ class _JobsCardsState extends State<JobsCards> {
                                   widget.active == 'activeJobs' ?
 
                                   Text(
-                                    '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date.toString()))}',
+                                    data[index].actual_start_date != null
+                                        ? DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date + 'Z').toUtc().toLocal())
+                                        : '',
                                     style: getPrimaryRegularStyle(
                                         fontSize: 15,
                                         color: context
                                             .resources.color.btnColorBlue),
                                   )
                                   :Text(
-                                    '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].start_date.toString()))}',
+                                    data[index].start_date != null
+                                        ? DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].start_date).toLocal())
+                                        : '',
                                     style: getPrimaryRegularStyle(
                                         fontSize: 15,
                                         color: context
                                             .resources.color.btnColorBlue),
                                   ): widget.active == 'activeJobs'?
                                   Text(
-                                    '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date.toString()))}',
+                                    data[index].actual_start_date != null
+                                        ? DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date + 'Z').toUtc().toLocal())
+                                        : '',
                                     style: getPrimaryRegularStyle(
                                         fontSize: 15,
                                         color: context
@@ -370,7 +377,7 @@ class _JobsCardsState extends State<JobsCards> {
 
 
                                   Text(
-                                    '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date.toString()))}',
+                                    DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date + 'Z').toUtc().toLocal()),
                                     style: getPrimaryRegularStyle(
                                         fontSize: 15,
                                         color: context
@@ -527,97 +534,97 @@ class _JobsCardsState extends State<JobsCards> {
                                   ),
                                 )
                               : Container(),
-                                  widget.active == 'activeJobs' && widget.userRole==Constants.supplierRoleId
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                    top: context.appValues.appPadding.p10,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) =>
-                                                _buildPopupDialog(
-                                                    context,
-                                                    jobsViewModel,
-                                                    data[index].id,
-                                                    widget.active),
-                                          );
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          elevation: 1.0,
-                                          shadowColor: Colors.black,
-                                          backgroundColor:
-                                              const Color(0xffF3D347),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(10),
-                                          ),
-                                          fixedSize: Size(
-                                            context
-                                                .appValues.appSizePercent.w40,
-                                            context.appValues.appSizePercent.h6,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          translate('button.cancel'),
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 15,
-                                            color: context
-                                                .resources.color.colorWhite,
-                                          ),
-                                        ),
-                                      ),
-                                      widget.active != 'activeJobs' &&
-                                              widget.userRole ==
-                                                  Constants.supplierRoleId
-                                          ? ElevatedButton(
-                                              onPressed: () {
-                                                debugPrint(
-                                                    'data ${data[index]}');
-                                                widget.active == 'activeJobs'
-                                                    ? jobsViewModel.finishJob(
-                                                        data[index].id)
-                                                    : jobsViewModel.startJob(
-                                                        data[index].id);
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                elevation: 1.0,
-                                                shadowColor: Colors.black,
-                                                backgroundColor:
-                                                    const Color(0xff57527A),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                fixedSize: Size(
-                                                  context.appValues
-                                                      .appSizePercent.w40,
-                                                  context.appValues
-                                                      .appSizePercent.h6,
-                                                ),
-                                              ),
-                                              child: Text(
-                                                widget.active == 'activeJobs'
-                                                    ? translate(
-                                                        'button.complete')
-                                                    : translate(
-                                                        'button.startJob'),
-                                                style: getPrimaryRegularStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            )
-                                          : Container(),
-                                    ],
-                                  ),
-                                )
-                              : Container(),
+                              //     widget.active == 'activeJobs' && widget.userRole==Constants.supplierRoleId
+                              // ? Padding(
+                              //     padding: EdgeInsets.only(
+                              //       top: context.appValues.appPadding.p10,
+                              //     ),
+                              //     child: Row(
+                              //       mainAxisAlignment:
+                              //           MainAxisAlignment.spaceBetween,
+                              //       children: [
+                              //         ElevatedButton(
+                              //           onPressed: () {
+                              //             showDialog(
+                              //               context: context,
+                              //               builder: (BuildContext context) =>
+                              //                   _buildPopupDialog(
+                              //                       context,
+                              //                       jobsViewModel,
+                              //                       data[index].id,
+                              //                       widget.active),
+                              //             );
+                              //           },
+                              //           style: ElevatedButton.styleFrom(
+                              //             elevation: 1.0,
+                              //             shadowColor: Colors.black,
+                              //             backgroundColor:
+                              //                 const Color(0xffF3D347),
+                              //             shape: RoundedRectangleBorder(
+                              //               borderRadius:
+                              //                   BorderRadius.circular(10),
+                              //             ),
+                              //             fixedSize: Size(
+                              //               context
+                              //                   .appValues.appSizePercent.w40,
+                              //               context.appValues.appSizePercent.h6,
+                              //             ),
+                              //           ),
+                              //           child: Text(
+                              //             translate('button.cancel'),
+                              //             style: getPrimaryBoldStyle(
+                              //               fontSize: 15,
+                              //               color: context
+                              //                   .resources.color.colorWhite,
+                              //             ),
+                              //           ),
+                              //         ),
+                              //         widget.active != 'activeJobs' &&
+                              //                 widget.userRole ==
+                              //                     Constants.supplierRoleId
+                              //             ? ElevatedButton(
+                              //                 onPressed: () {
+                              //                   debugPrint(
+                              //                       'data ${data[index]}');
+                              //                   widget.active == 'activeJobs'
+                              //                       ? jobsViewModel.finishJob(
+                              //                           data[index].id)
+                              //                       : jobsViewModel.startJob(
+                              //                           data[index].id);
+                              //                 },
+                              //                 style: ElevatedButton.styleFrom(
+                              //                   elevation: 1.0,
+                              //                   shadowColor: Colors.black,
+                              //                   backgroundColor:
+                              //                       const Color(0xff57527A),
+                              //                   shape: RoundedRectangleBorder(
+                              //                     borderRadius:
+                              //                         BorderRadius.circular(10),
+                              //                   ),
+                              //                   fixedSize: Size(
+                              //                     context.appValues
+                              //                         .appSizePercent.w40,
+                              //                     context.appValues
+                              //                         .appSizePercent.h6,
+                              //                   ),
+                              //                 ),
+                              //                 child: Text(
+                              //                   widget.active == 'activeJobs'
+                              //                       ? translate(
+                              //                           'button.complete')
+                              //                       : translate(
+                              //                           'button.startJob'),
+                              //                   style: getPrimaryRegularStyle(
+                              //                     fontSize: 15,
+                              //                     color: Colors.white,
+                              //                   ),
+                              //                 ),
+                              //               )
+                              //             : Container(),
+                              //       ],
+                              //     ),
+                              //   )
+                              // : Container(),
                         ],
                       ),
                     )
