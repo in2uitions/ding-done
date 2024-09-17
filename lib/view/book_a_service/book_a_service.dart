@@ -135,49 +135,52 @@ class _BookAServiceState extends State<BookAService> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.only(
-                            top: context.appValues.appPadding.p20,
+                            top: context.appValues.appPadding.p8,
                             left: context.appValues.appPadding.p20,
                             right: context.appValues.appPadding.p20,
                           ),
-                          child: Stack(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  // InkWell(
-                                  //   child: Padding(
-                                  //     padding: const EdgeInsets.only(top: 5),
-                                  //     child: SvgPicture.asset(
-                                  //         'assets/img/back-new.svg'),
-                                  //   ),
-                                  //   onTap: () {
-                                  //     Navigator.pop(context);
-                                  //   },
-                                  // ),
-                                  // const Gap(10),
-                                  Text(
-                                    translate('bookService.bookService'),
-                                    style: getPrimaryBoldStyle(
-                                      color: context.resources.color.colorWhite,
-                                      fontSize: 28,
+                          child: SafeArea(
+                            child: Stack(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    // InkWell(
+                                    //   child: Padding(
+                                    //     padding: const EdgeInsets.only(top: 5),
+                                    //     child: SvgPicture.asset(
+                                    //         'assets/img/back-new.svg'),
+                                    //   ),
+                                    //   onTap: () {
+                                    //     Navigator.pop(context);
+                                    //   },
+                                    // ),
+                                    // const Gap(10),
+                                    Text(
+                                      translate('bookService.bookService'),
+                                      style: getPrimaryBoldStyle(
+                                        color:
+                                            context.resources.color.colorWhite,
+                                        fontSize: 28,
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                              InkWell(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: context.appValues.appPadding.p8,
-                                  ),
-                                  child: SvgPicture.asset(
-                                      'assets/img/back-new.svg'),
+                                  ],
                                 ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
+                                InkWell(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      top: context.appValues.appPadding.p8,
+                                    ),
+                                    child: SvgPicture.asset(
+                                        'assets/img/back-new.svg'),
+                                  ),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                           // Column(
                           //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -206,7 +209,7 @@ class _BookAServiceState extends State<BookAService> {
                           padding: EdgeInsets.symmetric(
                             horizontal: context.appValues.appPadding.p20,
                           ),
-                          child: Container(
+                          child: SizedBox(
                             width: context.appValues.appSizePercent.w80,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -425,9 +428,16 @@ class _BookAServiceState extends State<BookAService> {
                                                 );
                                               },
                                               child: Row(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  SvgPicture.asset(
-                                                    'assets/img/locationbookservice.svg',
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 5),
+                                                    child: SvgPicture.asset(
+                                                      'assets/img/locationbookservice.svg',
+                                                    ),
                                                   ),
                                                   const Gap(10),
                                                   Expanded(
@@ -465,7 +475,7 @@ class _BookAServiceState extends State<BookAService> {
                                 payment_method: paymentViewModel.paymentList,
                                 role: Constants.customerRoleId,
                               ),
-                              SizedBox(height: context.appValues.appSize.s10),
+                              const Gap(10),
                               Container(
                                 height: context.appValues.appSizePercent.h10,
                                 width: context.appValues.appSizePercent.w100,
@@ -532,7 +542,7 @@ class _BookAServiceState extends State<BookAService> {
                                           },
                                           style: ElevatedButton.styleFrom(
                                             backgroundColor:
-                                                const Color(0xffF3D347),
+                                                const Color(0xff4100E3),
                                             shape: RoundedRectangleBorder(
                                               borderRadius:
                                                   BorderRadius.circular(12),
@@ -561,7 +571,7 @@ class _BookAServiceState extends State<BookAService> {
                                             backgroundColor: Colors.transparent,
                                             shape: RoundedRectangleBorder(
                                               side: const BorderSide(
-                                                color: Color(0xff190C39),
+                                                color: Color(0xff4100E3),
                                                 width: 3,
                                               ),
                                               borderRadius:
@@ -573,7 +583,9 @@ class _BookAServiceState extends State<BookAService> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               SvgPicture.asset(
-                                                  'assets/img/chat.svg'),
+                                                'assets/img/chat.svg',
+                                                color: const Color(0xff4100E3),
+                                              ),
                                               // SizedBox(
                                               //   height: context.appValues.appSize.s5,
                                               // ),
@@ -582,7 +594,7 @@ class _BookAServiceState extends State<BookAService> {
                                                 style: getPrimaryRegularStyle(
                                                   fontSize: 19,
                                                   color:
-                                                      const Color(0xff190C39),
+                                                      const Color(0xff4100E3),
                                                 ),
                                               ),
                                             ],

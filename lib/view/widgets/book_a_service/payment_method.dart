@@ -79,18 +79,33 @@ class _PaymentMethodState extends State<PaymentMethod> {
                           horizontal: context.appValues.appPadding.p20,
                         ),
                         child: InkWell(
-                          child: Row(
-                            children: [
-                              SvgPicture.asset('assets/img/add.svg'),
-                              const Gap(10),
-                              Text(
-                                translate('paymentMethod.addMethod'),
-                                style: getPrimaryBoldStyle(
-                                    fontSize: 20,
-                                    color:
-                                        context.resources.color.btnColorBlue),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              color: Color(0xffF4F3FD),
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(15),
                               ),
-                            ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: context.appValues.appPadding.p20,
+                                vertical: context.appValues.appPadding.p15,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SvgPicture.asset('assets/img/addmedia.svg'),
+                                  const Gap(10),
+                                  Text(
+                                    translate('paymentMethod.addMethod'),
+                                    style: getPrimaryBoldStyle(
+                                      fontSize: 18,
+                                      color: const Color(0xff4100E3),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                           ),
                           onTap: () {
                             Navigator.of(context)
