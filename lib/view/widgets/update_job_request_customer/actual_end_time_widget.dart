@@ -80,7 +80,10 @@ class _ActualEndTimeWidgetState extends State<ActualEndTimeWidget> {
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                          '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(widget.actual_end_date.toString()))}',
+                          widget.actual_end_date != null
+                              ? DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(widget.actual_end_date.toString() + 'Z').toUtc().toLocal())
+                              : '',
+
                           style: getPrimaryRegularStyle(
                             fontSize: 18,
                             color: const Color(0xff180C38),

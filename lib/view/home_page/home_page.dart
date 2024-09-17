@@ -636,7 +636,9 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 const Gap(10),
                                 InkWell(
-                                  onTap: () {},
+                                  onTap: () {
+                                    jobsViewModel.launchWhatsApp();
+                                  },
                                   child: Container(
                                     width: 155,
                                     height: 52,

@@ -9,6 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
+
+import '../../../view_model/jobs_view_model/jobs_view_model.dart';
 
 class ProfileSeconComponent extends StatefulWidget {
   const ProfileSeconComponent({super.key});
@@ -63,30 +66,40 @@ class _ProfileSeconComponentState extends State<ProfileSeconComponent> {
               color: Color(0xffEAEAFF),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p15,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/img/headphone.svg',
-                    ),
-                    const Gap(10),
-                    Text(
-                      translate('profile.help'),
-                      style: getPrimaryRegularStyle(
-                        fontSize: 20,
-                        color: const Color(0xff1F1F39),
+          Consumer< JobsViewModel>(
+              builder: (context, jobsViewModel, _) {
+
+                return InkWell(
+                onTap: (){
+                  jobsViewModel.launchWhatsApp();
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.appValues.appPadding.p15,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          SvgPicture.asset(
+                            'assets/img/headphone.svg',
+                          ),
+                          const Gap(10),
+                          Text(
+                            translate('profile.help'),
+                            style: getPrimaryRegularStyle(
+                              fontSize: 20,
+                              color: const Color(0xff1F1F39),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ],
-            ),
+              );
+            }
           ),
           Padding(
             padding: EdgeInsets.only(

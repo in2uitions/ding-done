@@ -179,6 +179,110 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
               widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
               AddressWidget(address: widget.data.address)
               :Container(),
+              // widget.fromWhere == translate('jobs.booked')
+              //     ? Padding(
+              //   padding: EdgeInsets.symmetric(
+              //     horizontal: context.appValues.appPadding.p20,
+              //     vertical: context.appValues.appPadding.p10,
+              //   ),
+              //   child: Container(
+              //     width: context.appValues.appSizePercent.w90,
+              //     child: Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       mainAxisAlignment: MainAxisAlignment.center,
+              //       children: [
+              //         Padding(
+              //           padding: EdgeInsets.fromLTRB(
+              //             context.appValues.appPadding.p0,
+              //             context.appValues.appPadding.p10,
+              //             context.appValues.appPadding.p0,
+              //             context.appValues.appPadding.p0,
+              //           ),
+              //           child: Text(
+              //             translate('jobs.estimatedDistance'),
+              //             style: getPrimaryBoldStyle(
+              //               fontSize: 20,
+              //               color: const Color(0xff180C38),
+              //             ),
+              //           ),
+              //         ),
+              //         Padding(
+              //           padding: EdgeInsets.fromLTRB(
+              //             context.appValues.appPadding.p0,
+              //             context.appValues.appPadding.p0,
+              //             context.appValues.appPadding.p0,
+              //             context.appValues.appPadding.p15,
+              //           ),
+              //           child: Row(
+              //             children: [
+              //               Text(
+              //                 '${(widget.data.supplier_to_job_distance != null ? (widget.data.supplier_to_job_distance / 1000).toStringAsFixed(3) : "0")} km',
+              //                 style: getPrimaryRegularStyle(
+              //                   fontSize: 18,
+              //                   color: const Color(0xff190C39),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //
+              //       ],
+              //     ),
+              //   ),
+              // )
+              //     :Container(),
+              widget.fromWhere == translate('jobs.booked')
+                  ? Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p20,
+                  vertical: context.appValues.appPadding.p10,
+                ),
+                child: Container(
+                  width: context.appValues.appSizePercent.w90,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          context.appValues.appPadding.p0,
+                          context.appValues.appPadding.p10,
+                          context.appValues.appPadding.p0,
+                          context.appValues.appPadding.p0,
+                        ),
+                        child: Text(
+                          translate('jobs.estimatedTime'),
+                          style: getPrimaryBoldStyle(
+                            fontSize: 20,
+                            color: const Color(0xff180C38),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          context.appValues.appPadding.p0,
+                          context.appValues.appPadding.p0,
+                          context.appValues.appPadding.p0,
+                          context.appValues.appPadding.p15,
+                        ),
+                        child: Row(
+                          children: [
+                            Text(
+                              '${widget.data.supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
+                              style: getPrimaryRegularStyle(
+                                fontSize: 18,
+                                color: const Color(0xff190C39),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              )
+                  : Container(),
               widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active')  &&  widget.fromWhere!=translate('jobs.completed')?
               DateAndTimeWidget(dateTime: widget.data.start_date)
               :Container(),

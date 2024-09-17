@@ -87,7 +87,6 @@ class _JobsCardsState extends State<JobsCards> {
                 break; // Break the loop once the translation is found
               }
             }
-            debugPrint('111111${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date + 'Z').toUtc().toLocal())}');
 
             return InkWell(
               onTap: () {

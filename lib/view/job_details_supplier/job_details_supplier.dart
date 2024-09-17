@@ -216,6 +216,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
               Gap(20),
               AddressWidget(address: widget.data.address),
 
+
+
               widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked')?
               ActualStartTimeWidget(
                   actual_start_date: widget.data.actual_start_date ?? '',
