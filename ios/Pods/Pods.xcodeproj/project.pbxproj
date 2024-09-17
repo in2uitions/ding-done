@@ -24244,6 +24244,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_image_compress_common/flutter_image_compress_common-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_image_compress_common/flutter_image_compress_common-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -24278,6 +24282,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -24299,6 +24307,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/FirebaseCoreInternal";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = FirebaseCoreInternal;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/ResourceBundle-FirebaseCoreInternal_Privacy-FirebaseCoreInternal-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -24321,6 +24333,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DKImagePickerController";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = DKImagePickerController;
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/ResourceBundle-DKImagePickerController-DKImagePickerController-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -24343,6 +24359,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleUtilities";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = GoogleUtilities;
 				INFOPLIST_FILE = "Target Support Files/GoogleUtilities/ResourceBundle-GoogleUtilities_Privacy-GoogleUtilities-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -24362,6 +24382,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -24383,6 +24407,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MLKitTextRecognition";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = MLKitTextRecognition;
 				INFOPLIST_FILE = "Target Support Files/MLKitTextRecognition/ResourceBundle-LatinOCRResources-MLKitTextRecognition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -24405,6 +24433,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/shared_preferences_foundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = shared_preferences_foundation;
 				INFOPLIST_FILE = "Target Support Files/shared_preferences_foundation/ResourceBundle-shared_preferences_foundation_privacy-shared_preferences_foundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -24430,6 +24462,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyGif/SwiftyGif-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/SwiftyGif-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -24466,6 +24502,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/FirebaseCoreInternal/FirebaseCoreInternal-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/FirebaseCoreInternal-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -24513,6 +24553,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/file_picker/file_picker-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/file_picker/file_picker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -24550,6 +24594,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/path_provider_foundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = path_provider_foundation;
 				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/ResourceBundle-path_provider_foundation_privacy-path_provider_foundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -24573,6 +24621,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/PromisesObjC/PromisesObjC-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -24604,6 +24656,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/geolocator_apple";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = geolocator_apple;
 				INFOPLIST_FILE = "Target Support Files/geolocator_apple/ResourceBundle-geolocator_apple_privacy-geolocator_apple-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -24623,6 +24679,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -24659,6 +24719,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/stripe_ios/stripe_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/stripe_ios/stripe_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -24699,6 +24763,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -24746,6 +24814,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/package_info_plus/package_info_plus-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/package_info_plus/package_info_plus-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -24787,6 +24859,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/Mantle/Mantle-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Mantle/Mantle-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -24834,6 +24910,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/stripe_ios/stripe_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/stripe_ios/stripe_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -24876,6 +24956,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/Stripe/Stripe-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Stripe/Stripe-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -24908,6 +24992,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/image_picker_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = image_picker_ios;
 				INFOPLIST_FILE = "Target Support Files/image_picker_ios/ResourceBundle-image_picker_ios_privacy-image_picker_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -24934,6 +25022,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeFinancialConnections/StripeFinancialConnections-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeFinancialConnections/StripeFinancialConnections-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -24966,6 +25058,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PromisesObjC";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = FBLPromises;
 				INFOPLIST_FILE = "Target Support Files/PromisesObjC/ResourceBundle-FBLPromises_Privacy-PromisesObjC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -24987,6 +25083,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePayments";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePayments;
 				INFOPLIST_FILE = "Target Support Files/StripePayments/ResourceBundle-StripePayments-StripePayments-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -25009,6 +25109,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/PromisesObjC/PromisesObjC-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25057,6 +25161,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/location/location-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/location/location-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -25098,6 +25206,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyGif/SwiftyGif-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/SwiftyGif-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25146,6 +25258,10 @@
 					"\"/Volumes/KINGSTON/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
 				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -25182,6 +25298,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -25218,6 +25338,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/video_player_avfoundation/video_player_avfoundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/video_player_avfoundation/video_player_avfoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -25255,6 +25379,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/nanopb";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = nanopb;
 				INFOPLIST_FILE = "Target Support Files/nanopb/ResourceBundle-nanopb_Privacy-nanopb-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25276,6 +25404,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/video_player_avfoundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = video_player_avfoundation;
 				INFOPLIST_FILE = "Target Support Files/video_player_avfoundation/ResourceBundle-video_player_avfoundation_privacy-video_player_avfoundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -25312,6 +25444,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/google_mlkit_commons/google_mlkit_commons-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/google_mlkit_commons/google_mlkit_commons-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -25350,6 +25486,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DKPhotoGallery";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = DKPhotoGallery;
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/ResourceBundle-DKPhotoGallery-DKPhotoGallery-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25375,6 +25515,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeApplePay/StripeApplePay-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeApplePay/StripeApplePay-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -25411,6 +25555,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeApplePay/StripeApplePay-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeApplePay/StripeApplePay-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -25446,6 +25594,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/libwebp/libwebp-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/libwebp/libwebp-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25481,6 +25633,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/DKImagePickerController/DKImagePickerController-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/DKImagePickerController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25510,6 +25666,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -25530,6 +25690,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DKImagePickerController";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = DKImagePickerController;
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/ResourceBundle-DKImagePickerController-DKImagePickerController-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25551,6 +25715,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Stripe";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = Stripe;
 				INFOPLIST_FILE = "Target Support Files/Stripe/ResourceBundle-Stripe-Stripe-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -25571,6 +25739,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/FirebaseCoreInternal";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = FirebaseCoreInternal;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/ResourceBundle-FirebaseCoreInternal_Privacy-FirebaseCoreInternal-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -25595,6 +25767,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/TOCropViewController/TOCropViewController-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/TOCropViewController/TOCropViewController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25629,6 +25805,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleDataTransport/GoogleDataTransport-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25664,6 +25844,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/DKPhotoGallery/DKPhotoGallery-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/DKPhotoGallery-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25695,6 +25879,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/TOCropViewController";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = TOCropViewController;
 				INFOPLIST_FILE = "Target Support Files/TOCropViewController/ResourceBundle-TOCropViewControllerBundle-TOCropViewController-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25732,6 +25920,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -25781,6 +25973,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/onesignal_flutter/onesignal_flutter-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/onesignal_flutter/onesignal_flutter-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -25819,6 +26015,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PromisesObjC";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = FBLPromises;
 				INFOPLIST_FILE = "Target Support Files/PromisesObjC/ResourceBundle-FBLPromises_Privacy-PromisesObjC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25842,6 +26042,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleUtilities/GoogleUtilities-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25874,6 +26078,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleMaps";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = GoogleMaps;
 				INFOPLIST_FILE = "Target Support Files/GoogleMaps/ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -25895,6 +26103,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SwiftyGif";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = SwiftyGif;
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/ResourceBundle-SwiftyGif-SwiftyGif-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25918,6 +26130,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleUtilities/GoogleUtilities-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -25965,6 +26181,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/google_mlkit_text_recognition/google_mlkit_text_recognition-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/google_mlkit_text_recognition/google_mlkit_text_recognition-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -26019,6 +26239,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/image_picker_ios/image_picker_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/image_picker_ios/image_picker_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -26061,6 +26285,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -26098,6 +26326,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/FirebaseCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -26129,6 +26361,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SwiftyGif";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = SwiftyGif;
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/ResourceBundle-SwiftyGif-SwiftyGif-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -26150,6 +26386,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleUtilities";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = GoogleUtilities;
 				INFOPLIST_FILE = "Target Support Files/GoogleUtilities/ResourceBundle-GoogleUtilities_Privacy-GoogleUtilities-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -26176,6 +26416,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeCore/StripeCore-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeCore/StripeCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -26223,6 +26467,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_image_compress_common/flutter_image_compress_common-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_image_compress_common/flutter_image_compress_common-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -26275,6 +26523,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/url_launcher_ios/url_launcher_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/url_launcher_ios/url_launcher_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -26323,6 +26575,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_image_compress_common/flutter_image_compress_common-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_image_compress_common/flutter_image_compress_common-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -26359,6 +26615,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/image_picker_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = image_picker_ios;
 				INFOPLIST_FILE = "Target Support Files/image_picker_ios/ResourceBundle-image_picker_ios_privacy-image_picker_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -26380,6 +26640,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Stripe";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = Stripe;
 				INFOPLIST_FILE = "Target Support Files/Stripe/ResourceBundle-Stripe-Stripe-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -26417,6 +26681,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/open_file/open_file-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/open_file/open_file-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -26455,6 +26723,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/PromisesObjC/PromisesObjC-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -26486,6 +26758,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleDataTransport";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = GoogleDataTransport;
 				INFOPLIST_FILE = "Target Support Files/GoogleDataTransport/ResourceBundle-GoogleDataTransport_Privacy-GoogleDataTransport-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -26508,6 +26784,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePayments";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePayments;
 				INFOPLIST_FILE = "Target Support Files/StripePayments/ResourceBundle-Stripe3DS2-StripePayments-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -26529,6 +26809,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/path_provider_foundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = path_provider_foundation;
 				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/ResourceBundle-path_provider_foundation_privacy-path_provider_foundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -26547,6 +26831,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -26583,6 +26871,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/package_info_plus/package_info_plus-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/package_info_plus/package_info_plus-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -26620,6 +26912,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePayments";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePayments;
 				INFOPLIST_FILE = "Target Support Files/StripePayments/ResourceBundle-Stripe3DS2-StripePayments-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -26657,6 +26953,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/onesignal_flutter/onesignal_flutter-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/onesignal_flutter/onesignal_flutter-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -26695,6 +26995,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleDataTransport";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = GoogleDataTransport;
 				INFOPLIST_FILE = "Target Support Files/GoogleDataTransport/ResourceBundle-GoogleDataTransport_Privacy-GoogleDataTransport-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -26716,6 +27020,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripeFinancialConnections";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripeFinancialConnections;
 				INFOPLIST_FILE = "Target Support Files/StripeFinancialConnections/ResourceBundle-StripeFinancialConnections-StripeFinancialConnections-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -26735,6 +27043,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -26753,6 +27065,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -26788,6 +27104,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_localization/flutter_localization-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_localization/flutter_localization-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -26825,6 +27145,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DKPhotoGallery";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = DKPhotoGallery;
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/ResourceBundle-DKPhotoGallery-DKPhotoGallery-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -26849,6 +27173,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleUtilities/GoogleUtilities-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -26878,6 +27206,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -26898,6 +27230,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/path_provider_foundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = path_provider_foundation;
 				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/ResourceBundle-path_provider_foundation_privacy-path_provider_foundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -26919,6 +27255,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MLKitTextRecognition";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = MLKitTextRecognition;
 				INFOPLIST_FILE = "Target Support Files/MLKitTextRecognition/ResourceBundle-LatinOCRResources-MLKitTextRecognition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -26939,6 +27279,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/camera_avfoundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = camera_avfoundation;
 				INFOPLIST_FILE = "Target Support Files/camera_avfoundation/ResourceBundle-camera_avfoundation_privacy-camera_avfoundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -26964,6 +27308,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/FirebaseCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -27000,6 +27348,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripePaymentSheet/StripePaymentSheet-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripePaymentSheet/StripePaymentSheet-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27031,6 +27383,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripeUICore";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripeUICore;
 				INFOPLIST_FILE = "Target Support Files/StripeUICore/ResourceBundle-StripeUICore-StripeUICore-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27057,6 +27413,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeFinancialConnections/StripeFinancialConnections-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeFinancialConnections/StripeFinancialConnections-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27088,6 +27448,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/TOCropViewController";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = TOCropViewController;
 				INFOPLIST_FILE = "Target Support Files/TOCropViewController/ResourceBundle-TOCropViewControllerBundle-TOCropViewController-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -27113,6 +27477,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeFinancialConnections/StripeFinancialConnections-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeFinancialConnections/StripeFinancialConnections-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27145,6 +27513,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePayments";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePayments;
 				INFOPLIST_FILE = "Target Support Files/StripePayments/ResourceBundle-StripePayments-StripePayments-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27167,6 +27539,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePaymentsUI";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePaymentsUI;
 				INFOPLIST_FILE = "Target Support Files/StripePaymentsUI/ResourceBundle-StripePaymentsUI-StripePaymentsUI-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27193,6 +27569,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripePayments/StripePayments-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripePayments/StripePayments-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27239,6 +27619,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/audioplayers_darwin/audioplayers_darwin-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/audioplayers_darwin/audioplayers_darwin-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -27275,6 +27659,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/url_launcher_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = url_launcher_ios;
 				INFOPLIST_FILE = "Target Support Files/url_launcher_ios/ResourceBundle-url_launcher_ios_privacy-url_launcher_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -27312,6 +27700,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/image_cropper/image_cropper-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/image_cropper/image_cropper-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -27349,6 +27741,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePaymentSheet";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePaymentSheet;
 				INFOPLIST_FILE = "Target Support Files/StripePaymentSheet/ResourceBundle-StripePaymentSheet-StripePaymentSheet-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27369,6 +27765,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/video_player_avfoundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = video_player_avfoundation;
 				INFOPLIST_FILE = "Target Support Files/video_player_avfoundation/ResourceBundle-video_player_avfoundation_privacy-video_player_avfoundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -27391,6 +27791,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/camera_avfoundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = camera_avfoundation;
 				INFOPLIST_FILE = "Target Support Files/camera_avfoundation/ResourceBundle-camera_avfoundation_privacy-camera_avfoundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -27415,6 +27819,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleDataTransport/GoogleDataTransport-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -27450,6 +27858,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleUtilitiesComponents/GoogleUtilitiesComponents-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -27486,6 +27898,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/nanopb/nanopb-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/nanopb/nanopb-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -27517,6 +27933,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleUtilities";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = GoogleUtilities;
 				INFOPLIST_FILE = "Target Support Files/GoogleUtilities/ResourceBundle-GoogleUtilities_Privacy-GoogleUtilities-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -27553,6 +27973,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/image_picker_ios/image_picker_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/image_picker_ios/image_picker_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -27605,6 +28029,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/geocoding_ios/geocoding_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/geocoding_ios/geocoding_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -27657,6 +28085,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/camera_avfoundation/camera_avfoundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/camera_avfoundation/camera_avfoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -27695,6 +28127,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/url_launcher_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = url_launcher_ios;
 				INFOPLIST_FILE = "Target Support Files/url_launcher_ios/ResourceBundle-url_launcher_ios_privacy-url_launcher_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -27717,6 +28153,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripeUICore";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripeUICore;
 				INFOPLIST_FILE = "Target Support Files/StripeUICore/ResourceBundle-StripeUICore-StripeUICore-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27738,6 +28178,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/geocoding_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = geocoding_ios;
 				INFOPLIST_FILE = "Target Support Files/geocoding_ios/ResourceBundle-geocoding_ios_privacy-geocoding_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -27775,6 +28219,10 @@
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
 					"\"/Volumes/KINGSTON/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -27818,6 +28266,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -27849,6 +28301,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DKPhotoGallery";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = DKPhotoGallery;
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/ResourceBundle-DKPhotoGallery-DKPhotoGallery-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -27870,6 +28326,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/google_maps_flutter_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = google_maps_flutter_ios;
 				INFOPLIST_FILE = "Target Support Files/google_maps_flutter_ios/ResourceBundle-google_maps_flutter_ios_privacy-google_maps_flutter_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -27906,6 +28366,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/ml_card_scanner/ml_card_scanner-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/ml_card_scanner/ml_card_scanner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -27942,6 +28406,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/DKImagePickerController";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = DKImagePickerController;
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/ResourceBundle-DKImagePickerController-DKImagePickerController-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -27962,6 +28430,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePaymentsUI";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePaymentsUI;
 				INFOPLIST_FILE = "Target Support Files/StripePaymentsUI/ResourceBundle-StripePaymentsUI-StripePaymentsUI-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -27998,6 +28470,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/url_launcher_ios/url_launcher_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/url_launcher_ios/url_launcher_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -28046,6 +28522,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/firebase_core/firebase_core-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/firebase_core/firebase_core-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -28084,6 +28564,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripeCore";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripeCore;
 				INFOPLIST_FILE = "Target Support Files/StripeCore/ResourceBundle-StripeCore-StripeCore-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -28174,6 +28658,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -28206,6 +28694,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePaymentSheet";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePaymentSheet;
 				INFOPLIST_FILE = "Target Support Files/StripePaymentSheet/ResourceBundle-StripePaymentSheet-StripePaymentSheet-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -28242,6 +28734,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/geolocator_apple/geolocator_apple-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/geolocator_apple/geolocator_apple-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -28283,6 +28779,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/Stripe/Stripe-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Stripe/Stripe-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -28330,6 +28830,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/camera_avfoundation/camera_avfoundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/camera_avfoundation/camera_avfoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -28384,6 +28888,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/path_provider_foundation/path_provider_foundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -28432,6 +28940,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/image_picker_ios/image_picker_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/image_picker_ios/image_picker_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -28485,6 +28997,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/open_file/open_file-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/open_file/open_file-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -28536,6 +29052,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/audioplayers_darwin/audioplayers_darwin-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/audioplayers_darwin/audioplayers_darwin-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -28570,6 +29090,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -28607,6 +29131,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/onesignal_flutter/onesignal_flutter-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/onesignal_flutter/onesignal_flutter-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -28646,6 +29174,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SDWebImage";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = SDWebImage;
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/ResourceBundle-SDWebImage-SDWebImage-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -28672,6 +29204,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeUICore/StripeUICore-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeUICore/StripeUICore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -28719,6 +29255,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/google_mlkit_text_recognition/google_mlkit_text_recognition-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/google_mlkit_text_recognition/google_mlkit_text_recognition-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -28761,6 +29301,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/DKImagePickerController/DKImagePickerController-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/DKImagePickerController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -28792,6 +29336,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SDWebImage";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = SDWebImage;
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/ResourceBundle-SDWebImage-SDWebImage-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -28818,6 +29366,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripePaymentSheet/StripePaymentSheet-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripePaymentSheet/StripePaymentSheet-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -28854,6 +29406,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/FirebaseCoreInternal/FirebaseCoreInternal-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/FirebaseCoreInternal-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -28890,6 +29446,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeApplePay/StripeApplePay-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeApplePay/StripeApplePay-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -28919,6 +29479,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -28943,6 +29507,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/libwebp/libwebp-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/libwebp/libwebp-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -28978,6 +29546,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/TOCropViewController/TOCropViewController-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/TOCropViewController/TOCropViewController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -29007,6 +29579,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -29042,6 +29618,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_native_splash/flutter_native_splash-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_native_splash/flutter_native_splash-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -29078,6 +29658,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePayments";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePayments;
 				INFOPLIST_FILE = "Target Support Files/StripePayments/ResourceBundle-StripePayments-StripePayments-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -29104,6 +29688,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeCore/StripeCore-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeCore/StripeCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -29133,6 +29721,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -29154,6 +29746,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/google_maps_flutter_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = google_maps_flutter_ios;
 				INFOPLIST_FILE = "Target Support Files/google_maps_flutter_ios/ResourceBundle-google_maps_flutter_ios_privacy-google_maps_flutter_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -29192,6 +29788,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/location/location-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/location/location-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -29244,6 +29844,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/geocoding_ios/geocoding_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/geocoding_ios/geocoding_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -29296,6 +29900,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/google_maps_flutter_ios/google_maps_flutter_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/google_maps_flutter_ios/google_maps_flutter_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -29339,6 +29947,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/FirebaseCoreInternal/FirebaseCoreInternal-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/FirebaseCoreInternal-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -29370,6 +29982,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleMaps";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = GoogleMaps;
 				INFOPLIST_FILE = "Target Support Files/GoogleMaps/ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -29407,6 +30023,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/firebase_core/firebase_core-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/firebase_core/firebase_core-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -29450,6 +30070,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/Stripe/Stripe-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Stripe/Stripe-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -29496,6 +30120,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_pdfview/flutter_pdfview-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_pdfview/flutter_pdfview-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -29533,6 +30161,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/TOCropViewController";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = TOCropViewController;
 				INFOPLIST_FILE = "Target Support Files/TOCropViewController/ResourceBundle-TOCropViewControllerBundle-TOCropViewController-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -29570,6 +30202,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/package_info_plus/package_info_plus-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/package_info_plus/package_info_plus-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -29607,6 +30243,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePaymentSheet";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePaymentSheet;
 				INFOPLIST_FILE = "Target Support Files/StripePaymentSheet/ResourceBundle-StripePaymentSheet-StripePaymentSheet-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -29632,6 +30272,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/FirebaseCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -29667,6 +30311,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -29713,6 +30361,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/geocoding_ios/geocoding_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/geocoding_ios/geocoding_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -29752,6 +30404,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GTMSessionFetcher/GTMSessionFetcher-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -29786,6 +30442,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleDataTransport/GoogleDataTransport-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -29815,6 +30475,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -29852,6 +30516,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/path_provider_foundation/path_provider_foundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -29884,6 +30552,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/image_picker_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = image_picker_ios;
 				INFOPLIST_FILE = "Target Support Files/image_picker_ios/ResourceBundle-image_picker_ios_privacy-image_picker_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -29902,6 +30574,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -29922,6 +30598,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/geocoding_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = geocoding_ios;
 				INFOPLIST_FILE = "Target Support Files/geocoding_ios/ResourceBundle-geocoding_ios_privacy-geocoding_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -29942,6 +30622,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/url_launcher_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = url_launcher_ios;
 				INFOPLIST_FILE = "Target Support Files/url_launcher_ios/ResourceBundle-url_launcher_ios_privacy-url_launcher_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -29979,6 +30663,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/google_maps_flutter_ios/google_maps_flutter_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/google_maps_flutter_ios/google_maps_flutter_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -30021,6 +30709,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/DKPhotoGallery/DKPhotoGallery-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/DKPhotoGallery-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -30069,6 +30761,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/image_cropper/image_cropper-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/image_cropper/image_cropper-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -30121,6 +30817,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/ml_card_scanner/ml_card_scanner-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/ml_card_scanner/ml_card_scanner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -30173,6 +30873,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/google_mlkit_text_recognition/google_mlkit_text_recognition-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/google_mlkit_text_recognition/google_mlkit_text_recognition-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -30211,6 +30915,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/MLKitTextRecognition";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = MLKitTextRecognition;
 				INFOPLIST_FILE = "Target Support Files/MLKitTextRecognition/ResourceBundle-LatinOCRResources-MLKitTextRecognition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -30247,6 +30955,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/geolocator_apple/geolocator_apple-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/geolocator_apple/geolocator_apple-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -30299,6 +31011,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/video_player_avfoundation/video_player_avfoundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/video_player_avfoundation/video_player_avfoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -30337,6 +31053,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/nanopb";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = nanopb;
 				INFOPLIST_FILE = "Target Support Files/nanopb/ResourceBundle-nanopb_Privacy-nanopb-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -30358,6 +31078,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/FirebaseCoreInternal";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = FirebaseCoreInternal;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCoreInternal/ResourceBundle-FirebaseCoreInternal_Privacy-FirebaseCoreInternal-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -30395,6 +31119,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/file_picker/file_picker-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/file_picker/file_picker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -30447,6 +31175,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/google_maps_flutter_ios/google_maps_flutter_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/google_maps_flutter_ios/google_maps_flutter_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -30485,6 +31217,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/nanopb";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = nanopb;
 				INFOPLIST_FILE = "Target Support Files/nanopb/ResourceBundle-nanopb_Privacy-nanopb-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -30565,6 +31301,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -30585,6 +31325,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/FirebaseCore";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = FirebaseCore;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/ResourceBundle-FirebaseCore_Privacy-FirebaseCore-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -30606,6 +31350,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePayments";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePayments;
 				INFOPLIST_FILE = "Target Support Files/StripePayments/ResourceBundle-Stripe3DS2-StripePayments-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -30627,6 +31375,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/shared_preferences_foundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = shared_preferences_foundation;
 				INFOPLIST_FILE = "Target Support Files/shared_preferences_foundation/ResourceBundle-shared_preferences_foundation_privacy-shared_preferences_foundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -30646,6 +31398,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -30670,6 +31426,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImage/SDWebImage-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/SDWebImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -30702,6 +31462,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleDataTransport";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = GoogleDataTransport;
 				INFOPLIST_FILE = "Target Support Files/GoogleDataTransport/ResourceBundle-GoogleDataTransport_Privacy-GoogleDataTransport-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -30727,6 +31491,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImageWebPCoder/SDWebImageWebPCoder-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/SDWebImageWebPCoder/SDWebImageWebPCoder-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -30758,6 +31526,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/shared_preferences_foundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = shared_preferences_foundation;
 				INFOPLIST_FILE = "Target Support Files/shared_preferences_foundation/ResourceBundle-shared_preferences_foundation_privacy-shared_preferences_foundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -30782,6 +31554,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/DKPhotoGallery/DKPhotoGallery-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/DKPhotoGallery/DKPhotoGallery-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -30829,6 +31605,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/open_file/open_file-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/open_file/open_file-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -30866,6 +31646,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/geolocator_apple";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = geolocator_apple;
 				INFOPLIST_FILE = "Target Support Files/geolocator_apple/ResourceBundle-geolocator_apple_privacy-geolocator_apple-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -30903,6 +31687,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/url_launcher_ios/url_launcher_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/url_launcher_ios/url_launcher_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -30935,6 +31723,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/google_maps_flutter_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = google_maps_flutter_ios;
 				INFOPLIST_FILE = "Target Support Files/google_maps_flutter_ios/ResourceBundle-google_maps_flutter_ios_privacy-google_maps_flutter_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -30971,6 +31763,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/file_picker/file_picker-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/file_picker/file_picker-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -31011,6 +31807,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/libwebp/libwebp-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/libwebp/libwebp-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -31043,6 +31843,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SwiftyGif";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = SwiftyGif;
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/ResourceBundle-SwiftyGif-SwiftyGif-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -31064,6 +31868,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripeFinancialConnections";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripeFinancialConnections;
 				INFOPLIST_FILE = "Target Support Files/StripeFinancialConnections/ResourceBundle-StripeFinancialConnections-StripeFinancialConnections-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -31089,6 +31897,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeUICore/StripeUICore-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeUICore/StripeUICore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -31118,6 +31930,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -31154,6 +31970,10 @@
 				"FRAMEWORK_SEARCH_PATHS[sdk=iphonesimulator*]" = (
 					"\"/Volumes/KINGSTON/flutter/bin/cache/artifacts/engine/ios/Flutter.xcframework/ios-arm64_x86_64-simulator\"",
 					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
 				);
 				INFOPLIST_FILE = "Target Support Files/Pods-Runner/Pods-Runner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
@@ -31209,6 +32029,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -31245,6 +32069,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleUtilitiesComponents/GoogleUtilitiesComponents-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -31278,6 +32106,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/geocoding_ios";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = geocoding_ios;
 				INFOPLIST_FILE = "Target Support Files/geocoding_ios/ResourceBundle-geocoding_ios_privacy-geocoding_ios-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -31315,6 +32147,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/shared_preferences_foundation/shared_preferences_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -31345,6 +32181,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -31381,6 +32221,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/permission_handler_apple/permission_handler_apple-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/permission_handler_apple/permission_handler_apple-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -31422,6 +32266,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/Mantle/Mantle-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Mantle/Mantle-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -31470,6 +32318,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/image_cropper/image_cropper-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/image_cropper/image_cropper-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -31522,6 +32374,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_native_splash/flutter_native_splash-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_native_splash/flutter_native_splash-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -31574,6 +32430,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/firebase_core/firebase_core-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/firebase_core/firebase_core-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -31610,6 +32470,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -31635,6 +32499,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeCore/StripeCore-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeCore/StripeCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -31666,6 +32534,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripeCore";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripeCore;
 				INFOPLIST_FILE = "Target Support Files/StripeCore/ResourceBundle-StripeCore-StripeCore-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -31686,6 +32558,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/geolocator_apple";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = geolocator_apple;
 				INFOPLIST_FILE = "Target Support Files/geolocator_apple/ResourceBundle-geolocator_apple_privacy-geolocator_apple-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -31722,6 +32598,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/permission_handler_apple/permission_handler_apple-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/permission_handler_apple/permission_handler_apple-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -31774,6 +32654,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/ml_card_scanner/ml_card_scanner-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/ml_card_scanner/ml_card_scanner-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -31808,6 +32692,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -31833,6 +32721,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripePayments/StripePayments-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripePayments/StripePayments-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -31865,6 +32757,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/FirebaseCore";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = FirebaseCore;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/ResourceBundle-FirebaseCore_Privacy-FirebaseCore-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -31902,6 +32798,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/stripe_ios/stripe_ios-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/stripe_ios/stripe_ios-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -31943,6 +32843,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/TOCropViewController/TOCropViewController-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/TOCropViewController/TOCropViewController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -31978,6 +32882,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleToolboxForMac/GoogleToolboxForMac-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -32007,6 +32915,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -32031,6 +32943,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImageWebPCoder/SDWebImageWebPCoder-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/SDWebImageWebPCoder/SDWebImageWebPCoder-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -32063,6 +32979,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/video_player_avfoundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = video_player_avfoundation;
 				INFOPLIST_FILE = "Target Support Files/video_player_avfoundation/ResourceBundle-video_player_avfoundation_privacy-video_player_avfoundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -32085,6 +33005,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Stripe";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = Stripe;
 				INFOPLIST_FILE = "Target Support Files/Stripe/ResourceBundle-Stripe-Stripe-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32104,6 +33028,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -32140,6 +33068,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_compass/flutter_compass-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_compass/flutter_compass-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -32181,6 +33113,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripePaymentsUI/StripePaymentsUI-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripePaymentsUI/StripePaymentsUI-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32212,6 +33148,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripeUICore";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripeUICore;
 				INFOPLIST_FILE = "Target Support Files/StripeUICore/ResourceBundle-StripeUICore-StripeUICore-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32237,6 +33177,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripePayments/StripePayments-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripePayments/StripePayments-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32284,6 +33228,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_compass/flutter_compass-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_compass/flutter_compass-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -32318,6 +33266,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -32355,6 +33307,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/path_provider_foundation/path_provider_foundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/path_provider_foundation/path_provider_foundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -32402,6 +33358,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_pdfview/flutter_pdfview-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_pdfview/flutter_pdfview-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -32443,6 +33403,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripePaymentsUI/StripePaymentsUI-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripePaymentsUI/StripePaymentsUI-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32478,6 +33442,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SwiftyGif/SwiftyGif-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/SwiftyGif/SwiftyGif-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -32509,6 +33477,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/FirebaseCore";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = FirebaseCore;
 				INFOPLIST_FILE = "Target Support Files/FirebaseCore/ResourceBundle-FirebaseCore_Privacy-FirebaseCore-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -32544,6 +33516,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_localization/flutter_localization-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_localization/flutter_localization-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -32580,6 +33556,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/SDWebImage";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = SDWebImage;
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/ResourceBundle-SDWebImage-SDWebImage-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -32605,6 +33585,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripeUICore/StripeUICore-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripeUICore/StripeUICore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32651,6 +33635,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_localization/flutter_localization-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_localization/flutter_localization-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -32704,6 +33692,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/location/location-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/location/location-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -32741,6 +33733,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripeFinancialConnections";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripeFinancialConnections;
 				INFOPLIST_FILE = "Target Support Files/StripeFinancialConnections/ResourceBundle-StripeFinancialConnections-StripeFinancialConnections-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32778,6 +33774,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/permission_handler_apple/permission_handler_apple-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/permission_handler_apple/permission_handler_apple-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -32820,6 +33820,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripePaymentsUI/StripePaymentsUI-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripePaymentsUI/StripePaymentsUI-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32849,6 +33853,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -32874,6 +33882,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/StripePaymentSheet/StripePaymentSheet-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/StripePaymentSheet/StripePaymentSheet-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32903,6 +33915,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -32921,6 +33937,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -32942,6 +33962,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripeCore";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripeCore;
 				INFOPLIST_FILE = "Target Support Files/StripeCore/ResourceBundle-StripeCore-StripeCore-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -32968,6 +33992,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -32999,6 +34027,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -33085,6 +34117,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/DKImagePickerController/DKImagePickerController-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/DKImagePickerController/DKImagePickerController-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -33121,6 +34157,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Pods-RunnerTests/Pods-RunnerTests-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -33170,6 +34210,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/camera_avfoundation/camera_avfoundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/camera_avfoundation/camera_avfoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -33211,6 +34255,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/GoogleUtilitiesComponents/GoogleUtilitiesComponents-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
@@ -33243,6 +34291,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleMaps";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = GoogleMaps;
 				INFOPLIST_FILE = "Target Support Files/GoogleMaps/ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
@@ -33263,6 +34315,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/StripePaymentsUI";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = StripePaymentsUI;
 				INFOPLIST_FILE = "Target Support Files/StripePaymentsUI/ResourceBundle-StripePaymentsUI-StripePaymentsUI-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -33299,6 +34355,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_pdfview/flutter_pdfview-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_pdfview/flutter_pdfview-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -33350,6 +34410,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_native_splash/flutter_native_splash-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_native_splash/flutter_native_splash-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -33402,6 +34466,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/flutter_compass/flutter_compass-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/flutter_compass/flutter_compass-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -33453,6 +34521,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/audioplayers_darwin/audioplayers_darwin-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/audioplayers_darwin/audioplayers_darwin-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -33489,6 +34561,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/PromisesObjC";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = FBLPromises;
 				INFOPLIST_FILE = "Target Support Files/PromisesObjC/ResourceBundle-FBLPromises_Privacy-PromisesObjC-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -33514,6 +34590,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImageWebPCoder/SDWebImageWebPCoder-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/SDWebImageWebPCoder/SDWebImageWebPCoder-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -33549,6 +34629,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/nanopb/nanopb-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/nanopb/nanopb-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -33584,6 +34668,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/nanopb/nanopb-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/nanopb/nanopb-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -33619,6 +34707,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImage/SDWebImage-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/SDWebImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -33665,6 +34757,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/geolocator_apple/geolocator_apple-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/geolocator_apple/geolocator_apple-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -33701,6 +34797,10 @@
 				CODE_SIGNING_REQUIRED = NO;
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/camera_avfoundation";
 				EXPANDED_CODE_SIGN_IDENTITY = "-";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IBSC_MODULE = camera_avfoundation;
 				INFOPLIST_FILE = "Target Support Files/camera_avfoundation/ResourceBundle-camera_avfoundation_privacy-camera_avfoundation-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -33725,6 +34825,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/SDWebImage/SDWebImage-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/SDWebImage/SDWebImage-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -33760,6 +34864,10 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/Mantle/Mantle-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/Mantle/Mantle-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
@@ -33789,6 +34897,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -33825,6 +34937,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/google_mlkit_commons/google_mlkit_commons-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/google_mlkit_commons/google_mlkit_commons-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -33879,6 +34995,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/google_mlkit_commons/google_mlkit_commons-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/google_mlkit_commons/google_mlkit_commons-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -33915,6 +35035,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -33951,6 +35075,10 @@
 					"$(inherited)",
 				);
 				GCC_PREFIX_HEADER = "Target Support Files/video_player_avfoundation/video_player_avfoundation-prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"PERMISSION_CAMERA=1",
+				);
 				INFOPLIST_FILE = "Target Support Files/video_player_avfoundation/video_player_avfoundation-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
