@@ -72,11 +72,28 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              InkWell(
-                                child: SvgPicture.asset('assets/img/back.svg'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  InkWell(
+                                    child: SvgPicture.asset('assets/img/back.svg'),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                  Consumer<JobsViewModel>(
+                                      builder: (context, jobsViewModel, _) {
+                                      return InkWell(
+                                        onTap: (){
+                                          jobsViewModel.launchWhatsApp();
+                                        },
+                                        child: SvgPicture.asset(
+                                          'assets/img/headphone.svg',
+                                        ),
+                                      );
+                                    }
+                                  ),
+                                ],
                               ),
                               const Gap(20),
                               Text(

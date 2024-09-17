@@ -820,7 +820,7 @@ class _JobsCardsState extends State<JobsCards> {
                   ),
                 ),
                 child: Text(
-                  translate('button.send'),
+                  translate('button.proceed'),
                   style: getPrimaryRegularStyle(
                     fontSize: 15,
                     color: context.resources.color.btnColorBlue,
