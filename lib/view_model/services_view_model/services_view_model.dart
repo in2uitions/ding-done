@@ -114,6 +114,7 @@ class ServicesViewModel with ChangeNotifier {
           ;
     }).toList();
     searchBody[index] = value;
+    debugPrint('searchbody in filter $searchBody');
 
     notifyListeners();
   }
@@ -144,7 +145,7 @@ class ServicesViewModel with ChangeNotifier {
         for (Map<String,
             dynamic> translation1 in translation["services_id"]["translations"]) {
           if (translation1["languages_code"] == lang) {
-            debugPrint('category title ${translation1["title"].toString()}');
+            debugPrint('category title1 ${translation1["title"].toString()}');
 
             firstTranslationCategoryTitle = translation1["title"];
             break; // Break the loop once the translation is found

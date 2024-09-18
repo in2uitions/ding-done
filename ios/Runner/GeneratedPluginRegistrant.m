@@ -42,6 +42,12 @@
 @import flutter_image_compress_common;
 #endif
 
+#if __has_include(<flutter_keyboard_visibility/FlutterKeyboardVisibilityPlugin.h>)
+#import <flutter_keyboard_visibility/FlutterKeyboardVisibilityPlugin.h>
+#else
+@import flutter_keyboard_visibility;
+#endif
+
 #if __has_include(<flutter_localization/FlutterLocalizationPlugin.h>)
 #import <flutter_localization/FlutterLocalizationPlugin.h>
 #else
@@ -177,6 +183,7 @@
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FlutterCompassPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterCompassPlugin"]];
   [ImageCompressPlugin registerWithRegistrar:[registry registrarForPlugin:@"ImageCompressPlugin"]];
+  [FlutterKeyboardVisibilityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterKeyboardVisibilityPlugin"]];
   [FlutterLocalizationPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalizationPlugin"]];
   [FlutterNativeSplashPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterNativeSplashPlugin"]];
   [FLTPDFViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPDFViewFlutterPlugin"]];

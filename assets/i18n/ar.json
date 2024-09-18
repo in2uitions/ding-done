@@ -33,6 +33,7 @@
     "start": "بدء",
     "success": "نجاح",
     "somethingWentWrong": "حدث خطأ ما",
+    "pleaseProvidePaymentCard": "يرجى تقديم بطاقة الدفع",
     "failure": "فشل",
     "jobCanceledMsg": "تم إلغاء الوظيفة ولكن عليك دفع غرامة",
     "tryAgainLater": "الرجاء المحاولة مرة أخرى لاحقًا",

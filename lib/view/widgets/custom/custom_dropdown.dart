@@ -4,7 +4,7 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropDown extends StatefulWidget {
-  const CustomDropDown({
+   CustomDropDown({
     super.key,
     required this.list,
     required this.onChange,
@@ -13,15 +13,28 @@ class CustomDropDown extends StatefulWidget {
     this.errorText,
     required this.index,
     this.validator,
+    required this.viewModel,
+    this.labelText,
+    this.onSaved,
+    this.onFieldSubmitted,
+    this.onChanged, this.hintText, this.onTap, this.keyboardType,
   });
 
-  final List<DropdownRoleModel> list;
+  final List<dynamic> list;
   final dynamic onChange;
   final String? value;
   final String hint;
   final String? errorText;
   final String index;
   final FormFieldValidator<String>? validator;
+  final dynamic viewModel;
+  final String? hintText;
+  final String? labelText;
+  final FormFieldSetter<String>? onSaved;
+  final ValueChanged<String>? onFieldSubmitted;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onTap;
+  final keyboardType;
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
@@ -37,7 +50,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       elevation: 5,
       shadowColor: Colors.black,
       child: DropdownButtonFormField<String>(
-        value: widget.value,
+        // value: widget.value,
         icon: const Icon(Icons.keyboard_arrow_down),
         elevation: 16,
         isExpanded: true,
@@ -76,11 +89,11 @@ class _CustomDropDownState extends State<CustomDropDown> {
         onChanged: widget.onChange,
         hint: Text(widget.hint),
         items: widget.list
-            .map<DropdownMenuItem<String>>((DropdownRoleModel value) {
+            .map<DropdownMenuItem<String>>((dynamic value) {
           return DropdownMenuItem<String>(
-            value: value.id,
+            value: value['code'],
             child: Text(
-              value.title ?? '',
+              value['name'] ?? '',
               // maxLines: 1,
               overflow: TextOverflow.ellipsis,
               softWrap: true,

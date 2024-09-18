@@ -33,6 +33,7 @@
     "start": "Έναρξη",
     "success": "Επιτυχία",
     "somethingWentWrong": "Κάτι πήγε στραβά",
+    "pleaseProvidePaymentCard": "Δώστε κάρτα πληρωμής",
     "failure": "Αποτυχία",
     "jobCanceledMsg": "Η εργασία ακυρώθηκε αλλά θα πρέπει να πληρώσετε πρόστιμο",
     "tryAgainLater": "Παρακαλώ προσπαθήστε ξανά αργότερα",

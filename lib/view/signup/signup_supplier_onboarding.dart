@@ -3,9 +3,11 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/agreement/supplier_agreement.dart';
 import 'package:dingdone/view/login/login.dart';
+import 'package:dingdone/view/map_screen/google_maps.dart';
 import 'package:dingdone/view/map_screen/map_display.dart';
 import 'package:dingdone/view/map_screen/map_screen.dart';
 import 'package:dingdone/view/widgets/custom/custom_date_picker.dart';
+import 'package:dingdone/view/widgets/custom/custom_dropdown.dart';
 import 'package:dingdone/view/widgets/custom/custom_multiple_selection_checkbox.dart';
 import 'package:dingdone/view/widgets/custom/custom_phone_feild.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
@@ -16,6 +18,7 @@ import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
 
@@ -626,12 +629,40 @@ class _SignUpSupplierOnBoardingScreenState
                                 ),
                               ),
                               onTap: () {
-                                Navigator.of(context)
-                                    .push(_createRoute(MapScreen(
-                                  viewModel: signupViewModel,
-                                  longitude: 25.3,
-                                  latitude: 51.52,
-                                )));
+                                // Navigator.of(context)
+                                //     .push(_createRoute(MapScreen(
+                                //   viewModel: signupViewModel,
+                                //   longitude: 25.3,
+                                //   latitude: 51.52,
+                                // )));
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) {
+                                      return MapLocationPicker(
+                                        apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                        popOnNextButtonTaped: true,
+                                        currentLatLng: const LatLng(29.146727, 76.464895),
+                                        onNext: (GeocodingResult? result) {
+                                          if (result != null) {
+                                            setState(() {
+                                              // address = result.formattedAddress ?? "";
+                                            });
+                                          }
+                                        },
+                                        onSuggestionSelected: (PlacesDetailsResponse? result) {
+                                          if (result != null) {
+                                            setState(() {
+                                              // autocompletePlace =
+                                              //     result.result.formattedAddress ?? "";
+                                            });
+                                          }
+                                        },
+                                      );
+                                    },
+                                  ),
+                                );
+
                               },
                             ),
                           ],
@@ -814,6 +845,25 @@ class _SignUpSupplierOnBoardingScreenState
                             errorText: signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['zone']!],
                             keyboardType: TextInputType.text),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child: CustomDropDown(
+                            value: signupViewModel.signUpBody["country"] ?? '',
+                            index: 'country',
+                            viewModel: signupViewModel.setInputValues,
+                            hintText: translate('formHints.country'),
+                            validator: (val) => signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['country']!],
+                            errorText: signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['country']!],
+                            keyboardType: TextInputType.text,
+                          list: signupViewModel.getCountries,
+                          onChange: (value){
+                              debugPrint('value of country $value');
+                              signupViewModel.setInputValues(index: 'country',value: value);
+
+                        },),
                       ),
 
                       // }),

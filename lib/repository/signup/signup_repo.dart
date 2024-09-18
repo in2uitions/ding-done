@@ -10,6 +10,8 @@ import 'package:dingdone/res/app_prefs.dart';
 class SignUpRepository {
   final BaseApiService _apiRoleGet =
       NetworkApiService(url: ApiEndPoints().getRoles);
+  final BaseApiService _apiCountriesGet =
+      NetworkApiService(url: ApiEndPoints().getCountries);
   final BaseApiService _apiUserRegister =
       NetworkApiService(url: ApiEndPoints().userRegister);
   // final BaseApiService _apiEmailConfirm =
@@ -22,6 +24,15 @@ class SignUpRepository {
       dynamic response = await _apiRoleGet.getResponse();
       final jsonData = DropDownModelMain.fromJson(response);
       return jsonData;
+    } catch (error) {
+      rethrow;
+    }
+  }
+  Future<dynamic> getCountries() async {
+    try {
+      dynamic response = await _apiCountriesGet.getResponse(sendToken: false);
+      // final jsonData = DropDownModelMain.fromJson(response);
+      return response;
     } catch (error) {
       rethrow;
     }

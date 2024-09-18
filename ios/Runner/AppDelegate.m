@@ -5,6 +5,7 @@
 #import "AppDelegate.h"
 #import "GeneratedPluginRegistrant.h"
 #import "PlatformViewController.h"
+#import "GoogleMaps/GoogleMaps.h"
 
 @implementation AppDelegate {
   FlutterResult _flutterResult;
@@ -12,6 +13,7 @@
 
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+  [GMSServices provideAPIKey:@"AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I"];
   [GeneratedPluginRegistrant registerWithRegistry:self];
   FlutterViewController* controller =
   (FlutterViewController*)self.window.rootViewController;

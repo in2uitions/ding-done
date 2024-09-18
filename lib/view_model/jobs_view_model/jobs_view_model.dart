@@ -9,7 +9,6 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-
 class JobsViewModel with ChangeNotifier {
   final JobsRepository _jobsRepository = JobsRepository();
   ApiResponse<JobsModel> _jobsResponse = ApiResponse.loading();
@@ -22,23 +21,26 @@ class JobsViewModel with ChangeNotifier {
   List<JobsModel>? _customerPay = List.empty();
   ApiResponse<JobsModelMain> _apiJobsResponse = ApiResponse.loading();
   ApiResponse<JobsModelMain> _apiCustomerJobsResponse = ApiResponse.loading();
-  ApiResponse<JobsModelMain> _apiSupplierCompletedJobsResponse = ApiResponse.loading();
-  ApiResponse<JobsModelMain> _apiSupplierInProgressJobsResponse = ApiResponse.loading();
-  ApiResponse<JobsModelMain> _apiSupplierBookedJobsResponse = ApiResponse.loading();
-  ApiResponse<JobsModelMain> _apiSupplierOpenJobsResponse = ApiResponse.loading();
+  ApiResponse<JobsModelMain> _apiSupplierCompletedJobsResponse =
+      ApiResponse.loading();
+  ApiResponse<JobsModelMain> _apiSupplierInProgressJobsResponse =
+      ApiResponse.loading();
+  ApiResponse<JobsModelMain> _apiSupplierBookedJobsResponse =
+      ApiResponse.loading();
+  ApiResponse<JobsModelMain> _apiSupplierOpenJobsResponse =
+      ApiResponse.loading();
   ApiResponse<JobsModelMain> _apiCustomerPayResponse = ApiResponse.loading();
   Map<String, dynamic> jobsBody = {};
   Map<String, dynamic> _updatedBody = {};
   Map<String, dynamic> _addressBody = {};
-  String? _role='';
-  String? _errorMessage='';
-  bool _jobUpdated=true;
-  DateTime selectedDate=DateTime.now();
-  TimeOfDay selectedTime=TimeOfDay(hour:00, minute: 00);
-  String _selectedReason='';
+  String? _role = '';
+  String? _errorMessage = '';
+  bool _jobUpdated = true;
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  String _selectedReason = '';
   bool _showCustomTextArea = false;
-  dynamic _file ;
-
+  dynamic _file;
 
   JobsViewModel() {
     debugPrint('hehehehe');
@@ -50,28 +52,25 @@ class JobsViewModel with ChangeNotifier {
     // await getJobs();
     debugPrint('supplier gettiong jobs ');
 
-    if(Constants.supplierRoleId==_role){
+    if (Constants.supplierRoleId == _role) {
       debugPrint('supplier gettiong jobs ');
       await getSupplierCompletedJobs();
       await getSupplierInProgressJobs();
       await getSupplierBookedJobs();
       await getSupplierOpenJobs();
-
-    }
-    else{
+    } else {
       await getCustomerJobs();
-
     }
-
   }
+
   Future<void> getRole() async {
     try {
-      _role=await AppPreferences().get(key: userRoleKey, isModel: false);
-
+      _role = await AppPreferences().get(key: userRoleKey, isModel: false);
     } catch (err) {
-      return ;
+      return;
     }
   }
+
   Future<bool?> getJobs() async {
     try {
       dynamic response = await _jobsRepository.getAllJobs();
@@ -84,6 +83,7 @@ class JobsViewModel with ChangeNotifier {
     notifyListeners();
     return true;
   }
+
   Future<bool?> getCustomerJobs() async {
     try {
       debugPrint('customers jooob}');
@@ -98,6 +98,7 @@ class JobsViewModel with ChangeNotifier {
     notifyListeners();
     return true;
   }
+
   Future<bool?> getSupplierCompletedJobs() async {
     try {
       dynamic response = await _jobsRepository.getSupplierCompletedJobs();
@@ -116,7 +117,8 @@ class JobsViewModel with ChangeNotifier {
       dynamic response = await _jobsRepository.getSupplierInProgressJobs();
       _apiSupplierInProgressJobsResponse = ApiResponse.completed(response);
       _supplierInProgressJobs = _apiSupplierInProgressJobsResponse.data?.jobs;
-      debugPrint('response in progress jobs ${_supplierInProgressJobs?.first.service}');
+      debugPrint(
+          'response in progress jobs ${_supplierInProgressJobs?.first.service}');
 
       notifyListeners();
     } catch (error) {
@@ -125,6 +127,7 @@ class JobsViewModel with ChangeNotifier {
     notifyListeners();
     return true;
   }
+
   Future<bool?> getSupplierBookedJobs() async {
     try {
       dynamic response = await _jobsRepository.getSupplierBookedJobs();
@@ -155,18 +158,16 @@ class JobsViewModel with ChangeNotifier {
 
   Future<bool?> finishJob(int id) async {
     try {
-       dynamic response=await _jobsRepository.finishJob(id);
-       if(response["status"]=='OK'){
-         readJson();
-         notifyListeners();
-         return true;
-       }
-       else{
-         _errorMessage=response["reason"];
-         notifyListeners();
-         return false;
-       }
-
+      dynamic response = await _jobsRepository.finishJob(id);
+      if (response["status"] == 'OK') {
+        readJson();
+        notifyListeners();
+        return true;
+      } else {
+        _errorMessage = response["reason"];
+        notifyListeners();
+        return false;
+      }
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
     }
@@ -180,22 +181,18 @@ class JobsViewModel with ChangeNotifier {
       // _apiCustomerPayResponse = ApiResponse.completed(response);
       // _customerPay = _apiCustomerPayResponse.data?.jobs;
       debugPrint('Response of paying fees ${response["status"]}');
-      if(response["status"]=='OK'){
+      if (response["status"] == 'OK') {
         readJson();
         notifyListeners();
         return true;
-      }
-      else{
-        _errorMessage=response["reason"];
+      } else {
+        _errorMessage = response["reason"];
         notifyListeners();
         return false;
       }
-
-
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
       return false;
-
     }
     notifyListeners();
 
@@ -204,13 +201,13 @@ class JobsViewModel with ChangeNotifier {
 
   Future<bool?> startJob(int id) async {
     try {
-      dynamic response=await _jobsRepository.startJob(id);
+      dynamic response = await _jobsRepository.startJob(id);
       readJson();
       notifyListeners();
-      if(response["status"]=="OK"){
+      if (response["status"] == "OK") {
         return true;
-      }else{
-        _errorMessage=response["reason"];
+      } else {
+        _errorMessage = response["reason"];
         return false;
       }
     } catch (error) {
@@ -223,21 +220,20 @@ class JobsViewModel with ChangeNotifier {
 
   Future<bool?> ignoreJob(int id) async {
     try {
-      dynamic response=await _jobsRepository.ignoreJob(id);
+      dynamic response = await _jobsRepository.ignoreJob(id);
       // readJson();
       // notifyListeners();
-      if(response["status"]=="OK"){
+      if (response["status"] == "OK") {
         readJson();
         return true;
-      }else{
-        _errorMessage=response["reason"];
+      } else {
+        _errorMessage = response["reason"];
         return false;
       }
     } catch (error) {
       debugPrint('Error ignoring jobs ${error}');
       return false;
     }
-
   }
 
   Future<bool?> acceptJob(dynamic data) async {
@@ -246,9 +242,9 @@ class JobsViewModel with ChangeNotifier {
       try {
         Position currentPosition = await Geolocator.getCurrentPosition();
         // debugPrint('Estimated customer address: ${data.customer["address"]} minutes');
-        debugPrint('currentPosition: ${currentPosition
-            .toString()}');
-        debugPrint('job position: ${data.job_address["latitude"]} ${data.job_address["longitude"]} minutes');
+        debugPrint('currentPosition: ${currentPosition.toString()}');
+        debugPrint(
+            'job position: ${data.job_address["latitude"]} ${data.job_address["longitude"]} minutes');
 
         // Calculate the distance and duration to the customer's location
         double distance = await Geolocator.distanceBetween(
@@ -259,27 +255,30 @@ class JobsViewModel with ChangeNotifier {
         );
         debugPrint('Estimated time to reach distance: ${distance} minutes');
 
-        Duration duration = Duration(seconds: (distance / 100)
-            .round()); // Adjust this based on your requirements
+        Duration duration = Duration(
+            seconds: (distance / 100)
+                .round()); // Adjust this based on your requirements
 
         // Now you have the estimated duration to reach the customer's location
         debugPrint(
             'Estimated time to reach customer: ${duration.inMinutes} minutes');
-         // await _jobsRepository.updateJob(data.id,{"supplier_to_job_distance":distance.toString(),"supplier_to_job_time":duration.inMinutes});
+        // await _jobsRepository.updateJob(data.id,{"supplier_to_job_distance":distance.toString(),"supplier_to_job_time":duration.inMinutes});
 
-        dynamic response=await _jobsRepository.acceptJob(data.id,{"supplier_to_job_distance":distance.toString(),"supplier_to_job_time":duration.inMinutes});
+        dynamic response = await _jobsRepository.acceptJob(data.id, {
+          "supplier_to_job_distance": distance.toString(),
+          "supplier_to_job_time": duration.inMinutes
+        });
         readJson();
         notifyListeners();
-        if(response["status"]=="OK"){
+        if (response["status"] == "OK") {
           return true;
-        }else{
-          _errorMessage=response["reason"];
+        } else {
+          _errorMessage = response["reason"];
           return false;
         }
-      }catch (error) {
+      } catch (error) {
         debugPrint('Error calculating distance: $error');
       }
-
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
     }
@@ -289,16 +288,16 @@ class JobsViewModel with ChangeNotifier {
 
   Future<bool?> updateJob(int id) async {
     try {
-      dynamic res=await _jobsRepository.updateJob(id,_updatedBody);
+      dynamic res = await _jobsRepository.updateJob(id, _updatedBody);
       readJson();
       notifyListeners();
-      _jobUpdated=true;
+      _jobUpdated = true;
       // await getSupplierBookedJobs();
       // await getSupplierCompletedJobs();
       // await getSupplierOpenJobs();
-      if(res["status"]=="OK"){
+      if (res["status"] == "OK") {
         return true;
-    }else{
+      } else {
         return false;
       }
     } catch (error) {
@@ -308,17 +307,18 @@ class JobsViewModel with ChangeNotifier {
 
     return true;
   }
+
   Future<bool?> downloadInvoice(int id) async {
     try {
-      dynamic res=await _jobsRepository.downloadInvoice(id);
+      dynamic res = await _jobsRepository.downloadInvoice(id);
       readJson();
       notifyListeners();
 
-      if(res!=null){
+      if (res != null) {
         debugPrint('file downloaded');
-        _file=res;
+        _file = res;
         return true;
-    }else{
+      } else {
         debugPrint('error in file downloading');
 
         return false;
@@ -330,20 +330,21 @@ class JobsViewModel with ChangeNotifier {
 
     return true;
   }
+
   Future<bool?> cancelBooking(int id) async {
     debugPrint('cancellation reason bookik ${jobsBody['cancellation_reason']}');
     try {
-      dynamic response=await _jobsRepository.cancelBooking(id,jobsBody['cancellation_reason']);
+      dynamic response = await _jobsRepository.cancelBooking(
+          id, jobsBody['cancellation_reason']);
       readJson();
       notifyListeners();
       debugPrint('${response['status']}');
-      if(response["status"]=="OK"){
+      if (response["status"] == "OK") {
         return true;
-      }else{
-        _errorMessage=response["reason"];
+      } else {
+        _errorMessage = response["reason"];
         return false;
       }
-
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
       return false;
@@ -351,15 +352,17 @@ class JobsViewModel with ChangeNotifier {
   }
 
   Future<bool?> cancelJobNoPenalty(int id) async {
-    debugPrint('cancellation reason no penalty${jobsBody['cancellation_reason']}');
+    debugPrint(
+        'cancellation reason no penalty${jobsBody['cancellation_reason']}');
     try {
-      dynamic response=await _jobsRepository.cancelJobNoPenalty(id,jobsBody['cancellation_reason'].toString());
+      dynamic response = await _jobsRepository.cancelJobNoPenalty(
+          id, jobsBody['cancellation_reason'].toString());
       readJson();
       notifyListeners();
-      if(response["status"]=="OK"){
+      if (response["status"] == "OK") {
         return true;
-      }else{
-        _errorMessage=response["reason"];
+      } else {
+        _errorMessage = response["reason"];
         return false;
       }
     } catch (error) {
@@ -369,15 +372,17 @@ class JobsViewModel with ChangeNotifier {
   }
 
   Future<bool?> cancelJobWithPenalty(int id) async {
-    debugPrint('cancellation reason with penalty  ${jobsBody['cancellation_reason']}');
+    debugPrint(
+        'cancellation reason with penalty  ${jobsBody['cancellation_reason']}');
     try {
-      dynamic response = await _jobsRepository.cancelJobWithPenalty(id,jobsBody['cancellation_reason']);
+      dynamic response = await _jobsRepository.cancelJobWithPenalty(
+          id, jobsBody['cancellation_reason']);
       readJson();
       notifyListeners();
-      if(response["status"]=="OK"){
+      if (response["status"] == "OK") {
         return true;
-      }else{
-        _errorMessage=response["reason"];
+      } else {
+        _errorMessage = response["reason"];
         return false;
       }
     } catch (error) {
@@ -393,7 +398,7 @@ class JobsViewModel with ChangeNotifier {
       int month = selectedDate.month;
       int day = selectedDate.day;
       debugPrint('tiiiimee iss ${jobsBody['time']}');
-      jobsBody['job_type']='work';
+      jobsBody['job_type'] = 'work';
 
       if (jobsBody['time'] == null) {
         // Get the current time directly using TimeOfDay.now()
@@ -407,10 +412,14 @@ class JobsViewModel with ChangeNotifier {
 
       DateTime combinedDateTime = DateTime(year, month, day, hour, minute);
       debugPrint('combinedDateTime $combinedDateTime');
-      setInputValues(index: 'start_date',value: combinedDateTime.toString());
-      dynamic response =
-      await _jobsRepository.postNewJobRequest(jobsBody);
-      _jobsResponse = ApiResponse<JobsModel>.completed(response);
+      setInputValues(index: 'start_date', value: combinedDateTime.toString());
+      if (jobsBody['payment_card'] == null) {
+        return false;
+      }else{
+        dynamic response = await _jobsRepository.postNewJobRequest(jobsBody);
+        _jobsResponse = ApiResponse<JobsModel>.completed(response);
+
+      }
 
       return true;
     } catch (error) {
@@ -423,13 +432,12 @@ class JobsViewModel with ChangeNotifier {
     jobsBody[index] = value;
     debugPrint('jobsBody $jobsBody');
     debugPrint('hhhh $index $value');
-    if(index=='date') {
+    if (index == 'date') {
       final inputFormat = DateFormat('dd-MM-yyyy');
       // Parse the input date string
       selectedDate = inputFormat.parse(value);
-       // selectedDate = DateTime.parse(value);
-    }// Your selected date
-
+      // selectedDate = DateTime.parse(value);
+    } // Your selected date
 
     if (index == 'time') {
       // Extract the time part from the TimeOfDay string
@@ -446,28 +454,32 @@ class JobsViewModel with ChangeNotifier {
         print('Invalid time format: $value');
       }
     }
-    if(index=='cancellation_reason'){
-      _selectedReason=value;
+    if (index == 'cancellation_reason') {
+      _selectedReason = value;
     }
 
     notifyListeners();
   }
+
   void setUpdatedJob({required String index, dynamic value}) {
-    if((index=='payment_card' || index=='payment_method') && userRole==Constants.supplierRoleId){
-
-    }else{
+    if ((index == 'payment_card' || index == 'payment_method') &&
+        userRole == Constants.supplierRoleId) {
+    } else {
       _updatedBody[index] = value;
-
     }
-    _jobUpdated=false;
+    _jobUpdated = false;
     debugPrint('hhhh $index $value');
     notifyListeners();
   }
-  void launchWhatsApp() async {
-    String phoneNumber = '+974 3301 9741'; // Replace with the actual WhatsApp number
-    String message = 'Hello, I would like to inquire about online consultation.'; // Your default message
 
-    String whatsappUrl = 'https://wa.me/$phoneNumber?text=${Uri.encodeQueryComponent(message)}';
+  void launchWhatsApp() async {
+    String phoneNumber =
+        '+974 3301 9741'; // Replace with the actual WhatsApp number
+    String message =
+        'Hello, I would like to inquire about online consultation.'; // Your default message
+
+    String whatsappUrl =
+        'https://wa.me/$phoneNumber?text=${Uri.encodeQueryComponent(message)}';
 
     if (await canLaunch(whatsappUrl)) {
       await launch(whatsappUrl);
@@ -477,7 +489,6 @@ class JobsViewModel with ChangeNotifier {
     }
   }
 
-
   void setShowCustomTextArea(bool show) {
     _showCustomTextArea = show;
     notifyListeners();
@@ -485,18 +496,30 @@ class JobsViewModel with ChangeNotifier {
 
   // get isActive => _userModelResponse.data?.status == 'active';
   get jobsList => _jobsList;
-  get supplierCompletedJobs => _supplierCompletedJobs;
-  get supplierInProgressJobs => _supplierInProgressJobs;
-  get supplierBookedJobs => _supplierBookedJobs;
-  get supplierOpenJobs => _supplierOpenJobs;
-  get getjobsBody => jobsBody;
-  get getcustomerJobs => _customerjobsList;
-  get userRole => _role;
-  get updatedBody => _updatedBody;
-  get jobUpdated => _jobUpdated;
-  get selectedReason => _selectedReason;
-  get errorMessage => _errorMessage;
-  get showCustomTextArea => _showCustomTextArea;
-  get file => _file;
 
+  get supplierCompletedJobs => _supplierCompletedJobs;
+
+  get supplierInProgressJobs => _supplierInProgressJobs;
+
+  get supplierBookedJobs => _supplierBookedJobs;
+
+  get supplierOpenJobs => _supplierOpenJobs;
+
+  get getjobsBody => jobsBody;
+
+  get getcustomerJobs => _customerjobsList;
+
+  get userRole => _role;
+
+  get updatedBody => _updatedBody;
+
+  get jobUpdated => _jobUpdated;
+
+  get selectedReason => _selectedReason;
+
+  get errorMessage => _errorMessage;
+
+  get showCustomTextArea => _showCustomTextArea;
+
+  get file => _file;
 }

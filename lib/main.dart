@@ -10,11 +10,13 @@ import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
@@ -97,6 +99,9 @@ class _MyAppState extends State<MyApp> {
     await dotenv.load(fileName: "assets/.env");
     PermissionStatus cameraPermission = await Permission.camera.request();
     debugPrint('status $cameraPermission');
+    if (defaultTargetPlatform == TargetPlatform.android) {
+      AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
+    }
 
   }
 

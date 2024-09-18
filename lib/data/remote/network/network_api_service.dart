@@ -22,7 +22,7 @@ class NetworkApiService extends BaseApiService {
   }
 
   @override
-  Future getResponse({params = ''}) async {
+  Future getResponse({params = '',bool sendToken = true,}) async {
     dynamic responseJson;
     String finalUrl = baseUrl + url;
     if (params != '') {
@@ -30,17 +30,19 @@ class NetworkApiService extends BaseApiService {
     }
     debugPrint(finalUrl);
     try {
-      String tokenValue = await getToken();
+      String? tokenValue;
+      if(sendToken){
+        tokenValue = await getToken();
+        if (tokenValue != '' && url=='/users/me') {
+          headers[HttpHeaders.authorizationHeader] = tokenValue;
+        }else{
+          headers[HttpHeaders.contentTypeHeader] = 'application/json';
 
-      if (tokenValue != '' && url=='/users/me') {
+        }
+
         headers[HttpHeaders.authorizationHeader] = tokenValue;
-      }else{
-        headers[HttpHeaders.contentTypeHeader] = 'application/json';
-
-
       }
 
-      headers[HttpHeaders.authorizationHeader] = tokenValue;
       debugPrint('final url $finalUrl');
       debugPrint('token value $tokenValue');
       // headers[HttpHeaders.authorizationHeader] =

@@ -16,6 +16,7 @@ class SignUpViewModel with ChangeNotifier {
 
   // ApiResponse<ResultConfirmEmail> _apiConfirmResponse = ApiResponse.loading();
   List<DropdownRoleModel>? _listRole = List.empty();
+  List<dynamic>? _listCountries = List.empty();
   Map<String?, String?> signUpErrors = {};
 
   // Map<String, dynamic> signUpBody = {"status": 'draft'};
@@ -29,6 +30,7 @@ class SignUpViewModel with ChangeNotifier {
 
   SignUpViewModel() {
     roles();
+    countries();
   }
 
   void start() {}
@@ -72,6 +74,7 @@ class SignUpViewModel with ChangeNotifier {
     String? apartmentMessage = '';
     String? cityMessage = '';
     String? zoneMessage = '';
+    String? countryMessage = '';
     String? floorMessage = '';
     String? longitudeMessage = '';
     String? latitudeMessage = '';
@@ -170,6 +173,9 @@ class SignUpViewModel with ChangeNotifier {
         zoneMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
             index: 'Zone');
+        countryMessage = AppValidation().isNotEmpty(
+            value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
+            index: 'Country');
         floorMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['floor']!] ?? '',
             index: 'Floor');
@@ -184,6 +190,7 @@ class SignUpViewModel with ChangeNotifier {
             apartmentMessage == null &&
             cityMessage == null &&
             zoneMessage == null &&
+            countryMessage == null &&
             floorMessage == null && signUpBody['longitude']!=null &&signUpBody['latitude']!=null) {
           notifyListeners();
           return true;
@@ -195,6 +202,7 @@ class SignUpViewModel with ChangeNotifier {
             apartmentMessage;
         signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
         signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+        signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
         signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
         signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
         signUpErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
@@ -255,6 +263,9 @@ class SignUpViewModel with ChangeNotifier {
         zoneMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
             index: 'Zone');
+        countryMessage = AppValidation().isNotEmpty(
+            value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
+            index: 'Country');
         floorMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['floor']!] ?? '',
             index: 'Floor');
@@ -285,6 +296,7 @@ class SignUpViewModel with ChangeNotifier {
             apartmentMessage == null &&
             cityMessage == null &&
             zoneMessage == null &&
+                countryMessage == null &&
             floorMessage == null &&
             QIDMessage == null &&
             signUpBody["avatar"]!=null&&
@@ -309,6 +321,7 @@ class SignUpViewModel with ChangeNotifier {
             apartmentMessage;
         signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
         signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+        signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
         signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
         signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
         signUpErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
@@ -403,6 +416,9 @@ class SignUpViewModel with ChangeNotifier {
           zoneMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
               index: 'Zone');
+          countryMessage = AppValidation().isNotEmpty(
+              value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
+              index: 'Country');
           floorMessage = AppValidation().isNotEmpty(
               value:
               signUpBody[EnglishStrings().formKeys['floor']!] ?? '',
@@ -419,6 +435,7 @@ class SignUpViewModel with ChangeNotifier {
               apartmentMessage == null &&
               cityMessage == null &&
               zoneMessage == null &&
+              countryMessage == null &&
               floorMessage == null && latitudeMessage==null && longitudeMessage==null) {
             notifyListeners();
             return true;
@@ -432,6 +449,7 @@ class SignUpViewModel with ChangeNotifier {
               apartmentMessage;
           signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
           signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+          signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
           signUpErrors[EnglishStrings().formKeys['floor']!] =
               floorMessage;
           signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
@@ -477,6 +495,9 @@ class SignUpViewModel with ChangeNotifier {
           zoneMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
               index: 'Zone');
+          countryMessage = AppValidation().isNotEmpty(
+              value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
+              index: 'Country');
           floorMessage = AppValidation().isNotEmpty(
               value:
               signUpBody[EnglishStrings().formKeys['floor']!] ?? '',
@@ -498,6 +519,7 @@ class SignUpViewModel with ChangeNotifier {
               apartmentMessage == null &&
               cityMessage == null &&
               floorMessage == null &&
+              countryMessage == null &&
               zoneMessage == null  && latitudeMessage==null && longitudeMessage==null) {
             notifyListeners();
             return true;
@@ -517,6 +539,8 @@ class SignUpViewModel with ChangeNotifier {
               apartmentMessage;
           signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
           signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+          signUpErrors[EnglishStrings().formKeys['country']!] =
+              countryMessage;
           signUpErrors[EnglishStrings().formKeys['floor']!] =
               floorMessage;
           signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
@@ -553,6 +577,18 @@ class SignUpViewModel with ChangeNotifier {
     }
     notifyListeners();
   }
+  void countries() async {
+    try {
+      dynamic response = await _signUpRepository.getCountries();
+      debugPrint('response getting countries $response');
+      // _apiCountriesResponse = ApiResponse.completed(response);
+      _listCountries = response['data'];
+    } catch (error) {
+      debugPrint('error getting countries $error');
+      // _apiRoleResponse = ApiResponse.error(error.toString());
+    }
+    notifyListeners();
+  }
 
   // Future<void> getUserRoleFromId(String id) async {
   //   try {
@@ -569,6 +605,7 @@ class SignUpViewModel with ChangeNotifier {
   get userRole => _userRole;
 
   get getRoleList => _listRole;
+  get getCountries => _listCountries;
 
   // get isEmailSent => _apiConfirmResponse.status == Status.COMPLETED;
   get getRoleApiResponse => _apiRoleResponse;
