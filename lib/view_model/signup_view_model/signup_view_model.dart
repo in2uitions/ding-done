@@ -577,12 +577,13 @@ class SignUpViewModel with ChangeNotifier {
     }
     notifyListeners();
   }
-  void countries() async {
+  Future<List<dynamic>?> countries() async {
     try {
       dynamic response = await _signUpRepository.getCountries();
       debugPrint('response getting countries $response');
       // _apiCountriesResponse = ApiResponse.completed(response);
       _listCountries = response['data'];
+      return _listCountries;
     } catch (error) {
       debugPrint('error getting countries $error');
       // _apiRoleResponse = ApiResponse.error(error.toString());

@@ -474,7 +474,7 @@ class JobsViewModel with ChangeNotifier {
 
   void launchWhatsApp() async {
     String phoneNumber =
-        '+974 3301 9741'; // Replace with the actual WhatsApp number
+        '+97433019741'; // Replace with the actual WhatsApp number
     String message =
         'Hello, I would like to inquire about online consultation.'; // Your default message
 
@@ -487,6 +487,7 @@ class JobsViewModel with ChangeNotifier {
       // Handle the error
       debugPrint('Could not launch WhatsApp.');
     }
+
   }
 
   void setShowCustomTextArea(bool show) {

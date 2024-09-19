@@ -53,7 +53,7 @@ class UploadOneImageState extends State<UploadOneImage> {
     try {
       String? token =
           await AppPreferences().get(key: userTokenKey, isModel: false);
-      if (token != null || token != '') {
+      if (token != null && token != '') {
         return "Bearer $token";
       }
       return '';
@@ -135,11 +135,15 @@ class UploadOneImageState extends State<UploadOneImage> {
           ...filesType,
           multipartFile.filename: lookupMimeType(compressedFile.path)
         };
+        debugPrint('tiokeeen $token');
         request.files.add(multipartFile);
-        request.headers.addAll({'Authorization': 'Bearer $token'});
+        if(token!=null && token!=''){
+          request.headers.addAll({'Authorization': 'Bearer $token'});
+
+        }
         requests.add(request);
       }
-
+      debugPrint('requestss $requests');
       // Send each request in parallel
       for (var i = 0; i < requests.length; i++) {
         futures.add(requests[i].send());

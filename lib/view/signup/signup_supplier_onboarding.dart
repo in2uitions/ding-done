@@ -6,6 +6,7 @@ import 'package:dingdone/view/login/login.dart';
 import 'package:dingdone/view/map_screen/google_maps.dart';
 import 'package:dingdone/view/map_screen/map_display.dart';
 import 'package:dingdone/view/map_screen/map_screen.dart';
+import 'package:dingdone/view/signup/signup_onboarding.dart';
 import 'package:dingdone/view/widgets/custom/custom_date_picker.dart';
 import 'package:dingdone/view/widgets/custom/custom_dropdown.dart';
 import 'package:dingdone/view/widgets/custom/custom_multiple_selection_checkbox.dart';
@@ -13,6 +14,7 @@ import 'package:dingdone/view/widgets/custom/custom_phone_feild.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/image_component/upload_one_image.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
+import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,8 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
+
+import '../../res/constants.dart';
 
 class SignUpSupplierOnBoardingScreen extends StatefulWidget {
   var initialIndex;
@@ -47,6 +51,9 @@ class _SignUpSupplierOnBoardingScreenState
 
     index = widget.initialIndex;
     debugPrint('initial index is ${widget.initialIndex}');
+    Provider.of<SignUpViewModel>(context, listen: false).countries();
+    Provider.of<CategoriesViewModel>(context, listen: false).getCategoriesAndServices();
+
   }
 
   Material _skipButton({void Function(int)? setIndex}) {
@@ -107,15 +114,13 @@ class _SignUpSupplierOnBoardingScreenState
               if (signupViewModel.validate(index: index)) {
                 Navigator.of(context)
                     .push(_createRoute(SupplierAgreement(index: index)));
-              }else{
+              } else {
                 showDialog(
                   context: context,
-                  builder: (BuildContext context) =>
-                      _buildPopupDialog(
-                          context, 'Make Sure to provide all your informtation'),
+                  builder: (BuildContext context) => _buildPopupDialog(
+                      context, 'Make Sure to provide all your informtation'),
                 );
               }
-
             },
             child: Center(
               child: Text(
@@ -131,6 +136,7 @@ class _SignUpSupplierOnBoardingScreenState
       }),
     );
   }
+
   Widget _buildPopupDialog(BuildContext context, String message) {
     return AlertDialog(
       content: Column(
@@ -157,7 +163,7 @@ class _SignUpSupplierOnBoardingScreenState
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  width:context.appValues.appSizePercent.w50,
+                  width: context.appValues.appSizePercent.w50,
                   child: Text(
                     message,
                     style: getPrimaryRegularStyle(
@@ -224,11 +230,13 @@ class _SignUpSupplierOnBoardingScreenState
             ),
             title: Text(
               translate('login_screen.swipe'),
-              style: getPrimaryBoldStyle(fontSize: 13,color:const Color(0xff180C38),), // Customize text style
+              style: getPrimaryBoldStyle(
+                fontSize: 13,
+                color: const Color(0xff180C38),
+              ), // Customize text style
             ),
-            centerTitle: true,  // Centers the text
+            centerTitle: true, // Centers the text
           ),
-
           body: Onboarding(
             pages: [
               PageModel(
@@ -258,7 +266,7 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
-                          value:signupViewModel.signUpBody["first_name"]??'',
+                          value: signupViewModel.signUpBody["first_name"] ?? '',
                           index: 'first_name',
                           viewModel: signupViewModel.setInputValues,
                           hintText: translate('formHints.first_name'),
@@ -273,7 +281,7 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
-                          value:signupViewModel.signUpBody["last_name"]??'',
+                          value: signupViewModel.signUpBody["last_name"] ?? '',
                           index: 'last_name',
                           viewModel: signupViewModel.setInputValues,
                           hintText: translate('formHints.last_name'),
@@ -287,23 +295,23 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 5),
                           child: CustomDatePicker(
-                            value:signupViewModel.signUpBody["dob"]??'',
+                            value: signupViewModel.signUpBody["dob"] ?? '',
                             index: 'dob',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.dob'),
                           )),
-                      if (signupViewModel.signUpErrors[context
-                          .resources.strings.formKeys['dob']] !=
+                      if (signupViewModel.signUpErrors[
+                              context.resources.strings.formKeys['dob']] !=
                           null)
                         Padding(
                           padding: const EdgeInsets.fromLTRB(30, 0, 20, 20),
                           child: Text(
-                            signupViewModel.signUpErrors[context
-                                .resources.strings.formKeys['dob']]!,
-                            style: TextStyle(color: Colors.red[700],fontSize: 12),
+                            signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['dob']]!,
+                            style:
+                                TextStyle(color: Colors.red[700], fontSize: 12),
                           ),
                         ),
-
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: SizedBox(
@@ -330,7 +338,9 @@ class _SignUpSupplierOnBoardingScreenState
                                     setState(() {
                                       selectedOption = value;
                                     });
-                                    signupViewModel.setInputValues(index: 'selectedOption', value: selectedOption);
+                                    signupViewModel.setInputValues(
+                                        index: 'selectedOption',
+                                        value: selectedOption);
                                   },
                                 ),
                                 Text(
@@ -363,7 +373,9 @@ class _SignUpSupplierOnBoardingScreenState
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: CustomTextField(
-                                value:signupViewModel.signUpBody["company_id"]??'',
+                                value:
+                                    signupViewModel.signUpBody["company_id"] ??
+                                        '',
                                 index: 'company',
                                 viewModel: signupViewModel.setInputValues,
                                 hintText: translate('signUp.companyId'),
@@ -442,33 +454,36 @@ class _SignUpSupplierOnBoardingScreenState
                                 ),
                               ),
                             ),
-
                         ],
                       ),
                       if (signupViewModel.signUpErrors[context
-                          .resources.strings.formKeys['id_image']] !=
-                          null && signupViewModel.getSignUpBody['selectedOption']=='individual')
+                                  .resources.strings.formKeys['id_image']] !=
+                              null &&
+                          signupViewModel.getSignUpBody['selectedOption'] ==
+                              'individual')
                         Padding(
                           padding: const EdgeInsets.fromLTRB(55, 0, 20, 20),
                           child: Text(
                             signupViewModel.signUpErrors[context
                                 .resources.strings.formKeys['id_image']]!,
-                            style: TextStyle(color: Colors.red[700],fontSize: 12),
+                            style:
+                                TextStyle(color: Colors.red[700], fontSize: 12),
                           ),
                         ),
-
                       if (signupViewModel.signUpErrors[context
-                          .resources.strings.formKeys['company_id']] !=
-                          null && signupViewModel.getSignUpBody['selectedOption']=='company')
+                                  .resources.strings.formKeys['company_id']] !=
+                              null &&
+                          signupViewModel.getSignUpBody['selectedOption'] ==
+                              'company')
                         Padding(
                           padding: const EdgeInsets.fromLTRB(55, 0, 20, 20),
                           child: Text(
                             signupViewModel.signUpErrors[context
                                 .resources.strings.formKeys['company_id']]!,
-                            style: TextStyle(color: Colors.red[700],fontSize: 12),
+                            style:
+                                TextStyle(color: Colors.red[700], fontSize: 12),
                           ),
                         ),
-
                     ],
                   ),
                 ),
@@ -501,7 +516,8 @@ class _SignUpSupplierOnBoardingScreenState
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                           child: CustomPhoneFeild(
                             index: 'phone_number',
-                            value: signupViewModel.signUpBody['phone_number']??'' ,
+                            value: signupViewModel.signUpBody['phone_number'] ??
+                                '',
                             viewModel: signupViewModel.setInputValues,
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
@@ -513,7 +529,7 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
-                            value: signupViewModel.signUpBody['email']??'' ,
+                            value: signupViewModel.signUpBody['email'] ?? '',
                             index: 'email',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.email'),
@@ -554,7 +570,7 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
-                            value: signupViewModel.signUpBody['password']??'' ,
+                            value: signupViewModel.signUpBody['password'] ?? '',
                             index: 'password',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.password'),
@@ -640,29 +656,145 @@ class _SignUpSupplierOnBoardingScreenState
                                   MaterialPageRoute(
                                     builder: (context) {
                                       return MapLocationPicker(
-                                        apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                        apiKey:
+                                            'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
                                         popOnNextButtonTaped: true,
-                                        currentLatLng: const LatLng(29.146727, 76.464895),
+                                        currentLatLng: LatLng(
+                                          signupViewModel.getSignUpBody[
+                                                      "latitude"] !=
+                                                  null
+                                              ? double.parse(signupViewModel
+                                                  .getSignUpBody['latitude']
+                                                  .toString())
+                                              : 51.5310,
+                                          signupViewModel.getSignUpBody[
+                                                      'longitude'] !=
+                                                  null
+                                              ? double.parse(signupViewModel
+                                                  .getSignUpBody['longitude']
+                                                  .toString())
+                                              : 25.2854,
+                                        ),
                                         onNext: (GeocodingResult? result) {
                                           if (result != null) {
-                                            setState(() {
-                                              // address = result.formattedAddress ?? "";
-                                            });
+                                            debugPrint(
+                                                'next button hit ${result.formattedAddress}');
+                                            var splitted = result
+                                                .formattedAddress
+                                                ?.split(',');
+                                            var first =
+                                                splitted?.first.toString();
+                                            var last =
+                                                splitted?.last.toString();
+                                            debugPrint(
+                                                'first $first last $last');
+                                            signupViewModel.setInputValues(
+                                                index: "longitude",
+                                                value: result
+                                                    .geometry?.location.lng
+                                                    .toString());
+                                            signupViewModel.setInputValues(
+                                                index: "latitude",
+                                                value: result
+                                                    .geometry?.location.lat
+                                                    .toString());
+                                            signupViewModel.setInputValues(
+                                                index: "address",
+                                                value:
+                                                    result.formattedAddress ??
+                                                        '');
+
+                                            signupViewModel.setInputValues(
+                                                index: "city",
+                                                value: '$last' ?? '');
+
+                                            // signupViewModel.setInputValues(
+                                            //     index: "state",
+                                            //     value: pickedData.addressData['state'] ?? '');
+                                            signupViewModel.setInputValues(
+                                                index: "street_number",
+                                                value: '$first' ?? '');
+                                            Navigator.pop(context);
+                                            if (signupViewModel
+                                                    .signUpBody['role'] ==
+                                                Constants.supplierRoleId) {
+                                              Navigator.of(context).push(
+                                                  _createRoute(
+                                                      SignUpSupplierOnBoardingScreen(
+                                                initialIndex: 3,
+                                              )));
+                                            }
+                                            if (signupViewModel
+                                                    .signUpBody['role'] ==
+                                                Constants.customerRoleId) {
+                                              Navigator.of(context).push(
+                                                  _createRoute(
+                                                      SignUpOnBoardingScreen(
+                                                initialIndex: 3,
+                                              )));
+                                            }
                                           }
                                         },
-                                        onSuggestionSelected: (PlacesDetailsResponse? result) {
+                                        onSuggestionSelected:
+                                            (PlacesDetailsResponse? result) {
                                           if (result != null) {
-                                            setState(() {
-                                              // autocompletePlace =
-                                              //     result.result.formattedAddress ?? "";
-                                            });
+
+                                            var splitted = result
+                                                .result.formattedAddress
+                                                ?.split(',');
+                                            var first =
+                                                splitted?.first.toString();
+                                            var last =
+                                                splitted?.last.toString();
+                                            debugPrint(
+                                                'first $first last $last');
+                                            signupViewModel.setInputValues(
+                                                index: "longitude",
+                                                value: result.result.geometry
+                                                    ?.location.lng
+                                                    .toString());
+                                            signupViewModel.setInputValues(
+                                                index: "latitude",
+                                                value: result.result.geometry
+                                                    ?.location.lat
+                                                    .toString());
+                                            signupViewModel.setInputValues(
+                                                index: "address",
+                                                value: result.result
+                                                        .formattedAddress ??
+                                                    '');
+
+                                            signupViewModel.setInputValues(
+                                                index: "city",
+                                                value: '$last' ?? '');
+
+                                            // signupViewModel.setInputValues(
+                                            //     index: "state",
+                                            //     value: pickedData.addressData['state'] ?? '');
+                                            signupViewModel.setInputValues(
+                                                index: "street_number",
+                                                value: '$first' ?? '');
+                                            // signupViewModel.setInputValues(
+                                            //     index: "postal_code",
+                                            //     value: pickedData.addressData['postcode'] ?? '');
+                                            // signupViewModel.setInputValues(
+                                            //     index: "zone",
+                                            //     value: pickedData.addressData['zone'] ?? '');
+                                            // Navigator.pop(context);
+                                            // if(signupViewModel.signUpBody['role']==Constants.supplierRoleId){
+                                            //   Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 3,)));
+                                            //
+                                            // }
+                                            // if(signupViewModel.signUpBody['role']==Constants.customerRoleId){
+                                            //   Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(initialIndex: 3,)));
+                                            //
+                                            // }
                                           }
                                         },
                                       );
                                     },
                                   ),
                                 );
-
                               },
                             ),
                           ],
@@ -680,37 +812,193 @@ class _SignUpSupplierOnBoardingScreenState
                                 builder: (context, AsyncSnapshot data) {
                                   if (data.connectionState ==
                                       ConnectionState.done) {
+                                    debugPrint(
+                                        'from view model ${signupViewModel.getSignUpBody["longitude"]}');
+                                    debugPrint(
+                                        'from data ${data.data['longitude']}');
                                     return GestureDetector(
-                                      onTap: () {
-                                        Navigator.of(context)
-                                            .push(_createRoute(MapScreen(
-                                          viewModel: signupViewModel,
-                                          longitude: 25.3,
-                                          latitude: 51.52,
-                                        )));
-                                      },
-                                      child: MapDisplay(
-                                        body: signupViewModel.signUpBody,
-                                        longitude: signupViewModel.signUpBody[
-                                                        "longitude"] !=
-                                                    null &&
-                                                signupViewModel.signUpBody[
-                                                        "longitude"] !=
-                                                    ''
-                                            ? double.parse(signupViewModel
-                                                .signUpBody["longitude"])
-                                            : 25.3,
-                                        latitude: signupViewModel.signUpBody[
-                                                        "latitude"] !=
-                                                    null &&
-                                                signupViewModel.signUpBody[
-                                                        "latitude"] !=
-                                                    ''
-                                            ? double.parse(signupViewModel
-                                                .signUpBody["latitude"])
-                                            : 51.52,
-                                      ),
-                                    );
+                                        // onTap: () {
+                                        //   Navigator.of(context)
+                                        //       .push(_createRoute(MapLocationPicker(
+                                        //     apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                        //     popOnNextButtonTaped: true,
+                                        //     currentLatLng:  LatLng(signupViewModel.signUpBody[
+                                        //     "longitude"] !=
+                                        //         null &&
+                                        //         signupViewModel.signUpBody[
+                                        //         "longitude"] !=
+                                        //             ''
+                                        //         ? double.parse(signupViewModel
+                                        //         .signUpBody["longitude"])
+                                        //         : 25.2854, signupViewModel.signUpBody[
+                                        //     "latitude"] !=
+                                        //         null &&
+                                        //         signupViewModel.signUpBody[
+                                        //         "latitude"] !=
+                                        //             ''
+                                        //         ? double.parse(signupViewModel
+                                        //         .signUpBody["latitude"])
+                                        //         : 51.5310,),
+                                        //     onNext: (GeocodingResult? result) {
+                                        //       if (result != null) {
+                                        //         debugPrint('next button hit ${result.formattedAddress}');
+                                        //         setState(() {
+                                        //           // address = result.formattedAddress ?? "";
+                                        //         });
+                                        //       }
+                                        //     },
+                                        //     onSuggestionSelected: (PlacesDetailsResponse? result) {
+                                        //       if (result != null) {
+                                        //         setState(() {
+                                        //           // autocompletePlace =
+                                        //           //     result.result.formattedAddress ?? "";
+                                        //         });
+                                        //         var splitted =result.result.formattedAddress?.split(',');
+                                        //         var first=splitted?.first.toString();
+                                        //         var last=splitted?.last.toString();
+                                        //         debugPrint('first $first last $last');
+                                        //         signupViewModel.setInputValues(
+                                        //             index: "longitude",
+                                        //             value: result.result.geometry?.location.lng.toString());
+                                        //         signupViewModel.setInputValues(
+                                        //             index: "latitude",
+                                        //             value: result.result.geometry?.location.lat.toString());
+                                        //         signupViewModel.setInputValues(
+                                        //             index: "address",
+                                        //             value: result.result.formattedAddress ?? '');
+                                        //         debugPrint('addfrees ${ result.result.formattedAddress?.split(',').first}');
+                                        //
+                                        //         signupViewModel.setInputValues(
+                                        //             index: "city",
+                                        //             value: '$last' ?? '');
+                                        //
+                                        //         debugPrint('addfrees ${ result.result.formattedAddress?.split(',').first}');
+                                        //
+                                        //         // signupViewModel.setInputValues(
+                                        //         //     index: "state",
+                                        //         //     value: pickedData.addressData['state'] ?? '');
+                                        //         signupViewModel.setInputValues(
+                                        //             index: "street_number",
+                                        //             value: '$first' ?? '');
+                                        //         // signupViewModel.setInputValues(
+                                        //         //     index: "postal_code",
+                                        //         //     value: pickedData.addressData['postcode'] ?? '');
+                                        //         // signupViewModel.setInputValues(
+                                        //         //     index: "zone",
+                                        //         //     value: pickedData.addressData['zone'] ?? '');
+                                        //         // Navigator.pop(context);
+                                        //         // if(signupViewModel.signUpBody['role']==Constants.supplierRoleId){
+                                        //         //   Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 3,)));
+                                        //         //
+                                        //         // }
+                                        //         // if(signupViewModel.signUpBody['role']==Constants.customerRoleId){
+                                        //         //   Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(initialIndex: 3,)));
+                                        //         //
+                                        //         // }
+                                        //       }
+                                        //     },
+                                        //
+                                        //   )));
+                                        // },
+                                        // child: MapDisplay(
+                                        //   body: signupViewModel.signUpBody,
+                                        //   longitude: signupViewModel.signUpBody[
+                                        //                   "longitude"] !=
+                                        //               null &&
+                                        //           signupViewModel.signUpBody[
+                                        //                   "longitude"] !=
+                                        //               ''
+                                        //       ? double.parse(signupViewModel
+                                        //           .signUpBody["longitude"])
+                                        //       : 25.3,
+                                        //   latitude: signupViewModel.signUpBody[
+                                        //                   "latitude"] !=
+                                        //               null &&
+                                        //           signupViewModel.signUpBody[
+                                        //                   "latitude"] !=
+                                        //               ''
+                                        //       ? double.parse(signupViewModel
+                                        //           .signUpBody["latitude"])
+                                        //       : 51.52,
+                                        // ),
+                                        child: MapLocationPicker(
+                                      apiKey:
+                                          'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                      popOnNextButtonTaped: false,
+                                      hideMoreOptions: true,
+                                      hideBackButton: true,
+                                      hideBottomCard: true,
+                                      hideLocationButton: true,
+                                      hideSuggestionsOnKeyboardHide: true,
+                                      hideMapTypeButton: true,
+                                          onSuggestionSelected:
+                                              (PlacesDetailsResponse? result) {
+                                            if (result != null) {
+
+                                              var splitted = result
+                                                  .result.formattedAddress
+                                                  ?.split(',');
+                                              var first =
+                                              splitted?.first.toString();
+                                              var last =
+                                              splitted?.last.toString();
+                                              debugPrint(
+                                                  'first $first last $last');
+                                              signupViewModel.setInputValues(
+                                                  index: "longitude",
+                                                  value: result.result.geometry
+                                                      ?.location.lng
+                                                      .toString());
+                                              signupViewModel.setInputValues(
+                                                  index: "latitude",
+                                                  value: result.result.geometry
+                                                      ?.location.lat
+                                                      .toString());
+                                              signupViewModel.setInputValues(
+                                                  index: "address",
+                                                  value: result.result
+                                                      .formattedAddress ??
+                                                      '');
+
+                                              signupViewModel.setInputValues(
+                                                  index: "city",
+                                                  value: '$last' ?? '');
+
+                                              // signupViewModel.setInputValues(
+                                              //     index: "state",
+                                              //     value: pickedData.addressData['state'] ?? '');
+                                              signupViewModel.setInputValues(
+                                                  index: "street_number",
+                                                  value: '$first' ?? '');
+                                              // signupViewModel.setInputValues(
+                                              //     index: "postal_code",
+                                              //     value: pickedData.addressData['postcode'] ?? '');
+                                              // signupViewModel.setInputValues(
+                                              //     index: "zone",
+                                              //     value: pickedData.addressData['zone'] ?? '');
+                                              // Navigator.pop(context);
+                                              // if(signupViewModel.signUpBody['role']==Constants.supplierRoleId){
+                                              //   Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 3,)));
+                                              //
+                                              // }
+                                              // if(signupViewModel.signUpBody['role']==Constants.customerRoleId){
+                                              //   Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(initialIndex: 3,)));
+                                              //
+                                              // }
+                                            }
+                                          },
+                                      currentLatLng: LatLng(
+                                          data.data["latitude"] != null
+                                              ? double.parse(data
+                                                  .data['latitude']
+                                                  .toString())
+                                              : 51.5310,
+                                          data.data['longitude'] != null
+                                              ? double.parse(data
+                                                  .data['longitude']
+                                                  .toString())
+                                              : 25.2854),
+                                    ));
                                   } else {
                                     return Container();
                                   }
@@ -846,25 +1134,43 @@ class _SignUpSupplierOnBoardingScreenState
                                 context.resources.strings.formKeys['zone']!],
                             keyboardType: TextInputType.text),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                        child: CustomDropDown(
-                            value: signupViewModel.signUpBody["country"] ?? '',
-                            index: 'country',
-                            viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.country'),
-                            validator: (val) => signupViewModel.signUpErrors[
-                                context.resources.strings.formKeys['country']!],
-                            errorText: signupViewModel.signUpErrors[
-                                context.resources.strings.formKeys['country']!],
-                            keyboardType: TextInputType.text,
-                          list: signupViewModel.getCountries,
-                          onChange: (value){
-                              debugPrint('value of country $value');
-                              signupViewModel.setInputValues(index: 'country',value: value);
-
-                        },),
-                      ),
+                      // FutureBuilder(
+                      //     future: Provider.of<SignUpViewModel>(context,
+                      //             listen: false)
+                      //         .countries(),
+                      //     builder: (context, AsyncSnapshot data) {
+                      //       if (data.connectionState == ConnectionState.done) {
+                      //         return
+                                Padding(
+                                padding:
+                                    const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                                child: CustomDropDown(
+                                  value:
+                                      signupViewModel.getSignUpBody["country"] ??
+                                          '',
+                                  index: 'country',
+                                  viewModel: signupViewModel.setInputValues,
+                                  hintText: translate('formHints.country'),
+                                  validator: (val) =>
+                                      signupViewModel.signUpErrors[context
+                                          .resources
+                                          .strings
+                                          .formKeys['country']!],
+                                  errorText: signupViewModel.signUpErrors[
+                                      context.resources.strings
+                                          .formKeys['country']!],
+                                  keyboardType: TextInputType.text,
+                                  list: signupViewModel.getCountries,
+                                  onChange: (value) {
+                                    signupViewModel.setInputValues(
+                                        index: 'country', value: value);
+                                  },
+                                ),
+                              ),
+                            // } else {
+                            //   return Container();
+                          //   }
+                          // }),
 
                       // }),
                       // Padding(
