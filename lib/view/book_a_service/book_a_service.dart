@@ -453,7 +453,7 @@ class _BookAServiceState extends State<BookAService> {
                                           onPressed: () async {
                                             if (await jobsViewModel
                                                     .requestService() ==
-                                                true) {
+                                                true ) {
                                               showDialog(
                                                 context: context,
                                                 builder: (BuildContext
@@ -461,13 +461,24 @@ class _BookAServiceState extends State<BookAService> {
                                                     _buildPopupDialog(context),
                                               );
                                             } else {
-                                              showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        _buildPopupDialogNo(
-                                                            context),
-                                              );
+                                              if(jobsViewModel.getjobsBody['payment_card']==null){
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                      _buildPopupDialogNo(
+                                                          context,translate('button.pleaseProvidePaymentCard')),
+                                                );
+                                              }else{
+                                                showDialog(
+                                                  context: context,
+                                                  builder:
+                                                      (BuildContext context) =>
+                                                      _buildPopupDialogNo(
+                                                          context,translate('button.somethingWentWrong')),
+                                                );
+                                              }
+
                                             }
                                           },
                                           style: ElevatedButton.styleFrom(
@@ -495,7 +506,9 @@ class _BookAServiceState extends State<BookAService> {
                                         height: context
                                             .appValues.appSizePercent.h100,
                                         child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            jobsViewModel.launchWhatsApp();
+                                          },
                                           style: ElevatedButton.styleFrom(
                                             elevation: 0,
                                             backgroundColor: Colors.transparent,
@@ -605,7 +618,7 @@ Widget _buildPopupDialog(BuildContext context) {
   );
 }
 
-Widget _buildPopupDialogNo(BuildContext context) {
+Widget _buildPopupDialogNo(BuildContext context,String message) {
   return AlertDialog(
     elevation: 15,
     content: Column(
@@ -633,7 +646,7 @@ Widget _buildPopupDialogNo(BuildContext context) {
             horizontal: context.appValues.appPadding.p32,
           ),
           child: Text(
-            translate('button.somethingWentWrong'),
+           message,
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
               fontSize: 17,

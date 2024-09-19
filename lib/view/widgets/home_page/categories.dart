@@ -28,7 +28,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   void initState() {
     super.initState();
     getLanguage();
-    Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(widget.servicesViewModel.searchBody["search_services"]);
+    // Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(widget.servicesViewModel.searchBody["search_services"]);
 
   }
 

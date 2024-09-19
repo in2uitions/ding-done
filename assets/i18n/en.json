@@ -33,6 +33,7 @@
     "start": "Start",
     "success": "Success",
     "somethingWentWrong": "Something went wrong",
+    "pleaseProvidePaymentCard": "Please provide payment card",
     "failure": "Failure",
     "jobCanceledMsg": "Job canceled but you have to pay a penalty",
     "tryAgainLater": "Please try again later",

@@ -21,7 +21,7 @@ class CategoriesRepo {
   }
  Future<dynamic> getCategoriesAndServices() async {
     try {
-      dynamic response = await _apiCategoriesAndServices.getResponse();
+      dynamic response = await _apiCategoriesAndServices.getResponse(sendToken: false);
       debugPrint('response in get categories and serices $response');
       return response;
     } catch (error) {

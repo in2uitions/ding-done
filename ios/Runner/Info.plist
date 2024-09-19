@@ -13,11 +13,7 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-	<key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-    </dict>
+
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
@@ -43,23 +39,22 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
-	<key>NSAppTransportSecurity</key>
-    <dict>
-      <key>NSAllowsArbitraryLoads</key>
-      <true/>
-    </dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>NSAppTransportSecurity</key>
-	<string>NSAllowsArbitraryLoads</string>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play videos while in the app</string>
 	<key>NSCameraUsageDescription</key>
-	<string>This app requires access to your camera for allowing users to upload logos and media (photos, videos)</string>
+	<string>This app requires access to your camera for allowing users to scan credit card</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>We need access to save files in the documents folder</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Using location when in use</string>
+    <string>Need location when in use</string>
+    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+    <string>Always and when in use!</string>
+    <key>NSLocationUsageDescription</key>
+    <string>Older devices need location.</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>Can I have location always?</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app requires access to microphone for uploading audio</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

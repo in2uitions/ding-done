@@ -11,6 +11,7 @@ import 'package:camera_web/camera_web.dart';
 import 'package:file_picker/_internal/file_picker_web.dart';
 import 'package:firebase_core_web/firebase_core_web.dart';
 import 'package:flutter_image_compress_web/flutter_image_compress_web.dart';
+import 'package:flutter_keyboard_visibility_web/flutter_keyboard_visibility_web.dart';
 import 'package:flutter_localization/flutter_localization_web.dart';
 import 'package:flutter_native_splash/flutter_native_splash_web.dart';
 import 'package:geolocator_web/geolocator_web.dart';
@@ -31,6 +32,7 @@ void registerPlugins([final Registrar? pluginRegistrar]) {
   FilePickerWeb.registerWith(registrar);
   FirebaseCoreWeb.registerWith(registrar);
   FlutterImageCompressWeb.registerWith(registrar);
+  FlutterKeyboardVisibilityPlugin.registerWith(registrar);
   FlutterLocalizationWeb.registerWith(registrar);
   FlutterNativeSplashWeb.registerWith(registrar);
   GeolocatorPlugin.registerWith(registrar);

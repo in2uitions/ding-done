@@ -187,7 +187,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                                         profileViewModel.getProfileBody['current_address']['longitude']);
                                 jobsViewModel.setInputValues(
                                     index: 'payment_method',
-                                    value: 'Cash on Delivery');
+                                    value: 'Card');
 
                                 Navigator.of(context)
                                     .push(_createRoute(BookAService(

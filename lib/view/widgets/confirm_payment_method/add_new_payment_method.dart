@@ -68,7 +68,10 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
           await _scanCard();
           paymentViewModel.setInputValues(index: 'brand',value: _cardInfo?.type);
           paymentViewModel.setInputValues(index: 'card-number',value: _cardInfo?.number);
-          Navigator.of(context).pop();
+          // Future.delayed(const Duration(seconds: 0), () =>
+          //     Navigator.pop(context));
+          Future.delayed(const Duration(seconds: 0), () =>
+              Navigator.pop(context));
           Future.delayed(const Duration(seconds: 0), () =>
               Navigator.of(context)
                   .push(_createRoute(
@@ -97,6 +100,20 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                     height: context.appValues.appSizePercent.h5,
                     child: IconButton(
                       onPressed: () async {
+                        await _scanCard();
+                        paymentViewModel.setInputValues(index: 'brand',value: _cardInfo?.type);
+                        paymentViewModel.setInputValues(index: 'card-number',value: _cardInfo?.number);
+                        // Future.delayed(const Duration(seconds: 0), () =>
+                        //     Navigator.pop(context));
+                        Future.delayed(const Duration(seconds: 0), () =>
+                            Navigator.pop(context));
+                        Future.delayed(const Duration(seconds: 0), () =>
+                            Navigator.of(context)
+                                .push(_createRoute(
+                                ConfirmPaymentMethod(
+                                    payment_method:widget.payment_method,
+                                    paymentViewModel: paymentViewModel,
+                                    role: Constants.customerRoleId))));
 
                       },
                       icon: Icon(Icons.scanner,color:context.resources.color.btnColorBlue ,),

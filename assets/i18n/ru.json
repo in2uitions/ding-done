@@ -33,6 +33,7 @@
     "start": "Старт",
     "success": "Успех",
     "somethingWentWrong": "Что-то пошло не так",
+    "pleaseProvidePaymentCard": "Пожалуйста, предоставьте платежную карту",
     "failure": "Неудача",
     "jobCanceledMsg": "Работа отменена, но вам придется заплатить штраф",
     "tryAgainLater": "Пожалуйста, попробуйте позже",

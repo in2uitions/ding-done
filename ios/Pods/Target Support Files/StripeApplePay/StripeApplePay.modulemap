@@ -1,6 +1,0 @@
-framework module StripeApplePay {
-  umbrella header "StripeApplePay-umbrella.h"
-
-  export *
-  module * { export * }
-}
