@@ -451,12 +451,6 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                 ),
                               ),
                               onTap: () {
-                                // Navigator.of(context)
-                                //     .push(_createRoute(MapScreen(
-                                //   viewModel: signupViewModel,
-                                //   longitude: 25.3,
-                                //   latitude: 51.52,
-                                // )));
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -587,186 +581,105 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                     "longitude"]}');
                                     debugPrint('from data ${data.data['longitude']}');
                                     return GestureDetector(
-                                      // onTap: () {
-                                      //   Navigator.of(context)
-                                      //       .push(_createRoute(MapLocationPicker(
-                                      //     apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
-                                      //     popOnNextButtonTaped: true,
-                                      //     currentLatLng:  LatLng(signupViewModel.signUpBody[
-                                      //     "longitude"] !=
-                                      //         null &&
-                                      //         signupViewModel.signUpBody[
-                                      //         "longitude"] !=
-                                      //             ''
-                                      //         ? double.parse(signupViewModel
-                                      //         .signUpBody["longitude"])
-                                      //         : 25.2854, signupViewModel.signUpBody[
-                                      //     "latitude"] !=
-                                      //         null &&
-                                      //         signupViewModel.signUpBody[
-                                      //         "latitude"] !=
-                                      //             ''
-                                      //         ? double.parse(signupViewModel
-                                      //         .signUpBody["latitude"])
-                                      //         : 51.5310,),
-                                      //     onNext: (GeocodingResult? result) {
-                                      //       if (result != null) {
-                                      //         debugPrint('next button hit ${result.formattedAddress}');
-                                      //         setState(() {
-                                      //           // address = result.formattedAddress ?? "";
-                                      //         });
-                                      //       }
-                                      //     },
-                                      //     onSuggestionSelected: (PlacesDetailsResponse? result) {
-                                      //       if (result != null) {
-                                      //         setState(() {
-                                      //           // autocompletePlace =
-                                      //           //     result.result.formattedAddress ?? "";
-                                      //         });
-                                      //         var splitted =result.result.formattedAddress?.split(',');
-                                      //         var first=splitted?.first.toString();
-                                      //         var last=splitted?.last.toString();
-                                      //         debugPrint('first $first last $last');
-                                      //         signupViewModel.setInputValues(
-                                      //             index: "longitude",
-                                      //             value: result.result.geometry?.location.lng.toString());
-                                      //         signupViewModel.setInputValues(
-                                      //             index: "latitude",
-                                      //             value: result.result.geometry?.location.lat.toString());
-                                      //         signupViewModel.setInputValues(
-                                      //             index: "address",
-                                      //             value: result.result.formattedAddress ?? '');
-                                      //         debugPrint('addfrees ${ result.result.formattedAddress?.split(',').first}');
-                                      //
-                                      //         signupViewModel.setInputValues(
-                                      //             index: "city",
-                                      //             value: '$last' ?? '');
-                                      //
-                                      //         debugPrint('addfrees ${ result.result.formattedAddress?.split(',').first}');
-                                      //
-                                      //         // signupViewModel.setInputValues(
-                                      //         //     index: "state",
-                                      //         //     value: pickedData.addressData['state'] ?? '');
-                                      //         signupViewModel.setInputValues(
-                                      //             index: "street_number",
-                                      //             value: '$first' ?? '');
-                                      //         // signupViewModel.setInputValues(
-                                      //         //     index: "postal_code",
-                                      //         //     value: pickedData.addressData['postcode'] ?? '');
-                                      //         // signupViewModel.setInputValues(
-                                      //         //     index: "zone",
-                                      //         //     value: pickedData.addressData['zone'] ?? '');
-                                      //         // Navigator.pop(context);
-                                      //         // if(signupViewModel.signUpBody['role']==Constants.supplierRoleId){
-                                      //         //   Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 3,)));
-                                      //         //
-                                      //         // }
-                                      //         // if(signupViewModel.signUpBody['role']==Constants.customerRoleId){
-                                      //         //   Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(initialIndex: 3,)));
-                                      //         //
-                                      //         // }
-                                      //       }
-                                      //     },
-                                      //
-                                      //   )));
-                                      // },
-                                      // child: MapDisplay(
-                                      //   body: signupViewModel.signUpBody,
-                                      //   longitude: signupViewModel.signUpBody[
-                                      //                   "longitude"] !=
-                                      //               null &&
-                                      //           signupViewModel.signUpBody[
-                                      //                   "longitude"] !=
-                                      //               ''
-                                      //       ? double.parse(signupViewModel
-                                      //           .signUpBody["longitude"])
-                                      //       : 25.3,
-                                      //   latitude: signupViewModel.signUpBody[
-                                      //                   "latitude"] !=
-                                      //               null &&
-                                      //           signupViewModel.signUpBody[
-                                      //                   "latitude"] !=
-                                      //               ''
-                                      //       ? double.parse(signupViewModel
-                                      //           .signUpBody["latitude"])
-                                      //       : 51.52,
-                                      // ),
-                                        child:MapLocationPicker(
-                                          apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
-                                          popOnNextButtonTaped: false,
-                                          hideMoreOptions:true,
-                                          hideBackButton: true,
-                                          hideBottomCard: true,
-                                          hideLocationButton: true,
-                                          hideSuggestionsOnKeyboardHide: true,
-                                          hideMapTypeButton: true,
-                                          onSuggestionSelected:
-                                              (PlacesDetailsResponse? result) {
-                                            if (result != null) {
+                                      child:GoogleMap(
+                                        onMapCreated: null,
+                                        initialCameraPosition:
+                                        CameraPosition(
+                                          zoom: 16.0,
+                                          target:LatLng(
+                                                data.data["latitude"] !=
+                                                    null
+                                                    ? double.parse(data.data['latitude'].toString())
+                                                    : 25.2854 , data.data['longitude'] !=
+                                                null
+                                                ? double.parse(data.data['longitude'].toString())
+                                                : 51.5310)),
 
-                                              var splitted = result
-                                                  .result.formattedAddress
-                                                  ?.split(',');
-                                              var first =
-                                              splitted?.first.toString();
-                                              var last =
-                                              splitted?.last.toString();
-                                              debugPrint(
-                                                  'first $first last $last');
-                                              signupViewModel.setInputValues(
-                                                  index: "longitude",
-                                                  value: result.result.geometry
-                                                      ?.location.lng
-                                                      .toString());
-                                              signupViewModel.setInputValues(
-                                                  index: "latitude",
-                                                  value: result.result.geometry
-                                                      ?.location.lat
-                                                      .toString());
-                                              signupViewModel.setInputValues(
-                                                  index: "address",
-                                                  value: result.result
-                                                      .formattedAddress ??
-                                                      '');
+                                        mapType: MapType.normal,
+                                        markers: <Marker>{Marker(
+                                            markerId: MarkerId('marker'),
+                                            infoWindow: InfoWindow(title: 'InfoWindow'))},
+                                        onCameraMove: null,
+                                        myLocationButtonEnabled: false,
+                                      ),
 
-                                              signupViewModel.setInputValues(
-                                                  index: "city",
-                                                  value: '$last' ?? '');
-
-                                              // signupViewModel.setInputValues(
-                                              //     index: "state",
-                                              //     value: pickedData.addressData['state'] ?? '');
-                                              signupViewModel.setInputValues(
-                                                  index: "street_number",
-                                                  value: '$first' ?? '');
-                                              // signupViewModel.setInputValues(
-                                              //     index: "postal_code",
-                                              //     value: pickedData.addressData['postcode'] ?? '');
-                                              // signupViewModel.setInputValues(
-                                              //     index: "zone",
-                                              //     value: pickedData.addressData['zone'] ?? '');
-                                              // Navigator.pop(context);
-                                              // if(signupViewModel.signUpBody['role']==Constants.supplierRoleId){
-                                              //   Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 3,)));
-                                              //
-                                              // }
-                                              // if(signupViewModel.signUpBody['role']==Constants.customerRoleId){
-                                              //   Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(initialIndex: 3,)));
-                                              //
-                                              // }
-                                            }
-                                          },
-                                          currentLatLng: LatLng(
-                                              data.data["latitude"] !=
-                                                  null
-                                                  ? double.parse(data.data['latitude'].toString())
-                                                  : 25.2854 , data.data['longitude'] !=
-                                              null
-                                              ? double.parse(data.data['longitude'].toString())
-                                              : 51.5310),
-
-
-                                        )
+                                        // child:MapLocationPicker(
+                                        //   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                        //   popOnNextButtonTaped: false,
+                                        //   hideMoreOptions:true,
+                                        //   hideBackButton: true,
+                                        //   hideBottomCard: true,
+                                        //   hideLocationButton: true,
+                                        //   hideSuggestionsOnKeyboardHide: true,
+                                        //   hideMapTypeButton: true,
+                                        //
+                                        //   onSuggestionSelected:
+                                        //       (PlacesDetailsResponse? result) {
+                                        //     if (result != null) {
+                                        //
+                                        //       var splitted = result
+                                        //           .result.formattedAddress
+                                        //           ?.split(',');
+                                        //       var first =
+                                        //       splitted?.first.toString();
+                                        //       var last =
+                                        //       splitted?.last.toString();
+                                        //       debugPrint(
+                                        //           'first $first last $last');
+                                        //       signupViewModel.setInputValues(
+                                        //           index: "longitude",
+                                        //           value: result.result.geometry
+                                        //               ?.location.lng
+                                        //               .toString());
+                                        //       signupViewModel.setInputValues(
+                                        //           index: "latitude",
+                                        //           value: result.result.geometry
+                                        //               ?.location.lat
+                                        //               .toString());
+                                        //       signupViewModel.setInputValues(
+                                        //           index: "address",
+                                        //           value: result.result
+                                        //               .formattedAddress ??
+                                        //               '');
+                                        //
+                                        //       signupViewModel.setInputValues(
+                                        //           index: "city",
+                                        //           value: '$last' ?? '');
+                                        //
+                                        //       // signupViewModel.setInputValues(
+                                        //       //     index: "state",
+                                        //       //     value: pickedData.addressData['state'] ?? '');
+                                        //       signupViewModel.setInputValues(
+                                        //           index: "street_number",
+                                        //           value: '$first' ?? '');
+                                        //       // signupViewModel.setInputValues(
+                                        //       //     index: "postal_code",
+                                        //       //     value: pickedData.addressData['postcode'] ?? '');
+                                        //       // signupViewModel.setInputValues(
+                                        //       //     index: "zone",
+                                        //       //     value: pickedData.addressData['zone'] ?? '');
+                                        //       // Navigator.pop(context);
+                                        //       // if(signupViewModel.signUpBody['role']==Constants.supplierRoleId){
+                                        //       //   Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 3,)));
+                                        //       //
+                                        //       // }
+                                        //       // if(signupViewModel.signUpBody['role']==Constants.customerRoleId){
+                                        //       //   Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(initialIndex: 3,)));
+                                        //       //
+                                        //       // }
+                                        //     }
+                                        //   },
+                                        //   currentLatLng: LatLng(
+                                        //       data.data["latitude"] !=
+                                        //           null
+                                        //           ? double.parse(data.data['latitude'].toString())
+                                        //           : 25.2854 , data.data['longitude'] !=
+                                        //       null
+                                        //       ? double.parse(data.data['longitude'].toString())
+                                        //       : 51.5310),
+                                        //
+                                        //
+                                        // )
                                     );
                                   } else {
                                     return Container();

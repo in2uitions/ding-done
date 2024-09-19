@@ -3,7 +3,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/agreement/supplier_agreement.dart';
 import 'package:dingdone/view/login/login.dart';
-import 'package:dingdone/view/map_screen/google_maps.dart';
+// import 'package:dingdone/view/map_screen/google_maps.dart';
 import 'package:dingdone/view/map_screen/map_display.dart';
 import 'package:dingdone/view/map_screen/map_screen.dart';
 import 'package:dingdone/view/signup/signup_onboarding.dart';
@@ -820,13 +820,13 @@ class _SignUpSupplierOnBoardingScreenState
                             horizontal: context.appValues.appPadding.p20),
                         child: SizedBox(
                             height: 300,
-                            child: FutureBuilder(
-                                future: Provider.of<SignUpViewModel>(context,
-                                        listen: false)
-                                    .getData(),
-                                builder: (context, AsyncSnapshot data) {
-                                  if (data.connectionState ==
-                                      ConnectionState.done) {
+                            child:  FutureBuilder(
+    future: Provider.of<SignUpViewModel>(context,
+    listen: false)
+        .getData(),
+    builder: (context, AsyncSnapshot data) {
+    if (data.connectionState ==
+    ConnectionState.done) {
                                     debugPrint(
                                         'from view model ${signupViewModel.getSignUpBody["longitude"]}');
                                     debugPrint(
@@ -936,84 +936,95 @@ class _SignUpSupplierOnBoardingScreenState
                                         //           .signUpBody["latitude"])
                                         //       : 51.52,
                                         // ),
-                                        child: MapLocationPicker(
-                                      apiKey:
-                                          'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
-                                      popOnNextButtonTaped: false,
-                                      hideMoreOptions: true,
-                                      hideBackButton: true,
-                                      hideBottomCard: true,
-                                      hideLocationButton: true,
-                                      hideSuggestionsOnKeyboardHide: true,
-                                      hideMapTypeButton: true,
-                                          onSuggestionSelected:
-                                              (PlacesDetailsResponse? result) {
-                                            if (result != null) {
+                                        child:
+                                        GoogleMap(
+                                          onMapCreated: null,
+                                          initialCameraPosition:
+                                          CameraPosition(
+                                            zoom: 16.0,
+                                            target:LatLng(
+                                                data.data["latitude"] != null
+                                                    ? double.parse(data
+                                                    .data['latitude']
+                                                    .toString())
+                                                    :25.2854 ,
+                                                data.data['longitude'] != null
+                                                    ? double.parse(data
+                                                    .data['longitude']
+                                                    .toString())
+                                                    : 51.5310),),
 
-                                              var splitted = result
-                                                  .result.formattedAddress
-                                                  ?.split(',');
-                                              var first =
-                                              splitted?.first.toString();
-                                              var last =
-                                              splitted?.last.toString();
-                                              debugPrint(
-                                                  'first $first last $last');
-                                              signupViewModel.setInputValues(
-                                                  index: "longitude",
-                                                  value: result.result.geometry
-                                                      ?.location.lng
-                                                      .toString());
-                                              signupViewModel.setInputValues(
-                                                  index: "latitude",
-                                                  value: result.result.geometry
-                                                      ?.location.lat
-                                                      .toString());
-                                              signupViewModel.setInputValues(
-                                                  index: "address",
-                                                  value: result.result
-                                                      .formattedAddress ??
-                                                      '');
-
-                                              signupViewModel.setInputValues(
-                                                  index: "city",
-                                                  value: '$last' ?? '');
-
-                                              // signupViewModel.setInputValues(
-                                              //     index: "state",
-                                              //     value: pickedData.addressData['state'] ?? '');
-                                              signupViewModel.setInputValues(
-                                                  index: "street_number",
-                                                  value: '$first' ?? '');
-                                              // signupViewModel.setInputValues(
-                                              //     index: "postal_code",
-                                              //     value: pickedData.addressData['postcode'] ?? '');
-                                              // signupViewModel.setInputValues(
-                                              //     index: "zone",
-                                              //     value: pickedData.addressData['zone'] ?? '');
-                                              // Navigator.pop(context);
-                                              // if(signupViewModel.signUpBody['role']==Constants.supplierRoleId){
-                                              //   Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 3,)));
-                                              //
-                                              // }
-                                              // if(signupViewModel.signUpBody['role']==Constants.customerRoleId){
-                                              //   Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(initialIndex: 3,)));
-                                              //
-                                              // }
-                                            }
-                                          },
-                                      currentLatLng: LatLng(
-                                          data.data["latitude"] != null
-                                              ? double.parse(data
-                                                  .data['latitude']
-                                                  .toString())
-                                              :25.2854 ,
-                                          data.data['longitude'] != null
-                                              ? double.parse(data
-                                                  .data['longitude']
-                                                  .toString())
-                                              : 51.5310),
-                                    ));
+                                          mapType: MapType.normal,
+                                          markers: <Marker>{Marker(
+                                              markerId: MarkerId('marker'),
+                                              infoWindow: InfoWindow(title: 'InfoWindow'))},
+                                          onCameraMove: null,
+                                          myLocationButtonEnabled: false,
+                                        ),
+                                          // options: GoogleMapOptions(
+                                          //     myLocationEnabled:true
+                                          //there is a lot more options you can add here
+                                        );
+                                    //     MapLocationPicker(
+                                    //   apiKey:
+                                    //       'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                    //   popOnNextButtonTaped: false,
+                                    //   hideMoreOptions: true,
+                                    //   hideBackButton: true,
+                                    //   hideBottomCard: true,
+                                    //   hideLocationButton: true,
+                                    //   hideSuggestionsOnKeyboardHide: true,
+                                    //   hideMapTypeButton: true,
+                                    //       onSuggestionSelected:
+                                    //           (PlacesDetailsResponse? result) {
+                                    //         if (result != null) {
+                                    //
+                                    //           var splitted = result
+                                    //               .result.formattedAddress
+                                    //               ?.split(',');
+                                    //           var first =
+                                    //           splitted?.first.toString();
+                                    //           var last =
+                                    //           splitted?.last.toString();
+                                    //           debugPrint(
+                                    //               'first $first last $last');
+                                    //           signupViewModel.setInputValues(
+                                    //               index: "longitude",
+                                    //               value: result.result.geometry
+                                    //                   ?.location.lng
+                                    //                   .toString());
+                                    //           signupViewModel.setInputValues(
+                                    //               index: "latitude",
+                                    //               value: result.result.geometry
+                                    //                   ?.location.lat
+                                    //                   .toString());
+                                    //           signupViewModel.setInputValues(
+                                    //               index: "address",
+                                    //               value: result.result
+                                    //                   .formattedAddress ??
+                                    //                   '');
+                                    //
+                                    //           signupViewModel.setInputValues(
+                                    //               index: "city",
+                                    //               value: '$last' ?? '');
+                                    //           signupViewModel.setInputValues(
+                                    //               index: "street_number",
+                                    //               value: '$first' ?? '');
+                                    //
+                                    //         }
+                                    //       },
+                                    //   currentLatLng: LatLng(
+                                    //       data.data["latitude"] != null
+                                    //           ? double.parse(data
+                                    //               .data['latitude']
+                                    //               .toString())
+                                    //           :25.2854 ,
+                                    //       data.data['longitude'] != null
+                                    //           ? double.parse(data
+                                    //               .data['longitude']
+                                    //               .toString())
+                                    //           : 51.5310),
+                                    // ));
                                   } else {
                                     return Container();
                                   }

@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
@@ -27,6 +28,7 @@ class EditAccount extends StatefulWidget {
 
 class _EditAccountState extends State<EditAccount> {
   dynamic image = {};
+
   Future<void> _handleRefresh() async {
     try {
       String? role =
@@ -372,15 +374,60 @@ class _EditAccountState extends State<EditAccount> {
                                 0, 0, 0, context.appValues.appPadding.p0),
                             child: SizedBox(
                               height: 180,
-                              child: MapDisplay(
-                                body: profileViewModel.getProfileBody,
-                                longitude: profileViewModel
-                                        .getProfileBody['current_address']
-                                    ["longitude"],
-                                latitude: profileViewModel
-                                        .getProfileBody['current_address']
-                                    ["latitude"],
-                              ),
+                              child:  GoogleMap(
+                                  onMapCreated: null,
+                                  initialCameraPosition:
+                                  CameraPosition(
+                                    zoom: 16.0,
+                                    target: LatLng(  profileViewModel
+                                      .getProfileBody['current_address']
+                                  ["latitude"],
+                                      profileViewModel
+                                          .getProfileBody['current_address']
+                                      ["longitude"]),),
+
+                                  mapType: MapType.normal,
+                                  markers: <Marker>{Marker(
+                              markerId: MarkerId('marker'),
+                              infoWindow: InfoWindow(title: 'InfoWindow'))},
+                                  onCameraMove: null,
+                                  myLocationButtonEnabled: false,
+                                  // options: GoogleMapOptions(
+                                  //     myLocationEnabled:true
+                                    //there is a lot more options you can add here
+                                  )
+                              // ),
+                              // MapLocationPicker(
+                              //   apiKey:
+                              //       'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                              //   popOnNextButtonTaped: false,
+                              //   hideMoreOptions:true,
+                              //   hideBackButton: true,
+                              //   hideBottomCard: true,
+                              //   hideLocationButton: true,
+                              //   hideSuggestionsOnKeyboardHide: true,
+                              //   hideMapTypeButton: true,
+                              //   // topCardColor: Colors.transparent,
+                              //   topCardShape: RoundedRectangleBorder(), // This hides the top card shape
+                              //
+                              //   top: false,
+                              //   currentLatLng: LatLng(
+                              //       profileViewModel
+                              //               .getProfileBody['current_address']
+                              //           ["latitude"],
+                              //       profileViewModel
+                              //               .getProfileBody['current_address']
+                              //           ["longitude"]),
+                              // ),
+                              // MapDisplay(
+                              //   body: profileViewModel.getProfileBody,
+                              //   longitude: profileViewModel
+                              //           .getProfileBody['current_address']
+                              //       ["longitude"],
+                              //   latitude: profileViewModel
+                              //           .getProfileBody['current_address']
+                              //       ["latitude"],
+                              // ),
                             ),
                           ),
                         ],

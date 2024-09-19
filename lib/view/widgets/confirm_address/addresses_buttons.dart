@@ -71,6 +71,7 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 var address = profileViewModel.getProfileBody["address"][index];
+                debugPrint('address in address buttons $address');
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [

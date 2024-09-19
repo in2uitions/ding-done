@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
+import 'package:map_location_picker/map_location_picker.dart';
 import 'package:provider/provider.dart';
 
 class AddNewAddressWidget extends StatefulWidget {
@@ -71,26 +72,119 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                     ),
                     child: InkWell(
                       onTap: () {
-                        Navigator.of(context).push(_createRoute(MapScreen(
-                          viewModel: jobsViewModel,
-                          longitude: jobsViewModel.getjobsBody["longitude"] ??
-                                  profileViewModel
-                                              .getProfileBody['current_address']
-                                          ["longitude"] !=
-                                      null
-                              ? profileViewModel
-                                      .getProfileBody['current_address']
-                                  ["longitude"]
-                              : 23,
-                          latitude: jobsViewModel.getjobsBody["latitude"] ??
-                                  profileViewModel
-                                              .getProfileBody['current_address']
-                                          ["latitude"] !=
-                                      null
-                              ? profileViewModel
-                                  .getProfileBody['current_address']["latitude"]
-                              : 89,
-                        )));
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return MapLocationPicker(
+                                apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                popOnNextButtonTaped: true,
+                                currentLatLng: LatLng(
+                                    jobsViewModel.getjobsBody["latitude"] != null
+                                        ? jobsViewModel.getjobsBody["latitude"] is String
+                                        ? double.parse(
+                                        jobsViewModel.getjobsBody["latitude"])
+                                        : jobsViewModel.getjobsBody["latitude"]
+                                        : profileViewModel.getProfileBody['current_address'] !=
+                                        null &&
+                                        profileViewModel.getProfileBody[
+                                        'current_address']["latitude"] !=
+                                            null
+                                        ? profileViewModel
+                                        .getProfileBody['current_address']
+                                    ["latitude"] is String
+                                        ? double.parse(profileViewModel
+                                        .getProfileBody['current_address']
+                                    ["latitude"])
+                                        : profileViewModel
+                                        .getProfileBody['current_address']
+                                    ["latitude"]: 25.2854,
+                                    jobsViewModel.getjobsBody['longitude'] !=
+                                        null
+                                        ? double.parse(jobsViewModel.getjobsBody['longitude'].toString())
+                                        : 51.5310),
+                                onNext: (GeocodingResult? result) {
+                                  if (result != null) {
+                                    debugPrint('next button hit ${result.formattedAddress}');
+                                    var splitted =result.formattedAddress?.split(',');
+                                    var first=splitted?.first.toString();
+                                    var last=splitted?.last.toString();
+                                    debugPrint('first $first last $last');
+                                    jobsViewModel.setInputValues(
+                                        index: "longitude",
+                                        value: result.geometry?.location.lng.toString());
+                                    jobsViewModel.setInputValues(
+                                        index: "latitude",
+                                        value: result.geometry?.location.lat.toString());
+                                    jobsViewModel.setInputValues(
+                                        index: "address",
+                                        value: result.formattedAddress ?? '');
+
+                                    jobsViewModel.setInputValues(
+                                        index: "city",
+                                        value: '$last' ?? '');
+
+                                    jobsViewModel.setInputValues(
+                                        index: "street_number",
+                                        value: '$first' ?? '');
+
+                                  }
+                                },
+                                onSuggestionSelected: (PlacesDetailsResponse? result) {
+                                  if (result != null) {
+                                    setState(() {
+                                      // autocompletePlace =
+                                      //     result.result.formattedAddress ?? "";
+                                    });
+                                    var splitted =result.result.formattedAddress?.split(',');
+                                    var first=splitted?.first.toString();
+                                    var last=splitted?.last.toString();
+                                    debugPrint('first $first last $last');
+                                    jobsViewModel.setInputValues(
+                                        index: "longitude",
+                                        value: result.result.geometry?.location.lng.toString());
+                                    jobsViewModel.setInputValues(
+                                        index: "latitude",
+                                        value: result.result.geometry?.location.lat.toString());
+                                    jobsViewModel.setInputValues(
+                                        index: "address",
+                                        value: result.result.formattedAddress ?? '');
+
+                                    jobsViewModel.setInputValues(
+                                        index: "city",
+                                        value: '$last' ?? '');
+                                    jobsViewModel.setInputValues(
+                                        index: "street_number",
+                                        value: '$first' ?? '');
+                                  }
+                                },
+
+
+
+                              );
+                            },
+                          ),
+                        );
+                        // Navigator.of(context).push(_createRoute(MapScreen(
+                        //   viewModel: jobsViewModel,
+                        //   longitude: jobsViewModel.getjobsBody["longitude"] ??
+                        //           profileViewModel
+                        //                       .getProfileBody['current_address']
+                        //                   ["longitude"] !=
+                        //               null
+                        //       ? profileViewModel
+                        //               .getProfileBody['current_address']
+                        //           ["longitude"]
+                        //       : 23,
+                        //   latitude: jobsViewModel.getjobsBody["latitude"] ??
+                        //           profileViewModel
+                        //                       .getProfileBody['current_address']
+                        //                   ["latitude"] !=
+                        //               null
+                        //       ? profileViewModel
+                        //           .getProfileBody['current_address']["latitude"]
+                        //       : 89,
+                        // )));
                       },
                       child: Row(
                         children: [
@@ -111,52 +205,165 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                   //   alignment: Alignment.center,
                   //   child: SvgPicture.asset('assets/img/map-iamge.svg'),
                   // ),
-                  InkWell(
+                  GestureDetector(
                     onTap: () {
-                      Navigator.of(context).push(_createRoute(MapScreen(
-                        viewModel: jobsViewModel,
-                        longitude: jobsViewModel.getjobsBody["longitude"] !=
-                                null
-                            ? jobsViewModel.getjobsBody["longitude"] is String
-                                ? double.parse(
-                                    jobsViewModel.getjobsBody["longitude"])
-                                : jobsViewModel.getjobsBody["longitude"]
-                            : profileViewModel.getProfileBody['current_address'] !=
-                                        null &&
-                                    profileViewModel.getProfileBody['current_address']
-                                            ["longitude"] !=
-                                        null
-                                ? profileViewModel
-                                            .getProfileBody['current_address']
-                                        ["longitude"] is String
-                                    ? double.parse(profileViewModel
-                                            .getProfileBody['current_address']
-                                        ["longitude"])
-                                    : profileViewModel
-                                            .getProfileBody['current_address']
-                                        ["longitude"]
-                                : 23.0,
-                        latitude: jobsViewModel.getjobsBody["latitude"] != null
-                            ? jobsViewModel.getjobsBody["latitude"] is String
-                                ? double.parse(
-                                    jobsViewModel.getjobsBody["latitude"])
-                                : jobsViewModel.getjobsBody["latitude"]
-                            : profileViewModel.getProfileBody['current_address'] !=
-                                        null &&
-                                    profileViewModel.getProfileBody[
-                                            'current_address']["latitude"] !=
-                                        null
-                                ? profileViewModel
-                                            .getProfileBody['current_address']
-                                        ["latitude"] is String
-                                    ? double.parse(profileViewModel
-                                            .getProfileBody['current_address']
-                                        ["latitude"])
-                                    : profileViewModel
-                                            .getProfileBody['current_address']
-                                        ["latitude"]
-                                : 89.0,
-                      )));
+                      // Navigator.of(context).push(_createRoute(
+                      //     MapScreen(
+                      //   viewModel: jobsViewModel,
+                      //   longitude: jobsViewModel.getjobsBody["longitude"] !=
+                      //           null
+                      //       ? jobsViewModel.getjobsBody["longitude"] is String
+                      //           ? double.parse(
+                      //               jobsViewModel.getjobsBody["longitude"])
+                      //           : jobsViewModel.getjobsBody["longitude"]
+                      //       : profileViewModel.getProfileBody['current_address'] !=
+                      //                   null &&
+                      //               profileViewModel.getProfileBody['current_address']
+                      //                       ["longitude"] !=
+                      //                   null
+                      //           ? profileViewModel
+                      //                       .getProfileBody['current_address']
+                      //                   ["longitude"] is String
+                      //               ? double.parse(profileViewModel
+                      //                       .getProfileBody['current_address']
+                      //                   ["longitude"])
+                      //               : profileViewModel
+                      //                       .getProfileBody['current_address']
+                      //                   ["longitude"]
+                      //           : 23.0,
+                      //   latitude: jobsViewModel.getjobsBody["latitude"] != null
+                      //       ? jobsViewModel.getjobsBody["latitude"] is String
+                      //           ? double.parse(
+                      //               jobsViewModel.getjobsBody["latitude"])
+                      //           : jobsViewModel.getjobsBody["latitude"]
+                      //       : profileViewModel.getProfileBody['current_address'] !=
+                      //                   null &&
+                      //               profileViewModel.getProfileBody[
+                      //                       'current_address']["latitude"] !=
+                      //                   null
+                      //           ? profileViewModel
+                      //                       .getProfileBody['current_address']
+                      //                   ["latitude"] is String
+                      //               ? double.parse(profileViewModel
+                      //                       .getProfileBody['current_address']
+                      //                   ["latitude"])
+                      //               : profileViewModel
+                      //                       .getProfileBody['current_address']
+                      //                   ["latitude"]
+                      //           :  jobsViewModel.getjobsBody["longitude"] !=
+                      //       null
+                      //       ? jobsViewModel.getjobsBody["longitude"] is String
+                      //       ? double.parse(
+                      //       jobsViewModel.getjobsBody["longitude"])
+                      //       : jobsViewModel.getjobsBody["longitude"]
+                      //       : profileViewModel.getProfileBody['current_address'] !=
+                      //       null &&
+                      //       profileViewModel.getProfileBody['current_address']
+                      //       ["longitude"] !=
+                      //           null
+                      //       ? profileViewModel
+                      //       .getProfileBody['current_address']
+                      //   ["longitude"] is String
+                      //       ? double.parse(profileViewModel
+                      //       .getProfileBody['current_address']
+                      //   ["longitude"])
+                      //       : profileViewModel
+                      //       .getProfileBody['current_address']
+                      //   ["longitude"]:89.0,
+                      // )));
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                            return MapLocationPicker(
+                              apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                              popOnNextButtonTaped: true,
+                              currentLatLng: LatLng(
+                                  jobsViewModel.getjobsBody["latitude"] != null
+                                      ? jobsViewModel.getjobsBody["latitude"] is String
+                                      ? double.parse(
+                                      jobsViewModel.getjobsBody["latitude"])
+                                      : jobsViewModel.getjobsBody["latitude"]
+                                      : profileViewModel.getProfileBody['current_address'] !=
+                                      null &&
+                                      profileViewModel.getProfileBody[
+                                      'current_address']["latitude"] !=
+                                          null
+                                      ? profileViewModel
+                                      .getProfileBody['current_address']
+                                  ["latitude"] is String
+                                      ? double.parse(profileViewModel
+                                      .getProfileBody['current_address']
+                                  ["latitude"])
+                                      : profileViewModel
+                                      .getProfileBody['current_address']
+                                  ["latitude"]: 25.2854,
+                                  jobsViewModel.getjobsBody['longitude'] !=
+                                  null
+                                  ? double.parse(jobsViewModel.getjobsBody['longitude'].toString())
+                                  : 51.5310),
+                              onNext: (GeocodingResult? result) {
+                                if (result != null) {
+                                  debugPrint('next button hit ${result.formattedAddress}');
+                                  var splitted =result.formattedAddress?.split(',');
+                                  var first=splitted?.first.toString();
+                                  var last=splitted?.last.toString();
+                                  debugPrint('first $first last $last');
+                                  jobsViewModel.setInputValues(
+                                      index: "longitude",
+                                      value: result.geometry?.location.lng.toString());
+                                  jobsViewModel.setInputValues(
+                                      index: "latitude",
+                                      value: result.geometry?.location.lat.toString());
+                                  jobsViewModel.setInputValues(
+                                      index: "address",
+                                      value: result.formattedAddress ?? '');
+
+                                  jobsViewModel.setInputValues(
+                                      index: "city",
+                                      value: '$last' ?? '');
+
+                                  jobsViewModel.setInputValues(
+                                      index: "street_number",
+                                      value: '$first' ?? '');
+
+                                }
+                              },
+                              onSuggestionSelected: (PlacesDetailsResponse? result) {
+                                if (result != null) {
+                                  setState(() {
+                                    // autocompletePlace =
+                                    //     result.result.formattedAddress ?? "";
+                                  });
+                                  var splitted =result.result.formattedAddress?.split(',');
+                                  var first=splitted?.first.toString();
+                                  var last=splitted?.last.toString();
+                                  debugPrint('first $first last $last');
+                                  jobsViewModel.setInputValues(
+                                      index: "longitude",
+                                      value: result.result.geometry?.location.lng.toString());
+                                  jobsViewModel.setInputValues(
+                                      index: "latitude",
+                                      value: result.result.geometry?.location.lat.toString());
+                                  jobsViewModel.setInputValues(
+                                      index: "address",
+                                      value: result.result.formattedAddress ?? '');
+
+                                  jobsViewModel.setInputValues(
+                                      index: "city",
+                                      value: '$last' ?? '');
+                                  jobsViewModel.setInputValues(
+                                      index: "street_number",
+                                      value: '$first' ?? '');
+                                }
+                              },
+
+
+
+                            );
+                          },
+                        ),
+                      );
                     },
                     child: Padding(
                       padding: EdgeInsets.symmetric(
@@ -170,44 +377,149 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                             builder: (context, AsyncSnapshot data) {
                               if (data.connectionState ==
                                   ConnectionState.done) {
-                                return MapDisplay(
-                                  body: profileViewModel.getProfileBody,
-                                  longitude: jobsViewModel
-                                              .getjobsBody["longitude"] !=
-                                          null
-                                      ? double.parse(jobsViewModel
-                                          .getjobsBody["longitude"]
-                                          .toString())
-                                      : profileViewModel.getProfileBody[
-                                                      'current_address'] !=
-                                                  null &&
-                                              profileViewModel
-                                                          .getProfileBody['current_address']
-                                                      ["longitude"] !=
-                                                  null
-                                          ? double.parse(profileViewModel
-                                              .getProfileBody['current_address']
-                                                  ["longitude"]
-                                              .toString())
-                                          : 23.0,
-                                  latitude: jobsViewModel.getjobsBody["latitude"] !=
-                                          null
-                                      ? double.parse(jobsViewModel
-                                          .getjobsBody["latitude"]
-                                          .toString())
-                                      : profileViewModel.getProfileBody[
-                                                      'current_address'] !=
-                                                  null &&
-                                              profileViewModel.getProfileBody[
-                                                          'current_address']
-                                                      ["latitude"] !=
-                                                  null
-                                          ? double.parse(profileViewModel
-                                              .getProfileBody['current_address']
-                                                  ["latitude"]
-                                              .toString())
-                                          : 89.0,
+                                return  GoogleMap(
+                                  onMapCreated: null,
+                                  initialCameraPosition:
+                                  CameraPosition(
+                                    zoom: 16.0,
+                                    target: LatLng(
+                                        jobsViewModel.getjobsBody["latitude"] !=
+                                            null
+                                            ? double.parse(jobsViewModel
+                                            .getjobsBody["latitude"]
+                                            .toString())
+                                            : profileViewModel.getProfileBody[
+                                        'current_address'] !=
+                                            null &&
+                                            profileViewModel.getProfileBody[
+                                            'current_address']
+                                            ["latitude"] !=
+                                                null
+                                            ? double.parse(profileViewModel
+                                            .getProfileBody['current_address']
+                                        ["latitude"]
+                                            .toString())
+                                            : 25.2854 ,
+                                        jobsViewModel
+                                            .getjobsBody["longitude"] !=
+                                            null
+                                            ? double.parse(jobsViewModel
+                                            .getjobsBody["longitude"]
+                                            .toString())
+                                            : profileViewModel.getProfileBody[
+                                        'current_address'] !=
+                                            null &&
+                                            profileViewModel
+                                                .getProfileBody['current_address']
+                                            ["longitude"] !=
+                                                null
+                                            ? double.parse(profileViewModel
+                                            .getProfileBody['current_address']
+                                        ["longitude"]
+                                            .toString())
+                                            : 51.5310),),
+
+                                  mapType: MapType.normal,
+                                  markers: <Marker>{Marker(
+                                      markerId: MarkerId('marker'),
+                                      infoWindow: InfoWindow(title: 'InfoWindow'))},
+                                  onCameraMove: null,
+                                  myLocationButtonEnabled: false,
+                                  // options: GoogleMapOptions(
+                                  //     myLocationEnabled:true
+                                  //there is a lot more options you can add here
                                 );
+                              // MapLocationPicker(
+                              //     apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                              //     popOnNextButtonTaped: false,
+                              //     hideMoreOptions:true,
+                              //     hideBackButton: true,
+                              //     hideBottomCard: true,
+                              //     hideLocationButton: true,
+                              //     hideSuggestionsOnKeyboardHide: true,
+                              //     hideMapTypeButton: true,
+                              //     // topCardColor: Colors.transparent,
+                              //     topCardShape: RoundedRectangleBorder(), // This hides the top card shape
+                              //
+                              //     top: false,
+                              //     onSuggestionSelected:
+                              //         (PlacesDetailsResponse? result) {
+                              //       if (result != null) {
+                              //
+                              //         var splitted = result
+                              //             .result.formattedAddress
+                              //             ?.split(',');
+                              //         var first =
+                              //         splitted?.first.toString();
+                              //         var last =
+                              //         splitted?.last.toString();
+                              //         debugPrint(
+                              //             'first $first last $last');
+                              //         profileViewModel.setInputValues(
+                              //             index: "longitude",
+                              //             value: result.result.geometry
+                              //                 ?.location.lng
+                              //                 .toString());
+                              //         profileViewModel.setInputValues(
+                              //             index: "latitude",
+                              //             value: result.result.geometry
+                              //                 ?.location.lat
+                              //                 .toString());
+                              //         profileViewModel.setInputValues(
+                              //             index: "address",
+                              //             value: result.result
+                              //                 .formattedAddress ??
+                              //                 '');
+                              //
+                              //         profileViewModel.setInputValues(
+                              //             index: "city",
+                              //             value: '$last' ?? '');
+                              //
+                              //         profileViewModel.setInputValues(
+                              //             index: "street_number",
+                              //             value: '$first' ?? '');
+                              //       }
+                              //     },
+                              //     currentLatLng: LatLng(
+                              //         jobsViewModel.getjobsBody["latitude"] !=
+                              //             null
+                              //             ? double.parse(jobsViewModel
+                              //             .getjobsBody["latitude"]
+                              //             .toString())
+                              //             : profileViewModel.getProfileBody[
+                              //         'current_address'] !=
+                              //             null &&
+                              //             profileViewModel.getProfileBody[
+                              //             'current_address']
+                              //             ["latitude"] !=
+                              //                 null
+                              //             ? double.parse(profileViewModel
+                              //             .getProfileBody['current_address']
+                              //         ["latitude"]
+                              //             .toString())
+                              //             : 25.2854 ,
+                              //         jobsViewModel
+                              //             .getjobsBody["longitude"] !=
+                              //             null
+                              //             ? double.parse(jobsViewModel
+                              //             .getjobsBody["longitude"]
+                              //             .toString())
+                              //             : profileViewModel.getProfileBody[
+                              //         'current_address'] !=
+                              //             null &&
+                              //             profileViewModel
+                              //                 .getProfileBody['current_address']
+                              //             ["longitude"] !=
+                              //                 null
+                              //             ? double.parse(profileViewModel
+                              //             .getProfileBody['current_address']
+                              //         ["longitude"]
+                              //             .toString())
+                              //             : 51.5310),
+                              //
+                              //
+                              //   );
+
                               } else {
                                 return Container();
                               }
