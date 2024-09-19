@@ -470,10 +470,10 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                           "latitude"] !=
                                               null
                                               ? double.parse(signupViewModel.getSignUpBody['latitude'].toString())
-                                              : 51.5310, signupViewModel.getSignUpBody['longitude'] !=
+                                              : 25.2854, signupViewModel.getSignUpBody['longitude'] !=
                                             null
                                             ? double.parse(signupViewModel.getSignUpBody['longitude'].toString())
-                                            : 25.2854,),
+                                            : 51.5310),
                                         onNext: (GeocodingResult? result) {
                                           if (result != null) {
                                             debugPrint('next button hit ${result.formattedAddress}');
@@ -760,10 +760,10 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                               data.data["latitude"] !=
                                                   null
                                                   ? double.parse(data.data['latitude'].toString())
-                                                  : 51.5310, data.data['longitude'] !=
+                                                  : 25.2854 , data.data['longitude'] !=
                                               null
                                               ? double.parse(data.data['longitude'].toString())
-                                              : 25.2854),
+                                              : 51.5310),
 
 
                                         )
