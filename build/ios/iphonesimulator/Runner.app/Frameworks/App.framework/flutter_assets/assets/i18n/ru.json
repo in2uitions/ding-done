@@ -110,6 +110,8 @@
     "termsOfUse": "Условия использования",
     "logOut": "Выйти",
     "account": "Аккаунт",
+    "yourProfile": "Ваш профиль",
+    "yourName": "Ваше имя",
     "paymentMethods": "Способы оплаты",
     "notifications": "Уведомления",
     "editProfilePhoto": "Редактировать фото профиля",
@@ -142,7 +144,6 @@
     "CVC": "CVC",
     "cashOnDelivery": "Оплата наличными при доставке",
     "noPaymentMethod": "нет способов оплаты"
-
   },
   "bookService": {
     "bookService": "Забронировать услугу",

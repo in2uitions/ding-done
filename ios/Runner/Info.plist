@@ -13,7 +13,8 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-
+    <key>GMSApiKey</key>
+    <string>AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>

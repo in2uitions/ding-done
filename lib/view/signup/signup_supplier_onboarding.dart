@@ -656,25 +656,40 @@ class _SignUpSupplierOnBoardingScreenState
                                   MaterialPageRoute(
                                     builder: (context) {
                                       return MapLocationPicker(
+
                                         apiKey:
                                             'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
                                         popOnNextButtonTaped: true,
-                                        currentLatLng: LatLng(
+                                        currentLatLng:
+                                        LatLng(
                                           signupViewModel.getSignUpBody[
-                                                      "latitude"] !=
-                                                  null
+                                          'latitude'] !=
+                                              null && signupViewModel.getSignUpBody[
+                                          'latitude'] !=  'null'
+                                              && signupViewModel.getSignUpBody[
+                                          'latitude'] !=
+                                              ''
                                               ? double.parse(signupViewModel
-                                                  .getSignUpBody['latitude']
-                                                  .toString())
-                                              : 51.5310,
+                                              .getSignUpBody['latitude']
+                                              .toString())
+                                              : 25.2854,
                                           signupViewModel.getSignUpBody[
-                                                      'longitude'] !=
-                                                  null
+                                                      "longitude"] !=
+                                                  null && signupViewModel.getSignUpBody[
+                                                      "longitude"] !=
+                                                  'null' && signupViewModel.getSignUpBody[
+                                          "longitude"] !=''
                                               ? double.parse(signupViewModel
                                                   .getSignUpBody['longitude']
                                                   .toString())
-                                              : 25.2854,
+                                              : 51.5310,
+
                                         ),
+                                        // LatLng(
+                                        //   25.2854,
+                                        //  51.5310,
+                                        //
+                                        // ),
                                         onNext: (GeocodingResult? result) {
                                           if (result != null) {
                                             debugPrint(
@@ -992,12 +1007,12 @@ class _SignUpSupplierOnBoardingScreenState
                                               ? double.parse(data
                                                   .data['latitude']
                                                   .toString())
-                                              : 51.5310,
+                                              :25.2854 ,
                                           data.data['longitude'] != null
                                               ? double.parse(data
                                                   .data['longitude']
                                                   .toString())
-                                              : 25.2854),
+                                              : 51.5310),
                                     ));
                                   } else {
                                     return Container();
