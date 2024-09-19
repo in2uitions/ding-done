@@ -109,6 +109,8 @@
     "termsOfUse": "Όροι Χρήσης",
     "logOut": "Αποσύνδεση",
     "account": "Λογαριασμός",
+    "yourProfile": "Το προφίλ σας",
+    "yourName": "Το όνομά σου",
     "paymentMethods": "Τρόποι Πληρωμής",
     "notifications": "Ειδοποιήσεις",
     "editProfilePhoto": "Επεξεργασία Φωτογραφίας Προφίλ",
@@ -141,7 +143,6 @@
     "CVC": "Κωδικός CVC",
     "cashOnDelivery": "Πληρωμή Κατά Την Παράδοση",
     "noPaymentMethod": "δεν υπάρχουν τρόποι πληρωμής"
-
   },
   "bookService": {
     "bookService": "Κάντε κράτηση υπηρεσίας",

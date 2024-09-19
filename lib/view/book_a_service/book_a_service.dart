@@ -62,44 +62,10 @@ class _BookAServiceState extends State<BookAService> {
 
       return Scaffold(
         backgroundColor: const Color(0xffFEFEFE),
-        // backgroundColor: const Color(0xffF0F3F8),
         body: Stack(
           children: [
             Column(
               children: [
-                // SafeArea(
-                //   child: Directionality(
-                //     textDirection: TextDirection.ltr,
-                //     child: Padding(
-                //       padding: EdgeInsets.all(context.appValues.appPadding.p20),
-                //       child: Row(
-                //         children: [
-                //           InkWell(
-                //             child: SvgPicture.asset('assets/img/back.svg'),
-                //             onTap: () {
-                //               Navigator.pop(context);
-                //             },
-                //           ),
-                //         ],
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //     left: context.appValues.appPadding.p20,
-                //   ),
-                //   child: Align(
-                //     alignment: Alignment.centerLeft,
-                //     child: Text(
-                //       translate('bookService.bookService'),
-                //       style: getPrimaryRegularStyle(
-                //         color: context.resources.color.btnColorBlue,
-                //         fontSize: 32,
-                //       ),
-                //     ),
-                //   ),
-                // ),
                 Padding(
                   padding: EdgeInsets.all(context.appValues.appPadding.p0),
                   child: Stack(
@@ -122,7 +88,6 @@ class _BookAServiceState extends State<BookAService> {
                             begin: const Alignment(0.00, 1),
                             end: const Alignment(0, 0),
                             colors: [
-                              // const Color(0x00D9D9D9),
                               const Color(0xffEECB0B).withOpacity(0),
                               const Color(0xffEECB0B).withOpacity(0.4),
                               const Color(0xffEECB0B).withOpacity(0.6),
@@ -146,17 +111,6 @@ class _BookAServiceState extends State<BookAService> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // InkWell(
-                                    //   child: Padding(
-                                    //     padding: const EdgeInsets.only(top: 5),
-                                    //     child: SvgPicture.asset(
-                                    //         'assets/img/back-new.svg'),
-                                    //   ),
-                                    //   onTap: () {
-                                    //     Navigator.pop(context);
-                                    //   },
-                                    // ),
-                                    // const Gap(10),
                                     Text(
                                       translate('bookService.bookService'),
                                       style: getPrimaryBoldStyle(
@@ -182,25 +136,6 @@ class _BookAServiceState extends State<BookAService> {
                               ],
                             ),
                           ),
-                          // Column(
-                          //   crossAxisAlignment: CrossAxisAlignment.start,
-                          //   children: [
-                          //     Text(
-                          //       '${categories!["title"]}',
-                          //       style: getPrimaryBoldStyle(
-                          //         fontSize: 20,
-                          //         color: context.resources.color.colorWhite,
-                          //       ),
-                          //     ),
-                          //     Text(
-                          //       '${services!["title"]}',
-                          //       style: getPrimaryBoldStyle(
-                          //         fontSize: 30,
-                          //         color: context.resources.color.colorWhite,
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
                         ),
                       ),
                       Positioned(
@@ -245,7 +180,6 @@ class _BookAServiceState extends State<BookAService> {
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return Container(
-                    // height: context.appValues.appSizePercent.h70,
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
@@ -291,21 +225,18 @@ class _BookAServiceState extends State<BookAService> {
                                   ],
                                 ),
                               ),
-
                               const AddMedia(),
-
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal:
                                         context.appValues.appPadding.p20),
                                 child: Container(
                                   width: context.appValues.appSizePercent.w100,
-                                  // height: context.appValues.appSizePercent.h20,
-                                  // height: context.appValues.appSizePercent.h30,
                                   decoration: BoxDecoration(
                                     color: context.resources.color.colorWhite,
                                     borderRadius: const BorderRadius.all(
-                                        Radius.circular(20)),
+                                      Radius.circular(20),
+                                    ),
                                   ),
                                   child: Column(
                                     crossAxisAlignment:
@@ -313,12 +244,12 @@ class _BookAServiceState extends State<BookAService> {
                                     children: [
                                       Padding(
                                         padding: EdgeInsets.symmetric(
-                                            horizontal: context
-                                                .appValues.appPadding.p20,
-                                            vertical: context
-                                                .appValues.appPadding.p10),
+                                          horizontal:
+                                              context.appValues.appPadding.p20,
+                                          vertical:
+                                              context.appValues.appPadding.p10,
+                                        ),
                                         child: Text(
-                                          // translate('bookService.dateAndTime'),
                                           "Working Day",
                                           style: getPrimaryBoldStyle(
                                             fontSize: 20,
@@ -326,7 +257,6 @@ class _BookAServiceState extends State<BookAService> {
                                           ),
                                         ),
                                       ),
-                                      // DateAndTimeButtons(),
                                       const DatePickerWidget(),
                                       SizedBox(
                                           height: context

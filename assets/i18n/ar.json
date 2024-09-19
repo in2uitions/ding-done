@@ -109,6 +109,8 @@
     "termsOfUse": "شروط الاستخدام",
     "logOut": "تسجيل الخروج",
     "account": "الحساب",
+    "yourProfile": "ملفك الشخصي",
+    "yourName": "اسمك",
     "paymentMethods": "وسائل الدفع",
     "notifications": "الإشعارات",
     "editProfilePhoto": "تحرير صورة الملف الشخصي",
@@ -141,7 +143,6 @@
     "CVC": "رمز التحقق من البطاقة (CVC)",
     "cashOnDelivery": "الدفع عند الاستلام",
     "noPaymentMethod": "لا توجد طرق الدفع"
-
   },
   "bookService": {
     "bookService": "حجز خدمة",

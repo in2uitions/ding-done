@@ -43,48 +43,44 @@ class _CustomPhoneFeildState extends State<CustomPhoneFeild> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: context.appValues.appSizePercent.h8,
-          decoration: BoxDecoration(
-            borderRadius: const BorderRadius.all(
-              Radius.circular(15),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 1,
-                blurRadius: 4,
-                offset: Offset(0, 2),
-              ),
-            ],
+    return IntlPhoneField(
+      style: getPrimaryRegularStyle(
+        fontSize: 16,
+      ),
+      textAlign: TextAlign.start,
+      controller: _customController,
+      decoration: InputDecoration(
+        errorText: widget.errorText,
+        hintText: translate('formHints.phone_number'),
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 2.0,
           ),
         ),
-        IntlPhoneField(
-          style: getPrimaryRegularStyle(
-            fontSize: 16,
-            // color: const Color(0xffB4B4B4),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 2.0,
           ),
-          textAlign: TextAlign.start,
-          controller: _customController,
-          decoration: InputDecoration(
-            errorText: widget.errorText,
-            hintText: translate('formHints.phone_number'),
-            // labelStyle: TextStyle(),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(context.appValues.appSize.s10),
-              ),
-              borderSide: BorderSide.none,
-            ),
-            filled: true,
-            fillColor: context.resources.color.colorWhite,
-          ),
-          initialCountryCode: 'QA',
-          disableLengthCheck: true,
         ),
-      ],
+        errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 2.0,
+          ),
+        ),
+        focusedErrorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 2.0,
+          ),
+        ),
+        filled: true,
+        fillColor: context.resources.color.colorWhite,
+      ),
+      initialCountryCode: 'QA',
+      disableLengthCheck: true,
     );
   }
 
