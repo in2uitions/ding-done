@@ -9,6 +9,9 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import '../../res/app_validation.dart';
+import '../../res/strings/english_strings.dart';
+
 class JobsViewModel with ChangeNotifier {
   final JobsRepository _jobsRepository = JobsRepository();
   ApiResponse<JobsModel> _jobsResponse = ApiResponse.loading();
@@ -41,6 +44,7 @@ class JobsViewModel with ChangeNotifier {
   String _selectedReason = '';
   bool _showCustomTextArea = false;
   dynamic _file;
+  Map<String?, String?> jobsAddressError = {};
 
   JobsViewModel() {
     debugPrint('hehehehe');
@@ -82,6 +86,81 @@ class JobsViewModel with ChangeNotifier {
     }
     notifyListeners();
     return true;
+  }
+
+  bool validate() {
+    jobsAddressError = {};
+    String? streetMessage = '';
+    String? buildingMessage = '';
+    String? apartmentMessage = '';
+    String? cityMessage = '';
+    String? zoneMessage = '';
+    String? countryMessage = '';
+    String? floorMessage = '';
+    String? longitudeMessage = '';
+    String? latitudeMessage = '';
+
+    streetMessage = AppValidation().isNotEmpty(
+        value:
+            jobsBody[EnglishStrings().formKeys['street_number']!] ?? '',
+        index: 'Street Number');
+    buildingMessage = AppValidation().isNotEmpty(
+        value:
+        jobsBody[EnglishStrings().formKeys['building_number']!] ??
+                '',
+        index: 'Building Number');
+    apartmentMessage = AppValidation().isNotEmpty(
+        value:
+        jobsBody[EnglishStrings().formKeys['apartment_number']!] ??
+                '',
+        index: 'Apartment Number');
+    cityMessage = AppValidation().isNotEmpty(
+        value: jobsBody[EnglishStrings().formKeys['city']!] ?? '',
+        index: 'City');
+    zoneMessage = AppValidation().isNotEmpty(
+        value: jobsBody[EnglishStrings().formKeys['zone']!] ?? '',
+        index: 'Zone');
+    countryMessage = AppValidation().isNotEmpty(
+        value: jobsBody[EnglishStrings().formKeys['country']!] ?? '',
+        index: 'Country');
+    floorMessage = AppValidation().isNotEmpty(
+        value: jobsBody[EnglishStrings().formKeys['floor']!] ?? '',
+        index: 'Floor');
+
+    longitudeMessage = AppValidation().isNotEmpty(
+        value: jobsBody['longitude'] ?? '', index: 'Longitude');
+    latitudeMessage = AppValidation().isNotEmpty(
+        value: jobsBody['latitude'] ?? '', index: 'Latitude');
+
+    if (streetMessage == null &&
+        buildingMessage == null &&
+        apartmentMessage == null &&
+        cityMessage == null &&
+        zoneMessage == null &&
+        countryMessage == null &&
+        floorMessage == null &&
+        jobsBody['longitude'] != null &&
+        jobsBody['latitude'] != null) {
+      notifyListeners();
+      return true;
+    }
+
+    jobsAddressError[EnglishStrings().formKeys['street_number']!] =
+        streetMessage;
+    jobsAddressError[EnglishStrings().formKeys['building_number']!] =
+        buildingMessage;
+    jobsAddressError[EnglishStrings().formKeys['apartment_number']!] =
+        apartmentMessage;
+    jobsAddressError[EnglishStrings().formKeys['city']!] = cityMessage;
+    jobsAddressError[EnglishStrings().formKeys['zone']!] = zoneMessage;
+    jobsAddressError[EnglishStrings().formKeys['country']!] = countryMessage;
+    jobsAddressError[EnglishStrings().formKeys['floor']!] = floorMessage;
+    jobsAddressError[EnglishStrings().formKeys['longitude']!] =
+        longitudeMessage;
+    jobsAddressError[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
+
+    notifyListeners();
+    return false;
   }
 
   Future<bool?> getCustomerJobs() async {
@@ -415,10 +494,9 @@ class JobsViewModel with ChangeNotifier {
       setInputValues(index: 'start_date', value: combinedDateTime.toString());
       if (jobsBody['payment_card'] == null) {
         return false;
-      }else{
+      } else {
         dynamic response = await _jobsRepository.postNewJobRequest(jobsBody);
         _jobsResponse = ApiResponse<JobsModel>.completed(response);
-
       }
 
       return true;
@@ -487,7 +565,6 @@ class JobsViewModel with ChangeNotifier {
       // Handle the error
       debugPrint('Could not launch WhatsApp.');
     }
-
   }
 
   void setShowCustomTextArea(bool show) {

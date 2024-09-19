@@ -88,16 +88,20 @@ class ProfileViewModel extends DisposableViewModel {
       String userId = await getUserId();
       List<Map<String, dynamic>> existingAddresses = List.from(profileBody["address"]);
       // Create a new address
+      debugPrint('body in patch profile data ${body}');
       Map<String, dynamic> newAddress = {
-        "street_name": body["street_name"],
-        "building_number": body["street_name"],
+        "street_name": body["address"],
+        "street_number": body["street_number"],
+        "building_number": body["building_number"],
         "city": body["city"],
+        "floor": body["floor"],
+        "apartment_number": body["apartment_number"],
         "state": body["state"],
-        "postal_code": body["postal_code"],
+        "zone": body["zone"],
         "longitude": body["longitude"],
         "latitude": body["latitude"],
         //Here we have to add the country
-        // "country": body["country"].toString(),
+        "country": body["country"].toString(),
       };
       debugPrint('adding new address $newAddress');
 

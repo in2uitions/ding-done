@@ -965,66 +965,6 @@ class _SignUpSupplierOnBoardingScreenState
                                           //     myLocationEnabled:true
                                           //there is a lot more options you can add here
                                         );
-                                    //     MapLocationPicker(
-                                    //   apiKey:
-                                    //       'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
-                                    //   popOnNextButtonTaped: false,
-                                    //   hideMoreOptions: true,
-                                    //   hideBackButton: true,
-                                    //   hideBottomCard: true,
-                                    //   hideLocationButton: true,
-                                    //   hideSuggestionsOnKeyboardHide: true,
-                                    //   hideMapTypeButton: true,
-                                    //       onSuggestionSelected:
-                                    //           (PlacesDetailsResponse? result) {
-                                    //         if (result != null) {
-                                    //
-                                    //           var splitted = result
-                                    //               .result.formattedAddress
-                                    //               ?.split(',');
-                                    //           var first =
-                                    //           splitted?.first.toString();
-                                    //           var last =
-                                    //           splitted?.last.toString();
-                                    //           debugPrint(
-                                    //               'first $first last $last');
-                                    //           signupViewModel.setInputValues(
-                                    //               index: "longitude",
-                                    //               value: result.result.geometry
-                                    //                   ?.location.lng
-                                    //                   .toString());
-                                    //           signupViewModel.setInputValues(
-                                    //               index: "latitude",
-                                    //               value: result.result.geometry
-                                    //                   ?.location.lat
-                                    //                   .toString());
-                                    //           signupViewModel.setInputValues(
-                                    //               index: "address",
-                                    //               value: result.result
-                                    //                   .formattedAddress ??
-                                    //                   '');
-                                    //
-                                    //           signupViewModel.setInputValues(
-                                    //               index: "city",
-                                    //               value: '$last' ?? '');
-                                    //           signupViewModel.setInputValues(
-                                    //               index: "street_number",
-                                    //               value: '$first' ?? '');
-                                    //
-                                    //         }
-                                    //       },
-                                    //   currentLatLng: LatLng(
-                                    //       data.data["latitude"] != null
-                                    //           ? double.parse(data
-                                    //               .data['latitude']
-                                    //               .toString())
-                                    //           :25.2854 ,
-                                    //       data.data['longitude'] != null
-                                    //           ? double.parse(data
-                                    //               .data['longitude']
-                                    //               .toString())
-                                    //           : 51.5310),
-                                    // ));
                                   } else {
                                     return Container();
                                   }

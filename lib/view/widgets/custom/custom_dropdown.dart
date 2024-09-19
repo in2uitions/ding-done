@@ -61,7 +61,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
             getPrimaryRegularStyle(
                 color: context.resources.color.colorBlack[50]),
         decoration: InputDecoration(
-          // labelText: widget.hint,
+          hintText: widget.hintText,
           focusedBorder: const OutlineInputBorder(
             borderRadius: BorderRadius.all(
               Radius.circular(10),
@@ -87,7 +87,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
           fillColor: context.resources.color.colorWhite,
         ),
         onChanged: widget.onChange,
-        hint: Text(widget.hint),
+        hint: Text(widget.hintText!),
         items: widget.list
             .map<DropdownMenuItem<String>>((dynamic value) {
           return DropdownMenuItem<String>(

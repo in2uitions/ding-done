@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		r//AkYYIhqGBQ5idPaqg5Fwlz/k=
+		CY/iA/OqTNB8YfxyhUdO47dTqX0=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		klpabgY8SzZPSTz5dGFIgdAxXZA=
+		iiZjUo/sSvX0Zs/ROorNsYKFEcQ=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
@@ -470,7 +470,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		UYmo064lUbNh/88K5LjBsITYQmg=
+		62/tTJrAnjCokJNh8pheAn5XOxA=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -4706,11 +4706,11 @@
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI</key>
 		<data>
-		+nRDcfAN0ZbvRxEHkjwrhwaKx5E=
+		Vmo2aU3qWmZCEvhEGnXGeR9usK4=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Assets.car</key>
 		<data>
-		mRZp0E/cF6kESv/3pB5/A7B9mQ4=
+		WWbtXewZnW9ykyuppGmHS/fGbEI=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Info.plist</key>
 		<data>
@@ -5100,7 +5100,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/_CodeSignature/CodeResources</key>
 		<data>
-		I4T1NiNP7Thp9myU2reRU7lhXOg=
+		iLR4fXogzD0+Ln50U8Lr+LO70kQ=
 		</data>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
 		<data>
@@ -5108,11 +5108,11 @@
 		</data>
 		<key>Frameworks/StripeUICore.framework/StripeUICore</key>
 		<data>
-		sY7EPpEWnn9G+FZUdgxTsOADbDo=
+		22lEKk2RrJz6bgjrGwT8N64bovc=
 		</data>
 		<key>Frameworks/StripeUICore.framework/StripeUICore.bundle/Assets.car</key>
 		<data>
-		eT0NS52706kRGLsrRqI3AP+Mv+8=
+		VVgUCfBZ4iXmBGShlI/A/W9e88E=
 		</data>
 		<key>Frameworks/StripeUICore.framework/StripeUICore.bundle/Info.plist</key>
 		<data>
@@ -5497,7 +5497,7 @@
 		</dict>
 		<key>Frameworks/StripeUICore.framework/_CodeSignature/CodeResources</key>
 		<data>
-		MxkgokO1nL8hOsdHSEb2H+D8zmA=
+		lYcbhJH42Gf6Q09+5GuLIi99N7k=
 		</data>
 		<key>Frameworks/SwiftyGif.framework/Info.plist</key>
 		<data>
@@ -7119,7 +7119,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			sxm0jzvg5utfTt8UZTTAFNFY6zy/pdJp9Mlvb+1DmXM=
+			Q0FXaKQzHnXijw3PT9+f5VH8FwLmZTd2xqAjG/9lmJE=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -7133,7 +7133,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fdDe7DQ6FHnqCee5NKZxk+KgDejEkOaypdMKqaPXXlA=
+			DpW3Y4m0RLELfIngZCThDHRgMwgzeh+h3WyX4y+zN64=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
@@ -7847,7 +7847,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vHsuuKcnAkH8dFNoYZ/KVzS/WaDkduBLN9JxRNdBZ9s=
+			1NElCg6+aRgayoLYkK4T0oaY2+U9XOl3Tb5/Vv7KJ0A=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -13424,14 +13424,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			tyHX6gI5gTe8gePtHuupb38X/jQQ9KqrHLmCF/K9bV0=
+			1RXZLrFxAcr946JPxGUBJ9y/auX0HgOyNAQIhq+DZbA=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			J+Ra7VIYV38cn4aEK4hd3dHSae6pr19Vz3B3InvhoVw=
+			JZ5QnbDSaEJjMFiVJO2uP+scmDy0wIT0jA+aTtIeMfk=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Info.plist</key>
@@ -13830,7 +13830,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0rr9wNN/fsrkIOPrmLtFomx7x/+zeSqIjZ5Z0aSCC3o=
+			9xXF1O4QlAdJy7P2huM0I2Dz7ohGpNjB0E7E5aEbaq4=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
@@ -13844,14 +13844,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1xSO7LDX/grmqjhZfRbO4d1G8NOLoNhwzfM+RcuVpnM=
+			k+nBIRC7DExEaJzcpg8Trf6P9ASS2Ax4qzxN6oZtMp4=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/StripeUICore.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZVQumS7mqtCG5yFjGYLtm9/tjMQ+feNJOYEqyQb5l5s=
+			Jx98mu+fBHiqezEkvVH9cxMSu+U2eF+qe28YTLHXong=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/StripeUICore.bundle/Info.plist</key>
@@ -14248,7 +14248,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			xDUbvnkmnsf/435/rocGxPJJccUAD/ivhjAWOc+bh54=
+			CDRCqh7XC7Pgx3yGuqDLOX45NFI0SaHS4QCQozoJM+c=
 			</data>
 		</dict>
 		<key>Frameworks/SwiftyGif.framework/Info.plist</key>

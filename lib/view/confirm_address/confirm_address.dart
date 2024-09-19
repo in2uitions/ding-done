@@ -123,8 +123,11 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                             height: context.appValues.appSizePercent.h100,
                             child: ElevatedButton(
                               onPressed: () async {
-                                await profileViewModel
-                                    .patchProfileData(jobsViewModel.getjobsBody);
+                                if(jobsViewModel.validate()){
+                                  await profileViewModel
+                                      .patchProfileData(jobsViewModel.getjobsBody);
+                                }
+
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xffF3D347),
