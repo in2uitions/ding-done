@@ -35,14 +35,62 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
   late Material materialButton;
   late int index;
   dynamic image = {};
+  Position? _currentPosition;
 
   @override
   void initState() {
     super.initState();
     materialButton = _skipButton();
     index = widget.initialIndex;
+    _getCurrentPosition();
   }
 
+  Future<bool> _handleLocationPermission() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location services are disabled. Please enable the services')));
+      return false;
+    }
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Location permissions are denied')));
+        return false;
+      }
+    }
+    if (permission == LocationPermission.deniedForever) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+              'Location permissions are permanently denied, we cannot request permissions.')));
+      return false;
+    }
+    return true;
+  }
+
+  Future<void> _getCurrentPosition() async {
+    final hasPermission = await _handleLocationPermission();
+    debugPrint('has location permission $hasPermission');
+    if (!hasPermission) return;
+
+    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      debugPrint('current location $position');
+      setState(() => _currentPosition = position);
+      // AppPreferences().save(key: currentPositionKey, value: position, isModel: false);
+      debugPrint('current location $position');
+
+    }).catchError((e) {
+      debugPrint('error getting position $e');
+      debugPrint(e);
+    });
+  }
   Material _skipButton({void Function(int)? setIndex}) {
     return Material(
       borderRadius: defaultSkipButtonBorderRadius,
@@ -464,10 +512,10 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                           "latitude"] !=
                                               null
                                               ? double.parse(signupViewModel.getSignUpBody['latitude'].toString())
-                                              : 25.2854, signupViewModel.getSignUpBody['longitude'] !=
+                                              : double.parse(_currentPosition!.latitude.toString()), signupViewModel.getSignUpBody['longitude'] !=
                                             null
                                             ? double.parse(signupViewModel.getSignUpBody['longitude'].toString())
-                                            : 51.5310),
+                                            : double.parse(_currentPosition!.longitude.toString())),
                                         onNext: (GeocodingResult? result) {
                                           if (result != null) {
                                             debugPrint('next button hit ${result.formattedAddress}');
@@ -590,10 +638,10 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                                 data.data["latitude"] !=
                                                     null
                                                     ? double.parse(data.data['latitude'].toString())
-                                                    : 25.2854 , data.data['longitude'] !=
+                                                    : double.parse(_currentPosition!.latitude.toString()) , data.data['longitude'] !=
                                                 null
                                                 ? double.parse(data.data['longitude'].toString())
-                                                : 51.5310)),
+                                                : double.parse(_currentPosition!.longitude.toString()))),
 
                                         mapType: MapType.normal,
                                         markers: <Marker>{Marker(

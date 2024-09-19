@@ -590,7 +590,7 @@ class SignUpViewModel with ChangeNotifier {
     }
     notifyListeners();
   }
-
+ 
   // Future<void> getUserRoleFromId(String id) async {
   //   try {
   //     String? user_role = await _signUpRepository.getUserRoleFromId(id);

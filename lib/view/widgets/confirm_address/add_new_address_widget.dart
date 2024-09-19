@@ -14,6 +14,7 @@ import 'package:gap/gap.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:provider/provider.dart';
 
+import '../../confirm_address/confirm_address.dart';
 import '../custom/custom_dropdown.dart';
 
 class AddNewAddressWidget extends StatefulWidget {
@@ -133,7 +134,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
 
                                   }
                                 },
-                                onSuggestionSelected: (PlacesDetailsResponse? result) {
+                                onSuggestionSelected: (PlacesDetailsResponse? result) async {
                                   if (result != null) {
                                     setState(() {
                                       // autocompletePlace =
@@ -159,7 +160,14 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                     jobsViewModel.setInputValues(
                                         index: "street_number",
                                         value: '$first' ?? '');
-                                  }
+                                    Navigator.pop(context);
+                                    await Future.delayed(const Duration(seconds: 1));
+
+                                      Navigator.of(context).push(
+                                          _createRoute(
+                                              ConfirmAddress()));
+                                    }
+
                                 },
 
 
@@ -247,7 +255,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
 
                                 }
                               },
-                              onSuggestionSelected: (PlacesDetailsResponse? result) {
+                              onSuggestionSelected: (PlacesDetailsResponse? result) async {
                                 if (result != null) {
                                   var splitted =result.result.formattedAddress?.split(',');
                                   var first=splitted?.first.toString();
@@ -269,6 +277,12 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                   jobsViewModel.setInputValues(
                                       index: "street_number",
                                       value: '$first' ?? '');
+                                  Navigator.pop(context);
+                                  await Future.delayed(const Duration(seconds: 1));
+
+                                  Navigator.of(context).push(
+                                      _createRoute(
+                                          ConfirmAddress()));
                                 }
                               },
 
