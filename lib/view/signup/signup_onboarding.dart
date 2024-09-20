@@ -646,9 +646,20 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                         mapType: MapType.normal,
                                         markers: <Marker>{Marker(
                                             markerId: MarkerId('marker'),
-                                            infoWindow: InfoWindow(title: 'InfoWindow'))},
+                                            infoWindow: InfoWindow(title: 'Current'),
+                                          position: LatLng(
+                                      data.data["latitude"] !=
+                                      null
+                                      ? double.parse(data.data['latitude'].toString())
+                                          : double.parse(_currentPosition!.latitude.toString()) , data.data['longitude'] !=
+                                      null
+                                      ? double.parse(data.data['longitude'].toString())
+                                          : double.parse(_currentPosition!.longitude.toString())))},
+
+
                                         onCameraMove: null,
                                         myLocationButtonEnabled: false,
+
                                       ),
 
                                         // child:MapLocationPicker(

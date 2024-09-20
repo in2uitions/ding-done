@@ -41,6 +41,8 @@ class UpdateJobRequestCustomer extends StatefulWidget {
 }
 
 class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
+  bool _isLoading=false;
+  bool _isLoading2=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -455,6 +457,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                           height: context.appValues.appSizePercent.h100,
                           child: ElevatedButton(
                             onPressed: () async {
+                              setState(() {
+                                _isLoading2=true;
+
+                              });
                               widget.fromWhere == 'completed'
                                   ? await jobsViewModel.downloadInvoice(
                                               widget.data.id) ==
@@ -481,6 +487,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           context: context,
                                           builder: (BuildContext context) =>
                                               simpleAlert(context, translate('button.failure')));
+                              setState(() {
+                                _isLoading2=false;
+
+                              });
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xff87795F),
@@ -489,14 +499,14 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                               ),
                             ),
                             child: widget.fromWhere == 'completed'
-                                ? Text(
+                                ? _isLoading2?CircularProgressIndicator():Text(
                                     translate('button.invoice'),
                                     style: getPrimaryBoldStyle(
                                       fontSize: 18,
                                       color: context.resources.color.colorWhite,
                                     ),
                                   )
-                                : Text(
+                                : _isLoading2?CircularProgressIndicator():Text(
                                     translate('button.update'),
                                     style: getPrimaryBoldStyle(
                                       fontSize: 18,
@@ -521,6 +531,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             height: context.appValues.appSizePercent.h100,
                             child: ElevatedButton(
                               onPressed: () {
+                                setState(() {
+                                  _isLoading=true;
+
+                                });
                                 debugPrint(
                                     'payment_card ${widget.data.payment_card}');
                                 widget.fromWhere == 'booked' || widget.fromWhere==translate('jobs.requestedJobs')
@@ -565,6 +579,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                         review(context,
                                                             jobsViewModel))
                                             : '';
+                                setState(() {
+                                  _isLoading=false;
+
+                                });
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(0xffF3D347),
@@ -574,7 +592,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                               ),
                               child:
                               widget.fromWhere == 'active'
-                                  ? Text(
+                                  ? _isLoading?CircularProgressIndicator():Text(
                                       translate('button.finish'),
                                       style: getPrimaryBoldStyle(
                                         fontSize: 18,
@@ -584,7 +602,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     )
                                   :
                               widget.fromWhere == 'completed'
-                                      ? Text(
+                                      ?_isLoading?CircularProgressIndicator(): Text(
                                           widget.data.is_paid != null
                                               ? (widget.fromWhere ==
                                                           'completed' &&

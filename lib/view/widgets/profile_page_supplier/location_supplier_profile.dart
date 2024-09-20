@@ -5,6 +5,7 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 import '../../confirm_address/confirm_address.dart';
@@ -93,7 +94,11 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
                         context.appValues.appPadding.p10,
                       ),
                       child: Text(
-                        '${profileViewModel.getProfileBody['address'][0]["street_name"]} ${profileViewModel.getProfileBody['address'][0]["building_number"]}, ${profileViewModel.getProfileBody['address'][0]["city"]}, ${profileViewModel.getProfileBody['address'][0]["state"]}',
+                        '${profileViewModel.getProfileBody[
+                        'current_address']["street_name"]} ${profileViewModel.getProfileBody[
+                        'current_address']["building_number"]}, ${profileViewModel.getProfileBody[
+                        'current_address']["city"]}, ${profileViewModel.getProfileBody[
+                        'current_address']["state"]}',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: getPrimaryRegularStyle(
@@ -108,24 +113,87 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
                       child: SizedBox(
                           height: context.appValues.appSizePercent.h25,
                           width: context.appValues.appSizePercent.w90,
-                          child: MapDisplay(
-                              body: profileViewModel.getProfileBody,
-                              longitude:
-                                  profileViewModel.getProfileBody["address"] != null &&
-                                          profileViewModel.getProfileBody["address"]
-                                                  [0]["longitude"] !=
-                                              null
-                                      ? profileViewModel.getProfileBody["address"]
-                                          [0]["longitude"]
-                                      : 23,
-                              latitude:
-                                  profileViewModel.getProfileBody["address"] != null &&
-                                          profileViewModel.getProfileBody["address"]
-                                                  [0]["latitude"] !=
-                                              null
-                                      ? profileViewModel.getProfileBody["address"]
-                                          [0]["latitude"]
-                                      : 89)),
+                          child: FutureBuilder(
+                              future: Provider.of<ProfileViewModel>(context,
+                                  listen: false)
+                                  .getData(),
+                              builder: (context, AsyncSnapshot data) {
+                                if (data.connectionState ==
+                                    ConnectionState.done) {
+                                  return  GoogleMap(
+                                    onMapCreated: null,
+                                    initialCameraPosition:
+                                    CameraPosition(
+                                      zoom: 16.0,
+                                      target: LatLng(
+                                          profileViewModel.getProfileBody[
+                                          'current_address'] !=
+                                              null &&
+                                              profileViewModel.getProfileBody[
+                                              'current_address']
+                                              ["latitude"] !=
+                                                  null
+                                              ? double.parse(profileViewModel
+                                              .getProfileBody['current_address']
+                                          ["latitude"]
+                                              .toString())
+                                              : 25.2854 ,
+
+                                           profileViewModel.getProfileBody[
+                                          'current_address'] !=
+                                              null &&
+                                              profileViewModel
+                                                  .getProfileBody['current_address']
+                                              ["longitude"] !=
+                                                  null
+                                              ? double.parse(profileViewModel
+                                              .getProfileBody['current_address']
+                                          ["longitude"]
+                                              .toString())
+                                              : 51.5310),),
+
+                                    mapType: MapType.normal,
+                                    markers: <Marker>{Marker(
+                                      markerId: MarkerId('marker'),
+                                      infoWindow: InfoWindow(title: 'Current'),
+                                      position: LatLng(
+                                          profileViewModel.getProfileBody[
+                                          'current_address'] !=
+                                              null &&
+                                              profileViewModel.getProfileBody[
+                                              'current_address']
+                                              ["latitude"] !=
+                                                  null
+                                              ? double.parse(profileViewModel
+                                              .getProfileBody['current_address']
+                                          ["latitude"]
+                                              .toString())
+                                              : 25.2854 ,
+                                          profileViewModel.getProfileBody[
+                                          'current_address'] !=
+                                              null &&
+                                              profileViewModel
+                                                  .getProfileBody['current_address']
+                                              ["longitude"] !=
+                                                  null
+                                              ? double.parse(profileViewModel
+                                              .getProfileBody['current_address']
+                                          ["longitude"]
+                                              .toString())
+                                              : 51.5310),
+                                    )
+                                    },
+                                    onCameraMove: null,
+                                    myLocationButtonEnabled: false,
+                                    // options: GoogleMapOptions(
+                                    //     myLocationEnabled:true
+                                    //there is a lot more options you can add here
+                                  );
+
+                                } else {
+                                  return Container();
+                                }
+                              }),),
                     ),
                   ],
                 ),

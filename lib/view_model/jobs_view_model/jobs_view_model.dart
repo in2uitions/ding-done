@@ -75,6 +75,15 @@ class JobsViewModel with ChangeNotifier {
     }
   }
 
+  Future<dynamic> getUpdatedJobsBody() async {
+    try {
+      notifyListeners();
+      return jobsBody;
+    } catch (err) {
+      return;
+    }
+  }
+
   Future<bool?> getJobs() async {
     try {
       dynamic response = await _jobsRepository.getAllJobs();

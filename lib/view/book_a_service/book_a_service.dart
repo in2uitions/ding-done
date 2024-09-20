@@ -577,8 +577,8 @@ Widget _buildPopupDialog(BuildContext context) {
                 child: SvgPicture.asset('assets/img/x.svg'),
                 onTap: () {
                   Navigator.pop(context);
-                  Future.delayed(
-                      const Duration(seconds: 0), () => Navigator.pop(context));
+                  // Future.delayed(
+                  //     const Duration(seconds: 0), () => Navigator.pop(context));
                 },
               ),
             ],

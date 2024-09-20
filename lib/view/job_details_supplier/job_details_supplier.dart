@@ -40,6 +40,9 @@ class JobDetailsSupplier extends StatefulWidget {
 }
 
 class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
+  bool _isLoading=false;
+  bool _isLoading2=false;
+
   @override
   Widget build(BuildContext context) {
     debugPrint('job type ${widget.data.job_type}');
@@ -398,6 +401,10 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                     if (await jobsViewModel
                                             .updateJob(widget.data.id) ==
                                         true) {
+                                      setState(() {
+                                        _isLoading2=true;
+
+                                      });
                                       showDialog(
                                           context: context,
                                           builder: (BuildContext context) =>
@@ -416,6 +423,10 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                   translate(
                                                       'jobDetails.notUpdated')));
                                     }
+                                    setState(() {
+                                      _isLoading2=false;
+
+                                    });
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xff87795F),
@@ -423,7 +434,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                       borderRadius: BorderRadius.circular(12),
                                     ),
                                   ),
-                                  child: Text(
+                                  child: _isLoading2?CircularProgressIndicator():Text(
                                     translate('button.update'),
                                     style: getPrimaryBoldStyle(
                                       fontSize: 18,
@@ -438,6 +449,10 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                     height: context.appValues.appSizePercent.h7,
                                     child: ElevatedButton(
                                       onPressed: () async {
+                                        setState(() {
+                                          _isLoading2=true;
+
+                                        });
                                         if (await jobsViewModel
                                                 .ignoreJob(
                                                     widget.data.id) ==
@@ -462,6 +477,10 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                       translate(
                                                           'jobDetails.couldNotIgnored')));
                                         }
+                                        setState(() {
+                                          _isLoading2=false;
+
+                                        });
                                       },
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor:
@@ -471,7 +490,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                               BorderRadius.circular(12),
                                         ),
                                       ),
-                                      child: Text(
+                                      child:_isLoading2?CircularProgressIndicator(): Text(
                                         translate('jobDetails.ignore'),
                                         style: getPrimaryBoldStyle(
                                           fontSize: 18,
@@ -488,6 +507,10 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                           child: ElevatedButton(
                             onPressed: () async {
                               debugPrint('wefjweoifj ${widget.fromWhere}');
+                              setState(() {
+                                _isLoading=true;
+
+                              });
                               widget.fromWhere == 'request'
                                   ? await jobsViewModel.acceptJob(widget.data) ==
                                           true
@@ -564,6 +587,10 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                               ))
                                                   : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
                                               : '';
+                              setState(() {
+                                _isLoading=false;
+
+                              });
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xffF3D347),
@@ -571,7 +598,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                 borderRadius: BorderRadius.circular(12),
                               ),
                             ),
-                            child: Text(
+                            child: _isLoading?
+                            CircularProgressIndicator():
+                            Text(
                               widget.fromWhere == 'request'
                                   ? translate('button.accept')
                                   : widget.fromWhere == 'active'
