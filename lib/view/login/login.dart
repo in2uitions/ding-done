@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
@@ -5,6 +7,7 @@ import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
 import 'package:dingdone/view/forgot_password/forgot_password.dart';
 import 'package:dingdone/view/sign_up_as/sign_up_as.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
+import 'package:dingdone/view/widgets/custom/custom_text_feild_login.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -13,6 +16,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -52,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
   var password;
   // @override
   // void initState() {
-  //   // TODO: implement initState
   //   super.initState();
   //   //Remove this method to stop OneSignal Debugging
   //   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
@@ -76,6 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
         child: SafeArea(
+          bottom: false,
           child: ListView(
             children: [
               Padding(
@@ -114,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             jobsViewModel, error) {
                       return Column(
                         children: [
-                          CustomTextField(
+                          CustomTextFieldLogin(
                             viewModel: loginViewModel.setInputValues,
                             index: context.resources.strings.formKeys['email']!,
                             // hintText: context
@@ -125,21 +129,22 @@ class _LoginScreenState extends State<LoginScreen> {
                             errorText: loginViewModel.loginErrors[
                                 context.resources.strings.formKeys['email']!],
                             keyboardType: TextInputType.emailAddress,
-                            value: email != null ? email : '',
+                            value: email ?? '',
                           ),
-                          SizedBox(height: context.appValues.appSize.s15),
-                          CustomTextField(
-                              viewModel: loginViewModel.setInputValues,
-                              index: context
-                                  .resources.strings.formKeys['password']!,
-                              // hintText: context
-                              //     .resources.strings.formHints['password']!,
-                              hintText: translate('formHints.password'),
-                              errorText: loginViewModel.loginErrors[context
-                                  .resources.strings.formKeys['password']!],
-                              keyboardType: TextInputType.visiblePassword,
-                              value: password != null ? password : ''),
-                          SizedBox(height: context.appValues.appSize.s25),
+                          const Gap(15),
+                          CustomTextFieldLogin(
+                            viewModel: loginViewModel.setInputValues,
+                            index:
+                                context.resources.strings.formKeys['password']!,
+                            // hintText: context
+                            //     .resources.strings.formHints['password']!,
+                            hintText: translate('formHints.password'),
+                            errorText: loginViewModel.loginErrors[context
+                                .resources.strings.formKeys['password']!],
+                            keyboardType: TextInputType.visiblePassword,
+                            value: password ?? '',
+                          ),
+                          const Gap(10),
                           loginViewModel.errorMsg != null
                               ? Text(
                                   loginViewModel.errorMsg,
@@ -154,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             children: [
                               Align(
                                 alignment: Alignment.centerLeft,
-                                child: Container(
+                                child: SizedBox(
                                   width: context.appValues.appSizePercent.w45,
                                   child: CheckboxListTile(
                                     title: Text(
@@ -425,7 +430,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ],
                     ),
-                    SizedBox(height: context.appValues.appSize.s35),
+                    const Gap(30),
                   ],
                 ),
               ),
@@ -506,9 +511,10 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
         cancelButton: CupertinoActionSheetAction(
           // child: Text(translate('button.cancel')),
-          child: const Text('Cancel'),
           isDefaultAction: true,
           onPressed: () => Navigator.pop(context, null),
+          // child: Text(translate('button.cancel')),
+          child: const Text('Cancel'),
         ),
       ),
     );

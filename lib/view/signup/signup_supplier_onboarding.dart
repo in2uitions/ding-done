@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
@@ -20,7 +22,6 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
-
 
 class SignUpSupplierOnBoardingScreen extends StatefulWidget {
   var initialIndex;
@@ -65,7 +66,7 @@ class _SignUpSupplierOnBoardingScreenState
           // height: 51,
           height: context.appValues.appSizePercent.h065,
           decoration: BoxDecoration(
-            color: const Color(0xff57527A),
+            color: const Color(0xff4100E3),
             borderRadius: BorderRadius.circular(15),
           ),
           child: InkWell(
@@ -103,7 +104,7 @@ class _SignUpSupplierOnBoardingScreenState
           // height: 51,
           height: context.appValues.appSizePercent.h065,
           decoration: BoxDecoration(
-            color: const Color(0xffF3D347),
+            color: const Color(0xffFFC502),
             borderRadius: BorderRadius.circular(15),
           ),
           child: InkWell(
@@ -436,7 +437,7 @@ class _SignUpSupplierOnBoardingScreenState
                           if (selectedOption == 'individual')
                             Container(
                               decoration: BoxDecoration(
-                                color: Color(0xff112b78),
+                                color: const Color(0xff112b78),
                                 borderRadius: BorderRadius.circular(30.0),
                               ),
                               padding: EdgeInsets.symmetric(
@@ -699,7 +700,7 @@ class _SignUpSupplierOnBoardingScreenState
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) {
-                                      return GoogleMapScreen();
+                                      return const GoogleMapScreen();
                                     },
                                   ),
                                 );
@@ -749,7 +750,7 @@ class _SignUpSupplierOnBoardingScreenState
                                         mapType: MapType.normal,
                                         markers: <Marker>{
                                           Marker(
-                                            markerId: MarkerId('marker'),
+                                            markerId: const MarkerId('marker'),
                                             infoWindow: InfoWindow(
                                                 title: '${data.data['city']}'),
                                             position: LatLng(
@@ -791,7 +792,7 @@ class _SignUpSupplierOnBoardingScreenState
                           child: Text(
                             signupViewModel.signUpErrors[context
                                 .resources.strings.formKeys['longitude']]!,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ),
                       if (signupViewModel.signUpErrors[
@@ -802,7 +803,7 @@ class _SignUpSupplierOnBoardingScreenState
                           child: Text(
                             signupViewModel.signUpErrors[context
                                 .resources.strings.formKeys['latitude']]!,
-                            style: TextStyle(color: Colors.red),
+                            style: const TextStyle(color: Colors.red),
                           ),
                         ),
 
@@ -1210,7 +1211,7 @@ class _SignUpSupplierOnBoardingScreenState
                 child: ColoredBox(
                   color: const Color(0xffFEFEFE),
                   child: Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 20),
+                    padding: const EdgeInsets.fromLTRB(0.0, 10.0, 20.0, 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [

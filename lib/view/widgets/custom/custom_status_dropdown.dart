@@ -45,7 +45,13 @@ class _CustomStatusDropDownState extends State<CustomStatusDropDown> {
           items: items.map((String items) {
             return DropdownMenuItem(
               value: items,
-              child: Text(items),
+              child: Text(
+                items,
+                style: getPrimaryBoldStyle(
+                  color: context.resources.color.colorWhite,
+                  fontSize: 17,
+                ),
+              ),
             );
           }).toList(),
           onChanged: (String? newValue) {

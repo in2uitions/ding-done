@@ -1,4 +1,3 @@
-import 'package:dingdone/models/roles_model.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/categories_screen/categories_screen.dart';
@@ -61,7 +60,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               width: context.appValues.appSizePercent.w100,
               height: context.appValues.appSizePercent.h70,
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3, // Number of items in each row
                   crossAxisSpacing: 4, // Spacing between items horizontally
                   mainAxisSpacing: 4, // Spacing between items vertically
@@ -74,7 +73,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                   context.appValues.appPadding.p10,
                 ),
                 physics:
-                    NeverScrollableScrollPhysics(), // Disable grid view scrolling
+                    const NeverScrollableScrollPhysics(), // Disable grid view scrolling
                 shrinkWrap: true, // Wrap content inside the Column
                 itemCount: categoriesViewModel.categoriesList2.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -90,8 +89,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                 },
               ),
             ),
-            const SizedBox(
-                height: 15), // Add space between the first and second row
+            const SizedBox(height: 15),
           ],
         );
       },
@@ -100,9 +98,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
 
   Widget buildServiceWidget(
       dynamic service, CategoriesViewModel categoriesViewModel, var index) {
-    if (lang == null) {
-      lang = "en-US";
-    }
+    lang ??= "en-US";
     Map<String, dynamic>? services;
     Map<String, dynamic>? parentServices;
     for (Map<String, dynamic> translation in service["translations"]) {
@@ -224,8 +220,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                                                   "search_services"]
                                                               .toString()
                                                               .toLowerCase() ==
-                                                          parentServices?[
-                                                                  "title"]
+                                                          parentServices?["title"]
                                                               .toString()
                                                               .toLowerCase()
                                                   ? const Color(0xffDDB504)
@@ -238,7 +233,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                                                   "search_services"] ==
                                                               null
                                                       ? const Color(0xffDDB504)
-                                                      : Color.fromARGB(
+                                                      : const Color.fromARGB(
                                                           255, 124, 124, 124),
                                               BlendMode.srcIn,
                                             ),

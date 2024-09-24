@@ -66,65 +66,41 @@ class _CustomSearchBarState extends State<CustomSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // height: context.appValues.appSizePercent.h7,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5), // Shadow color
-            spreadRadius: 2, // Spread radius
-            blurRadius: 7, // Blur radius
-            offset: Offset(0, 3), // changes position of shadow
+    return TextFormField(
+      controller: _customController,
+      textAlignVertical: TextAlignVertical.center,
+      key: globalKey,
+      obscureText: widget.hintText == "Password" ? obscureText : false,
+      // maxLength: 32,
+      onSaved: widget.onSaved,
+      validator: widget.validator,
+      // onFieldSubmitted: widget.onFieldSubmitted,
+      onChanged: widget.onChanged,
+      // onTap: (() => widget.onTap),
+      style:
+          getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
+      decoration: InputDecoration(
+        isDense: true,
+        errorText: widget.errorText,
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
           ),
-        ],
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
+          borderSide: BorderSide.none,
         ),
-      ),
-      child: TextFormField(
-        controller: _customController,
-        textAlignVertical: TextAlignVertical.center,
-        key: globalKey,
-        obscureText: widget.hintText == "Password" ? obscureText : false,
-        // maxLength: 32,
-        onSaved: widget.onSaved,
-        validator: widget.validator,
-        // onFieldSubmitted: widget.onFieldSubmitted,
-        onChanged: widget.onChanged,
-        // onTap: (() => widget.onTap),
-        style: getPrimaryRegularStyle(
-            color: context.resources.color.colorBlack[50]),
-        decoration: InputDecoration(
-          isDense: true,
-          errorText: widget.errorText,
-          // border: InputBorder.none,
-          // contentPadding: EdgeInsets.all(context.appValues.appPadding.p8),
-          // border: OutlineInputBorder(
-          //   // borderSide: BorderSide.,
-          //   borderRadius: BorderRadius.all(
-          //     Radius.circular(context.appValues.appSize.s10),
-          //   ),
-          // ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(context.appValues.appSize.s10),
-            ),
-            borderSide: BorderSide.none,
-          ),
-          filled: true,
-          fillColor: context.resources.color.colorWhite,
-          hintText: widget.hintText,
-          hintStyle: getPrimaryBoldStyle(
-            color: const Color(0xffB4B4B4),
-            fontSize: 15,
-          ),
-          // labelText: widget.hintText,
-          helperText: widget.helperText,
-          prefixIcon: const Icon(
-            Icons.search_rounded,
-            color: Color(0xff9F9AB7),
-            size: 25,
-          ),
+        filled: true,
+        fillColor: context.resources.color.colorWhite,
+        hintText: widget.hintText,
+        hintStyle: getPrimaryBoldStyle(
+          color: const Color(0xffB4B4B4),
+          fontSize: 15,
+        ),
+        // labelText: widget.hintText,
+        helperText: widget.helperText,
+        prefixIcon: const Icon(
+          Icons.search_rounded,
+          color: Color(0xff9F9AB7),
+          size: 25,
         ),
       ),
     );

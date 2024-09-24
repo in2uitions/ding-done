@@ -1,7 +1,6 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
-import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -22,7 +21,6 @@ String? lang;
 class _JobInProgressState extends State<JobInProgress> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getLanguage();
   }
@@ -98,7 +96,9 @@ class _JobInProgressState extends State<JobInProgress> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              categories!=null?'${categories!["title"]}':'',
+                              categories != null
+                                  ? '${categories["title"]}'
+                                  : '',
                               // 'Plumbing',
                               style: getPrimaryBoldStyle(
                                 fontSize: 15,
@@ -106,7 +106,7 @@ class _JobInProgressState extends State<JobInProgress> {
                               ),
                             ),
                             Text(
-                              '${services!=null?services!["title"]:''}',
+                              '${services != null ? services["title"] : ''}',
                               style: getPrimaryBoldStyle(
                                 fontSize: 22,
                                 color: const Color(0xff190C39),
@@ -135,12 +135,9 @@ class _JobInProgressState extends State<JobInProgress> {
                           ),
                         ),
                         Text(
-                          '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ?
-                          jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] : ''}'
-                              ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ?
-                          jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["curreny"] : ''}'
-                              ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ?
-                          jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_type"] : ''}',
+                          '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] : ''}'
+                          ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["curreny"] : ''}'
+                          ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_type"] : ''}',
                           style: getPrimaryRegularStyle(
                             fontSize: 18,
                             color: const Color(0xff180C39),
@@ -166,9 +163,11 @@ class _JobInProgressState extends State<JobInProgress> {
                             color: const Color(0xff9E9AB7),
                           ),
                         ),
-
                         Text(
-                          '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(jobsViewModel.supplierInProgressJobs[index].start_date.toString()))}',
+                          DateFormat('d MMMM yyyy, HH:mm').format(
+                              DateTime.parse(jobsViewModel
+                                  .supplierInProgressJobs[index].start_date
+                                  .toString())),
 
                           // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
                           style: getPrimaryRegularStyle(
@@ -244,16 +243,16 @@ class _JobInProgressState extends State<JobInProgress> {
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(12.0),
-                                side: BorderSide(
-                                  color: context.resources.color.colorYellow,
+                                side: const BorderSide(
+                                  color: Color(0xff4100E3),
                                 ),
                               ),
-                              backgroundColor: const Color(0xffF3D347),
+                              backgroundColor: const Color(0xff4100E3),
                             ),
                             child: Text(
                               translate('button.complete'),
                               style: getPrimaryBoldStyle(
-                                fontSize: 15,
+                                fontSize: 18,
                                 color: context.resources.color.colorWhite,
                               ),
                             ),

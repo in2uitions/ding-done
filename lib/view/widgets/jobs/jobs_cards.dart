@@ -23,13 +23,16 @@ class JobsCards extends StatefulWidget {
   var userRole;
   var jobsViewModel;
   var lang;
+  final ScrollController? scrollController;
 
-  JobsCards(
-      {super.key,
-      required this.active,
-      required this.userRole,
-      required this.jobsViewModel,
-      required this.lang});
+  JobsCards({
+    super.key,
+    required this.active,
+    required this.userRole,
+    required this.jobsViewModel,
+    required this.lang,
+    this.scrollController,
+  });
 
   @override
   State<JobsCards> createState() => _JobsCardsState();
@@ -41,7 +44,6 @@ class _JobsCardsState extends State<JobsCards> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -49,7 +51,6 @@ class _JobsCardsState extends State<JobsCards> {
   Widget build(BuildContext context) {
     return Consumer3<LoginViewModel, JobsViewModel, PaymentViewModel>(
         builder: (context, loginViewModel, jobsViewModel, paymentViewModel, _) {
-
       data = Constants.supplierRoleId == widget.userRole
           ? widget.active == 'activeJobs'
               ? widget.jobsViewModel.supplierInProgressJobs
@@ -64,15 +65,17 @@ class _JobsCardsState extends State<JobsCards> {
                   ? widget.jobsViewModel.getcustomerJobs
                       .where((e) => e.status == 'completed')
                       .toList()
-              : widget.active == 'requestedJobs'
-                  ? widget.jobsViewModel.getcustomerJobs
-                      .where((e) => e.status == 'circulating' || e.status == 'draft')
-                      .toList()
-                  : widget.jobsViewModel.getcustomerJobs
-                      .where((e) => e.status == 'booked')
-                      .toList();
+                  : widget.active == 'requestedJobs'
+                      ? widget.jobsViewModel.getcustomerJobs
+                          .where((e) =>
+                              e.status == 'circulating' || e.status == 'draft')
+                          .toList()
+                      : widget.jobsViewModel.getcustomerJobs
+                          .where((e) => e.status == 'booked')
+                          .toList();
 
       return ListView.builder(
+          controller: widget.scrollController,
           padding: EdgeInsets.zero,
           shrinkWrap: true,
           itemCount: data.length,
@@ -105,19 +108,20 @@ class _JobsCardsState extends State<JobsCards> {
                             : widget.active == 'completedJobs'
                                 ? translate('jobs.completed')
                                 : translate('jobs.booked'),
-                  title: services?["title"].toString(),
+                        title: services?["title"].toString(),
                       )))
                     : Navigator.of(context)
                         .push(_createRoute(UpdateJobRequestCustomer(
                         data: data[index],
-                        title:'${data[index].service != null ?data[index].service['title']: services!["title"]}',
+                        title:
+                            '${data[index].service != null ? data[index].service['title'] : services!["title"]}',
                         fromWhere: widget.active == 'activeJobs'
                             ? 'active'
                             : widget.active == 'completedJobs'
                                 ? translate('jobs.completed')
-                            : widget.active == 'requestedJobs'
-                            ? translate('jobs.requestedJobs')
-                                : translate('jobs.booked'),
+                                : widget.active == 'requestedJobs'
+                                    ? translate('jobs.requestedJobs')
+                                    : translate('jobs.booked'),
                       )));
               },
               child: Padding(
@@ -199,7 +203,7 @@ class _JobsCardsState extends State<JobsCards> {
                                       widget.userRole ==
                                               Constants.supplierRoleId
                                           ? '${data[index].service != null ? services != null ? services["title"] : services : data[index].service}'
-                                          : '${data[index].service != null ?data[index].service['title']: services!["title"]}',
+                                          : '${data[index].service != null ? data[index].service['title'] : services!["title"]}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: getPrimaryRegularStyle(
@@ -257,9 +261,8 @@ class _JobsCardsState extends State<JobsCards> {
                                                     .total_amount
                                                     .toString() !=
                                                 ''
-                                        ? '${data[index].total_amount} ${ data[index].service["country_rates"]!=null && data[index].service["country_rates"].isNotEmpty ?
-                                    data[index].service["country_rates"][0]["country"]["curreny"]:''}'
-                                        : '${data[index].service["country_rates"]!=null ? data[index].service["country_rates"][0]["unit_rate"] :''} ${ data[index].service["country_rates"]!=null ? data[index].service["country_rates"][0]["country"]["curreny"]:''}',
+                                        ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["curreny"] : ''}'
+                                        : '${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["unit_rate"] : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["curreny"] : ''}',
                                     style: getPrimaryRegularStyle(
                                         fontSize: 15,
                                         color: context
@@ -267,35 +270,48 @@ class _JobsCardsState extends State<JobsCards> {
                                   ),
                                 ]),
                           ),
-                          widget.active == 'bookedJobs' || widget.active == 'requestedJobs'
+                          widget.active == 'bookedJobs' ||
+                                  widget.active == 'requestedJobs'
                               ? Padding(
-                            padding: EdgeInsets.only(right: context.appValues.appPadding.p8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  translate('updateJob.address'),
-                                  style: getPrimaryRegularStyle(
-                                      fontSize: 18, color: context.resources.color.secondColorBlue),
-                                ),
-                                Gap(30),
-                                Expanded(
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Text(
-                                      data[index].address != null && data[index].address.toString() != ''
-                                          ? '${data[index].address}'
-                                          : '',
-                                      style: getPrimaryRegularStyle(
-                                          fontSize: 15, color: context.resources.color.btnColorBlue),
-                                      overflow: TextOverflow.visible, // Ensure the text wraps to the next line
-                                      softWrap: true, // Enable soft wrapping
-                                    ),
+                                  padding: EdgeInsets.only(
+                                      right: context.appValues.appPadding.p8),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        translate('updateJob.address'),
+                                        style: getPrimaryRegularStyle(
+                                            fontSize: 18,
+                                            color: context.resources.color
+                                                .secondColorBlue),
+                                      ),
+                                      Gap(30),
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            data[index].address != null &&
+                                                    data[index]
+                                                            .address
+                                                            .toString() !=
+                                                        ''
+                                                ? '${data[index].address}'
+                                                : '',
+                                            style: getPrimaryRegularStyle(
+                                                fontSize: 15,
+                                                color: context.resources.color
+                                                    .btnColorBlue),
+                                            overflow: TextOverflow
+                                                .visible, // Ensure the text wraps to the next line
+                                            softWrap:
+                                                true, // Enable soft wrapping
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          )
+                                )
                               : Container(),
 
                           Padding(
@@ -305,54 +321,78 @@ class _JobsCardsState extends State<JobsCards> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  widget.active == 'activeJobs'?
-                                  Text(
-                                    translate('jobs.startTime'),
-                                    style: getPrimaryRegularStyle(
-                                        fontSize: 18,
-                                        color: context
-                                            .resources.color.secondColorBlue),
-                                  ):
-                                      widget.userRole==Constants.supplierRoleId || widget.active == 'requestedJobs'?
-                                  Text(
-                                    translate('jobs.dateTime'),
-                                    style: getPrimaryRegularStyle(
-                                        fontSize: 18,
-                                        color: context
-                                            .resources.color.secondColorBlue),
-                                  ):
-                                  Container(),
-                                  widget.userRole==Constants.supplierRoleId || widget.active == 'requestedJobs'?
-                                  widget.active == 'activeJobs' ?
-
-                                  Text(
-                                    data[index].actual_start_date != null
-                                        ? DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date + 'Z').toUtc().toLocal())
-                                        : '',
-                                    style: getPrimaryRegularStyle(
-                                        fontSize: 15,
-                                        color: context
-                                            .resources.color.btnColorBlue),
-                                  )
-                                  :Text(
-                                    data[index].start_date != null
-                                        ? DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].start_date).toLocal())
-                                        : '',
-                                    style: getPrimaryRegularStyle(
-                                        fontSize: 15,
-                                        color: context
-                                            .resources.color.btnColorBlue),
-                                  ): widget.active == 'activeJobs'?
-                                  Text(
-                                    data[index].actual_start_date != null
-                                        ? DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date + 'Z').toUtc().toLocal())
-                                        : '',
-                                    style: getPrimaryRegularStyle(
-                                        fontSize: 15,
-                                        color: context
-                                            .resources.color.btnColorBlue),
-                                  ):
-                                  Container(),
+                                  widget.active == 'activeJobs'
+                                      ? Text(
+                                          translate('jobs.startTime'),
+                                          style: getPrimaryRegularStyle(
+                                              fontSize: 18,
+                                              color: context.resources.color
+                                                  .secondColorBlue),
+                                        )
+                                      : widget.userRole ==
+                                                  Constants.supplierRoleId ||
+                                              widget.active == 'requestedJobs'
+                                          ? Text(
+                                              translate('jobs.dateTime'),
+                                              style: getPrimaryRegularStyle(
+                                                  fontSize: 18,
+                                                  color: context.resources.color
+                                                      .secondColorBlue),
+                                            )
+                                          : Container(),
+                                  widget.userRole == Constants.supplierRoleId ||
+                                          widget.active == 'requestedJobs'
+                                      ? widget.active == 'activeJobs'
+                                          ? Text(
+                                              data[index].actual_start_date !=
+                                                      null
+                                                  ? DateFormat(
+                                                          'd MMMM yyyy, HH:mm')
+                                                      .format(DateTime.parse(data[
+                                                                      index]
+                                                                  .actual_start_date +
+                                                              'Z')
+                                                          .toUtc()
+                                                          .toLocal())
+                                                  : '',
+                                              style: getPrimaryRegularStyle(
+                                                  fontSize: 15,
+                                                  color: context.resources.color
+                                                      .btnColorBlue),
+                                            )
+                                          : Text(
+                                              data[index].start_date != null
+                                                  ? DateFormat(
+                                                          'd MMMM yyyy, HH:mm')
+                                                      .format(DateTime.parse(
+                                                              data[index]
+                                                                  .start_date)
+                                                          .toLocal())
+                                                  : '',
+                                              style: getPrimaryRegularStyle(
+                                                  fontSize: 15,
+                                                  color: context.resources.color
+                                                      .btnColorBlue),
+                                            )
+                                      : widget.active == 'activeJobs'
+                                          ? Text(
+                                              data[index].actual_start_date !=
+                                                      null
+                                                  ? DateFormat(
+                                                          'd MMMM yyyy, HH:mm')
+                                                      .format(DateTime.parse(data[
+                                                                      index]
+                                                                  .actual_start_date +
+                                                              'Z')
+                                                          .toUtc()
+                                                          .toLocal())
+                                                  : '',
+                                              style: getPrimaryRegularStyle(
+                                                  fontSize: 15,
+                                                  color: context.resources.color
+                                                      .btnColorBlue),
+                                            )
+                                          : Container(),
                                 ]),
                           ),
                           Padding(
@@ -360,89 +400,98 @@ class _JobsCardsState extends State<JobsCards> {
                                 right: context.appValues.appPadding.p8),
                             child: Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  widget.active == 'completedJobs' && widget.userRole==Constants.customerRoleId?
-                                  Text(
-                                    translate('jobs.dateTime'),
-                                    style: getPrimaryRegularStyle(
-                                        fontSize: 18,
-                                        color: context
-                                            .resources.color.secondColorBlue),
-                                  ):
-
-                                  Container(),
-                                  widget.active == 'completedJobs' && widget.userRole==Constants.customerRoleId?
-
-
-                                  Text(
-                                    DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(data[index].actual_start_date + 'Z').toUtc().toLocal()),
-                                    style: getPrimaryRegularStyle(
-                                        fontSize: 15,
-                                        color: context
-                                            .resources.color.btnColorBlue),
-                                  )
-                                     :Container(),
-                                ]),
-                          ),
-
-                          widget.userRole==Constants.supplierRoleId?
-
-                          widget.active == 'bookedJobs'
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                      right: context.appValues.appPadding.p8),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          translate('jobs.estimatedDistance'),
+                                  widget.active == 'completedJobs' &&
+                                          widget.userRole ==
+                                              Constants.customerRoleId
+                                      ? Text(
+                                          translate('jobs.dateTime'),
                                           style: getPrimaryRegularStyle(
                                               fontSize: 18,
                                               color: context.resources.color
                                                   .secondColorBlue),
-                                        ),
-                                        Text(
-                                          '${(data[index].supplier_to_job_distance != null ? (data[index].supplier_to_job_distance / 1000).toStringAsFixed(3) : "0")} km',
-                                          style: getPrimaryRegularStyle(
-                                            fontSize: 15,
-                                            color: context.resources.color.btnColorBlue,
-                                          ),
-                                        ),
-
-                                      ]),
-                                )
-                              : Container()
-                          :Container(),
-                          widget.userRole==Constants.supplierRoleId?
-                          widget.active == 'bookedJobs'
-                              ? Padding(
-                                  padding: EdgeInsets.only(
-                                      right: context.appValues.appPadding.p8),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          translate('jobs.estimatedTime'),
-                                          style: getPrimaryRegularStyle(
-                                              fontSize: 18,
-                                              color: context.resources.color
-                                                  .secondColorBlue),
-                                        ),
-                                        Text(
-                                          '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
+                                        )
+                                      : Container(),
+                                  widget.active == 'completedJobs' &&
+                                          widget.userRole ==
+                                              Constants.customerRoleId
+                                      ? Text(
+                                          DateFormat('d MMMM yyyy, HH:mm')
+                                              .format(DateTime.parse(data[index]
+                                                          .actual_start_date +
+                                                      'Z')
+                                                  .toUtc()
+                                                  .toLocal()),
                                           style: getPrimaryRegularStyle(
                                               fontSize: 15,
                                               color: context.resources.color
                                                   .btnColorBlue),
-                                        ),
-                                      ]),
-                                )
-                              : Container():Container(),
+                                        )
+                                      : Container(),
+                                ]),
+                          ),
 
-                                  widget.active == 'bookedJobs'
+                          widget.userRole == Constants.supplierRoleId
+                              ? widget.active == 'bookedJobs'
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                          right:
+                                              context.appValues.appPadding.p8),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              translate(
+                                                  'jobs.estimatedDistance'),
+                                              style: getPrimaryRegularStyle(
+                                                  fontSize: 18,
+                                                  color: context.resources.color
+                                                      .secondColorBlue),
+                                            ),
+                                            Text(
+                                              '${(data[index].supplier_to_job_distance != null ? (data[index].supplier_to_job_distance / 1000).toStringAsFixed(3) : "0")} km',
+                                              style: getPrimaryRegularStyle(
+                                                fontSize: 15,
+                                                color: context.resources.color
+                                                    .btnColorBlue,
+                                              ),
+                                            ),
+                                          ]),
+                                    )
+                                  : Container()
+                              : Container(),
+                          widget.userRole == Constants.supplierRoleId
+                              ? widget.active == 'bookedJobs'
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                          right:
+                                              context.appValues.appPadding.p8),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              translate('jobs.estimatedTime'),
+                                              style: getPrimaryRegularStyle(
+                                                  fontSize: 18,
+                                                  color: context.resources.color
+                                                      .secondColorBlue),
+                                            ),
+                                            Text(
+                                              '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
+                                              style: getPrimaryRegularStyle(
+                                                  fontSize: 15,
+                                                  color: context.resources.color
+                                                      .btnColorBlue),
+                                            ),
+                                          ]),
+                                    )
+                                  : Container()
+                              : Container(),
+
+                          widget.active == 'bookedJobs'
                               ? Padding(
                                   padding: EdgeInsets.only(
                                     top: context.appValues.appPadding.p10,
@@ -533,97 +582,97 @@ class _JobsCardsState extends State<JobsCards> {
                                   ),
                                 )
                               : Container(),
-                              //     widget.active == 'activeJobs' && widget.userRole==Constants.supplierRoleId
-                              // ? Padding(
-                              //     padding: EdgeInsets.only(
-                              //       top: context.appValues.appPadding.p10,
-                              //     ),
-                              //     child: Row(
-                              //       mainAxisAlignment:
-                              //           MainAxisAlignment.spaceBetween,
-                              //       children: [
-                              //         ElevatedButton(
-                              //           onPressed: () {
-                              //             showDialog(
-                              //               context: context,
-                              //               builder: (BuildContext context) =>
-                              //                   _buildPopupDialog(
-                              //                       context,
-                              //                       jobsViewModel,
-                              //                       data[index].id,
-                              //                       widget.active),
-                              //             );
-                              //           },
-                              //           style: ElevatedButton.styleFrom(
-                              //             elevation: 1.0,
-                              //             shadowColor: Colors.black,
-                              //             backgroundColor:
-                              //                 const Color(0xffF3D347),
-                              //             shape: RoundedRectangleBorder(
-                              //               borderRadius:
-                              //                   BorderRadius.circular(10),
-                              //             ),
-                              //             fixedSize: Size(
-                              //               context
-                              //                   .appValues.appSizePercent.w40,
-                              //               context.appValues.appSizePercent.h6,
-                              //             ),
-                              //           ),
-                              //           child: Text(
-                              //             translate('button.cancel'),
-                              //             style: getPrimaryBoldStyle(
-                              //               fontSize: 15,
-                              //               color: context
-                              //                   .resources.color.colorWhite,
-                              //             ),
-                              //           ),
-                              //         ),
-                              //         widget.active != 'activeJobs' &&
-                              //                 widget.userRole ==
-                              //                     Constants.supplierRoleId
-                              //             ? ElevatedButton(
-                              //                 onPressed: () {
-                              //                   debugPrint(
-                              //                       'data ${data[index]}');
-                              //                   widget.active == 'activeJobs'
-                              //                       ? jobsViewModel.finishJob(
-                              //                           data[index].id)
-                              //                       : jobsViewModel.startJob(
-                              //                           data[index].id);
-                              //                 },
-                              //                 style: ElevatedButton.styleFrom(
-                              //                   elevation: 1.0,
-                              //                   shadowColor: Colors.black,
-                              //                   backgroundColor:
-                              //                       const Color(0xff57527A),
-                              //                   shape: RoundedRectangleBorder(
-                              //                     borderRadius:
-                              //                         BorderRadius.circular(10),
-                              //                   ),
-                              //                   fixedSize: Size(
-                              //                     context.appValues
-                              //                         .appSizePercent.w40,
-                              //                     context.appValues
-                              //                         .appSizePercent.h6,
-                              //                   ),
-                              //                 ),
-                              //                 child: Text(
-                              //                   widget.active == 'activeJobs'
-                              //                       ? translate(
-                              //                           'button.complete')
-                              //                       : translate(
-                              //                           'button.startJob'),
-                              //                   style: getPrimaryRegularStyle(
-                              //                     fontSize: 15,
-                              //                     color: Colors.white,
-                              //                   ),
-                              //                 ),
-                              //               )
-                              //             : Container(),
-                              //       ],
-                              //     ),
-                              //   )
-                              // : Container(),
+                          //     widget.active == 'activeJobs' && widget.userRole==Constants.supplierRoleId
+                          // ? Padding(
+                          //     padding: EdgeInsets.only(
+                          //       top: context.appValues.appPadding.p10,
+                          //     ),
+                          //     child: Row(
+                          //       mainAxisAlignment:
+                          //           MainAxisAlignment.spaceBetween,
+                          //       children: [
+                          //         ElevatedButton(
+                          //           onPressed: () {
+                          //             showDialog(
+                          //               context: context,
+                          //               builder: (BuildContext context) =>
+                          //                   _buildPopupDialog(
+                          //                       context,
+                          //                       jobsViewModel,
+                          //                       data[index].id,
+                          //                       widget.active),
+                          //             );
+                          //           },
+                          //           style: ElevatedButton.styleFrom(
+                          //             elevation: 1.0,
+                          //             shadowColor: Colors.black,
+                          //             backgroundColor:
+                          //                 const Color(0xffF3D347),
+                          //             shape: RoundedRectangleBorder(
+                          //               borderRadius:
+                          //                   BorderRadius.circular(10),
+                          //             ),
+                          //             fixedSize: Size(
+                          //               context
+                          //                   .appValues.appSizePercent.w40,
+                          //               context.appValues.appSizePercent.h6,
+                          //             ),
+                          //           ),
+                          //           child: Text(
+                          //             translate('button.cancel'),
+                          //             style: getPrimaryBoldStyle(
+                          //               fontSize: 15,
+                          //               color: context
+                          //                   .resources.color.colorWhite,
+                          //             ),
+                          //           ),
+                          //         ),
+                          //         widget.active != 'activeJobs' &&
+                          //                 widget.userRole ==
+                          //                     Constants.supplierRoleId
+                          //             ? ElevatedButton(
+                          //                 onPressed: () {
+                          //                   debugPrint(
+                          //                       'data ${data[index]}');
+                          //                   widget.active == 'activeJobs'
+                          //                       ? jobsViewModel.finishJob(
+                          //                           data[index].id)
+                          //                       : jobsViewModel.startJob(
+                          //                           data[index].id);
+                          //                 },
+                          //                 style: ElevatedButton.styleFrom(
+                          //                   elevation: 1.0,
+                          //                   shadowColor: Colors.black,
+                          //                   backgroundColor:
+                          //                       const Color(0xff57527A),
+                          //                   shape: RoundedRectangleBorder(
+                          //                     borderRadius:
+                          //                         BorderRadius.circular(10),
+                          //                   ),
+                          //                   fixedSize: Size(
+                          //                     context.appValues
+                          //                         .appSizePercent.w40,
+                          //                     context.appValues
+                          //                         .appSizePercent.h6,
+                          //                   ),
+                          //                 ),
+                          //                 child: Text(
+                          //                   widget.active == 'activeJobs'
+                          //                       ? translate(
+                          //                           'button.complete')
+                          //                       : translate(
+                          //                           'button.startJob'),
+                          //                   style: getPrimaryRegularStyle(
+                          //                     fontSize: 15,
+                          //                     color: Colors.white,
+                          //                   ),
+                          //                 ),
+                          //               )
+                          //             : Container(),
+                          //       ],
+                          //     ),
+                          //   )
+                          // : Container(),
                         ],
                       ),
                     )
@@ -691,8 +740,8 @@ class _JobsCardsState extends State<JobsCards> {
               padding: EdgeInsets.symmetric(
                 horizontal: context.appValues.appPadding.p32,
               ),
-              child:
-                  Consumer<JobsViewModel>(builder: (context, jobsViewModel1, _) {
+              child: Consumer<JobsViewModel>(
+                  builder: (context, jobsViewModel1, _) {
                 return Column(
                   children: [
                     // Radio buttons
@@ -738,15 +787,15 @@ class _JobsCardsState extends State<JobsCards> {
                   if (widget.userRole == Constants.supplierRoleId) {
                     if (await jobsViewModel.cancelBooking(job_id) == true) {
                       Navigator.pop(context);
-      
+
                       Future.delayed(const Duration(seconds: 0));
                       showDialog(
                           context: context,
-                          builder: (BuildContext context) =>
-                              simpleAlert(context, translate('button.success')));
+                          builder: (BuildContext context) => simpleAlert(
+                              context, translate('button.success')));
                     } else {
                       Navigator.pop(context);
-      
+
                       Future.delayed(const Duration(seconds: 0));
                       showDialog(
                           context: context,
@@ -780,30 +829,30 @@ class _JobsCardsState extends State<JobsCards> {
                     //                 translate('button.somethingWentWrong')));
                     //   }
                     // } else {
-                      if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
-                          true) {
-                        Navigator.pop(context);
-      
-                        Future.delayed(const Duration(seconds: 0));
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                simpleAlertWithMessage2(
-                                    context,
-                                    translate('button.success'),
-                                    translate('button.jobCanceledMsg')));
-                      } else {
-                        Navigator.pop(context);
-      
-                        Future.delayed(const Duration(seconds: 0));
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                simpleAlertWithMessage2(
-                                    context,
-                                    translate('button.failure'),
-                                    translate('button.somethingWentWrong')));
-                      }
+                    if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
+                        true) {
+                      Navigator.pop(context);
+
+                      Future.delayed(const Duration(seconds: 0));
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              simpleAlertWithMessage2(
+                                  context,
+                                  translate('button.success'),
+                                  translate('button.jobCanceledMsg')));
+                    } else {
+                      Navigator.pop(context);
+
+                      Future.delayed(const Duration(seconds: 0));
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) =>
+                              simpleAlertWithMessage2(
+                                  context,
+                                  translate('button.failure'),
+                                  translate('button.somethingWentWrong')));
+                    }
                     // }
                   }
                 },

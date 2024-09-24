@@ -7,6 +7,7 @@ import 'package:dingdone/view/new_password/new_password.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
   const OTPVerificationScreen({super.key});
@@ -27,7 +28,8 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffF0F3F8),
+      // backgroundColor: const Color(0xffF0F3F8),
+      backgroundColor: const Color(0xffFFFFFF),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.only(
@@ -47,92 +49,129 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                   },
                 ),
               ),
-              SizedBox(height: context.appValues.appSize.s20),
+              const Gap(20),
+              SvgPicture.asset('assets/img/verifyotp.svg'),
+              const Gap(30),
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  translate('forgotPassword.verification'),
+                  translate('forgotPassword.verify'),
                   style: getPrimaryBoldStyle(
-                      color: context.resources.color.btnColorBlue,
-                      fontSize: 30),
+                    color: const Color(0xff1F126B),
+                    fontSize: 30,
+                  ),
                 ),
               ),
-              SizedBox(height: context.appValues.appSize.s15),
+              const Gap(15),
               Text(
                 translate('forgotPassword.verificationMsg'),
                 style: getPrimaryRegularStyle(
-                    color: context.resources.color.secondColorBlue,
-                    fontSize: 15),
+                  color: const Color(0xff78789D),
+                  fontSize: 15,
+                ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(height: context.appValues.appSize.s90),
-              // const CustomTextField(
-              //     index: 'index',
-              //     hintText: 'otp',
-              //     keyboardType: TextInputType.emailAddress),
-              Directionality(
-                textDirection: TextDirection.ltr,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    OtpInput(_fieldOne, true), // auto focus
-                    OtpInput(_fieldTwo, false),
-                    OtpInput(_fieldThree, false),
-                    OtpInput(_fieldFour, false)
-                  ],
-                ),
-              ),
-              SizedBox(height: context.appValues.appSize.s75),
-              SizedBox(
-                height: 56,
-                width: context.appValues.appSizePercent.w100,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: context.resources.color.btnColorBlue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(context.appValues.appSize.s10),
-                      ),
-                    ),
+              const Gap(50),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: const Color(0xffEAEAFF),
+                    width: 2,
                   ),
-                  onPressed: () async {
-                    setState(() {
-                      isLoading = true;
-                    });
-                    setState(() {
-                      _otp = _fieldOne.text +
-                          _fieldTwo.text +
-                          _fieldThree.text +
-                          _fieldFour.text;
-                    });
-                    String? otp_number = await AppPreferences()
-                        .get(key: otpNumber, isModel: false);
-                    if (otp_number == _otp) {
-                      Navigator.of(context)
-                          .push(_createRoute(NewPasswordScreen()));
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) =>
-                            _buildPopupDialog(context, 'Wrong OTP number'),
-                      );
-                    }
-                    setState(() {
-                      isLoading = false;
-                    });
-                  },
-                  child: (isLoading)
-                      ? const SizedBox(
-                          width: 16,
-                          height: 16,
-                          child: CircularProgressIndicator(
-                            color: Colors.white,
-                            strokeWidth: 1.5,
-                          ))
-                      : Text(translate('forgotPassword.verify'),
-                          style: getPrimaryRegularStyle(
-                              color: context.resources.color.colorWhite,
-                              fontSize: 15)),
+                  borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                    topRight: Radius.circular(20),
+                  ),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: context.appValues.appPadding.p25,
+                    horizontal: context.appValues.appPadding.p15,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        translate('formHints.email'),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 17,
+                          color: const Color(0xff1F1F39),
+                        ),
+                      ),
+                      const Gap(10),
+                      Directionality(
+                        textDirection: TextDirection.ltr,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            OtpInput(_fieldOne, true), // auto focus
+                            OtpInput(_fieldTwo, false),
+                            OtpInput(_fieldThree, false),
+                            OtpInput(_fieldFour, false)
+                          ],
+                        ),
+                      ),
+                      const Gap(30),
+                      SizedBox(
+                        height: 58,
+                        width: context.appValues.appSizePercent.w100,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xff4100E3),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(context.appValues.appSize.s10),
+                              ),
+                            ),
+                          ),
+                          onPressed: () async {
+                            setState(() {
+                              isLoading = true;
+                            });
+                            setState(() {
+                              _otp = _fieldOne.text +
+                                  _fieldTwo.text +
+                                  _fieldThree.text +
+                                  _fieldFour.text;
+                            });
+                            String? otp_number = await AppPreferences()
+                                .get(key: otpNumber, isModel: false);
+                            if (otp_number == _otp) {
+                              Navigator.of(context).push(
+                                  _createRoute(const NewPasswordScreen()));
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    _buildPopupDialog(
+                                        context, 'Wrong OTP number'),
+                              );
+                            }
+                            setState(() {
+                              isLoading = false;
+                            });
+                          },
+                          child: (isLoading)
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 1.5,
+                                  ),
+                                )
+                              : Text(
+                                  translate('forgotPassword.confirm'),
+                                  style: getPrimaryBoldStyle(
+                                    color: context.resources.color.colorWhite,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -161,16 +200,43 @@ class OtpInput extends StatelessWidget {
         maxLength: 1,
         cursorColor: Theme.of(context).primaryColor,
         decoration: InputDecoration(
-            filled: true,
-            fillColor: context.resources.color.colorWhite,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(context.appValues.appSize.s10),
-              ),
-              borderSide: BorderSide.none,
+          filled: true,
+          fillColor: context.resources.color.colorWhite,
+          border: UnderlineInputBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(context.appValues.appSize.s10),
+              bottomRight: Radius.circular(context.appValues.appSize.s10),
             ),
-            counterText: '',
-            hintStyle: const TextStyle(color: Colors.black, fontSize: 20.0)),
+            borderSide: const BorderSide(
+              color: Color(0xffEAEAFF),
+              width: 2.0,
+            ),
+          ),
+          enabledBorder: UnderlineInputBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(context.appValues.appSize.s10),
+              bottomRight: Radius.circular(context.appValues.appSize.s10),
+            ),
+            borderSide: const BorderSide(
+              color: Color(0xffEAEAFF),
+              width: 2.0,
+            ),
+          ),
+          focusedBorder: UnderlineInputBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(context.appValues.appSize.s10),
+              bottomRight: Radius.circular(context.appValues.appSize.s10),
+            ),
+            borderSide: const BorderSide(
+              color: Color(0xffEAEAFF),
+              width: 2.0,
+            ),
+          ),
+          counterText: '',
+          hintStyle: getPrimaryBoldStyle(
+            color: const Color(0xff38385E),
+          ),
+        ),
         onChanged: (value) {
           if (value.length == 1) {
             FocusScope.of(context).nextFocus();

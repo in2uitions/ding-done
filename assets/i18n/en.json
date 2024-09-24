@@ -264,6 +264,7 @@
     "createNewPasswordMsg": "And now, you can create the new\npassword and confirm it",
     "newPass": "New Password",
     "confirmPass": "Confirm Password",
+    "confirm": "Confirm",
     "passwordChanged": "Password changed"
   }
 }

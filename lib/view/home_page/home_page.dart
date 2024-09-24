@@ -365,314 +365,407 @@ class _HomePageState extends State<HomePage> {
         ),
         body: RefreshIndicator(
           onRefresh: _handleRefresh,
-          child: CustomScrollView(
-            slivers: [
-              SliverAppBar(
-                pinned: true,
-                backgroundColor: const Color(0xffFEFEFE),
-                elevation: 0,
-                title: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        // IconButton(
-                        //   icon: Icon(Icons.menu),
-                        //   onPressed: () {
-                        //     _scaffoldKey.currentState?.openDrawer();
-                        //   },
-                        // ),
-                        // SizedBox(width: 8),
-                        Text(
-                          profileViewModel.getProfileBody["user"] != null
-                              ? 'Hi ${profileViewModel.getProfileBody["user"]["first_name"]}!'
-                              : '',
-                          style: getPrimaryRegularStyle(
-                            color: context.resources.color.btnColorBlue,
-                            fontSize: 32,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: context.appValues.appSizePercent.w10p5,
-                      height: context.appValues.appSizePercent.h5p1,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(50),
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: NetworkImage(
-                            profileViewModel.getProfileBody['user'] != null &&
-                                    profileViewModel.getProfileBody['user']
-                                            ['avatar'] !=
-                                        null
-                                ? '${context.resources.image.networkImagePath2}${profileViewModel.getProfileBody['user']['avatar']}'
-                                : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  // Header with back button and title
+                  Stack(
+                    children: [
+                      // Background image
+                      Container(
+                        width: context.appValues.appSizePercent.w100,
+                        height: context.appValues.appSizePercent.h50,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage('assets/img/homepagebg.png'),
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.appValues.appPadding.p20,
-                        vertical: context.appValues.appPadding.p15,
-                      ),
-                      child: CustomSearchBar(
-                        index: 'search_services',
-                        hintText: "Search for services...",
-                        viewModel: servicesViewModel.searchData,
-                      ),
-                    ),
-                    SizedBox(height: context.appValues.appSize.s15),
-                    // HomeCategoriesWidget(servicesViewModel: servicesViewModel),
-                    // SizedBox(height: context.appValues.appSize.s15),
-                  ],
-                ),
-              ),
-              //
-              //
-              //
-              SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        context.appValues.appPadding.p20,
-                        context.appValues.appPadding.p20,
-                        context.appValues.appPadding.p20,
-                        context.appValues.appPadding.p10,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            servicesViewModel.chosenParent
-                                ? translate('home_screen.servicesCategories')
-                                : translate('home_screen.categories'),
-                            style: getPrimaryBoldStyle(
-                              fontSize: 25,
-                              color: context.resources.color.btnColorBlue,
-                            ),
-                          ),
-                          servicesViewModel.chosenParent
-                              ? InkWell(
-                                  child: Text(
-                                    translate('home_screen.seeAll'),
-                                    style: getPrimaryBoldStyle(
-                                      fontSize: 18,
-                                      color: const Color(0xff9E9BB8),
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).push(_createRoute(
-                                      CategoriesScreen(
-                                          categoriesViewModel:
-                                              categoriesViewModel,
-                                          initialTabIndex: 0,
-                                          serviceViewModel: servicesViewModel),
-                                    ));
-                                  },
-                                )
-                              : Container(),
-                        ],
-                      ),
-                    ),
-                    servicesViewModel.chosenParent
-                        ? CategoriesWidget(servicesViewModel: servicesViewModel)
-                        : ParentCategoriesWidget(
-                            servicesViewModel: servicesViewModel),
-                    Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        context.appValues.appPadding.p10,
-                        context.appValues.appPadding.p20,
-                        context.appValues.appPadding.p10,
-                        context.appValues.appPadding.p20,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            // servicesViewModel.searchBody["search_services"] != null &&
-                            //     servicesViewModel.searchBody["search_services"] != ''
-                            //     ? servicesViewModel.searchBody["search_services"]
-                            //     :
-                            translate('home_screen.featuredServices'),
-                            style: getPrimaryBoldStyle(
-                              fontSize: 25,
-                              color: context.resources.color.btnColorBlue,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {},
-                            child: Text(
-                              translate('home_screen.seeAll'),
-                              style: getPrimaryBoldStyle(
-                                fontSize: 18,
-                                color: const Color(0xff9E9BB8),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(right: 8.0, left: 8.0),
-                      child: Column(
-                        children: [
-                          Stack(
+                      // Gradient overlay
+                      Padding(
+                        padding: EdgeInsets.only(
+                          top: context.appValues.appPadding.p8,
+                          left: context.appValues.appPadding.p20,
+                          right: context.appValues.appPadding.p20,
+                        ),
+                        child: SafeArea(
+                          child: Column(
                             children: [
-                              CarouselSlider(
-                                options: CarouselOptions(
-                                  height: 200,
-                                  autoPlay: true,
-                                  enlargeCenterPage: true,
-                                  viewportFraction: 1.0,
-                                  autoPlayAnimationDuration:
-                                      const Duration(milliseconds: 700),
-                                  onPageChanged: (index, reason) {
-                                    setState(() {
-                                      _current = index;
-                                    });
-                                  },
-                                ),
-                                items: imgList
-                                    .map((item) => Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(20),
-                                            image: const DecorationImage(
-                                              fit: BoxFit.cover,
-                                              image: NetworkImage(
-                                                'https://media.istockphoto.com/id/1158769712/photo/professional-furniture-assembly-worker-assembles-shelf-professional-handyman-doing-assembly.jpg?s=612x612&w=0&k=20&c=BBvngif9SB8VbAb1gSD4DaBzob6Chnm0KZpP09lCLrc=',
-                                              ),
-                                            ),
-                                          ),
-                                          // color:
-                                          //     context.resources.color.btnColorBlue,
-                                          child: Center(
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.end,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Align(
-                                                  alignment:
-                                                      Alignment.bottomLeft,
-                                                  child: Padding(
-                                                    padding: EdgeInsets.only(
-                                                      left: context.appValues
-                                                          .appPadding.p10,
-                                                      bottom: context.appValues
-                                                          .appPadding.p35,
-                                                    ),
-                                                    child: Text(
-                                                      'Bed Frames Assembly',
-                                                      style:
-                                                          getPrimaryBoldStyle(
-                                                        fontSize: 22,
-                                                        color: context.resources
-                                                            .color.colorWhite,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ))
-                                    .toList(),
-                              ),
-                              Positioned(
-                                bottom: 15,
-                                left: 0,
-                                right: 0,
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children:
-                                      imgList.asMap().entries.map((entry) {
-                                    return GestureDetector(
-                                      onTap: () =>
-                                          _controller.animateToPage(entry.key),
-                                      child: Container(
-                                        width: 12.0,
-                                        height: 12.0,
-                                        margin: const EdgeInsets.symmetric(
-                                            vertical: 8.0, horizontal: 4.0),
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: _current == entry.key
-                                              ? Colors.white
-                                              : Colors.white.withOpacity(0.4),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Row(
+                                    children: [
+                                      IconButton(
+                                        icon: Icon(
+                                          Icons.menu,
+                                          size: 30,
+                                          color: context
+                                              .resources.color.colorWhite,
                                         ),
+                                        onPressed: () {
+                                          _scaffoldKey.currentState
+                                              ?.openDrawer();
+                                        },
                                       ),
-                                    );
-                                  }).toList(),
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Gap(50),
-                          Container(
-                            padding: const EdgeInsets.all(8.0),
-                            color: Colors.white,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    'We are available Sat to Thur from 9 to 5, Fri from 2 to 5',
-                                    style: getPrimaryRegularStyle(
-                                      fontSize: 13,
-                                      color: const Color(0xff180C38),
-                                    ),
-                                  ),
-                                ),
-                                const Gap(10),
-                                InkWell(
-                                  onTap: () {
-                                    jobsViewModel.launchWhatsApp();
-                                  },
-                                  child: Container(
-                                    width: 155,
-                                    height: 52,
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          context.appValues.appPadding.p10,
-                                      vertical:
-                                          context.appValues.appPadding.p15,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      color: const Color(0xff4100E3),
-                                      borderRadius: BorderRadius.circular(15),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        'CONTACT US',
+                                      const Gap(7),
+                                      Text(
+                                        profileViewModel
+                                                    .getProfileBody["user"] !=
+                                                null
+                                            ? 'Hi ${profileViewModel.getProfileBody["user"]["first_name"]}!'
+                                            : '',
                                         style: getPrimaryBoldStyle(
                                           color: context
                                               .resources.color.colorWhite,
-                                          fontSize: 16,
+                                          fontSize: 32,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    width:
+                                        context.appValues.appSizePercent.w10p5,
+                                    height:
+                                        context.appValues.appSizePercent.h5p1,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(50),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+                                          profileViewModel.getProfileBody[
+                                                          'user'] !=
+                                                      null &&
+                                                  profileViewModel
+                                                              .getProfileBody[
+                                                          'user']['avatar'] !=
+                                                      null
+                                              ? '${context.resources.image.networkImagePath2}${profileViewModel.getProfileBody['user']['avatar']}'
+                                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
                                         ),
                                       ),
                                     ),
                                   ),
+                                ],
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: context.appValues.appPadding.p20,
+                                  vertical: context.appValues.appPadding.p15,
+                                ),
+                                child: CustomSearchBar(
+                                  index: 'search_services',
+                                  hintText: "Search for services...",
+                                  viewModel: servicesViewModel.searchData,
+                                ),
+                              ),
+                              const Gap(15),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+              //
+              //
+              //
+              DraggableScrollableSheet(
+                  initialChildSize: 0.70,
+                  minChildSize: 0.70,
+                  maxChildSize: 1,
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                        color: Color(0xffFEFEFE),
+                      ),
+                      child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    context.appValues.appPadding.p20,
+                                    context.appValues.appPadding.p20,
+                                    context.appValues.appPadding.p20,
+                                    context.appValues.appPadding.p10,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        servicesViewModel.chosenParent
+                                            ? translate(
+                                                'home_screen.servicesCategories')
+                                            : translate(
+                                                'home_screen.categories'),
+                                        style: getPrimaryBoldStyle(
+                                          fontSize: 25,
+                                          color: context
+                                              .resources.color.btnColorBlue,
+                                        ),
+                                      ),
+                                      servicesViewModel.chosenParent
+                                          ? InkWell(
+                                              child: Text(
+                                                translate('home_screen.seeAll'),
+                                                style: getPrimaryBoldStyle(
+                                                  fontSize: 18,
+                                                  color:
+                                                      const Color(0xff9E9BB8),
+                                                ),
+                                              ),
+                                              onTap: () {
+                                                Navigator.of(context)
+                                                    .push(_createRoute(
+                                                  CategoriesScreen(
+                                                      categoriesViewModel:
+                                                          categoriesViewModel,
+                                                      initialTabIndex: 0,
+                                                      serviceViewModel:
+                                                          servicesViewModel),
+                                                ));
+                                              },
+                                            )
+                                          : Container(),
+                                    ],
+                                  ),
+                                ),
+                                servicesViewModel.chosenParent
+                                    ? CategoriesWidget(
+                                        servicesViewModel: servicesViewModel)
+                                    : ParentCategoriesWidget(
+                                        servicesViewModel: servicesViewModel),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    context.appValues.appPadding.p10,
+                                    context.appValues.appPadding.p20,
+                                    context.appValues.appPadding.p10,
+                                    context.appValues.appPadding.p20,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                        // servicesViewModel.searchBody["search_services"] != null &&
+                                        //     servicesViewModel.searchBody["search_services"] != ''
+                                        //     ? servicesViewModel.searchBody["search_services"]
+                                        //     :
+                                        translate(
+                                            'home_screen.featuredServices'),
+                                        style: getPrimaryBoldStyle(
+                                          fontSize: 25,
+                                          color: context
+                                              .resources.color.btnColorBlue,
+                                        ),
+                                      ),
+                                      InkWell(
+                                        onTap: () {},
+                                        child: Text(
+                                          translate('home_screen.seeAll'),
+                                          style: getPrimaryBoldStyle(
+                                            fontSize: 18,
+                                            color: const Color(0xff9E9BB8),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      right: 8.0, left: 8.0),
+                                  child: Column(
+                                    children: [
+                                      Stack(
+                                        children: [
+                                          CarouselSlider(
+                                            options: CarouselOptions(
+                                              height: 200,
+                                              autoPlay: true,
+                                              enlargeCenterPage: true,
+                                              viewportFraction: 1.0,
+                                              autoPlayAnimationDuration:
+                                                  const Duration(
+                                                      milliseconds: 700),
+                                              onPageChanged: (index, reason) {
+                                                setState(() {
+                                                  _current = index;
+                                                });
+                                              },
+                                            ),
+                                            items: imgList
+                                                .map((item) => Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(20),
+                                                        image:
+                                                            const DecorationImage(
+                                                          fit: BoxFit.cover,
+                                                          image: NetworkImage(
+                                                            'https://media.istockphoto.com/id/1158769712/photo/professional-furniture-assembly-worker-assembles-shelf-professional-handyman-doing-assembly.jpg?s=612x612&w=0&k=20&c=BBvngif9SB8VbAb1gSD4DaBzob6Chnm0KZpP09lCLrc=',
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      // color:
+                                                      //     context.resources.color.btnColorBlue,
+                                                      child: Center(
+                                                        child: Column(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            Align(
+                                                              alignment: Alignment
+                                                                  .bottomLeft,
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .only(
+                                                                  left: context
+                                                                      .appValues
+                                                                      .appPadding
+                                                                      .p10,
+                                                                  bottom: context
+                                                                      .appValues
+                                                                      .appPadding
+                                                                      .p35,
+                                                                ),
+                                                                child: Text(
+                                                                  'Bed Frames Assembly',
+                                                                  style:
+                                                                      getPrimaryBoldStyle(
+                                                                    fontSize:
+                                                                        22,
+                                                                    color: context
+                                                                        .resources
+                                                                        .color
+                                                                        .colorWhite,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    ))
+                                                .toList(),
+                                          ),
+                                          Positioned(
+                                            bottom: 15,
+                                            left: 0,
+                                            right: 0,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              children: imgList
+                                                  .asMap()
+                                                  .entries
+                                                  .map((entry) {
+                                                return GestureDetector(
+                                                  onTap: () => _controller
+                                                      .animateToPage(entry.key),
+                                                  child: Container(
+                                                    width: 12.0,
+                                                    height: 12.0,
+                                                    margin: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 8.0,
+                                                        horizontal: 4.0),
+                                                    decoration: BoxDecoration(
+                                                      shape: BoxShape.circle,
+                                                      color: _current ==
+                                                              entry.key
+                                                          ? Colors.white
+                                                          : Colors.white
+                                                              .withOpacity(0.4),
+                                                    ),
+                                                  ),
+                                                );
+                                              }).toList(),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const Gap(50),
+                                      Container(
+                                        padding: const EdgeInsets.all(8.0),
+                                        color: Colors.white,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Expanded(
+                                              child: Text(
+                                                'We are available Sat to Thur from 9 to 5, Fri from 2 to 5',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 13,
+                                                  color:
+                                                      const Color(0xff180C38),
+                                                ),
+                                              ),
+                                            ),
+                                            const Gap(10),
+                                            InkWell(
+                                              onTap: () {
+                                                jobsViewModel.launchWhatsApp();
+                                              },
+                                              child: Container(
+                                                width: 155,
+                                                height: 52,
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: context
+                                                      .appValues.appPadding.p10,
+                                                  vertical: context
+                                                      .appValues.appPadding.p15,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  color:
+                                                      const Color(0xff4100E3),
+                                                  borderRadius:
+                                                      BorderRadius.circular(15),
+                                                ),
+                                                child: Center(
+                                                  child: Text(
+                                                    'CONTACT US',
+                                                    style: getPrimaryBoldStyle(
+                                                      color: context.resources
+                                                          .color.colorWhite,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+                            );
+                          }),
+                    );
+                  }),
+
               //
               //
               //

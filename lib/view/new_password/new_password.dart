@@ -8,6 +8,7 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/custom/custom_text_feild.dart';
@@ -25,7 +26,8 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
   Widget build(BuildContext context) {
     return Consumer<ProfileViewModel>(builder: (context, profileViewModel, _) {
       return Scaffold(
-        backgroundColor: const Color(0xffF0F3F8),
+        // backgroundColor: const Color(0xffF0F3F8),
+        backgroundColor: const Color(0xffFFFFFF),
         body: SafeArea(
           child: Padding(
             padding: EdgeInsets.only(
@@ -45,99 +47,154 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     },
                   ),
                 ),
-                SizedBox(height: context.appValues.appSize.s20),
+                const Gap(20),
+                SvgPicture.asset('assets/img/restpassscreen.svg'),
+                const Gap(30),
                 Align(
                   alignment: Alignment.center,
                   child: Text(
                     translate('forgotPassword.createNewPassword'),
                     style: getPrimaryBoldStyle(
-                        color: context.resources.color.btnColorBlue,
-                        fontSize: 30),
+                      color: const Color(0xff1F126B),
+                      fontSize: 30,
+                    ),
                   ),
                 ),
                 SizedBox(height: context.appValues.appSize.s15),
                 Text(
                   translate('forgotPassword.createNewPasswordMsg'),
                   style: getPrimaryRegularStyle(
-                      color: context.resources.color.secondColorBlue,
-                      fontSize: 15),
+                    color: const Color(0xff78789D),
+                    fontSize: 15,
+                  ),
                   textAlign: TextAlign.center,
                 ),
-                SizedBox(height: context.appValues.appSize.s90),
-                CustomTextField(
-                  viewModel: profileViewModel.setInputValues,
-                  index: 'new_password',
-                  hintText: translate('forgotPassword.newPass'),
-                  validator: (val) => profileViewModel.verifyPassword[
-                      context.resources.strings.formKeys['password']!],
-                  errorText: profileViewModel.verifyPassword['new_password'],
-                  keyboardType: TextInputType.visiblePassword,
-                ),
-                SizedBox(height: context.appValues.appSize.s10),
-                CustomTextField(
-                  index: 'confirm_new_password',
-                  // hintText: "Confirm Password",
-                  hintText: translate('forgotPassword.confirmPass'),
-                  viewModel: profileViewModel.setInputValues,
-                  validator: (val) => profileViewModel.verifyPassword[
-                      context.resources.strings.formKeys['password']!],
-                  errorText:
-                      profileViewModel.verifyPassword['confirm_new_password'],
-                  keyboardType: TextInputType.visiblePassword,
-                ),
-                SizedBox(height: context.appValues.appSize.s75),
-                SizedBox(
-                  height: 56,
-                  width: context.appValues.appSizePercent.w100,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: context.resources.color.btnColorBlue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(context.appValues.appSize.s10),
-                        ),
-                      ),
+                const Gap(50),
+                Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: const Color(0xffEAEAFF),
+                      width: 2,
                     ),
-                    onPressed: () async {
-                      setState(() {
-                        isLoading = true;
-                      });
-                      if (profileViewModel.validate()) {
-                        if (await profileViewModel.patchPassword() == true) {
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                _buildPopupDialogChangedPassword(
-                                    context,
-                                    translate(
-                                        'forgotPassword.passwordChanged')),
-                          );
-                          AppPreferences().remove(key: otpNumber);
-                          AppPreferences().remove(key: userIdTochangePassword);
-                        }
-                      } else {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) => _buildPopupDialog(
-                              context, translate('button.somethingWentWrong')),
-                        );
-                      }
-                      setState(() {
-                        isLoading = false;
-                      });
-                    },
-                    child: (isLoading)
-                        ? const SizedBox(
-                            width: 16,
-                            height: 16,
-                            child: CircularProgressIndicator(
-                              color: Colors.white,
-                              strokeWidth: 1.5,
-                            ))
-                        : Text(translate('button.send'),
-                            style: getPrimaryRegularStyle(
-                                color: context.resources.color.colorWhite,
-                                fontSize: 15)),
+                    borderRadius: const BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                      topRight: Radius.circular(20),
+                    ),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: context.appValues.appPadding.p25,
+                      horizontal: context.appValues.appPadding.p15,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          translate('forgotPassword.newPass'),
+                          style: getPrimaryRegularStyle(
+                            fontSize: 17,
+                            color: const Color(0xff1F1F39),
+                          ),
+                        ),
+                        const Gap(10),
+                        CustomTextField(
+                          viewModel: profileViewModel.setInputValues,
+                          index: 'new_password',
+                          hintText: translate('forgotPassword.newPass'),
+                          validator: (val) => profileViewModel.verifyPassword[
+                              context.resources.strings.formKeys['password']!],
+                          errorText:
+                              profileViewModel.verifyPassword['new_password'],
+                          keyboardType: TextInputType.visiblePassword,
+                        ),
+                        const Gap(25),
+                        Text(
+                          translate('forgotPassword.confirmPass'),
+                          style: getPrimaryRegularStyle(
+                            fontSize: 17,
+                            color: const Color(0xff1F1F39),
+                          ),
+                        ),
+                        const Gap(10),
+                        CustomTextField(
+                          index: 'confirm_new_password',
+                          // hintText: "Confirm Password",
+                          hintText: translate('forgotPassword.confirmPass'),
+                          viewModel: profileViewModel.setInputValues,
+                          validator: (val) => profileViewModel.verifyPassword[
+                              context.resources.strings.formKeys['password']!],
+                          errorText: profileViewModel
+                              .verifyPassword['confirm_new_password'],
+                          keyboardType: TextInputType.visiblePassword,
+                        ),
+                        const Gap(30),
+                        SizedBox(
+                          height: 60,
+                          width: context.appValues.appSizePercent.w100,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xff4100E3),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                      context.appValues.appSize.s10),
+                                ),
+                              ),
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              if (profileViewModel.validate()) {
+                                if (await profileViewModel.patchPassword() ==
+                                    true) {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        _buildPopupDialogChangedPassword(
+                                            context,
+                                            translate(
+                                                'forgotPassword.passwordChanged')),
+                                  );
+                                  AppPreferences().remove(key: otpNumber);
+                                  AppPreferences()
+                                      .remove(key: userIdTochangePassword);
+                                }
+                              } else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      _buildPopupDialog(
+                                          context,
+                                          translate(
+                                              'button.somethingWentWrong')),
+                                );
+                              }
+                              setState(() {
+                                isLoading = false;
+                              });
+                            },
+                            child: (isLoading)
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 1.5,
+                                    ),
+                                  )
+                                : Text(
+                                    translate('forgotPassword.confirm'),
+                                    style: getPrimaryRegularStyle(
+                                      color: context.resources.color.colorWhite,
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
