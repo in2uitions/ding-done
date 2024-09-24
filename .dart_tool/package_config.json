@@ -1018,12 +1018,15 @@
     {
       "name": "shared_preferences_windows",
       "rootUri": "file:///C:/Users/Marc/AppData/Local/Pub/Cache/hosted/pub.dev/shared_preferences_windows-2.3.2",
+<<<<<<< Updated upstream
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
     {
       "name": "signature",
       "rootUri": "file:///C:/Users/Marc/AppData/Local/Pub/Cache/hosted/pub.dev/signature-5.5.0",
+=======
+>>>>>>> Stashed changes
       "packageUri": "lib/",
       "languageVersion": "2.19"
     },
@@ -1298,7 +1301,11 @@
       "languageVersion": "3.0"
     }
   ],
+<<<<<<< Updated upstream
   "generated": "2024-09-24T06:52:13.841276Z",
+=======
+  "generated": "2024-09-17T11:50:11.453258Z",
+>>>>>>> Stashed changes
   "generator": "pub",
   "generatorVersion": "3.2.6"
 }
