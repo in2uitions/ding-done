@@ -1,7 +1,6 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:dingdone/view/widgets/jobs/CircleButton.dart';
 import 'package:dingdone/view/widgets/jobs/jobs_cards.dart';
 import 'package:dingdone/view/widgets/tabs/tabs.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -13,7 +12,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/app_prefs.dart';
-import '../../view_model/profile_view_model/profile_view_model.dart';
 import '../bottom_bar/bottom_bar.dart';
 
 class JobsPage extends StatefulWidget {
@@ -52,85 +50,120 @@ class _JobsPageState extends State<JobsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFEFEFE),
-      body: Consumer<JobsViewModel>(
-        builder: (context, jobsViewModel, _) {
-          List<int> jobCounts = getJobCounts(jobsViewModel);
-          debugPrint('job counts  is $jobCounts');
-
-          return widget.userRole == Constants.supplierRoleId
-              ? Tabs(
-                  tabtitle: [
-                    translate('jobs.bookedJobs'),
-                    translate('jobs.activeJobs'),
-                    translate('jobs.completedJobs'),
-                  ],
-                  tabContent: [
-                    JobsCards(
-                      active: "bookedJobs",
-                      userRole: widget.userRole,
-                      jobsViewModel: jobsViewModel,
-                      lang: widget.lang,
-                    ),
-                    JobsCards(
-                      active: "activeJobs",
-                      userRole: widget.userRole,
-                      jobsViewModel: jobsViewModel,
-                      lang: widget.lang,
-                    ),
-                    JobsCards(
-                      active: "completedJobs",
-                      userRole: widget.userRole,
-                      jobsViewModel: jobsViewModel,
-                      lang: widget.lang,
-                    ),
-                  ],
-                  jobCounts: jobCounts,
-                  initialActiveTab: _active,
-                  initialIndex: widget.initialIndex,
-                  // Pass the active tab here
-                  content: buildHeader(context),
-                )
-              : Tabs(
-                  tabtitle: [
-                    translate('jobs.requestedJobs'),
-                    translate('jobs.confirmedJobs'),
-                    translate('jobs.activeJobs'),
-                    translate('jobs.completedJobs'),
-                  ],
-                  tabContent: [
-                    JobsCards(
-                      active: "requestedJobs",
-                      userRole: widget.userRole,
-                      jobsViewModel: jobsViewModel,
-                      lang: widget.lang,
-                    ),
-                    JobsCards(
-                      active: "bookedJobs",
-                      userRole: widget.userRole,
-                      jobsViewModel: jobsViewModel,
-                      lang: widget.lang,
-                    ),
-                    JobsCards(
-                      active: "activeJobs",
-                      userRole: widget.userRole,
-                      jobsViewModel: jobsViewModel,
-                      lang: widget.lang,
-                    ),
-                    JobsCards(
-                      active: "completedJobs",
-                      userRole: widget.userRole,
-                      jobsViewModel: jobsViewModel,
-                      lang: widget.lang,
-                    ),
-                  ],
-                  jobCounts: jobCounts,
-                  initialActiveTab: _active,
-                  initialIndex: widget.initialIndex,
-                  // Pass the active tab here
-                  content: buildHeader(context),
-                );
-        },
+      body: Stack(
+        children: [
+          // Draggable Scrollable Sheet
+          DraggableScrollableSheet(
+            initialChildSize: 0.55, // Adjust the size to match the design
+            minChildSize: 0.55,
+            maxChildSize: 1,
+            builder: (BuildContext context, ScrollController scrollController) {
+              return Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                  color: Color(0xffFEFEFE),
+                ),
+                child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: 1,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          // Tab and job content
+                          buildJobsContent(context),
+                        ],
+                      );
+                    }),
+              );
+            },
+          ),
+          // Static header that stays on top
+          buildHeader(context),
+        ],
       ),
+    );
+  }
+
+  Widget buildJobsContent(BuildContext context) {
+    return Consumer<JobsViewModel>(
+      builder: (context, jobsViewModel, _) {
+        List<int> jobCounts = getJobCounts(jobsViewModel);
+
+        return widget.userRole == Constants.supplierRoleId
+            ? Tabs(
+                tabtitle: [
+                  translate('jobs.bookedJobs'),
+                  translate('jobs.activeJobs'),
+                  translate('jobs.completedJobs'),
+                ],
+                tabContent: [
+                  JobsCards(
+                    active: "bookedJobs",
+                    userRole: widget.userRole,
+                    jobsViewModel: jobsViewModel,
+                    lang: widget.lang,
+                  ),
+                  JobsCards(
+                    active: "activeJobs",
+                    userRole: widget.userRole,
+                    jobsViewModel: jobsViewModel,
+                    lang: widget.lang,
+                  ),
+                  JobsCards(
+                    active: "completedJobs",
+                    userRole: widget.userRole,
+                    jobsViewModel: jobsViewModel,
+                    lang: widget.lang,
+                  ),
+                ],
+                jobCounts: jobCounts,
+                initialActiveTab: _active,
+                initialIndex: widget.initialIndex,
+                content: SizedBox(),
+              )
+            : Tabs(
+                tabtitle: [
+                  translate('jobs.requestedJobs'),
+                  translate('jobs.confirmedJobs'),
+                  translate('jobs.activeJobs'),
+                  translate('jobs.completedJobs'),
+                ],
+                tabContent: [
+                  JobsCards(
+                    active: "requestedJobs",
+                    userRole: widget.userRole,
+                    jobsViewModel: jobsViewModel,
+                    lang: widget.lang,
+                  ),
+                  JobsCards(
+                    active: "bookedJobs",
+                    userRole: widget.userRole,
+                    jobsViewModel: jobsViewModel,
+                    lang: widget.lang,
+                  ),
+                  JobsCards(
+                    active: "activeJobs",
+                    userRole: widget.userRole,
+                    jobsViewModel: jobsViewModel,
+                    lang: widget.lang,
+                  ),
+                  JobsCards(
+                    active: "completedJobs",
+                    userRole: widget.userRole,
+                    jobsViewModel: jobsViewModel,
+                    lang: widget.lang,
+                  ),
+                ],
+                jobCounts: jobCounts,
+                initialActiveTab: _active,
+                initialIndex: widget.initialIndex,
+                content: SizedBox(),
+              );
+      },
     );
   }
 

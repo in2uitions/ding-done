@@ -24,6 +24,7 @@ class CustomTextField extends StatefulWidget {
     this.onTap,
     this.keyboardType = TextInputType.text,
     this.prefixIcon = '',
+    this.isPrfixShown = false,
   });
 
   final dynamic viewModel;
@@ -36,6 +37,7 @@ class CustomTextField extends StatefulWidget {
   final String? helperText;
   final String? errorText;
   final String prefixIcon;
+  final bool isPrfixShown;
   final FormFieldSetter<String>? onSaved;
   final FormFieldValidator<String>? validator;
   final ValueChanged<String>? onFieldSubmitted;
@@ -111,18 +113,20 @@ class _CustomTextFieldState extends State<CustomTextField> {
             width: 2.0,
           ),
         ),
-        prefixIcon: Padding(
-          padding: const EdgeInsets.only(
-            left: 15,
-            right: 15,
-            bottom: 5,
-          ),
-          child: SvgPicture.asset(
-            widget.prefixIcon,
-            width: 15,
-            height: 15,
-          ),
-        ),
+        prefixIcon: widget.isPrfixShown
+            ? Padding(
+                padding: const EdgeInsets.only(
+                  left: 15,
+                  right: 15,
+                  bottom: 5,
+                ),
+                child: SvgPicture.asset(
+                  widget.prefixIcon,
+                  width: 15,
+                  height: 15,
+                ),
+              )
+            : null,
         filled: true,
         fillColor: context.resources.color.colorWhite,
         hintText: widget.hintText,

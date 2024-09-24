@@ -9,7 +9,8 @@ class Tabs extends StatefulWidget {
     required this.tabContent,
     required this.content,
     required this.jobCounts,
-    this.initialIndex = 0, required String initialActiveTab,
+    this.initialIndex = 0,
+    required String initialActiveTab,
   }) : super(key: key);
 
   final List<dynamic> tabtitle;
@@ -41,7 +42,7 @@ class _TabsState extends State<Tabs> with SingleTickerProviderStateMixin {
       body: DefaultTabController(
         length: widget.tabtitle.length,
         child: NestedScrollView(
-          physics: NeverScrollableScrollPhysics(),
+          physics: const NeverScrollableScrollPhysics(),
           headerSliverBuilder: (context, value) {
             return [
               SliverToBoxAdapter(
@@ -53,52 +54,58 @@ class _TabsState extends State<Tabs> with SingleTickerProviderStateMixin {
                     Align(
                       alignment: Alignment.center,
                       child: TabBar(
-                        tabAlignment:TabAlignment.start,
+                        tabAlignment: TabAlignment.start,
                         controller: _tabController,
                         labelStyle: getPrimaryBoldStyle(
                           fontSize: 20,
                           color: context.resources.color.btnColorBlue,
                         ),
                         unselectedLabelColor: const Color(0xffBEC2CE),
-                        indicator: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: const Color(0xffF3D347), // Yellow color
-                        ),
+                        // indicator: BoxDecoration(
+                        //   borderRadius: BorderRadius.circular(10),
+                        //   color: const Color(0xffF3D347), // Yellow color
+                        // ),
                         indicatorSize: TabBarIndicatorSize.tab,
-                        indicatorWeight:3,
+                        indicatorWeight: 3,
                         isScrollable: true,
-                        labelPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                        tabs: List<Widget>.generate(widget.tabtitle.length, (index) {
+                        labelPadding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 5),
+                        tabs: List<Widget>.generate(widget.tabtitle.length,
+                            (index) {
                           return Stack(
                             clipBehavior: Clip.none,
                             children: [
                               Padding(
-                                padding: EdgeInsets.only(right: 8.0), // Add padding to avoid overlay
+                                padding: const EdgeInsets.only(right: 8.0),
                                 child: Tab(
                                   child: Text(
                                     widget.tabtitle[index],
-                                    style: getPrimaryRegularStyle(fontSize: 17),
+                                    style: getPrimaryBoldStyle(
+                                      fontSize: 18,
+                                      color: const Color(0xff180C38),
+                                    ),
                                   ),
                                 ),
                               ),
-                              if (widget.jobCounts[index] > 0) // Only show badge if job count is greater than 0
+                              if (widget.jobCounts[index] >
+                                  0) // Only show badge if job count is greater than 0
                                 Positioned(
                                   right: -18,
                                   top: -5,
                                   child: Container(
-                                    padding: EdgeInsets.all(4),
+                                    padding: const EdgeInsets.all(4),
                                     decoration: BoxDecoration(
                                       color: Colors.green,
                                       borderRadius: BorderRadius.circular(12),
                                     ),
-                                    constraints: BoxConstraints(
+                                    constraints: const BoxConstraints(
                                       minWidth: 24,
                                       minHeight: 24,
                                     ),
                                     child: Center(
                                       child: Text(
                                         '${widget.jobCounts[index]}',
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           color: Colors.white,
                                           fontSize: 12,
                                           fontWeight: FontWeight.bold,

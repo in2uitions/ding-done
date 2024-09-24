@@ -5,7 +5,6 @@ import 'dart:io';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
-import 'package:dingdone/view/map_screen/map_display.dart';
 import 'package:dingdone/view/widgets/custom/custom_phone_feild.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/image_component/upload_one_image.dart';
@@ -14,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
-import 'package:map_location_picker/map_location_picker.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
@@ -71,7 +69,7 @@ class _EditAccountState extends State<EditAccount> {
           body: ListView(
             padding: EdgeInsets.zero,
             children: [
-              Container(
+              SizedBox(
                 height: context.appValues.appSizePercent.h35,
                 child: Stack(
                   children: [
@@ -225,6 +223,7 @@ class _EditAccountState extends State<EditAccount> {
                         value: profileViewModel.getProfileBody["user"]
                             ["first_name"],
                         prefixIcon: 'assets/img/account-feild.svg',
+                        isPrfixShown: true,
                       ),
                     ),
                     const Gap(10),
@@ -239,6 +238,7 @@ class _EditAccountState extends State<EditAccount> {
                         value: profileViewModel.getProfileBody["user"]
                             ["last_name"],
                         prefixIcon: 'assets/img/account-feild.svg',
+                        isPrfixShown: true,
                       ),
                     ),
                     const Gap(10),
@@ -293,82 +293,62 @@ class _EditAccountState extends State<EditAccount> {
                         keyboardType: TextInputType.emailAddress,
                         value: profileViewModel.getProfileBody["user"]["email"],
                         prefixIcon: 'assets/img/email-feild.svg',
+                        isPrfixShown: true,
+                      ),
+                    ),
+                    const Gap(20),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: SizedBox(
+                        width: context.appValues.appSizePercent.w100,
+                        child: Text(
+                          translate('profile.addresses'),
+                          style: getPrimaryBoldStyle(
+                            color: const Color(0xff180C38),
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
                     ),
                     const Gap(10),
-                    Container(
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff000000).withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                        color: context.resources.color.colorWhite,
-                        borderRadius: BorderRadius.circular(15.0),
-                      ),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0),
                       child: Column(
                         children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: context.appValues.appPadding.p20,
-                                vertical: context.appValues.appPadding.p10),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
-                                  children: [
-                                    SvgPicture.asset('assets/img/location.svg'),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                      child: Text(
-                                        translate('profile.addresses'),
-                                        style: getPrimaryBoldStyle(
-                                          fontSize: 20,
-                                          color: const Color(0xff180C38),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+                          InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(
+                                _createRoute(
+                                  // MapScreen(viewModel: jobsViewModel)));
+                                  ConfirmAddress(),
                                 ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: const Color(0xff58537A),
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20),
+                              );
+                            },
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5),
+                                  child: SvgPicture.asset(
+                                    'assets/img/locationbookservice.svg',
                                   ),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: context.appValues.appPadding.p5,
-                                      horizontal:
-                                          context.appValues.appPadding.p20,
-                                    ),
-                                    child: InkWell(
-                                      child: Text(
-                                        translate('profile.changeLocation'),
-                                        style: getPrimaryRegularStyle(
-                                          fontSize: 13,
-                                          color: const Color(0xff180C38),
-                                        ),
-                                      ),
-                                      onTap: () {
-                                        Navigator.of(context).push(_createRoute(
-                                          // MapScreen(viewModel: jobsViewModel)));
-                                          ConfirmAddress(),
-                                        ));
-                                      },
+                                ),
+                                const Gap(10),
+                                Expanded(
+                                  child: Text(
+                                    '${profileViewModel.getProfileBody['current_address']["street_name"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']["city"]}, ${profileViewModel.getProfileBody['current_address']["state"]}',
+                                    style: getPrimaryRegularStyle(
+                                      fontSize: 18,
+                                      color: const Color(0xff190C39),
                                     ),
                                   ),
                                 ),
                               ],
                             ),
                           ),
+<<<<<<< Updated upstream
                           Padding(
                             padding: EdgeInsets.fromLTRB(
                                 0, 0, 0, context.appValues.appPadding.p0),
@@ -437,10 +417,155 @@ class _EditAccountState extends State<EditAccount> {
                                 //       ["latitude"],
                                 // ),
                                 ),
+=======
+                          const Divider(
+                            color: Color(0xffEAEAFF),
+                            thickness: 2,
+                            height: 5,
+>>>>>>> Stashed changes
                           ),
                         ],
                       ),
                     ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //     boxShadow: [
+                    //       BoxShadow(
+                    //         color: const Color(0xff000000).withOpacity(0.1),
+                    //         spreadRadius: 1,
+                    //         blurRadius: 5,
+                    //         offset: const Offset(
+                    //             0, 3), // changes position of shadow
+                    //       ),
+                    //     ],
+                    //     color: context.resources.color.colorWhite,
+                    //     borderRadius: BorderRadius.circular(15.0),
+                    //   ),
+                    //   child: Column(
+                    //     children: [
+                    //       Padding(
+                    //         padding: EdgeInsets.symmetric(
+                    //             horizontal: context.appValues.appPadding.p20,
+                    //             vertical: context.appValues.appPadding.p10),
+                    //         child: Row(
+                    //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //           children: [
+                    //             Row(
+                    //               children: [
+                    //                 SvgPicture.asset('assets/img/location.svg'),
+                    //                 Padding(
+                    //                   padding:
+                    //                       const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                    //                   child: Text(
+                    //                     translate('profile.addresses'),
+                    //                     style: getPrimaryBoldStyle(
+                    //                       fontSize: 20,
+                    //                       color: const Color(0xff180C38),
+                    //                     ),
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //             Container(
+                    //               decoration: BoxDecoration(
+                    //                 border: Border.all(
+                    //                   color: const Color(0xff58537A),
+                    //                   width: 2,
+                    //                 ),
+                    //                 borderRadius: BorderRadius.circular(20),
+                    //               ),
+                    //               child: Padding(
+                    //                 padding: EdgeInsets.symmetric(
+                    //                   vertical: context.appValues.appPadding.p5,
+                    //                   horizontal:
+                    //                       context.appValues.appPadding.p20,
+                    //                 ),
+                    //                 child: InkWell(
+                    //                   child: Text(
+                    //                     translate('profile.changeLocation'),
+                    //                     style: getPrimaryRegularStyle(
+                    //                       fontSize: 13,
+                    //                       color: const Color(0xff180C38),
+                    //                     ),
+                    //                   ),
+                    //                   onTap: () {
+                    //                     Navigator.of(context).push(_createRoute(
+                    //                       // MapScreen(viewModel: jobsViewModel)));
+                    //                       ConfirmAddress(),
+                    //                     ));
+                    //                   },
+                    //                 ),
+                    //               ),
+                    //             ),
+                    //           ],
+                    //         ),
+                    //       ),
+                    //       Padding(
+                    //         padding: EdgeInsets.fromLTRB(
+                    //             0, 0, 0, context.appValues.appPadding.p0),
+                    //         child: SizedBox(
+                    //             height: 180,
+                    //             child: GoogleMap(
+                    //               onMapCreated: null,
+                    //               initialCameraPosition: CameraPosition(
+                    //                 zoom: 16.0,
+                    //                 target: LatLng(
+                    //                     profileViewModel.getProfileBody[
+                    //                         'current_address']["latitude"],
+                    //                     profileViewModel.getProfileBody[
+                    //                         'current_address']["longitude"]),
+                    //               ),
+
+                    //               mapType: MapType.normal,
+                    //               markers: <Marker>{
+                    //                 Marker(
+                    //                     markerId: MarkerId('marker'),
+                    //                     infoWindow:
+                    //                         InfoWindow(title: 'InfoWindow'))
+                    //               },
+                    //               onCameraMove: null,
+                    //               myLocationButtonEnabled: false,
+                    //               // options: GoogleMapOptions(
+                    //               //     myLocationEnabled:true
+                    //               //there is a lot more options you can add here
+                    //             )
+                    //             // ),
+                    //             // MapLocationPicker(
+                    //             //   apiKey:
+                    //             //       'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                    //             //   popOnNextButtonTaped: false,
+                    //             //   hideMoreOptions:true,
+                    //             //   hideBackButton: true,
+                    //             //   hideBottomCard: true,
+                    //             //   hideLocationButton: true,
+                    //             //   hideSuggestionsOnKeyboardHide: true,
+                    //             //   hideMapTypeButton: true,
+                    //             //   // topCardColor: Colors.transparent,
+                    //             //   topCardShape: RoundedRectangleBorder(), // This hides the top card shape
+                    //             //
+                    //             //   top: false,
+                    //             //   currentLatLng: LatLng(
+                    //             //       profileViewModel
+                    //             //               .getProfileBody['current_address']
+                    //             //           ["latitude"],
+                    //             //       profileViewModel
+                    //             //               .getProfileBody['current_address']
+                    //             //           ["longitude"]),
+                    //             // ),
+                    //             // MapDisplay(
+                    //             //   body: profileViewModel.getProfileBody,
+                    //             //   longitude: profileViewModel
+                    //             //           .getProfileBody['current_address']
+                    //             //       ["longitude"],
+                    //             //   latitude: profileViewModel
+                    //             //           .getProfileBody['current_address']
+                    //             //       ["latitude"],
+                    //             // ),
+                    //             ),
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

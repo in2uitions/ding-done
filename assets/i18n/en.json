@@ -27,6 +27,7 @@
     "back": "Back",
     "proceed": "Proceed",
     "send": "Send",
+    "sendMyCode": "Send my code",
     "error": "Error",
     "complete": "Complete",
     "startJob": "Start Job",
@@ -209,7 +210,7 @@
     "resetPasswordMessage": "Please enter your email to reset\nyour password"
   },
   "signUp": {
-    "areYouA": "Are you a",
+    "areYouA": "You are a",
     "customer": "Customer",
     "supplier": "Supplier",
     "securityInformation": "Security information",

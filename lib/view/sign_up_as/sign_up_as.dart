@@ -67,11 +67,12 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                       padding: EdgeInsets.all(context.appValues.appPadding.p20),
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xffF3D347),
+                          backgroundColor: const Color(0xff4100E3),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
-                            side: BorderSide(
-                                color: context.resources.color.colorYellow),
+                            side: const BorderSide(
+                              color: Color(0xff4100E3),
+                            ),
                           ),
                         ),
                         onPressed: () {
@@ -80,16 +81,18 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                             value: Constants.customerRoleId,
                           );
                           Navigator.of(context)
-                              .push(_createRoute(SignUpOnBoardingScreen(initialIndex: 0,)));
+                              .push(_createRoute(SignUpOnBoardingScreen(
+                            initialIndex: 0,
+                          )));
                         },
-                        child: Container(
+                        child: SizedBox(
                           width: context.appValues.appSizePercent.w75,
                           height: context.appValues.appSizePercent.h9,
                           child: Center(
                             child: Text(
                               translate('signUp.customer'),
                               style: getPrimaryBoldStyle(
-                                fontSize: 24,
+                                fontSize: 20,
                                 color: context.resources.color.colorWhite,
                               ),
                             ),
@@ -108,13 +111,12 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                           ),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent,
+                              backgroundColor: const Color(0xffFFC502),
                               elevation: 0,
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20),
                                 side: const BorderSide(
-                                  width: 3,
-                                  color: Color(0xff58537A),
+                                  color: Color(0xffFFC502),
                                 ),
                               ),
                             ),
@@ -123,20 +125,23 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                                 index: 'role',
                                 value: Constants.supplierRoleId,
                               );
-                              await categoriesViewModel.getCategoriesAndServices();
+                              await categoriesViewModel
+                                  .getCategoriesAndServices();
                               Navigator.of(context).push(
-                                _createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 0,)),
+                                _createRoute(SignUpSupplierOnBoardingScreen(
+                                  initialIndex: 0,
+                                )),
                               );
                             },
-                            child: Container(
+                            child: SizedBox(
                               width: context.appValues.appSizePercent.w75,
                               height: context.appValues.appSizePercent.h9,
                               child: Center(
                                 child: Text(
                                   translate('signUp.supplier'),
                                   style: getPrimaryBoldStyle(
-                                    fontSize: 24,
-                                    color: const Color(0xff58537A),
+                                    fontSize: 20,
+                                    color: context.resources.color.colorWhite,
                                   ),
                                 ),
                               ),

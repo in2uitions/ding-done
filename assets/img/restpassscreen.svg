@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="75.54" height="71.621" viewBox="0 0 75.54 71.621">
+  <g id="restpassscreen" transform="translate(3.25 2.298)">
+    <path id="Vector" d="M0,29.963,29.963,0" transform="translate(36.109 0)" fill="none" stroke="#ffc502" stroke-width="6.5"/>
+    <path id="Vector-2" data-name="Vector" d="M0,0,8.451,8.451" transform="translate(48.403 17.67)" fill="none" stroke="#ffc502" stroke-width="6.5"/>
+    <path id="Vector-3" data-name="Vector" d="M0,0,10.756,11.524" transform="translate(59.158 6.915)" fill="none" stroke="#ffc502" stroke-width="6.5"/>
+    <path id="Vector-4" data-name="Vector" d="M43.024,21.512A21.512,21.512,0,1,1,21.512,0,21.512,21.512,0,0,1,43.024,21.512Z" transform="translate(0 23.049)" fill="none" stroke="#4100e3" stroke-width="6.5"/>
+    <circle id="Ellipse_1" data-name="Ellipse 1" cx="4.137" cy="4.137" r="4.137" transform="translate(13.888 44.856)" fill="#ffc502"/>
+  </g>
+</svg>
