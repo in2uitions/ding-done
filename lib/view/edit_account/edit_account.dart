@@ -348,81 +348,10 @@ class _EditAccountState extends State<EditAccount> {
                               ],
                             ),
                           ),
-<<<<<<< Updated upstream
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(
-                                0, 0, 0, context.appValues.appPadding.p0),
-                            child: SizedBox(
-                                height: 180,
-                                child: GoogleMap(
-                                  onMapCreated: null,
-                                  initialCameraPosition: CameraPosition(
-                                    zoom: 16.0,
-                                    target: LatLng(
-                                        profileViewModel.getProfileBody[
-                                            'current_address']["latitude"],
-                                        profileViewModel.getProfileBody[
-                                            'current_address']["longitude"]),
-                                  ),
-
-                                  mapType: MapType.normal,
-                                  markers: <Marker>{
-                                    Marker(
-                                      markerId: MarkerId('marker'),
-                                      infoWindow: InfoWindow(title: 'Current'),
-                                      position: LatLng(
-                                          profileViewModel.getProfileBody[
-                                              'current_address']["latitude"],
-                                          profileViewModel.getProfileBody[
-                                              'current_address']["longitude"]),
-                                    )
-                                  },
-
-                                  onCameraMove: null,
-                                  myLocationButtonEnabled: false,
-                                  // options: GoogleMapOptions(
-                                  //     myLocationEnabled:true
-                                  //there is a lot more options you can add here
-                                )
-                                // ),
-                                // MapLocationPicker(
-                                //   apiKey:
-                                //       'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
-                                //   popOnNextButtonTaped: false,
-                                //   hideMoreOptions:true,
-                                //   hideBackButton: true,
-                                //   hideBottomCard: true,
-                                //   hideLocationButton: true,
-                                //   hideSuggestionsOnKeyboardHide: true,
-                                //   hideMapTypeButton: true,
-                                //   // topCardColor: Colors.transparent,
-                                //   topCardShape: RoundedRectangleBorder(), // This hides the top card shape
-                                //
-                                //   top: false,
-                                //   currentLatLng: LatLng(
-                                //       profileViewModel
-                                //               .getProfileBody['current_address']
-                                //           ["latitude"],
-                                //       profileViewModel
-                                //               .getProfileBody['current_address']
-                                //           ["longitude"]),
-                                // ),
-                                // MapDisplay(
-                                //   body: profileViewModel.getProfileBody,
-                                //   longitude: profileViewModel
-                                //           .getProfileBody['current_address']
-                                //       ["longitude"],
-                                //   latitude: profileViewModel
-                                //           .getProfileBody['current_address']
-                                //       ["latitude"],
-                                // ),
-                                ),
-=======
                           const Divider(
                             color: Color(0xffEAEAFF),
                             thickness: 2,
-                            height: 5,
->>>>>>> Stashed changes
+                            height: 10,
                           ),
                         ],
                       ),
