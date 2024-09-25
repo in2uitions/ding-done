@@ -84,6 +84,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
         services = translation;
         break; // Break the loop once the translation is found
       }
+
       // }
     }
     return InkWell(
@@ -113,7 +114,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SvgPicture.network(
-                    '${context.resources.image.networkImagePath}/${category["image"]}',
+                    '${context.resources.image.networkImagePath2}/${category["image"]}.svg',
                     height: 40,
                     width: 40,
                   ),
@@ -138,7 +139,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
             .filterData(index: 'search_services', value: services?["title"]);
         debugPrint(
             'search filter ${widget.servicesViewModel.searchBody["search_services"]}');
-        widget.servicesViewModel.setParentCategory('');
+        widget.servicesViewModel.setParentCategory(services?["title"]);
         categoriesViewModel.sortCategories(services?["title"]);
       },
     );

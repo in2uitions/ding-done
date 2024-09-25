@@ -561,6 +561,8 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                                   data: jobsViewModel
                                                       .supplierOpenJobs[index],
                                                   fromWhere: 'request')));
+                                          debugPrint('ejkwfhoweihfowef ${jobsViewModel
+                                              .supplierOpenJobs[index].severity_level}');
                                         },
                                         child: services != null
                                             ? JobRequests(
@@ -580,6 +582,8 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                                     '${jobsViewModel.supplierOpenJobs[index].job_description}',
                                                 id: jobsViewModel
                                                     .supplierOpenJobs[index].id,
+                                          severity_level: jobsViewModel
+                                              .supplierOpenJobs[index].severity_level ?? '',
                                               )
                                             : Container(),
                                       );

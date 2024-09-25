@@ -105,6 +105,9 @@
   "inbox": {
     "inbox": "Εισερχόμενα"
   },
+  "notifications": {
+    "notifications": "ειδοποιήσεις"
+  },
   "profile": {
     "help": "Βοήθεια",
     "privacyPolicy": "Πολιτική Απορρήτου",

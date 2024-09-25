@@ -16,9 +16,10 @@ class JobRequests extends StatefulWidget {
     required this.description,
     required this.id,
     required this.image,
+    required this.severity_level,
   });
 
-  String title, location, image, date, description;
+  String title, location, image, date, description, severity_level;
   int id;
   @override
   State<JobRequests> createState() => _JobRequestsState();
@@ -102,23 +103,7 @@ class _JobRequestsState extends State<JobRequests> {
                                 ),
                               ),
                             ),
-                            // Padding(
-                            //   padding: EdgeInsets.only(
-                            //       top: context.appValues.appPadding.p5),
-                            //   child: SizedBox(
-                            //     width: context.appValues.appSizePercent.w50,
-                            //     child: Text(
-                            //       widget.description,
-                            //       maxLines: 2,
-                            //       overflow: TextOverflow.ellipsis,
-                            //       style: getPrimaryRegularStyle(
-                            //         fontSize: 10,
-                            //         color:
-                            //             context.resources.color.secondColorBlue,
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
+
                             SizedBox(height: context.appValues.appSize.s2),
                             Row(
                               children: [
@@ -141,23 +126,7 @@ class _JobRequestsState extends State<JobRequests> {
                             ),
                           ],
                         ),
-                        // Row(
-                        //   children: [
-                        //     InkWell(
-                        //       child: SvgPicture.asset('assets/img/close.svg'),
-                        //       onTap: () {},
-                        //     ),
-                        //     SizedBox(width: context.appValues.appSize.s15),
-                        //     // InkWell(
-                        //     //   child:
-                        //     //       SvgPicture.asset('assets/img/checkmark-square.svg'),
-                        //     //   onTap: () {
-                        //     //     jobsViewModel.acceptJob(widget.id);
-                        //     //
-                        //     //   },
-                        //     // ),
-                        //   ],
-                        // ),
+
                       ],
                     ),
                     Row(
@@ -174,6 +143,20 @@ class _JobRequestsState extends State<JobRequests> {
                               fontSize: 10,
                               color: context.resources.color.secondColorBlue,
                             ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+
+                        SizedBox(
+                          width: context.appValues.appSizePercent.w50,
+                          child:  Text(
+                            widget.severity_level!=null?widget.severity_level.toString().toLowerCase()=='major'?'Urgent':'Normal':'',
+                            style: getPrimaryRegularStyle(
+                                fontSize: 15,
+                                color: widget.severity_level!=null?widget.severity_level.toString().toLowerCase()=='major'?Colors.red:Colors.green:Colors.white),
                           ),
                         ),
                       ],

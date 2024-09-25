@@ -37,7 +37,7 @@ class _InboxPageState extends State<InboxPage> {
             padding: EdgeInsets.symmetric(
                 horizontal: context.appValues.appPadding.p20),
             child: Text(
-              translate('inbox.inbox'),
+              translate('notifications.notifications'),
               style: getPrimaryRegularStyle(
                   color: context.resources.color.btnColorBlue, fontSize: 32),
             ),

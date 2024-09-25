@@ -105,6 +105,9 @@
   "inbox": {
     "inbox": "Inbox"
   },
+  "notifications": {
+    "notifications": "Notifications"
+  },
   "profile": {
     "help": "Help",
     "privacyPolicy": "Policy",

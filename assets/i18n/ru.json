@@ -105,6 +105,9 @@
   "inbox": {
     "inbox": "Входящие"
   },
+  "notifications": {
+    "notifications": "уведомления"
+  },
   "profile": {
     "help": "Помощь",
     "privacyPolicy": "Политика конфиденциальности",
