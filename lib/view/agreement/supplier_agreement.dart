@@ -21,6 +21,7 @@ import 'package:dingdone/view/widgets/agreements/supplier_agreement/use_of_platf
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 class SupplierAgreement extends StatefulWidget {
@@ -65,7 +66,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'SERVICE PROVIDER AGREEMENT',
+                  translate('termsAndConditionsSupplier.supplierAgreement'),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.secondColorBlue,
                       fontSize: 24),
@@ -75,7 +76,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'CJ WEDO LTD TERMS AND CONDITIONS',
+                  translate('termsAndConditionsSupplier.termsAndConditions'),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.btnColorBlue,
                       fontSize: 20),
@@ -93,35 +94,35 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
                     SizedBox(height: context.appValues.appSize.s20),
                     DefinitionsSupplier(),
                     SizedBox(height: context.appValues.appSize.s20),
-                    RelationShipOfPartiesSupplier(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    PlatformSupp(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    TheServiceSupp(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    FeesSupp(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    BusinessConductSupp(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    RepresentationsAndWarrantiesSupplier(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    IndemnificationSupplier(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    InsuranceSupplier(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    TerminationSupplier(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    OtherBusinessActivitiesSupplier(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    AssignmentSupplier(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    PrivacySupplier(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    IntelectualProperty(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    UseOfPlatformSupplier(),
-                    SizedBox(height: context.appValues.appSize.s20),
-                    GeneralProvisionSupplier(),
+                    // RelationShipOfPartiesSupplier(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // PlatformSupp(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // TheServiceSupp(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // FeesSupp(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // BusinessConductSupp(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // RepresentationsAndWarrantiesSupplier(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // IndemnificationSupplier(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // InsuranceSupplier(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // TerminationSupplier(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // OtherBusinessActivitiesSupplier(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // AssignmentSupplier(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // PrivacySupplier(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // IntelectualProperty(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // UseOfPlatformSupplier(),
+                    // SizedBox(height: context.appValues.appSize.s20),
+                    // GeneralProvisionSupplier(),
                     SizedBox(height: context.appValues.appSize.s10),
                     widget.index!=null?
                     CheckboxListTile(

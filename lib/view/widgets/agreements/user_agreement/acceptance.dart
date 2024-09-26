@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class Acceptance extends StatefulWidget {
   const Acceptance({super.key});
@@ -17,7 +18,7 @@ class _AcceptanceState extends State<Acceptance> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '3.	ACCEPTANCE',
+          translate('termsAndConditionsCustomer.acceptance'),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -29,13 +30,13 @@ class _AcceptanceState extends State<Acceptance> {
           child: Column(
             children: [
               Text(
-                '1.	By accessing or using the Platform you expressly agree to be bound by these Terms, and you agree that these Terms shall apply to all Services that you book via the Platform.',
+                translate('termsAndConditionsCustomer.acceptance1'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                '2.	Notwithstanding clause 3.1, you may not accept the Terms or access the Platform if:',
+                translate('termsAndConditionsCustomer.acceptance2'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
@@ -47,14 +48,14 @@ class _AcceptanceState extends State<Acceptance> {
                 child: Column(
                   children: [
                     Text(
-                      '1.	you are not of legal age to form a binding contract with WeDo; or',
+                      translate('termsAndConditionsCustomer.acceptance21'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      '2.	you are a person barred from entering into contracts under legislation, in which case, you must immediately leave the Platform.',
+                      translate('termsAndConditionsCustomer.acceptance22'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
@@ -65,13 +66,13 @@ class _AcceptanceState extends State<Acceptance> {
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                '3.	By accepting the Terms, you agree that this is clear and unequivocal proof that the Terms are not unconscionable, that there is no unfair bargaining power or position, that there is no duress, and that you have carefully read and understood the Terms.',
+                translate('termsAndConditionsCustomer.acceptance3'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                '4.	If you do not understand any part of the Terms you should seek independent legal advice.',
+                translate('termsAndConditionsCustomer.acceptance4'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

@@ -22,6 +22,7 @@ import 'package:dingdone/view/widgets/agreements/user_agreement/warranties_and_r
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 class UserAgreement extends StatefulWidget {
@@ -67,7 +68,7 @@ class _UserAgreementState extends State<UserAgreement> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'USERS AGREEMENT',
+                  translate('termsAndConditionsCustomer.userAgreement'),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.secondColorBlue,
                       fontSize: 24),
@@ -77,7 +78,7 @@ class _UserAgreementState extends State<UserAgreement> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  'CJ WEDO LTD TERMS AND CONDITIONS',
+                  translate('termsAndConditionsCustomer.termsAndConditions'),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.btnColorBlue,
                       fontSize: 20),
@@ -93,35 +94,35 @@ class _UserAgreementState extends State<UserAgreement> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'BACKGROUND',
+                      translate('termsAndConditionsCustomer.background'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.secondColorBlue,
                           fontSize: 18),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      'CJ WEDO LTD (“WeDo”) operates a website, mobile applications and associated administrative services (together the “Platform”) through which customers (“Users”) can book a Business for the provision of household services such as cleaning, gardening and handyman services (“Services”), by submitting a booking request. WeDo then matches the most suitable Business from its database of Businesses to the booking request. A Business is an independent service provider in the business of providing the Services and is not employed by WeDo or any of its affiliates.',
+                      translate('termsAndConditionsCustomer.background1'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
-                      'These terms and conditions form a contract between WeDo and the Users for the use of the Platform (“Terms”).',
+                      translate('termsAndConditionsCustomer.background2'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
-                      'The User enters into two contractual relationships. The first contract being with WeDo, governing the access to and use of the Platform in accordance with the Terms. The second contract is between the User and a Business for the provision of the Services and with WeDo as a technology provider in respect of the Services (“Services Agreement”) as attached as Appendix A and as amended from time to time.',
+                      translate('termsAndConditionsCustomer.background3'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
-                      'By accessing and/or using the Platform, you acknowledge that you have read, understood and agree to be bound by these Terms.',
+                      translate('termsAndConditionsCustomer.background4'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
@@ -138,7 +139,7 @@ class _UserAgreementState extends State<UserAgreement> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'AND THE PARTIES HEREBY AGREE:',
+                    translate('termsAndConditionsCustomer.partiesAgree'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 20),
