@@ -67,7 +67,7 @@ class _InboxPageState extends State<InboxPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    translate('inbox.inbox'),
+                                    translate('notifications.notifications'),
                                     style: getPrimaryBoldStyle(
                                       color: context.resources.color.colorWhite,
                                       fontSize: 28,
