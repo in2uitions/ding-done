@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		s+LM34V9URQrhOjtNPHQcN6KjX0=
+		pxCJUEQ80P+OYHYT6YGGJ1QNtYg=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -62,15 +62,15 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		60i12LyCtZIDMWkJzNXqNz8efRg=
+		Vlslanm0zCFVtX6G+9xh+2tNRAc=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
-		Nw0bzvptEaUGvrD37A/jiWu473A=
+		l4SSxdAV5IgaiwpTDfF3BUXdRL0=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<data>
-		8AQOZsevbxECN/jRwxkrTzne0Xw=
+		u2tL2TGb/vcYnv/cc4Zycp1oSY0=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
 		<data>
@@ -98,19 +98,19 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/ar.json</key>
 		<data>
-		ZgNmK3uZNSbmrQ+LU3eeSvxL4Vk=
+		lWSZQVDCVoP8mXhTBcTcAMf9F1U=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/el.json</key>
 		<data>
-		ZbRofiBirIgeGT5oihAbsMUaM9Q=
+		K6eVhjEtwxvYL5Lvpozfdg+PKJ0=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/en.json</key>
 		<data>
-		8jELs2oByH7EwE3R4xcvCayqvFY=
+		4pSXQiwP98QmjzRqHSBATFpj3jw=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/ru.json</key>
 		<data>
-		zPpDuu7UIgzzCbc7sKrWXnc419A=
+		+LPt3vL1OJ0tDdBeFW9rGxVgFYw=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/014-google.svg</key>
 		<data>
@@ -324,6 +324,10 @@
 		<data>
 		DFZu0LpkR+cwzlPQnsSO4EismuU=
 		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/img/inboxbg.png</key>
+		<data>
+		wh/gq69ErlbAxe0YcAwPCmnsN7U=
+		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/info.svg</key>
 		<data>
 		YI7F2M2/o8kOXwQUGIl3Vaizk3U=
@@ -331,6 +335,10 @@
 		<key>Frameworks/App.framework/flutter_assets/assets/img/jobimage.png</key>
 		<data>
 		x3chJiQBXuKt5WKQjd6S0Mq5CKQ=
+		</data>
+		<key>Frameworks/App.framework/flutter_assets/assets/img/location-profile.svg</key>
+		<data>
+		p+AhrMqOigI7J8Cv4lXLtuXfLIQ=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/location.svg</key>
 		<data>
@@ -490,7 +498,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		vx1ImxJBVt+1NjmqHLwI8KlDlzw=
+		HdpFK0h1h2EF9AyWE8v8GwJVM48=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -3553,11 +3561,11 @@
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet</key>
 		<data>
-		8w2hpc/gcjx4+TXZ0BMeDer824Y=
+		B0aukNFrfgm4PpzYdH/zp3VBlSQ=
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet.bundle/Assets.car</key>
 		<data>
-		LbDFQxjoX9PqZzfwrzTy2dEZvUg=
+		d/dPApv6Q9QGjA2hlnpXwVD5gcA=
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet.bundle/Info.plist</key>
 		<data>
@@ -3947,7 +3955,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/_CodeSignature/CodeResources</key>
 		<data>
-		JrAqj/Q4sa12Lx3UM5ftKgR2UMY=
+		O7sn74FKYYmWk7810szGOpAx3vA=
 		</data>
 		<key>Frameworks/StripePayments.framework/Info.plist</key>
 		<data>
@@ -4726,11 +4734,11 @@
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI</key>
 		<data>
-		Vmo2aU3qWmZCEvhEGnXGeR9usK4=
+		+nRDcfAN0ZbvRxEHkjwrhwaKx5E=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Assets.car</key>
 		<data>
-		WWbtXewZnW9ykyuppGmHS/fGbEI=
+		mRZp0E/cF6kESv/3pB5/A7B9mQ4=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Info.plist</key>
 		<data>
@@ -5120,7 +5128,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/_CodeSignature/CodeResources</key>
 		<data>
-		iLR4fXogzD0+Ln50U8Lr+LO70kQ=
+		I4T1NiNP7Thp9myU2reRU7lhXOg=
 		</data>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
 		<data>
@@ -6998,7 +7006,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		6/cE0MG0AHw+Sm+kzNEuLceMaTw=
+		lgbJon+vN7dkXJA0fGwDg0qbU4U=
 		</data>
 		<key>LatinOCRResources.bundle/Info.plist</key>
 		<data>
@@ -7139,7 +7147,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			QT5bO9x67sjEeZmXwxRE1O4ahsqIqwBPeP2KlRzvcQg=
+			AOp/Nb9VahrGDaRVpbVZM4/tQ9RuLwJZZuNdzr/7PDI=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -7153,21 +7161,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			2rTazwkSOYs6BM23wzbP6pRoUGk11+kq6IyDJwjm6fc=
+			X1jCqd1rl3FaV/0A6J4i3UgOL5Ha9qvzAcJXNclmxpE=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vMOTOIUmaCjvVtGYKE8S7OOeeLmx+HKPDIda8fNBXK4=
+			Gra19VeeYauY1Dabp1gHYUnnx3c+c996Ohwlr2WHvdc=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			VPy591ZfQ9ZimvjiAzltqFovY09UuWT/gxjnbhZzsyc=
+			Rl5TJe10I36V5SdYJff+w0sNVHOUYB+XRQnSNzoWeYc=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/FontManifest.json</key>
@@ -7216,28 +7224,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			sS5YjFcpe7kdE8HAqO6TK2RhmFYcVvuca018HPVmfAE=
+			k4RdQhQ7uigoK5Meh0yjkQrn3/HHMtfsMy078jprekY=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wrUxHjm1dp51mi+K187An5Y1gDkp2sN7L1sU88KqNA0=
+			l6kKod9EBsHny8i5j/vPT3ZQH72Dp7pca0ZdCH0dOxA=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/en.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6d5htFYI0oQmgcZWCcbvAgz0fVWaTU7lzciggO6Re2Q=
+			6AI0u8WYkktJFWfrzHl1x/giFrTRjaxYWWSfuTi/fA4=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			DPrG+9qUK/VPDdHtk7IvIMwynOyQUqbs8TgrGaM1u5U=
+			eijplQiwU+La/kYpE1AL+32mVDotWqZDhu1/IPzNEnw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/014-google.svg</key>
@@ -7611,6 +7619,13 @@
 			h4DE2yukqBTreLyNmaTVMWOC6ZocFBEwxT0DUzy29G0=
 			</data>
 		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/img/inboxbg.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			aTwzYys//r97MrTq84mdJ9mVHHgUU/Suvl7vJtpKNm8=
+			</data>
+		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/info.svg</key>
 		<dict>
 			<key>hash2</key>
@@ -7623,6 +7638,13 @@
 			<key>hash2</key>
 			<data>
 			T4SBMtqb0mtahu+fq8KHCcy6nGORrkR9g5XtYPYSo68=
+			</data>
+		</dict>
+		<key>Frameworks/App.framework/flutter_assets/assets/img/location-profile.svg</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			EAaem28uGK5kaQpplE2O/t0Sin27VOV3u+Ovi9E49nI=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/location.svg</key>
@@ -7902,7 +7924,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			W2EAKvfuttFGEHYkEY/C0LGEFv+wir8qqmM49pbJGMs=
+			QE5lYpInnvxqJPvFy0vwgiAhXvJ/SEsfr522plNLSeM=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -12270,14 +12292,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			mX7A5ZHPS9ISB0QVK27l4NaUs2zZGAGe1MNgBKuJDVY=
+			p3xyd/ZIPR/6cjuZDXxy10sz8iMO1465u8pZhDyJC9g=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uxcwPat1DlmKVgDjT1f76TkTOO1IVGBf1PHHv4971lo=
+			0xUtddefF36wAgy7S9XCDT3mFb52vaBe78+MRYfQRvY=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet.bundle/Info.plist</key>
@@ -12676,7 +12698,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JB/l6RNGsNw3N6viAeSCzWiJlSOO8cblgkWucN800LQ=
+			GvycLDgRqYYx1Tp/UDRP5WsKWernoVulj1gDiXeOM30=
 			</data>
 		</dict>
 		<key>Frameworks/StripePayments.framework/Info.plist</key>
@@ -13479,14 +13501,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1RXZLrFxAcr946JPxGUBJ9y/auX0HgOyNAQIhq+DZbA=
+			tyHX6gI5gTe8gePtHuupb38X/jQQ9KqrHLmCF/K9bV0=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JZ5QnbDSaEJjMFiVJO2uP+scmDy0wIT0jA+aTtIeMfk=
+			J+Ra7VIYV38cn4aEK4hd3dHSae6pr19Vz3B3InvhoVw=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Info.plist</key>
@@ -13885,7 +13907,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9xXF1O4QlAdJy7P2huM0I2Dz7ohGpNjB0E7E5aEbaq4=
+			0rr9wNN/fsrkIOPrmLtFomx7x/+zeSqIjZ5Z0aSCC3o=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>

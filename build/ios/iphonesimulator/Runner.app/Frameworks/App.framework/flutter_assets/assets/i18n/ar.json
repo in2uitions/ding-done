@@ -105,6 +105,9 @@
   "inbox": {
     "inbox": "البريد الوارد"
   },
+  "notifications": {
+    "notifications": "إشعارات"
+  },
   "profile": {
     "help": "المساعدة",
     "privacyPolicy": "سياسة الخصوصية",
