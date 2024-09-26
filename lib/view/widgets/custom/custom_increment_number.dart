@@ -43,7 +43,8 @@ class CustomIncrementField extends StatefulWidget {
 }
 
 class _CustomIncrementFieldState extends State<CustomIncrementField> {
-  final GlobalKey<FormFieldState<String>> globalKey = GlobalKey<FormFieldState<String>>();
+  final GlobalKey<FormFieldState<String>> globalKey =
+      GlobalKey<FormFieldState<String>>();
   int currentValue = 0;
   final TextEditingController _customController = TextEditingController();
 
@@ -51,7 +52,9 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
   void initState() {
     super.initState();
     debugPrint('value is ${widget.value}');
-    currentValue = widget.value!=null && widget.value!=''?int.parse(widget.value.toString()):0;
+    currentValue = widget.value != null && widget.value != ''
+        ? int.parse(widget.value.toString())
+        : 0;
     _customController.text = currentValue.toString();
     _customController.addListener(() {
       widget.viewModel(index: widget.index, value: _customController.text);
@@ -86,89 +89,64 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(
-          Radius.circular(15),
-        ),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                color: context.resources.color.colorWhite,
-                borderRadius: BorderRadius.circular(15),
-              ),
-              child: Row(
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.remove),
-                    onPressed: _decrement,
+    return Column(
+      children: [
+        Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.remove),
+              onPressed: _decrement,
+              color: const Color(0xffB4B4B4),
+            ),
+            Expanded(
+              child: TextFormField(
+                cursorColor: const Color(0xffB4B4B4),
+                controller: _customController,
+                textAlign: TextAlign.center,
+                keyboardType: widget.keyboardType,
+                style: getPrimaryRegularStyle(
+                  fontSize: 15,
+                ),
+                decoration: InputDecoration(
+                  isDense: true,
+                  errorText: widget.errorText,
+                  border: InputBorder.none, // Removed the border here
+                  hintText: widget.hintText,
+                  hintStyle: getPrimaryRegularStyle(
+                    fontSize: 15,
                     color: const Color(0xffB4B4B4),
                   ),
-                  Expanded(
-                    child: TextFormField(
-                      cursorColor: const Color(0xffB4B4B4),
-                      controller: _customController,
-                      textAlign: TextAlign.center,
-                      keyboardType: widget.keyboardType,
-                      style: getPrimaryRegularStyle(
-                        fontSize: 15,
-                      ),
-                      decoration: InputDecoration(
-                        isDense: true,
-                        errorText: widget.errorText,
-                        border: const OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(15),
-                          ),
-                          borderSide: BorderSide.none,
-                        ),
-                        filled: true,
-                        fillColor: context.resources.color.colorWhite,
-                        hintText: widget.hintText,
-                        hintStyle: getPrimaryRegularStyle(
-                          fontSize: 15,
-                          color: const Color(0xffB4B4B4),
-                        ),
-                        helperText: widget.helperText,
-                      ),
-                      onChanged: (value) {
-                        int? newValue = int.tryParse(value);
-                        if (newValue != null && newValue >= 0 && newValue <= 99) {
-                          setState(() {
-                            currentValue = newValue;
-                          });
-                          widget.viewModel(index: widget.index, value: value);
-                          if (widget.onChanged != null) {
-                            widget.onChanged!(value);
-                          }
-                        } else {
-                          _customController.text = currentValue.toString();
-                        }
-                      },
-                    ),
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.add),
-                    onPressed: _increment,
-                    color: const Color(0xffB4B4B4),
-                  ),
-                ],
+                  helperText: widget.helperText,
+                ),
+                onChanged: (value) {
+                  int? newValue = int.tryParse(value);
+                  if (newValue != null && newValue >= 0 && newValue <= 99) {
+                    setState(() {
+                      currentValue = newValue;
+                    });
+                    widget.viewModel(index: widget.index, value: value);
+                    if (widget.onChanged != null) {
+                      widget.onChanged!(value);
+                    }
+                  } else {
+                    _customController.text = currentValue.toString();
+                  }
+                },
               ),
             ),
-          ),
-        ],
-      ),
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: _increment,
+              color: const Color(0xffB4B4B4),
+            ),
+          ],
+        ),
+        const Divider(
+          color: Color(0xffEAEAFF),
+          thickness: 2,
+          height: 5,
+        ),
+      ],
     );
   }
 

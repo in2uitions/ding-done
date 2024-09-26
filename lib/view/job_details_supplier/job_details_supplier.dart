@@ -6,7 +6,6 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/payment_method_buttons.dart';
-import 'package:dingdone/view/widgets/job_details_supplier/customer_full_name_widget.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/actual_start_time_widget.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/address_widget.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/date_and_time_widget.dart';
@@ -33,15 +32,19 @@ class JobDetailsSupplier extends StatefulWidget {
   var fromWhere;
   var title;
 
-  JobDetailsSupplier({super.key, required this.data, required this.fromWhere, required this.title});
+  JobDetailsSupplier(
+      {super.key,
+      required this.data,
+      required this.fromWhere,
+      required this.title});
 
   @override
   State<JobDetailsSupplier> createState() => _JobDetailsSupplierState();
 }
 
 class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
-  bool _isLoading=false;
-  bool _isLoading2=false;
+  bool _isLoading = false;
+  bool _isLoading2 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -61,12 +64,16 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     child: Directionality(
                       textDirection: TextDirection.ltr,
                       child: Padding(
-                        padding:
-                        EdgeInsets.fromLTRB(context.appValues.appPadding.p20,0,context.appValues.appPadding.p20,0),
+                        padding: EdgeInsets.fromLTRB(
+                            context.appValues.appPadding.p20,
+                            0,
+                            context.appValues.appPadding.p20,
+                            0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
+                            const Gap(10),
                             InkWell(
                               child: SvgPicture.asset('assets/img/back.svg'),
                               onTap: () {
@@ -78,7 +85,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                               translate('jobDetails.jobDetails'),
                               style: getPrimaryRegularStyle(
                                 // color: context.resources.color.colorYellow,
-                                color: const Color(0xff180C38),
+                                color: const Color(0xff38385E),
                                 fontSize: 32,
                               ),
                             ),
@@ -89,66 +96,101 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                   ),
                 ],
               ),
+              // DraggableScrollableSheet(
+              //   initialChildSize: 0.55,
+              //   minChildSize: 0.55,
+              //   maxChildSize: 1,
+              //   builder:
+              //       (BuildContext context, ScrollController scrollController) {
+              //     return Container(
+              //       decoration: const BoxDecoration(
+              //         borderRadius: BorderRadius.only(
+              //           topLeft: Radius.circular(30),
+              //           topRight: Radius.circular(30),
+              //         ),
+              //         color: Color(0xffFEFEFE),
+              //       ),
+              //       child: ListView.builder(
+              //         controller: scrollController,
+              //         itemCount: 1,
+              //         itemBuilder: (BuildContext context, int index) {
+              //           return Column(
+              //             children: [],
+              //           );
+              //         },
+              //       ),
+              //     );
+              //   },
+              // ),
+              widget.fromWhere == translate('jobs.active') ||
+                      widget.fromWhere == translate('jobs.booked')
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.appValues.appPadding.p0,
+                              vertical: context.appValues.appPadding.p10,
+                            ),
+                            child: Text(
+                              translate('bookService.customerName'),
+                              style: getPrimaryBoldStyle(
+                                fontSize: 20,
+                                color: const Color(0xff38385E),
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.appValues.appPadding.p0,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                context.appValues.appPadding.p0,
+                                0,
+                                context.appValues.appPadding.p0,
+                                0,
+                              ),
+                              child: Text(
+                                widget.data.customer != null
+                                    ? '${widget.data.customer["first_name"]} ${widget.data.customer["last_name"]}'
+                                    : '',
+                                style: getPrimaryRegularStyle(
+                                  // color: context.resources.color.colorYellow,
+                                  color: const Color(0xff38385E),
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  : Container(),
 
-              widget.fromWhere==translate('jobs.active') || widget.fromWhere==translate('jobs.booked')?
+              widget.fromWhere == translate('jobs.active')
+                  ? const Gap(20)
+                  : Container(),
+
               Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                padding: EdgeInsets.symmetric(
+                    horizontal: context.appValues.appPadding.p20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p0,
-                          vertical: context.appValues.appPadding.p10),
-                      child: Text(
-                        translate('bookService.customerName'),
-                        style: getPrimaryBoldStyle(
-                          fontSize: 20,
-                          color: const Color(0xff180C38),
-                        ),
-                      ),
-                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: context.appValues.appPadding.p0,
+                        vertical: context.appValues.appPadding.p10,
                       ),
-                      child:Padding(
-                        padding:
-                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
-                        child: Text(
-                          widget.data.customer!=null?'${widget.data.customer["first_name"]} ${widget.data.customer["last_name"]}':'',
-                          style: getPrimaryRegularStyle(
-                            // color: context.resources.color.colorYellow,
-                            color: const Color(0xff180C38),
-                            fontSize: 20,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ):Container(),
-
-              widget.fromWhere==translate('jobs.active')?
-                  Gap(20)
-                  :Container(),
-
-              Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p0,
-                          vertical: context.appValues.appPadding.p10),
                       child: Text(
                         translate('bookService.jobTitle'),
                         style: getPrimaryBoldStyle(
                           fontSize: 20,
-                          color: const Color(0xff180C38),
+                          color: const Color(0xff38385E),
                         ),
                       ),
                     ),
@@ -156,14 +198,17 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       padding: EdgeInsets.symmetric(
                         horizontal: context.appValues.appPadding.p0,
                       ),
-                      child:Padding(
-                        padding:
-                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                            context.appValues.appPadding.p0,
+                            0,
+                            context.appValues.appPadding.p0,
+                            0),
                         child: Text(
                           widget.title,
                           style: getPrimaryRegularStyle(
                             // color: context.resources.color.colorYellow,
-                            color: const Color(0xff180C38),
+                            color: const Color(0xff38385E),
                             fontSize: 20,
                           ),
                         ),
@@ -172,234 +217,274 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                   ],
                 ),
               ),
-              Gap(20),
-              widget.fromWhere==translate('jobs.completed')?
-              Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
+              const Gap(20),
+              widget.fromWhere == translate('jobs.completed')
+                  ? Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p0,
-                          vertical: context.appValues.appPadding.p10),
-                      child: Text(
-                        translate('bookService.jobDescription'),
-                        style: getPrimaryBoldStyle(
-                          fontSize: 20,
-                          color: const Color(0xff180C38),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.appValues.appPadding.p0,
-                      ),
-                      child:Padding(
-                        padding:
-                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
-                        child: Text(
-                          widget.data.service['description'],
-                          style: getPrimaryRegularStyle(
-                            // color: context.resources.color.colorYellow,
-                            color: const Color(0xff180C38),
-                            fontSize: 20,
+                          horizontal: context.appValues.appPadding.p20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: context.appValues.appPadding.p0,
+                                vertical: context.appValues.appPadding.p10),
+                            child: Text(
+                              translate('bookService.jobDescription'),
+                              style: getPrimaryBoldStyle(
+                                fontSize: 20,
+                                color: const Color(0xff38385E),
+                              ),
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.appValues.appPadding.p0,
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                context.appValues.appPadding.p0,
+                                0,
+                                context.appValues.appPadding.p0,
+                                0,
+                              ),
+                              child: Text(
+                                widget.data.service['description'],
+                                style: getPrimaryRegularStyle(
+                                  // color: context.resources.color.colorYellow,
+                                  color: const Color(0xff38385E),
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ):Container(),
+                    )
+                  : Container(),
 
               JobDescriptionWidget(
-                  image:widget.data.uploaded_media,
+                  image: widget.data.uploaded_media,
                   description: widget.data.job_description),
-              Gap(20),
+              // const Gap(20),
               AddressWidget(address: widget.data.address),
 
-
-
-              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked')?
-              ActualStartTimeWidget(
-                  actual_start_date: widget.data.actual_start_date ?? '',
-                  actual_end_date: widget.data.finish_date ?? ''):Container(),
-               widget.fromWhere==translate('jobs.completed')?
-              ActualEndTimeWidget(
-                  actual_start_date: widget.data.actual_start_date ?? '',
-                  actual_end_date: widget.data.finish_date ?? ''):Container(),
-              widget.fromWhere==translate('jobs.completed')?
-              Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
+              widget.fromWhere != 'request' &&
+                      widget.fromWhere != translate('jobs.booked')
+                  ? ActualStartTimeWidget(
+                      actual_start_date: widget.data.actual_start_date ?? '',
+                      actual_end_date: widget.data.finish_date ?? '')
+                  : Container(),
+              widget.fromWhere == translate('jobs.completed')
+                  ? ActualEndTimeWidget(
+                      actual_start_date: widget.data.actual_start_date ?? '',
+                      actual_end_date: widget.data.finish_date ?? '')
+                  : Container(),
+              widget.fromWhere == translate('jobs.completed')
+                  ? Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p0,
-                          vertical: context.appValues.appPadding.p10),
-                      child: Text(
-                        translate('bookService.job_duration'),
-                        style: getPrimaryBoldStyle(
-                          fontSize: 20,
-                          color: const Color(0xff180C38),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.appValues.appPadding.p0,
-                      ),
-                      child:Padding(
-                        padding:
-                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
-                        child: Text(
-                          _getFormattedDuration(widget.data.actual_start_date, widget.data.finish_date),
-                          style: getPrimaryRegularStyle(
-                            // color: context.resources.color.colorYellow,
-                            color: const Color(0xff180C38),
-                            fontSize: 20,
+                          horizontal: context.appValues.appPadding.p20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: context.appValues.appPadding.p0,
+                                vertical: context.appValues.appPadding.p10),
+                            child: Text(
+                              translate('bookService.job_duration'),
+                              style: getPrimaryBoldStyle(
+                                fontSize: 20,
+                                color: const Color(0xff38385E),
+                              ),
+                            ),
                           ),
-                        ),
+                          Text(
+                            _getFormattedDuration(widget.data.actual_start_date,
+                                widget.data.finish_date),
+                            style: getPrimaryRegularStyle(
+                              color: const Color(0xff38385E),
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ):Container(),
+                    )
+                  : Container(),
 
-              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
-              JobStatusWidget(status: widget.data.status):
-              Container(),
+              widget.fromWhere != 'request' &&
+                      widget.fromWhere != translate('jobs.booked') &&
+                      widget.fromWhere != translate('jobs.active') &&
+                      widget.fromWhere != translate('jobs.completed')
+                  ? JobStatusWidget(status: widget.data.status)
+                  : Container(),
 
-              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
-              JobTypeWidget(
-                service: widget.data.service,
-                job_type: widget.data.job_type,
-                tab: widget.fromWhere,
-              ):Container(),
+              widget.fromWhere != 'request' &&
+                      widget.fromWhere != translate('jobs.booked') &&
+                      widget.fromWhere != translate('jobs.active') &&
+                      widget.fromWhere != translate('jobs.completed')
+                  ? JobTypeWidget(
+                      service: widget.data.service,
+                      job_type: widget.data.job_type,
+                      tab: widget.fromWhere,
+                    )
+                  : Container(),
               // JobCategorieAndServiceWidget(category:widget.data.service["category"]["title"],service:widget.data.service["title"]),
-              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
-              ServiceRateAndCurrnecyWidget(
-                currency: widget.data.service["country_rates"].isNotEmpty?
-                widget.data.service["country_rates"][0]["country"]["curreny"]:'',
-                // currency: widget.data.currency,
-                service_rate: widget.data.job_type=='inspection'?widget.data.service["country_rates"][0]['inspection_rate']:widget.data.service["country_rates"].isNotEmpty?'${widget.data.service["country_rates"][0]['unit_rate']} ${widget.data.service["country_rates"][0]['unit_type']}':'',
-                fromWhere: widget.fromWhere,
-                userRole: Constants.supplierRoleId,
-              ):Container(),
-              widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
-              DateAndTimeWidget(dateTime: widget.data.start_date):Container(),
-
-              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: context.appValues.appPadding.p10,
-                ),
-                child: Consumer2<PaymentViewModel, JobsViewModel>(
-                    builder: (context, paymentViewModel, jobsViewModel, _) {
-                  debugPrint('payment method ${paymentViewModel.paymentList}');
-                  debugPrint('payment card ${widget.data.payment_card}');
-                  // paymentViewModel.getPaymentMethods();
-                  return PaymentMethodButtons(
-                      payment_method: paymentViewModel.paymentList,
-                      payment_card: widget.data.payment_card,
-                      jobsViewModel: jobsViewModel,
+              widget.fromWhere != 'request' &&
+                      widget.fromWhere != translate('jobs.booked') &&
+                      widget.fromWhere != translate('jobs.active') &&
+                      widget.fromWhere != translate('jobs.completed')
+                  ? ServiceRateAndCurrnecyWidget(
+                      currency: widget.data.service["country_rates"].isNotEmpty
+                          ? widget.data.service["country_rates"][0]["country"]
+                              ["curreny"]
+                          : '',
+                      // currency: widget.data.currency,
+                      service_rate: widget.data.job_type == 'inspection'
+                          ? widget.data.service["country_rates"][0]
+                              ['inspection_rate']
+                          : widget.data.service["country_rates"].isNotEmpty
+                              ? '${widget.data.service["country_rates"][0]['unit_rate']} ${widget.data.service["country_rates"][0]['unit_type']}'
+                              : '',
                       fromWhere: widget.fromWhere,
-                      role: Constants.supplierRoleId);
-                  // return PaymentMethod(
-                  //     payment_method:
-                  //     paymentViewModel.paymentList,
-                  //   paymentViewModel: paymentViewModel,
-                  //   jobsViewModel:jobsViewModel ,);
-                }),
-              ):Container(),
+                      userRole: Constants.supplierRoleId,
+                    )
+                  : Container(),
+              widget.fromWhere != translate('jobs.active') &&
+                      widget.fromWhere != translate('jobs.completed')
+                  ? DateAndTimeWidget(dateTime: widget.data.start_date)
+                  : Container(),
+
+              widget.fromWhere != 'request' &&
+                      widget.fromWhere != translate('jobs.booked') &&
+                      widget.fromWhere != translate('jobs.active') &&
+                      widget.fromWhere != translate('jobs.completed')
+                  ? Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: context.appValues.appPadding.p10,
+                      ),
+                      child: Consumer2<PaymentViewModel, JobsViewModel>(builder:
+                          (context, paymentViewModel, jobsViewModel, _) {
+                        debugPrint(
+                            'payment method ${paymentViewModel.paymentList}');
+                        debugPrint('payment card ${widget.data.payment_card}');
+                        // paymentViewModel.getPaymentMethods();
+                        return PaymentMethodButtons(
+                            payment_method: paymentViewModel.paymentList,
+                            payment_card: widget.data.payment_card,
+                            jobsViewModel: jobsViewModel,
+                            fromWhere: widget.fromWhere,
+                            role: Constants.supplierRoleId);
+                        // return PaymentMethod(
+                        //     payment_method:
+                        //     paymentViewModel.paymentList,
+                        //   paymentViewModel: paymentViewModel,
+                        //   jobsViewModel:jobsViewModel ,);
+                      }),
+                    )
+                  : Container(),
 
               // CustomerFullNameWidget(
               //   user:
               //       '${widget.data.customer["first_name"]} ${widget.data.customer["last_name"]}',
               // ),
-              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked')?
-              JobSizeWidget(
-                completed_units: widget.data.completed_units ?? '',
-                number_of_units: widget.data.number_of_units ?? '',
-                extra_fees: widget.data.extra_fees ?? '',
-                extra_fees_reason: widget.data.extra_fees_reason ?? '',
-                userRole: Constants.supplierRoleId,
-                fromWhere: widget.fromWhere,
-              ):Container(),
+              widget.fromWhere != 'request' &&
+                      widget.fromWhere != translate('jobs.booked')
+                  ? JobSizeWidget(
+                      completed_units: widget.data.completed_units ?? '',
+                      number_of_units: widget.data.number_of_units ?? '',
+                      extra_fees: widget.data.extra_fees ?? '',
+                      extra_fees_reason: widget.data.extra_fees_reason ?? '',
+                      userRole: Constants.supplierRoleId,
+                      fromWhere: widget.fromWhere,
+                    )
+                  : Container(),
 
+              widget.fromWhere != 'request' &&
+                      widget.fromWhere != translate('jobs.booked')
+                  ? RatingStarsWidget(stars: widget.data.rating_stars ?? 0.0)
+                  : Container(),
 
-              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked')?
-              RatingStarsWidget(stars: widget.data.rating_stars ?? 0.0):
-              Container(),
-
-              widget.fromWhere!='request' && widget.fromWhere!=translate('jobs.booked') && widget.fromWhere!=translate('jobs.active')?
-              ReviewWidget(review: widget.data.rating_comment ?? '')
-              :Container(),
-              widget.fromWhere==translate('jobs.active') || widget.fromWhere==translate('jobs.completed')?
-              Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
+              widget.fromWhere != 'request' &&
+                      widget.fromWhere != translate('jobs.booked') &&
+                      widget.fromWhere != translate('jobs.active')
+                  ? ReviewWidget(review: widget.data.rating_comment ?? '')
+                  : Container(),
+              widget.fromWhere == translate('jobs.active') ||
+                      widget.fromWhere == translate('jobs.completed')
+                  ? Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p0,
-                          vertical: context.appValues.appPadding.p10),
-                      child: Text(
-                        translate('home_screen.totalPrice'),
-                        style: getPrimaryBoldStyle(
-                          fontSize: 20,
-                          color: const Color(0xff180C38),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.appValues.appPadding.p0,
-                      ),
-                      child:Padding(
-                        padding:
-                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
-                        child: Text(
-                          widget.data.total_amount!=null? '${widget.data.total_amount} ${widget.data.service["country_rates"]!=null && widget.data.service["country_rates"].isNotEmpty?
-                          widget.data.service["country_rates"][0]["country"]["curreny"]:''}':'',
-                          style: getPrimaryRegularStyle(
-                            // color: context.resources.color.colorYellow,
-                            color: const Color(0xff180C38),
-                            fontSize: 20,
+                          horizontal: context.appValues.appPadding.p20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: context.appValues.appPadding.p0,
+                                vertical: context.appValues.appPadding.p10),
+                            child: Text(
+                              // translate('home_screen.totalPrice'),
+                              "Cost",
+                              style: getPrimaryBoldStyle(
+                                fontSize: 20,
+                                color: const Color(0xff38385E),
+                              ),
+                            ),
                           ),
-                        ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.appValues.appPadding.p0,
+                            ),
+                            child: Text(
+                              widget.data.total_amount != null
+                                  ? '${widget.data.total_amount} ${widget.data.service["country_rates"] != null && widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"]["curreny"] : ''}'
+                                  : '',
+                              style: getPrimaryRegularStyle(
+                                color: const Color(0xff78789D),
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                  ],
-                ),
-              ):Container(),
-              widget.fromWhere=='request'?
-              Padding(
-                padding:
-                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
+                    )
+                  : Container(),
+              widget.fromWhere == 'request'
+                  ? Padding(
                       padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p0,
-                          vertical: context.appValues.appPadding.p10),
-                      child: Text(
-                        widget.data.severity_level!=null?widget.data.severity_level.toString().toLowerCase()=='major'?'Urgent':'Normal':'',
-                        style: getPrimaryRegularStyle(
-                            fontSize: 18,
-                            color: widget.data.severity_level!=null?widget.data.severity_level.toString().toLowerCase()=='major'?Colors.red:Colors.green:Colors.white),
+                          horizontal: context.appValues.appPadding.p20),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: context.appValues.appPadding.p0,
+                                vertical: context.appValues.appPadding.p10),
+                            child: Text(
+                              widget.data.severity_level != null
+                                  ? widget.data.severity_level
+                                              .toString()
+                                              .toLowerCase() ==
+                                          'major'
+                                      ? 'Urgent'
+                                      : 'Normal'
+                                  : '',
+                              style: getPrimaryRegularStyle(
+                                  fontSize: 18,
+                                  color: widget.data.severity_level != null
+                                      ? widget.data.severity_level
+                                                  .toString()
+                                                  .toLowerCase() ==
+                                              'major'
+                                          ? Colors.red
+                                          : Colors.green
+                                      : Colors.white),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-
-                  ],
-                ),
-              ):Container(),
+                    )
+                  : Container(),
               SizedBox(height: context.appValues.appSizePercent.h2),
               Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
                 return SizedBox(
@@ -416,7 +501,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       children: [
                         widget.fromWhere == 'active'
                             ? SizedBox(
-                                width: context.appValues.appSizePercent.w40,
+                                width: context.appValues.appSizePercent.w45,
                                 height: context.appValues.appSizePercent.h7,
                                 child: ElevatedButton(
                                   onPressed: () async {
@@ -424,8 +509,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                             .updateJob(widget.data.id) ==
                                         true) {
                                       setState(() {
-                                        _isLoading2=true;
-
+                                        _isLoading2 = true;
                                       });
                                       showDialog(
                                           context: context,
@@ -446,38 +530,37 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                       'jobDetails.notUpdated')));
                                     }
                                     setState(() {
-                                      _isLoading2=false;
-
+                                      _isLoading2 = false;
                                     });
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xff87795F),
+                                    backgroundColor: const Color(0xffF4F3FD),
                                     shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(12),
+                                      borderRadius: BorderRadius.circular(15),
                                     ),
                                   ),
-                                  child: _isLoading2?CircularProgressIndicator():Text(
-                                    translate('button.update'),
-                                    style: getPrimaryBoldStyle(
-                                      fontSize: 18,
-                                      color: context.resources.color.colorWhite,
-                                    ),
-                                  ),
+                                  child: _isLoading2
+                                      ? const CircularProgressIndicator()
+                                      : Text(
+                                          translate('button.update'),
+                                          style: getPrimaryBoldStyle(
+                                            fontSize: 18,
+                                            color: const Color(0xff6F6BE8),
+                                          ),
+                                        ),
                                 ),
                               )
                             : widget.fromWhere == 'request'
                                 ? SizedBox(
-                                    width: context.appValues.appSizePercent.w40,
+                                    width: context.appValues.appSizePercent.w45,
                                     height: context.appValues.appSizePercent.h7,
                                     child: ElevatedButton(
                                       onPressed: () async {
                                         setState(() {
-                                          _isLoading2=true;
-
+                                          _isLoading2 = true;
                                         });
                                         if (await jobsViewModel
-                                                .ignoreJob(
-                                                    widget.data.id) ==
+                                                .ignoreJob(widget.data.id) ==
                                             true) {
                                           showDialog(
                                               context: context,
@@ -500,38 +583,38 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                           'jobDetails.couldNotIgnored')));
                                         }
                                         setState(() {
-                                          _isLoading2=false;
-
+                                          _isLoading2 = false;
                                         });
                                       },
                                       style: ElevatedButton.styleFrom(
+                                        elevation: 0,
                                         backgroundColor:
-                                            const Color(0xff87795F),
+                                            const Color(0xffF4F3FD),
                                         shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(12),
+                                              BorderRadius.circular(15),
                                         ),
                                       ),
-                                      child:_isLoading2?CircularProgressIndicator(): Text(
-                                        translate('jobDetails.ignore'),
-                                        style: getPrimaryBoldStyle(
-                                          fontSize: 18,
-                                          color: context
-                                              .resources.color.colorWhite,
-                                        ),
-                                      ),
+                                      child: _isLoading2
+                                          ? const CircularProgressIndicator()
+                                          : Text(
+                                              translate('jobDetails.ignore'),
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 18,
+                                                color: const Color(0xff6F6BE8),
+                                              ),
+                                            ),
                                     ),
                                   )
                                 : Container(),
                         SizedBox(
-                          width: context.appValues.appSizePercent.w40,
+                          width: context.appValues.appSizePercent.w45,
                           height: context.appValues.appSizePercent.h7,
                           child: ElevatedButton(
                             onPressed: () async {
                               debugPrint('wefjweoifj ${widget.fromWhere}');
                               setState(() {
-                                _isLoading=true;
-
+                                _isLoading = true;
                               });
                               widget.fromWhere == 'request'
                                   ? await jobsViewModel.acceptJob(widget.data) ==
@@ -610,39 +693,40 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                   : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
                                               : '';
                               setState(() {
-                                _isLoading=false;
-
+                                _isLoading = false;
                               });
                             },
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xffF3D347),
+                              elevation: 0,
+                              backgroundColor: const Color(0xff4100E3),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                borderRadius: BorderRadius.circular(15),
                               ),
                             ),
-                            child: _isLoading?
-                            CircularProgressIndicator():
-                            Text(
-                              widget.fromWhere == 'request'
-                                  ? translate('button.accept')
-                                  : widget.fromWhere == 'active'
-                                      ? translate('button.finish')
-                                      : widget.fromWhere == 'booked'
-                                          ? translate('button.start')
-                                          : widget.fromWhere == 'completed'
-                                              ? translate('button.invoice')
-                                              : '',
-                              style: getPrimaryBoldStyle(
-                                fontSize: 18,
-                                color: context.resources.color.colorWhite,
-                              ),
-                            ),
+                            child: _isLoading
+                                ? const CircularProgressIndicator()
+                                : Text(
+                                    widget.fromWhere == 'request'
+                                        ? translate('button.accept')
+                                        : widget.fromWhere == 'active'
+                                            ? translate('button.finish')
+                                            : widget.fromWhere == 'booked'
+                                                ? translate('button.start')
+                                                : widget.fromWhere ==
+                                                        'completed'
+                                                    ? translate(
+                                                        'button.invoice')
+                                                    : '',
+                                    style: getPrimaryBoldStyle(
+                                      fontSize: 18,
+                                      color: context.resources.color.colorWhite,
+                                    ),
+                                  ),
                           ),
                         ),
                       ],
                     ));
               }),
-
             ],
           ),
         ],

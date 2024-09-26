@@ -21,7 +21,7 @@ class _DateAndTimeWidgetState extends State<DateAndTimeWidget> {
         horizontal: context.appValues.appPadding.p20,
         vertical: context.appValues.appPadding.p10,
       ),
-      child: Container(
+      child: SizedBox(
         width: context.appValues.appSizePercent.w100,
         // height: context.appValues.appSizePercent.h20,
         // height: context.appValues.appSizePercent.h30,
@@ -40,39 +40,18 @@ class _DateAndTimeWidgetState extends State<DateAndTimeWidget> {
                 translate('bookService.dateAndTime'),
                 style: getPrimaryBoldStyle(
                   fontSize: 20,
-                  color: const Color(0xff180C38),
+                  color: const Color(0xff38385E),
                 ),
               ),
             ),
             // const DatePickerWidget(),
-            Container(
-              width: context.appValues.appSizePercent.w100,
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xff000000).withOpacity(0.1),
-                    spreadRadius: 1,
-                    blurRadius: 5,
-                    offset: const Offset(0, 3), // changes position of shadow
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: context.appValues.appPadding.p15,
-                  horizontal: context.appValues.appPadding.p20,
-                ),
-                child: Text(
-                  '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(widget.dateTime.toString()))}',
-
-                  // '${widget.dateTime}',
-                  style: getPrimaryRegularStyle(
-                    fontSize: 18,
-                    color: const Color(0xff180C38),
-                  ),
-                ),
+            Text(
+              DateFormat('d MMMM yyyy, HH:mm')
+                  .format(DateTime.parse(widget.dateTime.toString())),
+              // '${widget.dateTime}',
+              style: getPrimaryRegularStyle(
+                fontSize: 18,
+                color: const Color(0xff38385E),
               ),
             ),
           ],

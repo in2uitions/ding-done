@@ -43,52 +43,25 @@ class _ActualEndTimeWidgetState extends State<ActualEndTimeWidget> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: context.appValues.appPadding.p10,
-                      horizontal: context.appValues.appPadding.p10,
-                    ),
-                    child: Text(
-                      translate('updateJob.finishTime'),
-                      style: getPrimaryBoldStyle(
-                        fontSize: 20,
-                        color: const Color(0xff180C38),
-                      ),
+                  Text(
+                    translate('updateJob.finishTime'),
+                    style: getPrimaryBoldStyle(
+                      fontSize: 20,
+                      color: const Color(0xff38385E),
                     ),
                   ),
-                  Container(
-                    width: context.appValues.appSizePercent.w90,
-                    height: context.appValues.appSizePercent.h7,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xff000000).withOpacity(0.1),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        // vertical: context.appValues.appPadding.p15,
-                        horizontal: context.appValues.appPadding.p10,
-                      ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          widget.actual_end_date != null
-                              ? DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(widget.actual_end_date.toString() + 'Z').toUtc().toLocal())
-                              : '',
-
-                          style: getPrimaryRegularStyle(
-                            fontSize: 18,
-                            color: const Color(0xff180C38),
-                          ),
-                        ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      widget.actual_end_date != null
+                          ? DateFormat('d MMMM yyyy, HH:mm').format(
+                              DateTime.parse('${widget.actual_end_date}Z')
+                                  .toUtc()
+                                  .toLocal())
+                          : '',
+                      style: getPrimaryRegularStyle(
+                        fontSize: 18,
+                        color: const Color(0xff38385E),
                       ),
                     ),
                   ),
@@ -128,7 +101,7 @@ class _ActualEndTimeWidgetState extends State<ActualEndTimeWidget> {
         //               translate('updateJob.finishTime'),
         //               style: getPrimaryBoldStyle(
         //                 fontSize: 20,
-        //                 color: const Color(0xff180C38),
+        //                 color: const Color(0xff38385E),
         //               ),
         //             ),
         //           ),
@@ -158,7 +131,7 @@ class _ActualEndTimeWidgetState extends State<ActualEndTimeWidget> {
         //                   '${widget.actual_end_date}',
         //                   style: getPrimaryRegularStyle(
         //                     fontSize: 20,
-        //                     color: const Color(0xff180C38),
+        //                     color: const Color(0xff38385E),
         //                   ),
         //                 ),
         //               ),

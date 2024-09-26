@@ -48,45 +48,23 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                 padding: EdgeInsets.only(
                   top: context.appValues.appPadding.p10,
                   bottom: context.appValues.appPadding.p10,
-                  left: context.appValues.appPadding.p10,
+                  left: context.appValues.appPadding.p0,
                   right: context.appValues.appPadding.p10,
                 ),
                 child: Text(
                   translate('bookService.jobType'),
                   style: getPrimaryBoldStyle(
                     fontSize: 20,
-                    color: const Color(0xff180C38),
+                    color: const Color(0xff38385E),
                   ),
                 ),
               ),
               widget.tab == 'completed' || widget.tab == 'booked'
-                  ? Container(
-                      width: context.appValues.appSizePercent.w100,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff000000).withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: context.appValues.appPadding.p15,
-                          horizontal: context.appValues.appPadding.p20,
-                        ),
-                        child: Text(
-                          '${widget.job_type}',
-                          style: getPrimaryRegularStyle(
-                            fontSize: 20,
-                            color: const Color(0xff180C38),
-                          ),
-                        ),
+                  ? Text(
+                      '${widget.job_type}',
+                      style: getPrimaryRegularStyle(
+                        fontSize: 20,
+                        color: const Color(0xff78789D),
                       ),
                     )
                   :

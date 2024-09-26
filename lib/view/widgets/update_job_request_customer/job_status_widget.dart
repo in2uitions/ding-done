@@ -40,36 +40,15 @@ class _JobStatusWidgetState extends State<JobStatusWidget> {
                   translate('updateJob.jobStatus'),
                   style: getPrimaryBoldStyle(
                     fontSize: 20,
-                    color: const Color(0xff180C38),
+                    color: const Color(0xff38385E),
                   ),
                 ),
               ),
-              Container(
-                width: context.appValues.appSizePercent.w100,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xff000000).withOpacity(0.1),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: context.appValues.appPadding.p15,
-                    horizontal: context.appValues.appPadding.p20,
-                  ),
-                  child: Text(
-                    '${widget.status}',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 18,
-                      color: const Color(0xff190C39),
-                    ),
-                  ),
+              Text(
+                '${widget.status}',
+                style: getPrimaryRegularStyle(
+                  fontSize: 18,
+                  color: const Color(0xff78789D),
                 ),
               ),
             ],

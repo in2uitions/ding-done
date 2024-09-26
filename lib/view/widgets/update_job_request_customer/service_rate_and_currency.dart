@@ -32,7 +32,7 @@ class _ServiceRateAndCurrnecyWidgetState
       children: [
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p20,
+              horizontal: context.appValues.appPadding.p0,
               vertical: context.appValues.appPadding.p10),
           child: SizedBox(
             width: context.appValues.appSizePercent.w90,
@@ -55,14 +55,14 @@ class _ServiceRateAndCurrnecyWidgetState
                     padding: EdgeInsets.only(
                       top: context.appValues.appPadding.p10,
                       bottom: context.appValues.appPadding.p10,
-                      left: context.appValues.appPadding.p10,
+                      left: context.appValues.appPadding.p0,
                       right: context.appValues.appPadding.p10,
                     ),
                     child: Text(
                       translate('updateJob.serviceRate'),
                       style: getPrimaryBoldStyle(
                         fontSize: 20,
-                        color: const Color(0xff180C38),
+                        color: const Color(0xff38385E),
                       ),
                     ),
                   ),
@@ -71,34 +71,12 @@ class _ServiceRateAndCurrnecyWidgetState
                     return
                         // widget.fromWhere=='completed'?
 
-                        Container(
-                      width: context.appValues.appSizePercent.w100,
-                      decoration: BoxDecoration(
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color(0xff000000).withOpacity(0.1),
-                            spreadRadius: 1,
-                            blurRadius: 5,
-                            offset: const Offset(
-                                0, 3), // changes position of shadow
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(15),
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: context.appValues.appPadding.p15,
-                          horizontal: context.appValues.appPadding.p20,
-                        ),
-                        child: Text(
-                          // widget.service_rate!=null?widget.service_rate[0]["unit_rate"].toString():'',
-                          '${widget.service_rate}',
-                          style: getPrimaryRegularStyle(
-                            fontSize: 20,
-                            color: const Color(0xff180C38),
-                          ),
-                        ),
+                        Text(
+                      // widget.service_rate!=null?widget.service_rate[0]["unit_rate"].toString():'',
+                      '${widget.service_rate}',
+                      style: getPrimaryRegularStyle(
+                        fontSize: 20,
+                        color: const Color(0xff38385E),
                       ),
                     );
                     //     :widget.userRole==Constants.customerRoleId?
@@ -128,7 +106,7 @@ class _ServiceRateAndCurrnecyWidgetState
         ),
         Padding(
           padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p20,
+              horizontal: context.appValues.appPadding.p0,
               vertical: context.appValues.appPadding.p10),
           child: SizedBox(
             width: context.appValues.appSizePercent.w90,
@@ -151,44 +129,22 @@ class _ServiceRateAndCurrnecyWidgetState
                     padding: EdgeInsets.only(
                       top: context.appValues.appPadding.p10,
                       bottom: context.appValues.appPadding.p10,
-                      left: context.appValues.appPadding.p10,
+                      left: context.appValues.appPadding.p0,
                       right: context.appValues.appPadding.p10,
                     ),
                     child: Text(
                       translate('updateJob.currency'),
                       style: getPrimaryBoldStyle(
                         fontSize: 20,
-                        color: const Color(0xff180C38),
+                        color: const Color(0xff38385E),
                       ),
                     ),
                   ),
-                  Container(
-                    width: context.appValues.appSizePercent.w100,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          color: const Color(0xff000000).withOpacity(0.1),
-                          spreadRadius: 1,
-                          blurRadius: 5,
-                          offset:
-                              const Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                      borderRadius: BorderRadius.circular(15),
-                      color: Colors.white,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: context.appValues.appPadding.p15,
-                        horizontal: context.appValues.appPadding.p20,
-                      ),
-                      child: Text(
-                        '${widget.currency}',
-                        style: getPrimaryRegularStyle(
-                          fontSize: 20,
-                          color: const Color(0xff180C38),
-                        ),
-                      ),
+                  Text(
+                    '${widget.currency}',
+                    style: getPrimaryRegularStyle(
+                      fontSize: 20,
+                      color: const Color(0xff38385E),
                     ),
                   ),
                 ],

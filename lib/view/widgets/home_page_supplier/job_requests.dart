@@ -59,12 +59,16 @@ class _JobRequestsState extends State<JobRequests> {
               context.appValues.appPadding.p0,
             ),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   // width: context.appValues.appSizePercent.w10,
-                  width: 109,
+                  width: 159,
+                  // width: 109,
                   // height: context.appValues.appSizePercent.h10,
-                  height: 118,
+                  height: 185,
+                  // height: 118,
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: NetworkImage(
@@ -73,13 +77,13 @@ class _JobRequestsState extends State<JobRequests> {
                       fit: BoxFit.cover,
                     ),
                     borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(12),
-                      topLeft: Radius.circular(12),
-                    ),
+                        bottomLeft: Radius.circular(12),
+                        topLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(50)),
                     // color: Colors.red,
                   ),
                 ),
-                Gap(10),
+                const Gap(10),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,10 +96,10 @@ class _JobRequestsState extends State<JobRequests> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: context.appValues.appSizePercent.w50,
+                              width: context.appValues.appSizePercent.w40,
                               child: Text(
                                 widget.title,
-                                maxLines: 1,
+                                maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: getPrimaryBoldStyle(
                                   fontSize: 18,
@@ -103,45 +107,65 @@ class _JobRequestsState extends State<JobRequests> {
                                 ),
                               ),
                             ),
-
                             SizedBox(height: context.appValues.appSize.s2),
-                            Row(
-                              children: [
-                                SvgPicture.asset('assets/img/map-marker.svg'),
-                                SizedBox(width: context.appValues.appSize.s5),
-                                SizedBox(
-                                  width: context.appValues.appSizePercent.w50,
-                                  child: Text(
-                                    widget.location,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: getPrimaryRegularStyle(
-                                      fontSize: 10,
-                                      color: context
-                                          .resources.color.secondColorBlue,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
                           ],
                         ),
-
                       ],
                     ),
-                    Row(
+                    const Gap(10),
+                    Column(
                       children: [
-                        SvgPicture.asset('assets/img/calendar-week.svg'),
-                        SizedBox(width: context.appValues.appSize.s5),
                         SizedBox(
-                          width: context.appValues.appSizePercent.w50,
+                          width: context.appValues.appSizePercent.w40,
                           child: Text(
-                            '${DateFormat('d MMMM yyyy, HH:mm').format(DateTime.parse(widget.date.toString()))}',
+                            'Working Day',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: getPrimaryBoldStyle(
+                              fontSize: 14,
+                              color: const Color(0xff1F1F39),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: context.appValues.appSizePercent.w40,
+                          child: Text(
+                            DateFormat('d MMMM yyyy, HH:mm')
+                                .format(DateTime.parse(widget.date.toString())),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: getPrimaryRegularStyle(
-                              fontSize: 10,
-                              color: context.resources.color.secondColorBlue,
+                              fontSize: 12,
+                              color: const Color(0xff38385E),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Gap(10),
+                    Column(
+                      children: [
+                        SizedBox(
+                          width: context.appValues.appSizePercent.w40,
+                          child: Text(
+                            'Location',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: getPrimaryBoldStyle(
+                              fontSize: 14,
+                              color: const Color(0xff1F1F39),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: context.appValues.appSizePercent.w40,
+                          child: Text(
+                            widget.location,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: getPrimaryRegularStyle(
+                              fontSize: 12,
+                              color: const Color(0xff38385E),
                             ),
                           ),
                         ),
@@ -149,14 +173,27 @@ class _JobRequestsState extends State<JobRequests> {
                     ),
                     Row(
                       children: [
-
                         SizedBox(
-                          width: context.appValues.appSizePercent.w50,
-                          child:  Text(
-                            widget.severity_level!=null?widget.severity_level.toString().toLowerCase()=='major'?'Urgent':'Normal':'',
+                          width: context.appValues.appSizePercent.w40,
+                          child: Text(
+                            widget.severity_level != null
+                                ? widget.severity_level
+                                            .toString()
+                                            .toLowerCase() ==
+                                        'major'
+                                    ? 'Urgent'
+                                    : 'Normal'
+                                : '',
                             style: getPrimaryRegularStyle(
                                 fontSize: 15,
-                                color: widget.severity_level!=null?widget.severity_level.toString().toLowerCase()=='major'?Colors.red:Colors.green:Colors.white),
+                                color: widget.severity_level != null
+                                    ? widget.severity_level
+                                                .toString()
+                                                .toLowerCase() ==
+                                            'major'
+                                        ? Colors.red
+                                        : Colors.green
+                                    : Colors.white),
                           ),
                         ),
                       ],
