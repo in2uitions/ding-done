@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class OtherBusinessActivitiesSupplier extends StatefulWidget {
   const OtherBusinessActivitiesSupplier({super.key});
@@ -19,7 +20,7 @@ class _OtherBusinessActivitiesSupplierState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '12. OTHER BUSINESS ACTIVITIES',
+          translate('termsAndConditionsSupplier.otherBusinessActivities'),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -31,7 +32,7 @@ class _OtherBusinessActivitiesSupplierState
           child: Column(
             children: [
               Text(
-                'Business may be engaged or employed in any other business, trade, profession, or other activity, including providing Services to customers booked through means other than the WeDo Platform, with the exception of other web-based websites. Business shall not affirmatively solicit Users originally referred through the WeDo Platform to book Bookings through any means other than the WeDo Platform.',
+                translate('termsAndConditionsSupplier.otherBusinessActivities1'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

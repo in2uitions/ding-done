@@ -194,7 +194,7 @@ class _UserAgreementState extends State<UserAgreement> {
                         //
                       },
                       title: Text(
-                        "Agree to the agreement",
+                        translate('termsAndConditionsCustomer.agree'),
                         style: getPrimaryRegularStyle(fontSize: 15),
                       ),
                     ):Container(),
@@ -245,7 +245,7 @@ class _UserAgreementState extends State<UserAgreement> {
                                 context.resources.color.colorYellow,
                           ),
                           child: Text(
-                            'Sign Up',
+                            translate('login_screen.signUp'),
                             style: getPrimaryRegularStyle(
                               fontSize: 15,
                               color: context.resources.color.btnColorBlue,

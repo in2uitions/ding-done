@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class InsuranceSupplier extends StatefulWidget {
   const InsuranceSupplier({super.key});
@@ -17,7 +18,7 @@ class _InsuranceSupplierState extends State<InsuranceSupplier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '10. INSURANCE',
+          translate('termsAndConditionsSupplier.insurance'),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -29,7 +30,7 @@ class _InsuranceSupplierState extends State<InsuranceSupplier> {
           child: Column(
             children: [
               Text(
-                'It is the sole responsibility of the Business to maintain in full force and effect adequate workers’ compensation, liability, and other forms of insurance, in each case with insurers reasonably acceptable to WeDo, with policy limits sufficient to protect and indemnify WeDo and its affiliates, and each of their officers, directors, agents, employees, subsidiaries, partners, members, controlling persons, and successors and assigns, from any losses resulting from the conduct, acts, or omissions of Business or Business’s Personnel, assistants, agents, contractors, servants, or employees.',
+                translate('termsAndConditionsSupplier.insurance1'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

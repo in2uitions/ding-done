@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class AssignmentSupplier extends StatefulWidget {
   const AssignmentSupplier({super.key});
@@ -17,7 +18,7 @@ class _AssignmentSupplierState extends State<AssignmentSupplier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '13. ASSIGNMENT',
+          translate('termsAndConditionsSupplier.assignment'),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -29,7 +30,7 @@ class _AssignmentSupplierState extends State<AssignmentSupplier> {
           child: Column(
             children: [
               Text(
-                'Business may not assign this Agreement, absent written authorisation by WeDo. WeDo may freely assign its rights and obligations under this Agreement at any time. This Agreement will inure to the benefit of, be binding on, and be enforceable against, each of the parties hereto and their respective successors and assigns.',
+                translate('termsAndConditionsSupplier.assignment1'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
