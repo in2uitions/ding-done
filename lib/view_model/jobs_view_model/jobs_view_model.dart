@@ -54,7 +54,7 @@ class JobsViewModel with ChangeNotifier {
   Future<void> readJson() async {
     await getRole();
     // await getJobs();
-    debugPrint('supplier gettiong jobs ');
+    // debugPrint('supplier gettiong jobs ');
 
     if (Constants.supplierRoleId == _role) {
       debugPrint('supplier gettiong jobs ');
@@ -63,6 +63,8 @@ class JobsViewModel with ChangeNotifier {
       await getSupplierBookedJobs();
       await getSupplierOpenJobs();
     } else {
+      debugPrint('customer gettiong jobs ');
+
       await getCustomerJobs();
     }
   }
@@ -179,6 +181,7 @@ class JobsViewModel with ChangeNotifier {
       _apiCustomerJobsResponse = ApiResponse.completed(response);
       _customerjobsList = _apiCustomerJobsResponse.data?.jobs;
       debugPrint('customer jobs list ${_customerjobsList}');
+      debugPrint('customer jobs list  media 1 ${_customerjobsList![1].uploaded_media}');
       notifyListeners();
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
@@ -480,11 +483,11 @@ class JobsViewModel with ChangeNotifier {
   }
 
   Future<bool> requestService() async {
-    //Todo sign up save user
     try {
       int year = selectedDate.year;
       int month = selectedDate.month;
       int day = selectedDate.day;
+
       debugPrint('tiiiimee iss ${jobsBody['time']}');
       jobsBody['job_type'] = 'work';
 
@@ -495,12 +498,28 @@ class JobsViewModel with ChangeNotifier {
 
         debugPrint('Selected time: $selectedTime'); // Your selected time
       }
+
       int hour = selectedTime.hour;
       int minute = selectedTime.minute;
 
       DateTime combinedDateTime = DateTime(year, month, day, hour, minute);
       debugPrint('combinedDateTime $combinedDateTime');
+
+      // Get the current date and time
+      DateTime currentDateTime = DateTime.now();
+
+      // Calculate the time two hours from now
+      DateTime twoHoursFromNow = currentDateTime.add(Duration(hours: 2));
+
+      // Check if the combinedDateTime is between now and two hours from now
+      if (combinedDateTime.isAfter(currentDateTime) && combinedDateTime.isBefore(twoHoursFromNow)) {
+        jobsBody['severity_level'] = 'major';
+      }else{
+        jobsBody['severity_level'] = 'minor';
+      }
+
       setInputValues(index: 'start_date', value: combinedDateTime.toString());
+
       if (jobsBody['payment_card'] == null) {
         return false;
       } else {
@@ -514,6 +533,7 @@ class JobsViewModel with ChangeNotifier {
       return false;
     }
   }
+
 
   void setInputValues({required String index, dynamic value}) {
     jobsBody[index] = value;

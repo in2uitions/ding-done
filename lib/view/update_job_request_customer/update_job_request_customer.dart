@@ -191,10 +191,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                   ],
                 ),
               ):Container(),
-              widget.fromWhere!=translate('jobs.active')?
+              // widget.fromWhere!=translate('jobs.active')?
               JobDescriptionWidget(
-                description: widget.data.job_description, image: widget.data.service["uploaded_media"],
-              ):Container(),
+                description: widget.data.job_description, image: widget.data.uploaded_media,),
+                      // :Container(),
               widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
               AddressWidget(address: widget.data.address)
               :Container(),
@@ -327,9 +327,9 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
 
               widget.fromWhere!=translate('jobs.requestedJobs') && widget.fromWhere!=translate('jobs.active')  &&  widget.fromWhere!=translate('jobs.completed')?
               ServiceRateAndCurrnecyWidget(
-                  currency: widget.data.service["country_rates"][0]["country"]["curreny"],
+                  currency: widget.data.job_address["country"]["curreny"],
                   // currency: widget.data.currency,
-                  service_rate: widget.data.job_type=='inspection'?widget.data.service["country_rates"][0]['inspection_rate']:'${widget.data.service["country_rates"][0]['unit_rate']} ${widget.data.service["country_rates"][0]['unit_type']['code']}',
+                  service_rate: _getServiceRate(),
 
                   // currency: widget.data.currency,
                   // service_rate: widget.data.service["service_rates"],
@@ -1127,5 +1127,26 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
         ],
       ),
     );
+  }
+  String _getServiceRate() {
+    // Extract the currency from job address
+    String currency = widget.data.job_address["country"]["curreny"];
+
+    // Find the rate from country_rates where currency matches
+    var matchingRate = widget.data.service["country_rates"].firstWhere(
+          (rate) => rate["country"]['curreny'] == currency,
+      orElse: () => null,  // If no match is found, return null
+    );
+
+    if (matchingRate != null) {
+      // Check the job type and return the appropriate rate
+      if (widget.data.job_type == 'inspection') {
+        return matchingRate['inspection_rate'] ?? 'No rate available';
+      } else {
+        return '${matchingRate['unit_rate']} ${matchingRate['unit_type']['code']}';
+      }
+    } else {
+      return 'Rate not found';  // Fallback if no matching currency is found
+    }
   }
 }

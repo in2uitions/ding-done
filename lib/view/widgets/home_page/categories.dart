@@ -41,6 +41,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   Widget build(BuildContext context) {
     return Consumer<CategoriesViewModel>(
       builder: (context, categoriesViewModel, _) {
+        // categoriesViewModel.sortCategories(widget.servicesViewModel.searchBody["search_services"]);
         return Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
@@ -74,14 +75,14 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                     ),
                 physics: NeverScrollableScrollPhysics(), // Disable grid view scrolling
                 shrinkWrap: true, // Wrap content inside the Column
-                itemCount: categoriesViewModel.categoriesList2.length,
+                itemCount: categoriesViewModel.categoriesList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return
                   Padding(
                     padding: EdgeInsets.only(
                         left: context.appValues.appPadding.p5,right:context.appValues.appPadding.p5 ),
                     child: buildServiceWidget(
-                        categoriesViewModel.categoriesList2[index],
+                        categoriesViewModel.categoriesList[index],
                         categoriesViewModel,index),
                   );
                 },
@@ -106,8 +107,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
       // for (Map<String, dynamic> translation1 in translation["categories_id"]["translations"]) {
         if (translation["languages_code"] == lang) {
           services = translation;
-          Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(widget.servicesViewModel.searchBody["search_services"]);
-
+          // categoriesViewModel.sortCategories(widget.servicesViewModel.searchBody["search_services"]);
           break; // Break the loop once the translation is found
         }
       // }
@@ -260,38 +260,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            // Padding(
-                            //   padding: const EdgeInsets.only(bottom: 20),
-                            //   child:
-                            //   service["image"] != null && service["image"]['filename_disk'] != null && service["image"]['filename_disk'].endsWith('.svg')
-                            //       ? SvgPicture.network(
-                            //     '${context.resources.image.networkImagePath2}/${service["image"]["filename_disk"]}',
-                            //     colorFilter: const ColorFilter.mode(
-                            //       Colors.white,
-                            //       BlendMode.srcIn,
-                            //     ),
-                            //     width: 43,
-                            //     height: 40,
-                            //   )
-                            //       : Container(
-                            //     width: context.appValues.appSizePercent.w20,
-                            //     height: context.appValues.appSizePercent.h5,
-                            //     decoration: BoxDecoration(
-                            //       image: DecorationImage(
-                            //         image: NetworkImage(
-                            //           service.image != null
-                            //               ? '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}'
-                            //               : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg', // Specify the URL of your alternative image here
-                            //         ),
-                            //         fit: BoxFit.cover,
-                            //       ),
-                            //       // borderRadius: const BorderRadius.only(
-                            //       //   topLeft: Radius.circular(15),
-                            //       //   topRight: Radius.circular(15),
-                            //       // ),
-                            //     ),
-                            //   ),
-                            // ),
                             Text(
                               services?["title"] ?? '',
                               textAlign: TextAlign.center,

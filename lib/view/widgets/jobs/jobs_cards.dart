@@ -93,6 +93,8 @@ class _JobsCardsState extends State<JobsCards> {
 
             return InkWell(
               onTap: () {
+                debugPrint(
+                    'uploaded media on tap ${data[index].uploaded_media}');
                 widget.userRole == Constants.supplierRoleId
                     ? paymentViewModel
                         .getCustomerPayments(data[index].customer["id"])
@@ -466,7 +468,71 @@ class _JobsCardsState extends State<JobsCards> {
                                     )
                                   : Container()
                               : Container(),
-                          const Gap(7),
+                          const Gap(5),
+                          widget.userRole == Constants.supplierRoleId
+                              ? widget.active == 'bookedJobs'
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                          right:
+                                              context.appValues.appPadding.p8),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            // Text(
+                                            //   translate('jobs.estimatedTime'),
+                                            //   style: getPrimaryRegularStyle(
+                                            //       fontSize: 18,
+                                            //       color: context.resources.color
+                                            //           .secondColorBlue),
+                                            // ),
+                                            Text(
+                                              '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 15,
+                                                color: const Color(0xff78789D),
+                                              ),
+                                            ),
+                                          ]),
+                                    )
+                                  : Container()
+                              : Container(),
+                          widget.active == 'requestedJobs'
+                              ? Padding(
+                                  padding: EdgeInsets.only(
+                                      right: context.appValues.appPadding.p8),
+                                  child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          data[index].severity_level != null
+                                              ? data[index]
+                                                          .severity_level
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'major'
+                                                  ? 'Urgent'
+                                                  : 'Normal'
+                                              : '',
+                                          style: getPrimaryRegularStyle(
+                                              fontSize: 18,
+                                              color: data[index]
+                                                          .severity_level !=
+                                                      null
+                                                  ? data[index]
+                                                              .severity_level
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          'major'
+                                                      ? Colors.red
+                                                      : Colors.green
+                                                  : Colors.white),
+                                        ),
+                                      ]),
+                                )
+                              : Container(),
+                          const Gap(5),
                           Padding(
                             padding: EdgeInsets.only(
                                 right: context.appValues.appPadding.p8),
@@ -495,7 +561,6 @@ class _JobsCardsState extends State<JobsCards> {
                               ],
                             ),
                           ),
-
                           widget.active == 'bookedJobs'
                               ? Padding(
                                   padding: EdgeInsets.only(
@@ -587,97 +652,6 @@ class _JobsCardsState extends State<JobsCards> {
                                   ),
                                 )
                               : Container(),
-                          //     widget.active == 'activeJobs' && widget.userRole==Constants.supplierRoleId
-                          // ? Padding(
-                          //     padding: EdgeInsets.only(
-                          //       top: context.appValues.appPadding.p10,
-                          //     ),
-                          //     child: Row(
-                          //       mainAxisAlignment:
-                          //           MainAxisAlignment.spaceBetween,
-                          //       children: [
-                          //         ElevatedButton(
-                          //           onPressed: () {
-                          //             showDialog(
-                          //               context: context,
-                          //               builder: (BuildContext context) =>
-                          //                   _buildPopupDialog(
-                          //                       context,
-                          //                       jobsViewModel,
-                          //                       data[index].id,
-                          //                       widget.active),
-                          //             );
-                          //           },
-                          //           style: ElevatedButton.styleFrom(
-                          //             elevation: 1.0,
-                          //             shadowColor: Colors.black,
-                          //             backgroundColor:
-                          //                 const Color(0xffF3D347),
-                          //             shape: RoundedRectangleBorder(
-                          //               borderRadius:
-                          //                   BorderRadius.circular(10),
-                          //             ),
-                          //             fixedSize: Size(
-                          //               context
-                          //                   .appValues.appSizePercent.w40,
-                          //               context.appValues.appSizePercent.h6,
-                          //             ),
-                          //           ),
-                          //           child: Text(
-                          //             translate('button.cancel'),
-                          //             style: getPrimaryBoldStyle(
-                          //               fontSize: 15,
-                          //               color: context
-                          //                   .resources.color.colorWhite,
-                          //             ),
-                          //           ),
-                          //         ),
-                          //         widget.active != 'activeJobs' &&
-                          //                 widget.userRole ==
-                          //                     Constants.supplierRoleId
-                          //             ? ElevatedButton(
-                          //                 onPressed: () {
-                          //                   debugPrint(
-                          //                       'data ${data[index]}');
-                          //                   widget.active == 'activeJobs'
-                          //                       ? jobsViewModel.finishJob(
-                          //                           data[index].id)
-                          //                       : jobsViewModel.startJob(
-                          //                           data[index].id);
-                          //                 },
-                          //                 style: ElevatedButton.styleFrom(
-                          //                   elevation: 1.0,
-                          //                   shadowColor: Colors.black,
-                          //                   backgroundColor:
-                          //                       const Color(0xff57527A),
-                          //                   shape: RoundedRectangleBorder(
-                          //                     borderRadius:
-                          //                         BorderRadius.circular(10),
-                          //                   ),
-                          //                   fixedSize: Size(
-                          //                     context.appValues
-                          //                         .appSizePercent.w40,
-                          //                     context.appValues
-                          //                         .appSizePercent.h6,
-                          //                   ),
-                          //                 ),
-                          //                 child: Text(
-                          //                   widget.active == 'activeJobs'
-                          //                       ? translate(
-                          //                           'button.complete')
-                          //                       : translate(
-                          //                           'button.startJob'),
-                          //                   style: getPrimaryRegularStyle(
-                          //                     fontSize: 15,
-                          //                     color: Colors.white,
-                          //                   ),
-                          //                 ),
-                          //               )
-                          //             : Container(),
-                          //       ],
-                          //     ),
-                          //   )
-                          // : Container(),
                         ],
                       ),
                     )

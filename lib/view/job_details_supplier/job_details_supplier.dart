@@ -214,7 +214,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
               ):Container(),
 
               JobDescriptionWidget(
-                  image:widget.data.service["uploaded_media"],
+                  image:widget.data.uploaded_media,
                   description: widget.data.job_description),
               Gap(20),
               AddressWidget(address: widget.data.address),
@@ -375,6 +375,28 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                         ),
                       ),
                     ),
+                  ],
+                ),
+              ):Container(),
+              widget.fromWhere=='request'?
+              Padding(
+                padding:
+                EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: context.appValues.appPadding.p10),
+                      child: Text(
+                        widget.data.severity_level!=null?widget.data.severity_level.toString().toLowerCase()=='major'?'Urgent':'Normal':'',
+                        style: getPrimaryRegularStyle(
+                            fontSize: 18,
+                            color: widget.data.severity_level!=null?widget.data.severity_level.toString().toLowerCase()=='major'?Colors.red:Colors.green:Colors.white),
+                      ),
+                    ),
+
                   ],
                 ),
               ):Container(),

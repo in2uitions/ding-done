@@ -27,6 +27,7 @@
     "back": "العودة",
     "proceed": "المتابعة",
     "send": "إرسال",
+    "sendMyCode": "إرسال",
     "error": "خطأ",
     "complete": "اكتمل",
     "startJob": "بدء الوظيفة",
@@ -263,6 +264,7 @@
     "createNewPasswordMsg": "والآن، يمكنك إنشاء كلمة المرور الجديدة وتأكيدها",
     "newPass": "كلمة المرور الجديدة",
     "confirmPass": "تأكيد كلمة المرور",
+    "confirm": "يتأكد",
     "passwordChanged": "تم تغيير كلمة المرور"
   }
 }

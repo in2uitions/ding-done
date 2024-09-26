@@ -40,7 +40,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     _tabController = TabController(
       length: widget.categoriesViewModel.categoriesList.length,
       vsync: this,
-      initialIndex: widget.initialTabIndex,
+      initialIndex: 0,
     );
     initializeLanguage();
   }
@@ -213,18 +213,22 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                                     break; // Break the loop once the translation is found
                                   }
                                 }
-                                return CategoriesScreenCards(
-                                  category: category,
-                                  title:
-                                      services != null ? services["title"] : '',
-                                  cost:
-                                      '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
-                                  image: service["image"] != null
-                                      ? '${context.resources.image.networkImagePath2}${service["image"]}'
-                                      : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                  onTap: () {
-                                    _handleServiceSelection(service);
-                                  },
+                                return Consumer2<JobsViewModel,ProfileViewModel>(
+                                    builder: (context, jobsViewModel,profileViewModel, _) {
+                                    return CategoriesScreenCards(
+                                      category: category,
+                                      title:
+                                          services != null ? services["title"] : '',
+                                      cost:
+                                          '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
+                                      image: service["image"] != null
+                                          ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                      onTap: () {
+                                        _handleServiceSelection(service,jobsViewModel,profileViewModel);
+                                      },
+                                    );
+                                  }
                                 );
                               } else {
                                 return const SizedBox.shrink();
@@ -264,8 +268,31 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     );
   }
 
-  void _handleServiceSelection(Map<String, dynamic> service) {
+  void _handleServiceSelection(Map<String, dynamic> service,JobsViewModel jobsViewModel,ProfileViewModel profileViewModel) {
     // Logic to handle service selection and navigation to next screen
+    if(lang==null){
+      lang='en-US';
+    }
+    jobsViewModel.setInputValues(index: 'service', value: service['id']);
+    jobsViewModel.setInputValues(
+      index: 'job_address',
+      value: profileViewModel.getProfileBody['current_address'],
+    );
+
+    jobsViewModel.setInputValues(
+      index: 'address',
+      value:
+      '${profileViewModel.getProfileBody['current_address']["street_name"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']["city"]}, ${profileViewModel.getProfileBody['current_address']["state"]}',
+    );
+    jobsViewModel.setInputValues(
+        index: 'latitude',
+        value: profileViewModel.getProfileBody['current_address']['latitude']);
+    jobsViewModel.setInputValues(
+        index: 'longitude',
+        value: profileViewModel.getProfileBody['current_address']['longitude']);
+    jobsViewModel.setInputValues(
+        index: 'payment_method', value: 'Card');
+
     Navigator.of(context).push(_createRoute(BookAService(
       service: service,
       lang: lang,

@@ -72,10 +72,8 @@ class CategoriesViewModel with ChangeNotifier {
       // _categoriesList = _apiCategoriesResponse.data?.dropDownList;
       _categoriesList=response["categories"];
       _parentCategoriesList = _categoriesList!.where((category) => category["class"] == null && category["status"]=='published').toList();
-      debugPrint('parent category list length ${_parentCategoriesList?.length}');
       _categoriesList = _categoriesList!.where((category) => category["class"] != null && category["status"]=='published').toList();
       // _categoriesList2 = _categoriesList!.where((category) => category.classs == servicesViewModel.searchBody['search_services']).toList();
-      debugPrint(' category list length ${_categoriesList?.length}');
       _servicesList=response["services"];
       _servicesList = _servicesList!.where((service) => service["status"].toString().toLowerCase() == 'published').toList();
 
@@ -93,6 +91,10 @@ class CategoriesViewModel with ChangeNotifier {
 
   Future<void> sortCategories(dynamic serv) async {
     try {
+      if(lang==null){
+        lang='en-US';
+
+      }
 
       // Filter the categories list to only include those with the chosen parent category
       _categoriesList2 = _categoriesList?.where((category) {
@@ -101,6 +103,8 @@ class CategoriesViewModel with ChangeNotifier {
 
         // Find the translation for the current language
         for (Map<String, dynamic> translation in category["translations"]) {
+          debugPrint('language code is  $lang');
+
           // for (Map<String,
           //     dynamic> translation1 in translation["categories_id"]["translations"]) {
             if (translation["languages_code"] == lang) {
@@ -118,6 +122,8 @@ class CategoriesViewModel with ChangeNotifier {
             }
           }
         // }
+        debugPrint('servvv to search for $serv');
+        debugPrint('services to search for ${services?["title"]}');
 
         // Check if the category or its parent matches the chosen parent category
         return serv.toString().toLowerCase() == services?["title"].toString().toLowerCase() ||
@@ -180,9 +186,9 @@ class CategoriesViewModel with ChangeNotifier {
     } catch (error) {
       debugPrint('Error sorting categories: $error');
     }
-    notifyListeners();
+    // notifyListeners();
   }
-//
+
 // // Define a function to check if a service is yellow
 //   bool _isYellow(DropdownRoleModel service) {
 //     // Logic to determine if the service is yellow
