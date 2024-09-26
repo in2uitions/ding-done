@@ -207,8 +207,9 @@ class _JobsCardsState extends State<JobsCards> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: getPrimaryRegularStyle(
-                                          fontSize: 22,
-                                          color: const Color(0xff222B45)),
+                                        fontSize: 22,
+                                        color: const Color(0xff190C39),
+                                      ),
                                     ),
                                   ),
                                   SizedBox(
@@ -228,9 +229,9 @@ class _JobsCardsState extends State<JobsCards> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: getPrimaryBoldStyle(
-                                          fontSize: 18,
-                                          color: context
-                                              .resources.color.secondColorBlue),
+                                        fontSize: 18,
+                                        color: const Color(0xff9E9AB7),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -240,36 +241,127 @@ class _JobsCardsState extends State<JobsCards> {
                           SizedBox(
                             height: context.appValues.appSizePercent.h2,
                           ),
+
                           Padding(
                             padding: EdgeInsets.only(
                                 right: context.appValues.appPadding.p8),
                             child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    translate('jobs.totalPrice'),
-                                    style: getPrimaryRegularStyle(
-                                        fontSize: 18,
-                                        color: context
-                                            .resources.color.secondColorBlue),
-                                  ),
-                                  Text(
-                                    // '',
-                                    data[index].total_amount != null &&
-                                            data[index]
-                                                    .total_amount
-                                                    .toString() !=
-                                                ''
-                                        ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["curreny"] : ''}'
-                                        : '${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["unit_rate"] : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["curreny"] : ''}',
-                                    style: getPrimaryRegularStyle(
-                                        fontSize: 15,
-                                        color: context
-                                            .resources.color.btnColorBlue),
-                                  ),
-                                ]),
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // widget.active == 'activeJobs'
+                                //     ? Text(
+                                //         translate('jobs.startTime'),
+                                //         style: getPrimaryRegularStyle(
+                                //             fontSize: 18,
+                                //             color: context.resources.color
+                                //                 .secondColorBlue),
+                                //       )
+                                //     : widget.userRole ==
+                                //                 Constants.supplierRoleId ||
+                                //             widget.active == 'requestedJobs'
+                                //         ? Text(
+                                //             translate('jobs.dateTime'),
+                                //             style: getPrimaryRegularStyle(
+                                //                 fontSize: 18,
+                                //                 color: context.resources.color
+                                //                     .secondColorBlue),
+                                //           )
+                                //         : Container(),
+                                widget.userRole == Constants.supplierRoleId ||
+                                        widget.active == 'requestedJobs'
+                                    ? widget.active == 'activeJobs'
+                                        ? Text(
+                                            data[index].actual_start_date !=
+                                                    null
+                                                ? DateFormat(
+                                                        'd MMMM yyyy, HH:mm')
+                                                    .format(DateTime.parse(data[
+                                                                    index]
+                                                                .actual_start_date +
+                                                            'Z')
+                                                        .toUtc()
+                                                        .toLocal())
+                                                : '',
+                                            style: getPrimaryRegularStyle(
+                                              fontSize: 15,
+                                              color: const Color(0xff78789D),
+                                            ),
+                                          )
+                                        : Text(
+                                            data[index].start_date != null
+                                                ? DateFormat(
+                                                        'd MMMM yyyy, HH:mm')
+                                                    .format(DateTime.parse(
+                                                            data[index]
+                                                                .start_date)
+                                                        .toLocal())
+                                                : '',
+                                            style: getPrimaryRegularStyle(
+                                              fontSize: 15,
+                                              color: const Color(0xff78789D),
+                                            ),
+                                          )
+                                    : widget.active == 'activeJobs'
+                                        ? Text(
+                                            data[index].actual_start_date !=
+                                                    null
+                                                ? DateFormat(
+                                                        'd MMMM yyyy, HH:mm')
+                                                    .format(DateTime.parse(data[
+                                                                    index]
+                                                                .actual_start_date +
+                                                            'Z')
+                                                        .toUtc()
+                                                        .toLocal())
+                                                : '',
+                                            style: getPrimaryRegularStyle(
+                                                fontSize: 15,
+                                                color: context.resources.color
+                                                    .btnColorBlue),
+                                          )
+                                        : Container(),
+                              ],
+                            ),
                           ),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: context.appValues.appPadding.p8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // widget.active == 'completedJobs' &&
+                                //         widget.userRole ==
+                                //             Constants.customerRoleId
+                                //     ? Text(
+                                //         translate('jobs.dateTime'),
+                                //         style: getPrimaryRegularStyle(
+                                //             fontSize: 18,
+                                //             color: context.resources.color
+                                //                 .secondColorBlue),
+                                //       )
+                                //     : Container(),
+                                widget.active == 'completedJobs' &&
+                                        widget.userRole ==
+                                            Constants.customerRoleId
+                                    ? Text(
+                                        DateFormat('d MMMM yyyy, HH:mm').format(
+                                            DateTime.parse(data[index]
+                                                        .actual_start_date +
+                                                    'Z')
+                                                .toUtc()
+                                                .toLocal()),
+                                        style: getPrimaryRegularStyle(
+                                          fontSize: 15,
+                                          color: const Color(0xff78789D),
+                                        ),
+                                      )
+                                    : Container(),
+                              ],
+                            ),
+                          ),
+
+                          const Gap(7),
+
                           widget.active == 'bookedJobs' ||
                                   widget.active == 'requestedJobs'
                               ? Padding(
@@ -279,14 +371,14 @@ class _JobsCardsState extends State<JobsCards> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(
-                                        translate('updateJob.address'),
-                                        style: getPrimaryRegularStyle(
-                                            fontSize: 18,
-                                            color: context.resources.color
-                                                .secondColorBlue),
-                                      ),
-                                      Gap(30),
+                                      // Text(
+                                      //   translate('updateJob.address'),
+                                      //   style: getPrimaryRegularStyle(
+                                      //       fontSize: 18,
+                                      //       color: context.resources.color
+                                      //           .secondColorBlue),
+                                      // ),
+                                      // const Gap(30),
                                       Expanded(
                                         child: Align(
                                           alignment: Alignment.centerRight,
@@ -299,9 +391,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                 ? '${data[index].address}'
                                                 : '',
                                             style: getPrimaryRegularStyle(
-                                                fontSize: 15,
-                                                color: context.resources.color
-                                                    .btnColorBlue),
+                                              fontSize: 15,
+                                              color: const Color(0xff78789D),
+                                            ),
                                             overflow: TextOverflow
                                                 .visible, // Ensure the text wraps to the next line
                                             softWrap:
@@ -314,123 +406,36 @@ class _JobsCardsState extends State<JobsCards> {
                                 )
                               : Container(),
 
-                          Padding(
-                            padding: EdgeInsets.only(
-                                right: context.appValues.appPadding.p8),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  widget.active == 'activeJobs'
-                                      ? Text(
-                                          translate('jobs.startTime'),
-                                          style: getPrimaryRegularStyle(
-                                              fontSize: 18,
-                                              color: context.resources.color
-                                                  .secondColorBlue),
-                                        )
-                                      : widget.userRole ==
-                                                  Constants.supplierRoleId ||
-                                              widget.active == 'requestedJobs'
-                                          ? Text(
-                                              translate('jobs.dateTime'),
-                                              style: getPrimaryRegularStyle(
-                                                  fontSize: 18,
-                                                  color: context.resources.color
-                                                      .secondColorBlue),
-                                            )
-                                          : Container(),
-                                  widget.userRole == Constants.supplierRoleId ||
-                                          widget.active == 'requestedJobs'
-                                      ? widget.active == 'activeJobs'
-                                          ? Text(
-                                              data[index].actual_start_date !=
-                                                      null
-                                                  ? DateFormat(
-                                                          'd MMMM yyyy, HH:mm')
-                                                      .format(DateTime.parse(data[
-                                                                      index]
-                                                                  .actual_start_date +
-                                                              'Z')
-                                                          .toUtc()
-                                                          .toLocal())
-                                                  : '',
-                                              style: getPrimaryRegularStyle(
-                                                  fontSize: 15,
-                                                  color: context.resources.color
-                                                      .btnColorBlue),
-                                            )
-                                          : Text(
-                                              data[index].start_date != null
-                                                  ? DateFormat(
-                                                          'd MMMM yyyy, HH:mm')
-                                                      .format(DateTime.parse(
-                                                              data[index]
-                                                                  .start_date)
-                                                          .toLocal())
-                                                  : '',
-                                              style: getPrimaryRegularStyle(
-                                                  fontSize: 15,
-                                                  color: context.resources.color
-                                                      .btnColorBlue),
-                                            )
-                                      : widget.active == 'activeJobs'
-                                          ? Text(
-                                              data[index].actual_start_date !=
-                                                      null
-                                                  ? DateFormat(
-                                                          'd MMMM yyyy, HH:mm')
-                                                      .format(DateTime.parse(data[
-                                                                      index]
-                                                                  .actual_start_date +
-                                                              'Z')
-                                                          .toUtc()
-                                                          .toLocal())
-                                                  : '',
-                                              style: getPrimaryRegularStyle(
-                                                  fontSize: 15,
-                                                  color: context.resources.color
-                                                      .btnColorBlue),
-                                            )
-                                          : Container(),
-                                ]),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                right: context.appValues.appPadding.p8),
-                            child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  widget.active == 'completedJobs' &&
-                                          widget.userRole ==
-                                              Constants.customerRoleId
-                                      ? Text(
-                                          translate('jobs.dateTime'),
-                                          style: getPrimaryRegularStyle(
-                                              fontSize: 18,
-                                              color: context.resources.color
-                                                  .secondColorBlue),
-                                        )
-                                      : Container(),
-                                  widget.active == 'completedJobs' &&
-                                          widget.userRole ==
-                                              Constants.customerRoleId
-                                      ? Text(
-                                          DateFormat('d MMMM yyyy, HH:mm')
-                                              .format(DateTime.parse(data[index]
-                                                          .actual_start_date +
-                                                      'Z')
-                                                  .toUtc()
-                                                  .toLocal()),
-                                          style: getPrimaryRegularStyle(
-                                              fontSize: 15,
-                                              color: context.resources.color
-                                                  .btnColorBlue),
-                                        )
-                                      : Container(),
-                                ]),
-                          ),
+                          const Gap(20),
+
+                          // widget.userRole == Constants.supplierRoleId
+                          //     ? widget.active == 'bookedJobs'
+                          //         ? Padding(
+                          //             padding: EdgeInsets.only(
+                          //                 right:
+                          //                     context.appValues.appPadding.p8),
+                          //             child: Row(
+                          //                 mainAxisAlignment:
+                          //                     MainAxisAlignment.spaceBetween,
+                          //                 children: [
+                          //                   Text(
+                          //                     translate('jobs.estimatedTime'),
+                          //                     style: getPrimaryRegularStyle(
+                          //                         fontSize: 18,
+                          //                         color: context.resources.color
+                          //                             .secondColorBlue),
+                          //                   ),
+                          //                   Text(
+                          //                     '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
+                          //                     style: getPrimaryRegularStyle(
+                          //                         fontSize: 15,
+                          //                         color: context.resources.color
+                          //                             .btnColorBlue),
+                          //                   ),
+                          //                 ]),
+                          //           )
+                          //         : Container()
+                          //     : Container(),
 
                           widget.userRole == Constants.supplierRoleId
                               ? widget.active == 'bookedJobs'
@@ -442,54 +447,54 @@ class _JobsCardsState extends State<JobsCards> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              translate(
-                                                  'jobs.estimatedDistance'),
-                                              style: getPrimaryRegularStyle(
-                                                  fontSize: 18,
-                                                  color: context.resources.color
-                                                      .secondColorBlue),
-                                            ),
+                                            // Text(
+                                            //   translate(
+                                            //       'jobs.estimatedDistance'),
+                                            //   style: getPrimaryRegularStyle(
+                                            //       fontSize: 18,
+                                            //       color: context.resources.color
+                                            //           .secondColorBlue),
+                                            // ),
                                             Text(
                                               '${(data[index].supplier_to_job_distance != null ? (data[index].supplier_to_job_distance / 1000).toStringAsFixed(3) : "0")} km',
-                                              style: getPrimaryRegularStyle(
+                                              style: getPrimaryBoldStyle(
                                                 fontSize: 15,
-                                                color: context.resources.color
-                                                    .btnColorBlue,
+                                                color: const Color(0xff78789D),
                                               ),
                                             ),
                                           ]),
                                     )
                                   : Container()
                               : Container(),
-                          widget.userRole == Constants.supplierRoleId
-                              ? widget.active == 'bookedJobs'
-                                  ? Padding(
-                                      padding: EdgeInsets.only(
-                                          right:
-                                              context.appValues.appPadding.p8),
-                                      child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              translate('jobs.estimatedTime'),
-                                              style: getPrimaryRegularStyle(
-                                                  fontSize: 18,
-                                                  color: context.resources.color
-                                                      .secondColorBlue),
-                                            ),
-                                            Text(
-                                              '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
-                                              style: getPrimaryRegularStyle(
-                                                  fontSize: 15,
-                                                  color: context.resources.color
-                                                      .btnColorBlue),
-                                            ),
-                                          ]),
-                                    )
-                                  : Container()
-                              : Container(),
+                          const Gap(7),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: context.appValues.appPadding.p8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // Text(
+                                //   translate('jobs.totalPrice'),
+                                //   style: getPrimaryRegularStyle(
+                                //       fontSize: 18,
+                                //       color: context
+                                //           .resources.color.secondColorBlue),
+                                // ),
+                                Text(
+                                  // '',
+                                  data[index].total_amount != null &&
+                                          data[index].total_amount.toString() !=
+                                              ''
+                                      ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["curreny"] : ''}'
+                                      : '${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["unit_rate"] : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["curreny"] : ''}',
+                                  style: getPrimaryBoldStyle(
+                                    fontSize: 15,
+                                    color: const Color(0xff78789D),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
 
                           widget.active == 'bookedJobs'
                               ? Padding(
@@ -513,10 +518,10 @@ class _JobsCardsState extends State<JobsCards> {
                                           );
                                         },
                                         style: ElevatedButton.styleFrom(
-                                          elevation: 1.0,
-                                          shadowColor: Colors.black,
+                                          elevation: 0,
+                                          // shadowColor: Colors.black,
                                           backgroundColor:
-                                              const Color(0xffF3D347),
+                                              const Color(0xffF4F3FD),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(10),
@@ -530,9 +535,8 @@ class _JobsCardsState extends State<JobsCards> {
                                         child: Text(
                                           translate('button.cancel'),
                                           style: getPrimaryBoldStyle(
-                                            fontSize: 15,
-                                            color: context
-                                                .resources.color.colorWhite,
+                                            fontSize: 16,
+                                            color: const Color(0xff6F6BE8),
                                           ),
                                         ),
                                       ),
@@ -550,10 +554,10 @@ class _JobsCardsState extends State<JobsCards> {
                                                         data[index].id);
                                               },
                                               style: ElevatedButton.styleFrom(
-                                                elevation: 1.0,
-                                                shadowColor: Colors.black,
+                                                elevation: 0,
+                                                // shadowColor: Colors.black,
                                                 backgroundColor:
-                                                    const Color(0xff57527A),
+                                                    const Color(0xff6F6BE8),
                                                 shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(10),
@@ -571,9 +575,10 @@ class _JobsCardsState extends State<JobsCards> {
                                                         'button.complete')
                                                     : translate(
                                                         'button.startJob'),
-                                                style: getPrimaryRegularStyle(
-                                                  fontSize: 15,
-                                                  color: Colors.white,
+                                                style: getPrimaryBoldStyle(
+                                                  fontSize: 16,
+                                                  color: context.resources.color
+                                                      .colorWhite,
                                                 ),
                                               ),
                                             )

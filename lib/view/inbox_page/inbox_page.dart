@@ -15,32 +15,135 @@ class _InboxPageState extends State<InboxPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffFEFEFE),
-      body: ListView(
-        padding: EdgeInsets.zero,
+      // backgroundColor: const Color(0xffFEFEFE),
+      backgroundColor: const Color(0xffFFFFFF),
+      body: Stack(
         children: [
-          SafeArea(
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.all(context.appValues.appPadding.p20),
-                child: InkWell(
-                  child: SvgPicture.asset('assets/img/back.svg'),
-                  onTap: () {
-                    // Navigator.pop(context);
-                  },
+          Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(context.appValues.appPadding.p0),
+                child: Stack(
+                  children: [
+                    Container(
+                      width: context.appValues.appSizePercent.w100,
+                      height: context.appValues.appSizePercent.h40,
+                      decoration: const BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/img/inboxbg.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: context.appValues.appSizePercent.w100,
+                      height: context.appValues.appSizePercent.h15,
+                      decoration: ShapeDecoration(
+                        gradient: LinearGradient(
+                          begin: const Alignment(0.00, 1),
+                          end: const Alignment(0, 0),
+                          colors: [
+                            const Color(0xffEECB0B).withOpacity(0),
+                            const Color(0xffEECB0B).withOpacity(0.4),
+                            const Color(0xffEECB0B).withOpacity(0.6),
+                            const Color(0xffEECB0B).withOpacity(0.9),
+                          ],
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                          top: context.appValues.appPadding.p8,
+                          left: context.appValues.appPadding.p20,
+                          right: context.appValues.appPadding.p20,
+                        ),
+                        child: SafeArea(
+                          child: Stack(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    translate('inbox.inbox'),
+                                    style: getPrimaryBoldStyle(
+                                      color: context.resources.color.colorWhite,
+                                      fontSize: 28,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              InkWell(
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: context.appValues.appPadding.p8,
+                                  ),
+                                  child: SvgPicture.asset(
+                                      'assets/img/back-new.svg'),
+                                ),
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 50,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p20,
+                        ),
+                        child: SizedBox(
+                          width: context.appValues.appSizePercent.w80,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Title',
+                                style: getPrimaryBoldStyle(
+                                  fontSize: 18,
+                                  color: context.resources.color.colorWhite,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
+            ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: context.appValues.appPadding.p20),
-            child: Text(
-              translate('inbox.inbox'),
-              style: getPrimaryRegularStyle(
-                  color: context.resources.color.btnColorBlue, fontSize: 32),
-            ),
+          DraggableScrollableSheet(
+            initialChildSize: 0.80,
+            minChildSize: 0.80,
+            maxChildSize: 1,
+            builder: (BuildContext context, ScrollController scrollController) {
+              return Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                  color: Color(0xffFEFEFE),
+                ),
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: 1,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [],
+                    );
+                  },
+                ),
+              );
+            },
           ),
         ],
       ),

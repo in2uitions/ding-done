@@ -34,11 +34,11 @@ class _StarsState extends State<Stars> {
         itemSize: widget.itemSize,
         itemPadding:
             EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p2),
-        itemBuilder: (context, _) => Icon(
+        itemBuilder: (context, _) => const Icon(
           Icons.star,
-          color: context.resources.color.colorYellow,
+          color: Color(0xffFFB457),
         ),
-        unratedColor: const Color(0xffE6E6E6),
+        unratedColor: const Color(0xffCCCCCC),
         onRatingUpdate: (rating) {
           loginViewModel.userRole == Constants.supplierRoleId
               ? ''

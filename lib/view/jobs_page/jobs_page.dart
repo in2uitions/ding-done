@@ -52,7 +52,8 @@ class _JobsPageState extends State<JobsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffFEFEFE),
+      // backgroundColor: const Color(0xffFEFEFE),
+      backgroundColor: const Color(0xffFFFFFF),
       body: Stack(
         children: [
           Column(

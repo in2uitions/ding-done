@@ -2,11 +2,9 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/profile/profile_component.dart';
 import 'package:dingdone/view/widgets/profile/profile_second_component.dart';
-import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xffFEFEFE),
+      backgroundColor: const Color(0xffFFFFFF),
       // backgroundColor: const Color(0xffF0F3F8),
       body: Consumer<ProfileViewModel>(builder: (context, profileViewModel, _) {
         return ListView(
