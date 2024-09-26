@@ -24,10 +24,12 @@ import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import '../../view_model/dispose_view_model/app_view_model.dart';
 import '../agreement/user_agreement.dart';
+import '../book_a_service/book_a_service.dart';
 import '../bottom_bar/bottom_bar.dart';
 import '../edit_account/edit_account.dart';
 import '../jobs_page/jobs_page.dart';
 import '../login/login.dart';
+import '../widgets/categories_screen/categories_screen_cards.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -40,15 +42,41 @@ String? lang;
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController searchController = TextEditingController();
+  List<dynamic> filteredServices = [];
 
   @override
   void initState() {
     super.initState();
     getLanguage();
-    Provider.of<CategoriesViewModel>(context, listen: false).readJson();
+    Provider.of<CategoriesViewModel>(context, listen: false).getCategoriesAndServices();
     // Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(
-    //     Provider.of<ServicesViewModel>(context, listen: false)
-    //         .searchBody['search_services']);
+    var categoriesViewModel= Provider.of<CategoriesViewModel>(context, listen: false);
+    searchController.addListener(_filterServices);
+    // Initially display all services
+    filteredServices = categoriesViewModel.servicesList2;
+  }
+  @override
+  void dispose() {
+    searchController.removeListener(_filterServices);
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void _filterServices() {
+    String searchText = searchController.text.toLowerCase();
+    var categoriesViewModel= Provider.of<CategoriesViewModel>(context, listen: false);
+    categoriesViewModel.searchData(index: 'search_services',value:searchText );
+    setState(() {
+      if (searchText.isEmpty) {
+        // Display all services if search text is empty
+        filteredServices = categoriesViewModel.servicesList2;
+      } else {
+
+        filteredServices = categoriesViewModel.servicesList2;
+
+      }
+    });
   }
 
   getLanguage() async {
@@ -424,10 +452,12 @@ class _HomePageState extends State<HomePage> {
                                   horizontal: context.appValues.appPadding.p20,
                                   vertical: context.appValues.appPadding.p15,
                                 ),
-                                child: CustomSearchBar(
-                                  index: 'search_services',
+                                child: SearchBar(
+                                  // index: 'search_services',
                                   hintText: "Search for services...",
-                                  viewModel: servicesViewModel.searchData,
+                                  // viewModel: servicesViewModel.searchData,
+                                  controller: searchController,
+
                                 ),
                               ),
                               const Gap(15),
@@ -439,10 +469,9 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              //
-              //
-              //
+              searchController.text.isEmpty?
               DraggableScrollableSheet(
+
                   initialChildSize: 0.70,
                   minChildSize: 0.70,
                   maxChildSize: 1,
@@ -732,16 +761,100 @@ class _HomePageState extends State<HomePage> {
                             );
                           }),
                     );
-                  }),
+                  })
+              :
+              DraggableScrollableSheet(
+                initialChildSize: 0.70,
+                minChildSize: 0.70,
+                maxChildSize: 1,
+                builder: (BuildContext context, ScrollController scrollController) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                      color: Color(0xffFEFEFE),
+                    ),
+                    child:ListView.builder(
+                      controller: scrollController,
+                      itemCount:
+                      filteredServices.length,
+                      itemBuilder: (context, index) {
+                        var service = filteredServices[index];
 
-              //
-              //
-              //
+                          return Consumer2<JobsViewModel,ProfileViewModel>(
+                              builder: (context, jobsViewModel,profileViewModel, _) {
+                                return CategoriesScreenCards(
+                                  category: service["category"],
+                                  title:
+                                service != null ? service["title"] : '',
+                                  cost:0,
+                                  // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
+                                  image: service["image"]!= null
+                                      ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                      : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                  onTap: () {
+                                    _handleServiceSelection(service,jobsViewModel,profileViewModel);
+                                  },
+                                );
+                              }
+                          );
+
+                      },
+                    ),
+                    // child: ListView.builder(
+                    //   controller: scrollController,
+                    //   itemCount: filteredServices.length,
+                    //   itemBuilder: (BuildContext context, int index) {
+                    //     var service = filteredServices[index];
+                    //     return ListTile(
+                    //       title: Text(service.title),
+                    //       subtitle: Text(service!=null && service.description !=null ?service.description:''),
+                    //     );
+                    //   },
+                    // ),
+                  );
+                },
+              ),
             ],
           ),
         ),
       );
     });
+  }
+  void _handleServiceSelection(dynamic service,JobsViewModel jobsViewModel,ProfileViewModel profileViewModel) {
+    // Logic to handle service selection and navigation to next screen
+    if(lang==null){
+      lang='en-US';
+    }
+    jobsViewModel.setInputValues(index: 'service', value: service["id"]);
+    jobsViewModel.setInputValues(
+      index: 'job_address',
+      value: profileViewModel.getProfileBody['current_address'],
+    );
+
+    jobsViewModel.setInputValues(
+      index: 'address',
+      value:
+      '${profileViewModel.getProfileBody['current_address']["street_name"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']["city"]}, ${profileViewModel.getProfileBody['current_address']["state"]}',
+    );
+    jobsViewModel.setInputValues(
+        index: 'latitude',
+        value: profileViewModel.getProfileBody['current_address']['latitude']);
+    jobsViewModel.setInputValues(
+        index: 'longitude',
+        value: profileViewModel.getProfileBody['current_address']['longitude']);
+    jobsViewModel.setInputValues(
+        index: 'payment_method', value: 'Card');
+
+    Navigator.of(context).push(_createRoute(BookAService(
+      service: service,
+      lang: lang,
+      image: service["image"] != null
+          ? '${context.resources.image.networkImagePath2}${service["image"]}'
+          : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
+    )));
   }
 
   void showDemoActionSheet(

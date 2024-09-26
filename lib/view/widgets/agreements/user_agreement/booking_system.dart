@@ -1,6 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class BookingSystem extends StatefulWidget {
   const BookingSystem({super.key});
@@ -17,7 +18,7 @@ class _BookingSystemState extends State<BookingSystem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '5.	BOOKING SYSTEM',
+            translate('termsAndConditionsCustomer.bookingSystem'),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -29,70 +30,70 @@ class _BookingSystemState extends State<BookingSystem> {
               child: Column(
                 children: [
                   Text(
-                    '1.	You may request a Booking via the Booking System. You will receive a Booking confirmation, a payment receipt and the Services Agreement that constitutes the contractual relationship between you, WeDo as a technology provider and a Business as a service provider that you are deemed to have entered into for the provision of the Services.',
+                    translate('termsAndConditionsCustomer.bookingSystem1'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '2.	WeDo will then make your contact details, location, requested time and the scope of the Service available to its Business network. An available Business will then confirm its acceptance of the Booking.',
+                    translate('termsAndConditionsCustomer.bookingSystem2'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '3.	You are able to request a preferred Business. WeDo will take your preference into account when facilitating the Service, however a specific Business cannot be guaranteed and will depend on the Business’s availability.',
+                    translate('termsAndConditionsCustomer.bookingSystem3'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '4.	When a Booking is confirmed by a Business, WeDo will notify you.',
+                    translate('termsAndConditionsCustomer.bookingSystem4'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '5.	If the requested Business cannot fulfill your Booking, WeDo will arrange an alternative Business for the requested Booking time.',
+                    translate('termsAndConditionsCustomer.bookingSystem5'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '6.	If the requested Booking cannot be facilitated, WeDo will arrange an alternative time for the Service with you and a Business.',
+                    translate('termsAndConditionsCustomer.bookingSystem6'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '7.	You are not permitted to engage the Services of a Business other than through the Booking System on the Platform.',
+                    translate('termsAndConditionsCustomer.bookingSystem7'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '8.	The Booking System is provided on the Platform to enable you to make legitimate Bookings and to make payments for those Bookings, and for no other purposes.',
+                    translate('termsAndConditionsCustomer.bookingSystem8'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '9.	Any speculative, false or fraudulent Booking is prohibited. You agree that the Booking System will only be used to make legitimate Bookings for you or another person for whom you are legally authorised to act. You acknowledge that abuse of the Booking System may result in you being denied access to the Booking System.',
+                    translate('termsAndConditionsCustomer.bookingSystem9'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '10.	WeDo has the right at any time to add, change or withdraw functions available on the Platform at its own discretion.',
+                    translate('termsAndConditionsCustomer.bookingSystem10'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
