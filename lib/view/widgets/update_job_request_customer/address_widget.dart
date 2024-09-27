@@ -1,9 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:gap/gap.dart';
 
 class AddressWidget extends StatefulWidget {
   var address;
@@ -22,7 +20,7 @@ class _AddressWidgetState extends State<AddressWidget> {
         horizontal: context.appValues.appPadding.p20,
         vertical: context.appValues.appPadding.p10,
       ),
-      child: Container(
+      child: SizedBox(
         width: context.appValues.appSizePercent.w90,
         // height: context.appValues.appSizePercent.h10,
         // decoration: BoxDecoration(
@@ -41,45 +39,25 @@ class _AddressWidgetState extends State<AddressWidget> {
                 context.appValues.appPadding.p0,
               ),
               child: Text(
-                translate('updateJob.address'),
+                translate('formHints.location'),
                 style: getPrimaryBoldStyle(
                   fontSize: 20,
-                  color: const Color(0xff180C38),
+                  color: const Color(0xff38385E),
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.fromLTRB(
-                context.appValues.appPadding.p0,
-                context.appValues.appPadding.p0,
-                context.appValues.appPadding.p0,
-                context.appValues.appPadding.p15,
-              ),
-              child: Row(
-                children: [
-                  SvgPicture.asset('assets/img/location.svg'),
-                  const Gap(10),
-                  Text(
-                    '${widget.address}',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 18,
-                      color: const Color(0xff190C39),
-                    ),
-                  ),
-                ],
+            SizedBox(
+              width: context.appValues.appSizePercent.w100,
+              child: Text(
+                '${widget.address}',
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: getPrimaryRegularStyle(
+                  fontSize: 18,
+                  color: const Color(0xff78789D),
+                ),
               ),
             ),
-            // Consumer<ProfileViewModel>(builder: (context, profileViewModel, _) {
-            //   return Padding(
-            //     padding: EdgeInsets.symmetric(
-            //         horizontal: context.appValues.appPadding.p10),
-            //     child: CustomLocationDropDown(
-            //       profileViewModel: profileViewModel,
-            //       color: 0xff000000,
-            //       backgroundColor: 0xffffffff,
-            //     ),
-            //   );
-            // }),
           ],
         ),
       ),

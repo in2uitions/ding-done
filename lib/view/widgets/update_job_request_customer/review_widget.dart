@@ -2,7 +2,6 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_area.dart';
-import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +47,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                   translate('jobDetails.review'),
                   style: getPrimaryBoldStyle(
                     fontSize: 20,
-                    color: const Color(0xff180C38),
+                    color: const Color(0xff38385E),
                   ),
                 ),
               ),
@@ -93,7 +92,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                               '${widget.review}',
                               style: getPrimaryBoldStyle(
                                 fontSize: 18,
-                                color: const Color(0xff180C38),
+                                color: const Color(0xff38385E),
                               ),
                             ),
                           ),

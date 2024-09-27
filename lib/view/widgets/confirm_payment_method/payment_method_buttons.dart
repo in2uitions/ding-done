@@ -1,8 +1,6 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
-import 'package:dingdone/view/widgets/confirm_payment_method/button/button_cash_on_delevery.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/button/button_confirm_payment_method.dart';
-import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
@@ -82,7 +80,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                       padding: EdgeInsets.zero,
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length + 1,
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (BuildContext context, int index) {
                         if (index == 0) {
                           return GestureDetector(
@@ -118,7 +116,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                                                 'paymentMethod.noPaymentMethod'),
                                             style: getPrimaryRegularStyle(
                                               fontSize: 18,
-                                              color: Color(0xff180C38),
+                                              color: const Color(0xff38385E),
                                             ),
                                           ),
                                 //Removed by Rim to be added later on Cash on Delivery
@@ -180,12 +178,12 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                 ),
               );
             } else {
-              return Center(child: Text('No payment methods available.'));
+              return const Center(child: Text('No payment methods available.'));
             }
           } else if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           } else {
-            return Center(child: Text('Error loading payment methods.'));
+            return const Center(child: Text('Error loading payment methods.'));
           }
         });
   }

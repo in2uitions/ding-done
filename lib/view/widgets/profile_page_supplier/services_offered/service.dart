@@ -35,11 +35,14 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
   }
 
   void _fetchServices() {
-    if (!widget.servicesViewModel.servicesFetched) { // Check if services are not already fetched
-      widget.servicesViewModel.setFetchedServices(true); // Set the flag to true after fetching services
+    if (!widget.servicesViewModel.servicesFetched) {
+      // Check if services are not already fetched
+      widget.servicesViewModel.setFetchedServices(
+          true); // Set the flag to true after fetching services
 
       for (var e in widget.list) {
-        widget.servicesViewModel.getServicesByCategoryID(int.parse(e['id'].toString()), widget.data["supplier_services"]);
+        widget.servicesViewModel.getServicesByCategoryID(
+            int.parse(e['id'].toString()), widget.data["supplier_services"]);
       }
     }
   }
@@ -51,76 +54,87 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<JobsViewModel>(
-        builder: (context, jobsViewModel, _) {
-          return Padding(
-            padding: EdgeInsets.all(context.appValues.appPadding.p10),
-            child: ListView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: EdgeInsets.zero,
-              shrinkWrap: true,
-              itemCount: widget.servicesViewModel.listOfServices.length,
-              itemBuilder: (BuildContext context, int index) {
-                var servicesInCategory = widget.servicesViewModel.listOfServices[index];
-                if (servicesInCategory.isEmpty) {
-                  return const SizedBox.shrink();
-                }
+    return Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+      return Padding(
+        padding: EdgeInsets.all(context.appValues.appPadding.p10),
+        child: ListView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          itemCount: widget.servicesViewModel.listOfServices.length,
+          itemBuilder: (BuildContext context, int index) {
+            var servicesInCategory =
+                widget.servicesViewModel.listOfServices[index];
+            if (servicesInCategory.isEmpty) {
+              return const SizedBox.shrink();
+            }
 
-                var categoryTitle = servicesInCategory[0]["category"]["translations"]
-                    .firstWhere(
-                        (translation) => translation["languages_code"] == lang,
-                    orElse: () => servicesInCategory[0]["category"]["translations"][0])
-                ["title"]
-                    .toString();
+            var categoryTitle = servicesInCategory[0]["category"]
+                    ["translations"]
+                .firstWhere(
+                    (translation) => translation["languages_code"] == lang,
+                    orElse: () => servicesInCategory[0]["category"]
+                        ["translations"][0])["title"]
+                .toString();
 
-                return ExpansionTile(
-                  title: Text(
-                    categoryTitle,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 15,
-                      color: context.resources.color.btnColorBlue,
-                    ),
-                  ),
-                  children: [
-                    for (int innerIndex = 0; innerIndex < servicesInCategory.length; innerIndex++)
-                      servicesInCategory[innerIndex]["status"]=='published'?
-                      CheckboxListTile(
-                        value: widget.servicesViewModel.checkboxValues[index][innerIndex],
-                        activeColor: context.resources.color.btnColorBlue,
-                        onChanged: (bool? value) async {
-                          setState(() {
-                            widget.servicesViewModel.setCheckbox(index, innerIndex);
-                            int serviceId = servicesInCategory[innerIndex]["id"];
-                            int supplierId = widget.data["id"];
-                            if (value!) {
-                              widget.servicesViewModel.addService(index, innerIndex, serviceId, supplierId);
-                            } else {
-                              widget.servicesViewModel.removeService(index, innerIndex, serviceId, supplierId);
-                            }
-                          });
-                          await jobsViewModel.readJson();
-                        },
-                        title: Text(
-                          servicesInCategory[innerIndex]["translations"]
-                              .firstWhere(
-                                  (translation) => translation["languages_code"]!=null?
-                                  translation["languages_code"]["code"] == lang:true,
-                              orElse: () => servicesInCategory[innerIndex]["translations"][0])
-                          ["title"]
-                              .toString(),
-                          style: getPrimaryRegularStyle(
-                            fontSize: 15,
-                            color: context.resources.color.secondColorBlue,
+            return ExpansionTile(
+              title: Text(
+                categoryTitle,
+                style: getPrimaryBoldStyle(
+                  fontSize: 15,
+                  color: const Color(0xff1F1F39),
+                ),
+              ),
+              children: [
+                for (int innerIndex = 0;
+                    innerIndex < servicesInCategory.length;
+                    innerIndex++)
+                  servicesInCategory[innerIndex]["status"] == 'published'
+                      ? CheckboxListTile(
+                          value: widget.servicesViewModel.checkboxValues[index]
+                              [innerIndex],
+                          activeColor: context.resources.color.btnColorBlue,
+                          onChanged: (bool? value) async {
+                            setState(() {
+                              widget.servicesViewModel
+                                  .setCheckbox(index, innerIndex);
+                              int serviceId =
+                                  servicesInCategory[innerIndex]["id"];
+                              int supplierId = widget.data["id"];
+                              if (value!) {
+                                widget.servicesViewModel.addService(
+                                    index, innerIndex, serviceId, supplierId);
+                              } else {
+                                widget.servicesViewModel.removeService(
+                                    index, innerIndex, serviceId, supplierId);
+                              }
+                            });
+                            await jobsViewModel.readJson();
+                          },
+                          title: Text(
+                            servicesInCategory[innerIndex]["translations"]
+                                .firstWhere(
+                                    (translation) =>
+                                        translation["languages_code"] != null
+                                            ? translation["languages_code"]
+                                                    ["code"] ==
+                                                lang
+                                            : true,
+                                    orElse: () => servicesInCategory[innerIndex]
+                                        ["translations"][0])["title"]
+                                .toString(),
+                            style: getPrimaryRegularStyle(
+                              fontSize: 15,
+                              color: context.resources.color.secondColorBlue,
+                            ),
                           ),
-                        ),
-                      ):Container(),
-                  ],
-                );
-              },
-            ),
-          );
-        }
-    );
+                        )
+                      : Container(),
+              ],
+            );
+          },
+        ),
+      );
+    });
   }
 }
-

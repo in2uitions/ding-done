@@ -75,18 +75,18 @@ class _InboxPageState extends State<InboxPage> {
                                   ),
                                 ],
                               ),
-                              InkWell(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: context.appValues.appPadding.p8,
-                                  ),
-                                  child: SvgPicture.asset(
-                                      'assets/img/back-new.svg'),
-                                ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
+                              // InkWell(
+                              //   child: Padding(
+                              //     padding: EdgeInsets.only(
+                              //       top: context.appValues.appPadding.p8,
+                              //     ),
+                              //     child: SvgPicture.asset(
+                              //         'assets/img/back-new.svg'),
+                              //   ),
+                              //   onTap: () {
+                              //     Navigator.pop(context);
+                              //   },
+                              // ),
                             ],
                           ),
                         ),

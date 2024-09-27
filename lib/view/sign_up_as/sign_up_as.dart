@@ -87,7 +87,8 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                               .push(_createRoute(SignUpOnBoardingScreen(
                             initialIndex: 0,
                           )));
-
+                          // Navigator.of(context)
+                          //     .push(_createRoute(UserAgreement(index: 0)));
                         },
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w75,
@@ -136,7 +137,11 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                                   initialIndex: 0,
                                 )),
                               );
+                              // Navigator.of(context).push(
+                              //   _createRoute(SupplierAgreement(index: 0,
 
+                              //   )),
+                              // );
                             },
                             child: SizedBox(
                               width: context.appValues.appSizePercent.w75,

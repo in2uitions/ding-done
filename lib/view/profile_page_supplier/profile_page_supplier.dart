@@ -231,37 +231,18 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                   children: [
                     Row(
                       children: [
-                        Container(
-                          width: 40,
-                          height: 40,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(50),
-                            ),
-                            color: Color(0xffEDF1F7),
-                          ),
-                          child: Align(
-                            alignment: Alignment.center,
-                            child: SvgPicture.asset(
-                              'assets/img/sign-out.svg',
-                              width: 16,
-                              height: 16,
-                              color: Color(0xff04043E),
-                            ),
-                          ),
+                        SvgPicture.asset(
+                          'assets/img/logout-new.svg',
                         ),
-                        SizedBox(width: context.appValues.appSize.s10),
+                        const Gap(10),
                         Text(
                           translate('drawer.logout'),
                           style: getPrimaryRegularStyle(
                             fontSize: 20,
-                            color: const Color(0xff180C38),
+                            color: const Color(0xff78789D),
                           ),
                         ),
                       ],
-                    ),
-                    SvgPicture.asset(
-                      'assets/img/right-arrow.svg',
                     ),
                   ],
                 ),
