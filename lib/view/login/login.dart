@@ -5,6 +5,7 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
 import 'package:dingdone/view/forgot_password/forgot_password.dart';
+import 'package:dingdone/view/sign_up_as/country_selection.dart';
 import 'package:dingdone/view/sign_up_as/sign_up_as.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild_login.dart';
@@ -425,7 +426,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             // Navigator.of(context).push(_createRoute(SignUpScreen()));
                             Navigator.of(context)
                                 // .push(_createRoute(SignUpOnBoardingScreen()));
-                                .push(_createRoute(const SignUpAsScreen()));
+                                .push(_createRoute(const CountrySelectionScreen()));
                           },
                         ),
                       ],

@@ -1072,26 +1072,26 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                 context.resources.strings.formKeys['zone']!],
                             keyboardType: TextInputType.text),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                        child: CustomDropDown(
-                          value: signupViewModel.signUpBody["country"] ?? '',
-                          index: 'country',
-                          viewModel: signupViewModel.setInputValues,
-                          hintText: translate('formHints.country'),
-                          validator: (val) => signupViewModel.signUpErrors[
-                              context.resources.strings.formKeys['country']!],
-                          errorText: signupViewModel.signUpErrors[
-                              context.resources.strings.formKeys['country']!],
-                          keyboardType: TextInputType.text,
-                          list: signupViewModel.getCountries,
-                          onChange: (value) {
-                            debugPrint('value of country $value');
-                            signupViewModel.setInputValues(
-                                index: 'country', value: value);
-                          },
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      //   child: CustomDropDown(
+                      //     value: signupViewModel.signUpBody["country"] ?? '',
+                      //     index: 'country',
+                      //     viewModel: signupViewModel.setInputValues,
+                      //     hintText: translate('formHints.country'),
+                      //     validator: (val) => signupViewModel.signUpErrors[
+                      //         context.resources.strings.formKeys['country']!],
+                      //     errorText: signupViewModel.signUpErrors[
+                      //         context.resources.strings.formKeys['country']!],
+                      //     keyboardType: TextInputType.text,
+                      //     list: signupViewModel.getCountries,
+                      //     onChange: (value) {
+                      //       debugPrint('value of country $value');
+                      //       signupViewModel.setInputValues(
+                      //           index: 'country', value: value);
+                      //     },
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),

@@ -27,22 +27,23 @@ class AddNewAddressWidget extends StatefulWidget {
 class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
   @override
   Widget build(BuildContext context) {
-    return Consumer3<JobsViewModel, ProfileViewModel,SignUpViewModel>(
-        builder: (context, jobsViewModel, profileViewModel,signupViewModel, _) {
-      return Padding(
-        padding: EdgeInsets.fromLTRB(
-          context.appValues.appPadding.p20,
-          context.appValues.appPadding.p50,
-          context.appValues.appPadding.p20,
-          context.appValues.appPadding.p20,
-        ),
-        child:
-        // FutureBuilder(
-        //     future:
-        //     Provider.of<JobsViewModel>(context, listen: false).getUpdatedJobsBody(),
-        //     builder: (context, AsyncSnapshot data) {
-        //     return
-              Column(
+    return Consumer3<JobsViewModel, ProfileViewModel, SignUpViewModel>(
+        builder: (context, jobsViewModel, profileViewModel, signupViewModel,
+            _) {
+          return Padding(
+            padding: EdgeInsets.fromLTRB(
+              context.appValues.appPadding.p20,
+              context.appValues.appPadding.p50,
+              context.appValues.appPadding.p20,
+              context.appValues.appPadding.p20,
+            ),
+            child:
+            // FutureBuilder(
+            //     future:
+            //     Provider.of<JobsViewModel>(context, listen: false).getUpdatedJobsBody(),
+            //     builder: (context, AsyncSnapshot data) {
+            //     return
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -63,7 +64,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                         color: const Color(0xff000000).withOpacity(0.1),
                         spreadRadius: 1,
                         blurRadius: 5,
-                        offset: const Offset(0, 3), // changes position of shadow
+                        offset: const Offset(
+                            0, 3), // changes position of shadow
                       ),
                     ],
                     color: context.resources.color.colorWhite,
@@ -90,12 +92,17 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                     apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
                                     popOnNextButtonTaped: true,
                                     currentLatLng: LatLng(
-                                        jobsViewModel.getjobsBody["latitude"] != null
-                                            ? jobsViewModel.getjobsBody["latitude"] is String
+                                        jobsViewModel.getjobsBody["latitude"] !=
+                                            null
+                                            ? jobsViewModel
+                                            .getjobsBody["latitude"] is String
                                             ? double.parse(
-                                            jobsViewModel.getjobsBody["latitude"])
-                                            : jobsViewModel.getjobsBody["latitude"]
-                                            : profileViewModel.getProfileBody['current_address'] !=
+                                            jobsViewModel
+                                                .getjobsBody["latitude"])
+                                            : jobsViewModel
+                                            .getjobsBody["latitude"]
+                                            : profileViewModel
+                                            .getProfileBody['current_address'] !=
                                             null &&
                                             profileViewModel.getProfileBody[
                                             'current_address']["latitude"] !=
@@ -108,27 +115,35 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                         ["latitude"])
                                             : profileViewModel
                                             .getProfileBody['current_address']
-                                        ["latitude"]: 25.2854,
-                                        jobsViewModel.getjobsBody['longitude'] !=
+                                        ["latitude"] : 25.2854,
+                                        jobsViewModel
+                                            .getjobsBody['longitude'] !=
                                             null
-                                            ? double.parse(jobsViewModel.getjobsBody['longitude'].toString())
+                                            ? double.parse(jobsViewModel
+                                            .getjobsBody['longitude']
+                                            .toString())
                                             : 51.5310),
                                     onNext: (GeocodingResult? result) async {
                                       if (result != null) {
-                                        debugPrint('next button hit ${result.formattedAddress}');
-                                        var splitted =result.formattedAddress?.split(',');
-                                        var first=splitted?.first.toString();
-                                        var last=splitted?.last.toString();
+                                        debugPrint('next button hit ${result
+                                            .formattedAddress}');
+                                        var splitted = result.formattedAddress
+                                            ?.split(',');
+                                        var first = splitted?.first.toString();
+                                        var last = splitted?.last.toString();
                                         debugPrint('first $first last $last');
                                         jobsViewModel.setInputValues(
                                             index: "longitude",
-                                            value: result.geometry?.location.lng.toString());
+                                            value: result.geometry?.location.lng
+                                                .toString());
                                         jobsViewModel.setInputValues(
                                             index: "latitude",
-                                            value: result.geometry?.location.lat.toString());
+                                            value: result.geometry?.location.lat
+                                                .toString());
                                         jobsViewModel.setInputValues(
                                             index: "address",
-                                            value: result.formattedAddress ?? '');
+                                            value: result.formattedAddress ??
+                                                '');
 
                                         jobsViewModel.setInputValues(
                                             index: "city",
@@ -139,34 +154,38 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                             value: '$first' ?? '');
                                         Navigator.pop(context);
                                         // await Future.delayed(const Duration(seconds: 1));
-                                        await jobsViewModel.getUpdatedJobsBody();
+                                        await jobsViewModel
+                                            .getUpdatedJobsBody();
 
                                         Navigator.of(context).push(
                                             _createRoute(
                                                 ConfirmAddress()));
-
-
                                       }
                                     },
-                                    onSuggestionSelected: (PlacesDetailsResponse? result) async {
+                                    onSuggestionSelected: (
+                                        PlacesDetailsResponse? result) async {
                                       if (result != null) {
                                         setState(() {
                                           // autocompletePlace =
                                           //     result.result.formattedAddress ?? "";
                                         });
-                                        var splitted =result.result.formattedAddress?.split(',');
-                                        var first=splitted?.first.toString();
-                                        var last=splitted?.last.toString();
+                                        var splitted = result.result
+                                            .formattedAddress?.split(',');
+                                        var first = splitted?.first.toString();
+                                        var last = splitted?.last.toString();
                                         debugPrint('first $first last $last');
                                         jobsViewModel.setInputValues(
                                             index: "longitude",
-                                            value: result.result.geometry?.location.lng.toString());
+                                            value: result.result.geometry
+                                                ?.location.lng.toString());
                                         jobsViewModel.setInputValues(
                                             index: "latitude",
-                                            value: result.result.geometry?.location.lat.toString());
+                                            value: result.result.geometry
+                                                ?.location.lat.toString());
                                         jobsViewModel.setInputValues(
                                             index: "address",
-                                            value: result.result.formattedAddress ?? '');
+                                            value: result.result
+                                                .formattedAddress ?? '');
 
                                         jobsViewModel.setInputValues(
                                             index: "city",
@@ -174,11 +193,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                         jobsViewModel.setInputValues(
                                             index: "street_number",
                                             value: '$first' ?? '');
-
-                                        }
-
+                                      }
                                     },
-
 
 
                                   );
@@ -207,20 +223,24 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       // ),
                       GestureDetector(
                         onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
                                 return MapLocationPicker(
                                   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
                                   popOnNextButtonTaped: true,
                                   currentLatLng: LatLng(
-                                      jobsViewModel.getjobsBody["latitude"] != null
-                                          ? jobsViewModel.getjobsBody["latitude"] is String
+                                      jobsViewModel.getjobsBody["latitude"] !=
+                                          null
+                                          ? jobsViewModel
+                                          .getjobsBody["latitude"] is String
                                           ? double.parse(
                                           jobsViewModel.getjobsBody["latitude"])
-                                          : jobsViewModel.getjobsBody["latitude"]
-                                          : profileViewModel.getProfileBody['current_address'] !=
+                                          : jobsViewModel
+                                          .getjobsBody["latitude"]
+                                          : profileViewModel
+                                          .getProfileBody['current_address'] !=
                                           null &&
                                           profileViewModel.getProfileBody[
                                           'current_address']["latitude"] !=
@@ -233,24 +253,30 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                       ["latitude"])
                                           : profileViewModel
                                           .getProfileBody['current_address']
-                                      ["latitude"]: 25.2854,
+                                      ["latitude"] : 25.2854,
                                       jobsViewModel.getjobsBody['longitude'] !=
-                                      null
-                                      ? double.parse(jobsViewModel.getjobsBody['longitude'].toString())
-                                      : 51.5310),
+                                          null
+                                          ? double.parse(
+                                          jobsViewModel.getjobsBody['longitude']
+                                              .toString())
+                                          : 51.5310),
                                   onNext: (GeocodingResult? result) {
                                     if (result != null) {
-                                      debugPrint('next button hit ${result.formattedAddress}');
-                                      var splitted =result.formattedAddress?.split(',');
-                                      var first=splitted?.first.toString();
-                                      var last=splitted?.last.toString();
+                                      debugPrint('next button hit ${result
+                                          .formattedAddress}');
+                                      var splitted = result.formattedAddress
+                                          ?.split(',');
+                                      var first = splitted?.first.toString();
+                                      var last = splitted?.last.toString();
                                       debugPrint('first $first last $last');
                                       jobsViewModel.setInputValues(
                                           index: "longitude",
-                                          value: result.geometry?.location.lng.toString());
+                                          value: result.geometry?.location.lng
+                                              .toString());
                                       jobsViewModel.setInputValues(
                                           index: "latitude",
-                                          value: result.geometry?.location.lat.toString());
+                                          value: result.geometry?.location.lat
+                                              .toString());
                                       jobsViewModel.setInputValues(
                                           index: "address",
                                           value: result.formattedAddress ?? '');
@@ -261,24 +287,28 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                       jobsViewModel.setInputValues(
                                           index: "street_number",
                                           value: '$first' ?? '');
-
                                     }
                                   },
-                                  onSuggestionSelected: (PlacesDetailsResponse? result) async {
+                                  onSuggestionSelected: (
+                                      PlacesDetailsResponse? result) async {
                                     if (result != null) {
-                                      var splitted =result.result.formattedAddress?.split(',');
-                                      var first=splitted?.first.toString();
-                                      var last=splitted?.last.toString();
+                                      var splitted = result.result
+                                          .formattedAddress?.split(',');
+                                      var first = splitted?.first.toString();
+                                      var last = splitted?.last.toString();
                                       debugPrint('first $first last $last');
                                       jobsViewModel.setInputValues(
                                           index: "longitude",
-                                          value: result.result.geometry?.location.lng.toString());
+                                          value: result.result.geometry
+                                              ?.location.lng.toString());
                                       jobsViewModel.setInputValues(
                                           index: "latitude",
-                                          value: result.result.geometry?.location.lat.toString());
+                                          value: result.result.geometry
+                                              ?.location.lat.toString());
                                       jobsViewModel.setInputValues(
                                           index: "address",
-                                          value: result.result.formattedAddress ?? '');
+                                          value: result.result
+                                              .formattedAddress ?? '');
 
                                       jobsViewModel.setInputValues(
                                           index: "city",
@@ -287,14 +317,14 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                           index: "street_number",
                                           value: '$first' ?? '');
                                       Navigator.pop(context);
-                                      await Future.delayed(const Duration(seconds: 1));
+                                      await Future.delayed(
+                                          const Duration(seconds: 1));
 
                                       Navigator.of(context).push(
                                           _createRoute(
                                               ConfirmAddress()));
                                     }
                                   },
-
 
 
                                 );
@@ -307,108 +337,257 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                               horizontal: context.appValues.appPadding.p20),
                           child: Container(
                             height: 180,
-                            child: FutureBuilder(
-                                future: Provider.of<ProfileViewModel>(context,
+                            child: Stack(
+                              children: [
+                                FutureBuilder(
+                                    future: Provider.of<ProfileViewModel>(
+                                        context,
                                         listen: false)
-                                    .getData(),
-                                builder: (context, AsyncSnapshot data) {
-                                  if (data.connectionState ==
-                                      ConnectionState.done) {
-                                    return  GoogleMap(
-                                      onMapCreated: null,
-                                      initialCameraPosition:
-                                      CameraPosition(
-                                        zoom: 16.0,
-                                        target: LatLng(
-                                            jobsViewModel.getjobsBody["latitude"] !=
-                                                null
-                                                ? double.parse(jobsViewModel
-                                                .getjobsBody["latitude"]
-                                                .toString())
-                                                : profileViewModel.getProfileBody[
-                                            'current_address'] !=
-                                                null &&
-                                                profileViewModel.getProfileBody[
-                                                'current_address']
-                                                ["latitude"] !=
+                                        .getData(),
+                                    builder: (context, AsyncSnapshot data) {
+                                      if (data.connectionState ==
+                                          ConnectionState.done) {
+                                        return GoogleMap(
+                                          onMapCreated: null,
+                                          initialCameraPosition:
+                                          CameraPosition(
+                                            zoom: 16.0,
+                                            target: LatLng(
+                                                jobsViewModel
+                                                    .getjobsBody["latitude"] !=
                                                     null
-                                                ? double.parse(profileViewModel
-                                                .getProfileBody['current_address']
-                                            ["latitude"]
-                                                .toString())
-                                                : 25.2854 ,
-                                            jobsViewModel
-                                                .getjobsBody["longitude"] !=
-                                                null
-                                                ? double.parse(jobsViewModel
-                                                .getjobsBody["longitude"]
-                                                .toString())
-                                                : profileViewModel.getProfileBody[
-                                            'current_address'] !=
-                                                null &&
-                                                profileViewModel
-                                                    .getProfileBody['current_address']
-                                                ["longitude"] !=
+                                                    ? double.parse(jobsViewModel
+                                                    .getjobsBody["latitude"]
+                                                    .toString())
+                                                    : profileViewModel
+                                                    .getProfileBody[
+                                                'current_address'] !=
+                                                    null &&
+                                                    profileViewModel
+                                                        .getProfileBody[
+                                                    'current_address']
+                                                    ["latitude"] !=
+                                                        null
+                                                    ? double.parse(
+                                                    profileViewModel
+                                                        .getProfileBody['current_address']
+                                                    ["latitude"]
+                                                        .toString())
+                                                    : 25.2854,
+                                                jobsViewModel
+                                                    .getjobsBody["longitude"] !=
                                                     null
-                                                ? double.parse(profileViewModel
-                                                .getProfileBody['current_address']
-                                            ["longitude"]
-                                                .toString())
-                                                : 51.5310),),
+                                                    ? double.parse(jobsViewModel
+                                                    .getjobsBody["longitude"]
+                                                    .toString())
+                                                    : profileViewModel
+                                                    .getProfileBody[
+                                                'current_address'] !=
+                                                    null &&
+                                                    profileViewModel
+                                                        .getProfileBody['current_address']
+                                                    ["longitude"] !=
+                                                        null
+                                                    ? double.parse(
+                                                    profileViewModel
+                                                        .getProfileBody['current_address']
+                                                    ["longitude"]
+                                                        .toString())
+                                                    : 51.5310),),
 
-                                      mapType: MapType.normal,
-                                      markers: <Marker>{Marker(
-                                          markerId: MarkerId('marker'),
-                                          infoWindow: InfoWindow(title: 'Current'),
-                                        position: LatLng(
-                                            jobsViewModel.getjobsBody["latitude"] !=
-                                                null
-                                                ? double.parse(jobsViewModel
-                                                .getjobsBody["latitude"]
-                                                .toString())
-                                                : profileViewModel.getProfileBody[
-                                            'current_address'] !=
-                                                null &&
-                                                profileViewModel.getProfileBody[
-                                                'current_address']
-                                                ["latitude"] !=
+                                          mapType: MapType.normal,
+                                          markers: <Marker>{Marker(
+                                            markerId: MarkerId('marker'),
+                                            infoWindow: InfoWindow(
+                                                title: 'Current'),
+                                            position: LatLng(
+                                                jobsViewModel
+                                                    .getjobsBody["latitude"] !=
                                                     null
-                                                ? double.parse(profileViewModel
-                                                .getProfileBody['current_address']
-                                            ["latitude"]
-                                                .toString())
-                                                : 25.2854 ,
-                                            jobsViewModel
-                                                .getjobsBody["longitude"] !=
-                                                null
-                                                ? double.parse(jobsViewModel
-                                                .getjobsBody["longitude"]
-                                                .toString())
-                                                : profileViewModel.getProfileBody[
-                                            'current_address'] !=
-                                                null &&
-                                                profileViewModel
+                                                    ? double.parse(jobsViewModel
+                                                    .getjobsBody["latitude"]
+                                                    .toString())
+                                                    : profileViewModel
+                                                    .getProfileBody[
+                                                'current_address'] !=
+                                                    null &&
+                                                    profileViewModel
+                                                        .getProfileBody[
+                                                    'current_address']
+                                                    ["latitude"] !=
+                                                        null
+                                                    ? double.parse(
+                                                    profileViewModel
+                                                        .getProfileBody['current_address']
+                                                    ["latitude"]
+                                                        .toString())
+                                                    : 25.2854,
+                                                jobsViewModel
+                                                    .getjobsBody["longitude"] !=
+                                                    null
+                                                    ? double.parse(jobsViewModel
+                                                    .getjobsBody["longitude"]
+                                                    .toString())
+                                                    : profileViewModel
+                                                    .getProfileBody[
+                                                'current_address'] !=
+                                                    null &&
+                                                    profileViewModel
+                                                        .getProfileBody['current_address']
+                                                    ["longitude"] !=
+                                                        null
+                                                    ? double.parse(
+                                                    profileViewModel
+                                                        .getProfileBody['current_address']
+                                                    ["longitude"]
+                                                        .toString())
+                                                    : 51.5310),
+                                          )
+                                          },
+                                          onCameraMove: null,
+                                          myLocationButtonEnabled: false,
+                                          // options: GoogleMapOptions(
+                                          //     myLocationEnabled:true
+                                          //there is a lot more options you can add here
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return MapLocationPicker(
+                                            apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                            popOnNextButtonTaped: true,
+                                            currentLatLng: LatLng(
+                                                jobsViewModel
+                                                    .getjobsBody["latitude"] !=
+                                                    null
+                                                    ? jobsViewModel
+                                                    .getjobsBody["latitude"] is String
+                                                    ? double.parse(
+                                                    jobsViewModel
+                                                        .getjobsBody["latitude"])
+                                                    : jobsViewModel
+                                                    .getjobsBody["latitude"]
+                                                    : profileViewModel
+                                                    .getProfileBody['current_address'] !=
+                                                    null &&
+                                                    profileViewModel
+                                                        .getProfileBody[
+                                                    'current_address']["latitude"] !=
+                                                        null
+                                                    ? profileViewModel
                                                     .getProfileBody['current_address']
-                                                ["longitude"] !=
+                                                ["latitude"] is String
+                                                    ? double.parse(
+                                                    profileViewModel
+                                                        .getProfileBody['current_address']
+                                                    ["latitude"])
+                                                    : profileViewModel
+                                                    .getProfileBody['current_address']
+                                                ["latitude"] : 25.2854,
+                                                jobsViewModel
+                                                    .getjobsBody['longitude'] !=
                                                     null
-                                                ? double.parse(profileViewModel
-                                                .getProfileBody['current_address']
-                                            ["longitude"]
-                                                .toString())
-                                                : 51.5310),
-                                      )
-                                      },
-                                      onCameraMove: null,
-                                      myLocationButtonEnabled: false,
-                                      // options: GoogleMapOptions(
-                                      //     myLocationEnabled:true
-                                      //there is a lot more options you can add here
+                                                    ? double.parse(jobsViewModel
+                                                    .getjobsBody['longitude']
+                                                    .toString())
+                                                    : 51.5310),
+                                            onNext: (GeocodingResult? result) {
+                                              if (result != null) {
+                                                debugPrint(
+                                                    'next button hit ${result
+                                                        .formattedAddress}');
+                                                var splitted = result
+                                                    .formattedAddress?.split(
+                                                    ',');
+                                                var first = splitted?.first
+                                                    .toString();
+                                                var last = splitted?.last
+                                                    .toString();
+                                                debugPrint(
+                                                    'first $first last $last');
+                                                jobsViewModel.setInputValues(
+                                                    index: "longitude",
+                                                    value: result.geometry
+                                                        ?.location.lng
+                                                        .toString());
+                                                jobsViewModel.setInputValues(
+                                                    index: "latitude",
+                                                    value: result.geometry
+                                                        ?.location.lat
+                                                        .toString());
+                                                jobsViewModel.setInputValues(
+                                                    index: "address",
+                                                    value: result
+                                                        .formattedAddress ??
+                                                        '');
+                                                jobsViewModel.setInputValues(
+                                                    index: "city",
+                                                    value: '$last' ?? '');
+
+                                                jobsViewModel.setInputValues(
+                                                    index: "street_number",
+                                                    value: '$first' ?? '');
+                                              }
+                                            },
+                                            onSuggestionSelected: (
+                                                PlacesDetailsResponse? result) async {
+                                              if (result != null) {
+                                                var splitted = result.result
+                                                    .formattedAddress?.split(
+                                                    ',');
+                                                var first = splitted?.first
+                                                    .toString();
+                                                var last = splitted?.last
+                                                    .toString();
+                                                debugPrint(
+                                                    'first $first last $last');
+                                                jobsViewModel.setInputValues(
+                                                    index: "longitude",
+                                                    value: result.result
+                                                        .geometry?.location.lng
+                                                        .toString());
+                                                jobsViewModel.setInputValues(
+                                                    index: "latitude",
+                                                    value: result.result
+                                                        .geometry?.location.lat
+                                                        .toString());
+                                                jobsViewModel.setInputValues(
+                                                    index: "address",
+                                                    value: result.result
+                                                        .formattedAddress ??
+                                                        '');
+
+                                                jobsViewModel.setInputValues(
+                                                    index: "city",
+                                                    value: '$last' ?? '');
+                                                jobsViewModel.setInputValues(
+                                                    index: "street_number",
+                                                    value: '$first' ?? '');
+                                                Navigator.pop(context);
+                                                await Future.delayed(
+                                                    const Duration(seconds: 1));
+
+                                                Navigator.of(context).push(
+                                                    _createRoute(
+                                                        ConfirmAddress()));
+                                              }
+                                            },
+
+                                          );
+                                        },
+                                      ),
                                     );
-
-                                  } else {
-                                    return Container();
-                                  }
-                                }),
+                                  },
+                                )
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -552,10 +731,6 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                 // ),
 
 
-
-
-
-
                 if (jobsViewModel.jobsAddressError[context
                     .resources.strings.formKeys['longitude']] !=
                     null)
@@ -587,7 +762,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       index: 'street_number',
                       viewModel: jobsViewModel.setInputValues,
                       hintText: translate('formHints.street'),
-                      validator: (val) => jobsViewModel.jobsAddressError[
+                      validator: (val) =>
+                      jobsViewModel.jobsAddressError[
                       context.resources.strings
                           .formKeys['street_number']!],
                       errorText: jobsViewModel.jobsAddressError[context
@@ -602,7 +778,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       index: 'building_number',
                       viewModel: jobsViewModel.setInputValues,
                       hintText: translate('formHints.building'),
-                      validator: (val) => jobsViewModel.jobsAddressError[
+                      validator: (val) =>
+                      jobsViewModel.jobsAddressError[
                       context.resources.strings
                           .formKeys['building_number']!],
                       errorText: jobsViewModel.jobsAddressError[context
@@ -618,7 +795,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       index: 'floor',
                       viewModel: jobsViewModel.setInputValues,
                       hintText: translate('formHints.floor'),
-                      validator: (val) => jobsViewModel.jobsAddressError[
+                      validator: (val) =>
+                      jobsViewModel.jobsAddressError[
                       context.resources.strings.formKeys['floor']!],
                       errorText: jobsViewModel.jobsAddressError[
                       context.resources.strings.formKeys['floor']!],
@@ -632,7 +810,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       index: 'apartment_number',
                       viewModel: jobsViewModel.setInputValues,
                       hintText: translate('formHints.apartment'),
-                      validator: (val) => jobsViewModel.jobsAddressError[
+                      validator: (val) =>
+                      jobsViewModel.jobsAddressError[
                       context.resources.strings
                           .formKeys['apartment_number']!],
                       errorText: jobsViewModel.jobsAddressError[context
@@ -655,7 +834,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       index: 'city',
                       viewModel: jobsViewModel.setInputValues,
                       hintText: translate('formHints.city'),
-                      validator: (val) => jobsViewModel.jobsAddressError[
+                      validator: (val) =>
+                      jobsViewModel.jobsAddressError[
                       context.resources.strings.formKeys['city']!],
                       errorText: jobsViewModel.jobsAddressError[
                       context.resources.strings.formKeys['city']!],
@@ -677,7 +857,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       index: 'zone',
                       viewModel: jobsViewModel.setInputValues,
                       hintText: translate('formHints.zone'),
-                      validator: (val) => jobsViewModel.jobsAddressError[
+                      validator: (val) =>
+                      jobsViewModel.jobsAddressError[
                       context.resources.strings.formKeys['zone']!],
                       errorText: jobsViewModel.jobsAddressError[
                       context.resources.strings.formKeys['zone']!],
@@ -718,10 +899,10 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                 ),
               ],
             ),
-        //   }
-        // ),
-      );
-    });
+            //   }
+            // ),
+          );
+        });
   }
 }
 

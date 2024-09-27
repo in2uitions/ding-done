@@ -681,31 +681,26 @@ class _SignUpSupplierOnBoardingScreenState
                                 color: context.resources.color.secondColorBlue,
                               ),
                             ),
-                            InkWell(
-                              child: Text(
-                                translate('signUp.chooseLocation'),
-                                style: getPrimaryRegularStyle(
-                                  fontSize: 15,
-                                  color: context.resources.color.btnColorBlue,
-                                ),
-                              ),
-                              onTap: () {
-                                // Navigator.of(context)
-                                //     .push(_createRoute(MapScreen(
-                                //   viewModel: signupViewModel,
-                                //   longitude: 25.3,
-                                //   latitude: 51.52,
-                                // )));
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) {
-                                      return const GoogleMapScreen();
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
+                            // InkWell(
+                            //   child: Text(
+                            //     translate('signUp.chooseLocation'),
+                            //     style: getPrimaryRegularStyle(
+                            //       fontSize: 15,
+                            //       color: context.resources.color.btnColorBlue,
+                            //     ),
+                            //   ),
+                            //   onTap: () {
+                            //
+                            //     Navigator.push(
+                            //       context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) {
+                            //           return const GoogleMapScreen();
+                            //         },
+                            //       ),
+                            //     );
+                            //   },
+                            // ),
                           ],
                         ),
                       ),
@@ -714,75 +709,88 @@ class _SignUpSupplierOnBoardingScreenState
                             horizontal: context.appValues.appPadding.p20),
                         child: SizedBox(
                             height: 300,
-                            child: FutureBuilder(
-                                future: Provider.of<SignUpViewModel>(context,
-                                        listen: false)
-                                    .getData(),
-                                builder: (context, AsyncSnapshot data) {
-                                  if (data.connectionState ==
-                                      ConnectionState.done) {
-                                    debugPrint(
-                                        'from view model ${signupViewModel.getSignUpBody["longitude"]}');
-                                    debugPrint(
-                                        'from data ${data.data['longitude']}');
-                                    return GestureDetector(
-                                      child: GoogleMap(
-                                        onMapCreated: null,
-                                        initialCameraPosition: CameraPosition(
-                                          zoom: 16.0,
-                                          target: LatLng(
-                                              data.data["latitude"] != null
-                                                  ? double.parse(data
-                                                      .data['latitude']
-                                                      .toString())
-                                                  : double.parse(
-                                                      _currentPosition!.latitude
-                                                          .toString()),
-                                              data.data['longitude'] != null
-                                                  ? double.parse(data
-                                                      .data['longitude']
-                                                      .toString())
-                                                  : double.parse(
-                                                      _currentPosition!
-                                                          .longitude
-                                                          .toString())),
-                                        ),
-                                        mapType: MapType.normal,
-                                        markers: <Marker>{
-                                          Marker(
-                                            markerId: const MarkerId('marker'),
-                                            infoWindow: InfoWindow(
-                                                title: '${data.data['city']}'),
-                                            position: LatLng(
-                                                data.data["latitude"] != null
-                                                    ? double.parse(data
-                                                        .data['latitude']
-                                                        .toString())
-                                                    : double.parse(
-                                                        _currentPosition!
-                                                            .latitude
-                                                            .toString()),
-                                                data.data['longitude'] != null
-                                                    ? double.parse(data
-                                                        .data['longitude']
-                                                        .toString())
-                                                    : double.parse(
-                                                        _currentPosition!
-                                                            .longitude
-                                                            .toString())),
-                                          )
+                            child: Stack(
+                              children: [
+                                FutureBuilder(
+                                    future: Provider.of<SignUpViewModel>(context,
+                                            listen: false)
+                                        .getData(),
+                                    builder: (context, AsyncSnapshot data) {
+                                      if (data.connectionState ==
+                                          ConnectionState.done) {
+
+                                        return GestureDetector(
+                                          child: GoogleMap(
+                                            onMapCreated: null,
+                                            initialCameraPosition: CameraPosition(
+                                              zoom: 16.0,
+                                              target: LatLng(
+                                                  data.data["latitude"] != null
+                                                      ? double.parse(data
+                                                          .data['latitude']
+                                                          .toString())
+                                                      : double.parse(
+                                                          _currentPosition!.latitude
+                                                              .toString()),
+                                                  data.data['longitude'] != null
+                                                      ? double.parse(data
+                                                          .data['longitude']
+                                                          .toString())
+                                                      : double.parse(
+                                                          _currentPosition!
+                                                              .longitude
+                                                              .toString())),
+                                            ),
+                                            mapType: MapType.normal,
+                                            markers: <Marker>{
+                                              Marker(
+                                                markerId: const MarkerId('marker'),
+                                                infoWindow: InfoWindow(
+                                                    title: '${data.data['city']}'),
+                                                position: LatLng(
+                                                    data.data["latitude"] != null
+                                                        ? double.parse(data
+                                                            .data['latitude']
+                                                            .toString())
+                                                        : double.parse(
+                                                            _currentPosition!
+                                                                .latitude
+                                                                .toString()),
+                                                    data.data['longitude'] != null
+                                                        ? double.parse(data
+                                                            .data['longitude']
+                                                            .toString())
+                                                        : double.parse(
+                                                            _currentPosition!
+                                                                .longitude
+                                                                .toString())),
+                                              )
+                                            },
+                                            onCameraMove: null,
+                                            myLocationButtonEnabled: false,
+                                          ),
+                                          // options: GoogleMapOptions(
+                                          //     myLocationEnabled:true
+                                          //there is a lot more options you can add here
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
+                                    }),
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) {
+                                          return const GoogleMapScreen();
                                         },
-                                        onCameraMove: null,
-                                        myLocationButtonEnabled: false,
                                       ),
-                                      // options: GoogleMapOptions(
-                                      //     myLocationEnabled:true
-                                      //there is a lot more options you can add here
                                     );
-                                  } else {
-                                    return Container();
-                                  }
-                                })),
+                                  },
+                                ),
+                              ],
+                            )),
                       ),
                       if (signupViewModel.signUpErrors[context
                               .resources.strings.formKeys['longitude']] !=
@@ -927,36 +935,36 @@ class _SignUpSupplierOnBoardingScreenState
                       ),
                       // }),
 
-                      FutureBuilder(
-                          future: Provider.of<SignUpViewModel>(context,
-                                  listen: false)
-                              .countries(),
-                          builder: (context, AsyncSnapshot data) {
-                            return Padding(
-                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                              child: CustomDropDown(
-                                value:
-                                    signupViewModel.getSignUpBody["country"] ??
-                                        '',
-                                index: 'country',
-                                viewModel: signupViewModel.setInputValues,
-                                hintText: translate('formHints.country'),
-                                validator: (val) =>
-                                    signupViewModel.signUpErrors[context
-                                        .resources
-                                        .strings
-                                        .formKeys['country']!],
-                                errorText: signupViewModel.signUpErrors[context
-                                    .resources.strings.formKeys['country']!],
-                                keyboardType: TextInputType.text,
-                                list: signupViewModel.getCountries,
-                                onChange: (value) {
-                                  signupViewModel.setInputValues(
-                                      index: 'country', value: value);
-                                },
-                              ),
-                            );
-                          }),
+                      // FutureBuilder(
+                      //     future: Provider.of<SignUpViewModel>(context,
+                      //             listen: false)
+                      //         .countries(),
+                      //     builder: (context, AsyncSnapshot data) {
+                      //       return Padding(
+                      //         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                      //         child: CustomDropDown(
+                      //           value:
+                      //               signupViewModel.getSignUpBody["country"] ??
+                      //                   '',
+                      //           index: 'country',
+                      //           viewModel: signupViewModel.setInputValues,
+                      //           hintText: translate('formHints.country'),
+                      //           validator: (val) =>
+                      //               signupViewModel.signUpErrors[context
+                      //                   .resources
+                      //                   .strings
+                      //                   .formKeys['country']!],
+                      //           errorText: signupViewModel.signUpErrors[context
+                      //               .resources.strings.formKeys['country']!],
+                      //           keyboardType: TextInputType.text,
+                      //           list: signupViewModel.getCountries,
+                      //           onChange: (value) {
+                      //             signupViewModel.setInputValues(
+                      //                 index: 'country', value: value);
+                      //           },
+                      //         ),
+                      //       );
+                      //     }),
 
                       // }),
                       // Padding(
