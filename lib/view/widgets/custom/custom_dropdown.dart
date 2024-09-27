@@ -4,7 +4,7 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
 
 class CustomDropDown extends StatefulWidget {
-   CustomDropDown({
+  CustomDropDown({
     super.key,
     required this.list,
     required this.onChange,
@@ -17,7 +17,10 @@ class CustomDropDown extends StatefulWidget {
     this.labelText,
     this.onSaved,
     this.onFieldSubmitted,
-    this.onChanged, this.hintText, this.onTap, this.keyboardType,
+    this.onChanged,
+    this.hintText,
+    this.onTap,
+    this.keyboardType,
   });
 
   final List<dynamic> list;
@@ -43,64 +46,73 @@ class CustomDropDown extends StatefulWidget {
 class _CustomDropDownState extends State<CustomDropDown> {
   @override
   Widget build(BuildContext context) {
-    return Material(
-      borderRadius: BorderRadius.all(
-        Radius.circular(10),
-      ),
-      elevation: 5,
-      shadowColor: Colors.black,
-      child: DropdownButtonFormField<String>(
-        // value: widget.value,
-        icon: const Icon(Icons.keyboard_arrow_down),
-        elevation: 16,
-        isExpanded: true,
-        validator: widget.validator,
-        style:
-            // TextStyle(
-            //     overflow: TextOverflow.ellipsis, color: Colors.black, fontSize: 9),
-            getPrimaryRegularStyle(
-                color: context.resources.color.colorBlack[50]),
-        decoration: InputDecoration(
-          hintText: widget.hintText,
-          focusedBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-            borderSide: BorderSide(width: 2, color: Color(0xfff7bb23)),
+    return DropdownButtonFormField<String>(
+      // value: widget.value,
+      icon: const Icon(Icons.keyboard_arrow_down),
+      elevation: 16,
+      isExpanded: true,
+      validator: widget.validator,
+      style:
+          // TextStyle(
+          //     overflow: TextOverflow.ellipsis, color: Colors.black, fontSize: 9),
+          getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
+      decoration: InputDecoration(
+        hintText: widget.hintText,
+        enabledBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 2.0,
           ),
-          enabledBorder: const OutlineInputBorder(
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-            borderSide: BorderSide(width: 0, color: Colors.transparent),
-          ),
-          isDense: true,
-          errorText: widget.errorText,
-          // contentPadding: EdgeInsets.all(context.appValues.appPadding.p8),
-          border: OutlineInputBorder(
-            // borderSide: BorderSide.,
-            borderRadius: BorderRadius.all(
-              Radius.circular(10),
-            ),
-          ),
-          filled: true,
-          fillColor: context.resources.color.colorWhite,
         ),
-        onChanged: widget.onChange,
-        hint: Text(widget.hintText!),
-        items: widget.list
-            .map<DropdownMenuItem<String>>((dynamic value) {
-          return DropdownMenuItem<String>(
-            value: value['code'],
-            child: Text(
-              value['name'] ?? '',
-              // maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              softWrap: true,
-            ),
-          );
-        }).toList(),
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 2.0,
+          ),
+        ),
+        errorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 2.0,
+          ),
+        ),
+        focusedErrorBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(
+            color: Color(0xffEAEAFF),
+            width: 2.0,
+          ),
+        ),
+        isDense: true,
+        errorText: widget.errorText,
+        // contentPadding: EdgeInsets.all(context.appValues.appPadding.p8),
+        border: const OutlineInputBorder(
+          // borderSide: BorderSide.,
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+        filled: true,
+        fillColor: context.resources.color.colorWhite,
       ),
+      onChanged: widget.onChange,
+      hint: Text(
+        widget.hintText!,
+        style: getPrimaryRegularStyle(
+          fontSize: 15,
+          color: const Color(0xffB4B4B4),
+        ),
+      ),
+      items: widget.list.map<DropdownMenuItem<String>>((dynamic value) {
+        return DropdownMenuItem<String>(
+          value: value['code'],
+          child: Text(
+            value['name'] ?? '',
+            // maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            softWrap: true,
+          ),
+        );
+      }).toList(),
     );
   }
 }

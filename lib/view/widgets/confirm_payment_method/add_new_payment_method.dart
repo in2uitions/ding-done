@@ -1,10 +1,6 @@
-import 'package:dingdone/models/roles_model.dart';
 import 'package:dingdone/res/app_context_extension.dart';
-import 'package:dingdone/res/app_validation.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
-import 'package:dingdone/view/confirm_payment_method/payments.dart';
-import 'package:dingdone/view/widgets/custom/custom_dropdown.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:flutter/foundation.dart';
@@ -15,12 +11,11 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
 import '../../../res/fonts/styles_manager.dart';
-import 'card_info.dart';
 
 class AddNewPaymentMethodWidget extends StatefulWidget {
   var payment_method;
 
-   AddNewPaymentMethodWidget({super.key,required this.payment_method});
+  AddNewPaymentMethodWidget({super.key, required this.payment_method});
 
   @override
   State<AddNewPaymentMethodWidget> createState() =>
@@ -38,6 +33,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
       ..setCardListener(_onListenCard)
       ..setErrorListener(_onError);
   }
+
   @override
   void dispose() {
     _controller
@@ -51,7 +47,6 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
     if (value != null) {
       debugPrint('popping');
       Navigator.of(context).pop(value);
-
     }
   }
 
@@ -60,37 +55,39 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
       print('Error: ${exception.message}');
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<PaymentViewModel>(builder: (context, paymentViewModel, _) {
       return InkWell(
-        onTap: () async{
+        onTap: () async {
           await _scanCard();
-          paymentViewModel.setInputValues(index: 'brand',value: _cardInfo?.type);
-          paymentViewModel.setInputValues(index: 'card-number',value: _cardInfo?.number);
+          paymentViewModel.setInputValues(
+              index: 'brand', value: _cardInfo?.type);
+          paymentViewModel.setInputValues(
+              index: 'card-number', value: _cardInfo?.number);
           // Future.delayed(const Duration(seconds: 0), () =>
           //     Navigator.pop(context));
-          Future.delayed(const Duration(seconds: 0), () =>
-              Navigator.pop(context));
-          Future.delayed(const Duration(seconds: 0), () =>
-              Navigator.of(context)
-                  .push(_createRoute(
+          Future.delayed(
+              const Duration(seconds: 0), () => Navigator.pop(context));
+          Future.delayed(
+              const Duration(seconds: 0),
+              () => Navigator.of(context).push(_createRoute(
                   ConfirmPaymentMethod(
-                      payment_method:widget.payment_method,
+                      payment_method: widget.payment_method,
                       paymentViewModel: paymentViewModel,
                       role: Constants.customerRoleId))));
-
         },
         child: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p20),
+          padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p20),
           child: Column(
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Text(
-                   'Scan here',
+                    'Scan here',
                     style: getPrimaryRegularStyle(
                       color: context.resources.color.btnColorBlue,
                       fontSize: 15,
@@ -101,29 +98,33 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                     child: IconButton(
                       onPressed: () async {
                         await _scanCard();
-                        paymentViewModel.setInputValues(index: 'brand',value: _cardInfo?.type);
-                        paymentViewModel.setInputValues(index: 'card-number',value: _cardInfo?.number);
+                        paymentViewModel.setInputValues(
+                            index: 'brand', value: _cardInfo?.type);
+                        paymentViewModel.setInputValues(
+                            index: 'card-number', value: _cardInfo?.number);
                         // Future.delayed(const Duration(seconds: 0), () =>
                         //     Navigator.pop(context));
-                        Future.delayed(const Duration(seconds: 0), () =>
-                            Navigator.pop(context));
-                        Future.delayed(const Duration(seconds: 0), () =>
-                            Navigator.of(context)
-                                .push(_createRoute(
+                        Future.delayed(const Duration(seconds: 0),
+                            () => Navigator.pop(context));
+                        Future.delayed(
+                            const Duration(seconds: 0),
+                            () => Navigator.of(context).push(_createRoute(
                                 ConfirmPaymentMethod(
-                                    payment_method:widget.payment_method,
+                                    payment_method: widget.payment_method,
                                     paymentViewModel: paymentViewModel,
                                     role: Constants.customerRoleId))));
-
                       },
-                      icon: Icon(Icons.scanner,color:context.resources.color.btnColorBlue ,),
+                      icon: Icon(
+                        Icons.scanner,
+                        color: context.resources.color.btnColorBlue,
+                      ),
                     ),
                   ),
                 ],
               ),
               CustomTextField(
                 index: 'brand',
-                value: paymentViewModel.getPaymentBody['brand']??'',
+                value: paymentViewModel.getPaymentBody['brand'] ?? '',
                 viewModel: paymentViewModel.setInputValues,
                 hintText: translate('paymentMethod.cardName'),
                 keyboardType: TextInputType.text,
@@ -131,7 +132,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
               SizedBox(height: context.appValues.appSize.s15),
               CustomTextField(
                 index: 'card-number',
-                value: paymentViewModel.getPaymentBody['card-number']??'',
+                value: paymentViewModel.getPaymentBody['card-number'] ?? '',
                 viewModel: paymentViewModel.setInputValues,
                 hintText: translate('paymentMethod.cardNumber'),
                 validator: (val) => paymentViewModel.paymentError[''],
@@ -171,17 +172,18 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                   ),
                 ],
               ),
-
             ],
           ),
         ),
       );
     });
   }
+
   Future<void> _scanCard() async {
     // Request camera permission
     var status = await Permission.camera.request();
-    debugPrint('Permission status: $status');  // Check the permission status in logs
+    debugPrint(
+        'Permission status: $status'); // Check the permission status in logs
 
     if (status.isGranted) {
       // If granted, proceed with scanning
@@ -211,8 +213,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
     } else if (status.isPermanentlyDenied) {
       // If permanently denied, guide the user to settings
       _showPermissionDialog(
-          "Camera permission is permanently denied. Please go to settings to enable the camera."
-      );
+          "Camera permission is permanently denied. Please go to settings to enable the camera.");
     }
   }
 
@@ -228,7 +229,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
               child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
-                openAppSettings();  // Open settings if permanently denied
+                openAppSettings(); // Open settings if permanently denied
               },
             ),
           ],
@@ -258,5 +259,4 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
       },
     );
   }
-
 }

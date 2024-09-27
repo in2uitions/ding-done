@@ -21,15 +21,14 @@ class ConfirmAddress extends StatefulWidget {
 class _ConfirmAddressState extends State<ConfirmAddress> {
   Future<void> _handleRefresh() async {
     try {
-      String? role = await AppPreferences().get(key: userRoleKey, isModel: false);
+      String? role =
+          await AppPreferences().get(key: userRoleKey, isModel: false);
 
       // Simulate network fetch or database query
       await Future.delayed(Duration(seconds: 2));
       // Update the list of items and refresh the UI
       Navigator.pop(context);
       Navigator.of(context).push(_createRoute(ConfirmAddress()));
-
-
     } catch (error) {
       // Handle the error, e.g., by displaying a snackbar
       ScaffoldMessenger.of(context).showSnackBar(
@@ -39,11 +38,12 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer2<ProfileViewModel, JobsViewModel>(
         builder: (context, profileViewModel, jobsViewModel, _) {
-      return  RefreshIndicator(
+      return RefreshIndicator(
         onRefresh: _handleRefresh,
         child: Scaffold(
           // backgroundColor: const Color(0xffF0F3F8),
@@ -123,14 +123,14 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                             height: context.appValues.appSizePercent.h100,
                             child: ElevatedButton(
                               onPressed: () async {
-                                if(jobsViewModel.validate()){
-                                  await profileViewModel
-                                      .patchProfileData(jobsViewModel.getjobsBody);
+                                if (jobsViewModel.validate()) {
+                                  await profileViewModel.patchProfileData(
+                                      jobsViewModel.getjobsBody);
                                 }
-
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(0xffF3D347),
+                                elevation: 0,
+                                backgroundColor: const Color(0xff4100E3),
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(15),
                                 ),

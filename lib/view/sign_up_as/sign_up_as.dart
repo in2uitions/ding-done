@@ -83,12 +83,12 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                             index: 'role',
                             value: Constants.customerRoleId,
                           );
-                          // Navigator.of(context)
-                          //     .push(_createRoute(SignUpOnBoardingScreen(
-                          //   initialIndex: 0,
-                          // )));
                           Navigator.of(context)
-                              .push(_createRoute(UserAgreement(index: 0)));
+                              .push(_createRoute(SignUpOnBoardingScreen(
+                            initialIndex: 0,
+                          )));
+                          // Navigator.of(context)
+                          //     .push(_createRoute(UserAgreement(index: 0)));
                         },
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w75,
@@ -132,16 +132,16 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                               );
                               await categoriesViewModel
                                   .getCategoriesAndServices();
-                              // Navigator.of(context).push(
-                              //   _createRoute(SignUpSupplierOnBoardingScreen(
-                              //     initialIndex: 0,
-                              //   )),
-                              // );
                               Navigator.of(context).push(
-                                _createRoute(SupplierAgreement(index: 0,
-
+                                _createRoute(SignUpSupplierOnBoardingScreen(
+                                  initialIndex: 0,
                                 )),
                               );
+                              // Navigator.of(context).push(
+                              //   _createRoute(SupplierAgreement(index: 0,
+
+                              //   )),
+                              // );
                             },
                             child: SizedBox(
                               width: context.appValues.appSizePercent.w75,

@@ -89,7 +89,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                         color: context.resources.color.btnColorBlue),
                   ),
                 ),
-                AddNewPaymentMethodWidget(payment_method:widget.payment_method),
+                AddNewPaymentMethodWidget(
+                    payment_method: widget.payment_method),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
                     context.appValues.appPadding.p20,
@@ -104,14 +105,13 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                         color: context.resources.color.btnColorBlue),
                   ),
                 ),
-
                 PaymentMethodButtons(
                   payment_method: widget.payment_method,
                   jobsViewModel: jobsViewModel,
                   fromWhere: 'confirm_payment',
                   role: widget.role,
                 ),
-
+                const Gap(60),
               ],
             ),
             Positioned(
@@ -141,11 +141,18 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                             await widget.paymentViewModel.createPaymentMethod();
                             await widget.paymentViewModel.getPaymentMethods();
                             Navigator.of(context).pop();
-                            new Future.delayed(const Duration(seconds: 0), () => Navigator.of(context)
-                                .push(_createRoute(ConfirmPaymentMethod(payment_method:widget.payment_method,paymentViewModel: widget.paymentViewModel, role: Constants.customerRoleId,))));
+                            Future.delayed(
+                                const Duration(seconds: 0),
+                                () => Navigator.of(context)
+                                        .push(_createRoute(ConfirmPaymentMethod(
+                                      payment_method: widget.payment_method,
+                                      paymentViewModel: widget.paymentViewModel,
+                                      role: Constants.customerRoleId,
+                                    ))));
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xffF3D347),
+                            elevation: 0,
+                            backgroundColor: const Color(0xff4100E3),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
