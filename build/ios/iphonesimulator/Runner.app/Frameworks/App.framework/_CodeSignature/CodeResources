@@ -50,19 +50,19 @@
 		</data>
 		<key>flutter_assets/assets/i18n/ar.json</key>
 		<data>
-		rO3f9iHB+/tV1sbP7bH/X+hujOo=
+		okziz0AF87/TQ1CPV/Z97FXgYnI=
 		</data>
 		<key>flutter_assets/assets/i18n/el.json</key>
 		<data>
-		rn6FID4r/shRTAIRIjyXbLEdakw=
+		gUvp5AgIQjRWroTivCYeH0RH004=
 		</data>
 		<key>flutter_assets/assets/i18n/en.json</key>
 		<data>
-		WpcmUAkMQMsBlT8oPzcopXDzbDE=
+		A9YAQSgmh3Z723PpHlQu+9DSnfM=
 		</data>
 		<key>flutter_assets/assets/i18n/ru.json</key>
 		<data>
-		LcfPsfqyUS5uCh9pKQcYgExDoWQ=
+		qXD5hMiE9eZ2OXO57qnWsVK+F0M=
 		</data>
 		<key>flutter_assets/assets/img/014-google.svg</key>
 		<data>
@@ -168,10 +168,6 @@
 		<data>
 		xtv28+KW2+ywvXLJORI3wKtOw9M=
 		</data>
-		<key>flutter_assets/assets/img/calendarhpsupp.svg</key>
-		<data>
-		vqmk7Mz01yS6ChwZqYDMZSwa05U=
-		</data>
 		<key>flutter_assets/assets/img/camera.svg</key>
 		<data>
 		aXNKP7XOj/B1T14lUo9VUSgIkJM=
@@ -215,10 +211,6 @@
 		<key>flutter_assets/assets/img/clock.svg</key>
 		<data>
 		d0ATsMXGnSvA2ctGsj9KzvjsXq8=
-		</data>
-		<key>flutter_assets/assets/img/clockhpsupp.svg</key>
-		<data>
-		oKlugkIBIaBWdt56Wk4KcrJzTGM=
 		</data>
 		<key>flutter_assets/assets/img/close.svg</key>
 		<data>
@@ -462,7 +454,7 @@
 		</data>
 		<key>flutter_assets/kernel_blob.bin</key>
 		<data>
-		R4ANVtzCo7o4gNRCzX9NdBuTF18=
+		I76F/wp8dMN4DOUce3Wu4clTC4M=
 		</data>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -1585,28 +1577,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			czVOqHNDsnIBk30E/DicrxPV4bEJe+Jic+dUb/9RWX0=
+			LcY4VAePezlU1+5JNn6jfYJ/i13y9a74bCG29IbX66U=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/i18n/el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			vgEtfTUbrur3rsQ5wNHqlhiJC7YNWQdpawo8tImg+hw=
+			b9e1r0rxLDwWbc8Td7GZYfYDg1onOTBtGB1plzpP9NE=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/i18n/en.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YrcTMENqE131mi5TjjmHXIOcnxrJUPsYY7CGxo+hHSs=
+			v4Yv31+t751m1nh5jDljd/nXnBMSOJu+xS2GLpQNOFo=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/i18n/ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			feJIKK/sZtQqOmNGvO2EX7C5L3SQwBidsup6/3TYj7Q=
+			hSsr9jMgpwnPDT6M7080W2QZ6Qxnzs31YM3bXqjYsd8=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/img/014-google.svg</key>
@@ -1791,13 +1783,6 @@
 			23C0mAFYdWofRhpY6BfNp/1b731UAbp+/y15qKNzvEk=
 			</data>
 		</dict>
-		<key>flutter_assets/assets/img/calendarhpsupp.svg</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			du+wz3sDVYmxjloupOGdWGxUX0pDwCwBC07Mvh1m3f8=
-			</data>
-		</dict>
 		<key>flutter_assets/assets/img/camera.svg</key>
 		<dict>
 			<key>hash2</key>
@@ -1873,13 +1858,6 @@
 			<key>hash2</key>
 			<data>
 			3tNWMEtq9KHQiQuvmWiM9bYTwo7SnSNwTow+TJ0OCI4=
-			</data>
-		</dict>
-		<key>flutter_assets/assets/img/clockhpsupp.svg</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			MyGEOF2SKcxBftdpmUKFQd9ATYKPJI3NKIjFVoAQ7oM=
 			</data>
 		</dict>
 		<key>flutter_assets/assets/img/close.svg</key>
@@ -2306,7 +2284,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			7lklnYdGYtKK4OsalV342lDqErIOWOd9q26s31HEfTM=
+			V6HtZMQXB6i6lsNk6ssC31dpZd5wj2YFAnpPVw5y2d8=
 			</data>
 		</dict>
 		<key>flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
