@@ -60,7 +60,7 @@
     "viewAll": "View All",
     "seeAll": "See All",
     "hey": "Hey, ",
-    "hi": "Hi ",
+    "Hi": "Hi ",
     "featuredServices": "Featured Services",
     "totalPrice": "Total Price",
     "jobRequestsAroundMe": "Job Requests Around me",
@@ -192,7 +192,12 @@
   "drawer": {
     "faqs": "FAQs",
     "termsAndConditions": "Terms and Conditions",
-    "logout": "Log out"
+    "logout": "Log out",
+    "orderHistory": "Order History",
+    "myAddressBook": "My Address Book",
+    "support": "Support",
+    "aboutDingDone": "About DingDone",
+    "chooseLanguage": "Choose Language"
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "USERS AGREEMENT",

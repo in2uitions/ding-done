@@ -60,7 +60,7 @@
     "viewAll": "Показать все",
     "seeAll": "Увидеть все",
     "hey": "Здравствуйте, ",
-    "hi": "Привет ",
+    "Hi": "Привет ",
     "featuredServices": "Избранные услуги",
     "totalPrice": "Общая стоимость",
     "jobRequestsAroundMe": "Запросы на работу рядом со мной",
@@ -192,7 +192,13 @@
   "drawer": {
     "faqs": "Часто задаваемые вопросы",
     "termsAndConditions": "Условия и положения",
-    "logout": "Выйти"
+    "logout": "Выйти",
+    "orderHistory": "история заказов",
+    "myAddressBook": "моя адресная книга",
+    "support": "поддерживать",
+    "aboutDingDone": "о DingDone",
+    "chooseLanguage": "выбрать язык"
+
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "USERS AGREEMENT",

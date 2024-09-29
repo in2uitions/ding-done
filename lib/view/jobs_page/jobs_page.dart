@@ -1,6 +1,8 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/home_page/home_page.dart';
+import 'package:dingdone/view/home_page/home_page_supplier.dart';
 import 'package:dingdone/view/widgets/jobs/CircleButton.dart';
 import 'package:dingdone/view/widgets/jobs/jobs_cards.dart';
 import 'package:dingdone/view/widgets/tabs/tabs.dart';
@@ -10,6 +12,7 @@ import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -55,105 +58,120 @@ class _JobsPageState extends State<JobsPage> {
       // backgroundColor: const Color(0xffFEFEFE),
       backgroundColor: const Color(0xffFFFFFF),
       body: Stack(
+        fit: StackFit.expand,
+
         children: [
+
           Column(
             children: [
-              Padding(
-                padding: EdgeInsets.all(context.appValues.appPadding.p0),
-                child: Stack(
-                  children: [
-                    Container(
-                      width: context.appValues.appSizePercent.w100,
-                      height: context.appValues.appSizePercent.h50,
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/img/jobimage.png'),
-                          fit: BoxFit.cover,
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(context.appValues.appPadding.p0),
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: context.appValues.appSizePercent.w100,
+                          height: context.appValues.appSizePercent.h50,
+                          decoration: const BoxDecoration(
+                            image: DecorationImage(
+                              image: AssetImage('assets/img/jobimage.png'),
+                              fit: BoxFit.cover,
+                            ),
+                          ),
                         ),
-                      ),
-                    ),
-                    Container(
-                      width: context.appValues.appSizePercent.w100,
-                      height: context.appValues.appSizePercent.h15,
-                      decoration: ShapeDecoration(
-                        gradient: LinearGradient(
-                          begin: const Alignment(0.00, 1),
-                          end: const Alignment(0, 0),
-                          colors: [
-                            const Color(0xffEECB0B).withOpacity(0),
-                            const Color(0xffEECB0B).withOpacity(0.4),
-                            const Color(0xffEECB0B).withOpacity(0.6),
-                            const Color(0xffEECB0B).withOpacity(0.9),
-                          ],
+                        Container(
+                          width: context.appValues.appSizePercent.w100,
+                          height: context.appValues.appSizePercent.h15,
+                          decoration: ShapeDecoration(
+                            gradient: LinearGradient(
+                              begin: const Alignment(0.00, 1),
+                              end: const Alignment(0, 0),
+                              colors: [
+                                const Color(0xffEECB0B).withOpacity(0),
+                                const Color(0xffEECB0B).withOpacity(0.4),
+                                const Color(0xffEECB0B).withOpacity(0.6),
+                                const Color(0xffEECB0B).withOpacity(0.9),
+                              ],
+                            ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(0),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: context.appValues.appPadding.p8,
+                              left: context.appValues.appPadding.p20,
+                              right: context.appValues.appPadding.p20,
+                            ),
+                            child: SafeArea(
+                              child: Stack(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        translate('bottom_bar.jobs'),
+                                        style: getPrimaryBoldStyle(
+                                          color: context.resources.color.colorWhite,
+                                          fontSize: 28,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  InkWell(
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                        top: context.appValues.appPadding.p8,
+                                      ),
+                                      child: SvgPicture.asset(
+                                          'assets/img/back-new.svg'),
+                                    ),
+                                    onTap: () {
+                                      Navigator.pop(context);
+
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              BottomBar(userRole: widget.userRole),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: context.appValues.appPadding.p8,
-                          left: context.appValues.appPadding.p20,
-                          right: context.appValues.appPadding.p20,
-                        ),
-                        child: SafeArea(
-                          child: Stack(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
+                        Positioned(
+                          bottom: 50,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.appValues.appPadding.p20,
+                            ),
+                            child: SizedBox(
+                              width: context.appValues.appSizePercent.w80,
+                              child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    translate('bottom_bar.jobs'),
+                                    'Title',
                                     style: getPrimaryBoldStyle(
+                                      fontSize: 18,
                                       color: context.resources.color.colorWhite,
-                                      fontSize: 28,
                                     ),
                                   ),
                                 ],
                               ),
-                              InkWell(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: context.appValues.appPadding.p8,
-                                  ),
-                                  child: SvgPicture.asset(
-                                      'assets/img/back-new.svg'),
-                                ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                            ],
+                            ),
                           ),
                         ),
-                      ),
+                      ],
                     ),
-                    Positioned(
-                      bottom: 50,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p20,
-                        ),
-                        child: SizedBox(
-                          width: context.appValues.appSizePercent.w80,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Title',
-                                style: getPrimaryBoldStyle(
-                                  fontSize: 18,
-                                  color: context.resources.color.colorWhite,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -276,13 +294,16 @@ class _JobsPageState extends State<JobsPage> {
                                           // content: buildHeader(context),
                                         ),
                                       );
+
                               },
                             ),
+
                           ],
                         );
                       }),
                 );
               }),
+
         ],
       ),
     );

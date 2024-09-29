@@ -128,8 +128,9 @@ class _BookAServiceState extends State<BookAService> {
                                     child: SvgPicture.asset(
                                         'assets/img/back-new.svg'),
                                   ),
-                                  onTap: () {
+                                  onTap: () async {
                                     Navigator.pop(context);
+
                                   },
                                 ),
                               ],
@@ -574,7 +575,9 @@ Widget _buildPopupDialog(BuildContext context) {
             children: [
               InkWell(
                 child: SvgPicture.asset('assets/img/x.svg'),
-                onTap: () {
+                onTap: () async {
+                  Navigator.pop(context);
+                  await Future.delayed(const Duration(milliseconds: 1));
                   Navigator.pop(context);
                   // Future.delayed(
                   //     const Duration(seconds: 0), () => Navigator.pop(context));

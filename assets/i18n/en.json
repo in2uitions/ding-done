@@ -60,10 +60,10 @@
     "viewAll": "View All",
     "seeAll": "See All",
     "hey": "Hey, ",
-    "hi": "Hi ",
+    "Hi": "Hi ",
     "featuredServices": "Featured Services",
     "totalPrice": "Total Price",
-    "jobRequestsAroundMe": "Job Requests Around me",
+    "jobRequestsAroundMe": "Job Requests Around Me",
     "serviceRequestConfirmed": "Service Request Confirmed",
     "serviceRequestConfirmedMsg": "We are looking for the best match now and you will receive an update once confirmed"
   },
@@ -192,7 +192,12 @@
   "drawer": {
     "faqs": "FAQs",
     "termsAndConditions": "Terms and Conditions",
-    "logout": "Log out"
+    "logout": "Log out",
+    "orderHistory": "Order History",
+    "myAddressBook": "My Address Book",
+    "support": "Support",
+    "aboutDingDone": "About DingDone",
+    "chooseLanguage": "Choose Language"
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "USERS AGREEMENT",

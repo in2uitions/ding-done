@@ -60,7 +60,7 @@
     "viewAll": "Προβολή Όλων",
     "seeAll": "Προβολή όλων",
     "hey": "Γειά σας, ",
-    "hi": "γεια ",
+    "Hi": "γεια ",
     "featuredServices": "Επιλεγμένες Υπηρεσίες",
     "totalPrice": "Συνολική Τιμή",
     "jobRequestsAroundMe": "Αιτήσεις Εργασίας Γύρω μου",
@@ -192,7 +192,14 @@
   "drawer": {
     "faqs": "Συχνές Ερωτήσεις",
     "termsAndConditions": "Όροι και Προϋποθέσεις",
-    "logout": "Αποσύνδεση"
+    "logout": "Αποσύνδεση",
+    "orderHistory": "ιστορικό παραγγελιών",
+    "myAddressBook": "το βιβλίο διευθύνσεών μου",
+    "support": "υποστήριξη",
+    "aboutDingDone": "σχετικά με το DingDone",
+    "chooseLanguage": "επιλέξτε γλώσσα"
+
+
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "USERS AGREEMENT",

@@ -141,7 +141,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const Gap(10),
                       Text(
-                        'Order History',
+                        translate('drawer.orderHistory'),
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
                           color: const Color(0xff1F1F39),
@@ -182,7 +182,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const Gap(10),
                       Text(
-                        'My Address Book',
+                        translate('drawer.myAddressBook'),
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
                           color: const Color(0xff1F1F39),
@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const Gap(10),
                       Text(
-                        'Support',
+                        translate('drawer.support'),
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
                           color: const Color(0xff1F1F39),
@@ -246,7 +246,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const Gap(10),
                       Text(
-                        'About DingDone',
+                        translate('drawer.aboutDingDone'),
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
                           color: const Color(0xff1F1F39),
@@ -278,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                       const Gap(10),
                       Text(
-                        'Terms and Conditions',
+                        translate('drawer.termsAndConditions'),
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
                           color: const Color(0xff1F1F39),
@@ -291,6 +291,39 @@ class _HomePageState extends State<HomePage> {
                     Navigator.of(context)
                         .push(_createRoute(UserAgreement(index: null)));
                   },
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: context.appValues.appPadding.p15,
+                    right: context.appValues.appPadding.p15,
+                  ),
+                  child: const Divider(
+                    height: 25,
+                    thickness: 2,
+                    color: Color(0xffEAEAFF),
+                  ),
+                ),
+                ListTile(
+                  title: Row(
+                    children: [
+                      Icon(
+                          Icons.language,
+                        size: 30,
+                        color: Colors.deepPurple,
+                      ),
+                      const Gap(10),
+
+                      Text(
+                        translate('drawer.chooseLanguage'),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 20,
+                          color: const Color(0xff1F1F39),
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () => _onActionSheetPress(context),
+
                 ),
                 const Spacer(),
                 Padding(

@@ -94,11 +94,12 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
                         context.appValues.appPadding.p10,
                       ),
                       child: Text(
-                        '${profileViewModel.getProfileBody[
+                        profileViewModel.getProfileBody[
+                        'current_address']!=null?'${profileViewModel.getProfileBody[
                         'current_address']["street_name"]} ${profileViewModel.getProfileBody[
                         'current_address']["building_number"]}, ${profileViewModel.getProfileBody[
                         'current_address']["city"]}, ${profileViewModel.getProfileBody[
-                        'current_address']["state"]}',
+                        'current_address']["state"]}':'',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: getPrimaryRegularStyle(

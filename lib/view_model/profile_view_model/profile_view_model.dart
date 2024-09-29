@@ -53,8 +53,8 @@ class ProfileViewModel extends DisposableViewModel {
             "state" :state
       });
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
-      profileBody = _apiProfileResponse.data?.toJson() ?? {};
-
+      // profileBody = _apiProfileResponse.data?.toJson() ?? {};
+      await getProfiledata();
       notifyListeners();
     } catch (error) {
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
@@ -194,7 +194,8 @@ class ProfileViewModel extends DisposableViewModel {
 
       });
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
-      profileBody = _apiProfileResponse.data?.toJson() ?? {};
+      await getProfiledata();
+      // profileBody = _apiProfileResponse.data?.toJson() ?? {};
 
       notifyListeners();
       return true;

@@ -143,32 +143,82 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(
-                    width: context.appValues.appSizePercent.w28,
-                    child: CustomTextField(
-                      index: 'expiry_year',
-                      viewModel: paymentViewModel.setInputValues,
-                      hintText: translate('paymentMethod.expiryYear'),
-                      keyboardType: TextInputType.text,
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: context.appValues.appSizePercent.w28,
+                        child: CustomTextField(
+                          index: 'expiry_year',
+                          viewModel: paymentViewModel.setInputValues,
+                          hintText: translate('paymentMethod.expiryYear'),
+                          // hintText: translate('paymentMethod.expiryYear'),
+                          keyboardType: TextInputType.text,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text(
+                          'ex:29',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w300,
+                          ),),
+                      ),
+
+                    ],
                   ),
-                  SizedBox(
-                    width: context.appValues.appSizePercent.w28,
-                    child: CustomTextField(
-                      index: 'expiry_month',
-                      viewModel: paymentViewModel.setInputValues,
-                      hintText: translate('paymentMethod.expiryMonth'),
-                      keyboardType: TextInputType.text,
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: context.appValues.appSizePercent.w28,
+                        child: CustomTextField(
+                          index: 'expiry_month',
+                          viewModel: paymentViewModel.setInputValues,
+                          hintText: translate('paymentMethod.expiryMonth'),
+                          keyboardType: TextInputType.text,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text(
+                          'ex:08',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w300,
+                          ),),
+                      ),
+
+                    ],
                   ),
-                  SizedBox(
-                    width: context.appValues.appSizePercent.w28,
-                    child: CustomTextField(
-                      index: 'last_digits',
-                      viewModel: paymentViewModel.setInputValues,
-                      hintText: translate('paymentMethod.CVC'),
-                      keyboardType: TextInputType.text,
-                    ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: context.appValues.appSizePercent.w28,
+                        child: CustomTextField(
+                          index: 'last_digits',
+                          viewModel: paymentViewModel.setInputValues,
+                          hintText: translate('paymentMethod.CVC'),
+                          keyboardType: TextInputType.text,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Text(
+                          '',
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 15.0,
+                            fontWeight: FontWeight.w300,
+                          ),),
+                      ),
+
+                    ],
                   ),
                 ],
               ),
@@ -193,11 +243,26 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
       final result = await Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) {
-            return ScannerWidget(
-              controller: _controller,
-              overlayOrientation: CardOrientation.landscape,
-              // cameraResolution: CameraResolution.high,
-              oneShotScanning: true,
+            return Scaffold(
+              appBar: AppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: () {
+                    Navigator.pop(context); // Navigate back when back button is pressed
+                  },
+                ),
+                title: Text("Scan Your Card"),
+              ),
+              body: Stack(
+                children: [
+                  ScannerWidget(
+                    controller: _controller,
+                    overlayOrientation: CardOrientation.landscape,
+                    // cameraResolution: CameraResolution.high,
+                    oneShotScanning: true,
+                  ),
+                ],
+              ),
             );
           },
         ),

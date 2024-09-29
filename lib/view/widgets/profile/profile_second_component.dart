@@ -5,6 +5,7 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/login/login.dart';
 import 'package:dingdone/view_model/dispose_view_model/app_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -12,6 +13,8 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_model/jobs_view_model/jobs_view_model.dart';
+import '../../agreement/user_agreement.dart';
+import '../restart/restart_widget.dart';
 
 class ProfileSeconComponent extends StatefulWidget {
   const ProfileSeconComponent({super.key});
@@ -149,31 +152,83 @@ class _ProfileSeconComponentState extends State<ProfileSeconComponent> {
               color: Color(0xffEAEAFF),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              top: context.appValues.appPadding.p5,
-              left: context.appValues.appPadding.p15,
-              right: context.appValues.appPadding.p15,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/img/termofuse.svg',
-                    ),
-                    const Gap(10),
-                    Text(
-                      translate('profile.termsOfUse'),
-                      style: getPrimaryRegularStyle(
-                        fontSize: 20,
-                        color: const Color(0xff1F1F39),
+          InkWell(
+            onTap: () {
+              Navigator.of(context)
+                  .push(_createRoute(UserAgreement(index: null)));
+            },
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: context.appValues.appPadding.p5,
+                left: context.appValues.appPadding.p15,
+                right: context.appValues.appPadding.p15,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/img/termofuse.svg',
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      const Gap(10),
+                      Text(
+                        translate('profile.termsOfUse'),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 20,
+                          color: const Color(0xff1F1F39),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+
+         Padding(
+              padding: EdgeInsets.only(
+                left: context.appValues.appPadding.p15,
+                right: context.appValues.appPadding.p100,
+              ),
+              child: const Divider(
+                height: 50,
+                thickness: 2,
+                color: Color(0xffEAEAFF),
+              ),
+
+          ),
+          InkWell(
+            onTap: () => _onActionSheetPress(context),
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: context.appValues.appPadding.p5,
+                left: context.appValues.appPadding.p15,
+                right: context.appValues.appPadding.p15,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.language,
+                        size: 30,
+                        color: Colors.deepPurple,
+                      ),
+                      const Gap(10),
+                      Text(
+                        translate('drawer.chooseLanguage'),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 20,
+                          color: const Color(0xff1F1F39),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           Padding(
@@ -254,7 +309,68 @@ class _ProfileSeconComponentState extends State<ProfileSeconComponent> {
     );
   }
 }
-
+void _onActionSheetPress(BuildContext context) {
+  showDemoActionSheet(
+    context: context,
+    child: CupertinoActionSheet(
+      title: const Text('Title'),
+      message: const Text('Message'),
+      actions: <Widget>[
+        CupertinoActionSheetAction(
+          child: Text(translate('language.name.en-US')),
+          onPressed: () async {
+            await AppPreferences()
+                .save(key: language, value: 'en', isModel: false);
+            Navigator.pop(context, 'en');
+            RestartWidget.restartApp(context);
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: Text(translate('language.name.ar-SA')),
+          onPressed: () async {
+            await AppPreferences()
+                .save(key: language, value: 'ar', isModel: false);
+            Navigator.pop(context, 'ar');
+            RestartWidget.restartApp(context);
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: Text(translate('language.name.el-GR')),
+          onPressed: () async {
+            await AppPreferences()
+                .save(key: language, value: 'el', isModel: false);
+            Navigator.pop(context, 'el');
+            RestartWidget.restartApp(context);
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: Text(translate('language.name.ru-RU')),
+          onPressed: () async {
+            await AppPreferences()
+                .save(key: language, value: 'ru', isModel: false);
+            Navigator.pop(context, 'ru');
+            RestartWidget.restartApp(context);
+          },
+        ),
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        child: const Text('Cancel'),
+        onPressed: () {
+          Navigator.pop(context, 'Cancel');
+        },
+      ),
+    ),
+  );
+}
+void showDemoActionSheet(
+    {required BuildContext context, required Widget child}) {
+  showCupertinoModalPopup<String>(
+    context: context,
+    builder: (BuildContext context) => child,
+  ).then((String? value) {
+    if (value != null) changeLocale(context, value);
+  });
+}
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => classname,

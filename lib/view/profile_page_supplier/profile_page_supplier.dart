@@ -182,23 +182,23 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                       height: context.appValues.appSizePercent.h100,
                       child: ElevatedButton(
                         onPressed: () async {
-                          if (await profileViewModel.patchUserData(
-                                  profileViewModel.getProfileBody) ==
-                              true) {
+                          // if (await profileViewModel.patchUserData(
+                          //         profileViewModel.getProfileBody) ==
+                          //     true) {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => simpleAlert(
                                       context,
                                       translate('button.success'),
                                     ));
-                          } else {
-                            showDialog(
-                                context: context,
-                                builder: (BuildContext context) => simpleAlert(
-                                      context,
-                                      translate('button.failure'),
-                                    ));
-                          }
+                          // } else {
+                          //   showDialog(
+                          //       context: context,
+                          //       builder: (BuildContext context) => simpleAlert(
+                          //             context,
+                          //             translate('button.failure'),
+                          //           ));
+                          // }
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff4100E3),

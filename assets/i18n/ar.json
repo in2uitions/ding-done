@@ -191,8 +191,15 @@
   },
   "drawer": {
     "faqs": "الأسئلة الشائعة",
-    "termsAndConditions": "الشروط والأحكام",
-    "logout": "تسجيل الخروج"
+    "termsAndConditions": "شروط الإستخدام",
+    "logout": "تسجيل الخروج",
+    "orderHistory": "سجل الطلبات",
+    "myAddressBook": "العناوين",
+    "support": "المساعدة",
+    "aboutDingDone": "عن DingDone",
+    "chooseLanguage": "اختر اللغة"
+
+
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "اتفاقية المستخدم",

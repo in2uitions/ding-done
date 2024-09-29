@@ -9,6 +9,8 @@ class RussianStrings extends Strings {
     'street_name': 'street_name',
     'floor': 'floor',
     'zone': 'zone',
+    'country': 'country',
+
     'street_number': 'street_number',
     'building_number': 'building_number',
     'apartment_number': 'apartment_number',
@@ -36,6 +38,7 @@ class RussianStrings extends Strings {
     'street_name': 'Street Name',
     'floor': 'Floor',
     'zone': 'Zone',
+    'country': 'Country',
     'street_number': 'Street Number',
     'building_number': 'Building Number',
     'apartment_number': 'Apartment Number',

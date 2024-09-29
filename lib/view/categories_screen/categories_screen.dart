@@ -218,7 +218,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                                     return CategoriesScreenCards(
                                       category: category,
                                       title:
-                                          services != null ? services["title"] : '',
+                                          services != null ? services["title"].toString() : '',
                                       cost:
                                           '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
                                       image: service["image"] != null

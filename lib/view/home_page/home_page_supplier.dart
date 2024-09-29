@@ -9,6 +9,7 @@ import 'package:dingdone/view/widgets/home_page_supplier/job_requests.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -22,8 +23,10 @@ import '../../view_model/dispose_view_model/app_view_model.dart';
 import '../about/about_dingdone.dart';
 import '../agreement/supplier_agreement.dart';
 import '../bottom_bar/bottom_bar.dart';
+import '../confirm_address/confirm_address.dart';
 import '../jobs_page/jobs_page.dart';
 import '../login/login.dart';
+import '../widgets/restart/restart_widget.dart';
 
 class HomePageSupplier extends StatefulWidget {
   const HomePageSupplier({super.key});
@@ -132,7 +135,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                       ),
                       const Gap(10),
                       Text(
-                        'Order History',
+                        translate('drawer.orderHistory'),
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
                           color: const Color(0xff1F1F39),
@@ -169,11 +172,43 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                   title: Row(
                     children: [
                       SvgPicture.asset(
+                        'assets/img/addressBook.svg',
+                      ),
+                      const Gap(10),
+                      Text(
+                        translate('drawer.myAddressBook'),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 20,
+                          color: const Color(0xff1F1F39),
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.of(context).push(_createRoute(ConfirmAddress()));
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: context.appValues.appPadding.p15,
+                    right: context.appValues.appPadding.p15,
+                  ),
+                  child: const Divider(
+                    height: 25,
+                    thickness: 2,
+                    color: Color(0xffEAEAFF),
+                  ),
+                ),
+
+                ListTile(
+                  title: Row(
+                    children: [
+                      SvgPicture.asset(
                         'assets/img/headphone.svg',
                       ),
                       const Gap(10),
                       Text(
-                        'Support',
+                        translate('drawer.support'),
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
                           color: const Color(0xff1F1F39),
@@ -206,7 +241,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                       ),
                       const Gap(10),
                       Text(
-                        'About DingDone',
+                        translate('drawer.aboutDingDone'),
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
                           color: const Color(0xff1F1F39),
@@ -238,7 +273,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                       ),
                       const Gap(10),
                       Text(
-                        'Terms and Conditions',
+                        translate('drawer.termsAndConditions'),
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
                           color: const Color(0xff1F1F39),
@@ -250,6 +285,39 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                     Navigator.of(context)
                         .push(_createRoute(SupplierAgreement(index: null)));
                   },
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: context.appValues.appPadding.p15,
+                    right: context.appValues.appPadding.p15,
+                  ),
+                  child: const Divider(
+                    height: 25,
+                    thickness: 2,
+                    color: Color(0xffEAEAFF),
+                  ),
+                ),
+                ListTile(
+                  title: Row(
+                    children: [
+                      Icon(
+                        Icons.language,
+                        size: 30,
+                        color: Colors.deepPurple,
+                      ),
+                      const Gap(10),
+
+                      Text(
+                        translate('drawer.chooseLanguage'),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 20,
+                          color: const Color(0xff1F1F39),
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () => _onActionSheetPress(context),
+
                 ),
                 const Spacer(),
                 Padding(
@@ -367,7 +435,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                         },
                                       ),
                                       Text(
-                                        translate('home_screen.hi'),
+                                        translate('home_screen.Hi'),
                                         style: getPrimaryBoldStyle(
                                           color: context
                                               .resources.color.colorWhite,
@@ -617,7 +685,69 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
     });
   }
 }
+void showDemoActionSheet(
+    {required BuildContext context, required Widget child}) {
+  showCupertinoModalPopup<String>(
+    context: context,
+    builder: (BuildContext context) => child,
+  ).then((String? value) {
+    if (value != null) changeLocale(context, value);
+  });
+}
 
+void _onActionSheetPress(BuildContext context) {
+  showDemoActionSheet(
+    context: context,
+    child: CupertinoActionSheet(
+      title: const Text('Title'),
+      message: const Text('Message'),
+      actions: <Widget>[
+        CupertinoActionSheetAction(
+          child: Text(translate('language.name.en-US')),
+          onPressed: () async {
+            await AppPreferences()
+                .save(key: language, value: 'en', isModel: false);
+            Navigator.pop(context, 'en');
+            RestartWidget.restartApp(context);
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: Text(translate('language.name.ar-SA')),
+          onPressed: () async {
+            await AppPreferences()
+                .save(key: language, value: 'ar', isModel: false);
+            Navigator.pop(context, 'ar');
+            RestartWidget.restartApp(context);
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: Text(translate('language.name.el-GR')),
+          onPressed: () async {
+            await AppPreferences()
+                .save(key: language, value: 'el', isModel: false);
+            Navigator.pop(context, 'el');
+            RestartWidget.restartApp(context);
+          },
+        ),
+        CupertinoActionSheetAction(
+          child: Text(translate('language.name.ru-RU')),
+          onPressed: () async {
+            await AppPreferences()
+                .save(key: language, value: 'ru', isModel: false);
+            Navigator.pop(context, 'ru');
+            RestartWidget.restartApp(context);
+          },
+        ),
+      ],
+      cancelButton: CupertinoActionSheetAction(
+        child: const Text('Cancel'),
+        onPressed: () {
+          Navigator.pop(context, 'Cancel');
+        },
+      ),
+    ),
+  );
+}
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => classname,
