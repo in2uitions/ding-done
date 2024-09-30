@@ -41,7 +41,7 @@ class ServicesRepository {
     try {
       dynamic response = await _apiServices.getResponse(
           params: '&filter[category][id][_eq]=$id');
-      // debugPrint('responseee ${response}');
+      debugPrint('responseee 2222${response["data"]}');
       // final jsonData = ServicesModelMain.fromJson(response["data"]);
       // debugPrint('jsoon data ${jsonData}');
       return response["data"];

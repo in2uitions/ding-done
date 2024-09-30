@@ -249,7 +249,7 @@ class ServicesViewModel with ChangeNotifier {
   Future<void> getServicesByCategoryID(int id,dynamic supplier_services) async {
     try {
       dynamic response = await _servicesRepository.getServicesByCategoryID(id);
-      debugPrint('response is $response');
+      debugPrint('response is in service view model $response');
       _apiServicesCategoryResponse = ApiResponse.completed(response);
       _servicesCategoryList = _apiServicesResponse.data?.services;
       // _servicesCategoryList = _servicesCategoryList!.where((service) => service.status.toString().toLowerCase() == 'published').toList();

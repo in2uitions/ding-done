@@ -1,21 +1,19 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../../res/app_prefs.dart';
 import '../../../../view_model/jobs_view_model/jobs_view_model.dart';
+import '../../../../view_model/categories_view_model/categories_view_model.dart';
 
 class ServiceOfferedWidget extends StatefulWidget {
   final dynamic servicesViewModel;
-  final List<dynamic> list;
   final dynamic profileViewModel;
   final dynamic data;
 
   const ServiceOfferedWidget({
     Key? key,
     required this.profileViewModel,
-    required this.list,
     required this.data,
     required this.servicesViewModel,
   }) : super(key: key);
@@ -26,115 +24,147 @@ class ServiceOfferedWidget extends StatefulWidget {
 
 class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
   String? lang;
+  late List<int> selectedServices; // Local list to manage checked states
+  bool isLoading = true; // Loading state
 
   @override
   void initState() {
     super.initState();
     _fetchServices();
     _getLanguage();
+    // Initialize local selected services based on the profile data
+    selectedServices = []; // Initialize it here or set it later after fetching
   }
 
   void _fetchServices() {
     if (!widget.servicesViewModel.servicesFetched) {
-      // Check if services are not already fetched
-      widget.servicesViewModel.setFetchedServices(
-          true); // Set the flag to true after fetching services
-
-      for (var e in widget.list) {
-        widget.servicesViewModel.getServicesByCategoryID(
-            int.parse(e['id'].toString()), widget.data["supplier_services"]);
-      }
+      widget.servicesViewModel.setFetchedServices(true);
     }
   }
 
   Future<void> _getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
     setState(() {});
+    await _fetchProfileData(); // Fetch profile data
+  }
+
+  Future<void> _fetchProfileData() async {
+    await widget.profileViewModel.getProfiledata();
+
+    // After fetching profile data, update selected services
+    setState(() {
+      // Check if supplier_services is not null and is a list
+      var supplierServices = widget.profileViewModel.getProfileBody["supplier_services"];
+      if (supplierServices is List) {
+        // Map and cast service IDs to int
+        selectedServices = supplierServices
+            .map((service) => service["services_id"]?['id'] as int) // Explicitly cast to int
+            .where((id) => id != null) // Ensure no null values are added
+            .toList();
+      } else {
+        selectedServices = []; // Default to an empty list if not a list
+      }
+
+      isLoading = false; // Set loading to false after fetching
+    });
+  }
+
+  bool isServiceChecked(int serviceId) {
+    return selectedServices.contains(serviceId);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
-      return Padding(
-        padding: EdgeInsets.all(context.appValues.appPadding.p10),
-        child: ListView.builder(
-          physics: const NeverScrollableScrollPhysics(),
-          padding: EdgeInsets.zero,
-          shrinkWrap: true,
-          itemCount: widget.servicesViewModel.listOfServices.length,
-          itemBuilder: (BuildContext context, int index) {
-            var servicesInCategory =
-                widget.servicesViewModel.listOfServices[index];
-            if (servicesInCategory.isEmpty) {
-              return const SizedBox.shrink();
-            }
+    return Consumer2<JobsViewModel, CategoriesViewModel>(
+      builder: (context, jobsViewModel, categoriesViewModel, _) {
+        if (isLoading) {
+          return Center(child: CircularProgressIndicator()); // Loading indicator
+        }
 
-            var categoryTitle = servicesInCategory[0]["category"]
-                    ["translations"]
-                .firstWhere(
-                    (translation) => translation["languages_code"] == lang,
-                    orElse: () => servicesInCategory[0]["category"]
-                        ["translations"][0])["title"]
-                .toString();
+        return Padding(
+          padding: EdgeInsets.all(context.appValues.appPadding.p10),
+          child: ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            padding: EdgeInsets.zero,
+            shrinkWrap: true,
+            itemCount: categoriesViewModel.categoriesList.length,
+            itemBuilder: (BuildContext context, int categoryIndex) {
+              var category = categoriesViewModel.categoriesList[categoryIndex];
 
-            return ExpansionTile(
-              title: Text(
-                categoryTitle,
-                style: getPrimaryBoldStyle(
-                  fontSize: 15,
-                  color: const Color(0xff1F1F39),
+              // Get the category's translated name based on the current language
+              var categoryTranslation = (category['translations']
+                  .firstWhere((translation) => translation['languages_code'] == lang, orElse: () {
+                return category['translations'].isNotEmpty
+                    ? category['translations']
+                    : {'title': 'Default Title'};
+              }))['title'].toString();
+
+              // Find services that belong to this category
+              var servicesInCategory = categoriesViewModel.servicesList.where((service) {
+                var categoryTranslation = service['category']['translations'].firstWhere(
+                        (translation) => translation['languages_code'] == lang,
+                    orElse: () => null);
+
+                return categoryTranslation != null &&
+                    categoryTranslation['categories_id'] == category['id'];
+              }).toList();
+
+              if (servicesInCategory.isEmpty) {
+                return const SizedBox.shrink(); // No services to show for this category
+              }
+
+              return ExpansionTile(
+                title: Text(
+                  categoryTranslation,
+                  style: getPrimaryBoldStyle(
+                    fontSize: 15,
+                    color: const Color(0xff1F1F39),
+                  ),
                 ),
-              ),
-              children: [
-                for (int innerIndex = 0;
-                    innerIndex < servicesInCategory.length;
-                    innerIndex++)
-                  servicesInCategory[innerIndex]["status"] == 'published'
-                      ? CheckboxListTile(
-                          value: widget.servicesViewModel.checkboxValues[index]
-                              [innerIndex],
-                          activeColor: context.resources.color.btnColorBlue,
-                          onChanged: (bool? value) async {
-                            setState(() {
-                              widget.servicesViewModel
-                                  .setCheckbox(index, innerIndex);
-                              int serviceId =
-                                  servicesInCategory[innerIndex]["id"];
-                              int supplierId = widget.data["id"];
-                              if (value!) {
-                                widget.servicesViewModel.addService(
-                                    index, innerIndex, serviceId, supplierId);
-                              } else {
-                                widget.servicesViewModel.removeService(
-                                    index, innerIndex, serviceId, supplierId);
-                              }
-                            });
-                            await jobsViewModel.readJson();
-                          },
-                          title: Text(
-                            servicesInCategory[innerIndex]["translations"]
-                                .firstWhere(
-                                    (translation) =>
-                                        translation["languages_code"] != null
-                                            ? translation["languages_code"]
-                                                    ["code"] ==
-                                                lang
-                                            : true,
-                                    orElse: () => servicesInCategory[innerIndex]
-                                        ["translations"][0])["title"]
-                                .toString(),
-                            style: getPrimaryRegularStyle(
-                              fontSize: 15,
-                              color: context.resources.color.secondColorBlue,
-                            ),
-                          ),
-                        )
-                      : Container(),
-              ],
-            );
-          },
-        ),
-      );
-    });
+                children: [
+                  for (int innerIndex = 0; innerIndex < servicesInCategory.length; innerIndex++)
+                    servicesInCategory[innerIndex]["status"] == 'published'
+                        ? CheckboxListTile(
+                      value: selectedServices.contains(servicesInCategory[innerIndex]["id"]),
+                      activeColor: context.resources.color.btnColorBlue,
+                      onChanged: (bool? value) async {
+                        if (value != null) {
+                          setState(() {
+                            int serviceId = servicesInCategory[innerIndex]["id"];
+                            int supplierId = widget.profileViewModel.getProfileBody["id"];
+
+                            if (value) {
+                              selectedServices.add(serviceId); // Add to local state
+                              widget.servicesViewModel.addService(categoryIndex, innerIndex, serviceId, supplierId);
+                            } else {
+                              selectedServices.remove(serviceId); // Remove from local state
+                              widget.servicesViewModel.removeService(categoryIndex, innerIndex, serviceId, supplierId);
+                            }
+                          });
+                          await widget.profileViewModel.getProfiledata();
+                        }
+                      },
+                      title: Text(
+                        servicesInCategory[innerIndex]["translations"]
+                            .firstWhere(
+                              (translation) => translation["languages_code"] == lang,
+                          orElse: () => servicesInCategory[innerIndex]["translations"][0],
+                        )["title"]
+                            .toString(),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 15,
+                          color: context.resources.color.secondColorBlue,
+                        ),
+                      ),
+                    )
+
+                        : Container(),
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }

@@ -756,22 +756,51 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                 child: ElevatedButton(
                   onPressed: () async {
                     if (tab == 'booked' || tab==translate('jobs.requestedJobs')) {
-                      if (await jobsViewModel.cancelJobWithPenalty(job_id) == true) {
-                        Navigator.pop(context);
+                      if(tab=='booked') {
+                        if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
+                            true) {
+                          Navigator.pop(context);
 
-                        Future.delayed(const Duration(seconds: 0));
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                simpleAlert(context, translate('button.success')));
-                      } else {
-                        Navigator.pop(context);
+                          Future.delayed(const Duration(seconds: 0));
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  simpleAlert(
+                                      context, translate('button.success')));
+                        } else {
+                          Navigator.pop(context);
 
-                        Future.delayed(const Duration(seconds: 0));
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                simpleAlert(context, translate('button.failure')));
+                          Future.delayed(const Duration(seconds: 0));
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  simpleAlert(
+                                      context, translate('button.failure')));
+                        }
+                      }else{
+                        if(tab==translate('jobs.requestedJobs')){
+                          if (await jobsViewModel.cancelJobNoPenalty(job_id) ==
+                              true) {
+                            Navigator.pop(context);
+
+                            Future.delayed(const Duration(seconds: 0));
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    simpleAlert(
+                                        context, translate('button.success')));
+                          }
+                          else {
+                            Navigator.pop(context);
+
+                            Future.delayed(const Duration(seconds: 0));
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    simpleAlert(
+                                        context, translate('button.failure')));
+                          }
+                        }
                       }
                     } else {
                       if (tab == 'active') {

@@ -92,7 +92,7 @@ class _ServicesOfferedSupplierProfileState
                   profileViewModel: widget.profileViewModel,
                   servicesViewModel: servicesViewModel,
                   data: widget.data,
-                  list: widget.list
+                  // list: widget.list
                   // list: categoriesViewModel.getCategories(),
                   ),
 

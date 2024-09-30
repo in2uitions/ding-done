@@ -31,8 +31,16 @@ class PaymentMethodButtons extends StatefulWidget {
 class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
   String? _active;
   var data;
+
   void active(String btn) {
     setState(() => _active = btn);
+  }
+
+  Future<void> deletePaymentMethod(String paymentMethodId) async {
+    // Call your ViewModel's delete method here
+    await Provider.of<PaymentViewModel>(context, listen: false)
+        .deletePaymentMethod(paymentMethodId);
+
   }
 
   @override
@@ -142,31 +150,55 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                             var card = snapshot.data![index - 1];
 
                             return widget.fromWhere != 'completed'
-                                ? GestureDetector(
-                                    onTap: () {
-                                      // Handle tap
+                                ? Dismissible(
+                                    key: Key(card['id'].toString()),
+                                    direction: DismissDirection.endToStart,
+                                    onDismissed: (direction) async {
+                                      deletePaymentMethod(
+                                          card['id'].toString());
+
+                                      // ScaffoldMessenger.of(context).showSnackBar(
+                                      //   SnackBar(
+                                      //     content: Text(
+                                      //         "${card['brand']} removed"),
+                                      //   ),
+                                      // );
                                     },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        ButtonConfirmPaymentMethod(
-                                          action: active,
-                                          tag: "${card['id']}",
-                                          active: _active == "${card['id']}"
-                                              ? true
-                                              : false,
-                                          text: '${card['brand']}',
-                                          image: 'assets/img/card-icon.svg',
-                                          jobsViewModel: widget.jobsViewModel,
-                                          data: card['id'],
-                                          last_digits: card['last_digits'],
-                                          payment_method: "Card",
-                                        ),
-                                        SizedBox(
-                                            height:
-                                                context.appValues.appSize.s10),
-                                      ],
+                                    background: Container(
+                                      color: Colors.red,
+                                      alignment: Alignment.centerRight,
+                                      padding: const EdgeInsets.only(right: 20),
+                                      child: const Icon(
+                                        Icons.delete,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        // Handle tap
+                                      },
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        children: [
+                                          ButtonConfirmPaymentMethod(
+                                            action: active,
+                                            tag: "${card['id']}",
+                                            active: _active == "${card['id']}"
+                                                ? true
+                                                : false,
+                                            text: '${card['brand']}',
+                                            image: 'assets/img/card-icon.svg',
+                                            jobsViewModel: widget.jobsViewModel,
+                                            data: card['id'],
+                                            last_digits: card['last_digits'],
+                                            payment_method: "Card",
+                                          ),
+                                          SizedBox(
+                                              height: context
+                                                  .appValues.appSize.s10),
+                                        ],
+                                      ),
                                     ),
                                   )
                                 : Container();

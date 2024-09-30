@@ -785,6 +785,7 @@ class _JobsCardsState extends State<JobsCards> {
                                   translate('button.somethingWentWrong')));
                     }
                   } else {
+                    debugPrint('active    qwd ${widget.active}');
                     // if (tab == 'bookedJobs') {
                     //   if (await jobsViewModel.cancelJobNoPenalty(job_id) ==
                     //       true) {
@@ -808,19 +809,47 @@ class _JobsCardsState extends State<JobsCards> {
                     //                 translate('button.somethingWentWrong')));
                     //   }
                     // } else {
-                    if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
-                        true) {
-                      Navigator.pop(context);
+                    if(widget.active == 'requestedJobs'){
+                      if (await jobsViewModel.cancelJobNoPenalty(job_id) ==
+                          true) {
+                        Navigator.pop(context);
 
-                      Future.delayed(const Duration(seconds: 0));
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              simpleAlertWithMessage2(
-                                  context,
-                                  translate('button.success'),
-                                  translate('button.jobCanceledMsg')));
-                    } else {
+                        Future.delayed(const Duration(seconds: 0));
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                simpleAlertWithMessage2(
+                                    context,
+                                    translate('button.success'),
+                                    translate('button.jobCanceledMsg')));
+                      }
+                      else {
+                        Navigator.pop(context);
+
+                        Future.delayed(const Duration(seconds: 0));
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                simpleAlertWithMessage2(
+                                    context,
+                                    translate('button.failure'),
+                                    translate('button.somethingWentWrong')));
+                      }
+                    }else {
+                      if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
+                          true) {
+                        Navigator.pop(context);
+
+                        Future.delayed(const Duration(seconds: 0));
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                simpleAlertWithMessage2(
+                                    context,
+                                    translate('button.success'),
+                                    translate('button.jobCanceledMsg')));
+                      }
+                    else {
                       Navigator.pop(context);
 
                       Future.delayed(const Duration(seconds: 0));
@@ -832,7 +861,7 @@ class _JobsCardsState extends State<JobsCards> {
                                   translate('button.failure'),
                                   translate('button.somethingWentWrong')));
                     }
-                    // }
+                    }
                   }
                 },
                 style: ElevatedButton.styleFrom(

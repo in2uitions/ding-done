@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PaymentsRepository {
   final BaseApiService _addPaymentCard =
       NetworkApiService(url: ApiEndPoints().addPaymentCard);
+  final BaseApiService _deletePaymentCard =
+      NetworkApiService(url: ApiEndPoints().deletePaymentCard);
   final BaseApiService _getAllPayments =
       NetworkApiService(url: ApiEndPoints().getAllPayments);
   final BaseApiService _apiCustomerProfile =
@@ -46,6 +48,17 @@ class PaymentsRepository {
       return response;
     } catch (error) {
       debugPrint('error in adding card $error');
+      rethrow;
+    }
+  }
+  Future<dynamic> deletePaymentCard(dynamic body) async {
+    try {
+      dynamic response = await _deletePaymentCard.postResponse(data: body);
+      debugPrint('deleting payment card $response');
+      // final jsonData = PaymentsModelMain.fromJson(response);
+      return response;
+    } catch (error) {
+      debugPrint('error in deleting card $error');
       rethrow;
     }
   }

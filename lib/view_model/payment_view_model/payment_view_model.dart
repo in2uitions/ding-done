@@ -163,6 +163,19 @@ class PaymentViewModel extends DisposableViewModel {
     }
   }
 
+ Future<void> deletePaymentMethod(dynamic id) async {
+    Map<String, dynamic> body = {};
+    body["card_id"]=id.toString();
+      try{
+        dynamic response=_paymentsRepository.deletePaymentCard(body);
+
+        debugPrint('response deleting card $response');
+      } catch (e) {
+        debugPrint('error in deleting payment $e');
+      }
+
+  }
+
 
   displayPaymentSheet() async {
     try {
