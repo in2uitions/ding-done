@@ -307,13 +307,13 @@ class ServicesViewModel with ChangeNotifier {
             supplier_id, serviceIndex);
         debugPrint('success is $success');
 
-        if (success!) {
-          _checkboxValues[index][innerIndex] =
-              !_checkboxValues[index][innerIndex];
-        } else {
-          // Handle the case where setting the service for the supplier failed
-          // You can show an error message or handle it as needed.
-        }
+        // if (success!) {
+        //   _checkboxValues[index][innerIndex] =
+        //       !_checkboxValues[index][innerIndex];
+        // } else {
+        //   // Handle the case where setting the service for the supplier failed
+        //   // You can show an error message or handle it as needed.
+        // }
       }
 
       notifyListeners();
@@ -326,6 +326,7 @@ class ServicesViewModel with ChangeNotifier {
       int index, int innerIndex, int serviceIndex, int supplier_id) async {
     try {
       debugPrint('supplier_id ${supplier_id}');
+      debugPrint('service_index ${serviceIndex}');
       if (supplier_id != 0) {
         // Handle the result of setting the service for the supplier
         bool success = await _servicesRepository.removeServiceForSuplier(

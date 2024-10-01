@@ -29,6 +29,7 @@ class ProfilePageSupplier extends StatefulWidget {
 }
 
 class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
+  bool _isLoading=false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +73,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                             image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                profileViewModel.getProfileBody['user']
+                                profileViewModel.getProfileBody['user']!=null && profileViewModel.getProfileBody['user']
                                             ['avatar'] !=
                                         null
                                     ? profileViewModel.getProfileBody['user']
@@ -132,7 +133,8 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                             SizedBox(
                               width: context.appValues.appSizePercent.w60,
                               child: Text(
-                                '${profileViewModel.getProfileBody['address'][0]["street_name"]} ${profileViewModel.getProfileBody['address'][0]["building_number"]}, ${profileViewModel.getProfileBody['address'][0]["city"]}, ${profileViewModel.getProfileBody['address'][0]["state"]}',
+                                profileViewModel.getProfileBody!=null && profileViewModel.getProfileBody['current_address']!=null?
+                                '${profileViewModel.getProfileBody['current_address']["street_name"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']["city"]}, ${profileViewModel.getProfileBody['current_address']["state"]}':'',
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: getPrimaryRegularStyle(
@@ -185,20 +187,34 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                           // if (await profileViewModel.patchUserData(
                           //         profileViewModel.getProfileBody) ==
                           //     true) {
+                          debugPrint('selected Services ${profileViewModel.selectedServices}');
+                          setState(() {
+                            _isLoading=true;
+
+                          });
+                          if(await profileViewModel.patchProfileServices()==true){
+
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => simpleAlert(
+                                  context,
+                                  translate('button.success'),
+                                ));
+
+
+                          } else {
+
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => simpleAlert(
                                       context,
-                                      translate('button.success'),
+                                      translate('button.failure'),
                                     ));
-                          // } else {
-                          //   showDialog(
-                          //       context: context,
-                          //       builder: (BuildContext context) => simpleAlert(
-                          //             context,
-                          //             translate('button.failure'),
-                          //           ));
-                          // }
+                          }
+                          setState(() {
+                            _isLoading=false;
+
+                          });
                         },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xff4100E3),
@@ -206,7 +222,11 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        child: Text(
+                        child:
+                        _isLoading?
+                        CircularProgressIndicator()
+                            :
+                        Text(
                           'Save',
                           style: getPrimaryBoldStyle(
                             fontSize: 18,

@@ -131,17 +131,18 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
                         if (value != null) {
                           setState(() {
                             int serviceId = servicesInCategory[innerIndex]["id"];
-                            int supplierId = widget.profileViewModel.getProfileBody["id"];
+                            // int supplierId = widget.profileViewModel.getProfileBody["id"];
 
                             if (value) {
                               selectedServices.add(serviceId); // Add to local state
-                              widget.servicesViewModel.addService(categoryIndex, innerIndex, serviceId, supplierId);
+                              // widget.servicesViewModel.addService(categoryIndex, innerIndex, serviceId, supplierId);
                             } else {
                               selectedServices.remove(serviceId); // Remove from local state
-                              widget.servicesViewModel.removeService(categoryIndex, innerIndex, serviceId, supplierId);
+                              // widget.servicesViewModel.removeService(categoryIndex, innerIndex, serviceId, supplierId);
                             }
                           });
-                          await widget.profileViewModel.getProfiledata();
+                          debugPrint('selected Services $selectedServices');
+                          widget.profileViewModel.setSelectedServices(selectedServices);
                         }
                       },
                       title: Text(
@@ -157,7 +158,6 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
                         ),
                       ),
                     )
-
                         : Container(),
                 ],
               );

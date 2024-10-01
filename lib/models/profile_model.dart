@@ -33,7 +33,7 @@ class ProfileModel {
   String? payment_method;
   List<dynamic>? address;
   Map<String, dynamic>? current_address;
-  Map<String, dynamic>? supplier_type;
+  dynamic supplier_type;
   Map<String, dynamic>? service_category;
   List<dynamic>? supplier_categories;
   List<dynamic>? supplier_services;

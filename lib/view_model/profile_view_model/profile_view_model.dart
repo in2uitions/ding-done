@@ -17,6 +17,7 @@ class ProfileViewModel extends DisposableViewModel {
   ApiResponse<UserModel> _apiUserResponse = ApiResponse.loading();
   Map<String, dynamic> profileBody = {};
   Map<String?, String?> verifyPassword = {};
+  List<dynamic>? _selectedServices=List.empty();
 
   Future<void> readJson() async {
 
@@ -39,6 +40,7 @@ class ProfileViewModel extends DisposableViewModel {
       notifyListeners();
       return profileBody;
     } catch (error) {
+      debugPrint('error getting profile $error');
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
       notifyListeners();
     }
@@ -55,6 +57,38 @@ class ProfileViewModel extends DisposableViewModel {
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       // profileBody = _apiProfileResponse.data?.toJson() ?? {};
       await getProfiledata();
+      notifyListeners();
+    } catch (error) {
+      // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
+      notifyListeners();
+    }
+  }
+  Future<bool>? patchProfileServices() async {
+    try {
+      debugPrint('patching Selected services $_selectedServices');
+      dynamic response = await _homeRepository.patchProfileServices(
+        profileBody["id"],
+        {
+          "supplier_services": _selectedServices?.map((serviceId) {
+            return {"services_id": serviceId};
+          }).toList(),
+        },
+      );
+      debugPrint('response ${response}');
+      // profileBody=response;
+      notifyListeners();
+
+      return true;
+    } catch (error) {
+      // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
+      notifyListeners();
+      return false;
+
+    }
+  }
+  Future<void> setSelectedServices(dynamic services) async {
+    try {
+      _selectedServices=services;
       notifyListeners();
     } catch (error) {
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
@@ -282,6 +316,7 @@ class ProfileViewModel extends DisposableViewModel {
   }
 
   get getProfileBody => profileBody;
+  get selectedServices => _selectedServices;
 
   @override
   void disposeValues() {

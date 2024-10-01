@@ -103,6 +103,7 @@ class ServicesRepository {
 
           existingServices
               .removeWhere((element) => element["services_id"] == service_id);
+
           Map<String, dynamic> updatedData = {
             "supplier_services": existingServices,
           };

@@ -123,14 +123,6 @@ class ProfileRepository {
       dynamic response;
       debugPrint('patching daa $body');
       if (Constants.customerRoleId == role) {
-        // // Make a copy of the body to avoid mutating the original data
-        // var cleanedBody = Map<String, dynamic>.from(body);
-        // // Remove the 'token' field from the cleanedBody
-        // removeToken(cleanedBody);
-        // Call the patchResponse method with the cleanedBody
-        // var finalBody = <String, dynamic>{};
-        // finalBody["user"]=cleanedBody["user"];
-        // debugPrint('supplier finalBody body ${finalBody}');
 
         response = await _apiCustomerProfile.patchResponse(
             id: id, data: body, params: '?fields=*.*');
@@ -178,6 +170,23 @@ class ProfileRepository {
       dynamic response;
         response = await _userApi.patchResponse(
             id: id, data: body, params: '?fields=*.*');
+        debugPrint('patch passqw response repo ${response}');
+
+
+      // final jsonData = UserModel.fromJson(response['data']);
+      debugPrint('jsondata repo ${response}');
+
+      return response["data"];
+    } catch (error) {
+      rethrow;
+    }
+  }
+  Future<dynamic> patchProfileServices(dynamic id,dynamic body) async {
+    try {
+
+      dynamic response;
+        response = await _apiSupplierProfile.patchResponse(
+            id: id, data: body);
         debugPrint('patch passqw response repo ${response}');
 
 
