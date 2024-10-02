@@ -82,6 +82,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
       //   debugPrint('translation 1 is ${translation1}');
       if (translation["languages_code"] == lang) {
         services = translation;
+
         break; // Break the loop once the translation is found
       }
 
@@ -133,12 +134,14 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
               ),
       ),
       onTap: () {
-        debugPrint('search filter ${widget.servicesViewModel.searchBody}');
+        debugPrint('search filter ${services?['title']}');
         widget.servicesViewModel.setParentCategoryExistence(true);
         widget.servicesViewModel
             .filterData(index: 'search_services', value: services?["title"]);
-        debugPrint(
-            'search filter ${widget.servicesViewModel.searchBody["search_services"]}');
+        widget.servicesViewModel
+            .setInputValues(index: 'search_services', value: services?["title"]);
+        // debugPrint(
+        //     'search filter ${widget.servicesViewModel.searchBody["search_services"]}');
         widget.servicesViewModel.setParentCategory(services?["title"]);
         categoriesViewModel.sortCategories(services?["title"]);
       },

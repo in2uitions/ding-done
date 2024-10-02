@@ -67,6 +67,8 @@ class _HomePageState extends State<HomePage> {
     String searchText = searchController.text.toLowerCase();
     var categoriesViewModel= Provider.of<CategoriesViewModel>(context, listen: false);
     categoriesViewModel.searchData(index: 'search_services',value:searchText );
+    debugPrint('categories search result ${categoriesViewModel.servicesList2}');
+
     setState(() {
       if (searchText.isEmpty) {
         // Display all services if search text is empty
@@ -811,31 +813,45 @@ class _HomePageState extends State<HomePage> {
                     ),
                     child:ListView.builder(
                       controller: scrollController,
-                      itemCount:
-                      filteredServices.length,
+                      itemCount: filteredServices.length,
                       itemBuilder: (context, index) {
                         var service = filteredServices[index];
 
-                          return Consumer2<JobsViewModel,ProfileViewModel>(
-                              builder: (context, jobsViewModel,profileViewModel, _) {
-                                return CategoriesScreenCards(
-                                  category: service["category"],
-                                  title:
-                                service != null ? service["title"] : '',
-                                  cost:0,
-                                  // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
-                                  image: service["image"]!= null
-                                      ? '${context.resources.image.networkImagePath2}${service["image"]}'
-                                      : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                  onTap: () {
-                                    _handleServiceSelection(service,jobsViewModel,profileViewModel);
-                                  },
-                                );
-                              }
-                          );
+                        // Find the translation where language_code == lang
+                        // var lang = 'ar-SA'; // Replace this with the actual language code you're using
+                        var translation = service['translations'].firstWhere(
+                              (t) => t['languages_code'] == lang,
+                          orElse: () => null,
+                        );
 
+                        // If no translation is found, fallback to default
+                        if (translation == null) {
+                          translation = {
+                            'title': service["xtitle"] ?? '',
+                            'description': service["xdescription"] ?? ''
+                          };
+                        }
+                        debugPrint('translation si $translation');
+
+                        return Consumer2<JobsViewModel, ProfileViewModel>(
+                          builder: (context, jobsViewModel, profileViewModel, _) {
+                            return CategoriesScreenCards(
+                              category: service["category"],
+                              title: translation != null ? translation["title"] : '',
+                              cost: 0,
+                              // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
+                              image: service["image"] != null
+                                  ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                              onTap: () {
+                                _handleServiceSelection(service, jobsViewModel, profileViewModel);
+                              },
+                            );
+                          },
+                        );
                       },
-                    ),
+                    )
+
                     // child: ListView.builder(
                     //   controller: scrollController,
                     //   itemCount: filteredServices.length,

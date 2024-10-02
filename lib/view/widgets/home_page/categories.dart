@@ -105,8 +105,11 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
     Map<String, dynamic>? parentServices;
     for (Map<String, dynamic> translation in service["translations"]) {
       // for (Map<String, dynamic> translation1 in translation["categories_id"]["translations"]) {
-        if (translation["languages_code"] == lang) {
-          services = translation;
+
+      if (translation["languages_code"] == lang) {
+        debugPrint('transssb usg ${translation}');
+
+        services = translation;
           // categoriesViewModel.sortCategories(widget.servicesViewModel.searchBody["search_services"]);
           break; // Break the loop once the translation is found
         }
@@ -119,6 +122,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         break; // Break the loop once the translation is found
       }
     }
+    debugPrint('efhiew ${widget.servicesViewModel.searchBody["search_services"]}');
 
     return widget.servicesViewModel.searchBody["search_services"]
         .toString()

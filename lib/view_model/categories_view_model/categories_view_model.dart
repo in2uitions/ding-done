@@ -199,9 +199,9 @@ class CategoriesViewModel with ChangeNotifier {
       Map<String, dynamic>? parentServices;
       for (Map<String, dynamic> translation in element["translations"]) {
           if (translation["languages_code"] == lang) {
-            firstTranslationDescription = translation["description"];
-            firstTranslationTitle = translation["title"];
-            firstTranslationCategoryTitle = translation["title"];
+            firstTranslationDescription = translation["description"].toString();
+            firstTranslationTitle = translation["title"].toString();
+            firstTranslationCategoryTitle = translation["title"].toString();
             break; // Break the loop once the translation is found
           }
       }
@@ -209,7 +209,7 @@ class CategoriesViewModel with ChangeNotifier {
       for (Map<String, dynamic> translation
       in element["category"]["translations"]) {
         if (translation["languages_code"] == lang) {
-          firstTranslationCategoryTitle = translation["title"];
+          firstTranslationCategoryTitle = translation["title"].toString();
           break; // Break the loop once the translation is found
         }
       }
