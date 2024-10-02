@@ -2,6 +2,9 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:map_location_picker/map_location_picker.dart';
+
+import '../../map_screen/google_maps.dart';
 
 class AddressWidget extends StatefulWidget {
   var address;
@@ -22,11 +25,6 @@ class _AddressWidgetState extends State<AddressWidget> {
       ),
       child: SizedBox(
         width: context.appValues.appSizePercent.w90,
-        // height: context.appValues.appSizePercent.h10,
-        // decoration: BoxDecoration(
-        //   borderRadius: BorderRadius.circular(15),
-        //   color: Colors.white,
-        // ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -46,15 +44,34 @@ class _AddressWidgetState extends State<AddressWidget> {
                 ),
               ),
             ),
-            SizedBox(
-              width: context.appValues.appSizePercent.w100,
-              child: Text(
-                '${widget.address}',
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: getPrimaryRegularStyle(
-                  fontSize: 18,
-                  color: const Color(0xff78789D),
+            InkWell(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return MapLocationPicker(
+                        apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                        popOnNextButtonTaped: true,
+                        currentLatLng: LatLng(
+                            widget.address['latitude'],widget.address['longitude']
+                        ),
+
+                      );
+                    },
+                  ),
+                );
+              },
+              child: SizedBox(
+                width: context.appValues.appSizePercent.w100,
+                child: Text(
+                  '${widget.address['city'] != null ? widget.address['city'] : ''}, ${widget.address['street_name'] != null ? widget.address['street_name'] : ''}, ${widget.address['state'] != null ? widget.address['state'] : ''}',
+                  maxLines: 3,
+                  overflow: TextOverflow.ellipsis,
+                  style: getPrimaryRegularStyle(
+                    fontSize: 18,
+                    color: const Color(0xff78789D),
+                  ),
                 ),
               ),
             ),

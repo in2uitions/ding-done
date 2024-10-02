@@ -71,7 +71,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                 ),
                 const Gap(10),
                 widget.userRole == Constants.supplierRoleId
-                    ? widget.fromWhere == 'completed'
+                    ? widget.fromWhere == translate('jobs.completed')
                         ? Text(
                             '${widget.completed_units}',
                             style: getPrimaryRegularStyle(
@@ -132,7 +132,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                 ),
                 const Gap(10),
                 widget.userRole == Constants.supplierRoleId
-                    ? widget.fromWhere == 'completed'
+                    ? widget.fromWhere == translate('jobs.completed')
                         ? Text(
                             '${widget.number_of_units}',
                             style: getPrimaryRegularStyle(
@@ -193,7 +193,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                 ),
                 const Gap(10),
                 widget.userRole == Constants.supplierRoleId
-                    ? widget.fromWhere == 'completed'
+                    ? widget.fromWhere == translate('jobs.completed')
                         ? Text(
                             '${widget.extra_fees}',
                             style: getPrimaryRegularStyle(
@@ -254,7 +254,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                 ),
                 const Gap(10),
                 widget.userRole == Constants.supplierRoleId
-                    ? widget.fromWhere == 'completed'
+                    ? widget.fromWhere == translate('jobs.completed')
                         ? Text(
                             '${widget.extra_fees_reason}',
                             style: getPrimaryRegularStyle(

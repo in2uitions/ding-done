@@ -206,7 +206,7 @@ class JobsRepository {
       String? id = await getUserId();
       dynamic response;
         response = await _apiCustomerInvoice.postResponseFile(data: {"user_id": id,"job_id":job_id});
-        debugPrint('response of the downloaded invoice');
+        debugPrint('response of the downloaded invoice $response');
       return response;
     } catch (error) {
       debugPrint('error in downloading invoice $error');

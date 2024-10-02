@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dingdone/models/jobs_model.dart';
 import 'package:dingdone/repository/jobs/jobs_repository.dart';
 import 'package:dingdone/res/app_prefs.dart';
@@ -399,27 +401,27 @@ class JobsViewModel with ChangeNotifier {
     return true;
   }
 
-  Future<bool?> downloadInvoice(int id) async {
+  Future<File>? downloadInvoice(int id) async {
     try {
       dynamic res = await _jobsRepository.downloadInvoice(id);
-      readJson();
-      notifyListeners();
+      // readJson();
+      // notifyListeners();
 
       if (res != null) {
         debugPrint('file downloaded');
         _file = res;
-        return true;
+        return _file;
       } else {
         debugPrint('error in file downloading');
 
-        return false;
+        return _file;
       }
     } catch (error) {
       debugPrint('Error downloading invoice  $error');
-      return false;
+      // return null;
     }
 
-    return true;
+    return File('');
   }
 
   Future<bool?> cancelBooking(int id) async {

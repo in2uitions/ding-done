@@ -82,6 +82,7 @@ dependencies:
   ml_card_scanner: ^0.0.5
   camera: ^0.10.5+9
   map_location_picker: ^1.2.6
+  syncfusion_flutter_pdfviewer: ^22.2.12
 
 flutter_launcher_icons:
   android: "launcher_icon"

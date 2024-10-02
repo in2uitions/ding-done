@@ -100,7 +100,8 @@
     "changeOfPlans": "Αλλαγή Σχεδίων",
     "unexpectedEmergency": "Απρόβλεπτη Έκτακτη Κατάσταση",
     "illnessOrHealthIssues": "Ασθένεια ή Υγειονομικά Θέματα",
-    "other": "Άλλο"
+    "other": "Άλλο",
+    "cost": "κόστος"
   },
   "inbox": {
     "inbox": "Εισερχόμενα"

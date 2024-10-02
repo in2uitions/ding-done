@@ -32,8 +32,9 @@ class UpdateJobRequestCustomer extends StatefulWidget {
 
   var fromWhere;
   var title;
+  var lang;
 
-  UpdateJobRequestCustomer({super.key, required this.data, this.fromWhere, this.title});
+  UpdateJobRequestCustomer({super.key, required this.data,required this.lang, this.fromWhere, this.title});
 
   @override
   State<UpdateJobRequestCustomer> createState() =>
@@ -45,6 +46,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
   bool _isLoading2=false;
   @override
   Widget build(BuildContext context) {
+    debugPrint('widget data ${widget.data.service['translations'][0]['title']}');
     return Scaffold(
       // backgroundColor: const Color(0xffF0F3F8),
       backgroundColor: const Color(0xffFEFEFE),
@@ -175,19 +177,36 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                       padding: EdgeInsets.symmetric(
                         horizontal: context.appValues.appPadding.p0,
                       ),
-                      child:Padding(
-                        padding:
-                        EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
-                        child: Text(
-                          widget.data.service['description'],
-                          style: getPrimaryRegularStyle(
-                            // color: context.resources.color.colorYellow,
-                            color: const Color(0xff180C38),
-                            fontSize: 20,
-                          ),
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          context.appValues.appPadding.p10,
+                          0,
+                          context.appValues.appPadding.p0,
+                          0,
+                        ),
+                        child: Builder(
+                          builder: (context) {
+                            String? description;
+                            for (var translation in widget.data.service['translations']) {
+                              if (translation['languages_code'] == widget.lang) {
+                                description = translation['description'];
+                                break; // Exit loop once the match is found
+                              }
+                            }
+
+                            // Display the description if found, otherwise fallback to default
+                            return Text(
+                              description ?? 'No description available',  // Fallback text if no matching translation is found
+                              style: getPrimaryRegularStyle(
+                                color: const Color(0xff180C38),
+                                fontSize: 20,
+                              ),
+                            );
+                          },
                         ),
                       ),
-                    ),
+                    )
+
                   ],
                 ),
               ):Container(),
@@ -196,7 +215,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                 description: widget.data.job_description, image: widget.data.uploaded_media,),
                       // :Container(),
               widget.fromWhere!=translate('jobs.active') &&  widget.fromWhere!=translate('jobs.completed')?
-              AddressWidget(address: widget.data.address)
+              AddressWidget(address: widget.data.job_address)
               :Container(),
               // widget.fromWhere == translate('jobs.booked')
               //     ? Padding(
@@ -461,7 +480,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 _isLoading2=true;
 
                               });
-                              widget.fromWhere == 'completed'
+                              widget.fromWhere == translate('jobs.completed')
                                   ? await jobsViewModel.downloadInvoice(
                                               widget.data.id) ==
                                           true
@@ -498,7 +517,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                             ),
-                            child: widget.fromWhere == 'completed'
+                            child: widget.fromWhere == translate('jobs.completed')
                                 ? _isLoading2?CircularProgressIndicator():Text(
                                     translate('button.invoice'),
                                     style: getPrimaryBoldStyle(
@@ -547,8 +566,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                 widget.data.id,
                                                 widget.fromWhere),
                                       )
-                                    : widget.fromWhere == 'completed'
-                                        ? (widget.fromWhere == 'completed' &&
+                                    : widget.fromWhere == translate('jobs.completed')
+                                        ? (widget.fromWhere == translate('jobs.completed') &&
                                                 !widget.data.is_paid)
                                             ? showDialog(
                                                 context: context,
@@ -559,7 +578,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                           jobsViewModel,
                                                         ))
                                             : ''
-                                        : widget.fromWhere == 'active'
+                                        : widget.fromWhere == translate('jobs.active')
                                             ?
                                             // widget.data.payment_card!=null?
                                             // showDialog(
@@ -591,7 +610,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 ),
                               ),
                               child:
-                              widget.fromWhere == 'active'
+                              widget.fromWhere == translate('jobs.active')
                                   ? _isLoading?CircularProgressIndicator():Text(
                                       translate('button.finish'),
                                       style: getPrimaryBoldStyle(
@@ -601,11 +620,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                       ),
                                     )
                                   :
-                              widget.fromWhere == 'completed'
+                              widget.fromWhere == translate('jobs.completed')
                                       ?_isLoading?CircularProgressIndicator(): Text(
                                           widget.data.is_paid != null
                                               ? (widget.fromWhere ==
-                                                          'completed' &&
+                                              translate('jobs.completed') &&
                                                       !widget.data.is_paid)
                                                   ? translate('button.payFees')
                                                   : translate('button.paid')
@@ -649,7 +668,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
     String message = '';
     if (tab == 'booked') {
       message = translate('updateJob.provideReasonToCancel');
-    } else if (tab == 'active') {
+    } else if (tab == translate('jobs.active')) {
       message = translate('updateJob.provideReasonToCancelNote');
     }
     List<String> reasons = [
@@ -803,7 +822,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                         }
                       }
                     } else {
-                      if (tab == 'active') {
+                      if (tab == translate('jobs.active')) {
                         if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
                             true) {
                           Navigator.pop(context);

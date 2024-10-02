@@ -96,70 +96,69 @@ class NetworkApiService extends BaseApiService {
     }
     return responseJson;
   }
- @override
-  Future postResponseFile(
-      {required dynamic data,
-      bool sendToken = true,
-      String params = ''}) async {
-    dynamic responseJson;
+  @override
+  Future<File?> postResponseFile({
+    required dynamic data,
+    bool sendToken = true,
+    String params = '',
+  }) async {
     if (sendToken) {
       String tokenValue = await getToken();
-      if (tokenValue != '') {
+      if (tokenValue.isNotEmpty) {
         headers[HttpHeaders.authorizationHeader] = tokenValue;
       }
-      headers[HttpHeaders.authorizationHeader] = await getToken();
     }
     headers[HttpHeaders.contentTypeHeader] = 'application/json';
-    // headers[HttpHeaders.authorizationHeader] =
-    //     'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
-    headers[HttpHeaders.authorizationHeader] = await getToken();
 
     String finalUrl = baseUrl + url;
-    if (params != '') {
+    if (params.isNotEmpty) {
       finalUrl = '$finalUrl$params';
     }
-    debugPrint('final ${finalUrl}');
-    debugPrint('data ${data}');
+
+    debugPrint('Requesting URL: $finalUrl');
+    debugPrint('Request data: $data');
+
     try {
-      final response;
-      response = await http.post(Uri.parse(finalUrl),
-          headers: headers, body: jsonEncode(data));
+      final response = await http.post(
+        Uri.parse(finalUrl),
+        headers: headers,
+        body: jsonEncode(data),
+      );
 
-      // Get file data
-      final fileData = response.bodyBytes;
-      debugPrint('response of the file $fileData');
+      // Handle response status codes
+      if (response.statusCode == 200) {
+        final fileData = response.bodyBytes;
 
-      // Get application documents directory
-      final appDocumentsDirectory = await getApplicationDocumentsDirectory();
-      debugPrint('response of the appDocumentsDirectory ${appDocumentsDirectory.path}/DingDone_Job_${data["job_id"]}.pdf');
+        if (fileData.isNotEmpty) {
+          final appDocumentsDirectory = await getTemporaryDirectory();
+          final filePath =
+              '${appDocumentsDirectory.path}/DingDone_Job_${data["job_id"]}.pdf';
+          final file = File(filePath);
 
-      try {
-        // Create file object in the documents directory
-         final file = File(
-            '${appDocumentsDirectory.path}/DingDone_Job_${data["job_id"]}.pdf');
-        // Write file data
-        await file.writeAsBytes(fileData);
-         debugPrint('file now opening file $file');
-         if (await file.exists()) {
-           debugPrint('File exists: ${file.path}');
-         } else {
-           debugPrint('File does not exist: ${file.path}');
-         }
-        // Open the downloaded file
-         Platform.isIOS?await OpenFile.open(file.path,type: 'application/pdf'):'';
-         // await launch('${file.path}');
+          await file.writeAsBytes(fileData);
+          debugPrint('File saved at: ${file.path} with size: ${file.lengthSync()} bytes');
 
-         return file;
-
-      }catch(error){
-        debugPrint('error opening file $error');
-
+          if (await file.exists()) {
+            return file;
+          } else {
+            debugPrint('File not found after saving');
+            return null;
+          }
+        } else {
+          debugPrint('Downloaded file is empty.');
+          return null;
+        }
+      } else {
+        // Log the status code and error message
+        debugPrint('Failed to download file. Status code: ${response.statusCode}');
+        return null;
       }
     } catch (error) {
-      debugPrint('error  downloading file $error');
-      rethrow;
+      debugPrint('Error while downloading file: $error');
+      return null;
     }
   }
+
 
   @override
   Future patchResponse(

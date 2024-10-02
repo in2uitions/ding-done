@@ -98,7 +98,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                             child: Column(
                               children: [
                                 // Removed by Rim to be added later on Cash on Delivery
-                                (widget.fromWhere == 'completed' &&
+                                (widget.fromWhere == translate('jobs.completed') &&
                                             data != null) ||
                                         (widget.role ==
                                                 Constants.supplierRoleId &&
@@ -149,7 +149,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                           if (widget.role == Constants.customerRoleId) {
                             var card = snapshot.data![index - 1];
 
-                            return widget.fromWhere != 'completed'
+                            return widget.fromWhere != translate('jobs.completed')
                                 ? Dismissible(
                                     key: Key(card['id'].toString()),
                                     direction: DismissDirection.endToStart,

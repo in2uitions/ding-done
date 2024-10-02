@@ -100,7 +100,8 @@
     "changeOfPlans": "Изменение планов",
     "unexpectedEmergency": "Неожиданный экстренный случай",
     "illnessOrHealthIssues": "Болезнь или проблемы со здоровьем",
-    "other": "Другое"
+    "other": "Другое",
+    "cost": "расходы"
   },
   "inbox": {
     "inbox": "Входящие"

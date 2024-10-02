@@ -24,6 +24,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 import '../widgets/update_job_request_customer/actual_end_time_widget.dart';
 
@@ -31,11 +32,13 @@ class JobDetailsSupplier extends StatefulWidget {
   var data;
   var fromWhere;
   var title;
+  var lang;
 
   JobDetailsSupplier(
       {super.key,
       required this.data,
       required this.fromWhere,
+      required this.lang,
       required this.title});
 
   @override
@@ -45,10 +48,21 @@ class JobDetailsSupplier extends StatefulWidget {
 class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
   bool _isLoading = false;
   bool _isLoading2 = false;
+  final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // _pdfViewerKey.currentState?.openBookmarkView();
+
+  }
   @override
   Widget build(BuildContext context) {
     debugPrint('job type ${widget.data.job_type}');
+
+
+
     return Scaffold(
       // backgroundColor: const Color(0xffF0F3F8),
       backgroundColor: const Color(0xffFEFEFE),
@@ -248,13 +262,25 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                 context.appValues.appPadding.p0,
                                 0,
                               ),
-                              child: Text(
-                                widget.data.service['description'],
-                                style: getPrimaryRegularStyle(
-                                  // color: context.resources.color.colorYellow,
-                                  color: const Color(0xff38385E),
-                                  fontSize: 20,
-                                ),
+                              child: Builder(
+                                builder: (context) {
+                                  String? description;
+                                  for (var translation in widget.data.service['translations']) {
+                                    if (translation['languages_code'] == widget.lang) {
+                                      description = translation['description'];
+                                      break; // Exit loop once the match is found
+                                    }
+                                  }
+
+                                  // Display the description if found, otherwise fallback to default
+                                  return Text(
+                                    description ?? 'No description available',  // Fallback text if no matching translation is found
+                                    style: getPrimaryRegularStyle(
+                                      color: const Color(0xff180C38),
+                                      fontSize: 20,
+                                    ),
+                                  );
+                                },
                               ),
                             ),
                           ),
@@ -267,7 +293,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                   image: widget.data.uploaded_media,
                   description: widget.data.job_description),
               // const Gap(20),
-              AddressWidget(address: widget.data.address),
+              AddressWidget(address: widget.data.job_address),
 
               widget.fromWhere != 'request' &&
                       widget.fromWhere != translate('jobs.booked')
@@ -424,7 +450,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                 vertical: context.appValues.appPadding.p10),
                             child: Text(
                               // translate('home_screen.totalPrice'),
-                              "Cost",
+                              translate('jobs.cost'),
                               style: getPrimaryBoldStyle(
                                 fontSize: 20,
                                 color: const Color(0xff38385E),
@@ -499,7 +525,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        widget.fromWhere == 'active'
+                        widget.fromWhere == translate('jobs.active')
                             ? SizedBox(
                                 width: context.appValues.appSizePercent.w45,
                                 height: context.appValues.appSizePercent.h7,
@@ -613,6 +639,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                           child: ElevatedButton(
                             onPressed: () async {
                               debugPrint('wefjweoifj ${widget.fromWhere}');
+
                               setState(() {
                                 _isLoading = true;
                               });
@@ -634,7 +661,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                   context,
                                                   translate('button.failure'),
                                                   '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
-                                  : widget.fromWhere == 'active'
+                                  : widget.fromWhere == translate('jobs.active')
                                       ? showDialog(
                                           context: context,
                                           builder: (BuildContext context) =>
@@ -652,46 +679,44 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                           translate('button.success'),
                                                           translate('jobDetails.jobStarted')))
                                               : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
-                                          : widget.fromWhere == 'completed'
-                                              ? await jobsViewModel.downloadInvoice(widget.data.id) == true
-                                                  ? Platform.isAndroid
-                                                      ? await Navigator.push(
-                                                          context,
-                                                          MaterialPageRoute(
-                                                            builder:
-                                                                (context) =>
-                                                                    PDFView(
-                                                              filePath:
-                                                                  jobsViewModel
-                                                                      .file
-                                                                      .path,
-                                                              enableSwipe: true,
-                                                              swipeHorizontal:
-                                                                  true,
-                                                              autoSpacing:
-                                                                  false,
-                                                              pageFling: true,
-                                                              pageSnap: true,
-                                                              // defaultPage: currentPage!,
-                                                              fitPolicy:
-                                                                  FitPolicy
-                                                                      .BOTH,
-                                                              preventLinkNavigation:
-                                                                  false,
-                                                            ),
-                                                          ),
-                                                        )
-                                                      : showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext context) => simpleAlert(
-                                                                context,
-                                                                translate(
-                                                                    'button.success'),
-                                                                translate(
-                                                                    'button.success'),
-                                                              ))
-                                                  : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
-                                              : '';
+                                          : widget.fromWhere == translate('jobs.completed')
+                                              ? await Navigator.push(
+                                context,
+                                  MaterialPageRoute(
+                                    builder: (context) => Scaffold(
+                                      appBar: AppBar(
+                                        title: const Text('Invoice'),
+                                      ),
+                                      body: FutureBuilder<File?>(
+                                        future: jobsViewModel.downloadInvoice(widget.data.id), // Assume this returns the file from the download
+                                        builder: (context, snapshot) {
+                                          if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
+                                            final File file = snapshot.data!;
+
+                                            // Check if the file exists and print file path and size
+                                            if (file.existsSync()) {
+                                              debugPrint('File path: ${file.path}');
+                                              debugPrint('File size: ${file.lengthSync()} bytes');
+                                            } else {
+                                              debugPrint('File does not exist at path: ${file.path}');
+                                            }
+
+                                            // Use SfPdfViewer.file() with the valid file path
+                                            return SfPdfViewer.file(file);
+                                          } else if (snapshot.hasError) {
+                                            return Center(child: Text('Error loading PDF: ${snapshot.error}'));
+                                          } else {
+                                            return Center(child: CircularProgressIndicator());
+                                          }
+                                        },
+                                      ),
+                                    ),
+
+                                  )
+
+                              )
+                              :showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
+                                              ;
                               setState(() {
                                 _isLoading = false;
                               });
@@ -708,12 +733,12 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                 : Text(
                                     widget.fromWhere == 'request'
                                         ? translate('button.accept')
-                                        : widget.fromWhere == 'active'
+                                        : widget.fromWhere == translate('jobs.active')
                                             ? translate('button.finish')
                                             : widget.fromWhere == 'booked'
                                                 ? translate('button.start')
                                                 : widget.fromWhere ==
-                                                        'completed'
+                                                        translate('jobs.completed')
                                                     ? translate(
                                                         'button.invoice')
                                                     : '',

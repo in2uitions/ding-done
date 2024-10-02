@@ -111,19 +111,21 @@ class _JobsCardsState extends State<JobsCards> {
                                 ? translate('jobs.completed')
                                 : translate('jobs.booked'),
                         title: services?["title"].toString(),
+                  lang:widget.lang,
                       )))
                     : Navigator.of(context)
                         .push(_createRoute(UpdateJobRequestCustomer(
                         data: data[index],
                         title:
-                            '${data[index].service != null ? data[index].service['title'] : services!["title"]}',
+                        services?["title"].toString(),
                         fromWhere: widget.active == 'activeJobs'
-                            ? 'active'
+                            ? translate('jobs.active')
                             : widget.active == 'completedJobs'
                                 ? translate('jobs.completed')
                                 : widget.active == 'requestedJobs'
                                     ? translate('jobs.requestedJobs')
                                     : translate('jobs.booked'),
+                  lang:widget.lang,
                       )));
               },
               child: Padding(
@@ -204,8 +206,8 @@ class _JobsCardsState extends State<JobsCards> {
                                     child: Text(
                                       widget.userRole ==
                                               Constants.supplierRoleId
-                                          ? '${data[index].service != null ? services != null ? services["title"] : services : data[index].service}'
-                                          : '${data[index].service != null ? data[index].service['title'] : services!["title"]}',
+                                          ? '${services?['title']}'
+                                          : '${services!["title"]}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: getPrimaryRegularStyle(
@@ -383,14 +385,14 @@ class _JobsCardsState extends State<JobsCards> {
                                       // const Gap(30),
                                       Expanded(
                                         child: Align(
-                                          alignment: Alignment.centerRight,
+                                          alignment: Alignment.centerLeft,
                                           child: Text(
-                                            data[index].address != null &&
+                                            data[index].job_address != null &&
                                                     data[index]
-                                                            .address
+                                                            .job_address
                                                             .toString() !=
                                                         ''
-                                                ? '${data[index].address}'
+                                                ? '${data[index].job_address['city'] !=null?data[index].job_address['city']:'' }, ${data[index].job_address['state'] !=null? data[index].job_address['state'] :''}, ${data[index].job_address['street_number']!=null?data[index].job_address['street_number']:''}'
                                                 : '',
                                             style: getPrimaryRegularStyle(
                                               fontSize: 15,
@@ -410,35 +412,6 @@ class _JobsCardsState extends State<JobsCards> {
 
                           const Gap(20),
 
-                          // widget.userRole == Constants.supplierRoleId
-                          //     ? widget.active == 'bookedJobs'
-                          //         ? Padding(
-                          //             padding: EdgeInsets.only(
-                          //                 right:
-                          //                     context.appValues.appPadding.p8),
-                          //             child: Row(
-                          //                 mainAxisAlignment:
-                          //                     MainAxisAlignment.spaceBetween,
-                          //                 children: [
-                          //                   Text(
-                          //                     translate('jobs.estimatedTime'),
-                          //                     style: getPrimaryRegularStyle(
-                          //                         fontSize: 18,
-                          //                         color: context.resources.color
-                          //                             .secondColorBlue),
-                          //                   ),
-                          //                   Text(
-                          //                     '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
-                          //                     style: getPrimaryRegularStyle(
-                          //                         fontSize: 15,
-                          //                         color: context.resources.color
-                          //                             .btnColorBlue),
-                          //                   ),
-                          //                 ]),
-                          //           )
-                          //         : Container()
-                          //     : Container(),
-
                           widget.userRole == Constants.supplierRoleId
                               ? widget.active == 'bookedJobs'
                                   ? Padding(
@@ -449,14 +422,6 @@ class _JobsCardsState extends State<JobsCards> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            // Text(
-                                            //   translate(
-                                            //       'jobs.estimatedDistance'),
-                                            //   style: getPrimaryRegularStyle(
-                                            //       fontSize: 18,
-                                            //       color: context.resources.color
-                                            //           .secondColorBlue),
-                                            // ),
                                             Text(
                                               '${(data[index].supplier_to_job_distance != null ? (data[index].supplier_to_job_distance / 1000).toStringAsFixed(3) : "0")} km',
                                               style: getPrimaryBoldStyle(
@@ -479,13 +444,7 @@ class _JobsCardsState extends State<JobsCards> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            // Text(
-                                            //   translate('jobs.estimatedTime'),
-                                            //   style: getPrimaryRegularStyle(
-                                            //       fontSize: 18,
-                                            //       color: context.resources.color
-                                            //           .secondColorBlue),
-                                            // ),
+
                                             Text(
                                               '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
                                               style: getPrimaryBoldStyle(
@@ -539,13 +498,7 @@ class _JobsCardsState extends State<JobsCards> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                // Text(
-                                //   translate('jobs.totalPrice'),
-                                //   style: getPrimaryRegularStyle(
-                                //       fontSize: 18,
-                                //       color: context
-                                //           .resources.color.secondColorBlue),
-                                // ),
+
                                 Text(
                                   // '',
                                   data[index].total_amount != null &&

@@ -48,7 +48,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.fromWhere != 'completed'
+                widget.fromWhere != translate('jobs.completed')
                     ? Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: context.appValues.appPadding.p20,
@@ -73,7 +73,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                   payment_card: widget.payment_card,
                   role: widget.role,
                 ),
-                widget.fromWhere != 'completed'
+                widget.fromWhere != translate('jobs.completed')
                     ? Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: context.appValues.appPadding.p20,

@@ -59,7 +59,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                   ),
                 ),
               ),
-              widget.tab == 'completed' || widget.tab == 'booked'
+              widget.tab == translate('jobs.completed') || widget.tab == 'booked'
                   ? Text(
                       '${widget.job_type}',
                       style: getPrimaryRegularStyle(
