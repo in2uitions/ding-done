@@ -100,7 +100,8 @@
     "changeOfPlans": "Change of Plans",
     "unexpectedEmergency": "Unexpected Emergency",
     "illnessOrHealthIssues": "Illness or Health Issues",
-    "other": "Other"
+    "other": "Other",
+    "cost": "Cost"
   },
   "inbox": {
     "inbox": "Inbox"

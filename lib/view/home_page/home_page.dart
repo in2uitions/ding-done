@@ -447,7 +447,7 @@ class _HomePageState extends State<HomePage> {
                                         profileViewModel
                                                     .getProfileBody["user"] !=
                                                 null
-                                            ? 'Hi ${profileViewModel.getProfileBody["user"]["first_name"]}!'
+                                            ? '${translate('home_screen.Hi')} ${profileViewModel.getProfileBody["user"]["first_name"]}!'
                                             : '',
                                         style: getPrimaryBoldStyle(
                                           color: context

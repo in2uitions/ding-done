@@ -25,6 +25,7 @@ class ApiEndPoints {
   final String supplierIgnoreJob = '/suppliers/ignoreJob';
   final String supplierAcceptJob = '/suppliers/bookJob';
   final String supplierChangeLocation = '/suppliers/myLocation';
+  final String customerChangeLocation = '/customers/myLocation';
   final String updateJob = '/suppliers/updateJob';
   final String updateJobCustomer = '/customers/updateJob';
   final String supplierCancelBooking = '/suppliers/cancelBooking';
@@ -38,4 +39,5 @@ class ApiEndPoints {
   final String downloadInvoice = '/invoices/downloadInvoice';
   // final String apiSendReset = '/email/reset-test';
   final String apiSendReset = '/email/reset-email';
+  final String notifications = '/i18/notifications';
 }

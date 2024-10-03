@@ -95,38 +95,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Gap(60),
-                // ListTile(
-                //   title: Row(
-                //     children: [
-                //       SvgPicture.asset(
-                //         'assets/img/account.svg',
-                //       ),
-                //       const Gap(10),
-                //       Text(
-                //         'My Account',
-                //         style: getPrimaryRegularStyle(
-                //           fontSize: 20,
-                //           color: const Color(0xff1F1F39),
-                //         ),
-                //       ),
-                //     ],
-                //   ),
-                //   onTap: () {
-                //     Navigator.of(context)
-                //         .push(_createRoute(const EditAccount()));
-                //   },
-                // ),
-                // Padding(
-                //   padding: EdgeInsets.only(
-                //     left: context.appValues.appPadding.p15,
-                //     right: context.appValues.appPadding.p15,
-                //   ),
-                //   child: const Divider(
-                //     height: 25,
-                //     thickness: 2,
-                //     color: Color(0xffEAEAFF),
-                //   ),
-                // ),
+
                 ListTile(
                   title: Row(
                     children: [

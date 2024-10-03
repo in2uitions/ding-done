@@ -15,6 +15,7 @@ class ButtonConfirmPaymentMethod extends StatelessWidget {
   var jobsViewModel;
   var payment_method;
   var last_digits;
+  var nickname;
 
   ButtonConfirmPaymentMethod(
       {required this.action,
@@ -25,6 +26,7 @@ class ButtonConfirmPaymentMethod extends StatelessWidget {
       required this.data,
       required this.jobsViewModel,
       required this.last_digits,
+      this.nickname,
       required this.payment_method});
 
   void handleTap() {
@@ -80,6 +82,14 @@ class ButtonConfirmPaymentMethod extends StatelessWidget {
                           color: const Color(0xff190C39),
                         ),
                       ),
+                      nickname!=null && nickname!='null'?
+                      Text(
+                        nickname,
+                        style: getPrimaryRegularStyle(
+                          fontSize: 13,
+                          color: const Color(0xff190C39),
+                        ),
+                      ):Container(),
                       Text(
                         last_digits ?? '',
                         style: getPrimaryRegularStyle(

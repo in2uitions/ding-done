@@ -327,7 +327,7 @@ class _BottomBarState extends State<BottomBar> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SvgPicture.asset(
-                              'assets/img/chat-new.svg',
+                              'assets/img/bell2.svg',
                               fit: BoxFit.contain,
                               height: context.appValues.appSizePercent.h3,
                               color: currentTab == 2

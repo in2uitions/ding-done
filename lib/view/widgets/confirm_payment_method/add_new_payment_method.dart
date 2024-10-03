@@ -6,10 +6,11 @@ import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:ml_card_scanner/ml_card_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:card_scanner/card_scanner.dart';
 
+import '../../../res/app_validation.dart';
 import '../../../res/fonts/styles_manager.dart';
 
 class AddNewPaymentMethodWidget extends StatefulWidget {
@@ -23,37 +24,12 @@ class AddNewPaymentMethodWidget extends StatefulWidget {
 }
 
 class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
-  CardInfo? _cardInfo;
-  final ScannerWidgetController _controller = ScannerWidgetController();
+  var card = ScannedCardModel();
+  // final ScannerWidgetController _controller = ScannerWidgetController();
 
   @override
   void initState() {
     super.initState();
-    _controller
-      ..setCardListener(_onListenCard)
-      ..setErrorListener(_onError);
-  }
-
-  @override
-  void dispose() {
-    _controller
-      ..removeCardListeners(_onListenCard)
-      ..removeErrorListener(_onError)
-      ..dispose();
-    super.dispose();
-  }
-
-  void _onListenCard(CardInfo? value) {
-    if (value != null) {
-      debugPrint('popping');
-      Navigator.of(context).pop(value);
-    }
-  }
-
-  void _onError(ScannerException exception) {
-    if (kDebugMode) {
-      print('Error: ${exception.message}');
-    }
   }
 
   @override
@@ -63,9 +39,13 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
         onTap: () async {
           await _scanCard();
           paymentViewModel.setInputValues(
-              index: 'brand', value: _cardInfo?.type);
+              index: 'nickname', value: card?.cardholder);
           paymentViewModel.setInputValues(
-              index: 'card-number', value: _cardInfo?.number);
+              index: 'card-number', value: card?.number);
+          paymentViewModel.setInputValues(
+              index: 'expiry_month', value: card?.expiry.split('/').first);
+          paymentViewModel.setInputValues(
+              index: 'expiry_year', value: card?.expiry.split('/').last);
           // Future.delayed(const Duration(seconds: 0), () =>
           //     Navigator.pop(context));
           Future.delayed(
@@ -86,22 +66,26 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Text(
-                    'Scan here',
-                    style: getPrimaryRegularStyle(
-                      color: context.resources.color.btnColorBlue,
-                      fontSize: 15,
-                    ),
-                  ),
+                  // Text(
+                  //   'Scan here',
+                  //   style: getPrimaryRegularStyle(
+                  //     color: context.resources.color.btnColorBlue,
+                  //     fontSize: 15,
+                  //   ),
+                  // ),
                   Container(
                     height: context.appValues.appSizePercent.h5,
                     child: IconButton(
                       onPressed: () async {
                         await _scanCard();
                         paymentViewModel.setInputValues(
-                            index: 'brand', value: _cardInfo?.type);
+                            index: 'nickname', value: card?.cardholder);
                         paymentViewModel.setInputValues(
-                            index: 'card-number', value: _cardInfo?.number);
+                            index: 'card-number', value: card?.number);
+                        paymentViewModel.setInputValues(
+                            index: 'expiry_month', value: card?.expiry.split('/').first);
+                        paymentViewModel.setInputValues(
+                            index: 'expiry_year', value: card?.expiry.split('/').last);
                         // Future.delayed(const Duration(seconds: 0), () =>
                         //     Navigator.pop(context));
                         Future.delayed(const Duration(seconds: 0),
@@ -115,21 +99,14 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                                     role: Constants.customerRoleId))));
                       },
                       icon: Icon(
-                        Icons.scanner,
+                        Icons.qr_code_scanner,
                         color: context.resources.color.btnColorBlue,
                       ),
                     ),
                   ),
                 ],
               ),
-              CustomTextField(
-                index: 'brand',
-                value: paymentViewModel.getPaymentBody['brand'] ?? '',
-                viewModel: paymentViewModel.setInputValues,
-                hintText: translate('paymentMethod.cardName'),
-                keyboardType: TextInputType.text,
-              ),
-              SizedBox(height: context.appValues.appSize.s15),
+
               CustomTextField(
                 index: 'card-number',
                 value: paymentViewModel.getPaymentBody['card-number'] ?? '',
@@ -151,6 +128,9 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                         width: context.appValues.appSizePercent.w28,
                         child: CustomTextField(
                           index: 'expiry_year',
+                          value: paymentViewModel.getPaymentBody['expiry_year'] ?? '',
+                          validator:  AppValidation().cardNumberValidator,
+
                           viewModel: paymentViewModel.setInputValues,
                           hintText: translate('paymentMethod.expiryYear'),
                           // hintText: translate('paymentMethod.expiryYear'),
@@ -178,6 +158,8 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                         width: context.appValues.appSizePercent.w28,
                         child: CustomTextField(
                           index: 'expiry_month',
+                          value: paymentViewModel.getPaymentBody['expiry_month'] ?? '',
+                          validator:  AppValidation().cardNumberValidator,
                           viewModel: paymentViewModel.setInputValues,
                           hintText: translate('paymentMethod.expiryMonth'),
                           keyboardType: TextInputType.text,
@@ -222,65 +204,86 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                   ),
                 ],
               ),
+              CustomTextField(
+                index: 'nickname',
+                value: paymentViewModel.getPaymentBody['nickname'] ?? '',
+                viewModel: paymentViewModel.setInputValues,
+                hintText: translate('paymentMethod.cardName'),
+                keyboardType: TextInputType.text,
+              ),
             ],
           ),
         ),
       );
     });
   }
-
   Future<void> _scanCard() async {
-    // Request camera permission
-    var status = await Permission.camera.request();
-    debugPrint(
-        'Permission status: $status'); // Check the permission status in logs
-
-    if (status.isGranted) {
-      // If granted, proceed with scanning
-      setState(() {
-        _cardInfo = null;
-      });
-      final result = await Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (context) {
-            return Scaffold(
-              appBar: AppBar(
-                leading: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context); // Navigate back when back button is pressed
-                  },
-                ),
-                title: Text("Scan Your Card"),
-              ),
-              body: Stack(
-                children: [
-                  ScannerWidget(
-                    controller: _controller,
-                    overlayOrientation: CardOrientation.landscape,
-                    // cameraResolution: CameraResolution.high,
-                    oneShotScanning: true,
-                  ),
-                ],
-              ),
-            );
-          },
-        ),
-      ) as CardInfo?;
-      if (result != null) {
-        setState(() {
-          _cardInfo = result;
-        });
-      }
-    } else if (status.isDenied) {
-      // If denied, explain the importance of permission
-      _showPermissionDialog("Camera permission is required to scan cards.");
-    } else if (status.isPermanentlyDenied) {
-      // If permanently denied, guide the user to settings
-      _showPermissionDialog(
-          "Camera permission is permanently denied. Please go to settings to enable the camera.");
+    const scanOptions = ScanOptions(scanCardHolderName: true);
+    try {
+      final receivedCard = await CardScanner.scanCard(scanOptions: scanOptions);
+      if (receivedCard == null) return;
+      if (!mounted) return;
+      card = receivedCard;
+      debugPrint('card $card');
+      setState(() {});
+    } catch (e) {
+      debugPrint(e.toString());
     }
   }
+
+  // Future<void> _scanCard() async {
+  //   // Request camera permission
+  //   var status = await Permission.camera.request();
+  //   debugPrint(
+  //       'Permission status: $status'); // Check the permission status in logs
+  //
+  //   if (status.isGranted) {
+  //
+  //     // If granted, proceed with scanning
+  //     setState(() {
+  //       _cardInfo = null;
+  //     });
+  //     final result = await Navigator.of(context).push(
+  //       MaterialPageRoute(
+  //         builder: (context) {
+  //           return Scaffold(
+  //             appBar: AppBar(
+  //               leading: IconButton(
+  //                 icon: Icon(Icons.arrow_back),
+  //                 onPressed: () {
+  //                   Navigator.pop(context); // Navigate back when back button is pressed
+  //                 },
+  //               ),
+  //               title: Text("Scan Your Card"),
+  //             ),
+  //             body: Stack(
+  //               children: [
+  //                 ScannerWidget(
+  //                   controller: _controller,
+  //                   overlayOrientation: CardOrientation.landscape,
+  //                   // cameraResolution: CameraResolution.high,
+  //                   oneShotScanning: true,
+  //                 ),
+  //               ],
+  //             ),
+  //           );
+  //         },
+  //       ),
+  //     ) as CardInfo?;
+  //     if (result != null) {
+  //       setState(() {
+  //         _cardInfo = result;
+  //       });
+  //     }
+  //   } else if (status.isDenied) {
+  //     // If denied, explain the importance of permission
+  //     _showPermissionDialog("Camera permission is required to scan cards.");
+  //   } else if (status.isPermanentlyDenied) {
+  //     // If permanently denied, guide the user to settings
+  //     _showPermissionDialog(
+  //         "Camera permission is permanently denied. Please go to settings to enable the camera.");
+  //   }
+  // }
 
   void _showPermissionDialog(String message) {
     showDialog(

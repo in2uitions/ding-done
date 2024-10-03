@@ -145,6 +145,15 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.3.4"
+  card_scanner:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: "5fef7e1"
+      resolved-ref: "5fef7e12bfac7b262687e1488e09c89ac6601da4"
+      url: "https://github.com/yauheniprakapenka/card_scanner.git"
+    source: git
+    version: "0.3.1"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -353,30 +362,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.3+1"
-  firebase_core:
-    dependency: transitive
-    description:
-      name: firebase_core
-      sha256: "53316975310c8af75a96e365f9fccb67d1c544ef0acdbf0d88bbe30eedd1c4f9"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.27.0"
-  firebase_core_platform_interface:
-    dependency: transitive
-    description:
-      name: firebase_core_platform_interface
-      sha256: f7d7180c7f99babd4b4c517754d41a09a4943a0f7a69b65c894ca5c68ba66315
-      url: "https://pub.dev"
-    source: hosted
-    version: "5.2.1"
-  firebase_core_web:
-    dependency: transitive
-    description:
-      name: firebase_core_web
-      sha256: c8e1d59385eee98de63c92f961d2a7062c5d9a65e7f45bdc7f1b0b205aab2492
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.11.5"
   flutter:
     dependency: "direct main"
     description: flutter
@@ -797,22 +782,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.22"
-  google_mlkit_commons:
-    dependency: transitive
-    description:
-      name: google_mlkit_commons
-      sha256: "42173a8ba89f386486cc5b8249e84da4a4b861daa70498373627d985eb418689"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.5.0"
-  google_mlkit_text_recognition:
-    dependency: transitive
-    description:
-      name: google_mlkit_text_recognition
-      sha256: "0f181d8a5aa6fc1b934c3454151eea6465c4e81cab1459e5a4b29aef82184618"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.9.0"
   html:
     dependency: transitive
     description:
@@ -1085,14 +1054,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.5"
-  ml_card_scanner:
-    dependency: "direct main"
-    description:
-      name: ml_card_scanner
-      sha256: e3eacb606afe7096c20d6d1bc81c46e84c8d25fca33eb45c31aa6bd9a48d4b3f
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.5"
   nested:
     dependency: transitive
     description:
@@ -1365,6 +1326,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  shimmer:
+    dependency: "direct main"
+    description:
+      name: shimmer
+      sha256: "5f88c883a22e9f9f299e5ba0e4f7e6054857224976a5d9f839d4ebdc94a14ac9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   signature:
     dependency: transitive
     description:

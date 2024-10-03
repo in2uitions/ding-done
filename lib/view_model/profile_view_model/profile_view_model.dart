@@ -18,6 +18,7 @@ class ProfileViewModel extends DisposableViewModel {
   Map<String, dynamic> profileBody = {};
   Map<String?, String?> verifyPassword = {};
   List<dynamic>? _selectedServices=List.empty();
+  List<dynamic>? _notifications=List.empty();
 
   Future<void> readJson() async {
 
@@ -39,6 +40,24 @@ class ProfileViewModel extends DisposableViewModel {
 
       notifyListeners();
       return profileBody;
+    } catch (error) {
+      debugPrint('error getting profile $error');
+      // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
+      notifyListeners();
+    }
+  }
+
+Future<dynamic> getNotifications() async {
+    //Todo sign up save user
+    try {
+      dynamic response = await _homeRepository.getNotifications();
+      // _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
+      // profileBody = _apiProfileResponse.data?.toJson() ?? {};
+      // debugPrint('PROFILEREE ${profileBody}');
+      _notifications=response;
+      notifyListeners();
+
+      return response;
     } catch (error) {
       debugPrint('error getting profile $error');
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
@@ -104,7 +123,6 @@ class ProfileViewModel extends DisposableViewModel {
           body: {
             "latitude" :latitude,
             "longitude" :longitude,
-            "supplier_id" :getUserId(),
       });
       // _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       // profileBody = _apiProfileResponse.data?.toJson() ?? {};
@@ -317,6 +335,7 @@ class ProfileViewModel extends DisposableViewModel {
 
   get getProfileBody => profileBody;
   get selectedServices => _selectedServices;
+  get notifications => _notifications;
 
   @override
   void disposeValues() {

@@ -72,19 +72,27 @@ class NotificationWidget extends StatelessWidget {
                       children: [
                         Text(
                           title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: getPrimaryBoldStyle(
                             fontSize: 14,
                             color: const Color(0xff1F1F39),
                           ),
+
                         ),
                         const Gap(7),
-                        Text(
-                          message,
-                          style: getPrimaryRegularStyle(
-                            fontSize: 14,
-                            color: const Color(0xff78789D),
+                        SizedBox(
+                          width: context.appValues.appSizePercent.w75,
+                          child: Text(
+                            message,
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: getPrimaryRegularStyle(
+                              fontSize: 14,
+                              color: const Color(0xff78789D),
+                            ),
                           ),
-                        ),
+                        )
                       ],
                     ),
                   ],

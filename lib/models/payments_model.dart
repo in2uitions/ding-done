@@ -44,6 +44,7 @@ class PaymentsModel {
     this.expiry_year,
     this.funding,
     this.last_digits,
+    this.nickname,
   });
 
   int? id;
@@ -55,6 +56,7 @@ class PaymentsModel {
   String? expiry_year;
   String? funding;
   String? last_digits;
+  String? nickname;
 
   factory PaymentsModel.fromJson(Map<String, dynamic> json) => PaymentsModel(
     id: json["id"],
@@ -66,6 +68,7 @@ class PaymentsModel {
     expiry_year: json["expiry_year"],
     funding: json["funding"],
     last_digits: json["last_digits"],
+    nickname: json["nickname"],
 
   );
 
@@ -79,6 +82,7 @@ class PaymentsModel {
     "expiry_year": expiry_year,
     "funding": funding,
     "last_digits": last_digits,
+    "nickname": nickname,
   };
 
   Map<String, dynamic> toCarouselJson() => {
@@ -90,5 +94,6 @@ class PaymentsModel {
     "expiry_year": expiry_year,
     "funding": funding,
     "last_digits": last_digits,
+    "nickname": nickname,
   };
 }

@@ -1,8 +1,12 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/inbox_page/skeleton_notifications.dart';
 import 'package:dingdone/view/widgets/inbox_page/notification_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:provider/provider.dart';
+
+import '../../view_model/profile_view_model/profile_view_model.dart';
 
 class InboxPage extends StatefulWidget {
   const InboxPage({super.key});
@@ -133,22 +137,40 @@ class _InboxPageState extends State<InboxPage> {
                   ),
                   color: Color(0xffFEFEFE),
                 ),
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemCount: 5,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        NotificationWidget(
-                          title: 'Job Cancelled',
-                          message: 'Your job has been cancelled',
-                          time: '1 min',
-                          onTap: () {},
-                        ),
-                      ],
-                    );
-                  },
-                ),
+                child: FutureBuilder(
+                    future: Provider.of<ProfileViewModel>(
+                        context, listen: false)
+                        .getNotifications(),
+                    builder: (context, AsyncSnapshot data) {
+                      if (data.hasData) {
+                        return ListView.builder(
+                          controller: scrollController,
+                          itemCount: data.data.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: [
+                                NotificationWidget(
+                                  title: '${data.data[index]['subject']}',
+                                  message: '${data.data[index]['body']}',
+                                  time: '',
+                                  onTap: () {},
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                      else {
+                        return ListView.builder(
+                          controller: scrollController,
+                          itemCount: 10 , // Show 10 skeletons while loading
+                          itemBuilder: (BuildContext context, int index) {
+                              return const NotificationSkeleton();
+
+                          },
+                        );
+                      }
+                    }),
               );
             },
           ),

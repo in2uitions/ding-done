@@ -48,6 +48,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
     super.initState();
 
     debugPrint('payment card in init ${widget.payment_card}');
+    debugPrint('data ${data}');
     if (widget.payment_card == null) {
       _active = "cash";
     } else {
@@ -116,6 +117,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                                         last_digits: snapshot.data![0]
                                             ['lastDigits'],
                                         payment_method: "Card",
+                                        nickname:"${snapshot.data![0]['nickname']}",
                                       )
                                     : snapshot.data.isNotEmpty
                                         ? Container()
@@ -148,7 +150,6 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                         } else {
                           if (widget.role == Constants.customerRoleId) {
                             var card = snapshot.data![index - 1];
-
                             return widget.fromWhere != translate('jobs.completed')
                                 ? Dismissible(
                                     key: Key(card['id'].toString()),
@@ -157,12 +158,6 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                                       deletePaymentMethod(
                                           card['id'].toString());
 
-                                      // ScaffoldMessenger.of(context).showSnackBar(
-                                      //   SnackBar(
-                                      //     content: Text(
-                                      //         "${card['brand']} removed"),
-                                      //   ),
-                                      // );
                                     },
                                     background: Container(
                                       color: Colors.red,
@@ -175,6 +170,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                                     ),
                                     child: GestureDetector(
                                       onTap: () {
+                                        debugPrint('card is $card');
                                         // Handle tap
                                       },
                                       child: Column(
@@ -193,6 +189,8 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                                             data: card['id'],
                                             last_digits: card['last_digits'],
                                             payment_method: "Card",
+                                            nickname:"${card['nickname']}",
+
                                           ),
                                           SizedBox(
                                               height: context

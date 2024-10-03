@@ -15,8 +15,12 @@ class ProfileRepository {
       NetworkApiService(url: ApiEndPoints().customerProfile);
   final BaseApiService _apiSupplierLocation =
       NetworkApiService(url: ApiEndPoints().supplierChangeLocation);
+  final BaseApiService _apiCustomerLocation =
+      NetworkApiService(url: ApiEndPoints().customerChangeLocation);
   final BaseApiService _userApi =
   NetworkApiService(url: ApiEndPoints().userData);
+  final BaseApiService _apiNotifications =
+  NetworkApiService(url: ApiEndPoints().notifications);
 
   Future<ProfileModel?> getProfileBody() async {
     try {
@@ -42,6 +46,18 @@ class ProfileRepository {
       return jsonData;
     } catch (error) {
       debugPrint('error in fetching profile data ${error}');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> getNotifications() async {
+    try {
+
+      dynamic response = await _apiNotifications.getResponse();
+      debugPrint('response notifications $response');
+      return response['data'];
+    } catch (error) {
+      debugPrint('error in fetching notifications data ${error}');
       rethrow;
     }
   }
@@ -74,15 +90,17 @@ class ProfileRepository {
       {dynamic body}) async {
     try {
       String userId = await getUserId();
-      body["supplier_id"] = userId;
       String role = await getRole();
       dynamic response;
       if (Constants.customerRoleId == role) {
+        body["customer_id"] = userId;
         debugPrint('customer change location ');
-        // response = await _apiCustomerLocation.postResponse(
-        //    data: body);
+        response = await _apiCustomerLocation.postResponse(
+           data: body);
       } else {
         if (Constants.supplierRoleId == role) {
+          body["supplier_id"] = userId;
+
           debugPrint('supplier change location ');
           debugPrint('supplier body ${body}');
           response = await _apiSupplierLocation.postResponse(

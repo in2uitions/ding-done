@@ -38,6 +38,17 @@ class AppValidation {
     return null;
   }
 
+  String? yearAndMonthValidator(String? value) {
+    if (value == null || value.isEmpty) {
+      return 'Please enter your card number';
+    }
+    // Basic card number validation (Luhn algorithm can be added for more accuracy)
+    if (!RegExp(r'^[0-9]{1,2}$').hasMatch(value.replaceAll(' ', ''))) {
+      return 'Please enter a valid card number with a maximum of 2 digits';
+    }
+    return null;
+  }
+
   String? isValidPhoneNumber(String val) {
     // Regular expression for validating phone number (adjust as needed)
     RegExp phoneRegExp = RegExp(r'^\+?[0-9]{6,15}$');
@@ -48,6 +59,7 @@ class AppValidation {
       return "Enter a valid phone number";
     }
   }
+
   String? isValidLoginPassword(String val) {
     // final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     // RegExp passwordRegExp = RegExp(r'^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$');

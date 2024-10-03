@@ -92,6 +92,7 @@ class PaymentViewModel extends DisposableViewModel {
           cvc: '${paymentBody["last_digits"]}',
           expirationMonth: int.parse('${paymentBody["expiry_month"]}'),
           expirationYear: int.parse('${paymentBody["expiry_year"]}'),
+
         ));
         // paymentIntent = await createPaymentIntent('100', 'INR');
         // debugPrint('payment intent $paymentIntent');
@@ -132,6 +133,7 @@ class PaymentViewModel extends DisposableViewModel {
         body["expiry_year"] = response.card.expYear;
         body["funding"] = response.card.funding;
         body["last_digits"] = response.card.last4;
+        body["nickname"] = paymentBody["nickname"];
 
         debugPrint('bodyy $body');
 
