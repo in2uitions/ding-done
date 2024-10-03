@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/widgets/inbox_page/notification_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 
 class InboxPage extends StatefulWidget {
@@ -135,10 +135,17 @@ class _InboxPageState extends State<InboxPage> {
                 ),
                 child: ListView.builder(
                   controller: scrollController,
-                  itemCount: 1,
+                  itemCount: 5,
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
-                      children: [],
+                      children: [
+                        NotificationWidget(
+                          title: 'Job Cancelled',
+                          message: 'Your job has been cancelled',
+                          time: '1 min',
+                          onTap: () {},
+                        ),
+                      ],
                     );
                   },
                 ),
