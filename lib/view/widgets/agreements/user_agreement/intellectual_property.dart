@@ -1,6 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class IntellectualProperty extends StatefulWidget {
   const IntellectualProperty({super.key});
@@ -17,7 +18,7 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '14.	INTELLECTUAL PROPERTY',
+            translate('termsAndConditionsCustomer.intellectualProperty'),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -29,14 +30,14 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
               child: Column(
                 children: [
                   Text(
-                    '1.	The Platform Content is protected by copyright and WeDo reserves all Intellectual Property Rights which may subsist in the Platform Content and/or the Platform.',
+                    translate('termsAndConditionsCustomer.intellectualProperty1'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '2.	By accepting the Terms, you are granted a non-exclusive licence to:',
+                    translate('termsAndConditionsCustomer.intellectualProperty2'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
@@ -49,21 +50,21 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
                     child: Column(
                       children: [
                         Text(
-                          '1.	view the WeDo website and mobile applications;',
+                          translate('termsAndConditionsCustomer.intellectualProperty21'),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          '2.	print pages from the WeDo website or mobile application in its original form; and',
+                          translate('termsAndConditionsCustomer.intellectualProperty22'),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          '3.	download any material from the WeDo website or mobile applications for caching purposes only.',
+                          translate('termsAndConditionsCustomer.intellectualProperty23'),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
@@ -73,7 +74,7 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '3.	You must not, without WeDo’s prior written consent which may be withheld at its absolute discretion:',
+                    translate('termsAndConditionsCustomer.intellectualProperty3'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
@@ -88,21 +89,21 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          '1.	copy, republish, reproduce, duplicate or extract Platform Content;',
+                          translate('termsAndConditionsCustomer.intellectualProperty31'),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          '2.	redistribute, sell, rent or licence any Platform Content; or',
+                          translate('termsAndConditionsCustomer.intellectualProperty32'),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          '3.	edit, modify or vary the Platform Content.',
+                          translate('termsAndConditionsCustomer.intellectualProperty33'),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),

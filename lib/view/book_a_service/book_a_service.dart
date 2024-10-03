@@ -45,20 +45,19 @@ class _BookAServiceState extends State<BookAService> {
       Map<String, dynamic>? services;
       Map<String, dynamic>? categories;
 
-      for (Map<String, dynamic> translation in widget.service["translations"]) {
-        debugPrint('transss ${translation}');
-        if (translation["languages_code"] == widget.lang) {
-          services = translation;
-          break; // Break the loop once the translation is found
+        for (Map<String, dynamic> translation in widget.service["translations"]) {
+          debugPrint('transss ${translation}');
+          if (translation["languages_code"] == widget.lang) {
+            services = translation;
+            break; // Break the loop once the translation is found
+          }
         }
-      }
-      for (Map<String, dynamic> translations in widget.service["category"]
-          ["translations"]) {
-        if (translations["languages_code"] == widget.lang) {
-          categories = translations;
-          break; // Break the loop once the translation is found
+        for (Map<String, dynamic> translations in widget.service["category"]["translations"]) {
+          if (translations["languages_code"] == widget.lang) {
+            categories = translations;
+            break; // Break the loop once the translation is found
+          }
         }
-      }
 
       return Scaffold(
         backgroundColor: const Color(0xffFEFEFE),
@@ -150,14 +149,14 @@ class _BookAServiceState extends State<BookAService> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  '${categories!["title"]}',
+                                  categories!=null?'${categories!["title"]}':'',
                                   style: getPrimaryBoldStyle(
                                     fontSize: 18,
                                     color: context.resources.color.colorWhite,
                                   ),
                                 ),
                                 Text(
-                                  '${services!["title"]}',
+                                  services!=null?'${services!["title"]}':'',
                                   style: getPrimaryBoldStyle(
                                     fontSize: 25,
                                     color: context.resources.color.colorWhite,

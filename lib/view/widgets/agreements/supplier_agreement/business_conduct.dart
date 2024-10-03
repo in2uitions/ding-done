@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class BusinessConductSupp extends StatefulWidget {
   const BusinessConductSupp({super.key});
@@ -17,7 +18,7 @@ class _BusinessConductSuppState extends State<BusinessConductSupp> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          '7. BUSINESS CONDUCT',
+          translate('termsAndConditionsSupplier.businessConduct'),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -29,7 +30,7 @@ class _BusinessConductSuppState extends State<BusinessConductSupp> {
           child: Column(
             children: [
               Text(
-                '7.1. Without limiting any other provision of this Agreement, in connection with Business’s use of the Platform and provision of the Services, Business may not and agrees that it will not:',
+                translate('termsAndConditionsSupplier.businessConduct1'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
@@ -41,35 +42,35 @@ class _BusinessConductSuppState extends State<BusinessConductSupp> {
                 child: Column(
                   children: [
                     Text(
-                      '(a) contact a User for any purpose other than in connection with a Booking;',
+                      translate('termsAndConditionsSupplier.businessConduct1a'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      '(b) impersonate any person or entity, or falsify or otherwise misrepresent itself or its affiliation with any person or entity;',
+                      translate('termsAndConditionsSupplier.businessConduct1b'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      '(c) use the Platform to find a User and then complete a Booking independent of the Platform in order to circumvent the obligation to pay the Booking Fee or any other fees related to WeDo’s provision of the Platform;',
+                      translate('termsAndConditionsSupplier.businessConduct1c'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      '(d) accept direct payment from the User, or attempt to directly charge the user for any services in connection with a Booking;',
+                      translate('termsAndConditionsSupplier.businessConduct1d'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      '(e) without the written consent of WeDo, directly contract to provide services to a User outside of the Platform (and thereby exclude WeDo). Where such a direct relationship is formed without the consent of the Company, the Business agrees to pay to the Company 25% of the Service Fees that would have applied to had those services been undertaken as Bookings.',
+                      translate('termsAndConditionsSupplier.businessConduct1e'),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),

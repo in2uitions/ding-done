@@ -142,28 +142,28 @@ class ServicesViewModel with ChangeNotifier {
 
       for (Map<String, dynamic> translation
           in element.category["translations"]) {
-        for (Map<String,
-            dynamic> translation1 in translation["services_id"]["translations"]) {
-          if (translation1["languages_code"] == lang) {
-            debugPrint('category title1 ${translation1["title"].toString()}');
+        // for (Map<String,
+        //     dynamic> translation1 in translation["services_id"]["translations"]) {
+          if (translation["languages_code"] == lang) {
+            debugPrint('category title1 ${translation["title"].toString()}');
 
-            firstTranslationCategoryTitle = translation1["title"];
+            firstTranslationCategoryTitle = translation["title"];
             break; // Break the loop once the translation is found
           }
-        }
+        // }
       }
       for (Map<String, dynamic> translation
           in element.category["translations"]) {
-        for (Map<String,
-            dynamic> translation1 in translation["services_id"]["translations"]) {
-          if (translation1["languages_code"] == lang) {
+        // for (Map<String,
+        //     dynamic> translation1 in translation["services_id"]["translations"]) {
+          if (translation["languages_code"] == lang) {
             // debugPrint(translation["title"].toString());
 
-            firstTranslationCategoryTitle = translation1["title"];
+            firstTranslationCategoryTitle = translation["title"];
             break; // Break the loop once the translation is found
           }
         }
-      }
+      // }
 
       return firstTranslationDescription
                   .toLowerCase()
@@ -174,10 +174,10 @@ class ServicesViewModel with ChangeNotifier {
               firstTranslationCategoryTitle
                   .toLowerCase()
                   .contains(value.toString().toLowerCase())
-          // ||
-          // firstTranslationClass
-          //     .toLowerCase()
-          //     .contains(value.toString().toLowerCase())
+          ||
+          firstTranslationClass
+              .toLowerCase()
+              .contains(value.toString().toLowerCase())
           ;
     }).toList();
     searchBody[index] = value;

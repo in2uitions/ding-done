@@ -188,6 +188,51 @@ class CategoriesViewModel with ChangeNotifier {
     }
     // notifyListeners();
   }
+  Future<void> searchData({required String index, dynamic value}) async {
+    String? lang = await AppPreferences().get(key: dblang, isModel: false);
+
+    _servicesList2 = _servicesList?.where((element) {
+      String firstTranslationTitle = '';
+      String firstTranslationCategoryTitle = '';
+      String firstTranslationDescription = '';
+      String firstTranslationClass = '';
+      Map<String, dynamic>? parentServices;
+      for (Map<String, dynamic> translation in element["translations"]) {
+          if (translation["languages_code"] == lang) {
+            firstTranslationDescription = translation["description"];
+            firstTranslationTitle = translation["title"];
+            firstTranslationCategoryTitle = translation["title"];
+            break; // Break the loop once the translation is found
+          }
+      }
+
+      for (Map<String, dynamic> translation
+      in element["category"]["translations"]) {
+        if (translation["languages_code"] == lang) {
+          firstTranslationCategoryTitle = translation["title"];
+          break; // Break the loop once the translation is found
+        }
+      }
+      // }
+
+      return firstTranslationDescription
+          .toLowerCase()
+          .contains(value.toString().toLowerCase()) ||
+          firstTranslationTitle
+              .toLowerCase()
+              .contains(value.toString().toLowerCase())||
+          firstTranslationCategoryTitle
+              .toLowerCase()
+              .contains(value.toString().toLowerCase())
+          ||
+          firstTranslationClass
+              .toLowerCase()
+              .contains(value.toString().toLowerCase())
+      ;
+    }).toList();
+
+    notifyListeners();
+  }
 
 // // Define a function to check if a service is yellow
 //   bool _isYellow(DropdownRoleModel service) {

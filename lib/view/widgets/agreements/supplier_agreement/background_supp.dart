@@ -42,28 +42,28 @@ class _BackgroundSupplierState extends State<BackgroundSupplier> {
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.background3'),
+                translate('termsAndConditionsSupplier.background11'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.background4'),
+                translate('termsAndConditionsSupplier.background12'),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
-              // Text(
-              //   '1.3. By accessing or using the Platform, the Business acknowledges that it has read, understood and agree to be bound by this Agreement and the Service Agreement.',
-              //   style: getPrimaryRegularStyle(
-              //       color: context.resources.color.btnColorBlue, fontSize: 15),
-              // ),
-              // SizedBox(height: context.appValues.appSize.s10),
-              // Text(
-              //   '1.4. By accepting a Booking Request and providing the Service, you have read, understood and agree to be bound by the terms of the Service Agreement.',
-              //   style: getPrimaryRegularStyle(
-              //       color: context.resources.color.btnColorBlue, fontSize: 15),
-              // ),
+              Text(
+                translate('termsAndConditionsSupplier.background13'),
+                style: getPrimaryRegularStyle(
+                    color: context.resources.color.btnColorBlue, fontSize: 15),
+              ),
+              SizedBox(height: context.appValues.appSize.s10),
+              Text(
+                translate('termsAndConditionsSupplier.background14'),
+                style: getPrimaryRegularStyle(
+                    color: context.resources.color.btnColorBlue, fontSize: 15),
+              ),
             ],
           ),
         ),

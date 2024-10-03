@@ -1,6 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 
 class GeneralProvisions extends StatefulWidget {
   const GeneralProvisions({super.key});
@@ -17,7 +18,7 @@ class _GeneralProvisionsState extends State<GeneralProvisions> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '18.	GENERAL PROVISIONS',
+            translate('termsAndConditionsCustomer.generalProvisions'),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -29,28 +30,28 @@ class _GeneralProvisionsState extends State<GeneralProvisions> {
               child: Column(
                 children: [
                   Text(
-                    '1.	Any provision of, or the application of any provision of these Terms which is prohibited in any jurisdiction is, in that jurisdiction, ineffective only to the extent of that prohibition.',
+                    translate('termsAndConditionsCustomer.generalProvisions1'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '2.	Any provision of, or the application of any provision of these Terms which is void, illegal or unenforceable in any jurisdiction does not affect the validity, legality or enforceability of that provision in any other jurisdiction or of the remaining provisions in that or any other jurisdiction.',
+                    translate('termsAndConditionsCustomer.generalProvisions2'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '3.	If a clause is void, illegal or unenforceable, it may be severed without affecting the enforceability of the other provisions in these Terms.',
+                    translate('termsAndConditionsCustomer.generalProvisions3'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    '4.	These Terms shall be governed by and construed in accordance with the laws and regulations of the Republic of Cyprus and the Business agrees to submit to the jurisdiction of the Courts of the Republic of Cyprus. ',
+                    translate('termsAndConditionsCustomer.generalProvisions4'),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
