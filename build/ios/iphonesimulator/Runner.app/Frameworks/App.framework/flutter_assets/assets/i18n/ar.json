@@ -142,7 +142,7 @@
     "confirmPaymentMethod": "تأكيد وسيلة الدفع",
     "addPaymentMethod": "إضافة وسيلة دفع جديدة",
     "visaCard": "بطاقة فيزا",
-    "cardName": "اسم البطاقة",
+    "cardName": "اللقب (اختياري)",
     "cardNumber": "رقم البطاقة",
     "expiryYear": "سنة الانتهاء",
     "expiryMonth": "شهر الانتهاء",

@@ -45,6 +45,7 @@ class PaymentsModel {
     this.funding,
     this.last_digits,
     this.nickname,
+    this.card_number,
   });
 
   int? id;
@@ -57,6 +58,7 @@ class PaymentsModel {
   String? funding;
   String? last_digits;
   String? nickname;
+  String? card_number;
 
   factory PaymentsModel.fromJson(Map<String, dynamic> json) => PaymentsModel(
     id: json["id"],
@@ -69,6 +71,7 @@ class PaymentsModel {
     funding: json["funding"],
     last_digits: json["last_digits"],
     nickname: json["nickname"],
+    card_number: json["card_number"],
 
   );
 
@@ -83,6 +86,7 @@ class PaymentsModel {
     "funding": funding,
     "last_digits": last_digits,
     "nickname": nickname,
+    "card_number": card_number,
   };
 
   Map<String, dynamic> toCarouselJson() => {

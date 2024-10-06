@@ -50,6 +50,7 @@ class PaymentViewModel extends DisposableViewModel {
 
   void setInputValues({required String index, dynamic value}) {
     paymentBody[index] = value;
+    debugPrint('payment body ${paymentBody}');
   }
 
 
@@ -83,12 +84,12 @@ class PaymentViewModel extends DisposableViewModel {
     Map<String, dynamic> bodyattach = {};
     String? cardNumberMessage = '';
     cardNumberMessage = AppValidation().cardNumberValidator(
-        paymentBody["card-number"] ?? '' );
+        paymentBody["card_number"] ?? '' );
 
     if (cardNumberMessage == null || cardNumberMessage == '') {
       try {
         await Stripe.instance.dangerouslyUpdateCardDetails(CardDetails(
-          number: '${paymentBody["card-number"]}',
+          number: '${paymentBody["card_number"]}',
           cvc: '${paymentBody["last_digits"]}',
           expirationMonth: int.parse('${paymentBody["expiry_month"]}'),
           expirationYear: int.parse('${paymentBody["expiry_year"]}'),
@@ -134,6 +135,7 @@ class PaymentViewModel extends DisposableViewModel {
         body["funding"] = response.card.funding;
         body["last_digits"] = response.card.last4;
         body["nickname"] = paymentBody["nickname"];
+        body["card_number"] = paymentBody["card_number"];
 
         debugPrint('bodyy $body');
 
@@ -159,7 +161,7 @@ class PaymentViewModel extends DisposableViewModel {
         debugPrint('error in create payment $e');
       }
     }else{
-      paymentError['card-number'] =
+      paymentError['card_number'] =
           cardNumberMessage;
       notifyListeners();
     }

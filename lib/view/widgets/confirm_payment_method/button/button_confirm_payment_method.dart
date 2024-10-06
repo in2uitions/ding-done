@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../view_model/jobs_view_model/jobs_view_model.dart';
 
-class ButtonConfirmPaymentMethod extends StatelessWidget {
+class ButtonConfirmPaymentMethod extends StatefulWidget {
   final ValueChanged<String> action;
   final String text, image, tag;
   final bool active;
@@ -29,15 +29,30 @@ class ButtonConfirmPaymentMethod extends StatelessWidget {
       this.nickname,
       required this.payment_method});
 
-  void handleTap() {
-    action(tag);
-    jobsViewModel.setInputValues(index: 'payment_card', value: data);
-    jobsViewModel.setUpdatedJob(index: 'payment_card', value: data);
-    jobsViewModel.setInputValues(
-        index: 'payment_method', value: payment_method);
-    jobsViewModel.setUpdatedJob(index: 'payment_method', value: payment_method);
-  }
+  @override
+  State<ButtonConfirmPaymentMethod> createState() => _ButtonConfirmPaymentMethodState();
+}
+class _ButtonConfirmPaymentMethodState extends State<ButtonConfirmPaymentMethod> {
 
+  void handleTap() {
+    widget.action(widget.tag);
+    widget.jobsViewModel.setInputValues(index: 'payment_card', value: widget.data);
+    widget.jobsViewModel.setUpdatedJob(index: 'payment_card', value: widget.data);
+    widget.jobsViewModel.setInputValues(
+        index: 'payment_method', value: widget.payment_method);
+    widget.jobsViewModel.setUpdatedJob(index: 'payment_method', value: widget.payment_method);
+  }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    // widget.action(widget.tag);
+    widget.jobsViewModel.setInputValues(index: 'payment_card', value: widget.data);
+    widget.jobsViewModel.setUpdatedJob(index: 'payment_card', value: widget.data);
+    widget.jobsViewModel.setInputValues(
+        index: 'payment_method', value: widget.payment_method);
+    widget.jobsViewModel.setUpdatedJob(index: 'payment_method', value: widget.payment_method);
+  }
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -45,7 +60,7 @@ class ButtonConfirmPaymentMethod extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           border: Border.all(
-            color: active ? const Color(0xff190C39) : const Color(0xffEBF0F9),
+            color: widget.active ? const Color(0xff190C39) : const Color(0xffEBF0F9),
             width: 3,
           ),
           borderRadius: BorderRadius.circular(15),
@@ -70,28 +85,28 @@ class ButtonConfirmPaymentMethod extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SvgPicture.asset(image),
+                  SvgPicture.asset(widget.image),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        text,
+                        widget.text,
                         style: getPrimaryRegularStyle(
                           fontSize: 18,
                           color: const Color(0xff190C39),
                         ),
                       ),
-                      nickname!=null && nickname!='null'?
+                      widget.nickname!=null && widget.nickname!='null'?
                       Text(
-                        nickname,
+                        widget.nickname,
                         style: getPrimaryRegularStyle(
                           fontSize: 13,
                           color: const Color(0xff190C39),
                         ),
                       ):Container(),
                       Text(
-                        last_digits ?? '',
+                        widget.last_digits ?? '',
                         style: getPrimaryRegularStyle(
                           fontSize: 15,
                           color: const Color(0xff190C39),

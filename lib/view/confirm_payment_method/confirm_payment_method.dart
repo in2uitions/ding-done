@@ -26,11 +26,27 @@ class ConfirmPaymentMethod extends StatefulWidget {
       required this.payment_method,
       required this.paymentViewModel,
       required this.role});
+
   @override
   State<ConfirmPaymentMethod> createState() => _ConfirmPaymentMethodState();
 }
 
 class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    widget.paymentViewModel.setInputValues(
+        index: 'nickname', value: '');
+    widget.paymentViewModel.setInputValues(
+        index: 'card_number', value: '');
+    widget.paymentViewModel.setInputValues(
+        index: 'expiry_month', value: '');
+    widget.paymentViewModel.setInputValues(
+        index: 'expiry_year', value: '');
+    widget.paymentViewModel.setInputValues(
+        index: 'last_digits', value: '');
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer3<ProfileViewModel, JobsViewModel, PaymentViewModel>(builder:
@@ -138,18 +154,42 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                         height: context.appValues.appSizePercent.h100,
                         child: ElevatedButton(
                           onPressed: () async {
-                            await widget.paymentViewModel.createPaymentMethod();
-                            await widget.paymentViewModel.getPaymentMethods();
-                            Navigator.of(context).pop();
-                            Future.delayed(
-                                const Duration(seconds: 0),
-                                () => Navigator.of(context)
-                                        .push(_createRoute(ConfirmPaymentMethod(
-                                      payment_method: widget.payment_method,
-                                      paymentViewModel: widget.paymentViewModel,
-                                      role: Constants.customerRoleId,
-                                    ))));
-                          },
+                            dynamic payments = await widget.paymentViewModel
+                                .getPaymentMethods();
+                            debugPrint('widget payment ${payments}');
+                            var found = false;
+                            for (var payment in payments) {
+                              if (payment['card_number'] ==
+                                  widget.paymentViewModel
+                                      .getPaymentBody['card_number']) {
+                                found = true;
+                              }
+                            }
+                            if (!found) {
+                              await widget.paymentViewModel
+                                  .createPaymentMethod();
+                              await widget.paymentViewModel.getPaymentMethods();
+                              Navigator.of(context).pop();
+                              Future.delayed(
+                                  const Duration(seconds: 0),
+                                  () => Navigator.of(context).push(
+                                          _createRoute(ConfirmPaymentMethod(
+                                        payment_method: widget.payment_method,
+                                        paymentViewModel:
+                                            widget.paymentViewModel,
+                                        role: Constants.customerRoleId,
+                                      ))));
+                            } else {
+                              showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      simpleAlert(
+                                          context,
+                                          translate('button.failure'),
+                                          'Card Number is already chosen'));
+                            }
+
+                            },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
                             backgroundColor: const Color(0xff4100E3),
@@ -176,6 +216,52 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
       );
     });
   }
+}
+
+Widget simpleAlert(BuildContext context, String message, String message2) {
+  return AlertDialog(
+    elevation: 15,
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                child: SvgPicture.asset('assets/img/x.svg'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Future.delayed(const Duration(seconds: 0),
+                      () => Navigator.of(context).pop());
+                },
+              ),
+            ],
+          ),
+        ),
+        message == 'Success'
+            ? SvgPicture.asset('assets/img/service-popup-image.svg')
+            : SvgPicture.asset('assets/img/failure.svg'),
+        SizedBox(height: context.appValues.appSize.s40),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p32,
+          ),
+          child: Text(
+            message2,
+            textAlign: TextAlign.center,
+            style: getPrimaryRegularStyle(
+              fontSize: 17,
+              color: context.resources.color.btnColorBlue,
+            ),
+          ),
+        ),
+        SizedBox(height: context.appValues.appSize.s20),
+      ],
+    ),
+  );
 }
 
 Route _createRoute(dynamic classname) {

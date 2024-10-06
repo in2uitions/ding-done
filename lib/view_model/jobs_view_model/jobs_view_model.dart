@@ -514,7 +514,9 @@ class JobsViewModel with ChangeNotifier {
       DateTime twoHoursFromNow = currentDateTime.add(Duration(hours: 2));
 
       // Check if the combinedDateTime is between now and two hours from now
-      if (combinedDateTime.isAfter(currentDateTime) && combinedDateTime.isBefore(twoHoursFromNow)) {
+      if (
+      // combinedDateTime.isAfter(currentDateTime) &&
+      combinedDateTime.isBefore(twoHoursFromNow)) {
         jobsBody['severity_level'] = 'major';
       }else{
         jobsBody['severity_level'] = 'minor';

@@ -67,8 +67,17 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
           debugPrint('filteredPaymentMethods is empty');
         }
       } else {
-        _active = widget.payment_card["id"].toString();
-        data = widget.payment_card;
+        if(widget.payment_method.length==1){
+          widget.payment_card=widget.payment_method[0];
+          setState(() {
+            _active = widget.payment_method[0]["id"].toString();
+            data = widget.payment_method[0];
+          });
+        }else{
+          _active = widget.payment_card["id"].toString();
+          data = widget.payment_card;
+        }
+
       }
     }
   }
@@ -180,9 +189,9 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                                           ButtonConfirmPaymentMethod(
                                             action: active,
                                             tag: "${card['id']}",
-                                            active: _active == "${card['id']}"
+                                            active:snapshot.data.length!=1? _active == "${card['id']}"
                                                 ? true
-                                                : false,
+                                                : false:true,
                                             text: '${card['brand']}',
                                             image: 'assets/img/card-icon.svg',
                                             jobsViewModel: widget.jobsViewModel,

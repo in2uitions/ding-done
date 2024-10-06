@@ -142,7 +142,7 @@
     "confirmPaymentMethod": "Επιβεβαίωση Τρόπου Πληρωμής",
     "addPaymentMethod": "Προσθήκη Νέου Τρόπου Πληρωμής",
     "visaCard": "Κάρτα Visa",
-    "cardName": "όνομα κάρτας",
+    "cardName": "ψευδώνυμο (προαιρετικό)",
     "cardNumber": "Αριθμός Κάρτας",
     "expiryYear": "Έτος Λήξης",
     "expiryMonth": "Μήνας Λήξης",

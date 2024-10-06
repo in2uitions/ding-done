@@ -142,7 +142,7 @@
     "confirmPaymentMethod": "Confirm Payment Method",
     "addPaymentMethod": "Add new Payment Method",
     "visaCard": "Visa Card",
-    "cardName": "Card Name",
+    "cardName": "Nickname (optional)",
     "cardNumber": "Card Number",
     "expiryYear": "Expiry Year",
     "expiryMonth": "Expiry Month",

@@ -90,6 +90,10 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
             itemCount: categoriesViewModel.categoriesList.length,
             itemBuilder: (BuildContext context, int categoryIndex) {
               var category = categoriesViewModel.categoriesList[categoryIndex];
+              debugPrint('lang $lang');
+              if(lang==null){
+                lang='en-US';
+              }
 
               // Get the category's translated name based on the current language
               var categoryTranslation = (category['translations']
@@ -98,6 +102,7 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
                     ? category['translations']
                     : {'title': 'Default Title'};
               }))['title'].toString();
+              debugPrint('hehehhe $categoryTranslation');
 
               // Find services that belong to this category
               var servicesInCategory = categoriesViewModel.servicesList.where((service) {

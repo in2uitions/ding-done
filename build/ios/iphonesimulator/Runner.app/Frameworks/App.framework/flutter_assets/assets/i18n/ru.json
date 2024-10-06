@@ -142,7 +142,7 @@
     "confirmPaymentMethod": "Подтвердить способ оплаты",
     "addPaymentMethod": "Добавить новый способ оплаты",
     "visaCard": "Карта Visa",
-    "cardName": "Имя карты",
+    "cardName": "псевдоним (необязательно)",
     "cardNumber": "Номер карты",
     "expiryYear": "Год истечения срока действия",
     "expiryMonth": "Месяц истечения срока действия",
