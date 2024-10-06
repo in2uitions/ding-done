@@ -268,9 +268,9 @@ class JobsViewModel with ChangeNotifier {
     return true;
   }
 
-  Future<bool?> payFees(int id) async {
+  Future<bool?> payFees(int id,dynamic customer_id) async {
     try {
-      dynamic response = await _jobsRepository.payJob(id);
+      dynamic response = await _jobsRepository.payJob(id,customer_id);
       // _apiCustomerPayResponse = ApiResponse.completed(response);
       // _customerPay = _apiCustomerPayResponse.data?.jobs;
       debugPrint('Response of paying fees ${response["status"]}');

@@ -902,18 +902,30 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                 SizedBox(height: context.appValues.appSize.s20),
                 ElevatedButton(
                   onPressed: () async {
-                    if (await jobsViewModel.finishJob(widget.data.id) == true) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              simpleAlert(context, 'Success', 'Job finished'));
-                    } else {
+                    debugPrint('data in finish ${widget.data.customer['id']}');
+                    if(await jobsViewModel.payFees(widget.data.id,widget.data.customer['id']) == true) {
+                      if (await jobsViewModel.finishJob(widget.data.id) ==
+                          true) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                simpleAlert(
+                                    context, 'Success', 'Job finished'));
+                      }else{
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => simpleAlert(
+                                context,
+                                'Failure',
+                                'Something went wrong while finishing job \n${jobsViewModel.errorMessage}'));
+                      }
+                    }else {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) => simpleAlert(
                               context,
                               'Failure',
-                              'Something went wrong \n${jobsViewModel.errorMessage}'));
+                              'Something went wrong while paying job\n${jobsViewModel.errorMessage}'));
                     }
                   },
                   style: ElevatedButton.styleFrom(

@@ -47,6 +47,11 @@ class _TabsJobsState extends State<TabsJobs>
             fontSize: 20,
             color: context.resources.color.btnColorBlue,
           ),
+          onTap:(int index){
+            setState(() {
+              widget.jobCounts[index]=0;
+            });
+          },
           unselectedLabelColor: const Color(0xffBEC2CE),
           indicatorSize: TabBarIndicatorSize.tab,
           indicatorWeight: 3,

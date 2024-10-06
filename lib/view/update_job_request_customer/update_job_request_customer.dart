@@ -538,7 +538,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                       :Container(),
                       //     :
                       // Container(),
-                      widget.fromWhere!=translate('jobs.active')?
+                      widget.fromWhere!=translate('jobs.active') && widget.fromWhere!=translate('jobs.completed')?
                       Consumer2<JobsViewModel, PaymentViewModel>(builder:
                           (context, jobsViewModel, paymentViewModel, _) {
                         return Padding(
@@ -566,18 +566,18 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                 widget.data.id,
                                                 widget.fromWhere),
                                       )
-                                    : widget.fromWhere == translate('jobs.completed')
-                                        ? (widget.fromWhere == translate('jobs.completed') &&
-                                                !widget.data.is_paid)
-                                            ? showDialog(
-                                                context: context,
-                                                builder:
-                                                    (BuildContext context) =>
-                                                        payFees(
-                                                          context,
-                                                          jobsViewModel,
-                                                        ))
-                                            : ''
+                                    // : widget.fromWhere == translate('jobs.completed')
+                                    //     ? (widget.fromWhere == translate('jobs.completed') &&
+                                    //             !widget.data.is_paid)
+                                    //         ? showDialog(
+                                    //             context: context,
+                                    //             builder:
+                                    //                 (BuildContext context) =>
+                                    //                     payFees(
+                                    //                       context,
+                                    //                       jobsViewModel,
+                                    //                     ))
+                                    //         : ''
                                         : widget.fromWhere == translate('jobs.active')
                                             ?
                                             // widget.data.payment_card!=null?
@@ -918,145 +918,145 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
     );
   }
 
-  Widget payFees(BuildContext context, JobsViewModel jobsViewModel) {
-    return AlertDialog(
-      elevation: 15,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  child: SvgPicture.asset('assets/img/x.svg'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Future.delayed(const Duration(seconds: 0));
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          ),
-          // message == 'Success'
-          //     ?
-          // SvgPicture.asset('assets/img/service-popup-image.svg')
-          //     : SvgPicture.asset('assets/img/failure.svg'),
-          SizedBox(height: context.appValues.appSize.s10),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              '${translate('updateJob.yourTotalAmountIs')} ${widget.data.total_amount} ${widget.data.currency}',
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: context.resources.color.btnColorBlue,
-              ),
-            ),
-          ),
-          SizedBox(height: context.appValues.appSize.s10),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p10,
-            ),
-            child: widget.data.payment_card!=null?
-            Row(
-              children: [
-                Text(
-                  translate('updateJob.payUsingCard'),
-                  textAlign: TextAlign.center,
-                  style: getPrimaryRegularStyle(
-                    fontSize: 17,
-                    color: context.resources.color.btnColorBlue,
-                  ),
-                ),
-                Text(
-                  '${widget.data.payment_card["brand"]}',
-                  textAlign: TextAlign.center,
-                  style: getPrimaryRegularStyle(
-                    fontSize: 17,
-                    color: context.resources.color.colorYellow,
-                  ),
-                ),
-              ],
-            ) : Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Make Sure to pay Cash',
-              textAlign: TextAlign.center,
-                  style: getPrimaryRegularStyle(
-                    fontSize: 17,
-                    color: context.resources.color.btnColorBlue,
-                  ),
-                ),
-
-              ],
-            ),
-          ),
-          SizedBox(height: context.appValues.appSize.s10),
-
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: ElevatedButton(
-              onPressed: () async {
-               if (widget.data.payment_card!=null){
-                 if (await jobsViewModel.payFees(widget.data.id) == true) {
-                   showDialog(
-                       context: context,
-                       builder: (BuildContext context) =>
-                           simpleAlert(context, translate('button.success')));
-                 } else {
-                   showDialog(
-                       context: context,
-                       builder: (BuildContext context) => simpleAlert(context,
-                           '${translate('button.failure')} \n${jobsViewModel.errorMessage}'));
-                 }
-               }else{
-                 showDialog(
-                     context: context,
-                     builder: (BuildContext context) =>
-                         simpleAlert(context, translate('button.success')));
-               }
-
-                // Future.delayed(Duration(seconds: 0));
-                // Navigator.pop(context);
-                //
-              },
-              style: ElevatedButton.styleFrom(
-                elevation: 0.0,
-                shadowColor: Colors.transparent,
-                backgroundColor: const Color(0xffFFD105),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                fixedSize: Size(
-                  context.appValues.appSizePercent.w30,
-                  context.appValues.appSizePercent.h5,
-                ),
-              ),
-              child: Text(
-                translate('button.ok'),
-                style: getPrimaryRegularStyle(
-                  fontSize: 15,
-                  color: context.resources.color.btnColorBlue,
-                ),
-              ),
-            ),
-          ),
-
-          SizedBox(height: context.appValues.appSize.s20),
-        ],
-      ),
-    );
-  }
+  // Widget payFees(BuildContext context, JobsViewModel jobsViewModel) {
+  //   return AlertDialog(
+  //     elevation: 15,
+  //     content: Column(
+  //       mainAxisSize: MainAxisSize.min,
+  //       // crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: <Widget>[
+  //         Padding(
+  //           padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.end,
+  //             children: [
+  //               InkWell(
+  //                 child: SvgPicture.asset('assets/img/x.svg'),
+  //                 onTap: () {
+  //                   Navigator.pop(context);
+  //                   Future.delayed(const Duration(seconds: 0));
+  //                   Navigator.pop(context);
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         // message == 'Success'
+  //         //     ?
+  //         // SvgPicture.asset('assets/img/service-popup-image.svg')
+  //         //     : SvgPicture.asset('assets/img/failure.svg'),
+  //         SizedBox(height: context.appValues.appSize.s10),
+  //         Padding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: context.appValues.appPadding.p32,
+  //           ),
+  //           child: Text(
+  //             '${translate('updateJob.yourTotalAmountIs')} ${widget.data.total_amount} ${widget.data.currency}',
+  //             textAlign: TextAlign.center,
+  //             style: getPrimaryRegularStyle(
+  //               fontSize: 17,
+  //               color: context.resources.color.btnColorBlue,
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(height: context.appValues.appSize.s10),
+  //         Padding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: context.appValues.appPadding.p10,
+  //           ),
+  //           child: widget.data.payment_card!=null?
+  //           Row(
+  //             children: [
+  //               Text(
+  //                 translate('updateJob.payUsingCard'),
+  //                 textAlign: TextAlign.center,
+  //                 style: getPrimaryRegularStyle(
+  //                   fontSize: 17,
+  //                   color: context.resources.color.btnColorBlue,
+  //                 ),
+  //               ),
+  //               Text(
+  //                 '${widget.data.payment_card["brand"]}',
+  //                 textAlign: TextAlign.center,
+  //                 style: getPrimaryRegularStyle(
+  //                   fontSize: 17,
+  //                   color: context.resources.color.colorYellow,
+  //                 ),
+  //               ),
+  //             ],
+  //           ) : Row(
+  //             mainAxisAlignment: MainAxisAlignment.center,
+  //             children: [
+  //               Text(
+  //                 'Make Sure to pay Cash',
+  //             textAlign: TextAlign.center,
+  //                 style: getPrimaryRegularStyle(
+  //                   fontSize: 17,
+  //                   color: context.resources.color.btnColorBlue,
+  //                 ),
+  //               ),
+  //
+  //             ],
+  //           ),
+  //         ),
+  //         SizedBox(height: context.appValues.appSize.s10),
+  //
+  //         Padding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: context.appValues.appPadding.p32,
+  //           ),
+  //           child: ElevatedButton(
+  //             onPressed: () async {
+  //              if (widget.data.payment_card!=null){
+  //                if (await jobsViewModel.payFees(widget.data.id) == true) {
+  //                  showDialog(
+  //                      context: context,
+  //                      builder: (BuildContext context) =>
+  //                          simpleAlert(context, translate('button.success')));
+  //                } else {
+  //                  showDialog(
+  //                      context: context,
+  //                      builder: (BuildContext context) => simpleAlert(context,
+  //                          '${translate('button.failure')} \n${jobsViewModel.errorMessage}'));
+  //                }
+  //              }else{
+  //                showDialog(
+  //                    context: context,
+  //                    builder: (BuildContext context) =>
+  //                        simpleAlert(context, translate('button.success')));
+  //              }
+  //
+  //               // Future.delayed(Duration(seconds: 0));
+  //               // Navigator.pop(context);
+  //               //
+  //             },
+  //             style: ElevatedButton.styleFrom(
+  //               elevation: 0.0,
+  //               shadowColor: Colors.transparent,
+  //               backgroundColor: const Color(0xffFFD105),
+  //               shape: RoundedRectangleBorder(
+  //                 borderRadius: BorderRadius.circular(10),
+  //               ),
+  //               fixedSize: Size(
+  //                 context.appValues.appSizePercent.w30,
+  //                 context.appValues.appSizePercent.h5,
+  //               ),
+  //             ),
+  //             child: Text(
+  //               translate('button.ok'),
+  //               style: getPrimaryRegularStyle(
+  //                 fontSize: 15,
+  //                 color: context.resources.color.btnColorBlue,
+  //               ),
+  //             ),
+  //           ),
+  //         ),
+  //
+  //         SizedBox(height: context.appValues.appSize.s20),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget review(BuildContext context, JobsViewModel jobsViewModel) {
     return AlertDialog(
@@ -1065,36 +1065,36 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
         mainAxisSize: MainAxisSize.min,
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  child: SvgPicture.asset('assets/img/x.svg'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    Future.delayed(const Duration(seconds: 0));
-                    widget.data.payment_card != null
-                        ? showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                payFees(context, jobsViewModel))
-                        : showDialog(
-                            context: context,
-                            builder: (BuildContext context) => simpleAlert(
-                                context,
-                                translate('updateJob.makeSureYouPayedByCash')));
-                  },
-                ),
-              ],
-            ),
-          ),
-          // message == 'Success'
-          //     ?
-          // SvgPicture.asset('assets/img/service-popup-image.svg')
-          //     : SvgPicture.asset('assets/img/failure.svg'),
-          SizedBox(height: context.appValues.appSize.s10),
+          // Padding(
+          //   padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.end,
+          //     children: [
+          //       InkWell(
+          //         child: SvgPicture.asset('assets/img/x.svg'),
+          //         onTap: () {
+          //           Navigator.pop(context);
+          //           Future.delayed(const Duration(seconds: 0));
+          //           widget.data.payment_card != null
+          //               ? showDialog(
+          //                   context: context,
+          //                   builder: (BuildContext context) =>
+          //                       payFees(context, jobsViewModel))
+          //               : showDialog(
+          //                   context: context,
+          //                   builder: (BuildContext context) => simpleAlert(
+          //                       context,
+          //                       translate('updateJob.makeSureYouPayedByCash')));
+          //         },
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // // message == 'Success'
+          // //     ?
+          // // SvgPicture.asset('assets/img/service-popup-image.svg')
+          // //     : SvgPicture.asset('assets/img/failure.svg'),
+          // SizedBox(height: context.appValues.appSize.s10),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p32,
@@ -1127,16 +1127,16 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                 if (await jobsViewModel.updateJob(widget.data.id) == true) {
                   Navigator.of(context).pop();
                   Future.delayed(const Duration(seconds: 0));
-                  widget.data.payment_card != null
-                      ? showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              payFees(context, jobsViewModel))
-                      : showDialog(
-                          context: context,
-                          builder: (BuildContext context) => simpleAlert(
-                              context,
-                              translate('updateJob.makeSureYouPayedByCash')));
+                  // widget.data.payment_card != null
+                  //     ? showDialog(
+                  //         context: context,
+                  //         builder: (BuildContext context) =>
+                  //             payFees(context, jobsViewModel))
+                  //     : showDialog(
+                  //         context: context,
+                  //         builder: (BuildContext context) => simpleAlert(
+                  //             context,
+                  //             translate('updateJob.makeSureYouPayedByCash')));
 
                   // showDialog(
                   //     context: context,

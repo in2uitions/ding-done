@@ -134,10 +134,10 @@ class JobsRepository {
       rethrow;
     }
   }
-  Future<dynamic> payJob(int job_id) async {
+  Future<dynamic> payJob(int job_id,dynamic customer_id) async {
     try {
-      String? id = await getUserId();
-      dynamic response = await _apiPayJob.postResponse(data: {"customer_id": id,"job_id":job_id});
+      // String? id = await getUserId();
+      dynamic response = await _apiPayJob.postResponse(data: {"customer_id": customer_id,"job_id":job_id});
       // final jsonData = JobsModelMain.fromJson(response["data"]);
       return response;
     } catch (error) {

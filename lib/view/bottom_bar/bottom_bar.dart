@@ -28,7 +28,8 @@ class BottomBar extends StatefulWidget {
   _BottomBarState createState() => _BottomBarState();
 }
 
-class _BottomBarState extends State<BottomBar> {
+class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMixin {
+
   // Properties & Variables needed
   String? lang;
 
@@ -36,6 +37,9 @@ class _BottomBarState extends State<BottomBar> {
   late Widget currentScreen;
   final PageStorageBucket bucket = PageStorageBucket();
   final JobsViewModel _jobsViewModel = JobsViewModel();
+  bool hasNotifications = true; // Replace with your actual condition
+  late AnimationController _controller;
+  late Animation<double> _pulseAnimation;
 
   String? _currentAddress;
   Position? _currentPosition;
@@ -45,15 +49,38 @@ class _BottomBarState extends State<BottomBar> {
     getLanguage();
     Provider.of<CategoriesViewModel>(context, listen: false).readJson();
     Provider.of<ServicesViewModel>(context, listen: false).readJson();
+    getNotifications();
     _handleLocationPermission();
     _getCurrentPosition();
     _jobsViewModel.readJson();
     currentScreen = widget.userRole == Constants.supplierRoleId
         ? const HomePageSupplier()
         : const HomePage();
+
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..repeat(reverse: true); // Makes it pulse continuously
+
+    _pulseAnimation = Tween<double>(begin: 0.8, end: 1.2).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
+  }
+  getNotifications() async{
+    dynamic notifications= await Provider.of<ProfileViewModel>(context, listen: false).getNotifications();
+    if(notifications.isNotEmpty){
+      hasNotifications=true;
+    }else{
+      hasNotifications=false;
+    }
   }
   // Widget currentScreen = HomePage(); // Our first view in viewport
   // Widget currentScreen = HomePageSupplier(); // Our first view in viewport
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
@@ -314,42 +341,55 @@ class _BottomBarState extends State<BottomBar> {
                       //   // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       //   crossAxisAlignment: CrossAxisAlignment.start,
                       //   children: <Widget>[
-                      MaterialButton(
-                        minWidth: 40,
-                        onPressed: () {
-                          setState(() {
-                            currentScreen =
-                                const InboxPage(); // if user taps on this dashboard tab will be active
-                            currentTab = 2;
-                          });
-                        },
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            SvgPicture.asset(
-                              'assets/img/bell2.svg',
-                              fit: BoxFit.contain,
-                              height: context.appValues.appSizePercent.h3,
-                              color: currentTab == 2
-                                  ? const Color(0xff6A39E5)
-                                  : const Color(0xffE5E5E5),
-                            ),
-                            // SizedBox(height: context.appValues.appSize.s5),
-                            // Text(
-                            //   translate('bottom_bar.inbox'),
-                            //   style: getPrimaryRegularStyle(
-                            //     color: currentTab == 2
-                            //         ? const Color(0xff9F9AB7)
-                            //         : const Color(0xff180C39),
-                            //   ),
-                            // ),
-                            // Icon(
-                            //   Icons.dashboard,
-                            //   color: currentTab == 2 ? Colors.blue : Color(0xff180C39),
-                            // ),
-                          ],
-                        ),
+
+               MaterialButton(
+              minWidth: 40,
+              onPressed: () {
+                setState(() {
+                  currentScreen = const InboxPage(); // Set InboxPage as the active screen
+                  currentTab = 2;
+                  hasNotifications=false;
+                });
+              },
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Stack(
+                    children: [
+                      SvgPicture.asset(
+                        'assets/img/bell2.svg',
+                        fit: BoxFit.contain,
+                        height: context.appValues.appSizePercent.h3,
+                        color: currentTab == 2
+                            ? const Color(0xff6A39E5)
+                            : const Color(0xffE5E5E5),
                       ),
+                      if (hasNotifications) // Show red dot if there are notifications
+                        Positioned(
+                          top: 0,
+                          right: 0,
+                          child: AnimatedBuilder(
+                            animation: _controller,
+                            builder: (context, child) {
+                              return ScaleTransition(
+                                scale: _pulseAnimation, // Pulsing effect
+                                child: Container(
+                                  width: 10, // Adjust the size of the red dot
+                                  height: 10,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    shape: BoxShape.circle,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
                       MaterialButton(
                         minWidth: 40,
                         onPressed: () {
