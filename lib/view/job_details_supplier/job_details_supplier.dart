@@ -57,6 +57,27 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
     // _pdfViewerKey.currentState?.openBookmarkView();
 
   }
+  String _getServiceRate() {
+    // Extract the currency from job address
+    String currency = widget.data.job_address["country"];
+
+    // Find the rate from country_rates where currency matches
+    var matchingRate = widget.data.service["country_rates"].firstWhere(
+          (rate) => rate["country"]['code'] == currency,
+      orElse: () => null,  // If no match is found, return null
+    );
+
+    if (matchingRate != null) {
+      // Check the job type and return the appropriate rate
+      if (widget.data.job_type == 'inspection') {
+        return matchingRate['inspection_rate'] ?? 'No rate available';
+      } else {
+        return '${matchingRate["country"]["curreny"]}';
+      }
+    } else {
+      return 'Rate not found';  // Fallback if no matching currency is found
+    }
+  }
   @override
   Widget build(BuildContext context) {
     debugPrint('job type ${widget.data.job_type}');
@@ -362,13 +383,11 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       widget.fromWhere != translate('jobs.completed')
                   ? ServiceRateAndCurrnecyWidget(
                       currency: widget.data.service["country_rates"].isNotEmpty
-                          ? widget.data.service["country_rates"][0]["country"]
-                              ["curreny"]
+                          ? _getServiceRate()
                           : '',
                       // currency: widget.data.currency,
                       service_rate: widget.data.job_type == 'inspection'
-                          ? widget.data.service["country_rates"][0]
-                              ['inspection_rate']
+                          ? _getServiceRate()
                           : widget.data.service["country_rates"].isNotEmpty
                               ? '${widget.data.service["country_rates"][0]['unit_rate']} ${widget.data.service["country_rates"][0]['unit_type']}'
                               : '',
@@ -428,7 +447,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
 
               widget.fromWhere != 'request' &&
                       widget.fromWhere != translate('jobs.booked')
-                  ? RatingStarsWidget(stars: widget.data.rating_stars ?? 0.0)
+                  ? RatingStarsWidget(stars: widget.data.rating_stars ?? 0.0,userRole: Constants.supplierRoleId,)
                   : Container(),
 
               widget.fromWhere != 'request' &&
@@ -463,7 +482,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                             ),
                             child: Text(
                               widget.data.total_amount != null
-                                  ? '${widget.data.total_amount} ${widget.data.service["country_rates"] != null && widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"]["curreny"] : ''}'
+                                  ? '${widget.data.total_amount} ${widget.data.service["country_rates"] != null && widget.data.service["country_rates"].isNotEmpty ? _getServiceRate() : ''}'
                                   : '',
                               style: getPrimaryRegularStyle(
                                 color: const Color(0xff78789D),
@@ -687,7 +706,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                       appBar: AppBar(
                                         title: const Text('Invoice'),
                                       ),
-                                      body: FutureBuilder<File?>(
+                                      body: FutureBuilder<dynamic>(
                                         future: jobsViewModel.downloadInvoice(widget.data.id), // Assume this returns the file from the download
                                         builder: (context, snapshot) {
                                           if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
@@ -903,8 +922,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                 ElevatedButton(
                   onPressed: () async {
                     debugPrint('data in finish ${widget.data.customer['id']}');
-                    if(await jobsViewModel.payFees(widget.data.id,widget.data.customer['id']) == true) {
-                      if (await jobsViewModel.finishJob(widget.data.id) ==
+                    // if(await jobsViewModel.payFees(widget.data.id,widget.data.customer['id']) == true) {
+                      if (await jobsViewModel.finishJobAndCollectPayment(widget.data.id) ==
                           true) {
                         showDialog(
                             context: context,
@@ -919,14 +938,14 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                 'Failure',
                                 'Something went wrong while finishing job \n${jobsViewModel.errorMessage}'));
                       }
-                    }else {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => simpleAlert(
-                              context,
-                              'Failure',
-                              'Something went wrong while paying job\n${jobsViewModel.errorMessage}'));
-                    }
+                    // }else {
+                    //   showDialog(
+                    //       context: context,
+                    //       builder: (BuildContext context) => simpleAlert(
+                    //           context,
+                    //           'Failure',
+                    //           'Something went wrong while paying job\n${jobsViewModel.errorMessage}'));
+                    // }
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0.0,

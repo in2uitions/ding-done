@@ -26,6 +26,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class UpdateJobRequestCustomer extends StatefulWidget {
   var data;
@@ -44,9 +45,9 @@ class UpdateJobRequestCustomer extends StatefulWidget {
 class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
   bool _isLoading=false;
   bool _isLoading2=false;
+  
   @override
   Widget build(BuildContext context) {
-    debugPrint('widget data ${widget.data.service['translations'][0]['title']}');
     return Scaffold(
       // backgroundColor: const Color(0xffF0F3F8),
       backgroundColor: const Color(0xffFEFEFE),
@@ -482,13 +483,18 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                               });
                               widget.fromWhere == translate('jobs.completed')
                                   ? await jobsViewModel.downloadInvoice(
-                                              widget.data.id) ==
-                                          true
-                                      ? showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              simpleAlert(context,
-                                                  translate('button.success')))
+                                              widget.data.id) !=
+                                          null
+                                      ?  await Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => Scaffold(
+                                          appBar: AppBar(
+                                            title: const Text('Invoice'),
+                                          ),
+                                  body:SfPdfViewer.memory(jobsViewModel.file))) )
+
+
                                       : showDialog(
                                           context: context,
                                           builder: (BuildContext context) =>
@@ -1065,36 +1071,6 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
         mainAxisSize: MainAxisSize.min,
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          // Padding(
-          //   padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-          //   child: Row(
-          //     mainAxisAlignment: MainAxisAlignment.end,
-          //     children: [
-          //       InkWell(
-          //         child: SvgPicture.asset('assets/img/x.svg'),
-          //         onTap: () {
-          //           Navigator.pop(context);
-          //           Future.delayed(const Duration(seconds: 0));
-          //           widget.data.payment_card != null
-          //               ? showDialog(
-          //                   context: context,
-          //                   builder: (BuildContext context) =>
-          //                       payFees(context, jobsViewModel))
-          //               : showDialog(
-          //                   context: context,
-          //                   builder: (BuildContext context) => simpleAlert(
-          //                       context,
-          //                       translate('updateJob.makeSureYouPayedByCash')));
-          //         },
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // // message == 'Success'
-          // //     ?
-          // // SvgPicture.asset('assets/img/service-popup-image.svg')
-          // //     : SvgPicture.asset('assets/img/failure.svg'),
-          // SizedBox(height: context.appValues.appSize.s10),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p32,
@@ -1110,6 +1086,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
           ),
           SizedBox(height: context.appValues.appSize.s10),
           RatingStarsWidget(
+            userRole: Constants.customerRoleId,
               stars: widget.data.rating_stars != null
                   ? widget.data.rating_stars
                   : 0),
@@ -1127,21 +1104,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                 if (await jobsViewModel.updateJob(widget.data.id) == true) {
                   Navigator.of(context).pop();
                   Future.delayed(const Duration(seconds: 0));
-                  // widget.data.payment_card != null
-                  //     ? showDialog(
-                  //         context: context,
-                  //         builder: (BuildContext context) =>
-                  //             payFees(context, jobsViewModel))
-                  //     : showDialog(
-                  //         context: context,
-                  //         builder: (BuildContext context) => simpleAlert(
-                  //             context,
-                  //             translate('updateJob.makeSureYouPayedByCash')));
 
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (BuildContext context) =>
-                  //         simpleAlert(context, 'Success'));
                 } else {
                   showDialog(
                       context: context,
@@ -1197,4 +1160,26 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
       return 'Rate not found';  // Fallback if no matching currency is found
     }
   }
+  Route _createRoute(Widget child) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => child,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        final tween = Tween(begin: begin, end: end);
+        final curvedAnimation = CurvedAnimation(
+          parent: animation,
+          curve: curve,
+        );
+
+        return SlideTransition(
+          position: tween.animate(curvedAnimation),
+          child: child,
+        );
+      },
+    );
+  }
+
 }

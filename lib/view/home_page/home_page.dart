@@ -30,6 +30,8 @@ import '../edit_account/edit_account.dart';
 import '../jobs_page/jobs_page.dart';
 import '../login/login.dart';
 import '../widgets/categories_screen/categories_screen_cards.dart';
+import '../widgets/job_details_supplier/rating_stars_widget.dart';
+import '../widgets/job_details_supplier/review_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -55,7 +57,10 @@ class _HomePageState extends State<HomePage> {
     searchController.addListener(_filterServices);
     // Initially display all services
     filteredServices = categoriesViewModel.servicesList2;
+
   }
+
+
   @override
   void dispose() {
     searchController.removeListener(_filterServices);

@@ -7,6 +7,7 @@ import 'package:dingdone/res/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/data/remote/response/ApiResponse.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -292,6 +293,30 @@ class JobsViewModel with ChangeNotifier {
     return true;
   }
 
+  Future<bool?> finishJobAndCollectPayment(int id) async {
+    try {
+      dynamic response = await _jobsRepository.finishJobAndCollectPayment(id);
+      // _apiCustomerPayResponse = ApiResponse.completed(response);
+      // _customerPay = _apiCustomerPayResponse.data?.jobs;
+      debugPrint('Response of finishing job and paying fees ${response}');
+      if (response["status"] == 'OK') {
+        readJson();
+        notifyListeners();
+        return true;
+      } else {
+        _errorMessage = response["reason"] ?? response["error"];
+        notifyListeners();
+        return false;
+      }
+    } catch (error) {
+      debugPrint('Error finishing job and paying fees ${error}');
+      return false;
+    }
+    notifyListeners();
+
+    return true;
+  }
+
   Future<bool?> startJob(int id) async {
     try {
       dynamic response = await _jobsRepository.startJob(id);
@@ -401,15 +426,19 @@ class JobsViewModel with ChangeNotifier {
     return true;
   }
 
-  Future<File>? downloadInvoice(int id) async {
+
+  Future<dynamic>? downloadInvoice(int id) async {
     try {
       dynamic res = await _jobsRepository.downloadInvoice(id);
+
       // readJson();
       // notifyListeners();
 
       if (res != null) {
         debugPrint('file downloaded');
         _file = res;
+        notifyListeners();
+
         return _file;
       } else {
         debugPrint('error in file downloading');

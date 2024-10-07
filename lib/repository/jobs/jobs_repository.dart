@@ -24,6 +24,8 @@ class JobsRepository {
       NetworkApiService(url: ApiEndPoints().supplierFinishJob);
   final BaseApiService _apiPayJob =
       NetworkApiService(url: ApiEndPoints().payJob);
+  final BaseApiService _apiFinishJobAndCollectPayment =
+      NetworkApiService(url: ApiEndPoints().finishJobAndCollectPayment);
   final BaseApiService _apiStartJob =
       NetworkApiService(url: ApiEndPoints().supplierStartJob);
   final BaseApiService _apiIgnoreJob =
@@ -41,7 +43,7 @@ class JobsRepository {
   final BaseApiService _apicancelJobWithPenalty =
       NetworkApiService(url: ApiEndPoints().customerCancelJobWithPenalty);
   final BaseApiService _apiCustomerInvoice =
-      NetworkApiService(url: ApiEndPoints().downloadInvoice);
+      NetworkApiService(url: ApiEndPoints().customerInvoice);
 
   Future<JobsModelMain?> getAllJobs() async {
     try {
@@ -145,6 +147,17 @@ class JobsRepository {
       rethrow;
     }
   }
+  Future<dynamic> finishJobAndCollectPayment(int job_id) async {
+    try {
+      // String? id = await getUserId();
+      dynamic response = await _apiFinishJobAndCollectPayment.postResponse(data: {"job_id":job_id});
+      // final jsonData = JobsModelMain.fromJson(response["data"]);
+      return response;
+    } catch (error) {
+      debugPrint('error in getting payed jobs $error');
+      rethrow;
+    }
+  }
   Future<dynamic> startJob(int job_id) async {
     try {
       String? id = await getUserId();
@@ -205,7 +218,7 @@ class JobsRepository {
     try {
       String? id = await getUserId();
       dynamic response;
-        response = await _apiCustomerInvoice.postResponseFile(data: {"user_id": id,"job_id":job_id});
+        response = await _apiCustomerInvoice.getResponseFile(params: "?user_id=$id&job_id=$job_id");
         debugPrint('response of the downloaded invoice $response');
       return response;
     } catch (error) {

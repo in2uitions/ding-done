@@ -35,8 +35,10 @@ class ApiEndPoints {
   final String addPaymentCard = '/customers/addPaymentCard';
   final String deletePaymentCard = '/customers/removeCard';
   final String payJob = '/customers/payJob';
+  final String finishJobAndCollectPayment = '/suppliers/finishJobAndCollectPayment';
   final String getAllPayments = '/items/customer_payment_cards?fields=*.*';
   final String downloadInvoice = '/invoices/downloadInvoice';
+  final String  customerInvoice= '/invoices/customerInvoice';
   // final String apiSendReset = '/email/reset-test';
   final String apiSendReset = '/email/reset-email';
   final String notifications = '/i18/notifications';

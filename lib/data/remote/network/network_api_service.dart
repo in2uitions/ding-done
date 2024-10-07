@@ -49,8 +49,44 @@ class NetworkApiService extends BaseApiService {
       // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
       final response;
       response = await http.get(Uri.parse(finalUrl), headers: headers);
-      // debugPrint('response in api network $response');
+      debugPrint('response in api network ${response.body}');
       responseJson = returnResponse(response);
+    } catch (error) {
+      debugPrint('error $error');
+      rethrow;
+    }
+    return responseJson;
+  }
+ @override
+  Future getResponseFile({params = '',bool sendToken = true,}) async {
+    dynamic responseJson;
+    String finalUrl = baseUrl + url;
+    if (params != '') {
+      finalUrl = '$finalUrl$params';
+    }
+    debugPrint(finalUrl);
+    try {
+      String? tokenValue;
+      if(sendToken){
+        tokenValue = await getToken();
+        if (tokenValue != '' && url=='/users/me') {
+          headers[HttpHeaders.authorizationHeader] = tokenValue;
+        }else{
+          headers[HttpHeaders.contentTypeHeader] = 'application/json';
+
+        }
+
+        headers[HttpHeaders.authorizationHeader] = tokenValue;
+      }
+
+      debugPrint('final url file $finalUrl');
+      debugPrint('token value $tokenValue');
+      // headers[HttpHeaders.authorizationHeader] =
+      // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
+      final response;
+      response = await http.get(Uri.parse(finalUrl), headers: headers);
+      debugPrint('response in api network ${response.bodyBytes}');
+      return response.bodyBytes;
     } catch (error) {
       debugPrint('error $error');
       rethrow;

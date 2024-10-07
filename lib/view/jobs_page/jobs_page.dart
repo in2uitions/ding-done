@@ -1,24 +1,20 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:dingdone/view/home_page/home_page.dart';
-import 'package:dingdone/view/home_page/home_page_supplier.dart';
-import 'package:dingdone/view/widgets/jobs/CircleButton.dart';
 import 'package:dingdone/view/widgets/jobs/jobs_cards.dart';
-import 'package:dingdone/view/widgets/tabs/tabs.dart';
 import 'package:dingdone/view/widgets/tabs/tabs_jobs.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/app_prefs.dart';
-import '../../view_model/profile_view_model/profile_view_model.dart';
 import '../bottom_bar/bottom_bar.dart';
+import '../widgets/update_job_request_customer/rating_stars_widget.dart';
+import '../widgets/update_job_request_customer/review_widget.dart';
 
 class JobsPage extends StatefulWidget {
   final String userRole;
@@ -50,6 +46,117 @@ class _JobsPageState extends State<JobsPage> {
     super.initState();
     _active = widget.initialActiveTab;
     Provider.of<JobsViewModel>(context, listen: false).getCustomerJobs();
+    if(widget.userRole==Constants.customerRoleId){
+      var jobsViewModel= Provider.of<JobsViewModel>(context, listen: false);
+      dynamic completedJobs =jobsViewModel.getcustomerJobs.where((e) => e.status == 'completed' && e.rating_stars == null)
+          .toList();
+      debugPrint('completed jobs $completedJobs');
+      if(completedJobs.isNotEmpty)
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showReviewDialog(context,completedJobs[0],jobsViewModel);
+        });
+    }
+
+  }
+// Function to show the review dialog
+  void _showReviewDialog(BuildContext context,dynamic job,JobsViewModel jobsViewModel) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return review(context,job,jobsViewModel); // This is the review widget you provided
+      },
+    );
+  }
+  Widget review(BuildContext context,dynamic job,JobsViewModel jobsViewModel) {
+    return AlertDialog(
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              translate('updateJob.rateJob'),
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              job.service['translations'][0]['title'],
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s10),
+          RatingStarsWidget(
+              stars: job.rating_stars != null
+                  ? job.rating_stars
+                  : 0, userRole: Constants.customerRoleId,),
+          ReviewWidget(
+            review: job.rating_comment ?? '',
+          ),
+          SizedBox(height: context.appValues.appSize.s10),
+
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Builder(
+              builder: (context) {
+                return ElevatedButton(
+                  onPressed: () async {
+                    if (await jobsViewModel.updateJob(job.id) == true) {
+                      Navigator.of(context).pop();
+                      Future.delayed(const Duration(seconds: 0));
+
+                    } else {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => simpleAlert(context,
+                              '${translate('button.failure')} \n${jobsViewModel.errorMessage}'));
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0.0,
+                    shadowColor: Colors.transparent,
+                    backgroundColor: const Color(0xffFFD105),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    fixedSize: Size(
+                      context.appValues.appSizePercent.w30,
+                      context.appValues.appSizePercent.h5,
+                    ),
+                  ),
+                  child: Text(
+                    translate('button.ok'),
+                    style: getPrimaryRegularStyle(
+                      fontSize: 15,
+                      color: context.resources.color.btnColorBlue,
+                    ),
+                  ),
+                );
+              }
+            ),
+          ),
+
+          SizedBox(height: context.appValues.appSize.s20),
+        ],
+      ),
+    );
   }
 
   @override

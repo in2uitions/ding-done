@@ -1,4 +1,5 @@
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/stars/stars.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,9 @@ import 'package:flutter_translate/flutter_translate.dart';
 
 class RatingStarsWidget extends StatefulWidget {
   var stars;
+  var userRole;
 
-  RatingStarsWidget({super.key, required this.stars});
+  RatingStarsWidget({super.key, required this.stars, required this.userRole});
 
   @override
   State<RatingStarsWidget> createState() => _RatingStarsWidgetState();
@@ -50,8 +52,19 @@ class _RatingStarsWidgetState extends State<RatingStarsWidget> {
                   ),
                 ),
               ),
-              Stars(
+              widget.userRole==Constants.customerRoleId?Stars(
                 rating: double.parse(widget.stars.toString()),
+              ):
+              SizedBox(
+                height: 20,
+                child: Stack(
+                  children: [
+                    Stars(
+                      rating: double.parse(widget.stars.toString()),
+                    ),
+                    InkWell()
+                  ],
+                ),
               ),
             ],
           ),

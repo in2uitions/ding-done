@@ -59,26 +59,26 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
     return Consumer<PaymentViewModel>(builder: (context, paymentViewModel, _) {
       return InkWell(
         onTap: () async {
-          await _scanCard();
-          paymentViewModel.setInputValues(
-              index: 'nickname', value: card?.cardholder);
-          paymentViewModel.setInputValues(
-              index: 'card_number', value: card?.number);
-          paymentViewModel.setInputValues(
-              index: 'expiry_month', value: card?.expiry.split('/').first);
-          paymentViewModel.setInputValues(
-              index: 'expiry_year', value: card?.expiry.split('/').last);
-          // Future.delayed(const Duration(seconds: 0), () =>
-          //     Navigator.pop(context));
-          Future.delayed(
-              const Duration(seconds: 0), () => Navigator.pop(context));
-          Future.delayed(
-              const Duration(seconds: 0),
-              () => Navigator.of(context).push(_createRoute(
-                  ConfirmPaymentMethod(
-                      payment_method: widget.payment_method,
-                      paymentViewModel: paymentViewModel,
-                      role: Constants.customerRoleId))));
+          // await _scanCard();
+          // paymentViewModel.setInputValues(
+          //     index: 'nickname', value: card?.cardholder);
+          // paymentViewModel.setInputValues(
+          //     index: 'card_number', value: card?.number);
+          // paymentViewModel.setInputValues(
+          //     index: 'expiry_month', value: card?.expiry.split('/').first);
+          // paymentViewModel.setInputValues(
+          //     index: 'expiry_year', value: card?.expiry.split('/').last);
+          // // Future.delayed(const Duration(seconds: 0), () =>
+          // //     Navigator.pop(context));
+          // Future.delayed(
+          //     const Duration(seconds: 0), () => Navigator.pop(context));
+          // Future.delayed(
+          //     const Duration(seconds: 0),
+          //     () => Navigator.of(context).push(_createRoute(
+          //         ConfirmPaymentMethod(
+          //             payment_method: widget.payment_method,
+          //             paymentViewModel: paymentViewModel,
+          //             role: Constants.customerRoleId))));
         },
         child: Padding(
           padding: EdgeInsets.symmetric(
