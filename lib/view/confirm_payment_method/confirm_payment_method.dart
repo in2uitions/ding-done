@@ -36,16 +36,16 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.paymentViewModel.setInputValues(
-        index: 'nickname', value: '');
-    widget.paymentViewModel.setInputValues(
-        index: 'card_number', value: '');
-    widget.paymentViewModel.setInputValues(
-        index: 'expiry_month', value: '');
-    widget.paymentViewModel.setInputValues(
-        index: 'expiry_year', value: '');
-    widget.paymentViewModel.setInputValues(
-        index: 'last_digits', value: '');
+    // widget.paymentViewModel.setInputValues(
+    //     index: 'nickname', value: '');
+    // widget.paymentViewModel.setInputValues(
+    //     index: 'card_number', value: '');
+    // widget.paymentViewModel.setInputValues(
+    //     index: 'expiry_month', value: '');
+    // widget.paymentViewModel.setInputValues(
+    //     index: 'expiry_year', value: '');
+    // widget.paymentViewModel.setInputValues(
+    //     index: 'last_digits', value: '');
   }
   @override
   Widget build(BuildContext context) {

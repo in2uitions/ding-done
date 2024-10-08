@@ -12,6 +12,9 @@
       "title": "اختيار اللغة"
     }
   },
+  "map":{
+    "map": "الخريطة"
+  },
   "button": {
     "cancel": "إلغاء",
     "change_language": "تغيير اللغة",
@@ -68,6 +71,7 @@
     "serviceRequestConfirmedMsg": "نحن نبحث عن أفضل تطابق الآن وستتلقى تحديثًا عند التأكيد"
   },
   "jobDetails": {
+    "job": "الوظيفة",
     "jobDetails": "تفاصيل الوظيفة",
     "rating": "التقييم",
     "review": "المراجعة",

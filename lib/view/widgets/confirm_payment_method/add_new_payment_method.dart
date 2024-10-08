@@ -153,7 +153,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                           index: 'expiry_year',
                           value:
                               paymentViewModel.getPaymentBody['expiry_year'] ??
-                                  '',
+                                  '00',
                           validator: AppValidation().cardNumberValidator,
 
                           viewModel: paymentViewModel.setInputValues,
@@ -190,7 +190,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                           index: 'expiry_month',
                           value:
                               paymentViewModel.getPaymentBody['expiry_month'] ??
-                                  '',
+                                  '0',
                           validator: AppValidation().cardNumberValidator,
                           viewModel: paymentViewModel.setInputValues,
                           hintText: 'MM',

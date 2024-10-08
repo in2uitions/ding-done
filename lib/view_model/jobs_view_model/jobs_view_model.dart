@@ -600,6 +600,35 @@ class JobsViewModel with ChangeNotifier {
 
     notifyListeners();
   }
+  void setInputValuesWithoutNotify({required String index, dynamic value}) {
+    jobsBody[index] = value;
+    debugPrint('jobsBody $jobsBody');
+    debugPrint('hhhh $index $value');
+    if (index == 'date') {
+      final inputFormat = DateFormat('dd-MM-yyyy');
+      // Parse the input date string
+      selectedDate = inputFormat.parse(value);
+      // selectedDate = DateTime.parse(value);
+    } // Your selected date
+
+    if (index == 'time') {
+      // Extract the time part from the TimeOfDay string
+      RegExp regExp = RegExp(r'TimeOfDay\((\d+):(\d+)\)');
+      Match? match = regExp.firstMatch(value);
+      if (match != null) {
+        // Parse the hours and minutes
+        int hours = int.parse(match.group(1)!);
+        int minutes = int.parse(match.group(2)!);
+        selectedTime = TimeOfDay(hour: hours, minute: minutes);
+        print('Selected time: $selectedTime'); // Your selected time
+      } else {
+        print('Invalid time format: $value');
+      }
+    }
+    if (index == 'cancellation_reason') {
+      _selectedReason = value;
+    }
+  }
 
   void setUpdatedJob({required String index, dynamic value}) {
     if ((index == 'payment_card' || index == 'payment_method') &&
@@ -610,6 +639,17 @@ class JobsViewModel with ChangeNotifier {
     _jobUpdated = false;
     debugPrint('hhhh $index $value');
     notifyListeners();
+  }
+
+  void setUpdatedJobWithoutNotify({required String index, dynamic value}) {
+    if ((index == 'payment_card' || index == 'payment_method') &&
+        userRole == Constants.supplierRoleId) {
+    } else {
+      _updatedBody[index] = value;
+    }
+    _jobUpdated = false;
+    debugPrint('hhhh $index $value');
+
   }
 
   void launchWhatsApp() async {
