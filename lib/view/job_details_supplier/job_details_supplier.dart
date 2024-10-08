@@ -652,6 +652,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                     ),
                                   )
                                 : Container(),
+                        widget.fromWhere == translate('jobs.completed')?
+                            Container():
                         SizedBox(
                           width: context.appValues.appSizePercent.w45,
                           height: context.appValues.appSizePercent.h7,
@@ -698,7 +700,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                           translate('button.success'),
                                                           translate('jobDetails.jobStarted')))
                                               : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
-                                          : widget.fromWhere == translate('jobs.completed')
+                                          :
+                              widget.fromWhere == translate('jobs.completed')
                                               ? await Navigator.push(
                                 context,
                                   MaterialPageRoute(

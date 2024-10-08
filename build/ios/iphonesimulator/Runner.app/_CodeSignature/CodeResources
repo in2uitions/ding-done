@@ -293,7 +293,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		NvGyq2oaGIBQs3m4so644R6Xg8s=
+		4j1aj3FAnEEzX2et0cgrLD4YCVA=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -301,7 +301,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		TM+qqCiUkF/eaA2ot1hfkPqqN08=
+		UO3RpkA5UOHW5hBTSOGH+hANP+A=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
 		<data>
@@ -749,7 +749,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		QzvR9WRpGq3rSaejB78QYzxj4as=
+		Y4XvNk9TVU04u7rk2EX6bxjuD14=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -2284,15 +2284,23 @@
 		</data>
 		<key>Frameworks/GTMSessionFetcher.framework/GTMSessionFetcher</key>
 		<data>
-		8ULaf2lqS/EMGLtM5hhTtYYehgg=
+		QS9PqbzV+qyT2jc9FoRpFwNNQYs=
+		</data>
+		<key>Frameworks/GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/Info.plist</key>
+		<data>
+		g7hvHkrskujesC96Djgz3TJTyiY=
+		</data>
+		<key>Frameworks/GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/PrivacyInfo.xcprivacy</key>
+		<data>
+		GqeAMkwbcNQeG0K4qQhQh2vHhHo=
 		</data>
 		<key>Frameworks/GTMSessionFetcher.framework/Info.plist</key>
 		<data>
-		OWQGUExZnZU0VCyIjNOT5XCUxi0=
+		Q/UKut1lkDxi4hC0cQVPwtUGqrg=
 		</data>
 		<key>Frameworks/GTMSessionFetcher.framework/_CodeSignature/CodeResources</key>
 		<data>
-		d+ImEezm8pXNIwVPXqAg8tABNII=
+		IFg8m97S44PJ5slL4vceKPKC9IM=
 		</data>
 		<key>Frameworks/GoogleDataTransport.framework/GoogleDataTransport</key>
 		<data>
@@ -2316,19 +2324,35 @@
 		</data>
 		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac</key>
 		<data>
-		ALS1881FjTSFKwtllnL4QfIAt4A=
+		AO9YB8A6GqKy4p2vw/hL+O3t0vE=
+		</data>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/Info.plist</key>
+		<data>
+		1/bFOE1ZPfT+TKZf3oy/xhXFwBQ=
+		</data>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/PrivacyInfo.xcprivacy</key>
+		<data>
+		GqeAMkwbcNQeG0K4qQhQh2vHhHo=
+		</data>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/Info.plist</key>
+		<data>
+		zcL4pRB+uf2YLfvmxmg9aqdT0t4=
+		</data>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/PrivacyInfo.xcprivacy</key>
+		<data>
+		ZajnvEs/MYRS3X4TPLAhBWi8mc4=
 		</data>
 		<key>Frameworks/GoogleToolboxForMac.framework/Info.plist</key>
 		<data>
-		K+OaRpOam0+8JXYBmSKigNqR9f0=
+		8OOUEruKALRYkGghIl8CzlYRwf8=
 		</data>
 		<key>Frameworks/GoogleToolboxForMac.framework/_CodeSignature/CodeResources</key>
 		<data>
-		oPLhhJutdNmhvvsDaxpjnMc5E20=
+		vaE1aNPJcXMiix7wbDjcrbFfbTs=
 		</data>
 		<key>Frameworks/GoogleUtilities.framework/GoogleUtilities</key>
 		<data>
-		tC9HY9IzZYnHDXEpr29PjFEOUqI=
+		JBFF02CNVY9AqG22tCiTAwWC0vo=
 		</data>
 		<key>Frameworks/GoogleUtilities.framework/GoogleUtilities_Privacy.bundle/Info.plist</key>
 		<data>
@@ -4985,11 +5009,11 @@
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI</key>
 		<data>
-		Vmo2aU3qWmZCEvhEGnXGeR9usK4=
+		+nRDcfAN0ZbvRxEHkjwrhwaKx5E=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Assets.car</key>
 		<data>
-		WWbtXewZnW9ykyuppGmHS/fGbEI=
+		mRZp0E/cF6kESv/3pB5/A7B9mQ4=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Info.plist</key>
 		<data>
@@ -5379,7 +5403,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/_CodeSignature/CodeResources</key>
 		<data>
-		iLR4fXogzD0+Ln50U8Lr+LO70kQ=
+		I4T1NiNP7Thp9myU2reRU7lhXOg=
 		</data>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
 		<data>
@@ -6405,7 +6429,7 @@
 		</data>
 		<key>Frameworks/stripe_ios.framework/stripe_ios</key>
 		<data>
-		ECyRWF4GW9nYV0ORJi/UdiLOt9o=
+		5FQy3URw3XZ5NOQwBvcRNlzgx5c=
 		</data>
 		<key>Frameworks/syncfusion_flutter_pdfviewer.framework/Info.plist</key>
 		<data>
@@ -7321,7 +7345,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		FDBKAs/RZZsiUMa007l702fanEo=
+		sVj3RDnHHSv9s551O0Xmqt0V3Jw=
 		</data>
 		<key>LatinOCRResources.bundle/Info.plist</key>
 		<data>
@@ -11226,7 +11250,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			lKy88o5yLzdsAowFuo1OJy634Q1f+F4CYsUnItJityo=
+			zk0BEWJUC11NQo6KvSHG9T4PHvKk9EXefLG1sT+95sw=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -11240,7 +11264,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			dZn88bwBtNgjl9p4cxHE7+9eAbRItB8QMgBLgzycAow=
+			BhU6zqtj/dmRj6If/bVhBWN2wtimsTGG3S9wzthasFc=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/AssetManifest.bin</key>
@@ -12024,7 +12048,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			amJzcDIlrDbhmMcJ9C2hspMajwk35Y+qhbdfn1p713A=
+			u1ifyrI6ePKQNsfoRAeAP/GDB5aT2xfWiLFwJDyXgjA=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -14555,21 +14579,35 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			ENeFZXtNG/4fYolo+cqWoYNmyD9EwCGYyyfqowbM8Oo=
+			LC/kuKq2ZDfCZP+4oH8YYI8X1ZfAYd86X0nSy4dkPEk=
+			</data>
+		</dict>
+		<key>Frameworks/GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			3avWUGT8YGFXy6aOWgDFCxqAwSpL2N1kQA0n1WYhjyE=
+			</data>
+		</dict>
+		<key>Frameworks/GTMSessionFetcher.framework/GTMSessionFetcher_Core_Privacy.bundle/PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			PkqTy+hqzvfdfgY6KMhJmS9Vbn9SytxfN8HosOG1RoY=
 			</data>
 		</dict>
 		<key>Frameworks/GTMSessionFetcher.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			1UMVKRpQZTt/lrWH7n6p3Ii1oH4cxP5cXldcjdR9B1E=
+			aXel4DtTj+FkQptWxU0WsU1ibqU5aJthHC4Dfly9u9s=
 			</data>
 		</dict>
 		<key>Frameworks/GTMSessionFetcher.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jW6YJ0r4+UAEJr4QRvYOmoXmCZiMhTBbcFZdD55v0U4=
+			DLse5rTzbAfakzt7IOegrjA1bjm8d4h1eRAhQueo780=
 			</data>
 		</dict>
 		<key>Frameworks/GoogleDataTransport.framework/GoogleDataTransport</key>
@@ -14611,28 +14649,56 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			OiCBfKm3aoMqBLA1J0wRgAa6MpaimjqTTIcqu582tj0=
+			q121lBkWMk8CZvMdn65G42HWy80immxA2wqu5isGNjU=
+			</data>
+		</dict>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			USkqIFQQZVrxBAxksHsfGCJKMCvjOIoDavsJXicn51c=
+			</data>
+		</dict>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac_Logger_Privacy.bundle/PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			PkqTy+hqzvfdfgY6KMhJmS9Vbn9SytxfN8HosOG1RoY=
+			</data>
+		</dict>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			z4NmRFlmly71IsCFfTSgM+v6ixUx9IqsxiPutbxmOKI=
+			</data>
+		</dict>
+		<key>Frameworks/GoogleToolboxForMac.framework/GoogleToolboxForMac_Privacy.bundle/PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			dLDNcvwjwe8wLyLuJ1P2GBfNxa8P96fy0GMrUk+4rOo=
 			</data>
 		</dict>
 		<key>Frameworks/GoogleToolboxForMac.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YzOatjvdEuvLXFF0wOsuSCDaM1Q382ojuLhJ4ogSil8=
+			AlHp43n/FLP+ouMfkvp3dPKCE+OOT3Wxt3sdPSPWbgw=
 			</data>
 		</dict>
 		<key>Frameworks/GoogleToolboxForMac.framework/_CodeSignature/CodeResources</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			GXdBwggQvHx1sT45kC1v/JN7eukielte7BHBhyIpGRA=
+			gvixthqyH5+qjYpdfOpFf5P2JVBWUXkUKuJDiRMxQIM=
 			</data>
 		</dict>
 		<key>Frameworks/GoogleUtilities.framework/GoogleUtilities</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tC/QgX2vRPkYkdyTq3yI3cFRivzktQ9JpaTcFUfY6uQ=
+			6DsbpXqAt9cAl6ydsKe7+7sX8nSW/TDHeE5cXuPy2Qw=
 			</data>
 		</dict>
 		<key>Frameworks/GoogleUtilities.framework/GoogleUtilities_Privacy.bundle/Info.plist</key>
@@ -17601,14 +17667,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			1RXZLrFxAcr946JPxGUBJ9y/auX0HgOyNAQIhq+DZbA=
+			tyHX6gI5gTe8gePtHuupb38X/jQQ9KqrHLmCF/K9bV0=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JZ5QnbDSaEJjMFiVJO2uP+scmDy0wIT0jA+aTtIeMfk=
+			J+Ra7VIYV38cn4aEK4hd3dHSae6pr19Vz3B3InvhoVw=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI.bundle/Info.plist</key>
@@ -18007,7 +18073,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9xXF1O4QlAdJy7P2huM0I2Dz7ohGpNjB0E7E5aEbaq4=
+			0rr9wNN/fsrkIOPrmLtFomx7x/+zeSqIjZ5Z0aSCC3o=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
@@ -19330,7 +19396,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			nvcFsy1O/Ez5KiEF+Nq062OiF+ajs4uj0Wp9DrBhHfY=
+			nSXvzALpEEM75BEjaYkH+cxfCMvHfBbYLZbQZQojjB0=
 			</data>
 		</dict>
 		<key>Frameworks/syncfusion_flutter_pdfviewer.framework/Info.plist</key>
