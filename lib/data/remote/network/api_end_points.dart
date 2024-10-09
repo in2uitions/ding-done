@@ -27,6 +27,7 @@ class ApiEndPoints {
   final String supplierChangeLocation = '/suppliers/myLocation';
   final String customerChangeLocation = '/customers/myLocation';
   final String updateJob = '/suppliers/updateJob';
+  final String rateJob = '/customers/rateJob';
   final String updateJobCustomer = '/customers/updateJob';
   final String supplierCancelBooking = '/suppliers/cancelBooking';
   final String customerCancelJobNoPenalty = '/customers/cancelJobNoPenalty';

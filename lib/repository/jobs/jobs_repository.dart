@@ -36,6 +36,8 @@ class JobsRepository {
       NetworkApiService(url: ApiEndPoints().updateJob);
   final BaseApiService _apiUpdateJobCustomer =
       NetworkApiService(url: ApiEndPoints().updateJobCustomer);
+  final BaseApiService _apiRateJob =
+      NetworkApiService(url: ApiEndPoints().rateJob);
   final BaseApiService _apiCancelBooking =
       NetworkApiService(url: ApiEndPoints().supplierCancelBooking);
   final BaseApiService _apicancelJobNoPenalty =
@@ -207,6 +209,23 @@ class JobsRepository {
         body["customer_id"]=id;
         response = await _apiUpdateJobCustomer.postResponse(data: body);
       }
+
+      return response;
+    } catch (error) {
+      debugPrint('error in getting book jobs $error');
+      rethrow;
+    }
+  }
+  Future<dynamic> rateJob(int job_id,dynamic body) async {
+    try {
+      String? id = await getUserId();
+      String role=await getRole();
+      body["job_id"]=job_id;
+      dynamic response;
+
+        body["customer_id"]=id;
+        response = await _apiRateJob.postResponse(data: body);
+
 
       return response;
     } catch (error) {

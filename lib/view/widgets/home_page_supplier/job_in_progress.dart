@@ -223,7 +223,7 @@ class _JobInProgressState extends State<JobInProgress> {
                             ),
                             Text(
                               '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] : ''}'
-                              ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["curreny"] : ''}'
+                              ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["currency"] : ''}'
                               ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_type"] : ''}',
                               style: getPrimaryRegularStyle(
                                 fontSize: 14,

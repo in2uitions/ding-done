@@ -72,7 +72,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
       if (widget.data.job_type == 'inspection') {
         return matchingRate['inspection_rate'] ?? 'No rate available';
       } else {
-        return '${matchingRate["country"]["curreny"]}';
+        return '${matchingRate["country"]["currency"]}';
       }
     } else {
       return 'Rate not found';  // Fallback if no matching currency is found
@@ -652,15 +652,13 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                     ),
                                   )
                                 : Container(),
-                        widget.fromWhere == translate('jobs.completed')?
-                            Container():
+                        // widget.fromWhere == translate('jobs.completed')?
+                        //     Container():
                         SizedBox(
                           width: context.appValues.appSizePercent.w45,
                           height: context.appValues.appSizePercent.h7,
                           child: ElevatedButton(
                             onPressed: () async {
-                              debugPrint('wefjweoifj ${widget.fromWhere}');
-
                               setState(() {
                                 _isLoading = true;
                               });
@@ -702,41 +700,19 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                               : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
                                           :
                               widget.fromWhere == translate('jobs.completed')
-                                              ? await Navigator.push(
-                                context,
+                                              ?
+                              await jobsViewModel.downloadInvoice(
+                                  widget.data.id) !=
+                                  null?
+                              await Navigator.push(
+                                  context,
                                   MaterialPageRoute(
-                                    builder: (context) => Scaffold(
-                                      appBar: AppBar(
-                                        title: const Text('Invoice'),
-                                      ),
-                                      body: FutureBuilder<dynamic>(
-                                        future: jobsViewModel.downloadInvoice(widget.data.id), // Assume this returns the file from the download
-                                        builder: (context, snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.done && snapshot.hasData) {
-                                            final File file = snapshot.data!;
-
-                                            // Check if the file exists and print file path and size
-                                            if (file.existsSync()) {
-                                              debugPrint('File path: ${file.path}');
-                                              debugPrint('File size: ${file.lengthSync()} bytes');
-                                            } else {
-                                              debugPrint('File does not exist at path: ${file.path}');
-                                            }
-
-                                            // Use SfPdfViewer.file() with the valid file path
-                                            return SfPdfViewer.file(file);
-                                          } else if (snapshot.hasError) {
-                                            return Center(child: Text('Error loading PDF: ${snapshot.error}'));
-                                          } else {
-                                            return Center(child: CircularProgressIndicator());
-                                          }
-                                        },
-                                      ),
-                                    ),
-
-                                  )
-
-                              )
+                                      builder: (context) => Scaffold(
+                                          appBar: AppBar(
+                                            title: const Text('Invoice'),
+                                          ),
+                                          body:SfPdfViewer.memory(jobsViewModel.file))) )
+                              :showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
                               :showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
                                               ;
                               setState(() {

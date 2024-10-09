@@ -347,7 +347,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
 
               widget.fromWhere!=translate('jobs.requestedJobs') && widget.fromWhere!=translate('jobs.active')  &&  widget.fromWhere!=translate('jobs.completed')?
               ServiceRateAndCurrnecyWidget(
-                  currency: widget.data.job_address["country"]["curreny"],
+                  currency: widget.data.job_address["country"]["currency"],
                   // currency: widget.data.currency,
                   service_rate: _getServiceRate(),
 
@@ -432,7 +432,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                         EdgeInsets.fromLTRB(context.appValues.appPadding.p10,0,context.appValues.appPadding.p0,0),
                         child: Text(
                           widget.data.total_amount!=null? '${widget.data.total_amount} ${widget.data.service["country_rates"].isNotEmpty?
-                          widget.data.service["country_rates"][0]["country"]["curreny"]:''}':'${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"]["curreny"]} ${widget.data.service["country_rates"][0]["unit_type"]!=null?widget.data.service["country_rates"][0]["unit_type"]["code"]:''}',
+                          widget.data.service["country_rates"][0]["country"]["currency"]:''}':'${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"]["curreny"]} ${widget.data.service["country_rates"][0]["unit_type"]!=null?widget.data.service["country_rates"][0]["unit_type"]["code"]:''}',
                           style: getPrimaryRegularStyle(
                             // color: context.resources.color.colorYellow,
                             color: const Color(0xff180C38),
@@ -1141,11 +1141,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
   }
   String _getServiceRate() {
     // Extract the currency from job address
-    String currency = widget.data.job_address["country"]["curreny"];
+    String currency = widget.data.job_address["country"]["currency"];
 
     // Find the rate from country_rates where currency matches
     var matchingRate = widget.data.service["country_rates"].firstWhere(
-          (rate) => rate["country"]['curreny'] == currency,
+          (rate) => rate["country"]['currency'] == currency,
       orElse: () => null,  // If no match is found, return null
     );
 

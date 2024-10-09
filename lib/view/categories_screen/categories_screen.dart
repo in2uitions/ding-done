@@ -220,7 +220,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                                       title:
                                           services != null ? services["title"].toString() : '',
                                       cost:
-                                          '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
+                                          '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["currency"]}',
                                       image: service["image"] != null
                                           ? '${context.resources.image.networkImagePath2}${service["image"]}'
                                           : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',

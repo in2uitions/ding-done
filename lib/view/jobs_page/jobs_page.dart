@@ -118,7 +118,7 @@ class _JobsPageState extends State<JobsPage> {
               builder: (context) {
                 return ElevatedButton(
                   onPressed: () async {
-                    if (await jobsViewModel.updateJob(job.id) == true) {
+                    if (await jobsViewModel.rateJob(job.id) == true) {
                       Navigator.of(context).pop();
                       Future.delayed(const Duration(seconds: 0));
 

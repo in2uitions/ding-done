@@ -410,9 +410,23 @@ class JobsViewModel with ChangeNotifier {
       readJson();
       notifyListeners();
       _jobUpdated = true;
-      // await getSupplierBookedJobs();
-      // await getSupplierCompletedJobs();
-      // await getSupplierOpenJobs();
+      if (res["status"] == "OK") {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (error) {
+      debugPrint('Error fetching jobs $error');
+      return false;
+    }
+  }
+
+  Future<bool?> rateJob(int id) async {
+    try {
+      dynamic res = await _jobsRepository.rateJob(id, _updatedBody);
+      readJson();
+      notifyListeners();
+      _jobUpdated = true;
       if (res["status"] == "OK") {
         return true;
       } else {
@@ -430,19 +444,13 @@ class JobsViewModel with ChangeNotifier {
   Future<dynamic>? downloadInvoice(int id) async {
     try {
       dynamic res = await _jobsRepository.downloadInvoice(id);
-
-      // readJson();
-      // notifyListeners();
-
       if (res != null) {
         debugPrint('file downloaded');
         _file = res;
         notifyListeners();
-
         return _file;
       } else {
         debugPrint('error in file downloading');
-
         return _file;
       }
     } catch (error) {
@@ -468,7 +476,7 @@ class JobsViewModel with ChangeNotifier {
         return false;
       }
     } catch (error) {
-      debugPrint('Error fetching jobs ${error}');
+      debugPrint('Error fetching jobs $error');
       return false;
     }
   }
@@ -508,7 +516,7 @@ class JobsViewModel with ChangeNotifier {
         return false;
       }
     } catch (error) {
-      debugPrint('Error fetching jobs ${error}');
+      debugPrint('Error fetching jobs $error');
       return false;
     }
   }
