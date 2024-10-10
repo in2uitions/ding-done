@@ -61,7 +61,7 @@ class _ServiceRateAndCurrnecyWidgetState
                     child: Text(
                       translate('updateJob.serviceRate'),
                       style: getPrimaryBoldStyle(
-                        fontSize: 20,
+                        fontSize: 18,
                         color: const Color(0xff38385E),
                       ),
                     ),
@@ -75,8 +75,8 @@ class _ServiceRateAndCurrnecyWidgetState
                       // widget.service_rate!=null?widget.service_rate[0]["unit_rate"].toString():'',
                       '${widget.service_rate}',
                       style: getPrimaryRegularStyle(
-                        fontSize: 20,
-                        color: const Color(0xff38385E),
+                        fontSize: 18,
+                        color: const Color(0xff78789D),
                       ),
                     );
                     //     :widget.userRole==Constants.customerRoleId?

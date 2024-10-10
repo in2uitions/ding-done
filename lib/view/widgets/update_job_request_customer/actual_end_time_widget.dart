@@ -35,7 +35,7 @@ class _ActualEndTimeWidgetState extends State<ActualEndTimeWidget> {
             // ),
             child: Padding(
               padding: EdgeInsets.fromLTRB(
-                context.appValues.appPadding.p0,
+                context.appValues.appPadding.p30,
                 context.appValues.appPadding.p0,
                 context.appValues.appPadding.p0,
                 context.appValues.appPadding.p0,

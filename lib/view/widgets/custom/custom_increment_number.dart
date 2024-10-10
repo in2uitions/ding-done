@@ -105,6 +105,7 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
                 textAlign: TextAlign.center,
                 keyboardType: widget.keyboardType,
                 style: getPrimaryRegularStyle(
+                  color: const Color(0xff78789D),
                   fontSize: 15,
                 ),
                 decoration: InputDecoration(

@@ -46,7 +46,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
           // ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              context.appValues.appPadding.p0,
+              context.appValues.appPadding.p20,
               context.appValues.appPadding.p10,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
@@ -76,23 +76,26 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             '${widget.completed_units}',
                             style: getPrimaryRegularStyle(
                               fontSize: 20,
-                              color: const Color(0xff38385E),
+                              color: const Color(0xff78789D),
                             ),
                           )
-                        : Consumer<JobsViewModel>(
-                            builder: (context, jobsViewModel, _) {
-                            return CustomIncrementField(
-                              index: 'completed_units',
-                              value: '${widget.completed_units}',
-                              // hintText: 'Job Type',
-                              viewModel: jobsViewModel.setUpdatedJob,
-                            );
-                          })
+                        : Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Consumer<JobsViewModel>(
+                                builder: (context, jobsViewModel, _) {
+                              return CustomIncrementField(
+                                index: 'completed_units',
+                                value: '${widget.completed_units}',
+                                // hintText: 'Job Type',
+                                viewModel: jobsViewModel.setUpdatedJob,
+                              );
+                            }),
+                          )
                     : Text(
                         '${widget.completed_units}',
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
-                          color: const Color(0xff38385E),
+                          color: const Color(0xff78789D),
                         ),
                       ),
               ],
@@ -107,7 +110,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
           // ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              context.appValues.appPadding.p0,
+              context.appValues.appPadding.p20,
               context.appValues.appPadding.p10,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
@@ -137,23 +140,26 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             '${widget.number_of_units}',
                             style: getPrimaryRegularStyle(
                               fontSize: 20,
-                              color: const Color(0xff38385E),
+                              color: const Color(0xff78789D),
                             ),
                           )
-                        : Consumer<JobsViewModel>(
-                            builder: (context, jobsViewModel, _) {
-                            return CustomIncrementField(
-                              index: 'number_of_units',
-                              value: '${widget.number_of_units}',
-                              // hintText: 'Job Type',
-                              viewModel: jobsViewModel.setUpdatedJob,
-                            );
-                          })
+                        : Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Consumer<JobsViewModel>(
+                                builder: (context, jobsViewModel, _) {
+                              return CustomIncrementField(
+                                index: 'number_of_units',
+                                value: '${widget.number_of_units}',
+                                // hintText: 'Job Type',
+                                viewModel: jobsViewModel.setUpdatedJob,
+                              );
+                            }),
+                          )
                     : Text(
                         '${widget.number_of_units}',
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
-                          color: const Color(0xff38385E),
+                          color: const Color(0xff78789D),
                         ),
                       ),
               ],
@@ -168,7 +174,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
           // ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              context.appValues.appPadding.p0,
+              context.appValues.appPadding.p20,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
@@ -198,23 +204,26 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             '${widget.extra_fees}',
                             style: getPrimaryRegularStyle(
                               fontSize: 20,
-                              color: const Color(0xff38385E),
+                              color: const Color(0xff78789D),
                             ),
                           )
-                        : Consumer<JobsViewModel>(
-                            builder: (context, jobsViewModel, _) {
-                            return CustomTextField(
-                              index: 'extra_fees',
-                              value: '${widget.extra_fees}',
-                              // hintText: 'Job Type',
-                              viewModel: jobsViewModel.setUpdatedJob,
-                            );
-                          })
+                        : Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Consumer<JobsViewModel>(
+                                builder: (context, jobsViewModel, _) {
+                              return CustomTextField(
+                                index: 'extra_fees',
+                                value: '${widget.extra_fees}',
+                                // hintText: 'Job Type',
+                                viewModel: jobsViewModel.setUpdatedJob,
+                              );
+                            }),
+                          )
                     : Text(
                         '${widget.extra_fees}',
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
-                          color: const Color(0xff38385E),
+                          color: const Color(0xff78789D),
                         ),
                       ),
               ],
@@ -229,7 +238,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
           // ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              context.appValues.appPadding.p0,
+              context.appValues.appPadding.p20,
               context.appValues.appPadding.p10,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
@@ -259,23 +268,26 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             '${widget.extra_fees_reason}',
                             style: getPrimaryRegularStyle(
                               fontSize: 20,
-                              color: const Color(0xff38385E),
+                              color: const Color(0xff78789D),
                             ),
                           )
-                        : Consumer<JobsViewModel>(
-                            builder: (context, jobsViewModel, _) {
-                            return CustomTextField(
-                              index: 'extra_fees_reason',
-                              value: '${widget.extra_fees_reason}',
-                              // hintText: 'Job Type',
-                              viewModel: jobsViewModel.setUpdatedJob,
-                            );
-                          })
+                        : Padding(
+                            padding: const EdgeInsets.only(right: 20.0),
+                            child: Consumer<JobsViewModel>(
+                                builder: (context, jobsViewModel, _) {
+                              return CustomTextField(
+                                index: 'extra_fees_reason',
+                                value: '${widget.extra_fees_reason}',
+                                // hintText: 'Job Type',
+                                viewModel: jobsViewModel.setUpdatedJob,
+                              );
+                            }),
+                          )
                     : Text(
                         '${widget.extra_fees_reason}',
                         style: getPrimaryRegularStyle(
                           fontSize: 20,
-                          color: const Color(0xff38385E),
+                          color: const Color(0xff78789D),
                         ),
                       ),
               ],

@@ -59,7 +59,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                             Text(
                               translate('paymentMethod.paymentMethod'),
                               style: getPrimaryBoldStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   color: context.resources.color.btnColorBlue),
                             ),
                           ],

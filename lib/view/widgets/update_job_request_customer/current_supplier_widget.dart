@@ -39,12 +39,12 @@ class _CurrentSupplierWidgetState extends State<CurrentSupplierWidget> {
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: context.appValues.appPadding.p10,
-                  horizontal: context.appValues.appPadding.p10,
+                  horizontal: context.appValues.appPadding.p0,
                 ),
                 child: Text(
                   translate('updateJob.currentSupplier'),
                   style: getPrimaryBoldStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: const Color(0xff180C38),
                   ),
                 ),
@@ -72,7 +72,7 @@ class _CurrentSupplierWidgetState extends State<CurrentSupplierWidget> {
                     '${widget.user}',
                     style: getPrimaryRegularStyle(
                       fontSize: 18,
-                      color: const Color(0xff190C39),
+                      color: const Color(0xff78789D),
                     ),
                   ),
                 ),
