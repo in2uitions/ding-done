@@ -55,6 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _isChecked = false;
   var email;
   var password;
+
   // @override
   // void initState() {
   //   super.initState();
@@ -172,32 +173,28 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     side: const BorderSide(color: Colors.white),
                                     contentPadding: EdgeInsets.zero,
+                                    // Remove padding
                                     activeColor: Colors.white,
                                     checkColor:
                                         context.resources.color.btnColorBlue,
-                                    // Remove padding
                                     dense: true,
-                                    // Make the ListTile more compact
+                                    // Make the tile more compact
                                     controlAffinity:
-                                        ListTileControlAffinity.trailing,
-                                    // Align checkbox to the right
+                                        ListTileControlAffinity.leading,
+                                    // Checkbox before text
+                                    visualDensity: VisualDensity(
+                                        horizontal: -4, vertical: -4),
+                                    // Reduce space
                                     value: _isChecked,
                                     onChanged: (newValue) async {
                                       setState(() {
                                         _isChecked = newValue!;
                                       });
-                                      // if (_isChecked) {
-                                      //   // await loginViewModel.setCredentials();
-                                      //   debugPrint('isChecked');
-                                      //
-                                      // } else {
-                                      //   loginViewModel.removePasswordCredential();
-                                      //
-                                      // }
                                     },
                                   ),
                                 ),
                               ),
+
                               // SizedBox(height: context.appValues.appSize.s15),
                               Align(
                                 alignment: Alignment.centerRight,
@@ -426,7 +423,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             // Navigator.of(context).push(_createRoute(SignUpScreen()));
                             Navigator.of(context)
                                 // .push(_createRoute(SignUpOnBoardingScreen()));
-                                .push(_createRoute(const CountrySelectionScreen()));
+                                .push(_createRoute(
+                                    const CountrySelectionScreen()));
                           },
                         ),
                       ],
