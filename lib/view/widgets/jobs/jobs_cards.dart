@@ -566,7 +566,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                 debugPrint(
                                                     'data ${data[index]}');
                                                 widget.active == 'activeJobs'
-                                                    ? jobsViewModel.finishJob(
+                                                    ? jobsViewModel.finishJobAndCollectPayment(
                                                         data[index].id)
                                                     : jobsViewModel.startJob(
                                                         data[index].id);

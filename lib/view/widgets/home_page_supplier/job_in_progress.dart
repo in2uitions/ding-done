@@ -291,7 +291,7 @@ class _JobInProgressState extends State<JobInProgress> {
                                 onPressed: () {
                                   debugPrint(
                                       '${jobsViewModel.supplierInProgressJobs[index].id}');
-                                  jobsViewModel.finishJob(jobsViewModel
+                                  jobsViewModel.finishJobAndCollectPayment(jobsViewModel
                                       .supplierInProgressJobs[index].id);
                                 },
                                 style: ElevatedButton.styleFrom(
