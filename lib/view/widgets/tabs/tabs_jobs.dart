@@ -73,32 +73,32 @@ class _TabsJobsState extends State<TabsJobs>
                     ),
                   ),
                 ),
-                if (widget.jobCounts[index] > 0)
-                  Positioned(
-                    right: -18,
-                    top: -5,
-                    child: Container(
-                      padding: const EdgeInsets.all(4),
-                      decoration: BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      constraints: const BoxConstraints(
-                        minWidth: 24,
-                        minHeight: 24,
-                      ),
-                      child: Center(
-                        child: Text(
-                          '${widget.jobCounts[index]}',
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                // if (widget.jobCounts[index] > 0)
+                //   Positioned(
+                //     right: -18,
+                //     top: -5,
+                //     child: Container(
+                //       padding: const EdgeInsets.all(4),
+                //       decoration: BoxDecoration(
+                //         color: Colors.green,
+                //         borderRadius: BorderRadius.circular(12),
+                //       ),
+                //       constraints: const BoxConstraints(
+                //         minWidth: 24,
+                //         minHeight: 24,
+                //       ),
+                //       child: Center(
+                //         child: Text(
+                //           '${widget.jobCounts[index]}',
+                //           style: const TextStyle(
+                //             color: Colors.white,
+                //             fontSize: 12,
+                //             fontWeight: FontWeight.bold,
+                //           ),
+                //         ),
+                //       ),
+                //     ),
+                //   ),
               ],
             );
           }),

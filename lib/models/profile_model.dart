@@ -22,6 +22,7 @@ class ProfileModel {
     this.supplier_services,
     this.state,
     this.stripe_customer_id,
+    this.company,
   });
 
   int? id;
@@ -42,6 +43,7 @@ class ProfileModel {
   String? contact_details;
   String? state;
   String? stripe_customer_id;
+  dynamic company;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
         id: json["id"],
@@ -62,10 +64,12 @@ class ProfileModel {
         supplier_categories: json["supplier_categories"],
         state: json["state"],
         stripe_customer_id: json["stripe_customer_id"],
+    company: json["company"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "company": company,
         "user": user,
         "status": status,
         "image": image,

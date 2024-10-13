@@ -30,7 +30,7 @@ class _CustomDatePicker2 extends State<CustomDatePicker2> {
   @override
   void initState() {
     dateinput.text = widget.value ?? '';
-
+    widget.viewModel(index: widget.index, value: dateinput.text);
     dateinput.addListener(() {
       widget.viewModel(index: widget.index, value: dateinput.text);
     });
