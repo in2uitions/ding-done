@@ -891,7 +891,7 @@ class _HomePageState extends State<HomePage> {
     jobsViewModel.setInputValues(
       index: 'address',
       value:
-      '${profileViewModel.getProfileBody['current_address']["street_name"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']["city"]}, ${profileViewModel.getProfileBody['current_address']["state"]}',
+      '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
     );
     jobsViewModel.setInputValues(
         index: 'latitude',

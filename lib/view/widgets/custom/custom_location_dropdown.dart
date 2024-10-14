@@ -37,7 +37,7 @@ class _CustomLocationDropDownState extends State<CustomLocationDropDown> {
         ? widget.profileViewModel.getProfileBody["address"]
         : [];
     dropdownvalue = widget.profileViewModel.getProfileBody["address"] != null
-        ? '${items[0]["street_name"]} ${items[0]["building_number"]}, ${items[0]["city"]}, ${items[0]["state"]} '
+        ? '${items[0]["street_number"]} ${items[0]["building_number"]}, ${items[0]["city"]}, ${items[0]["zone"]} '
         : '';
     super.initState();
   }
@@ -56,11 +56,11 @@ class _CustomLocationDropDownState extends State<CustomLocationDropDown> {
         items: items.map((dynamic items) {
           return DropdownMenuItem(
             value:
-                '${items["street_name"]} ${items["building_number"]}, ${items["city"]}, ${items["state"]} ',
+                '${items["street_number"]} ${items["building_number"]}, ${items["city"]}, ${items["zone"]} ',
             child: SizedBox(
               width: context.appValues.appSizePercent.w75,
               child: Text(
-                '${items["street_name"]} ${items["building_number"]}, ${items["city"]}, ${items["state"]} ',
+                '${items["street_number"]} ${items["building_number"]}, ${items["city"]}, ${items["zone"]} ',
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: getPrimaryRegularStyle(

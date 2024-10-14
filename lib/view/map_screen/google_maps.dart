@@ -138,21 +138,32 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
             if (signupViewModel.signUpBody['role'] ==
                 Constants.supplierRoleId) {
               debugPrint(';supplier clicked');
-              Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(
-                  initialIndex: 3,
-                )
-              ));
+              Future.delayed(
+                  const Duration(seconds: 0),
+                      () =>   Navigator.of(context).push(
+                          _createRoute(SignUpSupplierOnBoardingScreen(
+                        initialIndex: 3,
+                      )
+                      )));
+
               // Navigator.of(context).push(
               //     _createRoute(
               //         SignUpSupplierOnBoardingScreen(
               //   initialIndex: 3,
               // )));
             }
+            debugPrint(';customer clicked');
+
             if (signupViewModel.signUpBody['role'] ==
                 Constants.customerRoleId) {
-              Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(
+              debugPrint(';customer clicked');
+
+              Future.delayed(
+                  const Duration(seconds: 0),
+                      () =>    Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(
                 initialIndex: 3,
-              )));
+              ))));
+
             }
           }
         },

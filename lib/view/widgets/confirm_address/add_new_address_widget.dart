@@ -156,45 +156,49 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                         // await Future.delayed(const Duration(seconds: 1));
                                         await jobsViewModel
                                             .getUpdatedJobsBody();
+                                        Navigator.pop(context);
 
-                                        Navigator.of(context).push(
+                                        Future.delayed(
+                                            const Duration(seconds: 0),
+                                                () =>      Navigator.of(context).push(
                                             _createRoute(
-                                                ConfirmAddress()));
-                                      }
-                                    },
-                                    onSuggestionSelected: (
-                                        PlacesDetailsResponse? result) async {
-                                      if (result != null) {
-                                        setState(() {
-                                          // autocompletePlace =
-                                          //     result.result.formattedAddress ?? "";
-                                        });
-                                        var splitted = result.result
-                                            .formattedAddress?.split(',');
-                                        var first = splitted?.first.toString();
-                                        var last = splitted?.last.toString();
-                                        debugPrint('first $first last $last');
-                                        jobsViewModel.setInputValues(
-                                            index: "longitude",
-                                            value: result.result.geometry
-                                                ?.location.lng.toString());
-                                        jobsViewModel.setInputValues(
-                                            index: "latitude",
-                                            value: result.result.geometry
-                                                ?.location.lat.toString());
-                                        jobsViewModel.setInputValues(
-                                            index: "address",
-                                            value: result.result
-                                                .formattedAddress ?? '');
+                                                ConfirmAddress())));
 
-                                        jobsViewModel.setInputValues(
-                                            index: "city",
-                                            value: '$last' ?? '');
-                                        jobsViewModel.setInputValues(
-                                            index: "street_number",
-                                            value: '$first' ?? '');
                                       }
                                     },
+                                    // onSuggestionSelected: (
+                                    //     PlacesDetailsResponse? result) async {
+                                    //   if (result != null) {
+                                    //     setState(() {
+                                    //       // autocompletePlace =
+                                    //       //     result.result.formattedAddress ?? "";
+                                    //     });
+                                    //     var splitted = result.result
+                                    //         .formattedAddress?.split(',');
+                                    //     var first = splitted?.first.toString();
+                                    //     var last = splitted?.last.toString();
+                                    //     debugPrint('first $first last $last');
+                                    //     jobsViewModel.setInputValues(
+                                    //         index: "longitude",
+                                    //         value: result.result.geometry
+                                    //             ?.location.lng.toString());
+                                    //     jobsViewModel.setInputValues(
+                                    //         index: "latitude",
+                                    //         value: result.result.geometry
+                                    //             ?.location.lat.toString());
+                                    //     jobsViewModel.setInputValues(
+                                    //         index: "address",
+                                    //         value: result.result
+                                    //             .formattedAddress ?? '');
+                                    //
+                                    //     jobsViewModel.setInputValues(
+                                    //         index: "city",
+                                    //         value: '$last' ?? '');
+                                    //     jobsViewModel.setInputValues(
+                                    //         index: "street_number",
+                                    //         value: '$first' ?? '');
+                                    //   }
+                                    // },
 
 
                                   );
@@ -287,44 +291,52 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                       jobsViewModel.setInputValues(
                                           index: "street_number",
                                           value: '$first' ?? '');
-                                    }
-                                  },
-                                  onSuggestionSelected: (
-                                      PlacesDetailsResponse? result) async {
-                                    if (result != null) {
-                                      var splitted = result.result
-                                          .formattedAddress?.split(',');
-                                      var first = splitted?.first.toString();
-                                      var last = splitted?.last.toString();
-                                      debugPrint('first $first last $last');
-                                      jobsViewModel.setInputValues(
-                                          index: "longitude",
-                                          value: result.result.geometry
-                                              ?.location.lng.toString());
-                                      jobsViewModel.setInputValues(
-                                          index: "latitude",
-                                          value: result.result.geometry
-                                              ?.location.lat.toString());
-                                      jobsViewModel.setInputValues(
-                                          index: "address",
-                                          value: result.result
-                                              .formattedAddress ?? '');
-
-                                      jobsViewModel.setInputValues(
-                                          index: "city",
-                                          value: '$last' ?? '');
-                                      jobsViewModel.setInputValues(
-                                          index: "street_number",
-                                          value: '$first' ?? '');
-                                      Navigator.pop(context);
-                                      await Future.delayed(
-                                          const Duration(seconds: 1));
-
-                                      Navigator.of(context).push(
+                                      Future.delayed(
+                                          const Duration(seconds: 0),
+                                              () =>    Navigator.of(context).push(
                                           _createRoute(
-                                              ConfirmAddress()));
+                                              ConfirmAddress())));
+
                                     }
                                   },
+                                  // onSuggestionSelected: (
+                                  //     PlacesDetailsResponse? result) async {
+                                  //   if (result != null) {
+                                  //     var splitted = result.result
+                                  //         .formattedAddress?.split(',');
+                                  //     var first = splitted?.first.toString();
+                                  //     var last = splitted?.last.toString();
+                                  //     debugPrint('first $first last $last');
+                                  //     jobsViewModel.setInputValues(
+                                  //         index: "longitude",
+                                  //         value: result.result.geometry
+                                  //             ?.location.lng.toString());
+                                  //     jobsViewModel.setInputValues(
+                                  //         index: "latitude",
+                                  //         value: result.result.geometry
+                                  //             ?.location.lat.toString());
+                                  //     jobsViewModel.setInputValues(
+                                  //         index: "address",
+                                  //         value: result.result
+                                  //             .formattedAddress ?? '');
+                                  //
+                                  //     jobsViewModel.setInputValues(
+                                  //         index: "city",
+                                  //         value: '$last' ?? '');
+                                  //     jobsViewModel.setInputValues(
+                                  //         index: "street_number",
+                                  //         value: '$first' ?? '');
+                                  //     Navigator.pop(context);
+                                  //     await Future.delayed(
+                                  //         const Duration(seconds: 1));
+                                  //     Navigator.of(context).push(
+                                  //         _createRoute(
+                                  //             ConfirmAddress()));
+                                  //     // Navigator.of(context).push(
+                                  //     //     _createRoute(
+                                  //     //         ConfirmAddress()));
+                                  //   }
+                                  // },
 
 
                                 );
@@ -535,50 +547,59 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                                     index: "street_number",
                                                     value: '$first' ?? '');
                                               }
-                                            },
-                                            onSuggestionSelected: (
-                                                PlacesDetailsResponse? result) async {
-                                              if (result != null) {
-                                                var splitted = result.result
-                                                    .formattedAddress?.split(
-                                                    ',');
-                                                var first = splitted?.first
-                                                    .toString();
-                                                var last = splitted?.last
-                                                    .toString();
-                                                debugPrint(
-                                                    'first $first last $last');
-                                                jobsViewModel.setInputValues(
-                                                    index: "longitude",
-                                                    value: result.result
-                                                        .geometry?.location.lng
-                                                        .toString());
-                                                jobsViewModel.setInputValues(
-                                                    index: "latitude",
-                                                    value: result.result
-                                                        .geometry?.location.lat
-                                                        .toString());
-                                                jobsViewModel.setInputValues(
-                                                    index: "address",
-                                                    value: result.result
-                                                        .formattedAddress ??
-                                                        '');
+                                              Navigator.pop(context);
+                                              Future.delayed(
+                                                  const Duration(seconds: 0),
+                                                      () =>   Navigator.of(context).push(
+                                                  _createRoute(
+                                                      ConfirmAddress())));
 
-                                                jobsViewModel.setInputValues(
-                                                    index: "city",
-                                                    value: '$last' ?? '');
-                                                jobsViewModel.setInputValues(
-                                                    index: "street_number",
-                                                    value: '$first' ?? '');
-                                                Navigator.pop(context);
-                                                await Future.delayed(
-                                                    const Duration(seconds: 1));
-
-                                                Navigator.of(context).push(
-                                                    _createRoute(
-                                                        ConfirmAddress()));
-                                              }
                                             },
+                                            // onSuggestionSelected: (
+                                            //     PlacesDetailsResponse? result) async {
+                                            //   if (result != null) {
+                                            //     var splitted = result.result
+                                            //         .formattedAddress?.split(
+                                            //         ',');
+                                            //     var first = splitted?.first
+                                            //         .toString();
+                                            //     var last = splitted?.last
+                                            //         .toString();
+                                            //     debugPrint(
+                                            //         'first $first last $last');
+                                            //     jobsViewModel.setInputValues(
+                                            //         index: "longitude",
+                                            //         value: result.result
+                                            //             .geometry?.location.lng
+                                            //             .toString());
+                                            //     jobsViewModel.setInputValues(
+                                            //         index: "latitude",
+                                            //         value: result.result
+                                            //             .geometry?.location.lat
+                                            //             .toString());
+                                            //     jobsViewModel.setInputValues(
+                                            //         index: "address",
+                                            //         value: result.result
+                                            //             .formattedAddress ??
+                                            //             '');
+                                            //
+                                            //     jobsViewModel.setInputValues(
+                                            //         index: "city",
+                                            //         value: '$last' ?? '');
+                                            //     jobsViewModel.setInputValues(
+                                            //         index: "street_number",
+                                            //         value: '$first' ?? '');
+                                            //     Navigator.pop(context);
+                                            //     await Future.delayed(
+                                            //         const Duration(seconds: 1));
+                                            //     Navigator.of(context).push(
+                                            //         _createRoute(
+                                            //             ConfirmAddress()));
+                                            //     // Navigator.of(context).push(
+                                            //     //     _createRoute(
+                                            //     //         ConfirmAddress()));
+                                            //   }
+                                            // },
 
                                           );
                                         },

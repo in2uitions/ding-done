@@ -29,10 +29,11 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
       if (currentAddress != null) {
         for (var i = 0; i < profileViewModel.getProfileBody['address'].length; i++) {
           var address = profileViewModel.getProfileBody['address'][i];
-          if (address['street_name'] == currentAddress['street_name'] &&
+          if (
               address['city'] == currentAddress['city'] &&
-              address['state'] == currentAddress['state'] &&
-              address['postal_code'] == currentAddress['postal_code']) {
+                  address['building_number'] == currentAddress['building_number'] &&
+              address['apartment_number'] == currentAddress['apartment_number'] &&
+              address['street_number'] == currentAddress['street_number']) {
             setState(() {
               _active = "$i";
             });
@@ -94,7 +95,7 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
                         },
                         tag: "$index",
                         active: _active == "$index",
-                        text: '${address["street_name"]}, ${address["city"]}, ${address["state"]}, ${address["postal_code"]}',
+                        text: '${address["street_number"]}, ${address["city"]}, ${address["building_number"]}, ${address["apartment_number"]}, ${address["zone"]}',
                         address: address,
                       ),
                     ),

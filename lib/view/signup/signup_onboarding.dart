@@ -873,20 +873,23 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                                 if (signupViewModel
                                                         .signUpBody['role'] ==
                                                     Constants.supplierRoleId) {
-                                                  Navigator.of(context).push(
-                                                      _createRoute(
-                                                          SignUpSupplierOnBoardingScreen(
-                                                    initialIndex: 3,
-                                                  )));
+                                                  Future.delayed(
+                                                      const Duration(seconds: 0),
+                                                          () =>     Navigator.of(context).push(
+                                                              _createRoute(
+                                                                  SignUpSupplierOnBoardingScreen(
+                                                                    initialIndex: 3,
+                                                                  ))));
+
                                                 }
                                                 if (signupViewModel
                                                         .signUpBody['role'] ==
                                                     Constants.customerRoleId) {
-                                                  Navigator.of(context).push(
-                                                      _createRoute(
-                                                          SignUpOnBoardingScreen(
-                                                    initialIndex: 3,
-                                                  )));
+                                                  Future.delayed(
+                                                      const Duration(seconds: 0),
+                                                          () =>    Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(
+                                                        initialIndex: 3,
+                                                      ))));
                                                 }
                                               }
                                             },

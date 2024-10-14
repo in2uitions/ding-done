@@ -612,7 +612,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                                     ? '${context.resources.image.networkImagePath2}${jobsViewModel.supplierOpenJobs[index].service['image']}'
                                                     : 'https://t3.ftcdn.net/jpg/00/27/61/68/360_F_27616800_mP42aLqY152iln3kHDTiAvlMrDoYU606.jpg',
                                                 location:
-                                                    '${jobsViewModel.supplierOpenJobs[index].job_address["city"]},${jobsViewModel.supplierOpenJobs[index].job_address["street_name"]},${jobsViewModel.supplierOpenJobs[index].job_address["state"]}',
+                                                    '${jobsViewModel.supplierOpenJobs[index].job_address["city"]},${jobsViewModel.supplierOpenJobs[index].job_address["street_number"]},${jobsViewModel.supplierOpenJobs[index].job_address["zone"]}',
                                                 date:
                                                     '${jobsViewModel.supplierOpenJobs[index].start_date}',
                                                 description:

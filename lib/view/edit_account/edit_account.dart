@@ -338,7 +338,7 @@ class _EditAccountState extends State<EditAccount> {
                                 const Gap(10),
                                 Expanded(
                                   child: Text(
-                                    '${profileViewModel.getProfileBody['current_address']["street_name"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']["city"]}, ${profileViewModel.getProfileBody['current_address']["state"]}',
+                                    '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
                                     style: getPrimaryRegularStyle(
                                       fontSize: 18,
                                       color: const Color(0xff190C39),

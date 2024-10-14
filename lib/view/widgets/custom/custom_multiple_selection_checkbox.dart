@@ -135,7 +135,7 @@ class _CustomMultipleSelectionCheckBoxListState
 
                             for (Map<String, dynamic> translation
                             in servicesInCategory[innerIndex]["translations"]) {
-                              if (translation["languages_code"] == lang) {
+                              if (translation["languages_code"]["code"] == lang) {
                                 services = translation;
                                 break; // Break the loop once the translation is found
                               }

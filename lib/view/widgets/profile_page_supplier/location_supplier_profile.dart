@@ -96,10 +96,10 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
                       child: Text(
                         profileViewModel.getProfileBody[
                         'current_address']!=null?'${profileViewModel.getProfileBody[
-                        'current_address']["street_name"]} ${profileViewModel.getProfileBody[
+                        'current_address']["street_number"]} ${profileViewModel.getProfileBody[
                         'current_address']["building_number"]}, ${profileViewModel.getProfileBody[
                         'current_address']["city"]}, ${profileViewModel.getProfileBody[
-                        'current_address']["state"]}':'',
+                        'current_address']["zone"]}':'',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: getPrimaryRegularStyle(

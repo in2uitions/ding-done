@@ -857,9 +857,105 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                         ),
                                       )
                                       :Container();
-                                    }
-                                  )
 
+
+                                    }
+                                  ),
+                                  widget.fromWhere != translate('jobs.completed')?
+                                  SizedBox(
+                                    width: context.appValues.appSizePercent.w35,
+                                    height: context.appValues.appSizePercent.h7,
+                                    child: ElevatedButton(
+                                      onPressed: () async {
+                                        setState(() {
+                                          _isLoading = true;
+                                        });
+                                        widget.fromWhere == 'request'
+                                            ? await jobsViewModel.acceptJob(widget.data) ==
+                                            true
+                                            ? showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                simpleAlert(
+                                                    context,
+                                                    translate('button.success'),
+                                                    translate(
+                                                        'jobDetails.jobAccepted')))
+                                            : showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                simpleAlert(
+                                                    context,
+                                                    translate('button.failure'),
+                                                    '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
+                                            : widget.fromWhere == translate('jobs.active')
+                                            ? showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                showFinalData(
+                                                    context, jobsViewModel))
+                                            : widget.fromWhere == 'booked'
+                                            ? await jobsViewModel.startJob(
+                                            widget.data.id) ==
+                                            true
+                                            ? showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                simpleAlert(
+                                                    context,
+                                                    translate('button.success'),
+                                                    translate('jobDetails.jobStarted')))
+                                            : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
+                                            :
+                                        widget.fromWhere == translate('jobs.completed')
+                                            ?
+                                        await jobsViewModel.downloadInvoice(
+                                            widget.data.id) !=
+                                            null?
+                                        await Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => Scaffold(
+                                                    appBar: AppBar(
+                                                      title: const Text('Invoice'),
+                                                    ),
+                                                    body:SfPdfViewer.memory(jobsViewModel.file))) )
+                                            :showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
+                                            :showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure'), '${translate('button.failure')} \n ${jobsViewModel.errorMessage}'))
+                                        ;
+                                        setState(() {
+                                          _isLoading = false;
+                                        });
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                        elevation: 0,
+                                        backgroundColor: const Color(0xff4100E3),
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                        ),
+                                      ),
+                                      child: _isLoading
+                                          ? const CircularProgressIndicator()
+                                          : Text(
+                                        widget.fromWhere == 'request'
+                                            ? translate('button.accept')
+                                            : widget.fromWhere == translate('jobs.active')
+                                            ? translate('button.finish')
+                                            : widget.fromWhere == 'booked'
+                                            ? translate('button.start')
+                                            : widget.fromWhere ==
+                                            translate('jobs.completed')
+                                            ? translate(
+                                            'button.invoice')
+                                            : '',
+                                        style: getPrimaryBoldStyle(
+                                          fontSize: 18,
+                                          color: context.resources.color.colorWhite,
+                                        ),
+                                      ),
+                                    ),
+                                  ):
+                                      Container(),
                                 ],
                               ));
                         }),

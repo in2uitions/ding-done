@@ -50,7 +50,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                 children: [
                   Expanded(
                     child: Text(
-                      '${widget.address['city'] != null ? widget.address['city'] : ''}, ${widget.address['street_name'] != null ? widget.address['street_name'] : ''}, ${widget.address['state'] != null ? widget.address['state'] : ''}',
+                      '${widget.address['city'] != null ? widget.address['city'] : ''}, ${widget.address['street_number'] != null ? widget.address['street_number'] : ''}, ${widget.address['zone'] != null ? widget.address['zone'] : ''}',
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: getPrimaryRegularStyle(
