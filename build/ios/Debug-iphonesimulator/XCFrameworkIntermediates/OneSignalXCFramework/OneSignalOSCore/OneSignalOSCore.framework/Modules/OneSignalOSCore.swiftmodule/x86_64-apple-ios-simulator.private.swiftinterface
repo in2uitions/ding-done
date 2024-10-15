@@ -22,6 +22,7 @@ import _SwiftConcurrencyShims
   public var paused: Swift.Bool
   public func start()
   public func addExecutor(_ executor: any OneSignalOSCore.OSOperationExecutor)
+  public func enqueueDelta(_ delta: OneSignalOSCore.OSDelta)
   @objc public func addFlushDeltaQueueToDispatchQueue(inBackground: Swift.Bool = false)
   @objc override dynamic public init()
   @objc deinit
@@ -56,6 +57,12 @@ extension OneSignalOSCore.OSModelStore : OneSignalOSCore.OSModelChangedHandler {
   public func set<T>(property: Swift.String, newValue: T)
   public func hydrate(_ response: [Swift.String : Any])
   open func hydrateModel(_ response: [Swift.String : Any])
+  @objc deinit
+}
+public class OSNewRecordsState {
+  public init()
+  public func add(_ key: Swift.String, _ overwrite: Swift.Bool = false)
+  public func canAccess(_ key: Swift.String) -> Swift.Bool
   @objc deinit
 }
 @objc public protocol OSBackgroundTaskHandler {
