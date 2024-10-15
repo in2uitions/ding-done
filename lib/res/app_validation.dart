@@ -1,6 +1,6 @@
 class AppValidation {
   String? isEmailValid(String val) {
-    final emailRegExp = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[cC][oO][mM]$");
+    final emailRegExp = RegExp(r"^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
     if (val.isNotEmpty && emailRegExp.hasMatch(val)) {
       return null; // Email is valid
     } else {

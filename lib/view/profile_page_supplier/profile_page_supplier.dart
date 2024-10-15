@@ -134,7 +134,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                               width: context.appValues.appSizePercent.w60,
                               child: Text(
                                 profileViewModel.getProfileBody!=null && profileViewModel.getProfileBody['current_address']!=null?
-                                '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}':'',
+                                '${profileViewModel.getProfileBody['current_address']["street_number"]}, ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}':'',
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: getPrimaryRegularStyle(

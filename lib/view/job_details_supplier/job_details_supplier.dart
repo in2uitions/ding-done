@@ -551,7 +551,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                             : Container(),
 
                         widget.fromWhere != 'request' &&
-                                widget.fromWhere != translate('jobs.booked')
+                                widget.fromWhere == translate('jobs.completed')
                             ? RatingStarsWidget(stars: widget.data.rating_stars ?? 0.0,userRole: Constants.supplierRoleId,)
                             : Container(),
 

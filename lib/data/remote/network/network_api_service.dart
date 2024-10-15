@@ -49,7 +49,6 @@ class NetworkApiService extends BaseApiService {
       // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
       final response;
       response = await http.get(Uri.parse(finalUrl), headers: headers);
-      debugPrint('response in api network ${response.body}');
       responseJson = returnResponse(response);
     } catch (error) {
       debugPrint('error $error');
@@ -85,7 +84,6 @@ class NetworkApiService extends BaseApiService {
       // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
       final response;
       response = await http.get(Uri.parse(finalUrl), headers: headers);
-      debugPrint('response in api network ${response.bodyBytes}');
       return response.bodyBytes;
     } catch (error) {
       debugPrint('error $error');
