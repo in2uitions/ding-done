@@ -6,345 +6,349 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		D11UEsn97gAD1pju0BFSLAiq3ng=
+		MRKggvYR0LyD9U4LceugFBBpDuY=
 		</data>
-		<key>StripePaymentSheet.bundle/Assets.car</key>
+		<key>StripePaymentSheetBundle.bundle/Assets.car</key>
 		<data>
-		d/dPApv6Q9QGjA2hlnpXwVD5gcA=
+		Hw2jLpaii5Y2FA/NJHq/Ga0fV/o=
 		</data>
-		<key>StripePaymentSheet.bundle/Info.plist</key>
+		<key>StripePaymentSheetBundle.bundle/Info.plist</key>
 		<data>
-		HbgLu+guelviEASyj97g7yFL+cM=
+		zdl86Pg4Od34Ov1gjsUv0LoUL9Y=
 		</data>
-		<key>StripePaymentSheet.bundle/bg-BG.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			JtoDdKqB4gQ5txxmqpTmq76OIQ0=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/ca-ES.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			MM9elLwGRtTdZUW4oOCvbMrG1Co=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/cs-CZ.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			9q42fv958YZulZiywWhxo/42/js=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/da.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			fR+k8kuwIZcmOK3T07Elx6j/aQI=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/de.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			8QkFx+xsw9J5nYVVEd7c8yXsxDs=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/el-GR.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			SRj7dDXCqrTLGPZq5HLocDaLIkQ=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/en-GB.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			BESih1SYEvAbdM+PakcGzmi/2/o=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/en.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			NBvGgxBZQotn9yP4ktzWfFuOiqU=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/es-419.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			srXawSq+ewRo4imw8kSP6PBH4nE=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/es.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			K6kzmn54tib7Ie9iX5wXaqXBPxc=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/et-EE.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			pLkWphENNJ/hrGKWbVeCYTC1ROI=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/fi.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			LN0LxbeKQWRvd6R0yolHMCx0A8Q=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/fil.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			Kw2DIwl4g7Bs46iJ2OaP0LslOJU=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>StripePaymentSheet.bundle/form_specs.json</key>
+		<key>StripePaymentSheetBundle.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
-		yiQqt8AoKaghdwENKUBTUt9kHIQ=
+		KVQcLXIg958z1kiZmo8ZmmCYxZs=
 		</data>
-		<key>StripePaymentSheet.bundle/fr-CA.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			JYvWsTRIL7Iyst+ajtAQU2d9gMk=
+			fD9/VXNZmFevEgY5831TRBZe/Ac=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			mPUZ5NAWUeVnu538H7vRf0pc/Qw=
+			uuUx6UvSSzx3kziowoKMJHmdr78=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			NptXqwqnup/+b5QSjR5irl3tNQA=
+			fqUaMcnLIPyfB6XaCU3XbC9C6RI=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			whaQj4CftlshVOXHr/ZYiLyoIes=
+			HfeIWSJaZzmklHxbei+HOWc5NvQ=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/id.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			xIXhzMmj0i2UsMXCpiw5hAFgenI=
+			uKDTC4NaLeDZk9t1UMQItOl6KWs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/it.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pAWR1AMjdN1lGA/odlQON77MCKE=
+			9M0+xTF9z9r3RVbOs/sPTlIxZM4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wrce7DKIPmGwrNnbeJ5B9GSJfYY=
+			/C+gXSmoOJLVvEiPtvr50mumCdk=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3Pef6sDceLEkXr9tyXK0pL9unoQ=
+			BW8q72XoTlm7Q3H/6Vq90dD88W4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			r75k9nDRjdxnMiIlTU3Q6PfZMu0=
+			0bpmOxoiAVOKYxZkgjk+PGyRHPg=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			OIlg/Q+rB5zoBzLqaFnXi6C0iVE=
+			m4SWdtL0U9of38ZJdK+j2JzHZyY=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			asOMdncp9K6zT/xTTAVk7xBFNXU=
+			GCPnkUapPiaDQbIMYCGPstcgmnk=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			eH2yp6BcF6A8g+Docoij3Bjoy74=
+			6nATRz1mB5Q7Oop6EHrEejqzaNE=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8zpP4kp14hc0/7JzeRyRs5hVtBs=
+			FKbtCi/lhd9AlF2bORJqvgT11HI=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/form_specs.json</key>
+		<data>
+		4WMCQLY7Y3yxyByI2FzWflAXNkk=
+		</data>
+		<key>StripePaymentSheetBundle.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			XMbHff+EDY11gOuG2TzDbnReTkU=
+			TOTXsUXWZwtKmNFKZ9M4XbzulKw=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FQKkIoqKPIBzPdmmZKm4wbmGKdo=
+			/bcrM7sfP1RXjLnoApCdXW8iL7U=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			qUOjSj7urbDwhS8LedVwQJO4Izk=
+			rNeVM3sPHlIHeJFWnf0wJSgJiEM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			IJC/nNgpYxL7uC35n3z03in0TG0=
+			hoS0/opuFzcBjiGutqspTGrIH8M=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Zu6SeYa3pLa75kpzc9E+eQx81x4=
+			WkQ59rH0sRUG1rGoWD06ww4c65k=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			+ZKIKL/oywAG8TxM9M6cKFgOimU=
+			Y+pQnkS9z0kN+Ao14tz3TsTmx+c=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			D4Rb6GXeBfaIsEOo9BAEkGMivgA=
+			VqTmiOv308SgkdMbUYlgOWTvgVs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			TVjqdBgiue+gbA0ffmvx9TE3Hx8=
+			AcVOxmy6/nCBbAySRUmLJlA9vsM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Yy4tTrl1HosfIKAVmquHnclXXXU=
+			wm3txzc1yyOMpskTT2V+PGGQpog=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			j1mqvPMczel7gdMkkKHFskJgSBY=
+			OtTcVD3kEY7mdyjvDnnsoTQ9KQA=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/tk.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ms-MY.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			f0EQojh4WJW8HGJDV2aLKpcOpuc=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/mt.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			2RYrAOMdoakbejwDasGCVm4fnNc=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/nb.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			rH/V6lIxPmhQYPIpe3fWRk7Aim4=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/nl.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			RBSkdCX18n6MW6LCV/0RQhLKzu0=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/nn-NO.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			hGDFSzYRuhRicCHSZNSGecrx0ks=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/pl-PL.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			zlvP7H++ZEe13vupz2Uv59oj5ZM=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/pt-BR.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			/OKqTi/i8+nHr/fGWV/kH7z9v1c=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/pt-PT.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			m2EBEK09sGC+4Wmv6/HIkRcSyro=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/ro-RO.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			J1qrS8GI6SaeJm1qwrHBXngYFi4=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/ru.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			gZ3BzKMoXM6uULc5k9MQeRe89sw=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/sk-SK.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			ECqiRwcwRvhHiRsALwcgUlPspx8=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/sl-SI.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			LKTN13lqbgWT3BzNhp+xWhg9770=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/sv.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			roUAyI5cfMfE095njU3gG2asUg0=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -353,47 +357,47 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Pi4Jzj7S1AW5JY2aQd28PLvQ17Q=
+			orwO9WSGQF/SIpYn11RbLC3H5rA=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			fuBN2IbPsD5DwExubic/FTqcLPE=
+			575ZTWORBnQ5H4LWIPuqiy2I7Gg=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			SqWrClehE4seS+wIvoPEtAEx/l8=
+			3c0TXpcp9Xf9J0K9ah39EmtLrDM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nyFog2OdWvNwpQcgXyxG71YZCsQ=
+			gTtDyh2pUFwafJZsCMlodcxcvdM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Jf9TclUU8UBGjkbNrzgAiEBOx1o=
+			F7EFgUC1BC23sIrO368/LDPnXoI=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -401,352 +405,359 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>StripePaymentSheet.bundle/Assets.car</key>
+		<key>StripePaymentSheetBundle.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			0xUtddefF36wAgy7S9XCDT3mFb52vaBe78+MRYfQRvY=
+			isDTF3x5Lt5qVLT7y0dTZU4eMayTNxBVpUqfmdRdLk0=
 			</data>
 		</dict>
-		<key>StripePaymentSheet.bundle/Info.plist</key>
+		<key>StripePaymentSheetBundle.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ChUWxFjyZYjmi1FCGt/jh7bSF7yWbx6KT0UdLHic3mw=
+			Y10RIEO/amUg4Ma4KalhWvU9BZE9jk+X/+GXh5LJOW8=
 			</data>
 		</dict>
-		<key>StripePaymentSheet.bundle/bg-BG.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			F9mWwbDYTAI+gYB9S9JYms3p3WCH/72Yca9AWVmRuOs=
+			YjIr0uoZ9gU21STiXaYAZXIyfHROzQHuPdCFo6Dxgn0=
 			</data>
-			<key>optional</key>
-			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ca-ES.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			w5+YXGRrwwTUkxY5KWqv6YJpNdknDhajxLrXKVCUUFw=
+			+YGPB7JnJ9WSbW3XkquJ7fKWTvKZGjkAWG2WZQ95Iec=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/cs-CZ.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dTMZ7dw//hVoBDtGOLY0gL0PqSR4zRUmrKsr2A253pc=
+			n3QZD6n+P22AuK4WyGcuqeNI2tKClL3XcQ/jSJuUyJ4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/da.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ujsKD29nwjHA/ZTu5oVuVIDzQtzpzTrXClTnMTD4aJ8=
+			THyiADbmBO+vSVzUpHMrlGLUwdi29LgHbecFZ550FHg=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/de.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Vih+9GjC7bULg6FLxDshy1bsczZjqUKHL598UPXnh00=
+			nRz6U4JJl/cir2kv0aSIOrTViCe4gbjApRAPAD7c16c=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/el-GR.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			iyk2wt0tmnlKFYgasOZX0VgIyPCC0LdlYtPf8fbEktQ=
+			hXsErNAHYYOeaVw3juucvl6vOwvEsuh7QsWwgE3FTqo=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/en-GB.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			uUU4J6sn8atpgwt1HluStjxLJtaHZOzIo8+djfkSCOw=
+			b/2tTYX7+1VJIJIi6gVjPv51EwsbRBzTqoTJhLsXTo8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/en.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			91UUcPF4YxaLiG9xvtdZ8qtxBrYzvKwVf1LfCOFNrUA=
+			7k8Y/Fn5sSpMSJRUnZaC1HEfSGL4gt1Xw6IkY6s6+PU=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/es-419.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2+vP3JSFPItkTbNuJs6e5g4GhdRSLXD5Dj+maBX9SS0=
+			6UcpPhnnxcWu1JUrE5xjdU51bwNjzBPehxDRef52DwU=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/es.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wsA28kV5KxIYu/tze9WfVaJ+oUyXbezOZMysuH4O/9c=
+			PBuFnovMYPJpUWQWxD2FOBNV/lVEIkP/4uPVAuOGiO8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/et-EE.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			R6u25L4jK7JoUQCR2rUu8sGaJYu0TamJouucnBkf5Ro=
+			BqDTPTB6lZcXOlXJfbi0IGspNC0IY3EcuOwcj4RFYS4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/fi.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ml2SA4Jlb0Zhb2aqU5BMYPIb5GLna7jAkvcSPnUxgK4=
+			T49R3C6DOPqm+VwPFrJXhxK6M4wLdu6L0M6A91Z4NI4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/fil.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			kuOw7ln54EQDkgx1RzszRgmBa6S4Krl99SkWvPu1HTI=
+			4YlvxkIWxCQpSfZiB5TlvqHirKJkVmze8+9DWGmNp+A=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/form_specs.json</key>
+		<key>StripePaymentSheetBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RkhIlf8lf2CTyH+3GpXDtsjTievrxXnxwDJRJ/vvuFA=
-			</data>
-		</dict>
-		<key>StripePaymentSheet.bundle/fr-CA.lproj/Localizable.strings</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			fAEmLEQTuOMo+Ai0aIfH2dgpdHZ++l6DYzXx602asnc=
+			8GnwgDcpFSqIPDMHyrd57xZLUO8WfR3AOBttdQYiXXQ=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/form_specs.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BB0qyzqAZ+cfrYgozfcH4aozYMX3E1JxR0C43rdv8Gk=
+			qtXaRyurmw2ENgcFDG2K/BDSpcF31+5A9CvcXyBmKis=
+			</data>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/fr-CA.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Yw7p17Xsq6ig/QqY3disxTbVvKlCcHpUdapqnE8fzUo=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			falM+Qeu9oYun3B4gX9OCKOuRI/4TRwdPYNyIeAtb+k=
+			XHd+QbDX4XNGw4Pp21tfVnwRQhdjSHjMMlk/jEsCDcU=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ISB8gusjEIuSnK/U7dX0FI8u6HbLGZQqkmbkBsFHYOI=
+			lwpISfjMjr0p4b6Hb2QsU3tIizz2vP/D85HuaLi7uPQ=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/id.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Pym3aFyCaERW127fF8+CVmP+2MkdBd19ruV7XI8lmYg=
+			uKIKLhtoHSOcMhvS7BU6dF+vtji/6mjcinf1VAtWxE8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/it.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			j4pD4zS+XHmN/xT6tw2KuJk3GXHbiyD4AKHMrSRL554=
+			dPKZILGrBYdutSoW9NJnbChk0v90zPasiUduuJ//6RE=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			66CZdc12yHq7OsL+TTvoI9gJ1F+9F86jUIzMNoJ4hIY=
+			XBVy81HF3aKK0xI9VhY9WTPs41n4Mhu9yYNVjh66jX0=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			PP/bYg+i4UqsUFi+nyFeVB08C5xggRMbh2DON1BJwl8=
+			uqPRaFMS/FOCSgulylGrgiV+0HLrc/rO9jaHDD531hs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			woqxvrcTn1noR5nev2+6+rpptAOCYogObNCsu4qis/o=
+			GgPfaPS28SrZFKQeNojO4u3XAbcQEnOv6IHOESot2xs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			WR3JZYChKGUa4eA4tKSONl/mRBmrkCbPrr+RXs8c+pQ=
+			Q1EOVX/ZLNxpjn7e3Od9RR1szgZM2IahGJEfmLW4Jk8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fB6OmpicGrNVlvX1kVH5UuEtcUrufg9DXDXfiYBysvg=
+			gyPOOgbCIZdq2gN9nj31DZoyGFzlQfQOIiipsueGSho=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bzy190yFs5maI3xR+HSkx8y+d5G/cmFHJo9UuKXD0mA=
+			scTtWqN3BIbp1Fv55f3gWmgLx3qfXztUzzWe0tgbO+s=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wBpdQlBt+W+IH48cgv7OLmVwXXEfXqHq1o2QQvQNnis=
+			rhLYMnl8KCesyi7O3ITHr6aOaYH5u/qlWuu0pxqLuZE=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Sadu5YAhhAzQTEvEC5UqwoaJ+3HxPT3I8WN5MVKBCWU=
+			YEzEn88XKiI7o7L02YES0+5f7AJNmuNIcFNxB3uM0kQ=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			RfXTWwQBJM+3Yfx3MvgKVusiZPhblxWOTiJTf0DS50Q=
+			/THDDly7Sm5VP6/jo/Yuoidu0qPTZNCqwNta9NpzQ0c=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/nn-NO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			q5G7aAAKeA6mqiaYu8j0b2rs/OmbCzndSPOYb9n66ZI=
+			bW+R3jHjz78e9e6U03/4g5DX5zYiN8plmmeFEZA4osg=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bBjHt+MFCkzzZhqqsRPW1bzAaBvlVXpfy6tN5Y/Zsr0=
+			ml6ra4m4HbODCiJTHaGZJ+pTH+oZCpHh4EkpW4r2sUE=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			wJw25PKitoLxuQ3XFVnGWjtHDjtEWhaYpZUmJ/6elTs=
+			iObzDYOtwdu3/7H9AmVPFdgPePD/fjX6FBQpl4p1sIM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Pt7HRDHRuIpvblum3wS+EUzSdIbb2XiLkusq6ATK+Ok=
+			Bx/g5e4uuTxzDECTWl4uGcRSOMcXFGTYngwCW5xnnlg=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fgTX2tfdBj7BZ2kAAf3Q/CfDf2XLQ2OkMI1te8/S49Y=
+			8ucGIbqMRYCnIH6unQpwJDP60uQdbZ7f+gSlRgmxZQc=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			XUUZIskTjWQ1ukwTQ//DIM757wHsDk72rn6j7SBY3Kc=
+			oWLVujBBEsbMUCHUZBKh5IEXJviHQ3HREhsWmcg4VFA=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			duwBObEdyDE6XydG8+qp8IVaHcbVhUpS4BzyaZSO0Aw=
+			HV3i999aSjK6t1djLGWq4k6OSU3XQkpVUMltVDisb+U=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Eb6GZ7GmXbNLJQRYsomT2LremYe2im2gPXhOgBzXqMQ=
+			2oPBr0JVGT6fd0hy8kf1EbGOw46mH5KmHlE6PbP7Qd4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/tk.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/sv.lproj/Localizable.strings</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			gyPSF27jrwbSQNFd6PUmczYVb3sF3EUQ7PfBM+hQl7M=
+			</data>
+			<key>optional</key>
+			<true/>
+		</dict>
+		<key>StripePaymentSheetBundle.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -755,47 +766,47 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4xw9VImZR5MNU/5rIGIqsDW/Hd6IJm/XahRJHYC1D0U=
+			LwoHcffQNNav4LouiyIe6e3SC3wvzSxTSiERhX6v8gc=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			OLXVKt8x8hUzpcRW4zoAjYLjAfcxvNl/YssPzhG1NtE=
+			2pDtBKY8IgY42wQxsevheepTYrSBs9wzGLhT0mcR174=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HVAFzQinxq507kxHzUnBohJqvIS7zwotMLqgHATvHTM=
+			P21O+5FMLbLFUQsyISqJufMoeJXdB69e/pDGNOyITM8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qdM1NDcsr95at8s2ApiP64sKQtVClp62FR1wxyGCpSw=
+			bRKBO3hVsp5EaW9f/u9NNykf0SMW5whdAtz6BtUgDaM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentSheet.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripePaymentSheetBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			IPlUTzSSBEEDdMV3Ydqk1yMB7znF+WFC+mJHspQ+ttQ=
+			qiOXPBsVYZetzr3dIrMWHJPUSjBDsKLeW/WNNvRHmAs=
 			</data>
 			<key>optional</key>
 			<true/>

@@ -6,33 +6,25 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		i25koHMijIoT1oNJ/CKTbcuBBc0=
+		mqsU4kLEKhW06nPVd1+XSeX4Img=
 		</data>
-		<key>StripeFinancialConnections.bundle/Info.plist</key>
+		<key>StripeFinancialConnectionsBundle.bundle/Info.plist</key>
 		<data>
-		vMuD3kFPfdjCY4TQyB55ap3EFDQ=
+		CqQuPjI7X/kkvPjs1oWBVi+F6A4=
 		</data>
-		<key>StripeFinancialConnections.bundle/add@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
-		zNSq9FbxWBASQmclcBWpwfqxABk=
+		2ZhY36QuwmDxOhpfhxFdbGIE55g=
 		</data>
-		<key>StripeFinancialConnections.bundle/arrow_right@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/add@3x.png</key>
 		<data>
-		4/5vHdL66kVjZog5KVXz5EwdsE8=
+		jiOtumpER/DC6VDG2/jD6iU8ve4=
 		</data>
-		<key>StripeFinancialConnections.bundle/back_arrow@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/back_arrow@3x.png</key>
 		<data>
 		DcHDHFo84SQTsQbEAdZKOcBXQXk=
 		</data>
-		<key>StripeFinancialConnections.bundle/bank@3x.png</key>
-		<data>
-		CfGeXO9E7SQb0QmyfdNOyz+bTBU=
-		</data>
-		<key>StripeFinancialConnections.bundle/bank_check@2x.png</key>
-		<data>
-		EaYY9sRVYg/fdd1SW77XuRYrifY=
-		</data>
-		<key>StripeFinancialConnections.bundle/bg-BG.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -41,15 +33,15 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/brandicon_default@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/brandicon_default@3x.png</key>
 		<data>
-		1wTLAnVRyDvLTBM7b3fyBa3pncA=
+		z+ECqxei210XGq9B/gHVRp7Vw/A=
 		</data>
-		<key>StripeFinancialConnections.bundle/bullet@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/bullet@3x.png</key>
 		<data>
 		l4ECDF08L8pIoyPJpErLHyptJnI=
 		</data>
-		<key>StripeFinancialConnections.bundle/ca-ES.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -58,23 +50,23 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/cancel_circle@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/cancel_circle@3x.png</key>
 		<data>
 		Svjl+JhoUn3/hRHeWhrfjDTvJ8A=
 		</data>
-		<key>StripeFinancialConnections.bundle/check@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/check@3x.png</key>
 		<data>
-		AiURCycDyiU3ha6mnrTbOtPF9jY=
+		fMkeN7g3/uvmtcc6wA+SNFQ8oyg=
 		</data>
-		<key>StripeFinancialConnections.bundle/chevron_down@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/chevron_down@3x.png</key>
 		<data>
 		dr37WUK5ALAQgqJtn9AAbboXwNs=
 		</data>
-		<key>StripeFinancialConnections.bundle/close@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/close@3x.png</key>
 		<data>
 		xnQUP4lehFCh0GulXCtsOoL/G7c=
 		</data>
-		<key>StripeFinancialConnections.bundle/cs-CZ.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -83,7 +75,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/da.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -92,7 +84,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/de.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -101,7 +93,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/el-GR.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -110,11 +102,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ellipsis@3x.png</key>
-		<data>
-		gpP1glCk8tRGs05ymnoVNuWWOmU=
-		</data>
-		<key>StripeFinancialConnections.bundle/en-GB.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -123,7 +111,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/en.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -132,7 +120,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/es-419.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -141,7 +129,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/es.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -150,7 +138,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/et-EE.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -159,7 +147,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/fi.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -168,7 +156,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/fil.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -177,7 +165,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/fr-CA.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -186,7 +174,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -195,11 +183,11 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/generic_error@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/generic_error@3x.png</key>
 		<data>
 		YsLEuMmD6euyE32RFmPDWyvkQ9g=
 		</data>
-		<key>StripeFinancialConnections.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -208,7 +196,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -217,7 +205,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/id.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -226,7 +214,11 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/it.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/info@3x.png</key>
+		<data>
+		zXMLTmu745CTMX2YG0+Y2QOowgg=
+		</data>
+		<key>StripeFinancialConnectionsBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -235,7 +227,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -244,7 +236,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -253,7 +245,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -262,7 +254,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -271,7 +263,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -280,7 +272,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -289,7 +281,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -298,7 +290,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -307,7 +299,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/nn-NO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -316,7 +308,15 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/panel_arrow_right@3x.png</key>
+		<data>
+		VR+MflaL/AJ3j3ohVi7JGy6L5N0=
+		</data>
+		<key>StripeFinancialConnectionsBundle.bundle/person@3x.png</key>
+		<data>
+		JCm/axfknMkwEB3nE6U7k8HWkv0=
+		</data>
+		<key>StripeFinancialConnectionsBundle.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -325,11 +325,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/prepane_phone_background@3x.png</key>
-		<data>
-		hXfcYCXtgNL6fDWBuWGG9K9IFbQ=
-		</data>
-		<key>StripeFinancialConnections.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -338,7 +334,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -347,7 +343,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -356,7 +352,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -365,11 +361,11 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/search@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/search@3x.png</key>
 		<data>
-		AgvIlYcBfNiyNmbQl3RPUPiI9K0=
+		j1BS47ilRuLygXj17U9OxYgXoLI=
 		</data>
-		<key>StripeFinancialConnections.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -378,7 +374,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -387,15 +383,15 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/spinner@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/spinner@3x.png</key>
 		<data>
-		IAg4cjvcRgjSXxO9Tgdsycy/E6g=
+		hletj/H2oDwYGw0Usu+FtNoTozA=
 		</data>
-		<key>StripeFinancialConnections.bundle/stripe_logo@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/stripe_logo@3x.png</key>
 		<data>
 		FSlthoGDyUDmi/u37UpAlNHVgzI=
 		</data>
-		<key>StripeFinancialConnections.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -404,7 +400,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -413,7 +409,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -422,15 +418,11 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/warning_circle@3x.png</key>
-		<data>
-		eY99skTupkj0WHyoSYeMAPPdOV8=
-		</data>
-		<key>StripeFinancialConnections.bundle/warning_triangle@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/warning_triangle@3x.png</key>
 		<data>
 		cUNGkTpSUf5+0kcFmEeeQbopSf0=
 		</data>
-		<key>StripeFinancialConnections.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -439,7 +431,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -448,7 +440,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -460,49 +452,35 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>StripeFinancialConnections.bundle/Info.plist</key>
+		<key>StripeFinancialConnectionsBundle.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			JZjnc8j1RIvOMaMdQG7+OCSopM3Oc/xbjpQoq15ELs0=
+			DA0g47fqBKu9nXR0n0mf7LAwpyCADaHBkaP7kG/mwlE=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/add@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/PrivacyInfo.xcprivacy</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			63rd7Lcd1Jly5p/Afe2DmO4T4tmxsyVSXvO6U16uzak=
+			7Gf7aopIIafuI6jBkX+4YBFvyru0IfEtHgcCztIjMNQ=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/arrow_right@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/add@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pxq8fnfeaHuJuvfYjqJZfXMqvhLwN62cY2BUk+jOFP0=
+			rBMFWvMkP6nGj3bHJGyYhZa0WDhyIEi9JF1E0qGOnsQ=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/back_arrow@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/back_arrow@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			W7kyuks5onFfaMEJIzCuYVp4nt3odQMk0s+kruy48RA=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/bank@3x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			O2Qv1RDKJReQp8ffatTJuXBK8ENSQTOjOCwUFgA8CQY=
-			</data>
-		</dict>
-		<key>StripeFinancialConnections.bundle/bank_check@2x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			4RcKJbtu8KRWvzuYB6SeqGelNDZli+FoTUH18f2R1Ag=
-			</data>
-		</dict>
-		<key>StripeFinancialConnections.bundle/bg-BG.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -511,21 +489,21 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/brandicon_default@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/brandicon_default@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			b4ByN0rJTbUgzm/0WHCzskeEP95TLVDOLGiiDwTpGWU=
+			OaRj2kzxg0GbWGft9if5BQzSJ4VQiJQpuRGzgibBLBQ=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/bullet@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/bullet@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			yIop+/QZSioRnCvG0Aahv6Brkd/DdgNIglTAZhx0Qzg=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ca-ES.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -534,35 +512,35 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/cancel_circle@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/cancel_circle@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			mmcFvjZDi1lhv0JOO2cgrrNXRFNRrUEI7A8wpVm5ETU=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/check@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/check@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CBNeEVugMzp4SItvsRT40BbUO9f5fF6zuPWc7Ukx5i4=
+			fdQSjgnphJRYv27QaM/ydae+b5pjO9boGktS58eT2PE=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/chevron_down@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/chevron_down@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			nNteVbpC6/qQo9M0txCpyXEqWjY/46wJr5CHOR/io9U=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/close@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/close@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			VSYHbrHi1tgulGJA/LzyiM6mm0Oh4Vtnyu8eRs5xv9M=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/cs-CZ.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -571,7 +549,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/da.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -580,7 +558,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/de.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -589,7 +567,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/el-GR.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -598,14 +576,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ellipsis@3x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			qXdrUjDmiap3/S/HcUFO/A+pi4F0xz/HUX0t5b9zzOc=
-			</data>
-		</dict>
-		<key>StripeFinancialConnections.bundle/en-GB.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -614,7 +585,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/en.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -623,7 +594,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/es-419.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -632,7 +603,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/es.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -641,7 +612,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/et-EE.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -650,7 +621,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/fi.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -659,7 +630,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/fil.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -668,7 +639,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/fr-CA.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -677,7 +648,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -686,14 +657,14 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/generic_error@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/generic_error@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			kUQnGpP3a6/bjChibbkVp5VZ40CuP8BNPp/ZJs1Fiac=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -702,7 +673,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -711,7 +682,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/id.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -720,7 +691,14 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/it.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/info@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			n9EWX7luoBYCF9A2U50wf3BJJf4Ju21j37114VhiUIQ=
+			</data>
+		</dict>
+		<key>StripeFinancialConnectionsBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -729,7 +707,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -738,7 +716,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -747,7 +725,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -756,7 +734,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -765,7 +743,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -774,7 +752,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -783,7 +761,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -792,7 +770,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -801,7 +779,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/nn-NO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -810,7 +788,21 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/panel_arrow_right@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			Xqq4Gg0RykHfJOvcwj4mpcRsrGuDJP73lL+5vySqDn0=
+			</data>
+		</dict>
+		<key>StripeFinancialConnectionsBundle.bundle/person@3x.png</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			OSrY7mqTo7/lj+XLihCVvRUkX2Ol/3bS/YgxyosyZ8k=
+			</data>
+		</dict>
+		<key>StripeFinancialConnectionsBundle.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -819,14 +811,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/prepane_phone_background@3x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			RoiLKYXtC1VLjF93YyjrXXKGtiHEB3qSp9VmmMSj+KM=
-			</data>
-		</dict>
-		<key>StripeFinancialConnections.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -835,7 +820,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -844,7 +829,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -853,7 +838,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -862,14 +847,14 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/search@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/search@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			V1OdvliUbxfZxelXJ0QMjGN1s9Cd0SXoHsPZ6lPzDW0=
+			0CEfXNef8uVgUETprPrlEvAsqoSSuGVXVTGtP3K9+C4=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -878,7 +863,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -887,21 +872,21 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/spinner@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/spinner@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dB+BPB4dOUwM5BLHglZV0sdlxCvbJ3+OzRRSDgWtQxA=
+			3Yk/ut/aJLWcT3fie4HNmura2Y/WSfqzy2N7ux0kLAE=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/stripe_logo@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/stripe_logo@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			frKtl0c1ZPZqZfjHFGNfUO1OKjOXt8c6xJ/mWSDTM/E=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -910,7 +895,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -919,7 +904,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -928,21 +913,14 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/warning_circle@3x.png</key>
-		<dict>
-			<key>hash2</key>
-			<data>
-			PeVTWpPCkYBQMiDMjPR2xbg2i8sRBBbQkAFMVOIGCFo=
-			</data>
-		</dict>
-		<key>StripeFinancialConnections.bundle/warning_triangle@3x.png</key>
+		<key>StripeFinancialConnectionsBundle.bundle/warning_triangle@3x.png</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			vcrpWb81n30dq4qIAV1StsO/2FRL+VI3RbKDlhrFI3s=
 			</data>
 		</dict>
-		<key>StripeFinancialConnections.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -951,7 +929,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -960,7 +938,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeFinancialConnections.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripeFinancialConnectionsBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>

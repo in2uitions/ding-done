@@ -6,21 +6,21 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		mnua+ygl3FjCbc+ti+6ey5NPoSY=
+		apq1ewQtRriRQuleGBRjJ8vvGA4=
 		</data>
-		<key>StripePaymentsUI.bundle/Assets.car</key>
+		<key>StripePaymentsUIBundle.bundle/Assets.car</key>
 		<data>
-		mRZp0E/cF6kESv/3pB5/A7B9mQ4=
+		vEDiOYzDPb86MJGd7SC+/YFeasE=
 		</data>
-		<key>StripePaymentsUI.bundle/Info.plist</key>
+		<key>StripePaymentsUIBundle.bundle/Info.plist</key>
 		<data>
-		hYwbGtNsRVijQTZhklrP6yB7fSU=
+		rv9/hMAP/WClsjNPk67Db0RU69g=
 		</data>
-		<key>StripePaymentsUI.bundle/au_becs_bsb.json</key>
+		<key>StripePaymentsUIBundle.bundle/au_becs_bsb.json</key>
 		<data>
 		1bTo7i6sVSY85whK/COW4EpBVzo=
 		</data>
-		<key>StripePaymentsUI.bundle/bg-BG.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -29,7 +29,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ca-ES.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -38,7 +38,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/cs-CZ.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -47,7 +47,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/da.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -56,7 +56,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/de.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -65,7 +65,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/el-GR.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -74,7 +74,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/en-GB.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -83,7 +83,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/en.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -92,7 +92,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/es-419.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -101,7 +101,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/es.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -110,7 +110,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/et-EE.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -119,7 +119,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/fi.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -128,7 +128,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/fil.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -137,7 +137,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/fr-CA.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -146,7 +146,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -155,7 +155,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -164,7 +164,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -173,7 +173,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/id.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -182,7 +182,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/it.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -191,7 +191,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -200,7 +200,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -209,7 +209,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -218,7 +218,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -227,7 +227,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -236,7 +236,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -245,7 +245,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -254,7 +254,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -263,7 +263,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/nn-NO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -272,7 +272,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -281,7 +281,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -290,7 +290,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -299,7 +299,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -308,7 +308,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -317,7 +317,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -326,7 +326,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -335,7 +335,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -344,7 +344,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/tk.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -353,7 +353,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -362,7 +362,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -371,7 +371,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -380,7 +380,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -389,7 +389,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -401,28 +401,28 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>StripePaymentsUI.bundle/Assets.car</key>
+		<key>StripePaymentsUIBundle.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			J+Ra7VIYV38cn4aEK4hd3dHSae6pr19Vz3B3InvhoVw=
+			d/ydZF3sNeXXMl3sw0E5amqPof08CcRdR7icNl85k4k=
 			</data>
 		</dict>
-		<key>StripePaymentsUI.bundle/Info.plist</key>
+		<key>StripePaymentsUIBundle.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			QM7l9/bEBLgTqiVR5+cT41Q7mNMSsM0HnvfL+5PYmS0=
+			hoH1keBl5Xwq+sMtU2wTj41Qt/pv9e3RK66R7cXUzRE=
 			</data>
 		</dict>
-		<key>StripePaymentsUI.bundle/au_becs_bsb.json</key>
+		<key>StripePaymentsUIBundle.bundle/au_becs_bsb.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			Cd+piF3bgclsVb3Hd3/63GxvuDk9oZaFGb5SOKNpzso=
 			</data>
 		</dict>
-		<key>StripePaymentsUI.bundle/bg-BG.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -431,7 +431,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ca-ES.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -440,7 +440,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/cs-CZ.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -449,7 +449,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/da.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -458,7 +458,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/de.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -467,7 +467,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/el-GR.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -476,7 +476,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/en-GB.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -485,7 +485,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/en.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -494,7 +494,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/es-419.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -503,7 +503,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/es.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -512,7 +512,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/et-EE.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -521,7 +521,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/fi.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -530,7 +530,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/fil.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -539,7 +539,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/fr-CA.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -548,7 +548,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -557,7 +557,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -566,7 +566,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -575,7 +575,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/id.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -584,7 +584,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/it.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -593,7 +593,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -602,7 +602,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -611,7 +611,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -620,7 +620,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -629,7 +629,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -638,7 +638,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -647,7 +647,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -656,7 +656,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -665,7 +665,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/nn-NO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -674,7 +674,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -683,7 +683,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -692,7 +692,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -701,7 +701,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -710,7 +710,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -719,7 +719,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -728,7 +728,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -737,7 +737,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -746,7 +746,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/tk.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -755,7 +755,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -764,7 +764,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -773,7 +773,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -782,7 +782,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -791,7 +791,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripePaymentsUI.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripePaymentsUIBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>

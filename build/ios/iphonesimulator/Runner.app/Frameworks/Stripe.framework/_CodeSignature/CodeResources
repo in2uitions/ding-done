@@ -6,17 +6,21 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		/B2X9xzfPX00ft6NXiashF8BnVQ=
+		PwhxIy/zxhniO5LP5MvVE7At9J8=
 		</data>
-		<key>Stripe.bundle/Assets.car</key>
+		<key>StripeBundle.bundle/Assets.car</key>
 		<data>
-		NwpT4239NmVNTHdlpjbnQbiLrLk=
+		cnTsEicZtseWKhrA3Mre8gZDj3Y=
 		</data>
-		<key>Stripe.bundle/Info.plist</key>
+		<key>StripeBundle.bundle/Info.plist</key>
 		<data>
-		61Qqz9VCLL6X123P2p5qGTf0pWQ=
+		bTq2vwWF9MpgcMemh99soOwxsKY=
 		</data>
-		<key>Stripe.bundle/bg-BG.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/PrivacyInfo.xcprivacy</key>
+		<data>
+		KVQcLXIg958z1kiZmo8ZmmCYxZs=
+		</data>
+		<key>StripeBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -25,7 +29,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ca-ES.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -34,7 +38,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/cs-CZ.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -43,7 +47,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/da.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -52,7 +56,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/de.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -61,7 +65,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/el-GR.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -70,7 +74,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/en-GB.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -79,7 +83,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/en.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -88,7 +92,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/es-419.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -97,7 +101,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/es.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -106,7 +110,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/et-EE.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -115,7 +119,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/fi.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -124,7 +128,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/fil.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -133,7 +137,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/fr-CA.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -142,7 +146,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -151,7 +155,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -160,7 +164,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -169,7 +173,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/id.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -178,7 +182,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/it.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -187,7 +191,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -196,7 +200,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -205,7 +209,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -214,7 +218,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -223,7 +227,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -232,7 +236,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -241,7 +245,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -250,7 +254,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -259,7 +263,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/nn-NO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -268,7 +272,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -277,7 +281,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -286,7 +290,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -295,7 +299,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -304,7 +308,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -313,7 +317,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -322,7 +326,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -331,7 +335,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -340,7 +344,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/tk.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -349,7 +353,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -358,7 +362,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -367,7 +371,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -376,7 +380,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -385,11 +389,11 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Uap58QMQe60U5b2ZEKxxYylblns=
+			Rqkq/rlI4aq0MX1By4V/w4R6T/4=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -397,21 +401,28 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Stripe.bundle/Assets.car</key>
+		<key>StripeBundle.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			4Egzd3nJfwwo0Z713BI3F2Y/jx5wShBnn1WN6ZtSSaU=
+			S20Bq9yISgDJf7MOeItujqqZ53+oEL6uAtU2IjSJFPk=
 			</data>
 		</dict>
-		<key>Stripe.bundle/Info.plist</key>
+		<key>StripeBundle.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zzZb398bCyRsDlPzNXgBnUrrGdkl+Wnyqt5vU/01L5Y=
+			XfN8DtEd1+rTwWxyW0sV+876TvtmpnarrhcGN90Hb4A=
 			</data>
 		</dict>
-		<key>Stripe.bundle/bg-BG.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/PrivacyInfo.xcprivacy</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			YjIr0uoZ9gU21STiXaYAZXIyfHROzQHuPdCFo6Dxgn0=
+			</data>
+		</dict>
+		<key>StripeBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -420,7 +431,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ca-ES.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -429,7 +440,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/cs-CZ.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -438,7 +449,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/da.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -447,7 +458,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/de.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -456,7 +467,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/el-GR.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -465,7 +476,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/en-GB.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -474,7 +485,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/en.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -483,7 +494,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/es-419.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -492,7 +503,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/es.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -501,7 +512,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/et-EE.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -510,7 +521,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/fi.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -519,7 +530,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/fil.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -528,7 +539,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/fr-CA.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -537,7 +548,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -546,7 +557,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -555,7 +566,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -564,7 +575,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/id.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -573,7 +584,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/it.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -582,7 +593,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -591,7 +602,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -600,7 +611,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -609,7 +620,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -618,7 +629,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -627,7 +638,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -636,7 +647,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -645,7 +656,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -654,7 +665,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/nn-NO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -663,7 +674,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -672,7 +683,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -681,7 +692,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -690,7 +701,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -699,7 +710,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -708,7 +719,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -717,7 +728,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -726,7 +737,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -735,7 +746,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/tk.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/tk.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -744,7 +755,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -753,7 +764,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -762,7 +773,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -771,7 +782,7 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -780,11 +791,11 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>Stripe.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripeBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Js/5SPH+Tt5eoUqxfqqX390V5ofwIgNphro0axiFyJg=
+			WtB43kZdy5yFJTafYR5M3qjCecdkuhNkJhIv4aUYva8=
 			</data>
 			<key>optional</key>
 			<true/>

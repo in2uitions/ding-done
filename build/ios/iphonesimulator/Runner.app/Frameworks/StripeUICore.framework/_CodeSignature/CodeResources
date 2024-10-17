@@ -6,84 +6,84 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		kx9u2WAkXvAYQAj1FjeVguSUWhs=
+		5u5bGi0zi4v+LOeHI5x07JM/+kE=
 		</data>
-		<key>StripeUICore.bundle/Assets.car</key>
+		<key>StripeUICoreBundle.bundle/Assets.car</key>
 		<data>
-		VVgUCfBZ4iXmBGShlI/A/W9e88E=
+		X3SQ5BHPg1KuF4q2YUnmY+C9bdA=
 		</data>
-		<key>StripeUICore.bundle/Info.plist</key>
+		<key>StripeUICoreBundle.bundle/Info.plist</key>
 		<data>
-		9lpar8N2gztFcwyPbH3fyUQxC9w=
+		TMJ6W0Y4eQz3QPi40tC2B4sYw4Q=
 		</data>
-		<key>StripeUICore.bundle/au_becs_bsb.json</key>
+		<key>StripeUICoreBundle.bundle/au_becs_bsb.json</key>
 		<data>
 		yEwltBJubtFnHH2tjp1tIZLap/E=
 		</data>
-		<key>StripeUICore.bundle/bg-BG.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5UuybDXRLiEWlr4B+N8oCjOeWCQ=
+			tB1rf6sdpsexNtXjCWTEe8zkPaI=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ca-ES.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Pmu7CuOWfnQKFxBqmKstGr/l3co=
+			JSFZrCdweG4xHuUMueGhTdb662s=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/cs-CZ.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Bc8j719RoEqgeAcQ5CZ68GlJ3MI=
+			/612YpPJbc9YBZ9FiY/Jaj+V00Q=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/da.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CR1K5pYZkc3Jv86HLAVlirCK938=
+			wde4SEFi7IDY1MMxU6ZfLdv9GGI=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/de.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			jJ1YGLJLg/pFMDu+V3ZPI9pB8q8=
+			RMICGWhwNDEeenfaYtqpfXm45/M=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/el-GR.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			8wGjScwrSZEA8rnqlUkP2PsqT0Q=
+			GPysYbaOi0s9oKCBnH/Yd9c6T2c=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/en-GB.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			QPYMeXWsWzuHdWIkQVDklwjqIfk=
+			OmUcFmPcq2/4mzys0iM6KNm9kTQ=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/en.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
@@ -92,303 +92,303 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/es-419.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			j3Cq+ZmJ0u4JdrjeLjBLg2E6x1E=
+			5q9R9Fn4wuu0T5QbVyUzUf838YU=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/es.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			4dozcA6EoYuL85CuEhvSM/FzJ8w=
+			S7c4SnOACNE5vXhzZj8ciKzcy30=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/et-EE.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			GTmMoNeXAwdTt3w/9fPFQbafUoE=
+			2Vx8+mhTxL27F0BPY0ec1IaHkT0=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/fi.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			n1jg05IwiqgFjXnpnzMxP20N91Q=
+			35xQ4KirOoxInQJ/F9J1yWIUHYA=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/fil.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ONpwJ6Peafvj170W23fKOqG0QUU=
+			LkhfNfMGlaS5OwVW8v0UHLbKMQ4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/fr-CA.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			xIwNmbYIyQi+wdqjswNp7zcPkMw=
+			VpQMQeuRSS7Ulf5ixtuFi+FtKaU=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			In1l10JFhU5QRLcHb8Qe2j1QIbY=
+			lYLolhUvue1CWTLlakJrmU2WDXk=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			aYmdbQpoXv5OXnqJjbFEAY/PSQo=
+			YZ+gU0TpRK/Q+Ekme4Vz2GigGuU=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zebRb3BjgioTDAbGCEawvZCVMHY=
+			ORf13epZm2G9Msu/gNCpNQCA7FM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/id.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			b79a1uUy3t9cXOBB2WWgDkq287E=
+			7dhdV3xyiYcMIYXQm1mklY6yKs4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/it.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9rWarX8Dm+TPGGyVwpvFHyqjzBo=
+			UI9r1YkC0qpWaxvb03Inj+sTWCE=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			LK0rHUjKN+rYgUdMYjVcutIhmqk=
+			WfNISU8M4FaFjS9eY2qTGWOpsw8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dKDQiSpHYkX4V9PGWOs26hYJrk8=
+			xwbaqNDSkDBFUJiUyqHwZYRhgAM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/localized_address_data.json</key>
+		<key>StripeUICoreBundle.bundle/localized_address_data.json</key>
 		<data>
 		AYP3yqVVgkwF9+4KwMYNMXVL/lA=
 		</data>
-		<key>StripeUICore.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7SwQqki+pbzt0ZKSAqlTCFltFY8=
+			cPCRi9/paRKGBeAAM9wBGsqT8Pg=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pWzgUG0SyMJVbSsmH3xaPFmGayc=
+			oEbeXHxAt02VQfN0YHKTwkXYbBo=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nEg358G2DKqPyM8wH7SWaPEYqKY=
+			sPfmY7LsRdKGzPEYYFzqvRRwBjg=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wsHx2OVLMRAMl0uvj81Qt3pAse4=
+			lIBilYCPUJlojbilhqvXCtHaHHo=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Xms1ITt1RDg64Zx3JKdQd+TbZoM=
+			ClPfxAiWS0s7iHaMiHcU/xBkE6I=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			vsFhcH3LVyomhh4AcPMoyvfYC3o=
+			hY3NfblhsrG8LemfOUFl1h1hLj8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/nn-NO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			luBd1bho7dsdYsHNM5pl8JuFoUM=
+			9rMiOptLjpagcSvM6RW5/n/qX5o=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			wtXZehi/z/9A+sKASAahUbF7PKg=
+			Lr70fdDUQ9omeIJrRQ9wdz9bGq8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Z/rYyaJ22bqIIIP3DFLO4N/oNMw=
+			RTRs3eb+CgxhN/lvkorlhJ2UWMs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ZgRum0aRp98eazEcl27soGE2CnU=
+			j/RrPzE/aK0ke7B1qxFtbAi49+Y=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KCxZT1MRbFL8v+zAhVNPQX87/HU=
+			dHXH+SX8pUWVkNejR685rMf6SVI=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			RzRNUyH4AxtMfEkmQZfhj/nWsjs=
+			YUo13ELNrkUP8541nauXVKhrPbM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cTyZrDn3cUWJcAf3QfDNTOIseQc=
+			qJbf+cZzxZj9vjT49/9l0vACMZM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			6WZBpMhcx4+TiqfrAeID5oZNIPg=
+			IvV0NLtn8zjQ4o9FeHS9+Uha7H4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			IbWKbQDVCKFPGxrW9TKwQr1//Pc=
+			6RPr5D3G9jgOiC7r3AUj4FDWbik=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			K9G1u6ZaOBCAfiIL8dq6WJZQhlI=
+			cOMEud2Ytu1+JrWyhdqFVrFBkac=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			C+Wtc7UDuLYRqQGFJFuZYmnIhj8=
+			L8YJbnR8XnZ3njlIoVoKmmJtbyI=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			snmd1BQHkMWqmpdPv6dEpp5CZo8=
+			a7vRUM3avu3nkYCAI45tztXp/CE=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			sMaYcb9Ck3zM3yBi9haGgjh14qs=
+			NbwnaJ31wprpkbUg/367O4pF2Aw=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			chNo522oOx9oG6WqP2savbEx9tI=
+			+UQHVOEXig9LrIfcl0n6cbCLxD0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -396,91 +396,91 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>StripeUICore.bundle/Assets.car</key>
+		<key>StripeUICoreBundle.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Jx98mu+fBHiqezEkvVH9cxMSu+U2eF+qe28YTLHXong=
+			7zFajqtmZRUnuN9CQoQ/gvZ9blWRT0wI6qkiAsRftVU=
 			</data>
 		</dict>
-		<key>StripeUICore.bundle/Info.plist</key>
+		<key>StripeUICoreBundle.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qyA8GTGYMmvUoFZx8OcWtjnaEyXr1D7wyCRiZqtp85s=
+			ew2MzBGNuSIYOxjlR1SUMLyTfCxRav/KITxmUXMeU1c=
 			</data>
 		</dict>
-		<key>StripeUICore.bundle/au_becs_bsb.json</key>
+		<key>StripeUICoreBundle.bundle/au_becs_bsb.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			w8BoD80byn9hOVcWVsJFl14VsG019QYXo3d+WjVUlq4=
 			</data>
 		</dict>
-		<key>StripeUICore.bundle/bg-BG.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tRgBSiBbytCsMv5d3IXjBM0EqMg7xNpRCk9hblrolFw=
+			3A0dthha60B+fRVzOKeAzR360XTHhpSag4XtpFuTshk=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ca-ES.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ca-ES.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BUZ1Ccg2tUHag/ue2KilfnoeFFbyhmHEMkgqXyy9zz0=
+			UTb2+02nOjsleZYYBxNaeVEVnReIbyubvjfoWi+cMoA=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/cs-CZ.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/cs-CZ.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			7p+6w6hCcqkf3sCp0aBZ2jFS+0+R2wwJLJf9NQNO8lA=
+			6UaL0ZhGHEbHts8hTCf7spS9bn2S7NrGOz7Ig5arAXM=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/da.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/da.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HxqfJbieaw+G6pWA2TA9U8WpZv7c1ZXmxn6xS5cW9JA=
+			of/EymU5WDTfOFI85y+i+8VIa8TdYHwxnqA/fhC9lIc=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/de.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/de.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			5qPXzV9ZNYSqWQvvCGUDdZmICsGcSmZQWtnYA7PCEsI=
+			FlRVXUKBKSGet6I5ecVADcZMWCC8tc4ZbwNJDxlB88c=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/el-GR.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/el-GR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			LBmdTYEL2XrYPS7z7qw2nzf0rKXwXbXDJrftFSIvBHE=
+			Xjp8HHyC6HpQSyutxio3Y8dBANlA+/kjO/T53pdp4qg=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/en-GB.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/en-GB.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			s56QP9sh2Jj3DH2uC3uAVZF4VZzsKniEdQ3KhVRSnnw=
+			+AocuRhac4jLj4HksMn8tdAGVGEfocrAk0fbKFdYYx8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/en.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/en.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
@@ -489,306 +489,306 @@
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/es-419.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/es-419.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2f0E9jJ2qon+OBLNjKjDLJm82sdhjuEuLcGWJb/1dJA=
+			lYUmZuKMTWygosW730qHhmhb4G1V+vA3sSOyrf/ObVo=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/es.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/es.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			dmE6n7/dO5vzZOpd2cHCpyyVLn+/VJUfi2nEb02px1I=
+			BA6G26hgyrmhpuAuIJZMv6ccQblPIi5PFpnlcRbgxBE=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/et-EE.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/et-EE.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			iRyDRV5mvQgCqRmd2Mycv+NUdXjY8q/FIib52OSklys=
+			V6odByn3E3c2wd78saGepKxo6Y/QdUnQJ+sNqN4LOGk=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/fi.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/fi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			eLyPgAXJByisIEVg0ZYASvmBQe9qUoTlGJBbceZIuYw=
+			gNNOv014orCffNEZsfUPPDRACYpV6vkK44horZi3bEc=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/fil.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/fil.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6d1YVw8p8ivU+gt+WfLQnFalzLYjX16EPaHyN7M9Ols=
+			BmJPzQ3ia+fwsRcYFZ9MkMyIXZ1rDMo4liQXlWX5R4g=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/fr-CA.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/fr-CA.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KjBbD/ozt/hmWxOKnJLYUdK6A3PqBWRxuv0jQ6/DcXs=
+			lofHhQ/KoKau0HQTqeJknzkh/v4gzly9O4UogKT6PUo=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/fr.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/fr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			rtNHStB1MNILCGfkW+/SDjvnKLAuvopwM6yYaIYH/dc=
+			l32MwT8MB5Uus99FRlkwBQqPYfF7XyiS7feSUsNouow=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/hr.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/hr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			MXrNVDZqKTx/ninXMLHom9rI8PX/AD2bhG7mccXwWQ8=
+			c2irtfqkGVEJzfYyXPcdxWetc0OQP5M0wuJ6+FkIBoo=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/hu.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/hu.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			84Hsk4WTA/4GHTgwm3k3d7r9XNOVhORq8rYAntbGzXk=
+			OJ1vYUtwKiqXr5nodjmfsES9uinLu+Bc5VqQR4E3IZY=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/id.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/id.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			8e+Yyqj0bY+tW4YCrF6nesVYnNagouj7FW0dOCfckX4=
+			3MelL3c6YRLsriOFCiWWL3EdRww/Js+5kQkjNjsYaZY=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/it.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/it.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			UdGOENlFUCl0kXh9dSJhHl89NzvHI+/boo4Y+dOmvp4=
+			mK7LP/umMcaB9wxcR3ciKCxeCX+X7DETDkgQiKOzsV4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ja.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ja.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			KHoH7jnfucQZte3T9CPUzJ6TmiU3gt+QbtUTqsCoZI8=
+			LKX9O0lxL3RD8VIBWjhJRPCWMPeQV3YCaV//DfMykF8=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ko.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ko.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			TJaWKB6m2tUB56Jydl8y3W1W/0T7QfkR03PhQGa3X7c=
+			85LLm+mC8WnIYDdK6cGdtZA1c+NzDlskrSoKXpfPmok=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/localized_address_data.json</key>
+		<key>StripeUICoreBundle.bundle/localized_address_data.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
 			XFdjm3zQhkqR4OWREA7OERZ7IUDx6L/sZgKad3ZdzL0=
 			</data>
 		</dict>
-		<key>StripeUICore.bundle/lt-LT.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/lt-LT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			nXxqz4m7VNPxHpe5lAgnKjOEEhK0c2iaEFVqvGnpCjk=
+			jZlnOfmJJkecCFeXoJiOfVZjGs17HaMABUD18wYcV6A=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/lv-LV.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/lv-LV.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			d/WZsY4cu6VOWqDJALcIPZ3+/PhBKEds2M4nIA0gLTc=
+			l8SsjChnUoQbXQBvFAVdk48RQY7TqfQfSkt042vnIQQ=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ms-MY.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ms-MY.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			S5H1L+zBZRM+grr/8KBWnXv3lBQKbQfJuys8xviZxxM=
+			veoxBicu2xYP6rKisF9k5/zMqqya9r/QU9s1m26DSNs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/mt.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/mt.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2LtN/lixbVe8mco4yXS381zum5x7/7BclWSlP3o8Dp4=
+			3BaeEn4ZZYp/3aSmIpnL8RjeIjVCMG4NPhWoc/jmHUs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/nb.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/nb.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			eNMgIoDjKI8J6fUOBNhBuaaOupRoV+I8Ib01dn8KkHs=
+			r00ea2mbzJwZNiWsR9KtBOogzvbHt7OVsB5ZBaOQIo4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/nl.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/nl.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2TTJOP0syKgwn/m9ebmIPJPdrK1I6p7sxBJJ+J9ThsU=
+			MiGFhiBu969XiXEdJx4OcVyPcrtmOzKwS3WQqVnT/fY=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/nn-NO.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/nn-NO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			2B0DQw0lXQmbRyWKs+s6zzB4c7drt3o91d/ad4Ka0jE=
+			ItSvx2X21F0qOv4MjZOqc55Y5o3SmG0UhNxoXvK8jH4=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/pl-PL.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/pl-PL.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3bLcGQ6lM6L5zOvLM46xEyVPHvwiLEKn7TSOiyfSsxA=
+			oBrOi8AjUSNNo2aS6gKU4D8F+THCxoPQg8JjDYwRRTk=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/pt-BR.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/pt-BR.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ZguScMJdFB0LR4hUmIZ+/5I2wWn7gsC2Hw4e/M0xhvk=
+			DPTGmxhJQaeYoB9GEIpaQ4ApM0OYGpqFuNSQtmZNzd0=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/pt-PT.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/pt-PT.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hwY47KKTqi3sYvEK3cOuCPQt3/48M6BagapI9Jj+hXg=
+			pWQ86KkNZxnaFVTCT+/qM14riBBGR5IR6XDxc48Etx0=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ro-RO.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ro-RO.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			y1H2YyenvuADA4+OvbOR+TcU6BPt0tmxeU/SRi6Toyw=
+			ylbMRLY/pF/dFsUz3s1KYF+wBW/G8cGSGeAKCjSsHWs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/ru.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/ru.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			HvZjyrtpFvPbaqPCAIQxW4ooJlta2bKcRqSB85VKuIM=
+			THNrHnLW4Lz8T+89Fmjt6tvNUC9faRngcArDqRr5K+g=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/sk-SK.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/sk-SK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			Km9bTpwYzd7pFsI3fS2cR4WYStmkeTaYJ1K7VwLiT88=
+			uEm17P8o/XziCBvusQR3DvXUk7YpETzOZJt+3bNvmJs=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/sl-SI.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/sl-SI.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			CtTZNUGmSMy3cy/Wd+aDTsenufrCV1tgR0JQtkZ6E3w=
+			dp9TNK3y3/oclvO+We+sDK8ahvdEpHAEEexUEOc7a2Y=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/sv.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/sv.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			BKncb1DJZlrb2nbHyGfgw27bmb3dTYLNELVBEJUajRU=
+			IzRWv2lWqxGjFOPq1CsWY0Xs7jvTZqvIrqhj2HZy5SY=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/tr.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/tr.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ik17jmDEqfmH7gq/3yizBR1pscOlFp2D4dWSSWT1iR8=
+			bPMRssp2zpNmMkR4+WJRPmadoyvglaxS0+joCm4O+4s=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/vi.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/vi.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			on0eghWgr23niBwmUOgkW9gZZs0moU1Ws/ptY9+GRI4=
+			FnyAuFFbjLJ9Un9exy5wiWWdXo8TuqESuR6gZ0C5+GA=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/zh-HK.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/zh-HK.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			pmjcJFO+uf6x0Kw5w/PRoL9mR53PoHzqvfn41cMaOOI=
+			3JxxpOE6O/p1sZCpKQXAhY1+tuMfpPojbwvWxrBBRjc=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/zh-Hans.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/zh-Hans.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			P5h1mYuXVHdHbx/dR2ATXGatHXe/dyLuZKlI5updL6g=
+			RxPMzzJsnkP4CmyGaxQbiXqnQdaDrHaIOGDNhLj+UsQ=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
-		<key>StripeUICore.bundle/zh-Hant.lproj/Localizable.strings</key>
+		<key>StripeUICoreBundle.bundle/zh-Hant.lproj/Localizable.strings</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			FPpGbBEmrBpceu6lVjAOptfTp3Jisn91a4GMNV+HlK4=
+			cB/6xnwyBaH5VZk+YRhKwTVgoVedJ4qeiSy+gx7wVCk=
 			</data>
 			<key>optional</key>
 			<true/>

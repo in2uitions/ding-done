@@ -621,7 +621,7 @@
     },
     {
       "name": "image",
-      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/image-4.2.0",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/image-4.3.0",
       "packageUri": "lib/",
       "languageVersion": "2.15"
     },
@@ -1334,7 +1334,7 @@
       "languageVersion": "3.0"
     }
   ],
-  "generated": "2024-10-15T10:11:53.650259Z",
+  "generated": "2024-10-17T11:13:15.395615Z",
   "generator": "pub",
   "generatorVersion": "3.2.3"
 }
