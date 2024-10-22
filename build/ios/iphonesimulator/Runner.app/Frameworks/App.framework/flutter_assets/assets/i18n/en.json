@@ -154,6 +154,7 @@
   "bookService": {
     "bookService": "Book a service",
     "jobType": "Job Type",
+    "unitPrice": "Unit Price",
     "jobTitle": "Job Title",
     "jobDescription": "Job Description",
     "job_duration": "Job Duration",

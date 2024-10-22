@@ -157,6 +157,7 @@
   "bookService": {
     "bookService": "حجز خدمة",
     "jobType": "نوع الوظيفة",
+    "unitPrice": "سعر الوحدة",
     "jobTitle": "اسم الوظيفة",
     "jobDescription": "وصف الوظيفة",
     "job_duration": "مدة الوظيفة",

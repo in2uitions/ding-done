@@ -505,7 +505,7 @@ class _JobsCardsState extends State<JobsCards> {
                                           data[index].total_amount.toString() !=
                                               ''
                                       ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
-                                      : '${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["unit_rate"] : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
+                                      : '${data[index].service["country_rates"] != null ? data[index].number_of_units!=null?(data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) :(data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]): ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
                                   style: getPrimaryBoldStyle(
                                     fontSize: 15,
                                     color: const Color(0xff78789D),

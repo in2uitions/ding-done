@@ -157,6 +157,7 @@
   "bookService": {
     "bookService": "Забронировать услугу",
     "jobType": "Тип задания",
+    "unitPrice": "цена за единицу товара",
     "jobTitle": "название работы",
     "jobDescription": "Описание задания",
     "job_duration": "продолжительность работы",

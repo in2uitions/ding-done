@@ -157,6 +157,7 @@
   "bookService": {
     "bookService": "Κάντε κράτηση υπηρεσίας",
     "jobType": "Τύπος Εργασίας",
+    "unitPrice": "τιμή μονάδας",
     "jobTitle": "όνομα της εργασίας",
     "jobDescription": "Περιγραφή Εργασίας",
     "job_duration": "διάρκεια εργασίας",
