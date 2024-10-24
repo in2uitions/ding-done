@@ -222,7 +222,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                                       cost:
                                           '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["currency"]}',
                                       image: service["image"] != null
-                                          ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                          ? '${context.resources.image.networkImagePath2}${service["image"]}?width=600'
                                           : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
                                       onTap: () {
                                         _handleServiceSelection(service,jobsViewModel,profileViewModel);
@@ -297,7 +297,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       service: service,
       lang: lang,
       image: service["image"] != null
-          ? '${context.resources.image.networkImagePath2}${service["image"]}'
+          ? '${context.resources.image.networkImagePath2}${service["image"]}?quality=60'
           : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
     )));
   }

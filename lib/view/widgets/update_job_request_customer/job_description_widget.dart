@@ -126,7 +126,7 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                                           // ),
                                           image: DecorationImage(
                                             image: NetworkImage(
-                                              '${context.resources.image.networkImagePath2}/${widget.image[index]['directus_files_id']['id']}',
+                                              '${context.resources.image.networkImagePath2}/${widget.image[index]['directus_files_id']['id']}?width=500',
                                             ),
                                             fit: BoxFit.cover,
                                           ),
@@ -175,7 +175,7 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                                   // ),
                                   image: const DecorationImage(
                                     image: NetworkImage(
-                                      'https://cdn.pixabay.com/photo/2012/11/28/10/32/welding-67640_1280.jpg',
+                                      'https://cdn.pixabay.com/photo/2012/11/28/10/32/welding-67640_1280.jpg?width=500',
                                     ),
                                     fit: BoxFit.cover,
                                   ),
