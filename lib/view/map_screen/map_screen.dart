@@ -56,7 +56,7 @@ class _MapScreenState extends State<MapScreen> {
             selectLocationButtonStyle: ButtonStyle(
               backgroundColor: MaterialStateProperty.all(Colors.blue),
             ),
-            selectedLocationButtonTextstyle: const TextStyle(fontSize: 18),
+            // selectedLocationButtonTextstyle: const TextStyle(fontSize: 18),
             selectLocationButtonText: translate('signUp.setCurrentLocation'),
             selectLocationButtonLeadingIcon: const Icon(Icons.check),
             initZoom: 11,

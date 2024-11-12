@@ -118,7 +118,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   int _current = 0;
-  final CarouselController _controller = CarouselController();
+  final CarouselSliderController _controller = CarouselSliderController();
   final List<String> imgList = [
     'https://via.placeholder.com/800x400.png?text=Image+1',
     'https://via.placeholder.com/800x400.png?text=Image+2',

@@ -6,7 +6,7 @@
 	<dict>
 		<key>DKImagePickerController.bundle/Assets.car</key>
 		<data>
-		kVp+UeEFcEgl5Tll/f52gnRa6B8=
+		Q0odR9z4HX2rN8Nn9oorvsfdEbY=
 		</data>
 		<key>DKImagePickerController.bundle/Base.lproj/DKImagePickerController.strings</key>
 		<dict>
@@ -19,7 +19,7 @@
 		</dict>
 		<key>DKImagePickerController.bundle/Info.plist</key>
 		<data>
-		NMqK5EdCNvCFZOMthZRPmOfiS+8=
+		tzX/HZ5WgZRKZdAQvy2LmxyiMgU=
 		</data>
 		<key>DKImagePickerController.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -198,7 +198,7 @@
 		</dict>
 		<key>Info.plist</key>
 		<data>
-		ehEK+/x5aYNqQTtDDFWvndK+7dY=
+		qRgPs+T4GreAWPiHj4keKlMBftc=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -207,11 +207,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			kVp+UeEFcEgl5Tll/f52gnRa6B8=
+			Q0odR9z4HX2rN8Nn9oorvsfdEbY=
 			</data>
 			<key>hash2</key>
 			<data>
-			acmtaU+sQJOKCREzXsZS0CW8/7zThRW5+O04lQQPsKM=
+			moAUdzkc44M+qqnywgVptY5JwDi1/+vdYYTzEOzePho=
 			</data>
 		</dict>
 		<key>DKImagePickerController.bundle/Base.lproj/DKImagePickerController.strings</key>
@@ -231,11 +231,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			NMqK5EdCNvCFZOMthZRPmOfiS+8=
+			tzX/HZ5WgZRKZdAQvy2LmxyiMgU=
 			</data>
 			<key>hash2</key>
 			<data>
-			fCEJOzKyx4iI89PRkqQf334I+7yxhkqC3l4LVKVMrPk=
+			yTg+Ih3FLq7VcEkb34g/THm+PpLtoxlJtbHfpuq7ios=
 			</data>
 		</dict>
 		<key>DKImagePickerController.bundle/PrivacyInfo.xcprivacy</key>
