@@ -87,6 +87,7 @@ dependencies:
   map_location_picker: ^1.2.6
   syncfusion_flutter_pdfviewer: ^27.1.58
   shimmer: ^3.0.0
+  go_sell_sdk_flutter: ^2.4.10
 
 flutter_launcher_icons:
   android: "launcher_icon"

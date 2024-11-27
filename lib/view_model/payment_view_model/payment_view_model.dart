@@ -8,8 +8,11 @@ import 'package:dingdone/view_model/dispose_view_model/dispose_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
+import 'package:go_sell_sdk_flutter/model/models.dart';
 import 'package:http/http.dart' as http;
 import '../../res/app_validation.dart';
 import '../profile_view_model/profile_view_model.dart';
@@ -180,7 +183,6 @@ class PaymentViewModel extends DisposableViewModel {
 
   }
 
-
   displayPaymentSheet() async {
     try {
       // 3. display the payment sheet.
@@ -310,9 +312,6 @@ class PaymentViewModel extends DisposableViewModel {
       // Fluttertoast.showToast(msg: e.toString());
     }
   }
-
-
-
 
 //create Payment
   createPaymentIntent(String amount, String currency,dynamic payment_method) async {
