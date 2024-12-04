@@ -5,6 +5,7 @@ import 'package:dingdone/models/profile_model.dart';
 import 'package:dingdone/models/user_model.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/constants.dart';
+import 'package:dingdone/view/categories/categories.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,10 +51,10 @@ class ProfileRepository {
     }
   }
 
-  Future<dynamic> getNotifications() async {
+  Future<dynamic> getNotifications(var lang) async {
     try {
 
-      dynamic response = await _apiNotifications.getResponse();
+      dynamic response = await _apiNotifications.getResponse(params: '?language=$lang');
       debugPrint('response notifications $response');
       return response['data'];
     } catch (error) {

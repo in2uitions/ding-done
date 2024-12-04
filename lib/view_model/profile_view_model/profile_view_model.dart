@@ -19,13 +19,21 @@ class ProfileViewModel extends DisposableViewModel {
   Map<String?, String?> verifyPassword = {};
   List<dynamic>? _selectedServices=List.empty();
   List<dynamic>? _notifications=List.empty();
-
+  String? lang;
   Future<void> readJson() async {
 
     await getProfiledata();
+    await getLanguage();
     notifyListeners();
   }
+  getLanguage() async {
+    lang = await AppPreferences().get(key: dblang, isModel: false);
+    if (lang == null) {
 
+        lang = 'en-US';
+
+    }
+  }
   get errorMsg => null;
 
 
@@ -50,7 +58,8 @@ class ProfileViewModel extends DisposableViewModel {
 Future<dynamic> getNotifications() async {
     //Todo sign up save user
     try {
-      dynamic response = await _homeRepository.getNotifications();
+      await getLanguage();
+      dynamic response = await _homeRepository.getNotifications(lang);
       // _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       // profileBody = _apiProfileResponse.data?.toJson() ?? {};
       debugPrint('notifications ${response}');

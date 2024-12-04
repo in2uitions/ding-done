@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		WMmAPh1tSUEJDpxARQRBrNTxLrI=
+		t1JZJjh878Em6Mdtf7k9G03v6bs=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		3sD/pot7cnkRinc9rZKeMQng6UQ=
+		yjyui8AnFGFxvwqPW3R5OvImnDA=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/._isolate_snapshot_data</key>
 		<data>
@@ -522,7 +522,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		gxdpMGKejPlreD6a5Okyj/hwy/I=
+		c+qK1D84ban/1EeRaUk3FbbgCQo=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -7784,7 +7784,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		GUuii1xklUIVfo1de98jsx3xgfY=
+		6DM5FzgSzTCcZ2UGpDFaX3EUHRQ=
 		</data>
 		<key>LatinOCRResources.bundle/Info.plist</key>
 		<data>
@@ -7828,7 +7828,7 @@
 		</data>
 		<key>Runner.debug.dylib</key>
 		<data>
-		b04TWVPowq15qruH90XOB4GHpMQ=
+		//Mwt+REmBW3gdI26ZmeJegFOTA=
 		</data>
 		<key>__preview.dylib</key>
 		<data>
@@ -7949,7 +7949,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			DKb5iYsBhbnu0DZ4e/jnq4/4Fw3U8pEA90L8jmuQPRA=
+			Nz+7UuL+sPUKiZm0sjzrUiCZ2lNw/LduU1m3REZFiEs=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -7963,7 +7963,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			abeisZUk6C36tNKntkDi7IJ/hyh2N5VPC1B67M+iIi4=
+			uR1jQwNYZlXCbCk6rlAVnWoVrTKHEgE2L0NNB8YCkLk=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/._isolate_snapshot_data</key>
@@ -8768,7 +8768,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HHfaGbvzsoJIGy9gDFN5vcKZ9uREi6t4rhhYBq6fCMQ=
+			cCP+rMmnl13ODpGlrSD0LbQd5tH1BYoYMswMLb+RR5k=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -18583,7 +18583,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			0Jwen/rMO8l7VST/pZKwKK9VN8OAxyba/U1hp1vA2Fc=
+			RDkAy/+TsqloIZlh/H5P4dwh05CRWMSWoz0K7LU/dzg=
 			</data>
 		</dict>
 		<key>__preview.dylib</key>
