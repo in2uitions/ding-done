@@ -21,6 +21,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
+import '../../res/app_prefs.dart';
 import '../widgets/custom/custom_increment_number.dart';
 import '../widgets/job_details_supplier/job_size_widget.dart';
 
@@ -42,6 +43,7 @@ class BookAService extends StatefulWidget {
 class _BookAServiceState extends State<BookAService> {
   bool isLumpsum=false;
   var _matchingRate;
+
   String _getServiceRate(ProfileViewModel profileViewModel,JobsViewModel jobsViewModel) {
     // Extract the currency from job address
     String currency = profileViewModel.getProfileBody['current_address']["country"];
@@ -102,13 +104,34 @@ class _BookAServiceState extends State<BookAService> {
           (rate) => rate["country"]['code'] == currency,
       orElse: () => null,  // If no match is found, return null
     );
-
+    debugPrint('lang rate is ${widget.lang}');
+    if(widget.lang==null){
+      widget.lang="en-US";
+    }
     if (matchingRate != null) {
-        return '${matchingRate["unit_type"]}';
+      var matchingType;
+      debugPrint('matching rate is ${matchingRate["unit_type"]}');
+      for (Map<String, dynamic> translation
+      in matchingRate["unit_type"]["translations"]) {
+
+        if (translation["languages_code"] == widget.lang) {
+
+
+          matchingType = translation["name"];
+          break; // Break the loop once the translation is found
+        }
+      }
+        return '${matchingType}';
     } else {
       return 'Rate not found';  // Fallback if no matching currency is found
     }
   }
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer4<ProfileViewModel, JobsViewModel, ServicesViewModel,

@@ -68,11 +68,16 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
   }
   getNotifications() async{
     dynamic notifications= await Provider.of<ProfileViewModel>(context, listen: false).getNotifications();
-    if(notifications.isNotEmpty){
-      hasNotifications=true;
+    if(notifications!=null){
+      if(notifications.isNotEmpty){
+        hasNotifications=true;
+      }else{
+      }
     }else{
       hasNotifications=false;
+
     }
+
   }
   // Widget currentScreen = HomePage(); // Our first view in viewport
   // Widget currentScreen = HomePageSupplier(); // Our first view in viewport
@@ -346,7 +351,7 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
               minWidth: 40,
               onPressed: () {
                 setState(() {
-                  currentScreen = const InboxPage(); // Set InboxPage as the active screen
+                  currentScreen =  InboxPage(hasNotifications: hasNotifications); // Set InboxPage as the active screen
                   currentTab = 2;
                   hasNotifications=false;
                 });

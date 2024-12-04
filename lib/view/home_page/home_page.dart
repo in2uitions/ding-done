@@ -751,7 +751,8 @@ class _HomePageState extends State<HomePage> {
                                           children: [
                                             Expanded(
                                               child: Text(
-                                                'We are available Sat to Thur from 9 to 5, Fri from 2 to 5',
+                                                translate('home_screen.availability'),
+                                                // 'We are available Sat to Thur from 9 to 5, Fri from 2 to 5',
                                                 style: getPrimaryRegularStyle(
                                                   fontSize: 13,
                                                   color:

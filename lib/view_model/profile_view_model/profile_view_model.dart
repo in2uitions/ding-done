@@ -53,13 +53,13 @@ Future<dynamic> getNotifications() async {
       dynamic response = await _homeRepository.getNotifications();
       // _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       // profileBody = _apiProfileResponse.data?.toJson() ?? {};
-      // debugPrint('PROFILEREE ${profileBody}');
+      debugPrint('notifications ${response}');
       _notifications=response;
       notifyListeners();
 
       return response;
     } catch (error) {
-      debugPrint('error getting profile $error');
+      debugPrint('error getting notifications $error');
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
       notifyListeners();
     }

@@ -9,7 +9,9 @@ import 'package:provider/provider.dart';
 import '../../view_model/profile_view_model/profile_view_model.dart';
 
 class InboxPage extends StatefulWidget {
-  const InboxPage({super.key});
+  var hasNotifications;
+
+   InboxPage({super.key,required this.hasNotifications});
 
   @override
   State<InboxPage> createState() => _InboxPageState();
@@ -21,7 +23,8 @@ class _InboxPageState extends State<InboxPage> {
     return Scaffold(
       // backgroundColor: const Color(0xffFEFEFE),
       backgroundColor: const Color(0xffFFFFFF),
-      body: Stack(
+      body:
+      Stack(
         children: [
           Column(
             children: [
@@ -129,7 +132,8 @@ class _InboxPageState extends State<InboxPage> {
             minChildSize: 0.80,
             maxChildSize: 1,
             builder: (BuildContext context, ScrollController scrollController) {
-              return Container(
+              return  widget.hasNotifications?
+              Container(
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
@@ -171,7 +175,22 @@ class _InboxPageState extends State<InboxPage> {
                         );
                       }
                     }),
-              );
+              )
+                  : Container(
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
+                  ),
+                  color: Color(0xffFEFEFE),
+
+                ),
+                child:NotificationWidget(
+                  title: 'Notifications',
+                  message: 'No Notifications',
+                  time: '',
+                  onTap: () {},
+                ),);
             },
           ),
         ],

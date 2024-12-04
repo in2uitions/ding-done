@@ -68,7 +68,9 @@
     "totalPrice": "السعر الإجمالي",
     "jobRequestsAroundMe": "طلبات الوظائف حولي",
     "serviceRequestConfirmed": "تم تأكيد طلب الخدمة",
-    "serviceRequestConfirmedMsg": "نحن نبحث عن أفضل تطابق الآن وستتلقى تحديثًا عند التأكيد"
+    "serviceRequestConfirmedMsg": "نحن نبحث عن أفضل تطابق الآن وستتلقى تحديثًا عند التأكيد",
+    "availability": "متواجدون يومياً من الساعة 9:00 صباحاً حتى 5:00 مساءً"
+
   },
   "jobDetails": {
     "job": "الوظيفة",

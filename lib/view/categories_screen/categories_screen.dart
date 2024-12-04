@@ -258,7 +258,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     }
     return Tab(
       child: Text(
-        categories != null ? categories!["title"] : '',
+        categories != null ? categories!["title"].toString() : '',
         style: TextStyle(
           color: _tabController!.index == _tabController!.index
               ? context.resources.color.btnColorBlue
