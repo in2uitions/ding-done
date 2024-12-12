@@ -51,6 +51,18 @@ class PaymentsRepository {
       rethrow;
     }
   }
+  Future<dynamic> patchCustomerTapId({required id,required customer_id}) async {
+    try {
+      dynamic response = await _apiCustomerProfile.patchResponse(id:id,data: {'stripe_customer_id':customer_id});
+      // final jsonData = PaymentsModelMain.fromJson(response);
+      debugPrint('response in patching customer card $response');
+
+      return response;
+    } catch (error) {
+      debugPrint('error in patching customer card $error');
+      rethrow;
+    }
+  }
   Future<dynamic> deletePaymentCard(dynamic body) async {
     try {
       dynamic response = await _deletePaymentCard.postResponse(data: body);

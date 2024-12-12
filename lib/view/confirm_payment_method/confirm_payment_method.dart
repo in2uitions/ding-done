@@ -158,16 +158,19 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                 .getPaymentMethods();
                             debugPrint('widget payment ${payments}');
                             var found = false;
-                            for (var payment in payments) {
-                              if (payment['card_number'] ==
-                                  widget.paymentViewModel
-                                      .getPaymentBody['card_number']) {
-                                found = true;
+                            if(payments.isNotEmpty){
+                              for (var payment in payments) {
+                                if (payment['card_number'] ==
+                                    widget.paymentViewModel
+                                        .getPaymentBody['card_number']) {
+                                  found = true;
+                                }
                               }
                             }
+
                             if (!found) {
                               await widget.paymentViewModel
-                                  .createPaymentMethod();
+                                  .createPaymentMethodTap();
                               await widget.paymentViewModel.getPaymentMethods();
                               Navigator.of(context).pop();
                               Future.delayed(
