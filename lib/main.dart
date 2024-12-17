@@ -69,8 +69,8 @@ class _MyAppState extends State<MyApp> {
     WidgetsFlutterBinding.ensureInitialized();
     // Future.delayed(const Duration(seconds: 3), () => checkUserIsLogged());
     initPlatformState();
-    configurePayment();
-    setupSDKSession();
+    // configurePayment();
+    // setupSDKSession();
   }
 
 
@@ -121,11 +121,11 @@ class _MyAppState extends State<MyApp> {
             ? "com.in2uitions.dingdone"
             : "com.in2uitions.dingdone",
         productionSecretKey:
-        Platform.isAndroid ? "ANDROID-LIVE-KEY" : "iOS-Live-KEY",
+        Platform.isAndroid ? "sk_live_y1TzabNF6M5pCW3mGPwDVr4L" : "sk_live_y1TzabNF6M5pCW3mGPwDVr4L",
         sandBoxSecretKey:
         Platform.isAndroid
-            ? "sk_test_PTV8abJcsqrU9CfhOi7xHowA"
-            : "sk_test_PTV8abJcsqrU9CfhOi7xHowA",
+            ? "sk_test_MsZe1YiJK3qFgGLdfQxvTUIh"
+            : "sk_test_MsZe1YiJK3qFgGLdfQxvTUIh",
         lang: "en",
       );
     }catch(e){

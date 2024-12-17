@@ -14,6 +14,7 @@ import 'package:card_scanner/card_scanner.dart';
 
 import '../../../res/app_validation.dart';
 import '../../../res/fonts/styles_manager.dart';
+import '../../../view_model/profile_view_model/profile_view_model.dart';
 
 class AddNewPaymentMethodWidget extends StatefulWidget {
   var payment_method;
@@ -117,10 +118,15 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                         Future.delayed(
                             const Duration(seconds: 0),
                             () => Navigator.of(context).push(_createRoute(
-                                ConfirmPaymentMethod(
-                                    payment_method: widget.payment_method,
-                                    paymentViewModel: paymentViewModel,
-                                    role: Constants.customerRoleId))));
+                                Consumer<ProfileViewModel>(
+                                    builder: (context, profileViewModel, _) {
+                                    return ConfirmPaymentMethod(
+                                      profileViewModel: profileViewModel,
+                                        payment_method: widget.payment_method,
+                                        paymentViewModel: paymentViewModel,
+                                        role: Constants.customerRoleId);
+                                  }
+                                ))));
                       },
                       icon: Icon(
                         Icons.qr_code_scanner,

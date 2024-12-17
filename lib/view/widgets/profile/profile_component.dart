@@ -3,11 +3,14 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
 import 'package:dingdone/view/edit_account/edit_account.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
+import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+
+import '../tap_payment/tap_payment_example.dart';
 
 class ProfileComponent extends StatefulWidget {
   var payment_method;
@@ -172,11 +175,23 @@ class _ProfileComponentState extends State<ProfileComponent> {
                         ),
                         onTap: () {
                           Navigator.of(context)
-                              .push(_createRoute(ConfirmPaymentMethod(
-                            payment_method: data.data,
-                            paymentViewModel: paymentViewModel,
-                            role: widget.role,
-                          )));
+                              .push(_createRoute(Consumer<ProfileViewModel>(
+              builder: (context, profileViewModel, _) {
+                                  return ConfirmPaymentMethod(
+                                    profileViewModel:profileViewModel,
+                                                              payment_method: data.data,
+                                                              paymentViewModel: paymentViewModel,
+                                                              role: widget.role,
+                                                            );
+                                }
+                              )));
+                          // Navigator.of(context)
+                          //     .push(_createRoute(Consumer<ProfileViewModel>(
+                          //     builder: (context, profileViewModel, _) {
+                          //         return TapPaymentExample(profileViewModel:profileViewModel
+                          //                                   );
+                          //       }
+                          //     )));
                         },
                       );
                     }),
