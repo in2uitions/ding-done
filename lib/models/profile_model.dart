@@ -22,6 +22,7 @@ class ProfileModel {
     this.supplier_services,
     this.state,
     this.stripe_customer_id,
+    this.tap_id,
     this.company,
   });
 
@@ -43,11 +44,13 @@ class ProfileModel {
   String? contact_details;
   String? state;
   String? stripe_customer_id;
+  String? tap_id;
   dynamic company;
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) => ProfileModel(
         id: json["id"],
         user: json["user"],
+        tap_id: json["tap_id"],
         supplier_services: json["supplier_services"],
         status: json["status"],
         image: json["image"],
@@ -64,13 +67,14 @@ class ProfileModel {
         supplier_categories: json["supplier_categories"],
         state: json["state"],
         stripe_customer_id: json["stripe_customer_id"],
-    company: json["company"],
+        company: json["company"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "company": company,
         "user": user,
+        "tap_id": tap_id,
         "status": status,
         "image": image,
         "gender": gender,
@@ -91,6 +95,6 @@ class ProfileModel {
 
   @override
   String toString() {
-    return '{user: $user }';
+    return 'user: $user, tap_id: $tap_id';
   }
 }

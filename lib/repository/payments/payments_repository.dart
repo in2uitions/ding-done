@@ -10,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class PaymentsRepository {
   final BaseApiService _addPaymentCard =
       NetworkApiService(url: ApiEndPoints().addPaymentCard);
+  final BaseApiService _apiAuthorizeCard =
+      NetworkApiService(url: ApiEndPoints().authorizeCard);
   final BaseApiService _deletePaymentCard =
       NetworkApiService(url: ApiEndPoints().deletePaymentCard);
   final BaseApiService _getAllPayments =
@@ -53,13 +55,24 @@ class PaymentsRepository {
   }
   Future<dynamic> patchCustomerTapId({required id,required customer_id}) async {
     try {
-      dynamic response = await _apiCustomerProfile.patchResponse(id:id,data: {'stripe_customer_id':customer_id});
+      dynamic response = await _apiCustomerProfile.patchResponse(id:id,data: {'tap_id':customer_id});
       // final jsonData = PaymentsModelMain.fromJson(response);
       debugPrint('response in patching customer card $response');
 
       return response;
     } catch (error) {
       debugPrint('error in patching customer card $error');
+      rethrow;
+    }
+  }
+  Future<dynamic> authorizeCard({required  body}) async {
+    try {
+      dynamic response = await _apiAuthorizeCard.postResponse(data: body);
+      debugPrint('response in authorizing customer card $response');
+
+      return response;
+    } catch (error) {
+      debugPrint('error in authorizing customer card $error');
       rethrow;
     }
   }

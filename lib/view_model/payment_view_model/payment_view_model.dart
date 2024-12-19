@@ -364,36 +364,13 @@ class PaymentViewModel extends DisposableViewModel {
     String? cardNumberMessage = '';
     try {
       debugPrint('creating tap payment ');
-
-      body = {
-        "card": {
-          "number": paymentBody["card_number"],
-          "exp_month": paymentBody["expiry_month"],
-          "exp_year": paymentBody["expiry_year"],
-          "cvc": paymentBody["last_digits"],
-          "name": paymentBody["nickname"],
-          // "address": {
-          //   "country":
-          //       "${_profileViewModel.getProfileBody['current_address']['country']}",
-          //   // "line1": "Salmiya, 21",
-          //   "city":
-          //       "${_profileViewModel.getProfileBody['current_address']['city']}",
-          //   "street":
-          //       "${_profileViewModel.getProfileBody['current_address']['street_name']}",
-          //   // "avenue": "Gulf"
-          // }
-        },
-
-        "client_ip": "192.168.1.20"
-      };
-
       debugPrint('bodyy $body');
-      if (_profileViewModel.getProfileBody["stripe_customer_id"] == null) {
+      if (_profileViewModel.getProfileBody["tap_id"] == null) {
         var response1 = await createCustomerTapId();
         debugPrint('done creating customer tap id $response1');
         debugPrint('id of the new customer ${response1["id"]}');
         debugPrint('id of the new customer ${response1["id"]}');
-        body["stripe_customer_id"] = '${response1["id"]}';
+        body["tap_id"] = '${response1["id"]}';
         bodyattach["customer"] = '${response1["id"]}';
         debugPrint(
             '_profile view model body ${_profileViewModel.getProfileBody}');
@@ -402,32 +379,25 @@ class PaymentViewModel extends DisposableViewModel {
             customer_id: '${response1["id"]}');
       } else {
         bodyattach["customer"] =
-            '${_profileViewModel.getProfileBody["stripe_customer_id"]}';
+            '${_profileViewModel.getProfileBody["tap_id"]}';
       }
 
       debugPrint('bodyy $body');
-
-      var response =
-          await http.post(Uri.parse('https://api.tap.company/v2/tokens'),
-              headers: {
-                'Authorization': 'Bearer ${dotenv.env['TAP_SECRET']}',
-                'Content-Type': 'application/json',
-
-              },
-              body: jsonEncode(body));
-      debugPrint('response creating a card ${response.body}');
-
-      // await _paymentsRepository.addPaymentCard(body);
-      // await attachCustomerToPaymentMethod(bodyattach, response.id);
-      // await getCustomerPayments(_profileViewModel.getProfileBody["user"]["id"]);
     } catch (e) {
       debugPrint('error in create payment $e');
     }
-    // }
-    // else {
-    //   paymentError['card_number'] = cardNumberMessage;
-    //   notifyListeners();
-    // }
+
+  }
+
+
+  Future<void> authorizeCard(dynamic body) async {
+    try{
+      debugPrint('authorizing card body $body');
+      await _paymentsRepository.authorizeCard(body: body);
+    } catch (e) {
+      debugPrint('error authorizing card body $e');
+    }
+
   }
 
 

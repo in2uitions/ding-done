@@ -34,6 +34,7 @@ class ApiEndPoints {
   final String customerCancelJobWithPenalty = '/customers/cancelJobWithPenalty';
   final String getCustomerJobs = '/customers/myJobs';
   final String addPaymentCard = '/customers/addPaymentCard';
+  final String authorizeCard = '/customers/authorizeCard';
   final String deletePaymentCard = '/customers/removeCard';
   final String payJob = '/customers/payJob';
   final String finishJobAndCollectPayment = '/suppliers/finishJobAndCollectPayment';

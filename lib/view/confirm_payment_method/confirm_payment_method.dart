@@ -89,6 +89,11 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
     try {
       debugPrint('setup sdk  app');
       debugPrint('setup sdk  app ${widget.profileViewModel.getProfileBody}');
+      debugPrint('setup sdk  tap id ${widget.profileViewModel.getProfileBody['tap_id']}');
+      debugPrint('setup sdk  email ${widget.profileViewModel.getProfileBody['user']['email']}');
+      debugPrint('setup sdk  firstname ${widget.profileViewModel.getProfileBody['user']['first_name']}');
+      debugPrint('setup sdk  lastname ${widget.profileViewModel.getProfileBody['user']['last_name']}');
+      debugPrint('setup sdk  phone ${widget.profileViewModel.getProfileBody['user']['phone_number']}');
 
       GoSellSdkFlutter.sessionConfigurations(
         trxMode: TransactionMode.TOKENIZE_CARD,
@@ -96,15 +101,16 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         amount: 1,
         customer: Customer(
           // customerId: widget.profileViewModel.getProfileBody['stripe_customer_id'],
-          customerId:"",
+          customerId:widget.profileViewModel.getProfileBody['tap_id']??"",
           // customer id is important to retrieve cards saved for this customer
-          email: 'rim.zakhour@in2uitions.com',
-          isdNumber: "965",
-          number: "00000000",
-          firstName: 'Rim',
-          middleName: "test",
-          lastName: 'Zakhour',
+          email: '${widget.profileViewModel.getProfileBody['user']['email']}',
+          isdNumber: "961",
+          number: '${widget.profileViewModel.getProfileBody['user']['phone_number']}',
+          firstName: '${widget.profileViewModel.getProfileBody['user']['first_name']}',
+          middleName: "",
+          lastName: '${widget.profileViewModel.getProfileBody['user']['last_name']}',
           metaData: null,
+
         ),
         paymentItems: <PaymentItem>[
 
@@ -154,7 +160,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         applePayMerchantID: "merchant.applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: true,
         // pass the card holder name to the SDK
-        cardHolderName: "${widget.profileViewModel.getProfileBody['first_name']} ${widget.profileViewModel.getProfileBody['last_name']}",
+        cardHolderName: "${widget.profileViewModel.getProfileBody['user']['first_name']} ${widget.profileViewModel.getProfileBody['user']['last_name']}",
         // disable changing the card holder name by the user
         allowsToEditCardHolderName: true,
         // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
@@ -197,7 +203,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
       // loaderController.stopWhenFull();
       debugPrint('SDK Result>>>> ${tapSDKResult?['sdk_result']}');
 
-      setState(() {
+      setState(() async {
         switch (tapSDKResult!['sdk_result']) {
           case "SUCCESS":
             sdkStatus = "SUCCESS";
@@ -226,6 +232,9 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
             sdkStatus = "NOT_IMPLEMENTED";
             break;
         }
+        await widget.paymentViewModel.getPaymentMethods();
+        await widget.paymentViewModel.authorizeCard(tapSDKResult);
+
       });
     }catch(error){
       debugPrint('error starting sdk $error');
@@ -234,6 +243,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
 
   void handleSDKResult() {
     debugPrint('SDK Result>>>> $tapSDKResult');
+    debugPrint('SDK Result TOKEN>>>> ${tapSDKResult?['token']}');
 
     debugPrint('Transaction mode>>>> ${tapSDKResult!['trx_mode']}');
 
@@ -248,6 +258,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
 
       case "SAVE_CARD":
         printSDKResult('Save Card');
+        debugPrint('Save Card : ${tapSDKResult!['token']}');
         break;
 
       case "TOKENIZE":
@@ -259,6 +270,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         debugPrint(
             'TOKENIZE card_holder_name  : ${tapSDKResult!['card_holder_name']}');
         debugPrint('TOKENIZE card_exp_month : ${tapSDKResult!['card_exp_month']}');
+        debugPrint('TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
         debugPrint('TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
         debugPrint('TOKENIZE issuer_id    : ${tapSDKResult!['issuer_id']}');
         debugPrint('TOKENIZE issuer_bank    : ${tapSDKResult!['issuer_bank']}');
@@ -428,18 +440,17 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                               await widget.paymentViewModel
                                   .createPaymentMethodTap();
                               startSDK();
-                              await widget.paymentViewModel.getPaymentMethods();
-                              Navigator.of(context).pop();
-                              Future.delayed(
-                                  const Duration(seconds: 0),
-                                  () => Navigator.of(context).push(
-                                          _createRoute(ConfirmPaymentMethod(
-                                        payment_method: widget.payment_method,
-                                        paymentViewModel:
-                                            widget.paymentViewModel,
-                                        role: Constants.customerRoleId,
-                                            profileViewModel: widget.profileViewModel,
-                                      ))));
+                              // Navigator.of(context).pop();
+                              // Future.delayed(
+                              //     const Duration(seconds: 0),
+                              //     () => Navigator.of(context).push(
+                              //             _createRoute(ConfirmPaymentMethod(
+                              //           payment_method: widget.payment_method,
+                              //           paymentViewModel:
+                              //               widget.paymentViewModel,
+                              //           role: Constants.customerRoleId,
+                              //               profileViewModel: widget.profileViewModel,
+                              //         ))));
                             } else {
                               showDialog(
                                   context: context,
