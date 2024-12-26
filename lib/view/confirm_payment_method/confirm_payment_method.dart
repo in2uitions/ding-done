@@ -18,6 +18,7 @@ import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
 import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ConfirmPaymentMethod extends StatefulWidget {
   var payment_method;
@@ -232,15 +233,30 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
             sdkStatus = "NOT_IMPLEMENTED";
             break;
         }
-        await widget.paymentViewModel.getPaymentMethods();
-        await widget.paymentViewModel.authorizeCard(tapSDKResult);
+        debugPrint('authorizing card body $tapSDKResult');
 
+        await widget.paymentViewModel.getPaymentMethods();
+        dynamic result =await widget.paymentViewModel.authorizeCard(tapSDKResult);
+        debugPrint('result of adding new card $result');
+        debugPrint('result url ${result["transaction"]["url"]}');
+        _launchUrl('${result["transaction"]["url"]}');
+        // launchWhatsApp();
       });
     }catch(error){
       debugPrint('error starting sdk $error');
     }
   }
+  Future<void> _launchUrl(String url) async {
+    if (Uri.tryParse(url)?.hasAbsolutePath != true) {
+      debugPrint('Invalid URL: $url');
+      return;
+    }
 
+    final Uri uri = Uri.parse(url);
+    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
+    }
+  }
   void handleSDKResult() {
     debugPrint('SDK Result>>>> $tapSDKResult');
     debugPrint('SDK Result TOKEN>>>> ${tapSDKResult?['token']}');

@@ -86,7 +86,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: Provider.of<PaymentViewModel>(context, listen: false)
-            .getPaymentMethods(),
+            .getPaymentMethodsTap(),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (snapshot.hasData && snapshot.data != null) {
@@ -124,9 +124,9 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                                         jobsViewModel: widget.jobsViewModel,
                                         data: snapshot.data![0]['id'],
                                         last_digits: snapshot.data![0]
-                                            ['lastDigits'],
+                                            ['last_four'],
                                         payment_method: "Card",
-                                        nickname:"${snapshot.data![0]['nickname']}",
+                                        nickname:"${snapshot.data![0]['name']}",
                                       )
                                     : snapshot.data.isNotEmpty
                                         ? Container()
@@ -196,9 +196,9 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                                             image: 'assets/img/card-icon.svg',
                                             jobsViewModel: widget.jobsViewModel,
                                             data: card['id'],
-                                            last_digits: card['last_digits'],
+                                            last_digits: card['last_four'],
                                             payment_method: "Card",
-                                            nickname:"${card['nickname']}",
+                                            nickname:"${card['name']}",
 
                                           ),
                                           SizedBox(

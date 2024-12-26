@@ -64,6 +64,23 @@ class PaymentViewModel extends DisposableViewModel {
     }
   }
 
+  Future<dynamic> getPaymentMethodsTap() async {
+    try {
+      var response =
+      await http.get(Uri.parse('https://api.tap.company/v2/card/${_profileViewModel.getProfileBody["tap_id"]}'),
+          headers: {
+            'Authorization': 'Bearer ${dotenv.env['TAP_SECRET']}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          });
+      var res=jsonDecode(response.body);
+      debugPrint('response geetting cardn ${res["data"]}');
+      return res["data"];
+    } catch (e) {
+      debugPrint('error in getting payments tap $e');
+      return [];
+    }
+  }
+
   Future<List<dynamic>?> getCustomerPayments(dynamic customer_id) async {
     try {
       var response = await _paymentsRepository.getPayments(customer_id);
@@ -390,10 +407,11 @@ class PaymentViewModel extends DisposableViewModel {
   }
 
 
-  Future<void> authorizeCard(dynamic body) async {
+  Future<dynamic> authorizeCard(dynamic body) async {
     try{
       debugPrint('authorizing card body $body');
-      await _paymentsRepository.authorizeCard(body: body);
+      dynamic result = await _paymentsRepository.authorizeCard(body: body);
+      return result;
     } catch (e) {
       debugPrint('error authorizing card body $e');
     }

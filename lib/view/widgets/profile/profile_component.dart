@@ -27,7 +27,7 @@ class _ProfileComponentState extends State<ProfileComponent> {
   Widget build(BuildContext context) {
     return FutureBuilder(
         future: Provider.of<PaymentViewModel>(context, listen: false)
-            .getPaymentMethods(),
+            .getPaymentMethodsTap(),
         builder: (context, AsyncSnapshot data) {
           if (data.connectionState == ConnectionState.done) {
             if (data.hasData) {
