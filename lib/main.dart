@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
+import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
 import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -28,6 +30,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
+import 'package:uni_links2/uni_links.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -60,6 +63,9 @@ class _MyAppState extends State<MyApp> {
   String? userRole;
   String? _userId;
   bool _doLogin = false;
+  late StreamSubscription _sub;
+  late String _routePath;
+
   @override
   void initState() {
     super.initState();
@@ -71,8 +77,46 @@ class _MyAppState extends State<MyApp> {
     initPlatformState();
     // configurePayment();
     // setupSDKSession();
+    initialDeepLink();
   }
 
+  @override
+  void dispose() {
+    _sub.cancel();
+    super.dispose();
+  }
+
+  Future<void> initialDeepLink() async {
+    _sub = linkStream.listen((String? link) async {
+      if (!mounted) return;
+      final role = await AppPreferences().get(key: userRoleKey, isModel: false);
+
+      Uri uri = Uri.parse(link!);
+
+      _routePath = uri.path;
+
+      debugPrint('my routeee $_routePath');
+      if (_routePath.contains('confirm_payment_method')) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Consumer2<ProfileViewModel, PaymentViewModel>(
+                builder: (context, profileViewModel, paymentViewModel, _) {
+              return ConfirmPaymentMethod(
+                payment_method: paymentViewModel.getPaymentMethodsTap(),
+                paymentViewModel: paymentViewModel,
+                profileViewModel: profileViewModel,
+                role: role,
+              );
+            }),
+          ),
+        );
+      }
+    }, onError: (err) {
+      debugPrint('error in init deep link $err');
+      // Handle errors here
+    });
+  }
 
   void checkUserIsLogged() async {
     // final prefs = await SharedPreferences.getInstance();
@@ -110,211 +154,35 @@ class _MyAppState extends State<MyApp> {
     if (defaultTargetPlatform == TargetPlatform.android) {
       AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
     }
-
-  }
-  Future<void> configurePayment() async {
-    try {
-      debugPrint('configuring payment');
-
-      GoSellSdkFlutter.configureApp(
-        bundleId: Platform.isAndroid
-            ? "com.in2uitions.dingdone"
-            : "com.in2uitions.dingdone",
-        productionSecretKey:
-        Platform.isAndroid ? "sk_live_y1TzabNF6M5pCW3mGPwDVr4L" : "sk_live_y1TzabNF6M5pCW3mGPwDVr4L",
-        sandBoxSecretKey:
-        Platform.isAndroid
-            ? "sk_test_MsZe1YiJK3qFgGLdfQxvTUIh"
-            : "sk_test_MsZe1YiJK3qFgGLdfQxvTUIh",
-        lang: "en",
-      );
-    }catch(e){
-      debugPrint('error configuring payment $e');
-    }
-  }
-  Future<void> setupSDKSession() async {
-    try {
-      GoSellSdkFlutter.sessionConfigurations(
-        trxMode: TransactionMode.PURCHASE,
-        transactionCurrency: "kwd",
-        amount: 100.0,
-        customer: Customer(
-          customerId: "",
-          // customer id is important to retrieve cards saved  for this   customer
-          email: "rim.zakhour@in2uitions.com",
-          isdNumber: "961",
-          number: "71806048",
-          firstName: "rim",
-          middleName: "test",
-          lastName: "zakhour",
-          metaData: null,
-        ),
-        paymentItems: <PaymentItem>[
-          PaymentItem(
-            name: "item1",
-            amountPerUnit: 1,
-            quantity: Quantity(value: 1),
-            discount: {
-              "type": "F",
-              "value": 10,
-              "maximum_fee": 10,
-              "minimum_fee": 1
-            },
-            description: "Item 1 Apple",
-            taxes: [
-              Tax(
-                amount: Amount(
-                  type: "F",
-                  value: 10,
-                  minimumFee: 1,
-                  maximumFee: 10,
-                ),
-                name: "tax1",
-                description: "tax description",
-              )
-            ],
-            totalAmount: 100,
-          ),
-        ],
-// List of taxes
-
-        taxes: [
-          Tax(
-            amount: Amount(
-              type: "F",
-              value: 10,
-              minimumFee: 1,
-              maximumFee: 10,
-            ),
-            name: "tax1",
-            description: "tax description",
-          ),
-          Tax(
-            amount: Amount(
-              type: "F",
-              value: 10,
-              minimumFee: 1,
-              maximumFee: 10,
-            ),
-            name: "tax1",
-            description: "tax description",
-          ),
-
-        ],
-        // List of shipping
-
-        shippings: [
-          Shipping(
-            name: "shipping 1",
-            amount: 100,
-            description: "shipping description 1",
-          ),
-          Shipping(
-            name: "shipping 2",
-            amount: 100,
-            description: "shipping description 2",
-          ),
-        ],
-        // Post URL
-        postURL: "https://tap.company",
-        // Payment description
-        paymentDescription: "paymentDescription",
-        // Payment Metadata
-
-        paymentMetaData: {
-          "a": "a meta",
-          "b": "b meta",
-        },
-        // Payment Reference
-
-        paymentReference: Reference(
-            acquirer: "acquirer",
-            gateway: "gateway",
-            payment: "payment",
-            track: "track",
-            transaction: "trans_910101",
-            order: "order_262625"),
-        // payment Descriptor
-        paymentStatementDescriptor: "paymentStatementDescriptor",
-        // Save Card Switch
-        isUserAllowedToSaveCard: true,
-        // Enable/Disable 3DSecure
-        isRequires3DSecure: false,
-        // Receipt SMS/Email
-        receipt: Receipt(true, false),
-        // Authorize Action [Capture - Void]
-        authorizeAction: AuthorizeAction(
-            type: AuthorizeActionType.CAPTURE, timeInHours: 10),
-        // Destinations
-        destinations: Destinations(
-          amount: 100,
-          currency: 'kwd',
-          count: 2,
-          destinationlist: [
-            Destination(
-                id: "",
-                amount: 100,
-                currency: "kwd",
-                description: "des",
-                reference: "ref_121299"),
-            Destination(
-                id: "",
-                amount: 100,
-                currency: "kwd",
-                description: "des",
-                reference: "ref_22444444")
-
-          ],
-        ),
-        // merchant id
-        merchantID: "",
-        // Allowed cards
-        allowedCadTypes: CardType.ALL,
-        applePayMerchantID: "merchant.applePayMerchantID",
-        allowsToSaveSameCardMoreThanOnce: false,
-        // pass the card holder name to the SDK
-        cardHolderName: "Card Holder NAME",
-        // disable changing the card holder name by the user
-        allowsToEditCardHolderName: false,
-        // Supported payment methods List  supportedPaymentMethods: ["knet", "visa"],
-
-        /// SDK Appearance Mode appearanceMode: SDKAppearanceMode.fullscreen,
-        paymentType: PaymentType.ALL,
-        sdkMode: SDKMode.Sandbox,
-      );
-      var tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
-      debugPrint('tapSDKResult $tapSDKResult');
-    } on PlatformException {
-      debugPrint('error configuring payment');
-
-    }
   }
 
   Locale localLang = const Locale('en');
+
   void getLanguage() async {
     String? lang = await AppPreferences().get(key: language, isModel: false);
     // debugPrint('language to usse22 $lang');
     if (lang == null) {
       lang = "en";
-      await AppPreferences()
-          .save(key: language, value: "en", isModel: false);
-      await AppPreferences().save(key: dblang,value: 'en-US', isModel: false);
+      await AppPreferences().save(key: language, value: "en", isModel: false);
+      await AppPreferences().save(key: dblang, value: 'en-US', isModel: false);
     }
 
     setState(() {
       localLang = Locale(lang!);
     });
-    if(lang=='en'){
-      await AppPreferences().save(key: dblang,value: 'en-US', isModel: false);
-    }if(lang=='ar'){
-      await AppPreferences().save(key: dblang,value: 'ar-SA', isModel: false);
-    }if(lang=='ru'){
-      await AppPreferences().save(key: dblang,value: 'ru-RU', isModel: false);
-    }if(lang=='el'){
-      await AppPreferences().save(key: dblang,value: 'el-GR', isModel: false);
+    if (lang == 'en') {
+      await AppPreferences().save(key: dblang, value: 'en-US', isModel: false);
+    }
+    if (lang == 'ar') {
+      await AppPreferences().save(key: dblang, value: 'ar-SA', isModel: false);
+    }
+    if (lang == 'ru') {
+      await AppPreferences().save(key: dblang, value: 'ru-RU', isModel: false);
+    }
+    if (lang == 'el') {
+      await AppPreferences().save(key: dblang, value: 'el-GR', isModel: false);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

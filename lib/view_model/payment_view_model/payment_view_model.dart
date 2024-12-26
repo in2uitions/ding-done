@@ -32,7 +32,7 @@ class PaymentViewModel extends DisposableViewModel {
 
   PaymentViewModel(ProfileViewModel profileViewModel) {
     _profileViewModel = profileViewModel;
-    getPaymentMethods();
+    getPaymentMethodsTap();
     // if(_profileViewModel.profileBody["user"]["role"]==Constants.customerRoleId){
     //   getPaymentMethods();
     //

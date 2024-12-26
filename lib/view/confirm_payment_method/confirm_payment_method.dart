@@ -235,7 +235,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         }
         debugPrint('authorizing card body $tapSDKResult');
 
-        await widget.paymentViewModel.getPaymentMethods();
+        await widget.paymentViewModel.getPaymentMethodsTap();
         dynamic result =await widget.paymentViewModel.authorizeCard(tapSDKResult);
         debugPrint('result of adding new card $result');
         debugPrint('result url ${result["transaction"]["url"]}');
@@ -377,20 +377,20 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                 ),
                 const Gap(30),
                 const CardInfo1(),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p20,
-                    vertical: context.appValues.appPadding.p20,
-                  ),
-                  child: Text(
-                    translate('paymentMethod.addPaymentMethod'),
-                    style: getPrimaryRegularStyle(
-                        fontSize: 28,
-                        color: context.resources.color.btnColorBlue),
-                  ),
-                ),
-                AddNewPaymentMethodWidget(
-                    payment_method: widget.payment_method),
+                // Padding(
+                //   padding: EdgeInsets.symmetric(
+                //     horizontal: context.appValues.appPadding.p20,
+                //     vertical: context.appValues.appPadding.p20,
+                //   ),
+                //   child: Text(
+                //     translate('paymentMethod.addPaymentMethod'),
+                //     style: getPrimaryRegularStyle(
+                //         fontSize: 28,
+                //         color: context.resources.color.btnColorBlue),
+                //   ),
+                // ),
+                // AddNewPaymentMethodWidget(
+                //     payment_method: widget.payment_method),
                 Padding(
                   padding: EdgeInsets.fromLTRB(
                     context.appValues.appPadding.p20,
@@ -439,11 +439,12 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                         child: ElevatedButton(
                           onPressed: () async {
                             dynamic payments = await widget.paymentViewModel
-                                .getPaymentMethods();
-                            debugPrint('widget payment ${payments}');
+                                .getPaymentMethodsTap();
+                            dynamic paymentList=widget.paymentViewModel.paymentList.toList();
+                            debugPrint('widget payment ${paymentList}');
                             var found = false;
-                            if(payments.isNotEmpty){
-                              for (var payment in payments) {
+                            if(paymentList.isNotEmpty){
+                              for (var payment in paymentList) {
                                 if (payment['card_number'] ==
                                     widget.paymentViewModel
                                         .getPaymentBody['card_number']) {

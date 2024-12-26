@@ -1268,6 +1268,24 @@
       "languageVersion": "3.5"
     },
     {
+      "name": "uni_links2",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/uni_links2-0.6.0+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "uni_links2_platform_interface",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/uni_links2_platform_interface-1.0.0+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "uni_links_web2",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/uni_links_web2-0.1.0+2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "unicode",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/unicode-0.3.1",
       "packageUri": "lib/",
@@ -1442,7 +1460,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2024-12-24T09:38:02.000187Z",
+  "generated": "2024-12-26T11:06:47.335009Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Volumes/KINGSTON/flutter",
