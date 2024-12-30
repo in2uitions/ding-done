@@ -15,7 +15,7 @@ class PaymentMethod extends StatefulWidget {
       payment_method,
       paymentViewModel,
       jobsViewModel,
-      payment_card,
+      tap_payments_card,
       fromWhere,
       role;
 
@@ -26,7 +26,7 @@ class PaymentMethod extends StatefulWidget {
       required this.jobsViewModel,
       required this.fromWhere,
       required this.role,
-      this.payment_card});
+      this.tap_payments_card});
 
   @override
   State<PaymentMethod> createState() => _PaymentMethodState();
@@ -73,7 +73,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                   fromWhere: widget.fromWhere,
                   jobsViewModel: widget.jobsViewModel,
                   payment_method: widget.payment_method,
-                  payment_card: widget.payment_card,
+                  tap_payments_card: widget.tap_payments_card,
                   role: widget.role,
                 ),
                 widget.fromWhere != translate('jobs.completed')

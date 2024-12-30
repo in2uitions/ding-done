@@ -66,13 +66,14 @@ class PaymentViewModel extends DisposableViewModel {
 
   Future<dynamic> getPaymentMethodsTap() async {
     try {
-      var response =
-      await http.get(Uri.parse('https://api.tap.company/v2/card/${_profileViewModel.getProfileBody["tap_id"]}'),
+      var response = await http.get(
+          Uri.parse(
+              'https://api.tap.company/v2/card/${_profileViewModel.getProfileBody["tap_id"]}'),
           headers: {
             'Authorization': 'Bearer ${dotenv.env['TAP_SECRET']}',
             'Content-Type': 'application/x-www-form-urlencoded'
           });
-      var res=jsonDecode(response.body);
+      var res = jsonDecode(response.body);
       debugPrint('response geetting cardn ${res["data"]}');
       return res["data"];
     } catch (e) {
@@ -93,13 +94,30 @@ class PaymentViewModel extends DisposableViewModel {
       return [];
     }
   }
+
+  // Future<void> deletePaymentMethod(dynamic id) async {
+  //   Map<String, dynamic> body = {};
+  //   body["card_id"] = id.toString();
+  //   try {
+  //     dynamic response = _paymentsRepository.deletePaymentCard(body);
+  //
+  //     debugPrint('response deleting card $response');
+  //   } catch (e) {
+  //     debugPrint('error in deleting payment $e');
+  //   }
+  // }
   Future<void> deletePaymentMethod(dynamic id) async {
     Map<String, dynamic> body = {};
     body["card_id"] = id.toString();
     try {
-      dynamic response = _paymentsRepository.deletePaymentCard(body);
-
-      debugPrint('response deleting card $response');
+      var response =
+      await http.delete(Uri.parse('https://api.tap.company/v2/card/${_profileViewModel.getProfileBody["tap_id"]}/${body["card_id"]}'),
+          headers: {
+            'Authorization': 'Bearer ${dotenv.env['TAP_SECRET']}',
+            'Content-Type': 'application/x-www-form-urlencoded'
+          });
+      var res=jsonDecode(response.body);
+      debugPrint('response deleting card $res');
     } catch (e) {
       debugPrint('error in deleting payment $e');
     }
@@ -134,11 +152,11 @@ class PaymentViewModel extends DisposableViewModel {
       //STEP 2: Initialize Payment Sheet
       await Stripe.instance
           .initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-              paymentIntentClientSecret: paymentIntent![
-              'client_secret'], //Gotten from payment intent
-              style: ThemeMode.light,
-              merchantDisplayName: 'Ikay'))
+              paymentSheetParameters: SetupPaymentSheetParameters(
+                  paymentIntentClientSecret: paymentIntent![
+                      'client_secret'], //Gotten from payment intent
+                  style: ThemeMode.light,
+                  merchantDisplayName: 'Ikay'))
           .then((value) {});
 
       //STEP 3: Display Payment sheet
@@ -192,38 +210,38 @@ class PaymentViewModel extends DisposableViewModel {
       debugPrint('payment list $paymentList');
       List<dynamic> filteredPaymentMethods = paymentList
           .where((paymentMethod) =>
-      paymentMethod['id'].toString() == payment_card["id"].toString())
+              paymentMethod['id'].toString() == payment_card["id"].toString())
           .toList();
 
       debugPrint('hahahahahah ${filteredPaymentMethods}');
 
       paymentIntent =
-      await createPaymentIntent('100', 'INR', filteredPaymentMethods[0]);
+          await createPaymentIntent('100', 'INR', filteredPaymentMethods[0]);
       debugPrint('payment intent $paymentIntent');
 
       await Stripe.instance
           .initPaymentSheet(
-          paymentSheetParameters: SetupPaymentSheetParameters(
-              billingDetails: BillingDetails(
-                name:
-                '${_profileViewModel.getProfileBody["user"]["first_name"]} ${_profileViewModel.getProfileBody["user"]["last_name"]}',
-                email:
-                '${_profileViewModel.getProfileBody["user"]["email"]}',
-                phone:
-                '${_profileViewModel.getProfileBody["user"]["phone_number"]}',
+              paymentSheetParameters: SetupPaymentSheetParameters(
+                  billingDetails: BillingDetails(
+                    name:
+                        '${_profileViewModel.getProfileBody["user"]["first_name"]} ${_profileViewModel.getProfileBody["user"]["last_name"]}',
+                    email:
+                        '${_profileViewModel.getProfileBody["user"]["email"]}',
+                    phone:
+                        '${_profileViewModel.getProfileBody["user"]["phone_number"]}',
 
-                // address: Address(
-                //     city: 'YOUR CITY',
-                //     country: 'YOUR COUNTRY',
-                //     line1: 'YOUR ADDRESS 1',
-                //     line2: 'YOUR ADDRESS 2',
-                //     postalCode: 'YOUR PINCODE',
-                //     state: 'YOUR STATE')
-              ),
-              paymentIntentClientSecret: paymentIntent![
-              'client_secret'], //Gotten from payment intent
-              style: ThemeMode.dark,
-              merchantDisplayName: 'Ikay'))
+                    // address: Address(
+                    //     city: 'YOUR CITY',
+                    //     country: 'YOUR COUNTRY',
+                    //     line1: 'YOUR ADDRESS 1',
+                    //     line2: 'YOUR ADDRESS 2',
+                    //     postalCode: 'YOUR PINCODE',
+                    //     state: 'YOUR STATE')
+                  ),
+                  paymentIntentClientSecret: paymentIntent![
+                      'client_secret'], //Gotten from payment intent
+                  style: ThemeMode.dark,
+                  merchantDisplayName: 'Ikay'))
           .then((value) {
         debugPrint('value ${value}');
       });
@@ -238,7 +256,8 @@ class PaymentViewModel extends DisposableViewModel {
   }
 
 //create Payment
-  createPaymentIntent(String amount, String currency, dynamic payment_method) async {
+  createPaymentIntent(
+      String amount, String currency, dynamic payment_method) async {
     try {
       //Request body
       debugPrint('payment body customer ${payment_method["customer"]}');
@@ -403,21 +422,17 @@ class PaymentViewModel extends DisposableViewModel {
     } catch (e) {
       debugPrint('error in create payment $e');
     }
-
   }
 
-
   Future<dynamic> authorizeCard(dynamic body) async {
-    try{
+    try {
       debugPrint('authorizing card body $body');
       dynamic result = await _paymentsRepository.authorizeCard(body: body);
       return result;
     } catch (e) {
       debugPrint('error authorizing card body $e');
     }
-
   }
-
 
 //create Customer
   createCustomerId() async {

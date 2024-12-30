@@ -58,9 +58,9 @@ class _JobsCardsState extends State<JobsCards> {
                   ? widget.jobsViewModel.supplierCompletedJobs
                   : widget.jobsViewModel.supplierBookedJobs
           : widget.active == 'activeJobs'
-              ? widget.jobsViewModel.getcustomerJobs
-                  .where((e) => e.status == 'inprogress')
-                  .toList()
+              ?  widget.jobsViewModel.getcustomerJobs
+          .where((e) => e.status == 'inprogress')
+          .toList()
               : widget.active == 'completedJobs'
                   ? widget.jobsViewModel.getcustomerJobs
                       .where((e) => e.status == 'completed')
@@ -69,7 +69,7 @@ class _JobsCardsState extends State<JobsCards> {
                       ? widget.jobsViewModel.getcustomerJobs
                           .where((e) =>
                               e.status == 'circulating' || e.status == 'draft')
-                          .toList()
+          .toList()
                       : widget.jobsViewModel.getcustomerJobs
                           .where((e) => e.status == 'booked')
                           .toList();

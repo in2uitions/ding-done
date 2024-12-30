@@ -494,7 +494,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                       fromWhere: widget.fromWhere,
                                       payment_method:
                                           paymentViewModel.paymentList,
-                                      payment_card: widget.data.payment_card,
+                                      tap_payments_card: widget.data.tap_payments_card,
                                       paymentViewModel: paymentViewModel,
                                       jobsViewModel: jobsViewModel,
                                       role: Constants.customerRoleId,
@@ -745,7 +745,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     _isLoading = true;
                                                   });
                                                   debugPrint(
-                                                      'payment_card ${widget.data.payment_card}');
+                                                      'tap_payments_card ${widget.data.tap_payments_card}');
                                                   widget.fromWhere ==
                                                               'booked' ||
                                                           widget.fromWhere ==

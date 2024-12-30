@@ -27,8 +27,8 @@ class ButtonCahsOnDelevery extends StatelessWidget {
 
   void handleTap() {
     action(tag);
-    jobsViewModel.setInputValues(index: 'payment_card', value: data);
-    jobsViewModel.setUpdatedJob(index: 'payment_card', value: data);
+    jobsViewModel.setInputValues(index: 'tap_payments_card', value: data);
+    jobsViewModel.setUpdatedJob(index: 'tap_payments_card', value: data);
     jobsViewModel.setInputValues(
         index: 'payment_method', value: payment_method);
     jobsViewModel.setUpdatedJob(index: 'payment_method', value: payment_method);

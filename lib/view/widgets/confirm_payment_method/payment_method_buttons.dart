@@ -12,7 +12,7 @@ class PaymentMethodButtons extends StatefulWidget {
   var body;
   var payment_method;
   var jobsViewModel;
-  var payment_card;
+  var tap_payments_card;
   var fromWhere;
   var role;
 
@@ -22,7 +22,7 @@ class PaymentMethodButtons extends StatefulWidget {
       required this.jobsViewModel,
       required this.fromWhere,
       required this.role,
-      this.payment_card});
+      this.tap_payments_card});
 
   @override
   State<PaymentMethodButtons> createState() => _PaymentMethodButtonsState();
@@ -47,16 +47,16 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
   void initState() {
     super.initState();
 
-    debugPrint('payment card in init ${widget.payment_card}');
+    debugPrint('payment card in init ${widget.tap_payments_card}');
     debugPrint('data ${data}');
-    if (widget.payment_card == null) {
+    if (widget.tap_payments_card == null) {
       _active = "cash";
     } else {
       if (widget.role == Constants.supplierRoleId) {
         List<dynamic> filteredPaymentMethods = widget.payment_method
             .where((paymentMethod) =>
                 paymentMethod['id'].toString() ==
-                widget.payment_card.toString())
+                widget.tap_payments_card.toString())
             .toList();
         debugPrint('filteredPaymentMethods: $filteredPaymentMethods');
 
@@ -68,14 +68,14 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
         }
       } else {
         if(widget.payment_method.length==1){
-          widget.payment_card=widget.payment_method[0];
+          widget.tap_payments_card=widget.payment_method[0];
           setState(() {
             _active = widget.payment_method[0]["id"].toString();
             data = widget.payment_method[0];
           });
         }else{
-          _active = widget.payment_card["id"].toString();
-          data = widget.payment_card;
+          _active = widget.tap_payments_card["id"].toString();
+          data = widget.tap_payments_card;
         }
 
       }

@@ -36,8 +36,8 @@ class _ButtonConfirmPaymentMethodState extends State<ButtonConfirmPaymentMethod>
 
   void handleTap() {
     widget.action(widget.tag);
-    widget.jobsViewModel.setInputValues(index: 'payment_card', value: widget.data);
-    widget.jobsViewModel.setUpdatedJob(index: 'payment_card', value: widget.data);
+    widget.jobsViewModel.setInputValues(index: 'tap_payments_card', value: widget.data);
+    widget.jobsViewModel.setUpdatedJob(index: 'tap_payments_card', value: widget.data);
     widget.jobsViewModel.setInputValues(
         index: 'payment_method', value: widget.payment_method);
     widget.jobsViewModel.setUpdatedJob(index: 'payment_method', value: widget.payment_method);
@@ -49,8 +49,8 @@ class _ButtonConfirmPaymentMethodState extends State<ButtonConfirmPaymentMethod>
     // widget.action(widget.tag);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       debugPrint('hello from the othe side ');
-      widget.jobsViewModel.setInputValuesWithoutNotify(index: 'payment_card', value: widget.data);
-      widget.jobsViewModel.setUpdatedJobWithoutNotify(index: 'payment_card', value: widget.data);
+      widget.jobsViewModel.setInputValuesWithoutNotify(index: 'tap_payments_card', value: widget.data);
+      widget.jobsViewModel.setUpdatedJobWithoutNotify(index: 'tap_payments_card', value: widget.data);
       widget.jobsViewModel.setInputValuesWithoutNotify(
           index: 'payment_method', value: widget.payment_method);
       widget.jobsViewModel.setUpdatedJobWithoutNotify(index: 'payment_method', value: widget.payment_method);

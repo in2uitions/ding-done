@@ -183,6 +183,11 @@ class JobsViewModel with ChangeNotifier {
       dynamic response = await _jobsRepository.getCustomerJobs();
       _apiCustomerJobsResponse = ApiResponse.completed(response);
       _customerjobsList = _apiCustomerJobsResponse.data?.jobs;
+      _customerjobsList?.sort((a, b) {
+        DateTime startDateA = DateTime.parse(a.start_date!);
+        DateTime startDateB = DateTime.parse(b.start_date!);
+        return startDateB.compareTo(startDateA); // Sorts in ascending order
+      });
       debugPrint('customer jobs list ${_customerjobsList}');
       debugPrint('customer jobs list  media 1 ${_customerjobsList![1].uploaded_media}');
       notifyListeners();
@@ -198,6 +203,11 @@ class JobsViewModel with ChangeNotifier {
       dynamic response = await _jobsRepository.getSupplierCompletedJobs();
       _apiSupplierCompletedJobsResponse = ApiResponse.completed(response);
       _supplierCompletedJobs = _apiSupplierCompletedJobsResponse.data?.jobs;
+      _supplierCompletedJobs?.sort((a, b) {
+        DateTime startDateA = DateTime.parse(a.start_date!);
+        DateTime startDateB = DateTime.parse(b.start_date!);
+        return startDateB.compareTo(startDateA); // Sorts in ascending order
+      });
       notifyListeners();
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
@@ -211,6 +221,11 @@ class JobsViewModel with ChangeNotifier {
       dynamic response = await _jobsRepository.getSupplierInProgressJobs();
       _apiSupplierInProgressJobsResponse = ApiResponse.completed(response);
       _supplierInProgressJobs = _apiSupplierInProgressJobsResponse.data?.jobs;
+      _supplierInProgressJobs?.sort((a, b) {
+        DateTime startDateA = DateTime.parse(a.start_date!);
+        DateTime startDateB = DateTime.parse(b.start_date!);
+        return startDateB.compareTo(startDateA); // Sorts in ascending order
+      });
       debugPrint(
           'response in progress jobs ${_supplierInProgressJobs?.first.service}');
 
@@ -227,6 +242,11 @@ class JobsViewModel with ChangeNotifier {
       dynamic response = await _jobsRepository.getSupplierBookedJobs();
       _apiSupplierBookedJobsResponse = ApiResponse.completed(response);
       _supplierBookedJobs = _apiSupplierBookedJobsResponse.data?.jobs;
+      _supplierBookedJobs?.sort((a, b) {
+        DateTime startDateA = DateTime.parse(a.start_date!);
+        DateTime startDateB = DateTime.parse(b.start_date!);
+        return startDateB.compareTo(startDateA); // Sorts in ascending order
+      });
       notifyListeners();
     } catch (error) {
       debugPrint('Error fetching booked jobs ${error}');
@@ -561,7 +581,7 @@ class JobsViewModel with ChangeNotifier {
 
       setInputValues(index: 'start_date', value: combinedDateTime.toString());
 
-      if (jobsBody['payment_card'] == null) {
+      if (jobsBody['tap_payments_card'] == null) {
         return false;
       } else {
         dynamic response = await _jobsRepository.postNewJobRequest(jobsBody);
@@ -639,7 +659,7 @@ class JobsViewModel with ChangeNotifier {
   }
 
   void setUpdatedJob({required String index, dynamic value}) {
-    if ((index == 'payment_card' || index == 'payment_method') &&
+    if ((index == 'tap_payments_card' || index == 'payment_method') &&
         userRole == Constants.supplierRoleId) {
     } else {
       _updatedBody[index] = value;
@@ -650,7 +670,7 @@ class JobsViewModel with ChangeNotifier {
   }
 
   void setUpdatedJobWithoutNotify({required String index, dynamic value}) {
-    if ((index == 'payment_card' || index == 'payment_method') &&
+    if ((index == 'tap_payments_card' || index == 'payment_method') &&
         userRole == Constants.supplierRoleId) {
     } else {
       _updatedBody[index] = value;

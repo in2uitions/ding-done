@@ -46,6 +46,7 @@ class JobsModel {
     this.uploaded_media,
     this.payment_method,
     this.payment_card,
+    this.tap_payments_card,
     this.customer,
     this.supplier,
     this.service,
@@ -88,6 +89,7 @@ class JobsModel {
   dynamic uploaded_media;
   dynamic payment_method;
   dynamic payment_card;
+  dynamic tap_payments_card;
   String? supplier_first_name;
   String? supplier_last_name;
   String? actual_start_date;
@@ -124,6 +126,7 @@ class JobsModel {
     uploaded_media: json["uploaded_media"],
     payment_method: json["payment_method"],
     payment_card: json["payment_card"],
+    tap_payments_card: json["tap_payments_card"],
     customer: json["customer"],
     supplier: json["supplier"],
     service: json["service"],
@@ -165,6 +168,7 @@ class JobsModel {
     "uploaded_media": uploaded_media,
     "payment_method": payment_method,
     "payment_card": payment_card,
+    "tap_payments_card": tap_payments_card,
     "customer": customer,
     "supplier": supplier,
     "service": service,

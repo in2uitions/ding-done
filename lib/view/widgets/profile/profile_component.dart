@@ -25,12 +25,12 @@ class ProfileComponent extends StatefulWidget {
 class _ProfileComponentState extends State<ProfileComponent> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-        future: Provider.of<PaymentViewModel>(context, listen: false)
-            .getPaymentMethodsTap(),
-        builder: (context, AsyncSnapshot data) {
-          if (data.connectionState == ConnectionState.done) {
-            if (data.hasData) {
+    // return FutureBuilder(
+    //     future: Provider.of<PaymentViewModel>(context, listen: false)
+    //         .getPaymentMethodsTap(),
+    //     builder: (context, AsyncSnapshot data) {
+    //       if (data.connectionState == ConnectionState.done) {
+    //         if (data.hasData) {
               return Padding(
                 padding: EdgeInsets.fromLTRB(
                   context.appValues.appPadding.p20,
@@ -125,7 +125,8 @@ class _ProfileComponentState extends State<ProfileComponent> {
                     ),
                     Consumer<PaymentViewModel>(
                         builder: (context, paymentViewModel, _) {
-                      return InkWell(
+                      return
+                        InkWell(
                         child: Padding(
                           padding: EdgeInsets.only(
                               top: context.appValues.appPadding.p5,
@@ -136,24 +137,7 @@ class _ProfileComponentState extends State<ProfileComponent> {
                             children: [
                               Row(
                                 children: [
-                                  // Container(
-                                  //   width: 40,
-                                  //   height: 40,
-                                  //   decoration: BoxDecoration(
-                                  //       borderRadius: const BorderRadius.all(
-                                  //         Radius.circular(50),
-                                  //       ),
-                                  //       color: context
-                                  //           .resources.color.btnColorBlue),
-                                  //   child: Align(
-                                  //     alignment: Alignment.center,
-                                  //     child: SvgPicture.asset(
-                                  //       'assets/img/credit-card.svg',
-                                  //       width: 16,
-                                  //       height: 16,
-                                  //     ),
-                                  //   ),
-                                  // ),
+
                                   SvgPicture.asset(
                                     'assets/img/payment-method.svg',
                                     // width: 16,
@@ -179,7 +163,7 @@ class _ProfileComponentState extends State<ProfileComponent> {
               builder: (context, profileViewModel, _) {
                                   return ConfirmPaymentMethod(
                                     profileViewModel:profileViewModel,
-                                                              payment_method: data.data,
+                                                              payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
                                                               paymentViewModel: paymentViewModel,
                                                               role: widget.role,
                                                             );
@@ -249,14 +233,14 @@ class _ProfileComponentState extends State<ProfileComponent> {
                 ),
                 // ),
               );
-            } else if (data.hasError) {
-              return Container(
-                child: Text(translate('button.error')),
-              );
-            }
-          }
-          return Container();
-        });
+        //     } else if (data.hasError) {
+        //       return Container(
+        //         child: Text(translate('button.error')),
+        //       );
+        //     }
+        //   }
+        //   return Container();
+        // });
   }
 }
 

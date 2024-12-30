@@ -45,6 +45,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
   String sdkErrorCode = "";
   String sdkErrorMessage = "";
   String sdkErrorDescription = "";
+
   @override
   void initState() {
     // TODO: implement initState

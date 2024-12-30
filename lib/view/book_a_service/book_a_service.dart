@@ -683,7 +683,7 @@ class _BookAServiceState extends State<BookAService> {
                                               );
                                             } else {
                                               if (jobsViewModel.getjobsBody[
-                                                      'payment_card'] ==
+                                                      'tap_payments_card'] ==
                                                   null) {
                                                 showDialog(
                                                   context: context,

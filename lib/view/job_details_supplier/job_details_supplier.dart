@@ -517,11 +517,11 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                     (context, paymentViewModel, jobsViewModel, _) {
                                   debugPrint(
                                       'payment method ${paymentViewModel.paymentList}');
-                                  debugPrint('payment card ${widget.data.payment_card}');
+                                  debugPrint('payment card ${widget.data.tap_payments_card}');
                                   // paymentViewModel.getPaymentMethods();
                                   return PaymentMethodButtons(
                                       payment_method: paymentViewModel.paymentList,
-                                      payment_card: widget.data.payment_card,
+                                      tap_payments_card: widget.data.tap_payments_card,
                                       jobsViewModel: jobsViewModel,
                                       fromWhere: widget.fromWhere,
                                       role: Constants.supplierRoleId);
