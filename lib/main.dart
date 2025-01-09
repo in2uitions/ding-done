@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
+import 'package:dingdone/view/home_page/home_page.dart';
 import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -65,6 +66,7 @@ class _MyAppState extends State<MyApp> {
   bool _doLogin = false;
   late StreamSubscription _sub;
   late String _routePath;
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   void initState() {
@@ -86,35 +88,34 @@ class _MyAppState extends State<MyApp> {
     super.dispose();
   }
 
+// Use the global navigator key for navigation
   Future<void> initialDeepLink() async {
     _sub = linkStream.listen((String? link) async {
-      if (!mounted) return;
+      if (link == null) return;
+
       final role = await AppPreferences().get(key: userRoleKey, isModel: false);
+      Uri uri = Uri.parse(link);
 
-      Uri uri = Uri.parse(link!);
-
-      _routePath = uri.path;
-
-      debugPrint('my routeee $_routePath');
-      if (_routePath.contains('confirm_payment_method')) {
-        Navigator.push(
-          context,
+      if (uri.path.contains('confirm_payment_method')) {
+        navigatorKey.currentState?.push(
           MaterialPageRoute(
-            builder: (context) => Consumer2<ProfileViewModel, PaymentViewModel>(
-                builder: (context, profileViewModel, paymentViewModel, _) {
-              return ConfirmPaymentMethod(
-                payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
-                paymentViewModel: paymentViewModel,
-                profileViewModel: profileViewModel,
-                role: role,
-              );
-            }),
+            builder: (_) => Consumer2<ProfileViewModel, PaymentViewModel>(
+              builder: (context, profileViewModel, paymentViewModel, _) {
+                return ConfirmPaymentMethod(
+                  payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
+                  paymentViewModel: paymentViewModel,
+                  profileViewModel: profileViewModel,
+                  role: role,
+                );
+              },
+            ),
           ),
         );
+      } else {
+        navigatorKey.currentState?.push(
+          _createRoute(BottomBar(userRole: role)),
+        );
       }
-    }, onError: (err) {
-      debugPrint('error in init deep link $err');
-      // Handle errors here
     });
   }
 
@@ -137,7 +138,24 @@ class _MyAppState extends State<MyApp> {
     });
     // }
   }
+  Route _createRoute(dynamic classname) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => classname,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
 
+        var tween =
+        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
   Future<void> initPlatformState() async {
     if (!mounted) return;
     OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
@@ -188,6 +206,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     var localizationDelegate = LocalizedApp.of(context).delegate;
     return LocalizationProvider(
+
       state: LocalizationProvider.of(context).state,
       child: MultiProvider(
         providers: [
@@ -210,6 +229,7 @@ class _MyAppState extends State<MyApp> {
                   Provider.of<ProfileViewModel>(context, listen: false))),
         ],
         child: MaterialApp(
+          navigatorKey: navigatorKey,
           localizationsDelegates: [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
