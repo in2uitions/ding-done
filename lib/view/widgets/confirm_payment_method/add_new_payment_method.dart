@@ -122,7 +122,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                                     builder: (context, profileViewModel, _) {
                                     return ConfirmPaymentMethod(
                                       profileViewModel: profileViewModel,
-                                        payment_method: widget.payment_method,
+                                        payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
                                         paymentViewModel: paymentViewModel,
                                         role: Constants.customerRoleId);
                                   }

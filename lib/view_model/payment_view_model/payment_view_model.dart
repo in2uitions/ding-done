@@ -19,7 +19,7 @@ import '../profile_view_model/profile_view_model.dart';
 
 class PaymentViewModel extends DisposableViewModel {
   Map<String, dynamic> paymentBody = {};
-
+  bool _isloading=false;
   late ProfileViewModel _profileViewModel;
   late JobsViewModel _jobsViewModel;
   Map<String, dynamic>? paymentIntent;
@@ -32,7 +32,7 @@ class PaymentViewModel extends DisposableViewModel {
 
   PaymentViewModel(ProfileViewModel profileViewModel) {
     _profileViewModel = profileViewModel;
-    getPaymentMethodsTap();
+    // getPaymentMethodsTap();
     // if(_profileViewModel.profileBody["user"]["role"]==Constants.customerRoleId){
     //   getPaymentMethods();
     //
@@ -122,7 +122,10 @@ class PaymentViewModel extends DisposableViewModel {
       debugPrint('error in deleting payment $e');
     }
   }
-
+  setLoading(var value) async {
+    _isloading=value;
+    notifyListeners();
+  }
   displayPaymentSheet() async {
     try {
       // 3. display the payment sheet.
@@ -512,6 +515,7 @@ class PaymentViewModel extends DisposableViewModel {
   get getPaymentBody => paymentBody;
 
   get paymentList => _paymentsList;
+  get isLoading => _isloading;
 
   @override
   void disposeValues() {

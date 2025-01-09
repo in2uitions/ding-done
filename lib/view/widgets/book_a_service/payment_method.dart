@@ -2,6 +2,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/payment_method_buttons.dart';
+import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -112,10 +113,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
                           ),
                           onTap: () {
                             Navigator.of(context)
-                                .push(_createRoute(Consumer<ProfileViewModel>(
-                                builder: (context, profileViewModel, _) {
+                                .push(_createRoute(Consumer2<ProfileViewModel,PaymentViewModel>(
+                                builder: (context, profileViewModel,paymentViewModel, _) {
                                     return ConfirmPaymentMethod(
-                                                                  payment_method: widget.payment_method,
+                                                                  payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
                                                                   paymentViewModel: widget.paymentViewModel,
                                                                   role: widget.role, profileViewModel: profileViewModel,
                                                                 );

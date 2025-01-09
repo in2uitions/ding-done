@@ -103,7 +103,7 @@ class _MyAppState extends State<MyApp> {
             builder: (context) => Consumer2<ProfileViewModel, PaymentViewModel>(
                 builder: (context, profileViewModel, paymentViewModel, _) {
               return ConfirmPaymentMethod(
-                payment_method: paymentViewModel.getPaymentMethodsTap(),
+                payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
                 paymentViewModel: paymentViewModel,
                 profileViewModel: profileViewModel,
                 role: role,

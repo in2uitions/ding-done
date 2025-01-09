@@ -58,16 +58,16 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
 
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
-    try{
+    try {
       debugPrint('configuring app');
       GoSellSdkFlutter.configureApp(
         bundleId: Platform.isAndroid
             ? "com.in2uitions.dingdone"
             : "com.in2uitions.dingdone",
-        productionSecretKey:
-        Platform.isAndroid ? "sk_live_y1TzabNF6M5pCW3mGPwDVr4L" : "sk_live_y1TzabNF6M5pCW3mGPwDVr4L",
-        sandBoxSecretKey:
-        Platform.isAndroid
+        productionSecretKey: Platform.isAndroid
+            ? "sk_live_y1TzabNF6M5pCW3mGPwDVr4L"
+            : "sk_live_y1TzabNF6M5pCW3mGPwDVr4L",
+        sandBoxSecretKey: Platform.isAndroid
             ? "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn"
             : "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn",
         lang: "en",
@@ -80,9 +80,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
       //   productionSecretKey:  Platform.isAndroid? "Android-Live-KEY" : "iOS-Live-KEY",
       //   sandBoxSecretKey:  Platform.isAndroid?"Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
       // );
-    }catch(error){
+    } catch (error) {
       debugPrint('error configuring app $error');
-
     }
   }
 
@@ -91,11 +90,16 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
     try {
       debugPrint('setup sdk  app');
       debugPrint('setup sdk  app ${widget.profileViewModel.getProfileBody}');
-      debugPrint('setup sdk  tap id ${widget.profileViewModel.getProfileBody['tap_id']}');
-      debugPrint('setup sdk  email ${widget.profileViewModel.getProfileBody['user']['email']}');
-      debugPrint('setup sdk  firstname ${widget.profileViewModel.getProfileBody['user']['first_name']}');
-      debugPrint('setup sdk  lastname ${widget.profileViewModel.getProfileBody['user']['last_name']}');
-      debugPrint('setup sdk  phone ${widget.profileViewModel.getProfileBody['user']['phone_number']}');
+      debugPrint(
+          'setup sdk  tap id ${widget.profileViewModel.getProfileBody['tap_id']}');
+      debugPrint(
+          'setup sdk  email ${widget.profileViewModel.getProfileBody['user']['email']}');
+      debugPrint(
+          'setup sdk  firstname ${widget.profileViewModel.getProfileBody['user']['first_name']}');
+      debugPrint(
+          'setup sdk  lastname ${widget.profileViewModel.getProfileBody['user']['last_name']}');
+      debugPrint(
+          'setup sdk  phone ${widget.profileViewModel.getProfileBody['user']['phone_number']}');
 
       GoSellSdkFlutter.sessionConfigurations(
         trxMode: TransactionMode.TOKENIZE_CARD,
@@ -103,31 +107,28 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         amount: 1,
         customer: Customer(
           // customerId: widget.profileViewModel.getProfileBody['stripe_customer_id'],
-          customerId:widget.profileViewModel.getProfileBody['tap_id']??"",
+          customerId: widget.profileViewModel.getProfileBody['tap_id'] ?? "",
           // customer id is important to retrieve cards saved for this customer
           email: '${widget.profileViewModel.getProfileBody['user']['email']}',
           isdNumber: "961",
-          number: '${widget.profileViewModel.getProfileBody['user']['phone_number']}',
-          firstName: '${widget.profileViewModel.getProfileBody['user']['first_name']}',
+          number:
+              '${widget.profileViewModel.getProfileBody['user']['phone_number']}',
+          firstName:
+              '${widget.profileViewModel.getProfileBody['user']['first_name']}',
           middleName: "",
-          lastName: '${widget.profileViewModel.getProfileBody['user']['last_name']}',
+          lastName:
+              '${widget.profileViewModel.getProfileBody['user']['last_name']}',
           metaData: null,
-
         ),
-        paymentItems: <PaymentItem>[
+        paymentItems: <PaymentItem>[],
 
-        ],
         // List of taxes
-        taxes: [
-
-        ],
+        taxes: [],
         // List of shipping
-        shippings: [
-
-        ],
+        shippings: [],
         postURL: "https://tap.company",
         // Payment description
-        paymentDescription: "paymentDescription",
+        paymentDescription: "Save Card",
         // Payment Metadata
         paymentMetaData: {
           "a": "a meta",
@@ -152,7 +153,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         receipt: Receipt(true, false),
         // Authorize Action [Capture - Void]
         authorizeAction:
-        AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
+            AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
         // Destinations
         destinations: null,
         // merchant id
@@ -162,7 +163,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         applePayMerchantID: "merchant.applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: true,
         // pass the card holder name to the SDK
-        cardHolderName: "${widget.profileViewModel.getProfileBody['user']['first_name']} ${widget.profileViewModel.getProfileBody['user']['last_name']}",
+        cardHolderName:
+            "${widget.profileViewModel.getProfileBody['user']['first_name']} ${widget.profileViewModel.getProfileBody['user']['last_name']}",
         // disable changing the card holder name by the user
         allowsToEditCardHolderName: true,
         // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
@@ -181,7 +183,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         appearanceMode: SDKAppearanceMode.fullscreen,
         googlePayWalletMode: GooglePayWalletMode.ENVIRONMENT_TEST,
       );
-    } catch(error) {
+    } catch (error) {
       debugPrint('error setting up sdk $error');
       // platformVersion = 'Failed to get platform version.';
     }
@@ -237,16 +239,29 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         debugPrint('authorizing card body $tapSDKResult');
 
         await widget.paymentViewModel.getPaymentMethodsTap();
-        dynamic result =await widget.paymentViewModel.authorizeCard(tapSDKResult);
+        dynamic result =
+            await widget.paymentViewModel.authorizeCard(tapSDKResult);
+
         debugPrint('result of adding new card $result');
-        debugPrint('result url ${result["transaction"]["url"]}');
-        _launchUrl('${result["transaction"]["url"]}');
+        // debugPrint('result url ${result["transaction"]["url"]}');
+        if (result["transaction"] != null) {
+          _launchUrl('${result["transaction"]["url"]}');
+        } else {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) => simpleAlert(
+                  context,
+                  translate('button.failure'),
+                  '${result['errors'][0]['description']}'));
+        }
         // launchWhatsApp();
       });
-    }catch(error){
+      widget.paymentViewModel.setLoading(false);
+    } catch (error) {
       debugPrint('error starting sdk $error');
     }
   }
+
   Future<void> _launchUrl(String url) async {
     if (Uri.tryParse(url)?.hasAbsolutePath != true) {
       debugPrint('Invalid URL: $url');
@@ -258,6 +273,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
       throw Exception('Could not launch $url');
     }
   }
+
   void handleSDKResult() {
     debugPrint('SDK Result>>>> $tapSDKResult');
     debugPrint('SDK Result TOKEN>>>> ${tapSDKResult?['token']}');
@@ -280,15 +296,21 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
 
       case "TOKENIZE":
         debugPrint('TOKENIZE token : ${tapSDKResult!['token']}');
-        debugPrint('TOKENIZE token_currency  : ${tapSDKResult!['token_currency']}');
-        debugPrint('TOKENIZE card_first_six : ${tapSDKResult!['card_first_six']}');
-        debugPrint('TOKENIZE card_last_four : ${tapSDKResult!['card_last_four']}');
+        debugPrint(
+            'TOKENIZE token_currency  : ${tapSDKResult!['token_currency']}');
+        debugPrint(
+            'TOKENIZE card_first_six : ${tapSDKResult!['card_first_six']}');
+        debugPrint(
+            'TOKENIZE card_last_four : ${tapSDKResult!['card_last_four']}');
         debugPrint('TOKENIZE card_object  : ${tapSDKResult!['card_object']}');
         debugPrint(
             'TOKENIZE card_holder_name  : ${tapSDKResult!['card_holder_name']}');
-        debugPrint('TOKENIZE card_exp_month : ${tapSDKResult!['card_exp_month']}');
-        debugPrint('TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
-        debugPrint('TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
+        debugPrint(
+            'TOKENIZE card_exp_month : ${tapSDKResult!['card_exp_month']}');
+        debugPrint(
+            'TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
+        debugPrint(
+            'TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
         debugPrint('TOKENIZE issuer_id    : ${tapSDKResult!['issuer_id']}');
         debugPrint('TOKENIZE issuer_bank    : ${tapSDKResult!['issuer_bank']}');
         debugPrint(
@@ -305,24 +327,32 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
     } else {
       debugPrint('$trxMode id               : ${tapSDKResult!['charge_id']}');
     }
-    debugPrint('$trxMode  description        : ${tapSDKResult!['description']}');
+    debugPrint(
+        '$trxMode  description        : ${tapSDKResult!['description']}');
     debugPrint('$trxMode  message           : ${tapSDKResult!['message']}');
     debugPrint('$trxMode  card_first_six : ${tapSDKResult!['card_first_six']}');
-    debugPrint('$trxMode  card_last_four   : ${tapSDKResult!['card_last_four']}');
-    debugPrint('$trxMode  card_object         : ${tapSDKResult!['card_object']}');
+    debugPrint(
+        '$trxMode  card_last_four   : ${tapSDKResult!['card_last_four']}');
+    debugPrint(
+        '$trxMode  card_object         : ${tapSDKResult!['card_object']}');
     debugPrint('$trxMode  card_id         : ${tapSDKResult!['card_id']}');
-    debugPrint('$trxMode  card_brand          : ${tapSDKResult!['card_brand']}');
-    debugPrint('$trxMode  card_exp_month  : ${tapSDKResult!['card_exp_month']}');
+    debugPrint(
+        '$trxMode  card_brand          : ${tapSDKResult!['card_brand']}');
+    debugPrint(
+        '$trxMode  card_exp_month  : ${tapSDKResult!['card_exp_month']}');
     debugPrint('$trxMode  card_exp_year: ${tapSDKResult!['card_exp_year']}');
     debugPrint('$trxMode  acquirer_id  : ${tapSDKResult!['acquirer_id']}');
-    debugPrint("$trxMode payment agreement : ${tapSDKResult!['payment_agreement']}");
+    debugPrint(
+        "$trxMode payment agreement : ${tapSDKResult!['payment_agreement']}");
     debugPrint(
         '$trxMode  acquirer_response_code : ${tapSDKResult!['acquirer_response_code']}');
     debugPrint(
         '$trxMode  acquirer_response_message: ${tapSDKResult!['acquirer_response_message']}');
     debugPrint('$trxMode  source_id: ${tapSDKResult!['source_id']}');
-    debugPrint('$trxMode  source_channel     : ${tapSDKResult!['source_channel']}');
-    debugPrint('$trxMode  source_object      : ${tapSDKResult!['source_object']}');
+    debugPrint(
+        '$trxMode  source_channel     : ${tapSDKResult!['source_channel']}');
+    debugPrint(
+        '$trxMode  source_object      : ${tapSDKResult!['source_object']}');
     debugPrint(
         '$trxMode source_payment_type : ${tapSDKResult!['source_payment_type']}');
 
@@ -332,6 +362,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
       responseID = tapSDKResult!['charge_id'] ?? "";
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Consumer3<ProfileViewModel, JobsViewModel, PaymentViewModel>(builder:
@@ -439,12 +470,15 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                         height: context.appValues.appSizePercent.h100,
                         child: ElevatedButton(
                           onPressed: () async {
+                            widget.paymentViewModel.setLoading(true);
+
                             dynamic payments = await widget.paymentViewModel
                                 .getPaymentMethodsTap();
-                            dynamic paymentList=widget.paymentViewModel.paymentList.toList();
+                            dynamic paymentList =
+                                widget.paymentViewModel.paymentList.toList();
                             debugPrint('widget payment ${paymentList}');
                             var found = false;
-                            if(paymentList.isNotEmpty){
+                            if (paymentList.isNotEmpty) {
                               for (var payment in paymentList) {
                                 if (payment['card_number'] ==
                                     widget.paymentViewModel
@@ -457,7 +491,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                             if (!found) {
                               await widget.paymentViewModel
                                   .createPaymentMethodTap();
-                              startSDK();
+                              await startSDK();
                               // Navigator.of(context).pop();
                               // Future.delayed(
                               //     const Duration(seconds: 0),
@@ -478,8 +512,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                           translate('button.failure'),
                                           'Card Number is already chosen'));
                             }
-
-                            },
+                            widget.paymentViewModel.setLoading(false);
+                          },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
                             backgroundColor: const Color(0xff4100E3),
@@ -487,13 +521,15 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
-                          child: Text(
-                            translate('paymentMethod.addPaymentMethod'),
-                            style: getPrimaryRegularStyle(
-                              fontSize: 18,
-                              color: context.resources.color.colorWhite,
-                            ),
-                          ),
+                          child: widget.paymentViewModel.isLoading
+                              ? const CircularProgressIndicator()
+                              : Text(
+                                  translate('paymentMethod.addPaymentMethod'),
+                                  style: getPrimaryRegularStyle(
+                                    fontSize: 18,
+                                    color: context.resources.color.colorWhite,
+                                  ),
+                                ),
                         ),
                       ),
                     ],

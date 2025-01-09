@@ -47,14 +47,14 @@ class _ButtonConfirmPaymentMethodState extends State<ButtonConfirmPaymentMethod>
     // TODO: implement initState
     super.initState();
     // widget.action(widget.tag);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      debugPrint('hello from the othe side ');
-      widget.jobsViewModel.setInputValuesWithoutNotify(index: 'tap_payments_card', value: widget.data);
-      widget.jobsViewModel.setUpdatedJobWithoutNotify(index: 'tap_payments_card', value: widget.data);
-      widget.jobsViewModel.setInputValuesWithoutNotify(
-          index: 'payment_method', value: widget.payment_method);
-      widget.jobsViewModel.setUpdatedJobWithoutNotify(index: 'payment_method', value: widget.payment_method);
-    });
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   debugPrint('hello from the othe side ');
+    //   widget.jobsViewModel.setInputValuesWithoutNotify(index: 'tap_payments_card', value: widget.data);
+    //   widget.jobsViewModel.setUpdatedJobWithoutNotify(index: 'tap_payments_card', value: widget.data);
+    //   widget.jobsViewModel.setInputValuesWithoutNotify(
+    //       index: 'payment_method', value: widget.payment_method);
+    //   widget.jobsViewModel.setUpdatedJobWithoutNotify(index: 'payment_method', value: widget.payment_method);
+    // });
   }
   @override
   Widget build(BuildContext context) {
