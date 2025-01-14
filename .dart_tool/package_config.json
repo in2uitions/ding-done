@@ -110,12 +110,6 @@
       "languageVersion": "3.3"
     },
     {
-      "name": "card_scanner",
-      "rootUri": "file:///Users/souheiljabbour/.pub-cache/git/card_scanner-5fef7e12bfac7b262687e1488e09c89ac6601da4/",
-      "packageUri": "lib/",
-      "languageVersion": "2.14"
-    },
-    {
       "name": "carousel_slider",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/carousel_slider-5.0.0",
       "packageUri": "lib/",
@@ -1466,7 +1460,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-01-09T09:37:30.077743Z",
+  "generated": "2025-01-11T08:03:33.052345Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Volumes/KINGSTON/flutter",

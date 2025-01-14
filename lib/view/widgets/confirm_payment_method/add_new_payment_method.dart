@@ -10,7 +10,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:card_scanner/card_scanner.dart';
+// import 'package:card_scanner/card_scanner.dart';
 
 import '../../../res/app_validation.dart';
 import '../../../res/fonts/styles_manager.dart';
@@ -27,7 +27,7 @@ class AddNewPaymentMethodWidget extends StatefulWidget {
 }
 
 class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
-  var card = ScannedCardModel();
+  // var card = ScannedCardModel();
 
   // final ScannerWidgetController _controller = ScannerWidgetController();
 
@@ -96,44 +96,44 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                   //     fontSize: 15,
                   //   ),
                   // ),
-                  Container(
-                    height: context.appValues.appSizePercent.h5,
-                    child: IconButton(
-                      onPressed: () async {
-                        await _scanCard();
-                        paymentViewModel.setInputValues(
-                            index: 'nickname', value: card?.cardholder);
-                        paymentViewModel.setInputValues(
-                            index: 'card_number', value: card?.number);
-                        paymentViewModel.setInputValues(
-                            index: 'expiry_month',
-                            value: card?.expiry.split('/').first);
-                        paymentViewModel.setInputValues(
-                            index: 'expiry_year',
-                            value: card?.expiry.split('/').last);
-                        // Future.delayed(const Duration(seconds: 0), () =>
-                        //     Navigator.pop(context));
-                        Future.delayed(const Duration(seconds: 0),
-                            () => Navigator.pop(context));
-                        Future.delayed(
-                            const Duration(seconds: 0),
-                            () => Navigator.of(context).push(_createRoute(
-                                Consumer<ProfileViewModel>(
-                                    builder: (context, profileViewModel, _) {
-                                    return ConfirmPaymentMethod(
-                                      profileViewModel: profileViewModel,
-                                        payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
-                                        paymentViewModel: paymentViewModel,
-                                        role: Constants.customerRoleId);
-                                  }
-                                ))));
-                      },
-                      icon: Icon(
-                        Icons.qr_code_scanner,
-                        color: context.resources.color.btnColorBlue,
-                      ),
-                    ),
-                  ),
+                  // Container(
+                  //   height: context.appValues.appSizePercent.h5,
+                  //   child: IconButton(
+                  //     onPressed: () async {
+                  //       await _scanCard();
+                  //       paymentViewModel.setInputValues(
+                  //           index: 'nickname', value: card?.cardholder);
+                  //       paymentViewModel.setInputValues(
+                  //           index: 'card_number', value: card?.number);
+                  //       paymentViewModel.setInputValues(
+                  //           index: 'expiry_month',
+                  //           value: card?.expiry.split('/').first);
+                  //       paymentViewModel.setInputValues(
+                  //           index: 'expiry_year',
+                  //           value: card?.expiry.split('/').last);
+                  //       // Future.delayed(const Duration(seconds: 0), () =>
+                  //       //     Navigator.pop(context));
+                  //       Future.delayed(const Duration(seconds: 0),
+                  //           () => Navigator.pop(context));
+                  //       Future.delayed(
+                  //           const Duration(seconds: 0),
+                  //           () => Navigator.of(context).push(_createRoute(
+                  //               Consumer<ProfileViewModel>(
+                  //                   builder: (context, profileViewModel, _) {
+                  //                   return ConfirmPaymentMethod(
+                  //                     profileViewModel: profileViewModel,
+                  //                       payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
+                  //                       paymentViewModel: paymentViewModel,
+                  //                       role: Constants.customerRoleId);
+                  //                 }
+                  //               ))));
+                  //     },
+                  //     icon: Icon(
+                  //       Icons.qr_code_scanner,
+                  //       color: context.resources.color.btnColorBlue,
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
               CustomTextField(
@@ -265,19 +265,19 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
     });
   }
 
-  Future<void> _scanCard() async {
-    const scanOptions = ScanOptions(scanCardHolderName: true);
-    try {
-      final receivedCard = await CardScanner.scanCard(scanOptions: scanOptions);
-      if (receivedCard == null) return;
-      if (!mounted) return;
-      card = receivedCard;
-      debugPrint('card $card');
-      setState(() {});
-    } catch (e) {
-      debugPrint(e.toString());
-    }
-  }
+  // Future<void> _scanCard() async {
+  //   const scanOptions = ScanOptions(scanCardHolderName: true);
+  //   try {
+  //     final receivedCard = await CardScanner.scanCard(scanOptions: scanOptions);
+  //     if (receivedCard == null) return;
+  //     if (!mounted) return;
+  //     card = receivedCard;
+  //     debugPrint('card $card');
+  //     setState(() {});
+  //   } catch (e) {
+  //     debugPrint(e.toString());
+  //   }
+  // }
 
   // Future<void> _scanCard() async {
   //   // Request camera permission

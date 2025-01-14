@@ -201,7 +201,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
     // });
     try {
       debugPrint('Start sdk');
-
+      widget.paymentViewModel.setLoading(true);
       tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
 
       // loaderController.stopWhenFull();
@@ -246,17 +246,19 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         // debugPrint('result url ${result["transaction"]["url"]}');
         if (result["transaction"] != null) {
           _launchUrl('${result["transaction"]["url"]}');
+
         } else {
           showDialog(
               context: context,
               builder: (BuildContext context) => simpleAlert(
                   context,
                   translate('button.failure'),
-                  '${result['errors'][0]['description']}'));
+                  '${result['errors']!=null ?result['errors'][0]['description']:result['error']}'));
         }
+        await widget.paymentViewModel.setLoading(false);
+
         // launchWhatsApp();
       });
-      widget.paymentViewModel.setLoading(false);
     } catch (error) {
       debugPrint('error starting sdk $error');
     }
@@ -272,6 +274,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
+
   }
 
   void handleSDKResult() {
@@ -512,7 +515,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                           translate('button.failure'),
                                           'Card Number is already chosen'));
                             }
-                            widget.paymentViewModel.setLoading(false);
+                            // await widget.paymentViewModel.setLoading(false);
                           },
                           style: ElevatedButton.styleFrom(
                             elevation: 0,

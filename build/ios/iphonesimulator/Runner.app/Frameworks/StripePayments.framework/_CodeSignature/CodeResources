@@ -6,15 +6,15 @@
 	<dict>
 		<key>Info.plist</key>
 		<data>
-		QvjrLFVRox9xCvZZymuctG9k1ZM=
+		G7iRpySKAtFivnXVLL04+Z4Di1A=
 		</data>
 		<key>Stripe3DS2.bundle/Assets.car</key>
 		<data>
-		qekar6NIeCOr5+fyXjMsO3DhC40=
+		T9okfGAXDSL1DY559rw2c9Q2Hhs=
 		</data>
 		<key>Stripe3DS2.bundle/Info.plist</key>
 		<data>
-		itv7XXlldKoL0XlV+ogDr6u769A=
+		T2AU+o9aKPy6b5t2iE/A+1lQlBY=
 		</data>
 		<key>Stripe3DS2.bundle/PrivacyInfo.xcprivacy</key>
 		<data>
@@ -391,7 +391,7 @@
 		</dict>
 		<key>StripePaymentsBundle.bundle/Info.plist</key>
 		<data>
-		JFiCrz62qDDlUQmBPHCHREh77B8=
+		dul7oFT2JdRYEVqez8Ov/qDqv1k=
 		</data>
 		<key>StripePaymentsBundle.bundle/bg-BG.lproj/Localizable.strings</key>
 		<dict>
@@ -778,14 +778,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			wKdmSU6bs3NmaS/ybJF/958Pj9RsIkEKGt8hU9xqbKg=
+			Zw9IdEZWRnAJX+MHMIr9XFzq2UnwRSl6sMCpn1istkY=
 			</data>
 		</dict>
 		<key>Stripe3DS2.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			bOQlp9ggpXd8A7OOQyRSTX+JYvkb/X07aVUTQBYX/O4=
+			tgd/gEBKcsPHLq+ByHLVaDlrO3wwNiDsrUKQ9tKGW5o=
 			</data>
 		</dict>
 		<key>Stripe3DS2.bundle/PrivacyInfo.xcprivacy</key>
@@ -1168,7 +1168,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			IiOqXpwviEYop/cTigV1XOVyS462MfwxwECAuwSDCWY=
+			Mc/enRCQe30NSGcrKJ0sskGjd+MKSDV/YKgKP9LEaO4=
 			</data>
 		</dict>
 		<key>StripePaymentsBundle.bundle/bg-BG.lproj/Localizable.strings</key>
