@@ -39,7 +39,7 @@ class _DateAndTimeWidgetState extends State<DateAndTimeWidget> {
               child: Text(
                 translate('bookService.dateAndTime'),
                 style: getPrimaryBoldStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: const Color(0xff38385E),
                 ),
               ),
@@ -50,7 +50,7 @@ class _DateAndTimeWidgetState extends State<DateAndTimeWidget> {
                   .format(DateTime.parse(widget.dateTime.toString())),
               // '${widget.dateTime}',
               style: getPrimaryRegularStyle(
-                fontSize: 18,
+                fontSize: 16,
                 color: const Color(0xff78789D),
               ),
             ),

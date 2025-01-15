@@ -98,8 +98,8 @@ class _CustomDropDownState extends State<CustomDropDown> {
       hint: Text(
         widget.hintText!,
         style: getPrimaryRegularStyle(
-          fontSize: 15,
-          color: const Color(0xffB4B4B4),
+          fontSize: 14,
+          color: const Color(0xff343b61),
         ),
       ),
       items: widget.list.map<DropdownMenuItem<String>>((dynamic value) {

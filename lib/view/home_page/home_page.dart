@@ -8,7 +8,6 @@ import 'package:dingdone/view/about/about_dingdone.dart';
 import 'package:dingdone/view/categories/parent_categories.dart';
 import 'package:dingdone/view/categories_screen/categories_screen.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
-import 'package:dingdone/view/widgets/custom/custom_search_bar.dart';
 import 'package:dingdone/view/widgets/home_page/categories.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -26,12 +25,9 @@ import '../../view_model/dispose_view_model/app_view_model.dart';
 import '../agreement/user_agreement.dart';
 import '../book_a_service/book_a_service.dart';
 import '../bottom_bar/bottom_bar.dart';
-import '../edit_account/edit_account.dart';
 import '../jobs_page/jobs_page.dart';
 import '../login/login.dart';
 import '../widgets/categories_screen/categories_screen_cards.dart';
-import '../widgets/job_details_supplier/rating_stars_widget.dart';
-import '../widgets/job_details_supplier/review_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -51,15 +47,15 @@ class _HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     getLanguage();
-    Provider.of<CategoriesViewModel>(context, listen: false).getCategoriesAndServices();
+    Provider.of<CategoriesViewModel>(context, listen: false)
+        .getCategoriesAndServices();
     // Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(
-    var categoriesViewModel= Provider.of<CategoriesViewModel>(context, listen: false);
+    var categoriesViewModel =
+        Provider.of<CategoriesViewModel>(context, listen: false);
     searchController.addListener(_filterServices);
     // Initially display all services
     filteredServices = categoriesViewModel.servicesList2;
-
   }
-
 
   @override
   void dispose() {
@@ -70,8 +66,9 @@ class _HomePageState extends State<HomePage> {
 
   void _filterServices() {
     String searchText = searchController.text.toLowerCase();
-    var categoriesViewModel= Provider.of<CategoriesViewModel>(context, listen: false);
-    categoriesViewModel.searchData(index: 'search_services',value:searchText );
+    var categoriesViewModel =
+        Provider.of<CategoriesViewModel>(context, listen: false);
+    categoriesViewModel.searchData(index: 'search_services', value: searchText);
     debugPrint('categories search result ${categoriesViewModel.servicesList2}');
 
     setState(() {
@@ -79,9 +76,7 @@ class _HomePageState extends State<HomePage> {
         // Display all services if search text is empty
         filteredServices = categoriesViewModel.servicesList2;
       } else {
-
         filteredServices = categoriesViewModel.servicesList2;
-
       }
     });
   }
@@ -139,18 +134,19 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                const Gap(60),
+                const Gap(120),
                 ListTile(
                   title: Row(
                     children: [
                       SvgPicture.asset(
                         'assets/img/orderHistory.svg',
+                        width: context.appValues.appSizePercent.w4,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.orderHistory'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -186,12 +182,13 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       SvgPicture.asset(
                         'assets/img/addressBook.svg',
+                        width: context.appValues.appSizePercent.w4,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.myAddressBook'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -217,12 +214,13 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       SvgPicture.asset(
                         'assets/img/headphone.svg',
+                        width: context.appValues.appSizePercent.w5,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.support'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -250,12 +248,13 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       SvgPicture.asset(
                         'assets/img/aboutDingDone.svg',
+                        width: context.appValues.appSizePercent.w5,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.aboutDingDone'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -282,12 +281,13 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       SvgPicture.asset(
                         'assets/img/termofuse.svg',
+                        width: context.appValues.appSizePercent.w5,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.termsAndConditions'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -313,50 +313,52 @@ class _HomePageState extends State<HomePage> {
                 ListTile(
                   title: Row(
                     children: [
-                      Icon(
-                          Icons.language,
-                        size: 30,
+                      const Icon(
+                        Icons.language,
+                        size: 20,
                         color: Colors.deepPurple,
                       ),
                       const Gap(10),
-
                       Text(
                         translate('drawer.chooseLanguage'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
                     ],
                   ),
                   onTap: () => _onActionSheetPress(context),
-
                 ),
                 const Spacer(),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: context.appValues.appPadding.p5,
-                      left: context.appValues.appPadding.p15,
-                      right: context.appValues.appPadding.p15),
+                    top: context.appValues.appPadding.p5,
+                    left: context.appValues.appPadding.p15,
+                    right: context.appValues.appPadding.p15,
+                  ),
                   child: InkWell(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             SvgPicture.asset(
                               'assets/img/logout.svg',
+                              width: context.appValues.appSizePercent.w4,
                             ),
                             const Gap(10),
                             Text(
                               translate('profile.logOut'),
                               style: getPrimaryRegularStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 color: const Color(0xff78789D),
                               ),
                             ),
                           ],
                         ),
+                        const Gap(50)
                       ],
                     ),
                     onTap: () async {
@@ -497,7 +499,6 @@ class _HomePageState extends State<HomePage> {
                                   hintText: "Search for services...",
                                   // viewModel: servicesViewModel.searchData,
                                   controller: searchController,
-
                                 ),
                               ),
                               const Gap(15),
@@ -509,379 +510,412 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              searchController.text.isEmpty?
-              DraggableScrollableSheet(
-
-                  initialChildSize: 0.70,
-                  minChildSize: 0.70,
-                  maxChildSize: 1,
-                  builder: (BuildContext context,
-                      ScrollController scrollController) {
-                    return Container(
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
-                        color: Color(0xffFEFEFE),
-                      ),
-                      child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                    context.appValues.appPadding.p20,
-                                    context.appValues.appPadding.p20,
-                                    context.appValues.appPadding.p20,
-                                    context.appValues.appPadding.p10,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        servicesViewModel.chosenParent
-                                            ? translate(
-                                                'home_screen.servicesCategories')
-                                            : translate(
-                                                'home_screen.categories'),
-                                        style: getPrimaryBoldStyle(
-                                          fontSize: 25,
-                                          color: context
-                                              .resources.color.btnColorBlue,
-                                        ),
+              searchController.text.isEmpty
+                  ? DraggableScrollableSheet(
+                      initialChildSize: 0.70,
+                      minChildSize: 0.70,
+                      maxChildSize: 1,
+                      builder: (BuildContext context,
+                          ScrollController scrollController) {
+                        return Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                            color: Color(0xffFEFEFE),
+                          ),
+                          child: ListView.builder(
+                              controller: scrollController,
+                              itemCount: 1,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                        context.appValues.appPadding.p20,
+                                        context.appValues.appPadding.p0,
+                                        context.appValues.appPadding.p20,
+                                        context.appValues.appPadding.p10,
                                       ),
-                                      servicesViewModel.chosenParent
-                                          ? InkWell(
-                                              child: Text(
-                                                translate('home_screen.seeAll'),
-                                                style: getPrimaryBoldStyle(
-                                                  fontSize: 18,
-                                                  color:
-                                                      const Color(0xff9E9BB8),
-                                                ),
-                                              ),
-                                              onTap: () {
-                                                Navigator.of(context)
-                                                    .push(_createRoute(
-                                                  CategoriesScreen(
-                                                      categoriesViewModel:
-                                                          categoriesViewModel,
-                                                      initialTabIndex: 0,
-                                                      serviceViewModel:
-                                                          servicesViewModel),
-                                                ));
-                                              },
-                                            )
-                                          : Container(),
-                                    ],
-                                  ),
-                                ),
-                                servicesViewModel.chosenParent
-                                    ? CategoriesWidget(
-                                        servicesViewModel: servicesViewModel)
-                                    : ParentCategoriesWidget(
-                                        servicesViewModel: servicesViewModel),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                    context.appValues.appPadding.p10,
-                                    context.appValues.appPadding.p20,
-                                    context.appValues.appPadding.p10,
-                                    context.appValues.appPadding.p20,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        // servicesViewModel.searchBody["search_services"] != null &&
-                                        //     servicesViewModel.searchBody["search_services"] != ''
-                                        //     ? servicesViewModel.searchBody["search_services"]
-                                        //     :
-                                        translate(
-                                            'home_screen.featuredServices'),
-                                        style: getPrimaryBoldStyle(
-                                          fontSize: 25,
-                                          color: context
-                                              .resources.color.btnColorBlue,
-                                        ),
-                                      ),
-                                      InkWell(
-                                        onTap: () {},
-                                        child: Text(
-                                          translate('home_screen.seeAll'),
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 18,
-                                            color: const Color(0xff9E9BB8),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      right: 8.0, left: 8.0),
-                                  child: Column(
-                                    children: [
-                                      Stack(
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          CarouselSlider(
-                                            options: CarouselOptions(
-                                              height: 200,
-                                              autoPlay: true,
-                                              enlargeCenterPage: true,
-                                              viewportFraction: 1.0,
-                                              autoPlayAnimationDuration:
-                                                  const Duration(
-                                                      milliseconds: 700),
-                                              onPageChanged: (index, reason) {
-                                                setState(() {
-                                                  _current = index;
-                                                });
-                                              },
+                                          Text(
+                                            servicesViewModel.chosenParent
+                                                ? translate(
+                                                    'home_screen.servicesCategories')
+                                                : translate(
+                                                    'home_screen.categories'),
+                                            style: getPrimarySemiBoldStyle(
+                                              fontSize: 22,
+                                              color: context
+                                                  .resources.color.btnColorBlue,
                                             ),
-                                            items: imgList
-                                                .map((item) => Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(20),
-                                                        image:
-                                                            const DecorationImage(
-                                                          fit: BoxFit.cover,
-                                                          image: NetworkImage(
-                                                            'https://media.istockphoto.com/id/1158769712/photo/professional-furniture-assembly-worker-assembles-shelf-professional-handyman-doing-assembly.jpg?s=612x612&w=0&k=20&c=BBvngif9SB8VbAb1gSD4DaBzob6Chnm0KZpP09lCLrc=',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      // color:
-                                                      //     context.resources.color.btnColorBlue,
-                                                      child: Center(
-                                                        child: Column(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .end,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Align(
-                                                              alignment: Alignment
-                                                                  .bottomLeft,
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .only(
-                                                                  left: context
-                                                                      .appValues
-                                                                      .appPadding
-                                                                      .p10,
-                                                                  bottom: context
-                                                                      .appValues
-                                                                      .appPadding
-                                                                      .p35,
-                                                                ),
-                                                                child: Text(
-                                                                  'Bed Frames Assembly',
-                                                                  style:
-                                                                      getPrimaryBoldStyle(
-                                                                    fontSize:
-                                                                        22,
-                                                                    color: context
-                                                                        .resources
-                                                                        .color
-                                                                        .colorWhite,
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ))
-                                                .toList(),
                                           ),
-                                          Positioned(
-                                            bottom: 15,
-                                            left: 0,
-                                            right: 0,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: imgList
-                                                  .asMap()
-                                                  .entries
-                                                  .map((entry) {
-                                                return GestureDetector(
-                                                  onTap: () => _controller
-                                                      .animateToPage(entry.key),
-                                                  child: Container(
-                                                    width: 12.0,
-                                                    height: 12.0,
-                                                    margin: const EdgeInsets
-                                                        .symmetric(
-                                                        vertical: 8.0,
-                                                        horizontal: 4.0),
-                                                    decoration: BoxDecoration(
-                                                      shape: BoxShape.circle,
-                                                      color: _current ==
-                                                              entry.key
-                                                          ? Colors.white
-                                                          : Colors.white
-                                                              .withOpacity(0.4),
+                                          servicesViewModel.chosenParent
+                                              ? InkWell(
+                                                  child: Text(
+                                                    translate(
+                                                        'home_screen.seeAll'),
+                                                    style: getPrimaryBoldStyle(
+                                                      fontSize: 18,
+                                                      color: const Color(
+                                                          0xff9E9BB8),
                                                     ),
                                                   ),
-                                                );
-                                              }).toList(),
+                                                  onTap: () {
+                                                    Navigator.of(context)
+                                                        .push(_createRoute(
+                                                      CategoriesScreen(
+                                                          categoriesViewModel:
+                                                              categoriesViewModel,
+                                                          initialTabIndex: 0,
+                                                          serviceViewModel:
+                                                              servicesViewModel),
+                                                    ));
+                                                  },
+                                                )
+                                              : Container(),
+                                        ],
+                                      ),
+                                    ),
+                                    servicesViewModel.chosenParent
+                                        ? CategoriesWidget(
+                                            servicesViewModel:
+                                                servicesViewModel)
+                                        : ParentCategoriesWidget(
+                                            servicesViewModel:
+                                                servicesViewModel),
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                        context.appValues.appPadding.p10,
+                                        context.appValues.appPadding.p20,
+                                        context.appValues.appPadding.p10,
+                                        context.appValues.appPadding.p20,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            // servicesViewModel.searchBody["search_services"] != null &&
+                                            //     servicesViewModel.searchBody["search_services"] != ''
+                                            //     ? servicesViewModel.searchBody["search_services"]
+                                            //     :
+                                            translate(
+                                                'home_screen.featuredServices'),
+                                            style: getPrimarySemiBoldStyle(
+                                              fontSize: 22,
+                                              color: context
+                                                  .resources.color.btnColorBlue,
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {},
+                                            child: Text(
+                                              translate('home_screen.seeAll'),
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 18,
+                                                color: const Color(0xff9E9BB8),
+                                              ),
                                             ),
                                           ),
                                         ],
                                       ),
-                                      const Gap(50),
-                                      Container(
-                                        padding: const EdgeInsets.all(8.0),
-                                        color: Colors.white,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Expanded(
-                                              child: Text(
-                                                translate('home_screen.availability'),
-                                                // 'We are available Sat to Thur from 9 to 5, Fri from 2 to 5',
-                                                style: getPrimaryRegularStyle(
-                                                  fontSize: 13,
-                                                  color:
-                                                      const Color(0xff180C38),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                          right: 8.0, left: 8.0),
+                                      child: Column(
+                                        children: [
+                                          Stack(
+                                            children: [
+                                              CarouselSlider(
+                                                options: CarouselOptions(
+                                                  height: 200,
+                                                  autoPlay: true,
+                                                  enlargeCenterPage: true,
+                                                  viewportFraction: 1.0,
+                                                  autoPlayAnimationDuration:
+                                                      const Duration(
+                                                          milliseconds: 700),
+                                                  onPageChanged:
+                                                      (index, reason) {
+                                                    setState(() {
+                                                      _current = index;
+                                                    });
+                                                  },
+                                                ),
+                                                items: imgList
+                                                    .map((item) => Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        20),
+                                                            image:
+                                                                const DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image:
+                                                                  NetworkImage(
+                                                                'https://media.istockphoto.com/id/1158769712/photo/professional-furniture-assembly-worker-assembles-shelf-professional-handyman-doing-assembly.jpg?s=612x612&w=0&k=20&c=BBvngif9SB8VbAb1gSD4DaBzob6Chnm0KZpP09lCLrc=',
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          // color:
+                                                          //     context.resources.color.btnColorBlue,
+                                                          child: Center(
+                                                            child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Align(
+                                                                  alignment:
+                                                                      Alignment
+                                                                          .bottomLeft,
+                                                                  child:
+                                                                      Padding(
+                                                                    padding:
+                                                                        EdgeInsets
+                                                                            .only(
+                                                                      left: context
+                                                                          .appValues
+                                                                          .appPadding
+                                                                          .p10,
+                                                                      bottom: context
+                                                                          .appValues
+                                                                          .appPadding
+                                                                          .p35,
+                                                                    ),
+                                                                    child: Text(
+                                                                      'Bed Frames Assembly',
+                                                                      style:
+                                                                          getPrimaryBoldStyle(
+                                                                        fontSize:
+                                                                            22,
+                                                                        color: context
+                                                                            .resources
+                                                                            .color
+                                                                            .colorWhite,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ))
+                                                    .toList(),
+                                              ),
+                                              Positioned(
+                                                bottom: 15,
+                                                left: 0,
+                                                right: 0,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: imgList
+                                                      .asMap()
+                                                      .entries
+                                                      .map((entry) {
+                                                    return GestureDetector(
+                                                      onTap: () => _controller
+                                                          .animateToPage(
+                                                              entry.key),
+                                                      child: Container(
+                                                        width: 12.0,
+                                                        height: 12.0,
+                                                        margin: const EdgeInsets
+                                                            .symmetric(
+                                                            vertical: 8.0,
+                                                            horizontal: 4.0),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          shape:
+                                                              BoxShape.circle,
+                                                          color: _current ==
+                                                                  entry.key
+                                                              ? Colors.white
+                                                              : Colors.white
+                                                                  .withOpacity(
+                                                                      0.4),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
                                                 ),
                                               ),
-                                            ),
-                                            const Gap(10),
-                                            InkWell(
-                                              onTap: () {
-                                                jobsViewModel.launchWhatsApp();
-                                              },
-                                              child: Container(
-                                                width: 155,
-                                                height: 52,
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: context
-                                                      .appValues.appPadding.p10,
-                                                  vertical: context
-                                                      .appValues.appPadding.p15,
-                                                ),
-                                                decoration: BoxDecoration(
-                                                  color:
-                                                      const Color(0xff4100E3),
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                                child: Center(
+                                            ],
+                                          ),
+                                          const Gap(50),
+                                          Container(
+                                            padding: const EdgeInsets.all(8.0),
+                                            color: Colors.white,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Expanded(
                                                   child: Text(
-                                                    'CONTACT US',
-                                                    style: getPrimaryBoldStyle(
-                                                      color: context.resources
-                                                          .color.colorWhite,
-                                                      fontSize: 16,
+                                                    translate(
+                                                        'home_screen.availability'),
+                                                    // 'We are available Sat to Thur from 9 to 5, Fri from 2 to 5',
+                                                    style:
+                                                        getPrimaryRegularStyle(
+                                                      fontSize: 13,
+                                                      color: const Color(
+                                                          0xff180C38),
                                                     ),
                                                   ),
                                                 ),
-                                              ),
+                                                const Gap(10),
+                                                InkWell(
+                                                  onTap: () {
+                                                    jobsViewModel
+                                                        .launchWhatsApp();
+                                                  },
+                                                  child: Container(
+                                                    width: 155,
+                                                    height: 52,
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                      horizontal: context
+                                                          .appValues
+                                                          .appPadding
+                                                          .p10,
+                                                      vertical: context
+                                                          .appValues
+                                                          .appPadding
+                                                          .p15,
+                                                    ),
+                                                    decoration: BoxDecoration(
+                                                      color: const Color(
+                                                          0xff384ea2),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
+                                                    child: Center(
+                                                      child: Text(
+                                                        'CONTACT US',
+                                                        style:
+                                                            getPrimaryBoldStyle(
+                                                          color: context
+                                                              .resources
+                                                              .color
+                                                              .colorWhite,
+                                                          fontSize: 16,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            );
-                          }),
-                    );
-                  })
-              :
-              DraggableScrollableSheet(
-                initialChildSize: 0.70,
-                minChildSize: 0.70,
-                maxChildSize: 1,
-                builder: (BuildContext context, ScrollController scrollController) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
-                      ),
-                      color: Color(0xffFEFEFE),
-                    ),
-                    child:ListView.builder(
-                      controller: scrollController,
-                      itemCount: filteredServices.length,
-                      itemBuilder: (context, index) {
-                        var service = filteredServices[index];
-
-                        // Find the translation where language_code == lang
-                        // var lang = 'ar-SA'; // Replace this with the actual language code you're using
-                        var translation = service['translations'].firstWhere(
-                              (t) => t['languages_code'] == lang,
-                          orElse: () => null,
+                                    ),
+                                  ],
+                                );
+                              }),
                         );
+                      })
+                  : DraggableScrollableSheet(
+                      initialChildSize: 0.70,
+                      minChildSize: 0.70,
+                      maxChildSize: 1,
+                      builder: (BuildContext context,
+                          ScrollController scrollController) {
+                        return Container(
+                            decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
+                              ),
+                              color: Color(0xffFEFEFE),
+                            ),
+                            child: ListView.builder(
+                              controller: scrollController,
+                              itemCount: filteredServices.length,
+                              itemBuilder: (context, index) {
+                                var service = filteredServices[index];
 
-                        // If no translation is found, fallback to default
-                        if (translation == null) {
-                          translation = {
-                            'title': service["xtitle"] ?? '',
-                            'description': service["xdescription"] ?? ''
-                          };
-                        }
-                        debugPrint('translation si $translation');
+                                // Find the translation where language_code == lang
+                                // var lang = 'ar-SA'; // Replace this with the actual language code you're using
+                                var translation =
+                                    service['translations'].firstWhere(
+                                  (t) => t['languages_code'] == lang,
+                                  orElse: () => null,
+                                );
 
-                        return Consumer2<JobsViewModel, ProfileViewModel>(
-                          builder: (context, jobsViewModel, profileViewModel, _) {
-                            return CategoriesScreenCards(
-                              category: service["category"],
-                              title: translation != null ? translation["title"] : '',
-                              cost: 0,
-                              // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
-                              image: service["image"] != null
-                                  ? '${context.resources.image.networkImagePath2}${service["image"]}'
-                                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                              onTap: () {
-                                _handleServiceSelection(service, jobsViewModel, profileViewModel);
+                                // If no translation is found, fallback to default
+                                if (translation == null) {
+                                  translation = {
+                                    'title': service["xtitle"] ?? '',
+                                    'description': service["xdescription"] ?? ''
+                                  };
+                                }
+                                debugPrint('translation si $translation');
+
+                                return Consumer2<JobsViewModel,
+                                    ProfileViewModel>(
+                                  builder: (context, jobsViewModel,
+                                      profileViewModel, _) {
+                                    return CategoriesScreenCards(
+                                      category: service["category"],
+                                      title: translation != null
+                                          ? translation["title"]
+                                          : '',
+                                      cost: 0,
+                                      // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
+                                      image: service["image"] != null
+                                          ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                      onTap: () {
+                                        _handleServiceSelection(service,
+                                            jobsViewModel, profileViewModel);
+                                      },
+                                    );
+                                  },
+                                );
                               },
-                            );
-                          },
-                        );
-                      },
-                    )
+                            )
 
-                    // child: ListView.builder(
-                    //   controller: scrollController,
-                    //   itemCount: filteredServices.length,
-                    //   itemBuilder: (BuildContext context, int index) {
-                    //     var service = filteredServices[index];
-                    //     return ListTile(
-                    //       title: Text(service.title),
-                    //       subtitle: Text(service!=null && service.description !=null ?service.description:''),
-                    //     );
-                    //   },
-                    // ),
-                  );
-                },
-              ),
+                            // child: ListView.builder(
+                            //   controller: scrollController,
+                            //   itemCount: filteredServices.length,
+                            //   itemBuilder: (BuildContext context, int index) {
+                            //     var service = filteredServices[index];
+                            //     return ListTile(
+                            //       title: Text(service.title),
+                            //       subtitle: Text(service!=null && service.description !=null ?service.description:''),
+                            //     );
+                            //   },
+                            // ),
+                            );
+                      },
+                    ),
             ],
           ),
         ),
       );
     });
   }
-  void _handleServiceSelection(dynamic service,JobsViewModel jobsViewModel,ProfileViewModel profileViewModel) {
+
+  void _handleServiceSelection(dynamic service, JobsViewModel jobsViewModel,
+      ProfileViewModel profileViewModel) {
     // Logic to handle service selection and navigation to next screen
-    if(lang==null){
-      lang='en-US';
+    if (lang == null) {
+      lang = 'en-US';
     }
     jobsViewModel.setInputValues(index: 'service', value: service["id"]);
     jobsViewModel.setInputValues(
@@ -892,7 +926,7 @@ class _HomePageState extends State<HomePage> {
     jobsViewModel.setInputValues(
       index: 'address',
       value:
-      '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
+          '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
     );
     jobsViewModel.setInputValues(
         index: 'latitude',
@@ -900,8 +934,7 @@ class _HomePageState extends State<HomePage> {
     jobsViewModel.setInputValues(
         index: 'longitude',
         value: profileViewModel.getProfileBody['current_address']['longitude']);
-    jobsViewModel.setInputValues(
-        index: 'payment_method', value: 'Card');
+    jobsViewModel.setInputValues(index: 'payment_method', value: 'Card');
 
     Navigator.of(context).push(_createRoute(BookAService(
       service: service,

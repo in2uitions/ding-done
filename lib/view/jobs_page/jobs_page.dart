@@ -46,29 +46,35 @@ class _JobsPageState extends State<JobsPage> {
     super.initState();
     _active = widget.initialActiveTab;
     Provider.of<JobsViewModel>(context, listen: false).getCustomerJobs();
-    if(widget.userRole==Constants.customerRoleId){
-      var jobsViewModel= Provider.of<JobsViewModel>(context, listen: false);
-      dynamic completedJobs =jobsViewModel.getcustomerJobs.where((e) => e.status == 'completed' && e.rating_stars == null)
+    if (widget.userRole == Constants.customerRoleId) {
+      var jobsViewModel = Provider.of<JobsViewModel>(context, listen: false);
+      dynamic completedJobs = jobsViewModel.getcustomerJobs
+          .where((e) => e.status == 'completed' && e.rating_stars == null)
           .toList();
       debugPrint('completed jobs $completedJobs');
-      if(completedJobs.isNotEmpty)
+      if (completedJobs.isNotEmpty)
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          _showReviewDialog(context,completedJobs[0],jobsViewModel);
+          _showReviewDialog(context, completedJobs[0], jobsViewModel);
         });
     }
-
   }
+
 // Function to show the review dialog
-  void _showReviewDialog(BuildContext context,dynamic job,JobsViewModel jobsViewModel) {
+  void _showReviewDialog(
+      BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return review(context,job,jobsViewModel); // This is the review widget you provided
+        return review(context, job,
+            jobsViewModel); // This is the review widget you provided
       },
     );
   }
-  Widget review(BuildContext context,dynamic job,JobsViewModel jobsViewModel) {
+
+  Widget review(
+      BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
     return AlertDialog(
+      backgroundColor: Colors.white,
       elevation: 15,
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -102,57 +108,52 @@ class _JobsPageState extends State<JobsPage> {
           ),
           SizedBox(height: context.appValues.appSize.s10),
           RatingStarsWidget(
-              stars: job.rating_stars != null
-                  ? job.rating_stars
-                  : 0, userRole: Constants.customerRoleId,),
+            stars: job.rating_stars != null ? job.rating_stars : 0,
+            userRole: Constants.customerRoleId,
+          ),
           ReviewWidget(
             review: job.rating_comment ?? '',
           ),
           SizedBox(height: context.appValues.appSize.s10),
-
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p32,
             ),
-            child: Builder(
-              builder: (context) {
-                return ElevatedButton(
-                  onPressed: () async {
-                    if (await jobsViewModel.rateJob(job.id) == true) {
-                      Navigator.of(context).pop();
-                      Future.delayed(const Duration(seconds: 0));
-
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => simpleAlert(context,
-                              '${translate('button.failure')} \n${jobsViewModel.errorMessage}'));
-                    }
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0.0,
-                    shadowColor: Colors.transparent,
-                    backgroundColor: const Color(0xffFFD105),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    fixedSize: Size(
-                      context.appValues.appSizePercent.w30,
-                      context.appValues.appSizePercent.h5,
-                    ),
+            child: Builder(builder: (context) {
+              return ElevatedButton(
+                onPressed: () async {
+                  if (await jobsViewModel.rateJob(job.id) == true) {
+                    Navigator.of(context).pop();
+                    Future.delayed(const Duration(seconds: 0));
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => simpleAlert(context,
+                            '${translate('button.failure')} \n${jobsViewModel.errorMessage}'));
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0.0,
+                  shadowColor: Colors.transparent,
+                  backgroundColor: const Color(0xffFFD105),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Text(
-                    translate('button.ok'),
-                    style: getPrimaryRegularStyle(
-                      fontSize: 15,
-                      color: context.resources.color.btnColorBlue,
-                    ),
+                  fixedSize: Size(
+                    context.appValues.appSizePercent.w30,
+                    context.appValues.appSizePercent.h5,
                   ),
-                );
-              }
-            ),
+                ),
+                child: Text(
+                  translate('button.ok'),
+                  style: getPrimaryRegularStyle(
+                    fontSize: 15,
+                    color: context.resources.color.btnColorBlue,
+                  ),
+                ),
+              );
+            }),
           ),
-
           SizedBox(height: context.appValues.appSize.s20),
         ],
       ),
@@ -166,9 +167,7 @@ class _JobsPageState extends State<JobsPage> {
       backgroundColor: const Color(0xffFFFFFF),
       body: Stack(
         fit: StackFit.expand,
-
         children: [
-
           Column(
             children: [
               Column(
@@ -216,12 +215,14 @@ class _JobsPageState extends State<JobsPage> {
                                 children: [
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         translate('bottom_bar.jobs'),
                                         style: getPrimaryBoldStyle(
-                                          color: context.resources.color.colorWhite,
+                                          color: context
+                                              .resources.color.colorWhite,
                                           fontSize: 28,
                                         ),
                                       ),
@@ -241,8 +242,8 @@ class _JobsPageState extends State<JobsPage> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) =>
-                                              BottomBar(userRole: widget.userRole),
+                                          builder: (context) => BottomBar(
+                                              userRole: widget.userRole),
                                         ),
                                       );
                                     },
@@ -401,16 +402,13 @@ class _JobsPageState extends State<JobsPage> {
                                           // content: buildHeader(context),
                                         ),
                                       );
-
                               },
                             ),
-
                           ],
                         );
                       }),
                 );
               }),
-
         ],
       ),
     );

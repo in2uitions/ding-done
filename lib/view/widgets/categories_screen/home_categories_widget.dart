@@ -1,19 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:skeletons/skeletons.dart';
 
 import '../../../models/roles_model.dart';
-import '../../../models/services_model.dart';
 import '../../../res/app_context_extension.dart';
 import '../../../res/fonts/styles_manager.dart';
 import '../../../view_model/categories_view_model/categories_view_model.dart';
 import '../../../view_model/services_view_model/services_view_model.dart';
 import '../../../res/app_prefs.dart';
-import '../../book_a_service/book_a_service.dart';
-import '../../categories_screen/categories_screen.dart';
-import 'categories_screen_cards.dart';
 
 class HomeCategoriesWidget extends StatefulWidget {
   final ServicesViewModel servicesViewModel;
@@ -90,8 +84,8 @@ class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
       DropdownRoleModel service, CategoriesViewModel categoriesViewModel) {
     Map<String, dynamic>? services;
     Map<String, dynamic>? parentServices;
-    if(lang==null){
-      lang="en-US";
+    if (lang == null) {
+      lang = "en-US";
     }
     for (Map<String, dynamic> translation in service.translations) {
       if (translation["languages_code"]["code"] == lang) {
@@ -108,41 +102,41 @@ class _HomeCategoriesWidgetState extends State<HomeCategoriesWidget> {
             Radius.circular(22),
           ),
           color: widget.servicesViewModel.searchBody["search_services"]
-              .toString()
-              .toLowerCase() ==
-              services?["title"].toString().toLowerCase() ||
-              widget.servicesViewModel.parentCategory
-                  .toString()
-                  .toLowerCase() ==
-                  services?["title"].toString().toLowerCase()
+                          .toString()
+                          .toLowerCase() ==
+                      services?["title"].toString().toLowerCase() ||
+                  widget.servicesViewModel.parentCategory
+                          .toString()
+                          .toLowerCase() ==
+                      services?["title"].toString().toLowerCase()
               ? const Color(0xff57527A)
               : widget.servicesViewModel.searchBody["search_services"] == '' ||
-              widget.servicesViewModel.searchBody["search_services"] ==
-                  null
-              ? const Color(0xff9F9AB7)
-              : const Color(0xff9F9AB7),
+                      widget.servicesViewModel.searchBody["search_services"] ==
+                          null
+                  ? const Color(0xff9F9AB7)
+                  : const Color(0xff9F9AB7),
         ),
         child: _isLoading
             ? SkeletonListView()
             : Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // SvgPicture.network(
-            //   '${context.resources.image.networkImagePath}/${service.image["filename_disk"]}',
-            // ),
-            Text(
-              services?["title"] ?? '',
-              textAlign: TextAlign.center,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: getPrimaryBoldStyle(
-                fontSize: 18,
-                color: context.resources.color.colorWhite,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // SvgPicture.network(
+                  //   '${context.resources.image.networkImagePath}/${service.image["filename_disk"]}',
+                  // ),
+                  Text(
+                    services?["title"] ?? '',
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: getPrimaryBoldStyle(
+                      fontSize: 18,
+                      color: context.resources.color.colorWhite,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
       ),
       onTap: () {
         debugPrint('search filter ${widget.servicesViewModel.searchBody}');

@@ -47,25 +47,26 @@ class _RatingStarsWidgetState extends State<RatingStarsWidget> {
                 child: Text(
                   translate('jobDetails.rating'),
                   style: getPrimaryBoldStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: const Color(0xff38385E),
                   ),
                 ),
               ),
-              widget.userRole==Constants.customerRoleId?Stars(
-                rating: double.parse(widget.stars.toString()),
-              ):
-              SizedBox(
-                height: 20,
-                child: Stack(
-                  children: [
-                    Stars(
+              widget.userRole == Constants.customerRoleId
+                  ? Stars(
                       rating: double.parse(widget.stars.toString()),
+                    )
+                  : SizedBox(
+                      height: 20,
+                      child: Stack(
+                        children: [
+                          Stars(
+                            rating: double.parse(widget.stars.toString()),
+                          ),
+                          InkWell()
+                        ],
+                      ),
                     ),
-                    InkWell()
-                  ],
-                ),
-              ),
             ],
           ),
         ),

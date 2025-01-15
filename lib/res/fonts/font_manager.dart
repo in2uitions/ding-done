@@ -7,7 +7,8 @@ class FontConstants {
 
 class FontWeightConstants {
   static const FontWeight regular = FontWeight.w400;
-  static const FontWeight bold = FontWeight.w700;
+  static const FontWeight bold = FontWeight.w800;
+  static const FontWeight semiBold = FontWeight.w600;
 }
 
 class FontSizeConstants {

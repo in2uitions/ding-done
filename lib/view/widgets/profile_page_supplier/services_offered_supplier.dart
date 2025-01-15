@@ -44,20 +44,20 @@ class _ServicesOfferedSupplierProfileState
           // height: context.appValues.appSizePercent.h55,
           // height: context.appValues.appSizePercent.h60,
           // height: 442,
-          decoration: BoxDecoration(
-            color: context.resources.color.colorWhite,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(20),
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xff000000).withOpacity(0.1),
-                spreadRadius: 1,
-                blurRadius: 5,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ],
-          ),
+          // decoration: BoxDecoration(
+          //   color: context.resources.color.colorWhite,
+          //   borderRadius: const BorderRadius.all(
+          //     Radius.circular(20),
+          //   ),
+          //   boxShadow: [
+          //     BoxShadow(
+          //       color: const Color(0xff000000).withOpacity(0.1),
+          //       spreadRadius: 1,
+          //       blurRadius: 5,
+          //       offset: const Offset(0, 3), // changes position of shadow
+          //     ),
+          //   ],
+          // ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -70,31 +70,31 @@ class _ServicesOfferedSupplierProfileState
                 ),
                 child: Row(
                   children: [
-                    SvgPicture.asset('assets/img/services_offered.svg'),
-                    const Gap(10),
+                    // SvgPicture.asset('assets/img/services_offered.svg'),
+                    // const Gap(10),
                     Text(
                       translate('profile.servicesOffered'),
                       style: getPrimaryRegularStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         color: const Color(0xff180C38),
                       ),
                     ),
                   ],
                 ),
               ),
-              const Divider(
-                height: 20,
-                thickness: 2,
-                color: Color(0xffEDF1F7),
-              ),
-              const Gap(30),
+              // const Divider(
+              //   height: 20,
+              //   thickness: 2,
+              //   color: Color(0xffEDF1F7),
+              // ),
+              // const Gap(30),
               ServiceOfferedWidget(
-                  profileViewModel: widget.profileViewModel,
-                  servicesViewModel: servicesViewModel,
-                  data: widget.data,
-                  // list: widget.list
-                  // list: categoriesViewModel.getCategories(),
-                  ),
+                profileViewModel: widget.profileViewModel,
+                servicesViewModel: servicesViewModel,
+                data: widget.data,
+                // list: widget.list
+                // list: categoriesViewModel.getCategories(),
+              ),
 
               // PlumbingServicesOfferedWidget(),
               // ElectricalServicesOfferedWidget(),

@@ -58,8 +58,10 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
                 itemCount: categoriesViewModel.parentCategoriesList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return buildCategoryWidget(
-                      categoriesViewModel.parentCategoriesList[index],
-                      categoriesViewModel);
+                    categoriesViewModel.parentCategoriesList[index],
+                    categoriesViewModel,
+                    index,
+                  );
                 },
               ),
               const SizedBox(height: 15),
@@ -71,43 +73,58 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
   }
 
   Widget buildCategoryWidget(
-      dynamic category, CategoriesViewModel categoriesViewModel) {
+      dynamic category, CategoriesViewModel categoriesViewModel, int index) {
     Map<String, dynamic>? services;
     if (lang == null) {
       lang = "en-US";
     }
     debugPrint('category $category');
     for (Map<String, dynamic> translation in category["translations"]) {
-      // for (Map<String, dynamic> translation1 in translation["categories_id"]["translations"]) {
-      //   debugPrint('translation 1 is ${translation1}');
       if (translation["languages_code"] == lang) {
         services = translation;
-
         break; // Break the loop once the translation is found
       }
-
-      // }
     }
+
+    Color categoryColor;
+    switch (index) {
+      case 0:
+        categoryColor = const Color(0xFFdacce5); // Purple
+        break;
+      case 1:
+        categoryColor = const Color(0xFFf2d6ea); // Pink
+        break;
+      case 2:
+        categoryColor = const Color(0xFFccebcf); // Green
+        break;
+      case 3:
+        categoryColor = const Color(0xFFffe0a7); // Orange
+        break;
+      default:
+        categoryColor = const Color(0xffF3D347); // Default Yellow
+    }
+
     return InkWell(
       child: Container(
         decoration: BoxDecoration(
           borderRadius: const BorderRadius.all(
             Radius.circular(22),
           ),
-          color: widget.servicesViewModel.searchBody["search_services"]
-                          .toString()
-                          .toLowerCase() ==
-                      services?["title"].toString().toLowerCase() ||
-                  widget.servicesViewModel.parentCategory
-                          .toString()
-                          .toLowerCase() ==
-                      services?["title"].toString().toLowerCase()
-              ? const Color(0xffBEC2CE)
-              : widget.servicesViewModel.searchBody["search_services"] == '' ||
-                      widget.servicesViewModel.searchBody["search_services"] ==
-                          null
-                  ? const Color(0xffF3D347)
-                  : const Color(0xffF3D347),
+          color: categoryColor,
+          // color: widget.servicesViewModel.searchBody["search_services"]
+          //                 .toString()
+          //                 .toLowerCase() ==
+          //             services?["title"].toString().toLowerCase() ||
+          //         widget.servicesViewModel.parentCategory
+          //                 .toString()
+          //                 .toLowerCase() ==
+          //             services?["title"].toString().toLowerCase()
+          //     ? const Color(0xffBEC2CE)
+          //     : widget.servicesViewModel.searchBody["search_services"] == '' ||
+          //             widget.servicesViewModel.searchBody["search_services"] ==
+          //                 null
+          //         ? categoryColor
+          //         : const Color(0xffF3D347),
         ),
         child: _isLoading
             ? SkeletonListView()
@@ -138,10 +155,8 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
         widget.servicesViewModel.setParentCategoryExistence(true);
         widget.servicesViewModel
             .filterData(index: 'search_services', value: services?["title"]);
-        widget.servicesViewModel
-            .setInputValues(index: 'search_services', value: services?["title"]);
-        // debugPrint(
-        //     'search filter ${widget.servicesViewModel.searchBody["search_services"]}');
+        widget.servicesViewModel.setInputValues(
+            index: 'search_services', value: services?["title"]);
         widget.servicesViewModel.setParentCategory(services?["title"]);
         categoriesViewModel.sortCategories(services?["title"]);
       },

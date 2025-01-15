@@ -175,7 +175,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
                         Text(
                           _selectedTime.format(context),
                           style: getPrimaryRegularStyle(
-                            fontSize: 18,
+                            fontSize: 13,
                             color: context.resources.color.btnColorBlue,
                           ),
                         ),

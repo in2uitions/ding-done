@@ -61,7 +61,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               width: context.appValues.appSizePercent.w100,
               height: context.appValues.appSizePercent.h70,
               child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3, // Number of items in each row
                   crossAxisSpacing: 4, // Spacing between items horizontally
                   mainAxisSpacing: 4, // Spacing between items vertically
@@ -74,7 +74,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                   context.appValues.appPadding.p10,
                 ),
                 physics:
-                    NeverScrollableScrollPhysics(), // Disable grid view scrolling
+                    const NeverScrollableScrollPhysics(), // Disable grid view scrolling
                 shrinkWrap: true, // Wrap content inside the Column
                 itemCount: categoriesViewModel.categoriesList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -142,8 +142,6 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             ),
             child: InkWell(
               child: Container(
-                width: 137,
-                height: 137,
                 decoration: BoxDecoration(
                   boxShadow: [
                     BoxShadow(
@@ -227,8 +225,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                                                   "search_services"]
                                                               .toString()
                                                               .toLowerCase() ==
-                                                          parentServices?[
-                                                                  "title"]
+                                                          parentServices?["title"]
                                                               .toString()
                                                               .toLowerCase()
                                                   ? const Color(0xffDDB504)
@@ -241,7 +238,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                                                   "search_services"] ==
                                                               null
                                                       ? const Color(0xffDDB504)
-                                                      : Color.fromARGB(
+                                                      : const Color.fromARGB(
                                                           255, 124, 124, 124),
                                               BlendMode.srcIn,
                                             ),

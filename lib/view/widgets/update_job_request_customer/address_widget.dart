@@ -38,7 +38,7 @@ class _AddressWidgetState extends State<AddressWidget> {
               child: Text(
                 translate('formHints.location'),
                 style: getPrimaryBoldStyle(
-                  fontSize: 20,
+                  fontSize: 18,
                   color: const Color(0xff38385E),
                 ),
               ),
@@ -54,7 +54,7 @@ class _AddressWidgetState extends State<AddressWidget> {
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: getPrimaryRegularStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         color: const Color(0xff78789D),
                       ),
                     ),
@@ -71,49 +71,52 @@ class _AddressWidgetState extends State<AddressWidget> {
                         MaterialPageRoute(
                           builder: (context) {
                             return
-                              //   MapLocationPicker(
-                              //   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
-                              //   popOnNextButtonTaped: true,
-                              //   currentLatLng: LatLng(
-                              //       widget.address['latitude'],widget.address['longitude']
-                              //   ),
-                              //
-                              // );
-                              Scaffold(
-                                backgroundColor: const Color(0xffFFFFFF),
-                                appBar: AppBar(
-                                  title: Text(translate('map.map')),
+                                //   MapLocationPicker(
+                                //   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                //   popOnNextButtonTaped: true,
+                                //   currentLatLng: LatLng(
+                                //       widget.address['latitude'],widget.address['longitude']
+                                //   ),
+                                //
+                                // );
+                                Scaffold(
+                              backgroundColor: const Color(0xffFFFFFF),
+                              appBar: AppBar(
+                                title: Text(translate('map.map')),
+                              ),
+                              body: GoogleMap(
+                                onMapCreated: null,
+                                initialCameraPosition: CameraPosition(
+                                  zoom: 16.0,
+                                  target: LatLng(widget.address['latitude'],
+                                      widget.address['longitude']),
                                 ),
-                                body: GoogleMap(
-
-                                  onMapCreated: null,
-                                  initialCameraPosition: CameraPosition(
-                                    zoom: 16.0,
-                                    target: LatLng(
-                                        widget.address['latitude'],widget.address['longitude']),
-                                  ),
-                                  mapType: MapType.normal,
-                                  markers: <Marker>{
-                                    Marker(
-                                      markerId: const MarkerId('marker'),
-                                      infoWindow: InfoWindow(
-                                        title: '${translate('jobDetails.job')} 🚖',
-                                        onTap: () => _showOptionsDialog(context, widget.address['latitude'],widget.address['longitude']),
-                                      ),
-                                      position: LatLng(
-                                        widget.address['latitude'],
-                                        widget.address['longitude'],
-                                      ),
+                                mapType: MapType.normal,
+                                markers: <Marker>{
+                                  Marker(
+                                    markerId: const MarkerId('marker'),
+                                    infoWindow: InfoWindow(
+                                      title:
+                                          '${translate('jobDetails.job')} 🚖',
+                                      onTap: () => _showOptionsDialog(
+                                          context,
+                                          widget.address['latitude'],
+                                          widget.address['longitude']),
                                     ),
-                                  },
-                                  onCameraMove: null,
-                                  myLocationButtonEnabled: false,
-                                ),
-                              );
+                                    position: LatLng(
+                                      widget.address['latitude'],
+                                      widget.address['longitude'],
+                                    ),
+                                  ),
+                                },
+                                onCameraMove: null,
+                                myLocationButtonEnabled: false,
+                              ),
+                            );
                           },
                         ),
                       );
-                      },
+                    },
                   ),
                 ],
               ),
@@ -124,7 +127,8 @@ class _AddressWidgetState extends State<AddressWidget> {
     );
   }
 
-  void _showOptionsDialog(BuildContext context, double latitude, double longitude) {
+  void _showOptionsDialog(
+      BuildContext context, double latitude, double longitude) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -175,5 +179,4 @@ class _AddressWidgetState extends State<AddressWidget> {
       throw 'Could not open Google Maps.';
     }
   }
-
 }

@@ -29,7 +29,7 @@ class ProfilePageSupplier extends StatefulWidget {
 }
 
 class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
-  bool _isLoading=false;
+  bool _isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,9 +73,11 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                             image: DecorationImage(
                               fit: BoxFit.cover,
                               image: NetworkImage(
-                                profileViewModel.getProfileBody['user']!=null && profileViewModel.getProfileBody['user']
-                                            ['avatar'] !=
-                                        null
+                                profileViewModel.getProfileBody['user'] !=
+                                            null &&
+                                        profileViewModel.getProfileBody['user']
+                                                ['avatar'] !=
+                                            null
                                     ? profileViewModel.getProfileBody['user']
                                             ['avatar'] is Map<String, dynamic>
                                         ? '${context.resources.image.networkImagePath2}/${profileViewModel.getProfileBody['user']['avatar']['filename_disk']}'
@@ -97,7 +99,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                               ? '${profileViewModel.getProfileBody["user"]["first_name"]} ${profileViewModel.getProfileBody["user"]["last_name"]}'
                               : '',
                           style: getPrimaryRegularStyle(
-                            fontSize: 25,
+                            fontSize: 18,
                             color: const Color(0xff1F126B),
                           ),
                         ),
@@ -133,12 +135,16 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                             SizedBox(
                               width: context.appValues.appSizePercent.w60,
                               child: Text(
-                                profileViewModel.getProfileBody!=null && profileViewModel.getProfileBody['current_address']!=null?
-                                '${profileViewModel.getProfileBody['current_address']["street_number"]}, ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}':'',
+                                profileViewModel.getProfileBody != null &&
+                                        profileViewModel.getProfileBody[
+                                                'current_address'] !=
+                                            null
+                                    ? '${profileViewModel.getProfileBody['current_address']["street_number"]}, ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}'
+                                    : '',
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: getPrimaryRegularStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: const Color(0xff1F126B),
                                 ),
                               ),
@@ -168,14 +174,14 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
             //     color: Color(0xffEDF1F7),
             //   ),
             // ),
-            SizedBox(
-              height: context.appValues.appSizePercent.h10,
-              width: context.appValues.appSizePercent.w100,
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: context.appValues.appPadding.p10,
-                  horizontal: context.appValues.appPadding.p15,
-                ),
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20,
+                vertical: 20,
+              ),
+              child: SizedBox(
+                height: context.appValues.appSizePercent.h6,
+                width: context.appValues.appSizePercent.w100,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -187,23 +193,20 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                           // if (await profileViewModel.patchUserData(
                           //         profileViewModel.getProfileBody) ==
                           //     true) {
-                          debugPrint('selected Services ${profileViewModel.selectedServices}');
+                          debugPrint(
+                              'selected Services ${profileViewModel.selectedServices}');
                           setState(() {
-                            _isLoading=true;
-
+                            _isLoading = true;
                           });
-                          if(await profileViewModel.patchProfileServices()==true){
-
+                          if (await profileViewModel.patchProfileServices() ==
+                              true) {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => simpleAlert(
-                                  context,
-                                  translate('button.success'),
-                                ));
-
-
+                                      context,
+                                      translate('button.success'),
+                                    ));
                           } else {
-
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => simpleAlert(
@@ -212,8 +215,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                                     ));
                           }
                           setState(() {
-                            _isLoading=false;
-
+                            _isLoading = false;
                           });
                         },
                         style: ElevatedButton.styleFrom(
@@ -222,17 +224,15 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                         ),
-                        child:
-                        _isLoading?
-                        CircularProgressIndicator()
-                            :
-                        Text(
-                          'Save',
-                          style: getPrimaryBoldStyle(
-                            fontSize: 18,
-                            color: Colors.white,
-                          ),
-                        ),
+                        child: _isLoading
+                            ? const CircularProgressIndicator()
+                            : Text(
+                                'Save',
+                                style: getPrimaryBoldStyle(
+                                  fontSize: 16,
+                                  color: Colors.white,
+                                ),
+                              ),
                       ),
                     ),
                   ],

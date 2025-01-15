@@ -33,40 +33,32 @@ class _ActualEndTimeWidgetState extends State<ActualEndTimeWidget> {
             //   borderRadius: BorderRadius.circular(15),
             //   color: Colors.white,
             // ),
-            child: Padding(
-              padding: EdgeInsets.fromLTRB(
-                context.appValues.appPadding.p30,
-                context.appValues.appPadding.p0,
-                context.appValues.appPadding.p0,
-                context.appValues.appPadding.p0,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    translate('updateJob.finishTime'),
-                    style: getPrimaryBoldStyle(
-                      fontSize: 20,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  translate('updateJob.finishTime'),
+                  style: getPrimaryBoldStyle(
+                    fontSize: 16,
+                    color: const Color(0xff38385E),
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    widget.actual_end_date != null
+                        ? DateFormat('d MMMM yyyy, HH:mm').format(
+                            DateTime.parse('${widget.actual_end_date}Z')
+                                .toUtc()
+                                .toLocal())
+                        : '',
+                    style: getPrimaryRegularStyle(
+                      fontSize: 16,
                       color: const Color(0xff38385E),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      widget.actual_end_date != null
-                          ? DateFormat('d MMMM yyyy, HH:mm').format(
-                              DateTime.parse('${widget.actual_end_date}Z')
-                                  .toUtc()
-                                  .toLocal())
-                          : '',
-                      style: getPrimaryRegularStyle(
-                        fontSize: 18,
-                        color: const Color(0xff38385E),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

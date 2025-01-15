@@ -54,11 +54,13 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
     // After fetching profile data, update selected services
     setState(() {
       // Check if supplier_services is not null and is a list
-      var supplierServices = widget.profileViewModel.getProfileBody["supplier_services"];
+      var supplierServices =
+          widget.profileViewModel.getProfileBody["supplier_services"];
       if (supplierServices is List) {
         // Map and cast service IDs to int
         selectedServices = supplierServices
-            .map((service) => service["services_id"]?['id'] as int) // Explicitly cast to int
+            .map((service) =>
+                service["services_id"]?['id'] as int) // Explicitly cast to int
             .where((id) => id != null) // Ensure no null values are added
             .toList();
       } else {
@@ -78,7 +80,8 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
     return Consumer2<JobsViewModel, CategoriesViewModel>(
       builder: (context, jobsViewModel, categoriesViewModel, _) {
         if (isLoading) {
-          return Center(child: CircularProgressIndicator()); // Loading indicator
+          return Center(
+              child: CircularProgressIndicator()); // Loading indicator
         }
 
         return Padding(
@@ -91,80 +94,105 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
             itemBuilder: (BuildContext context, int categoryIndex) {
               var category = categoriesViewModel.categoriesList[categoryIndex];
               debugPrint('lang $lang');
-              if(lang==null){
-                lang='en-US';
+              if (lang == null) {
+                lang = 'en-US';
               }
 
               // Get the category's translated name based on the current language
-              var categoryTranslation = (category['translations']
-                  .firstWhere((translation) => translation['languages_code'] == lang, orElse: () {
+              var categoryTranslation = (category['translations'].firstWhere(
+                      (translation) => translation['languages_code'] == lang,
+                      orElse: () {
                 return category['translations'].isNotEmpty
                     ? category['translations']
                     : {'title': 'Default Title'};
-              }))['title'].toString();
+              }))['title']
+                  .toString();
               debugPrint('hehehhe $categoryTranslation');
 
               // Find services that belong to this category
-              var servicesInCategory = categoriesViewModel.servicesList.where((service) {
-                var categoryTranslation = service['category']['translations'].firstWhere(
+              var servicesInCategory =
+                  categoriesViewModel.servicesList.where((service) {
+                var categoryTranslation = service['category']['translations']
+                    .firstWhere(
                         (translation) => translation['languages_code'] == lang,
-                    orElse: () => null);
+                        orElse: () => null);
 
                 return categoryTranslation != null &&
                     categoryTranslation['categories_id'] == category['id'];
               }).toList();
 
               if (servicesInCategory.isEmpty) {
-                return const SizedBox.shrink(); // No services to show for this category
+                return const SizedBox
+                    .shrink(); // No services to show for this category
               }
 
-              return ExpansionTile(
-                title: Text(
-                  categoryTranslation,
-                  style: getPrimaryBoldStyle(
-                    fontSize: 15,
-                    color: const Color(0xff1F1F39),
+              return Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    width: 1,
+                    color: const Color(0xffEDF1F7),
                   ),
                 ),
-                children: [
-                  for (int innerIndex = 0; innerIndex < servicesInCategory.length; innerIndex++)
-                    servicesInCategory[innerIndex]["status"] == 'published'
-                        ? CheckboxListTile(
-                      value: selectedServices.contains(servicesInCategory[innerIndex]["id"]),
-                      activeColor: context.resources.color.btnColorBlue,
-                      onChanged: (bool? value) async {
-                        if (value != null) {
-                          setState(() {
-                            int serviceId = servicesInCategory[innerIndex]["id"];
-                            // int supplierId = widget.profileViewModel.getProfileBody["id"];
+                child: ExpansionTile(
+                  title: Text(
+                    categoryTranslation,
+                    style: getPrimaryBoldStyle(
+                      fontSize: 15,
+                      color: const Color(0xff1F1F39),
+                    ),
+                  ),
+                  children: [
+                    for (int innerIndex = 0;
+                        innerIndex < servicesInCategory.length;
+                        innerIndex++)
+                      servicesInCategory[innerIndex]["status"] == 'published'
+                          ? CheckboxListTile(
+                              value: selectedServices.contains(
+                                  servicesInCategory[innerIndex]["id"]),
+                              activeColor: context.resources.color.btnColorBlue,
+                              onChanged: (bool? value) async {
+                                if (value != null) {
+                                  setState(() {
+                                    int serviceId =
+                                        servicesInCategory[innerIndex]["id"];
+                                    // int supplierId = widget.profileViewModel.getProfileBody["id"];
 
-                            if (value) {
-                              selectedServices.add(serviceId); // Add to local state
-                              // widget.servicesViewModel.addService(categoryIndex, innerIndex, serviceId, supplierId);
-                            } else {
-                              selectedServices.remove(serviceId); // Remove from local state
-                              // widget.servicesViewModel.removeService(categoryIndex, innerIndex, serviceId, supplierId);
-                            }
-                          });
-                          debugPrint('selected Services $selectedServices');
-                          widget.profileViewModel.setSelectedServices(selectedServices);
-                        }
-                      },
-                      title: Text(
-                        servicesInCategory[innerIndex]["translations"]
-                            .firstWhere(
-                              (translation) => translation["languages_code"] == lang,
-                          orElse: () => servicesInCategory[innerIndex]["translations"][0],
-                        )["title"]
-                            .toString(),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 15,
-                          color: context.resources.color.secondColorBlue,
-                        ),
-                      ),
-                    )
-                        : Container(),
-                ],
+                                    if (value) {
+                                      selectedServices
+                                          .add(serviceId); // Add to local state
+                                      // widget.servicesViewModel.addService(categoryIndex, innerIndex, serviceId, supplierId);
+                                    } else {
+                                      selectedServices.remove(
+                                          serviceId); // Remove from local state
+                                      // widget.servicesViewModel.removeService(categoryIndex, innerIndex, serviceId, supplierId);
+                                    }
+                                  });
+                                  debugPrint(
+                                      'selected Services $selectedServices');
+                                  widget.profileViewModel
+                                      .setSelectedServices(selectedServices);
+                                }
+                              },
+                              title: Text(
+                                servicesInCategory[innerIndex]["translations"]
+                                    .firstWhere(
+                                      (translation) =>
+                                          translation["languages_code"] == lang,
+                                      orElse: () =>
+                                          servicesInCategory[innerIndex]
+                                              ["translations"][0],
+                                    )["title"]
+                                    .toString(),
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 15,
+                                  color:
+                                      context.resources.color.secondColorBlue,
+                                ),
+                              ),
+                            )
+                          : Container(),
+                  ],
+                ),
               );
             },
           ),

@@ -44,37 +44,16 @@ class _CurrentSupplierWidgetState extends State<CurrentSupplierWidget> {
                 child: Text(
                   translate('updateJob.currentSupplier'),
                   style: getPrimaryBoldStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: const Color(0xff180C38),
                   ),
                 ),
               ),
-              Container(
-                width: context.appValues.appSizePercent.w100,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xff000000).withOpacity(0.1),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: context.appValues.appPadding.p15,
-                    horizontal: context.appValues.appPadding.p20,
-                  ),
-                  child: Text(
-                    '${widget.user}',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 18,
-                      color: const Color(0xff78789D),
-                    ),
-                  ),
+              Text(
+                '${widget.user}',
+                style: getPrimaryRegularStyle(
+                  fontSize: 16,
+                  color: const Color(0xff78789D),
                 ),
               ),
             ],

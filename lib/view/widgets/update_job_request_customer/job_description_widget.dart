@@ -63,7 +63,7 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
               child: Text(
                 translate('bookService.jobDescriptionByUser'),
                 style: getPrimaryBoldStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: const Color(0xff38385E),
                 ),
               ),

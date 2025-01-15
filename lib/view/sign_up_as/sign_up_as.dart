@@ -10,9 +10,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
-import '../agreement/supplier_agreement.dart';
-import '../agreement/user_agreement.dart';
-
 class SignUpAsScreen extends StatefulWidget {
   const SignUpAsScreen({super.key});
 
@@ -68,17 +65,8 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                     SizedBox(height: context.appValues.appSizePercent.h3),
                     Padding(
                       padding: EdgeInsets.all(context.appValues.appPadding.p20),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff4100E3),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: const BorderSide(
-                              color: Color(0xff4100E3),
-                            ),
-                          ),
-                        ),
-                        onPressed: () {
+                      child: InkWell(
+                        onTap: () {
                           signupViewModel.setInputValues(
                             index: 'role',
                             value: Constants.customerRoleId,
@@ -90,14 +78,18 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                           // Navigator.of(context)
                           //     .push(_createRoute(UserAgreement(index: 0)));
                         },
-                        child: SizedBox(
-                          width: context.appValues.appSizePercent.w75,
-                          height: context.appValues.appSizePercent.h9,
+                        child: Container(
+                          width: context.appValues.appSizePercent.w80,
+                          height: context.appValues.appSizePercent.h6,
+                          decoration: BoxDecoration(
+                            color: const Color(0xff384ea2),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                           child: Center(
                             child: Text(
                               translate('signUp.customer'),
                               style: getPrimaryBoldStyle(
-                                fontSize: 20,
+                                fontSize: 14,
                                 color: context.resources.color.colorWhite,
                               ),
                             ),
@@ -114,18 +106,8 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                             context.appValues.appPadding.p20,
                             context.appValues.appPadding.p20,
                           ),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xffFFC502),
-                              elevation: 0,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20),
-                                side: const BorderSide(
-                                  color: Color(0xffFFC502),
-                                ),
-                              ),
-                            ),
-                            onPressed: () async {
+                          child: InkWell(
+                            onTap: () async {
                               signupViewModel.setInputValues(
                                 index: 'role',
                                 value: Constants.supplierRoleId,
@@ -143,14 +125,18 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                               //   )),
                               // );
                             },
-                            child: SizedBox(
-                              width: context.appValues.appSizePercent.w75,
-                              height: context.appValues.appSizePercent.h9,
+                            child: Container(
+                              width: context.appValues.appSizePercent.w80,
+                              height: context.appValues.appSizePercent.h6,
+                              decoration: BoxDecoration(
+                                color: const Color(0xffffc329),
+                                borderRadius: BorderRadius.circular(15),
+                              ),
                               child: Center(
                                 child: Text(
                                   translate('signUp.supplier'),
                                   style: getPrimaryBoldStyle(
-                                    fontSize: 20,
+                                    fontSize: 14,
                                     color: context.resources.color.colorWhite,
                                   ),
                                 ),

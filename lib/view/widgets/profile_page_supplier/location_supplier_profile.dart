@@ -66,7 +66,7 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
                     Text(
                       translate('bookService.location'),
                       style: getPrimaryRegularStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                         color: const Color(0xff180C38),
                       ),
                     ),
@@ -80,9 +80,8 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
               ),
 
               InkWell(
-                onTap: (){
-                  Navigator.of(context).push(_createRoute(
-                      ConfirmAddress()));
+                onTap: () {
+                  Navigator.of(context).push(_createRoute(ConfirmAddress()));
                 },
                 child: Column(
                   children: [
@@ -94,16 +93,14 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
                         context.appValues.appPadding.p10,
                       ),
                       child: Text(
-                        profileViewModel.getProfileBody[
-                        'current_address']!=null?'${profileViewModel.getProfileBody[
-                        'current_address']["street_number"]} ${profileViewModel.getProfileBody[
-                        'current_address']["building_number"]}, ${profileViewModel.getProfileBody[
-                        'current_address']["city"]}, ${profileViewModel.getProfileBody[
-                        'current_address']["zone"]}':'',
+                        profileViewModel.getProfileBody['current_address'] !=
+                                null
+                            ? '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']["city"]}, ${profileViewModel.getProfileBody['current_address']["zone"]}'
+                            : '',
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: getPrimaryRegularStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: const Color(0xff190C39),
                         ),
                       ),
@@ -112,99 +109,85 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
                       padding: EdgeInsets.symmetric(
                           horizontal: context.appValues.appPadding.p20),
                       child: SizedBox(
-                          height: context.appValues.appSizePercent.h25,
-                          width: context.appValues.appSizePercent.w90,
-                          child: Stack(
-                            children: [
-                              FutureBuilder(
-                                  future: Provider.of<ProfileViewModel>(context,
-                                      listen: false)
-                                      .getData(),
-                                  builder: (context, AsyncSnapshot data) {
-                                    if (data.connectionState ==
-                                        ConnectionState.done) {
-                                      return  GoogleMap(
-                                        onMapCreated: null,
-                                        initialCameraPosition:
-                                        CameraPosition(
-                                          zoom: 16.0,
-                                          target: LatLng(
-                                              profileViewModel.getProfileBody[
-                                              'current_address'] !=
-                                                  null &&
-                                                  profileViewModel.getProfileBody[
-                                                  'current_address']
-                                                  ["latitude"] !=
-                                                      null
-                                                  ? double.parse(profileViewModel
-                                                  .getProfileBody['current_address']
-                                              ["latitude"]
-                                                  .toString())
-                                                  : 25.2854 ,
+                        height: context.appValues.appSizePercent.h25,
+                        width: context.appValues.appSizePercent.w90,
+                        child: Stack(
+                          children: [
+                            FutureBuilder(
+                                future: Provider.of<ProfileViewModel>(context,
+                                        listen: false)
+                                    .getData(),
+                                builder: (context, AsyncSnapshot data) {
+                                  if (data.connectionState ==
+                                      ConnectionState.done) {
+                                    return GoogleMap(
+                                      onMapCreated: null,
+                                      initialCameraPosition: CameraPosition(
+                                        zoom: 16.0,
+                                        target: LatLng(
+                                            profileViewModel.getProfileBody['current_address'] != null &&
+                                                    profileViewModel.getProfileBody['current_address']["latitude"] !=
+                                                        null
+                                                ? double.parse(profileViewModel
+                                                    .getProfileBody['current_address']
+                                                        ["latitude"]
+                                                    .toString())
+                                                : 25.2854,
+                                            profileViewModel.getProfileBody['current_address'] != null &&
+                                                    profileViewModel.getProfileBody['current_address']
+                                                            ["longitude"] !=
+                                                        null
+                                                ? double.parse(profileViewModel
+                                                    .getProfileBody['current_address']["longitude"]
+                                                    .toString())
+                                                : 51.5310),
+                                      ),
 
-                                               profileViewModel.getProfileBody[
-                                              'current_address'] !=
-                                                  null &&
-                                                  profileViewModel
-                                                      .getProfileBody['current_address']
-                                                  ["longitude"] !=
-                                                      null
-                                                  ? double.parse(profileViewModel
-                                                  .getProfileBody['current_address']
-                                              ["longitude"]
-                                                  .toString())
-                                                  : 51.5310),),
-
-                                        mapType: MapType.normal,
-                                        markers: <Marker>{Marker(
+                                      mapType: MapType.normal,
+                                      markers: <Marker>{
+                                        Marker(
                                           markerId: MarkerId('marker'),
-                                          infoWindow: InfoWindow(title: 'Current'),
+                                          infoWindow:
+                                              InfoWindow(title: 'Current'),
                                           position: LatLng(
-                                              profileViewModel.getProfileBody[
-                                              'current_address'] !=
-                                                  null &&
-                                                  profileViewModel.getProfileBody[
-                                                  'current_address']
-                                                  ["latitude"] !=
-                                                      null
+                                              profileViewModel.getProfileBody['current_address'] != null &&
+                                                      profileViewModel.getProfileBody['current_address']
+                                                              ["latitude"] !=
+                                                          null
                                                   ? double.parse(profileViewModel
-                                                  .getProfileBody['current_address']
-                                              ["latitude"]
-                                                  .toString())
-                                                  : 25.2854 ,
-                                              profileViewModel.getProfileBody[
-                                              'current_address'] !=
-                                                  null &&
-                                                  profileViewModel
                                                       .getProfileBody['current_address']
-                                                  ["longitude"] !=
-                                                      null
-                                                  ? double.parse(profileViewModel
-                                                  .getProfileBody['current_address']
-                                              ["longitude"]
-                                                  .toString())
+                                                          ["latitude"]
+                                                      .toString())
+                                                  : 25.2854,
+                                              profileViewModel.getProfileBody[
+                                                              'current_address'] !=
+                                                          null &&
+                                                      profileViewModel.getProfileBody['current_address']
+                                                              ["longitude"] !=
+                                                          null
+                                                  ? double.parse(profileViewModel.getProfileBody['current_address']["longitude"].toString())
                                                   : 51.5310),
                                         )
-                                        },
-                                        onCameraMove: null,
-                                        myLocationButtonEnabled: false,
-                                        // options: GoogleMapOptions(
-                                        //     myLocationEnabled:true
-                                        //there is a lot more options you can add here
-                                      );
-
-                                    } else {
-                                      return Container();
-                                    }
-                                  }),
-                              InkWell(
-                                onTap: (){
-                                  Navigator.of(context).push(_createRoute(
-                                      ConfirmAddress()));
-                                },
-                              )
-                            ],
-                          ),),
+                                      },
+                                      onCameraMove: null,
+                                      myLocationButtonEnabled: false,
+                                      // options: GoogleMapOptions(
+                                      //     myLocationEnabled:true
+                                      //there is a lot more options you can add here
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                }),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .push(_createRoute(ConfirmAddress()));
+                              },
+                            )
+                          ],
+                        ),
+                      ),
                     ),
                   ],
                 ),

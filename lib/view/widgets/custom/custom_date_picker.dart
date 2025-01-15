@@ -75,8 +75,8 @@ class _CustomDatePicker extends State<CustomDatePicker> {
         fillColor: Colors.white,
         hintText: widget.hintText,
         hintStyle: getPrimaryRegularStyle(
-          fontSize: 15,
-          color: const Color(0xffB4B4B4),
+          fontSize: 14,
+          color: const Color(0xff343b61),
         ),
         // suffixIcon: const Icon(
         //   Icons.calendar_today_outlined,

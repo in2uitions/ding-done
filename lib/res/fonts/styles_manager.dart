@@ -25,6 +25,13 @@ TextStyle getPrimaryBoldStyle(
       FontWeightConstants.bold, color);
 }
 
+// semi Bold style
+TextStyle getPrimarySemiBoldStyle(
+    {double fontSize = FontSizeConstants.s12, Color? color}) {
+  return _getTextStyle(fontSize, FontConstants.primaryFontFamily,
+      FontWeightConstants.semiBold, color);
+}
+
 // Bold style
 TextStyle getSecondaryBoldStyle(
     {double fontSize = FontSizeConstants.s12, Color? color}) {

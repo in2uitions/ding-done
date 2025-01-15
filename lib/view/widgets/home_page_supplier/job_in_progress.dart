@@ -110,7 +110,7 @@ class _JobInProgressState extends State<JobInProgress> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: getPrimaryBoldStyle(
-                                      fontSize: 18,
+                                      fontSize: 16,
                                       color: const Color(0xff9E9AB7),
                                     ),
                                   ),
@@ -122,7 +122,7 @@ class _JobInProgressState extends State<JobInProgress> {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     style: getPrimaryRegularStyle(
-                                      fontSize: 22,
+                                      fontSize: 18,
                                       color: const Color(0xff190C39),
                                     ),
                                   ),
@@ -282,7 +282,7 @@ class _JobInProgressState extends State<JobInProgress> {
                             Container(
                               width: context.appValues.appSizePercent.w38,
                               // width: 155,
-                              height: context.appValues.appSizePercent.h065,
+                              height: context.appValues.appSizePercent.h6,
                               // height: 51,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
@@ -291,8 +291,9 @@ class _JobInProgressState extends State<JobInProgress> {
                                 onPressed: () {
                                   debugPrint(
                                       '${jobsViewModel.supplierInProgressJobs[index].id}');
-                                  jobsViewModel.finishJobAndCollectPayment(jobsViewModel
-                                      .supplierInProgressJobs[index].id);
+                                  jobsViewModel.finishJobAndCollectPayment(
+                                      jobsViewModel
+                                          .supplierInProgressJobs[index].id);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0,
@@ -306,8 +307,8 @@ class _JobInProgressState extends State<JobInProgress> {
                                 ),
                                 child: Text(
                                   translate('button.complete'),
-                                  style: getPrimaryBoldStyle(
-                                    fontSize: 18,
+                                  style: getPrimaryRegularStyle(
+                                    fontSize: 14,
                                     color: context.resources.color.colorWhite,
                                   ),
                                 ),

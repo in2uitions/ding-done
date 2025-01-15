@@ -190,7 +190,7 @@ class _AddMediaState extends State<AddMedia> {
                           Text(
                             translate('bookService.addMedia'),
                             style: getPrimaryBoldStyle(
-                              fontSize: 18,
+                              fontSize: 14,
                               color: const Color(0xff583EF2),
                             ),
                           ),

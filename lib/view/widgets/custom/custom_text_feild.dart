@@ -131,8 +131,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
         fillColor: context.resources.color.colorWhite,
         hintText: widget.hintText,
         hintStyle: getPrimaryRegularStyle(
-          fontSize: 15,
-          color: const Color(0xffB4B4B4),
+          fontSize: 14,
+          color: const Color(0xff343b61),
         ),
         helperText: widget.helperText,
         suffixIcon: widget.hintText == "Password"

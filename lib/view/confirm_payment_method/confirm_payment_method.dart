@@ -196,15 +196,11 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
   }
 
   Future<void> startSDK() async {
-    // setState(() {
-    //   // loaderController.start();
-    // });
+
     try {
       debugPrint('Start sdk');
       widget.paymentViewModel.setLoading(true);
       tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
-
-      // loaderController.stopWhenFull();
       debugPrint('SDK Result>>>> ${tapSDKResult?['sdk_result']}');
 
       setState(() async {
@@ -246,18 +242,16 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         // debugPrint('result url ${result["transaction"]["url"]}');
         if (result["transaction"] != null) {
           _launchUrl('${result["transaction"]["url"]}');
-
         } else {
           showDialog(
               context: context,
               builder: (BuildContext context) => simpleAlert(
                   context,
                   translate('button.failure'),
-                  '${result['errors']!=null ?result['errors'][0]['description']:result['error']}'));
+                  '${result['errors'] != null ? result['errors'][0]['description'] : result['error']}'));
         }
         await widget.paymentViewModel.setLoading(false);
 
-        // launchWhatsApp();
       });
     } catch (error) {
       debugPrint('error starting sdk $error');
@@ -274,7 +268,6 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
     if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $url');
     }
-
   }
 
   void handleSDKResult() {
@@ -405,9 +398,10 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                       horizontal: context.appValues.appPadding.p20),
                   child: Text(
                     translate('paymentMethod.confirmPaymentMethod'),
-                    style: getPrimaryRegularStyle(
-                        color: context.resources.color.btnColorBlue,
-                        fontSize: 32),
+                    style: getPrimaryBoldStyle(
+                      color: context.resources.color.btnColorBlue,
+                      fontSize: 22,
+                    ),
                   ),
                 ),
                 const Gap(30),
@@ -435,8 +429,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                   ),
                   child: Text(
                     translate('paymentMethod.paymentMethods'),
-                    style: getPrimaryRegularStyle(
-                        fontSize: 28,
+                    style: getPrimaryBoldStyle(
+                        fontSize: 16,
                         color: context.resources.color.btnColorBlue),
                   ),
                 ),
@@ -446,99 +440,76 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                   fromWhere: 'confirm_payment',
                   role: widget.role,
                 ),
-                const Gap(60),
-              ],
-            ),
-            Positioned(
-              bottom: 0,
-              child: Container(
-                height: context.appValues.appSizePercent.h10,
-                width: context.appValues.appSizePercent.w100,
-                // decoration: BoxDecoration(
-                //   borderRadius: const BorderRadius.only(
-                //       topLeft: Radius.circular(20),
-                //       topRight: Radius.circular(20)),
-                //   color: context.resources.color.btnColorBlue,
-                // ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: context.appValues.appPadding.p10,
-                    horizontal: context.appValues.appPadding.p15,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: context.appValues.appSizePercent.w90,
-                        height: context.appValues.appSizePercent.h100,
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            widget.paymentViewModel.setLoading(true);
+                const Gap(10),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Container(
+                    height: context.appValues.appSizePercent.h6,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: const Color(0xfff3f2f9),
+                    ),
+                    child: InkWell(
+                      onTap: () async {
+                        widget.paymentViewModel.setLoading(true);
 
-                            dynamic payments = await widget.paymentViewModel
-                                .getPaymentMethodsTap();
-                            dynamic paymentList =
-                                widget.paymentViewModel.paymentList.toList();
-                            debugPrint('widget payment ${paymentList}');
-                            var found = false;
-                            if (paymentList.isNotEmpty) {
-                              for (var payment in paymentList) {
-                                if (payment['card_number'] ==
-                                    widget.paymentViewModel
-                                        .getPaymentBody['card_number']) {
-                                  found = true;
-                                }
-                              }
+                        dynamic payments = await widget.paymentViewModel
+                            .getPaymentMethodsTap();
+                        dynamic paymentList =
+                            widget.paymentViewModel.paymentList.toList();
+                        debugPrint('widget payment ${paymentList}');
+                        var found = false;
+                        if (paymentList.isNotEmpty) {
+                          for (var payment in paymentList) {
+                            if (payment['card_number'] ==
+                                widget.paymentViewModel
+                                    .getPaymentBody['card_number']) {
+                              found = true;
                             }
+                          }
+                        }
 
-                            if (!found) {
-                              await widget.paymentViewModel
-                                  .createPaymentMethodTap();
-                              await startSDK();
-                              // Navigator.of(context).pop();
-                              // Future.delayed(
-                              //     const Duration(seconds: 0),
-                              //     () => Navigator.of(context).push(
-                              //             _createRoute(ConfirmPaymentMethod(
-                              //           payment_method: widget.payment_method,
-                              //           paymentViewModel:
-                              //               widget.paymentViewModel,
-                              //           role: Constants.customerRoleId,
-                              //               profileViewModel: widget.profileViewModel,
-                              //         ))));
-                            } else {
-                              showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) =>
-                                      simpleAlert(
-                                          context,
-                                          translate('button.failure'),
-                                          'Card Number is already chosen'));
-                            }
-                            // await widget.paymentViewModel.setLoading(false);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            backgroundColor: const Color(0xff4100E3),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                          ),
-                          child: widget.paymentViewModel.isLoading
-                              ? const CircularProgressIndicator()
-                              : Text(
-                                  translate('paymentMethod.addPaymentMethod'),
-                                  style: getPrimaryRegularStyle(
-                                    fontSize: 18,
-                                    color: context.resources.color.colorWhite,
-                                  ),
+                        if (!found) {
+                          await widget.paymentViewModel
+                              .createPaymentMethodTap();
+                          await startSDK();
+                          // Navigator.of(context).pop();
+                          // Future.delayed(
+                          //     const Duration(seconds: 0),
+                          //     () => Navigator.of(context).push(
+                          //             _createRoute(ConfirmPaymentMethod(
+                          //           payment_method: widget.payment_method,
+                          //           paymentViewModel:
+                          //               widget.paymentViewModel,
+                          //           role: Constants.customerRoleId,
+                          //               profileViewModel: widget.profileViewModel,
+                          //         ))));
+                        } else {
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => simpleAlert(
+                                  context,
+                                  translate('button.failure'),
+                                  'Card Number is already chosen'));
+                        }
+                        // await widget.paymentViewModel.setLoading(false);
+                      },
+                      child: widget.paymentViewModel.isLoading
+                          ? const CircularProgressIndicator()
+                          : Center(
+                              child: Text(
+                                translate('paymentMethod.addPaymentMethod'),
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 18,
+                                  color: const Color(0xff2c2b86),
                                 ),
-                        ),
-                      ),
-                    ],
+                              ),
+                            ),
+                    ),
                   ),
                 ),
-              ),
+                const Gap(60),
+              ],
             ),
           ],
         ),

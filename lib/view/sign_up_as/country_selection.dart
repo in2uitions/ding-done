@@ -1,18 +1,13 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/sign_up_as/sign_up_as.dart';
-import 'package:dingdone/view/signup/signup_onboarding.dart';
-import 'package:dingdone/view/signup/signup_supplier_onboarding.dart';
-import 'package:dingdone/res/constants.dart';
-import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-import '../agreement/supplier_agreement.dart';
-import '../agreement/user_agreement.dart';
 import '../widgets/custom/custom_dropdown.dart';
 
 class CountrySelectionScreen extends StatefulWidget {
@@ -62,12 +57,12 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
                   children: [
                     Text(
                       translate('formHints.country'),
-                      style: getPrimaryBoldStyle(
+                      style: getSecondaryBoldStyle(
                         color: const Color(0xff190C39),
-                        fontSize: 32,
+                        fontSize: 22,
                       ),
                     ),
-                    SizedBox(height: context.appValues.appSizePercent.h3),
+                    const Gap(50),
                     Padding(
                       padding: EdgeInsets.all(context.appValues.appPadding.p20),
                       child: FutureBuilder(
@@ -108,40 +103,34 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
                         context.appValues.appPadding.p20,
                         context.appValues.appPadding.p20,
                       ),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff4100E3),
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                            side: const BorderSide(
-                              color: Color(0xff4100E3),
-                            ),
-                          ),
-                        ),
-                        onPressed: () async {
-                          if (signupViewModel.getSignUpBody['country']!=null){
+                      child: InkWell(
+                        onTap: () async {
+                          if (signupViewModel.getSignUpBody['country'] !=
+                              null) {
                             Navigator.of(context).push(
                               _createRoute(SignUpAsScreen()),
                             );
-                          }else{
+                          } else {
                             showDialog(
                               context: context,
-                              builder: (BuildContext context) => _buildPopupDialog(
-                                  context, 'Please provide country'),
+                              builder: (BuildContext context) =>
+                                  _buildPopupDialog(
+                                      context, 'Please provide country'),
                             );
                           }
-
-
                         },
-                        child: SizedBox(
-                          width: context.appValues.appSizePercent.w75,
-                          height: context.appValues.appSizePercent.h9,
+                        child: Container(
+                          width: context.appValues.appSizePercent.w80,
+                          height: context.appValues.appSizePercent.h6,
+                          decoration: BoxDecoration(
+                            color: const Color(0xff384ea2),
+                            borderRadius: BorderRadius.circular(15),
+                          ),
                           child: Center(
                             child: Text(
                               translate('login_screen.signUp'),
                               style: getPrimaryBoldStyle(
-                                fontSize: 20,
+                                fontSize: 14,
                                 color: context.resources.color.colorWhite,
                               ),
                             ),
@@ -159,6 +148,7 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
     );
   }
 }
+
 Widget _buildPopupDialog(BuildContext context, String message) {
   return AlertDialog(
     content: Column(
@@ -192,6 +182,7 @@ Widget _buildPopupDialog(BuildContext context, String message) {
     ),
   );
 }
+
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => classname,

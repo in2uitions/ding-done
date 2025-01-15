@@ -7,6 +7,7 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
@@ -53,47 +54,47 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
               ListView(
                 padding: EdgeInsets.zero,
                 children: [
-                  Container(
-                    // decoration: BoxDecoration(
-                    //   color: context.resources.color.btnColorBlue,
-                    //   borderRadius: const BorderRadius.only(
-                    //       bottomLeft: Radius.circular(20),
-                    //       bottomRight: Radius.circular(20)),
-                    // ),
-                    child: SafeArea(
-                      child: Directionality(
-                        textDirection: TextDirection.ltr,
-                        child: Padding(
-                          padding:
-                              EdgeInsets.all(context.appValues.appPadding.p20),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                child: SvgPicture.asset('assets/img/back.svg'),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
+                  SafeArea(
+                    bottom: false,
+                    child: Directionality(
+                      textDirection: TextDirection.ltr,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          context.appValues.appPadding.p20,
+                          context.appValues.appPadding.p20,
+                          context.appValues.appPadding.p20,
+                          context.appValues.appPadding.p10,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            InkWell(
+                              child: SvgPicture.asset('assets/img/back.svg'),
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                            Text(
+                              translate('confirmAddress.confirmAddress'),
+                              style: getPrimaryBoldStyle(
+                                color: const Color(0xff180C38),
+                                fontSize: 25,
                               ),
-                              Text(
-                                translate('confirmAddress.confirmAddress'),
-                                style: getPrimaryBoldStyle(
-                                  color: const Color(0xff180C38),
-                                  fontSize: 32,
-                                ),
-                              ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.all(context.appValues.appPadding.p20),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.appValues.appPadding.p20,
+                      vertical: context.appValues.appPadding.p10,
+                    ),
                     child: Text(
                       translate('profile.addresses'),
                       style: getPrimaryBoldStyle(
-                        fontSize: 28,
+                        fontSize: 17,
                         color: const Color(0xff180C38),
                       ),
                     ),
@@ -101,53 +102,38 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                   const AddressesButtonsWidget(),
                   const AddNewAddressWidget(),
                   // SizedBox(height: context.appValues.appSize.s90),
-                  SizedBox(
-                    height: context.appValues.appSizePercent.h10,
-                    width: context.appValues.appSizePercent.w100,
-                    // decoration: BoxDecoration(
-                    //   borderRadius: const BorderRadius.only(
-                    //       topLeft: Radius.circular(20),
-                    //       topRight: Radius.circular(20)),
-                    //   color: context.resources.color.btnColorBlue,
-                    // ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: context.appValues.appPadding.p10,
-                        horizontal: context.appValues.appPadding.p15,
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: context.appValues.appPadding.p10,
+                      horizontal: context.appValues.appPadding.p25,
+                    ),
+                    child: Container(
+                      width: context.appValues.appSizePercent.w90,
+                      height: context.appValues.appSizePercent.h6,
+                      decoration: BoxDecoration(
+                        color: const Color(0xfff3f2f9),
+                        borderRadius: BorderRadius.circular(15),
                       ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SizedBox(
-                            width: context.appValues.appSizePercent.w90,
-                            height: context.appValues.appSizePercent.h100,
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                if (jobsViewModel.validate()) {
-                                  await profileViewModel.patchProfileData(
-                                      jobsViewModel.getjobsBody);
-                                }
-                              },
-                              style: ElevatedButton.styleFrom(
-                                elevation: 0,
-                                backgroundColor: const Color(0xff4100E3),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                ),
-                              ),
-                              child: Text(
-                                translate('confirmAddress.addNewAddress'),
-                                style: getPrimaryBoldStyle(
-                                  fontSize: 18,
-                                  color: context.resources.color.colorWhite,
-                                ),
-                              ),
+                      child: InkWell(
+                        onTap: () async {
+                          if (jobsViewModel.validate()) {
+                            await profileViewModel
+                                .patchProfileData(jobsViewModel.getjobsBody);
+                          }
+                        },
+                        child: Center(
+                          child: Text(
+                            translate('confirmAddress.addNewAddress'),
+                            style: getPrimarySemiBoldStyle(
+                              fontSize: 16,
+                              color: const Color(0xff2c2b86),
                             ),
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
+                  const Gap(20),
                 ],
               ),
             ],

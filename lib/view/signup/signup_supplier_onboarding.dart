@@ -8,7 +8,6 @@ import 'package:dingdone/view/login/login.dart';
 import 'package:dingdone/view/map_screen/google_maps.dart';
 
 import 'package:dingdone/view/widgets/custom/custom_date_picker.dart';
-import 'package:dingdone/view/widgets/custom/custom_dropdown.dart';
 import 'package:dingdone/view/widgets/custom/custom_multiple_selection_checkbox.dart';
 import 'package:dingdone/view/widgets/custom/custom_phone_feild.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
@@ -19,6 +18,7 @@ import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
@@ -64,9 +64,9 @@ class _SignUpSupplierOnBoardingScreenState
           // width: 127,
           width: context.appValues.appSizePercent.w32,
           // height: 51,
-          height: context.appValues.appSizePercent.h065,
+          height: context.appValues.appSizePercent.h5,
           decoration: BoxDecoration(
-            color: const Color(0xff4100E3),
+            color: const Color(0xff384ea2),
             borderRadius: BorderRadius.circular(15),
           ),
           child: InkWell(
@@ -82,7 +82,7 @@ class _SignUpSupplierOnBoardingScreenState
               child: Text(
                 translate('button.next'),
                 style: getPrimaryBoldStyle(
-                  fontSize: 21,
+                  fontSize: 14,
                   color: context.resources.color.colorWhite,
                 ),
               ),
@@ -99,10 +99,10 @@ class _SignUpSupplierOnBoardingScreenState
       color: defaultProceedButtonColor,
       child: Consumer<SignUpViewModel>(builder: (context, signupViewModel, _) {
         return Container(
-          // width: 156,
-          width: context.appValues.appSizePercent.w40,
+          // width: 127,
+          width: context.appValues.appSizePercent.w32,
           // height: 51,
-          height: context.appValues.appSizePercent.h065,
+          height: context.appValues.appSizePercent.h5,
           decoration: BoxDecoration(
             color: const Color(0xffFFC502),
             borderRadius: BorderRadius.circular(15),
@@ -125,7 +125,7 @@ class _SignUpSupplierOnBoardingScreenState
               child: Text(
                 translate('button.complete'),
                 style: getPrimaryBoldStyle(
-                  fontSize: 21,
+                  fontSize: 14,
                   color: context.resources.color.colorWhite,
                 ),
               ),
@@ -301,9 +301,9 @@ class _SignUpSupplierOnBoardingScreenState
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
                             translate('profile.personalInformation'),
-                            style: getPrimaryBoldStyle(
+                            style: getPrimarySemiBoldStyle(
                               color: const Color(0xff180C38),
-                              fontSize: 28,
+                              fontSize: 22,
                             ),
                           ),
                         ),
@@ -357,15 +357,16 @@ class _SignUpSupplierOnBoardingScreenState
                                 TextStyle(color: Colors.red[700], fontSize: 12),
                           ),
                         ),
+                      const Gap(25),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
                             translate('signUp.profileType'),
-                            style: getPrimaryBoldStyle(
+                            style: getPrimarySemiBoldStyle(
                               color: const Color(0xff180C38),
-                              fontSize: 28,
+                              fontSize: 22,
                             ),
                           ),
                         ),
@@ -373,8 +374,9 @@ class _SignUpSupplierOnBoardingScreenState
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                            padding: const EdgeInsets.fromLTRB(5, 0, 20, 20),
                             child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Radio<String>(
                                   value: 'individual',
@@ -392,7 +394,7 @@ class _SignUpSupplierOnBoardingScreenState
                                   translate('signUp.individual'),
                                   style: getPrimaryRegularStyle(
                                     color: const Color(0xff180C38),
-                                    fontSize: 18,
+                                    fontSize: 14,
                                   ),
                                 ),
                                 Radio<String>(
@@ -408,7 +410,7 @@ class _SignUpSupplierOnBoardingScreenState
                                   translate('signUp.company'),
                                   style: getPrimaryRegularStyle(
                                     color: const Color(0xff180C38),
-                                    fontSize: 18,
+                                    fontSize: 14,
                                   ),
                                 ),
                               ],
@@ -437,11 +439,11 @@ class _SignUpSupplierOnBoardingScreenState
                           if (selectedOption == 'individual')
                             Container(
                               decoration: BoxDecoration(
-                                color: const Color(0xff112b78),
-                                borderRadius: BorderRadius.circular(30.0),
+                                color: const Color(0xffededf6),
+                                borderRadius: BorderRadius.circular(15),
                               ),
                               padding: EdgeInsets.symmetric(
-                                horizontal: context.appValues.appPadding.p20,
+                                horizontal: context.appValues.appPadding.p40,
                                 vertical: context.appValues.appPadding.p10,
                               ),
                               child: UploadOneImage(
@@ -464,9 +466,9 @@ class _SignUpSupplierOnBoardingScreenState
                                 isImage: true,
                                 widget: Text(
                                   translate('signUp.identificationCard'),
-                                  style: getPrimaryBoldStyle(
-                                    fontSize: 21,
-                                    color: Colors.white,
+                                  style: getPrimarySemiBoldStyle(
+                                    fontSize: 14,
+                                    color: const Color(0xff4657a6),
                                   ),
                                 ),
                               ),
@@ -551,9 +553,9 @@ class _SignUpSupplierOnBoardingScreenState
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
                               translate('profile.contactInformation'),
-                              style: getPrimaryBoldStyle(
+                              style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
-                                fontSize: 28,
+                                fontSize: 22,
                               ),
                             ),
                           )),
@@ -606,9 +608,9 @@ class _SignUpSupplierOnBoardingScreenState
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
                               translate('signUp.securityInformation'),
-                              style: getPrimaryBoldStyle(
+                              style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
-                                fontSize: 28,
+                                fontSize: 22,
                               ),
                             ),
                           )),
@@ -636,7 +638,8 @@ class _SignUpSupplierOnBoardingScreenState
                         child: Text(
                           translate('signUp.requirments'),
                           style: const TextStyle(
-                            color: Colors.black, // Set your desired color
+                            fontSize: 12,
+                            color: Color(0xff4657a6),
                           ),
                         ),
                       ),
@@ -661,9 +664,9 @@ class _SignUpSupplierOnBoardingScreenState
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
                               translate('signUp.addressInformation'),
-                              style: getPrimaryBoldStyle(
+                              style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
-                                fontSize: 28,
+                                fontSize: 22,
                               ),
                             ),
                           )),
@@ -676,9 +679,9 @@ class _SignUpSupplierOnBoardingScreenState
                           children: [
                             Text(
                               translate('formHints.location'),
-                              style: getPrimaryRegularStyle(
-                                fontSize: 15,
-                                color: context.resources.color.secondColorBlue,
+                              style: getPrimarySemiBoldStyle(
+                                color: const Color(0xff180C38),
+                                fontSize: 18,
                               ),
                             ),
                             // InkWell(
@@ -712,17 +715,18 @@ class _SignUpSupplierOnBoardingScreenState
                             child: Stack(
                               children: [
                                 FutureBuilder(
-                                    future: Provider.of<SignUpViewModel>(context,
+                                    future: Provider.of<SignUpViewModel>(
+                                            context,
                                             listen: false)
                                         .getData(),
                                     builder: (context, AsyncSnapshot data) {
                                       if (data.connectionState ==
                                           ConnectionState.done) {
-
                                         return GestureDetector(
                                           child: GoogleMap(
                                             onMapCreated: null,
-                                            initialCameraPosition: CameraPosition(
+                                            initialCameraPosition:
+                                                CameraPosition(
                                               zoom: 16.0,
                                               target: LatLng(
                                                   data.data["latitude"] != null
@@ -730,7 +734,8 @@ class _SignUpSupplierOnBoardingScreenState
                                                           .data['latitude']
                                                           .toString())
                                                       : double.parse(
-                                                          _currentPosition!.latitude
+                                                          _currentPosition!
+                                                              .latitude
                                                               .toString()),
                                                   data.data['longitude'] != null
                                                       ? double.parse(data
@@ -744,11 +749,14 @@ class _SignUpSupplierOnBoardingScreenState
                                             mapType: MapType.normal,
                                             markers: <Marker>{
                                               Marker(
-                                                markerId: const MarkerId('marker'),
+                                                markerId:
+                                                    const MarkerId('marker'),
                                                 infoWindow: InfoWindow(
-                                                    title: '${data.data['city']}'),
+                                                    title:
+                                                        '${data.data['city']}'),
                                                 position: LatLng(
-                                                    data.data["latitude"] != null
+                                                    data.data["latitude"] !=
+                                                            null
                                                         ? double.parse(data
                                                             .data['latitude']
                                                             .toString())
@@ -756,7 +764,8 @@ class _SignUpSupplierOnBoardingScreenState
                                                             _currentPosition!
                                                                 .latitude
                                                                 .toString()),
-                                                    data.data['longitude'] != null
+                                                    data.data['longitude'] !=
+                                                            null
                                                         ? double.parse(data
                                                             .data['longitude']
                                                             .toString())
@@ -1015,9 +1024,9 @@ class _SignUpSupplierOnBoardingScreenState
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
                               translate('signUp.selectYourSkills'),
-                              style: getPrimaryBoldStyle(
+                              style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
-                                fontSize: 28,
+                                fontSize: 22,
                               ),
                             ),
                           ),
@@ -1082,9 +1091,9 @@ class _SignUpSupplierOnBoardingScreenState
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
                               translate('signUp.completeProfile'),
-                              style: getPrimaryBoldStyle(
+                              style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
-                                fontSize: 28,
+                                fontSize: 22,
                               ),
                             ),
                           )),
@@ -1098,11 +1107,11 @@ class _SignUpSupplierOnBoardingScreenState
                       SizedBox(height: context.appValues.appSize.s20),
                       Container(
                         decoration: BoxDecoration(
-                          color: const Color(0xff9E9AB7),
-                          borderRadius: BorderRadius.circular(30.0),
+                          color: const Color(0xffededf6),
+                          borderRadius: BorderRadius.circular(15),
                         ),
                         padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p20,
+                          horizontal: context.appValues.appPadding.p40,
                           vertical: context.appValues.appPadding.p10,
                         ),
                         child: UploadOneImage(
@@ -1124,9 +1133,9 @@ class _SignUpSupplierOnBoardingScreenState
                           isImage: true,
                           widget: Text(
                             translate('signUp.uploadProfilePhoto'),
-                            style: getPrimaryBoldStyle(
-                              fontSize: 21,
-                              color: Colors.white,
+                            style: getPrimarySemiBoldStyle(
+                              fontSize: 14,
+                              color: const Color(0xff4657a6),
                             ),
                           ),
                         ),

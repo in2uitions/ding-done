@@ -4,7 +4,6 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
-import 'package:dingdone/view/map_screen/map_display.dart';
 import 'package:dingdone/view/widgets/book_a_service/add_media.dart';
 import 'package:dingdone/view/widgets/book_a_service/date_picker.dart';
 import 'package:dingdone/view/widgets/book_a_service/payment_method.dart';
@@ -20,10 +19,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-
-import '../../res/app_prefs.dart';
-import '../widgets/custom/custom_increment_number.dart';
-import '../widgets/job_details_supplier/job_size_widget.dart';
 
 class BookAService extends StatefulWidget {
   BookAService(
@@ -41,91 +36,94 @@ class BookAService extends StatefulWidget {
 }
 
 class _BookAServiceState extends State<BookAService> {
-  bool isLumpsum=false;
+  bool isLumpsum = false;
   var _matchingRate;
 
-  String _getServiceRate(ProfileViewModel profileViewModel,JobsViewModel jobsViewModel) {
+  String _getServiceRate(
+      ProfileViewModel profileViewModel, JobsViewModel jobsViewModel) {
     // Extract the currency from job address
-    String currency = profileViewModel.getProfileBody['current_address']["country"];
+    String currency =
+        profileViewModel.getProfileBody['current_address']["country"];
     // Find the rate from country_rates where currency matches
     var matchingRate = widget.service["country_rates"].firstWhere(
-          (rate) => rate["country"]['code'] == currency,
-      orElse: () => null,  // If no match is found, return null
+      (rate) => rate["country"]['code'] == currency,
+      orElse: () => null, // If no match is found, return null
     );
 
     if (matchingRate != null) {
-      _matchingRate=matchingRate;
+      _matchingRate = matchingRate;
       debugPrint('_matchingRate ${_matchingRate['unit_rate']}');
-      debugPrint('jobsViewModel.getjobsBodynumber_of_units ${jobsViewModel.getjobsBody['number_of_units']}');
+      debugPrint(
+          'jobsViewModel.getjobsBodynumber_of_units ${jobsViewModel.getjobsBody['number_of_units']}');
       // Check the job type and return the appropriate rate
       if (matchingRate["unit_type"].toString().toLowerCase() == 'lumpsum') {
-        isLumpsum=true;
-
+        isLumpsum = true;
       }
-      if (profileViewModel.getProfileBody['current_address']['job_type'] == 'inspection') {
+      if (profileViewModel.getProfileBody['current_address']['job_type'] ==
+          'inspection') {
         return matchingRate['inspection_rate'] ?? 'No rate available';
       } else {
-        return '${jobsViewModel.getjobsBody['number_of_units']!=null? (int.parse(jobsViewModel.getjobsBody['number_of_units']) * int.parse(matchingRate['unit_rate'].toString())) : (int.parse(matchingRate['minimum_order'].toString()) * int.parse(matchingRate['unit_rate'].toString()))} ${matchingRate["country"]["currency"]}';
+        return '${jobsViewModel.getjobsBody['number_of_units'] != null ? (int.parse(jobsViewModel.getjobsBody['number_of_units']) * int.parse(matchingRate['unit_rate'].toString())) : (int.parse(matchingRate['minimum_order'].toString()) * int.parse(matchingRate['unit_rate'].toString()))} ${matchingRate["country"]["currency"]}';
       }
     } else {
-      return 'Rate not found';  // Fallback if no matching currency is found
+      return 'Rate not found'; // Fallback if no matching currency is found
     }
-
   }
-  String _getUnitPrice(ProfileViewModel profileViewModel) {
 
+  String _getUnitPrice(ProfileViewModel profileViewModel) {
     // Extract the currency from job address
-    String currency = profileViewModel.getProfileBody['current_address']["country"];
+    String currency =
+        profileViewModel.getProfileBody['current_address']["country"];
     // Find the rate from country_rates where currency matches
     var matchingRate = widget.service["country_rates"].firstWhere(
-          (rate) => rate["country"]['code'] == currency,
-      orElse: () => null,  // If no match is found, return null
+      (rate) => rate["country"]['code'] == currency,
+      orElse: () => null, // If no match is found, return null
     );
 
     if (matchingRate != null) {
-      _matchingRate=matchingRate;
+      _matchingRate = matchingRate;
       debugPrint('_matchingRate ${_matchingRate['unit_rate']}');
 
-      if (profileViewModel.getProfileBody['current_address']['job_type'] == 'inspection') {
+      if (profileViewModel.getProfileBody['current_address']['job_type'] ==
+          'inspection') {
         return matchingRate['inspection_rate'] ?? 'No rate available';
       } else {
         return '${int.parse(matchingRate['unit_rate'].toString())} ${matchingRate["country"]["currency"]}';
       }
     } else {
-      return 'Rate not found';  // Fallback if no matching currency is found
+      return 'Rate not found'; // Fallback if no matching currency is found
     }
-
   }
+
   String _getType(ProfileViewModel profileViewModel) {
     // Extract the currency from job address
-    String currency = profileViewModel.getProfileBody['current_address']["country"];
+    String currency =
+        profileViewModel.getProfileBody['current_address']["country"];
     // Find the rate from country_rates where currency matches
     var matchingRate = widget.service["country_rates"].firstWhere(
-          (rate) => rate["country"]['code'] == currency,
-      orElse: () => null,  // If no match is found, return null
+      (rate) => rate["country"]['code'] == currency,
+      orElse: () => null, // If no match is found, return null
     );
     debugPrint('lang rate is ${widget.lang}');
-    if(widget.lang==null){
-      widget.lang="en-US";
+    if (widget.lang == null) {
+      widget.lang = "en-US";
     }
     if (matchingRate != null) {
       var matchingType;
       debugPrint('matching rate is ${matchingRate["unit_type"]}');
-      for (Map<String, dynamic> translation
-      in matchingRate["unit_type"]["translations"]) {
-
+      for (Map<String, dynamic> translation in matchingRate["unit_type"]
+          ["translations"]) {
         if (translation["languages_code"] == widget.lang) {
-
-
           matchingType = translation["name"];
           break; // Break the loop once the translation is found
         }
       }
-        return '${matchingType}';
+      return '${matchingType}';
     } else {
-      return 'Rate not found';  // Fallback if no matching currency is found
+      return 'Rate not found'; // Fallback if no matching currency is found
     }
   }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -212,7 +210,7 @@ class _BookAServiceState extends State<BookAService> {
                                       style: getPrimaryBoldStyle(
                                         color:
                                             context.resources.color.colorWhite,
-                                        fontSize: 28,
+                                        fontSize: 25,
                                       ),
                                     ),
                                   ],
@@ -239,6 +237,7 @@ class _BookAServiceState extends State<BookAService> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: context.appValues.appPadding.p20,
+                            vertical: context.appValues.appPadding.p10,
                           ),
                           child: SizedBox(
                             width: context.appValues.appSizePercent.w80,
@@ -296,7 +295,7 @@ class _BookAServiceState extends State<BookAService> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal:
-                                    context.appValues.appPadding.p20),
+                                        context.appValues.appPadding.p20),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -316,13 +315,13 @@ class _BookAServiceState extends State<BookAService> {
                                     //     ),
                                     //   ),
                                     // ),
-                                   Text('${widget.service['xdescription']}',
-                                     style:
-                                     getPrimaryRegularStyle(
-                                       fontSize: 18,
-                                       color: const Color(
-                                           0xff190C39),
-                                     ),)
+                                    Text(
+                                      '${widget.service['xdescription']}',
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 14,
+                                        color: const Color(0xff190C39),
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
@@ -343,7 +342,7 @@ class _BookAServiceState extends State<BookAService> {
                                       child: Text(
                                         translate('bookService.jobDescription'),
                                         style: getPrimaryBoldStyle(
-                                          fontSize: 20,
+                                          fontSize: 16,
                                           color: context
                                               .resources.color.btnColorBlue,
                                         ),
@@ -385,7 +384,7 @@ class _BookAServiceState extends State<BookAService> {
                                         child: Text(
                                           "Working Day",
                                           style: getPrimaryBoldStyle(
-                                            fontSize: 20,
+                                            fontSize: 16,
                                             color: const Color(0xff1F1F39),
                                           ),
                                         ),
@@ -404,7 +403,7 @@ class _BookAServiceState extends State<BookAService> {
                                           // translate('bookService.dateAndTime'),
                                           "Start Time",
                                           style: getPrimaryBoldStyle(
-                                            fontSize: 20,
+                                            fontSize: 16,
                                             color: const Color(0xff1F1F39),
                                           ),
                                         ),
@@ -452,7 +451,7 @@ class _BookAServiceState extends State<BookAService> {
                                             Text(
                                               translate('bookService.location'),
                                               style: getPrimaryBoldStyle(
-                                                fontSize: 20,
+                                                fontSize: 16,
                                                 color: context.resources.color
                                                     .btnColorBlue,
                                               ),
@@ -549,7 +548,7 @@ class _BookAServiceState extends State<BookAService> {
                                     Text(
                                       translate('bookService.unitPrice'),
                                       style: getPrimaryBoldStyle(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         color: context
                                             .resources.color.btnColorBlue,
                                       ),
@@ -558,30 +557,30 @@ class _BookAServiceState extends State<BookAService> {
                                 ),
                               ),
                               Padding(
-                                  padding: const EdgeInsets.only(right: 40.0,left: 40.0),
+                                  padding: const EdgeInsets.only(
+                                      right: 40.0, left: 40.0),
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(),
+                                    padding: const EdgeInsets.symmetric(),
                                     child: Row(
                                       children: [
                                         Text(
                                           '${_getUnitPrice(profileViewModel)}',
                                           style: getPrimaryRegularStyle(
-                                              color: context
-                                                  .resources.color.secondColorBlue,
-                                              fontSize: 20),
+                                              color: context.resources.color
+                                                  .secondColorBlue,
+                                              fontSize: 14),
                                         ),
                                         Text(
                                           '/${_getType(profileViewModel)}',
                                           style: getPrimaryRegularStyle(
-                                              color: context
-                                                  .resources.color.secondColorBlue,
+                                              color: context.resources.color
+                                                  .secondColorBlue,
                                               fontSize: 10),
                                         ),
                                       ],
                                     ),
-                                  )
-                              ),
-                              Gap(10),
+                                  )),
+                              const Gap(10),
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: context.appValues.appPadding.p40,
@@ -592,7 +591,7 @@ class _BookAServiceState extends State<BookAService> {
                                     Text(
                                       translate('updateJob.jobSize'),
                                       style: getPrimaryBoldStyle(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         color: context
                                             .resources.color.btnColorBlue,
                                       ),
@@ -601,19 +600,22 @@ class _BookAServiceState extends State<BookAService> {
                                 ),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(right: 40.0,left: 40.0),
+                                padding: const EdgeInsets.only(
+                                    right: 40.0, left: 40.0),
                                 child: Consumer<JobsViewModel>(
                                     builder: (context, jobsViewModel, _) {
-                                      return CustomIncrementFieldRequest(
-                                        index: 'number_of_units',
-                                        editable: isLumpsum?false:true,
-                                        value: _matchingRate!=null?'${_matchingRate['minimum_order']}':'0',
-                                        // hintText: 'Job Type',
-                                        viewModel: jobsViewModel.setInputValues,
-                                      );
-                                    }),
+                                  return CustomIncrementFieldRequest(
+                                    index: 'number_of_units',
+                                    editable: isLumpsum ? false : true,
+                                    value: _matchingRate != null
+                                        ? '${_matchingRate['minimum_order']}'
+                                        : '0',
+                                    // hintText: 'Job Type',
+                                    viewModel: jobsViewModel.setInputValues,
+                                  );
+                                }),
                               ),
-                              Gap(10),
+                              const Gap(10),
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: context.appValues.appPadding.p40,
@@ -624,7 +626,7 @@ class _BookAServiceState extends State<BookAService> {
                                     Text(
                                       translate('home_screen.totalPrice'),
                                       style: getPrimaryBoldStyle(
-                                        fontSize: 20,
+                                        fontSize: 16,
                                         color: context
                                             .resources.color.btnColorBlue,
                                       ),
@@ -640,19 +642,19 @@ class _BookAServiceState extends State<BookAService> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      '${_getServiceRate(profileViewModel,jobsViewModel)}',
+                                      '${_getServiceRate(profileViewModel, jobsViewModel)}',
                                       style: getPrimaryRegularStyle(
-                                          color: context
-                                              .resources.color.colorYellow,
-                                          fontSize: 20),
+                                        color:
+                                            context.resources.color.colorYellow,
+                                        fontSize: 15,
+                                      ),
                                     ),
-
                                   ],
                                 ),
                               ),
 
                               Container(
-                                height: context.appValues.appSizePercent.h10,
+                                height: context.appValues.appSizePercent.h8,
                                 width: context.appValues.appSizePercent.w100,
                                 color: Colors.transparent,
                                 child: Padding(
@@ -789,6 +791,7 @@ class _BookAServiceState extends State<BookAService> {
 
 Widget _buildPopupDialog(BuildContext context) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     elevation: 15,
     content: Column(
       mainAxisSize: MainAxisSize.min,
@@ -830,7 +833,7 @@ Widget _buildPopupDialog(BuildContext context) {
         SizedBox(height: context.appValues.appSize.s20),
         Padding(
           padding: EdgeInsets.symmetric(
-            horizontal: context.appValues.appPadding.p32,
+            horizontal: context.appValues.appPadding.p20,
           ),
           child: Text(
             translate('bookService.serviceRequestConfirmedMsg'),
@@ -841,6 +844,7 @@ Widget _buildPopupDialog(BuildContext context) {
             ),
           ),
         ),
+        const Gap(20),
       ],
     ),
   );

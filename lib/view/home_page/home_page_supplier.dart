@@ -95,18 +95,18 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Gap(60),
-
                 ListTile(
                   title: Row(
                     children: [
                       SvgPicture.asset(
                         'assets/img/orderHistory.svg',
+                        width: context.appValues.appSizePercent.w4,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.orderHistory'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -142,12 +142,13 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                     children: [
                       SvgPicture.asset(
                         'assets/img/addressBook.svg',
+                        width: context.appValues.appSizePercent.w4,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.myAddressBook'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -168,18 +169,18 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                     color: Color(0xffEAEAFF),
                   ),
                 ),
-
                 ListTile(
                   title: Row(
                     children: [
                       SvgPicture.asset(
                         'assets/img/headphone.svg',
+                        width: context.appValues.appSizePercent.w5,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.support'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -207,12 +208,13 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                     children: [
                       SvgPicture.asset(
                         'assets/img/aboutDingDone.svg',
+                        width: context.appValues.appSizePercent.w5,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.aboutDingDone'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -239,12 +241,13 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                     children: [
                       SvgPicture.asset(
                         'assets/img/termofuse.svg',
+                        width: context.appValues.appSizePercent.w5,
                       ),
                       const Gap(10),
                       Text(
                         translate('drawer.termsAndConditions'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
@@ -269,45 +272,45 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                 ListTile(
                   title: Row(
                     children: [
-                      Icon(
+                      const Icon(
                         Icons.language,
-                        size: 30,
+                        size: 20,
                         color: Colors.deepPurple,
                       ),
                       const Gap(10),
-
                       Text(
                         translate('drawer.chooseLanguage'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
+                          fontSize: 16,
                           color: const Color(0xff1F1F39),
                         ),
                       ),
                     ],
                   ),
                   onTap: () => _onActionSheetPress(context),
-
                 ),
                 const Spacer(),
                 Padding(
                   padding: EdgeInsets.only(
-                      top: context.appValues.appPadding.p5,
-                      left: context.appValues.appPadding.p15,
-                      right: context.appValues.appPadding.p15),
+                    top: context.appValues.appPadding.p5,
+                    left: context.appValues.appPadding.p15,
+                    right: context.appValues.appPadding.p40,
+                  ),
                   child: InkWell(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Row(
                           children: [
                             SvgPicture.asset(
                               'assets/img/logout.svg',
+                              width: context.appValues.appSizePercent.w4,
                             ),
                             const Gap(10),
                             Text(
                               translate('profile.logOut'),
                               style: getPrimaryRegularStyle(
-                                fontSize: 20,
+                                fontSize: 16,
                                 color: const Color(0xff78789D),
                               ),
                             ),
@@ -501,8 +504,8 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
               //   ],
               // ),
               DraggableScrollableSheet(
-                  initialChildSize: 0.45,
-                  minChildSize: 0.45,
+                  initialChildSize: 0.43,
+                  minChildSize: 0.43,
                   maxChildSize: 1,
                   builder: (BuildContext context,
                       ScrollController scrollController) {
@@ -520,26 +523,10 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                           itemBuilder: (BuildContext context, int index) {
                             return Column(
                               children: [
-                                // Container(
-                                //   decoration: BoxDecoration(
-                                //     color: context.resources.color.colorWhite,
-                                //     borderRadius: const BorderRadius.only(
-                                //         bottomLeft: Radius.circular(20),
-                                //         bottomRight: Radius.circular(20)),
-                                //   ),
-                                //   child: Consumer<ProfileViewModel>(
-                                //       builder: (context, profileViewModel, _) {
-                                //     return Column(
-                                //       children: [
-
-                                //       ],
-                                //     );
-                                //   }),
-                                // ),
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(
                                     context.appValues.appPadding.p20,
-                                    context.appValues.appPadding.p20,
+                                    context.appValues.appPadding.p0,
                                     context.appValues.appPadding.p20,
                                     context.appValues.appPadding.p20,
                                   ),
@@ -551,7 +538,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                         translate(
                                             'home_screen.jobRequestsAroundMe'),
                                         style: getPrimaryBoldStyle(
-                                          fontSize: 20,
+                                          fontSize: 16,
                                           color: const Color(0xff180C38),
                                         ),
                                       ),
@@ -593,13 +580,14 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                                   .customer["id"]);
                                           Navigator.of(context).push(
                                               _createRoute(JobDetailsSupplier(
-                                                  title:
-                                                      '${services!["title"]}',
-                                                  data: jobsViewModel
-                                                      .supplierOpenJobs[index],
-                                                  fromWhere: 'request', lang: lang,)));
-                                          debugPrint('ejkwfhoweihfowef ${jobsViewModel
-                                              .supplierOpenJobs[index].severity_level}');
+                                            title: '${services!["title"]}',
+                                            data: jobsViewModel
+                                                .supplierOpenJobs[index],
+                                            fromWhere: 'request',
+                                            lang: lang,
+                                          )));
+                                          debugPrint(
+                                              'ejkwfhoweihfowef ${jobsViewModel.supplierOpenJobs[index].severity_level}');
                                         },
                                         child: services != null
                                             ? JobRequests(
@@ -619,8 +607,10 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                                     '${jobsViewModel.supplierOpenJobs[index].job_description}',
                                                 id: jobsViewModel
                                                     .supplierOpenJobs[index].id,
-                                          severity_level: jobsViewModel
-                                              .supplierOpenJobs[index].severity_level ?? '',
+                                                severity_level: jobsViewModel
+                                                        .supplierOpenJobs[index]
+                                                        .severity_level ??
+                                                    '',
                                               )
                                             : Container(),
                                       );
@@ -654,6 +644,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
     });
   }
 }
+
 void showDemoActionSheet(
     {required BuildContext context, required Widget child}) {
   showCupertinoModalPopup<String>(
@@ -717,6 +708,7 @@ void _onActionSheetPress(BuildContext context) {
     ),
   );
 }
+
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => classname,

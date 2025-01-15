@@ -402,13 +402,8 @@ class PaymentViewModel extends DisposableViewModel {
     Map<String, dynamic> bodyattach = {};
     String? cardNumberMessage = '';
     try {
-      debugPrint('creating tap payment ');
-      debugPrint('bodyy $body');
       if (_profileViewModel.getProfileBody["tap_id"] == null) {
         var response1 = await createCustomerTapId();
-        debugPrint('done creating customer tap id $response1');
-        debugPrint('id of the new customer ${response1["id"]}');
-        debugPrint('id of the new customer ${response1["id"]}');
         body["tap_id"] = '${response1["id"]}';
         bodyattach["customer"] = '${response1["id"]}';
         debugPrint(
@@ -467,17 +462,7 @@ class PaymentViewModel extends DisposableViewModel {
             '${_profileViewModel.getProfileBody["user"]["first_name"]} ',
         "last_name": '${_profileViewModel.getProfileBody["user"]["last_name"]}',
         "email": '${_profileViewModel.getProfileBody["user"]["email"]}',
-        // "phone": {
-        //   "code": "",
-        //   "number":
-        //       '${_profileViewModel.getProfileBody["user"]["phone_number"]}'
-        // },
-        // "description": "test",
-        // "metadata": {
-        //   "sample string 1": "string1",
-        //   "sample string 3": "string2"
-        // },
-        // "currency": ""
+
       };
       //Make post request to Stripe
       var response =

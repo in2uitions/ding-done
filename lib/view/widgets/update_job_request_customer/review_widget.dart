@@ -40,13 +40,13 @@ class _ReviewWidgetState extends State<ReviewWidget> {
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: context.appValues.appPadding.p10,
+                  horizontal: context.appValues.appPadding.p0,
                   vertical: context.appValues.appPadding.p10,
                 ),
                 child: Text(
                   translate('jobDetails.review'),
                   style: getPrimaryBoldStyle(
-                    fontSize: 20,
+                    fontSize: 18,
                     color: const Color(0xff38385E),
                   ),
                 ),
@@ -67,21 +67,21 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                   builder: (context, jobsViewModel, loginViewModel, _) {
                 return loginViewModel.userRole == Constants.supplierRoleId
                     ? Container(
-                        width: context.appValues.appSizePercent.w90,
-                        height: context.appValues.appSizePercent.h7,
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                              color: const Color(0xff000000).withOpacity(0.1),
-                              spreadRadius: 1,
-                              blurRadius: 5,
-                              offset: const Offset(
-                                  0, 3), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.white,
-                        ),
+                        // width: context.appValues.appSizePercent.w90,
+                        // height: context.appValues.appSizePercent.h7,
+                        // decoration: BoxDecoration(
+                        //   boxShadow: [
+                        //     BoxShadow(
+                        //       color: const Color(0xff000000).withOpacity(0.1),
+                        //       spreadRadius: 1,
+                        //       blurRadius: 5,
+                        //       offset: const Offset(
+                        //           0, 3), // changes position of shadow
+                        //     ),
+                        //   ],
+                        //   borderRadius: BorderRadius.circular(15),
+                        //   color: Colors.white,
+                        // ),
                         child: Align(
                           alignment: Alignment.centerLeft,
                           child: Padding(

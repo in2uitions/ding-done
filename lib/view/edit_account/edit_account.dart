@@ -118,7 +118,7 @@ class _EditAccountState extends State<EditAccount> {
                                         style: getPrimaryBoldStyle(
                                           color: context
                                               .resources.color.colorWhite,
-                                          fontSize: 22,
+                                          fontSize: 20,
                                         ),
                                       ),
                                     ),
@@ -204,9 +204,9 @@ class _EditAccountState extends State<EditAccount> {
                         width: context.appValues.appSizePercent.w100,
                         child: Text(
                           translate('profile.yourName'),
-                          style: getPrimaryBoldStyle(
+                          style: getPrimarySemiBoldStyle(
                             color: const Color(0xff180C38),
-                            fontSize: 20,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -248,9 +248,9 @@ class _EditAccountState extends State<EditAccount> {
                         width: context.appValues.appSizePercent.w100,
                         child: Text(
                           translate('formHints.phone_number'),
-                          style: getPrimaryBoldStyle(
+                          style: getPrimarySemiBoldStyle(
                             color: const Color(0xff180C38),
-                            fontSize: 20,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -275,9 +275,9 @@ class _EditAccountState extends State<EditAccount> {
                         width: context.appValues.appSizePercent.w100,
                         child: Text(
                           translate('formHints.email'),
-                          style: getPrimaryBoldStyle(
+                          style: getPrimarySemiBoldStyle(
                             color: const Color(0xff180C38),
-                            fontSize: 20,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -303,9 +303,9 @@ class _EditAccountState extends State<EditAccount> {
                         width: context.appValues.appSizePercent.w100,
                         child: Text(
                           translate('profile.addresses'),
-                          style: getPrimaryBoldStyle(
+                          style: getPrimarySemiBoldStyle(
                             color: const Color(0xff180C38),
-                            fontSize: 20,
+                            fontSize: 16,
                           ),
                         ),
                       ),
@@ -499,7 +499,7 @@ class _EditAccountState extends State<EditAccount> {
                 ),
               ),
               SizedBox(
-                height: context.appValues.appSizePercent.h10,
+                height: context.appValues.appSizePercent.h8,
                 width: context.appValues.appSizePercent.w100,
                 child: Padding(
                   padding: EdgeInsets.symmetric(
@@ -535,14 +535,14 @@ class _EditAccountState extends State<EditAccount> {
                             }
                           },
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xff4100E3),
+                            backgroundColor: const Color(0xff3b4498),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
                           ),
                           child: Text(
                             'Save',
-                            style: getPrimaryBoldStyle(
+                            style: getPrimarySemiBoldStyle(
                               fontSize: 18,
                               color: Colors.white,
                             ),
@@ -553,6 +553,7 @@ class _EditAccountState extends State<EditAccount> {
                   ),
                 ),
               ),
+              const Gap(20),
             ],
           ),
         ),

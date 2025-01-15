@@ -18,7 +18,6 @@ import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/constants.dart';
-import '../widgets/custom/custom_dropdown.dart';
 
 class SignUpOnBoardingScreen extends StatefulWidget {
   var initialIndex;
@@ -98,9 +97,9 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
           // width: 127,
           width: context.appValues.appSizePercent.w32,
           // height: 51,
-          height: context.appValues.appSizePercent.h065,
+          height: context.appValues.appSizePercent.h5,
           decoration: BoxDecoration(
-            color: const Color(0xff4100E3),
+            color: const Color(0xff384ea2),
             borderRadius: BorderRadius.circular(15),
           ),
           child: InkWell(
@@ -117,7 +116,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
               child: Text(
                 translate('button.next'),
                 style: getPrimaryBoldStyle(
-                  fontSize: 21,
+                  fontSize: 14,
                   color: context.resources.color.colorWhite,
                 ),
               ),
@@ -134,10 +133,10 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
       // color: defaultProceedButtonColor,
       child: Consumer<SignUpViewModel>(builder: (context, signupViewModel1, _) {
         return Container(
-          // width: 156,
-          width: context.appValues.appSizePercent.w40,
+          // width: 127,
+          width: context.appValues.appSizePercent.w32,
           // height: 51,
-          height: context.appValues.appSizePercent.h065,
+          height: context.appValues.appSizePercent.h5,
           decoration: BoxDecoration(
             color: const Color(0xffFFC502),
             borderRadius: BorderRadius.circular(15),
@@ -160,7 +159,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
               child: Text(
                 translate('button.complete'),
                 style: getPrimaryBoldStyle(
-                  fontSize: 21,
+                  fontSize: 14,
                   color: context.resources.color.colorWhite,
                 ),
               ),
@@ -874,22 +873,27 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                                         .signUpBody['role'] ==
                                                     Constants.supplierRoleId) {
                                                   Future.delayed(
-                                                      const Duration(seconds: 0),
-                                                          () =>     Navigator.of(context).push(
-                                                              _createRoute(
+                                                      const Duration(
+                                                          seconds: 0),
+                                                      () =>
+                                                          Navigator.of(context)
+                                                              .push(_createRoute(
                                                                   SignUpSupplierOnBoardingScreen(
-                                                                    initialIndex: 3,
-                                                                  ))));
-
+                                                            initialIndex: 3,
+                                                          ))));
                                                 }
                                                 if (signupViewModel
                                                         .signUpBody['role'] ==
                                                     Constants.customerRoleId) {
                                                   Future.delayed(
-                                                      const Duration(seconds: 0),
-                                                          () =>    Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(
-                                                        initialIndex: 3,
-                                                      ))));
+                                                      const Duration(
+                                                          seconds: 0),
+                                                      () =>
+                                                          Navigator.of(context)
+                                                              .push(_createRoute(
+                                                                  SignUpOnBoardingScreen(
+                                                            initialIndex: 3,
+                                                          ))));
                                                 }
                                               }
                                             },

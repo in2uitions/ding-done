@@ -65,7 +65,7 @@ class _CustomDatePicker2 extends State<CustomDatePicker2> {
         fillColor: context.resources.color.colorTransparent,
         hintText: widget.hintText,
         hintStyle: getPrimaryRegularStyle(
-          fontSize: 15,
+          fontSize: 13,
           color: const Color(0xffB4B4B4),
         ),
         prefixIcon: Padding(

@@ -16,8 +16,6 @@ import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
-import '../../../res/app_prefs.dart';
-
 class JobsCards extends StatefulWidget {
   var active;
   var userRole;
@@ -58,9 +56,9 @@ class _JobsCardsState extends State<JobsCards> {
                   ? widget.jobsViewModel.supplierCompletedJobs
                   : widget.jobsViewModel.supplierBookedJobs
           : widget.active == 'activeJobs'
-              ?  widget.jobsViewModel.getcustomerJobs
-          .where((e) => e.status == 'inprogress')
-          .toList()
+              ? widget.jobsViewModel.getcustomerJobs
+                  .where((e) => e.status == 'inprogress')
+                  .toList()
               : widget.active == 'completedJobs'
                   ? widget.jobsViewModel.getcustomerJobs
                       .where((e) => e.status == 'completed')
@@ -69,7 +67,7 @@ class _JobsCardsState extends State<JobsCards> {
                       ? widget.jobsViewModel.getcustomerJobs
                           .where((e) =>
                               e.status == 'circulating' || e.status == 'draft')
-          .toList()
+                          .toList()
                       : widget.jobsViewModel.getcustomerJobs
                           .where((e) => e.status == 'booked')
                           .toList();
@@ -111,13 +109,12 @@ class _JobsCardsState extends State<JobsCards> {
                                 ? translate('jobs.completed')
                                 : translate('jobs.booked'),
                         title: services?["title"].toString(),
-                  lang:widget.lang,
+                        lang: widget.lang,
                       )))
                     : Navigator.of(context)
                         .push(_createRoute(UpdateJobRequestCustomer(
                         data: data[index],
-                        title:
-                        services?["title"].toString(),
+                        title: services?["title"].toString(),
                         fromWhere: widget.active == 'activeJobs'
                             ? translate('jobs.active')
                             : widget.active == 'completedJobs'
@@ -125,7 +122,7 @@ class _JobsCardsState extends State<JobsCards> {
                                 : widget.active == 'requestedJobs'
                                     ? translate('jobs.requestedJobs')
                                     : translate('jobs.booked'),
-                  lang:widget.lang,
+                        lang: widget.lang,
                       )));
               },
               child: Padding(
@@ -211,7 +208,7 @@ class _JobsCardsState extends State<JobsCards> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: getPrimaryRegularStyle(
-                                        fontSize: 22,
+                                        fontSize: 16,
                                         color: const Color(0xff190C39),
                                       ),
                                     ),
@@ -233,7 +230,7 @@ class _JobsCardsState extends State<JobsCards> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: getPrimaryBoldStyle(
-                                        fontSize: 18,
+                                        fontSize: 14,
                                         color: const Color(0xff9E9AB7),
                                       ),
                                     ),
@@ -245,7 +242,6 @@ class _JobsCardsState extends State<JobsCards> {
                           SizedBox(
                             height: context.appValues.appSizePercent.h2,
                           ),
-
                           Padding(
                             padding: EdgeInsets.only(
                                 right: context.appValues.appPadding.p8),
@@ -287,7 +283,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                         .toLocal())
                                                 : '',
                                             style: getPrimaryRegularStyle(
-                                              fontSize: 15,
+                                              fontSize: 14,
                                               color: const Color(0xff78789D),
                                             ),
                                           )
@@ -301,7 +297,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                         .toLocal())
                                                 : '',
                                             style: getPrimaryRegularStyle(
-                                              fontSize: 15,
+                                              fontSize: 14,
                                               color: const Color(0xff78789D),
                                             ),
                                           )
@@ -319,7 +315,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                         .toLocal())
                                                 : '',
                                             style: getPrimaryRegularStyle(
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: context.resources.color
                                                     .btnColorBlue),
                                           )
@@ -355,7 +351,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                 .toUtc()
                                                 .toLocal()),
                                         style: getPrimaryRegularStyle(
-                                          fontSize: 15,
+                                          fontSize: 14,
                                           color: const Color(0xff78789D),
                                         ),
                                       )
@@ -363,9 +359,7 @@ class _JobsCardsState extends State<JobsCards> {
                               ],
                             ),
                           ),
-
                           const Gap(7),
-
                           widget.active == 'bookedJobs' ||
                                   widget.active == 'requestedJobs'
                               ? Padding(
@@ -392,10 +386,10 @@ class _JobsCardsState extends State<JobsCards> {
                                                             .job_address
                                                             .toString() !=
                                                         ''
-                                                ? '${data[index].job_address['city'] !=null?data[index].job_address['city']:'' }, ${data[index].job_address['state'] !=null? data[index].job_address['state'] :''}, ${data[index].job_address['street_number']!=null?data[index].job_address['street_number']:''}'
+                                                ? '${data[index].job_address['city'] != null ? data[index].job_address['city'] : ''}, ${data[index].job_address['state'] != null ? data[index].job_address['state'] : ''}, ${data[index].job_address['street_number'] != null ? data[index].job_address['street_number'] : ''}'
                                                 : '',
                                             style: getPrimaryRegularStyle(
-                                              fontSize: 15,
+                                              fontSize: 14,
                                               color: const Color(0xff78789D),
                                             ),
                                             overflow: TextOverflow
@@ -409,9 +403,7 @@ class _JobsCardsState extends State<JobsCards> {
                                   ),
                                 )
                               : Container(),
-
-                          const Gap(20),
-
+                          const Gap(15),
                           widget.userRole == Constants.supplierRoleId
                               ? widget.active == 'bookedJobs'
                                   ? Padding(
@@ -425,7 +417,7 @@ class _JobsCardsState extends State<JobsCards> {
                                             Text(
                                               '${(data[index].supplier_to_job_distance != null ? (data[index].supplier_to_job_distance / 1000).toStringAsFixed(3) : "0")} km',
                                               style: getPrimaryBoldStyle(
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: const Color(0xff78789D),
                                               ),
                                             ),
@@ -433,7 +425,7 @@ class _JobsCardsState extends State<JobsCards> {
                                     )
                                   : Container()
                               : Container(),
-                          const Gap(5),
+                          // const Gap(5),
                           widget.userRole == Constants.supplierRoleId
                               ? widget.active == 'bookedJobs'
                                   ? Padding(
@@ -444,11 +436,10 @@ class _JobsCardsState extends State<JobsCards> {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-
                                             Text(
                                               '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
                                               style: getPrimaryBoldStyle(
-                                                fontSize: 15,
+                                                fontSize: 14,
                                                 color: const Color(0xff78789D),
                                               ),
                                             ),
@@ -475,7 +466,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                   : 'Normal'
                                               : '',
                                           style: getPrimaryRegularStyle(
-                                              fontSize: 18,
+                                              fontSize: 14,
                                               color: data[index]
                                                           .severity_level !=
                                                       null
@@ -498,16 +489,15 @@ class _JobsCardsState extends State<JobsCards> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-
                                 Text(
                                   // '',
                                   data[index].total_amount != null &&
                                           data[index].total_amount.toString() !=
                                               ''
                                       ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
-                                      : '${data[index].service["country_rates"] != null ? data[index].number_of_units!=null?(data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) :(data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]): ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
+                                      : '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
                                   style: getPrimaryBoldStyle(
-                                    fontSize: 15,
+                                    fontSize: 14,
                                     color: const Color(0xff78789D),
                                   ),
                                 ),
@@ -553,7 +543,7 @@ class _JobsCardsState extends State<JobsCards> {
                                         child: Text(
                                           translate('button.cancel'),
                                           style: getPrimaryBoldStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             color: const Color(0xff6F6BE8),
                                           ),
                                         ),
@@ -566,8 +556,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                 debugPrint(
                                                     'data ${data[index]}');
                                                 widget.active == 'activeJobs'
-                                                    ? jobsViewModel.finishJobAndCollectPayment(
-                                                        data[index].id)
+                                                    ? jobsViewModel
+                                                        .finishJobAndCollectPayment(
+                                                            data[index].id)
                                                     : jobsViewModel.startJob(
                                                         data[index].id);
                                               },
@@ -594,7 +585,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                     : translate(
                                                         'button.startJob'),
                                                 style: getPrimaryBoldStyle(
-                                                  fontSize: 16,
+                                                  fontSize: 14,
                                                   color: context.resources.color
                                                       .colorWhite,
                                                 ),
@@ -762,7 +753,7 @@ class _JobsCardsState extends State<JobsCards> {
                     //                 translate('button.somethingWentWrong')));
                     //   }
                     // } else {
-                    if(widget.active == 'requestedJobs'){
+                    if (widget.active == 'requestedJobs') {
                       if (await jobsViewModel.cancelJobNoPenalty(job_id) ==
                           true) {
                         Navigator.pop(context);
@@ -775,8 +766,7 @@ class _JobsCardsState extends State<JobsCards> {
                                     context,
                                     translate('button.success'),
                                     translate('button.jobCanceledMsg')));
-                      }
-                      else {
+                      } else {
                         Navigator.pop(context);
 
                         Future.delayed(const Duration(seconds: 0));
@@ -788,7 +778,7 @@ class _JobsCardsState extends State<JobsCards> {
                                     translate('button.failure'),
                                     translate('button.somethingWentWrong')));
                       }
-                    }else {
+                    } else {
                       if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
                           true) {
                         Navigator.pop(context);
@@ -801,19 +791,18 @@ class _JobsCardsState extends State<JobsCards> {
                                     context,
                                     translate('button.success'),
                                     translate('button.jobCanceledMsg')));
-                      }
-                    else {
-                      Navigator.pop(context);
+                      } else {
+                        Navigator.pop(context);
 
-                      Future.delayed(const Duration(seconds: 0));
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              simpleAlertWithMessage2(
-                                  context,
-                                  translate('button.failure'),
-                                  translate('button.somethingWentWrong')));
-                    }
+                        Future.delayed(const Duration(seconds: 0));
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) =>
+                                simpleAlertWithMessage2(
+                                    context,
+                                    translate('button.failure'),
+                                    translate('button.somethingWentWrong')));
+                      }
                     }
                   }
                 },
