@@ -495,7 +495,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                         // await widget.paymentViewModel.setLoading(false);
                       },
                       child: widget.paymentViewModel.isLoading
-                          ? const CircularProgressIndicator()
+                          ? Container(width:30,height:30,child: Center(child: const CircularProgressIndicator()))
                           : Center(
                               child: Text(
                                 translate('paymentMethod.addPaymentMethod'),

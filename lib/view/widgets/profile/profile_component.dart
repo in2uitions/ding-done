@@ -151,10 +151,13 @@ class _ProfileComponentState extends State<ProfileComponent> {
                   ],
                 ),
               ),
-              onTap: () {
+              onTap: () async {
+                await Provider.of<PaymentViewModel>(context, listen: false)
+                    .getPaymentMethodsTap();
                 Navigator.of(context).push(_createRoute(
                     Consumer<ProfileViewModel>(
                         builder: (context, profileViewModel, _) {
+
                   return ConfirmPaymentMethod(
                     profileViewModel: profileViewModel,
                     payment_method:

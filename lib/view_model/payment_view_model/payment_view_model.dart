@@ -27,6 +27,7 @@ class PaymentViewModel extends DisposableViewModel {
   ApiResponse<PaymentsModelMain> _paymentsResponse = ApiResponse.loading();
 
   List<dynamic> _paymentsList = List.empty();
+  List<dynamic> _paymentCards = List.empty();
 
   Map<String?, String?> paymentError = {};
 
@@ -75,6 +76,7 @@ class PaymentViewModel extends DisposableViewModel {
           });
       var res = jsonDecode(response.body);
       debugPrint('response geetting cardn ${res["data"]}');
+      _paymentCards=res["data"];
       return res["data"];
     } catch (e) {
       debugPrint('error in getting payments tap $e');
@@ -498,6 +500,7 @@ class PaymentViewModel extends DisposableViewModel {
   }
 
   get getPaymentBody => paymentBody;
+  get paymentCards => _paymentCards;
 
   get paymentList => _paymentsList;
   get isLoading => _isloading;
