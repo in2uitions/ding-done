@@ -488,6 +488,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "flutter_web_browser",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/flutter_web_browser-0.17.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "flutter_web_plugins",
       "rootUri": "file:///Volumes/KINGSTON/flutter/packages/flutter_web_plugins",
       "packageUri": "lib/",
@@ -1460,7 +1466,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-01-16T10:16:06.545323Z",
+  "generated": "2025-01-22T12:10:36.637204Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Volumes/KINGSTON/flutter",

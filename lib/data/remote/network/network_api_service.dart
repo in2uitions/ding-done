@@ -119,10 +119,12 @@ class NetworkApiService extends BaseApiService {
     }
     debugPrint('final ${finalUrl}');
     debugPrint('data ${data}');
+    debugPrint('token ${headers[HttpHeaders.authorizationHeader]}');
     try {
       final response;
       response = await http.post(Uri.parse(finalUrl),
-          headers: headers, body: jsonEncode(data));
+          headers: headers,
+          body: jsonEncode(data));
 
       responseJson = returnResponse(response);
     } catch (error) {

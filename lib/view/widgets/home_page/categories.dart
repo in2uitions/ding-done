@@ -59,10 +59,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             ),
             SizedBox(
               width: context.appValues.appSizePercent.w100,
-              height: context.appValues.appSizePercent.h70,
+              height: context.appValues.appSizePercent.h50,
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // Number of items in each row
+                  crossAxisCount: 4, // Number of items in each row
                   crossAxisSpacing: 4, // Spacing between items horizontally
                   mainAxisSpacing: 4, // Spacing between items vertically
                   childAspectRatio: 1, // Aspect ratio of each grid item
@@ -99,289 +99,151 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
   }
 
   Widget buildServiceWidget(
-      dynamic service, CategoriesViewModel categoriesViewModel, var index) {
+      dynamic service, CategoriesViewModel categoriesViewModel, int index) {
     if (lang == null) {
       lang = "en-US";
     }
     Map<String, dynamic>? services;
     Map<String, dynamic>? parentServices;
     for (Map<String, dynamic> translation in service["translations"]) {
-      // for (Map<String, dynamic> translation1 in translation["categories_id"]["translations"]) {
-
       if (translation["languages_code"] == lang) {
-        debugPrint('transssb usg ${translation}');
-
         services = translation;
-        // categoriesViewModel.sortCategories(widget.servicesViewModel.searchBody["search_services"]);
-        break; // Break the loop once the translation is found
+        break;
       }
-      // }
     }
     for (Map<String, dynamic> translationParent in service["class"]
-        ["translations"]) {
+    ["translations"]) {
       if (translationParent["languages_code"] == lang) {
         parentServices = translationParent;
-        break; // Break the loop once the translation is found
+        break;
       }
     }
-    debugPrint(
-        'efhiew ${widget.servicesViewModel.searchBody["search_services"]}');
+
+    Color backgroundColor;
+    Color textColor;
+    Color iconColor;
+
+    int columnIndex = index % 4; // Determine the column index
+
+    switch (columnIndex) {
+      case 0:
+        backgroundColor = Color(0xffDECDFD);
+        textColor = Color(0xff180D38);
+        iconColor = Color(0xff581CC6);
+        break;
+      case 1:
+        backgroundColor = Color(0xffFCD5ED);
+        textColor = Color(0xff180D38);
+        iconColor = Color(0xffCB1282);
+        break;
+      case 2:
+        backgroundColor = Color(0xffCFF5D5);
+        textColor = Color(0xff180D38);
+        iconColor = Color(0xff0C8E1A);
+        break;
+      case 3:
+        backgroundColor = Color(0xffFFDFAC);
+        textColor = Color(0xff180D38);
+        iconColor = Color(0xffD08000);
+        break;
+      default:
+        backgroundColor = Colors.grey;
+        textColor = Colors.black;
+        iconColor = Colors.black;
+    }
 
     return widget.servicesViewModel.searchBody["search_services"]
-                    .toString()
-                    .toLowerCase() ==
-                services?["title"].toString().toLowerCase() ||
-            widget.servicesViewModel.searchBody["search_services"]
-                    .toString()
-                    .toLowerCase() ==
-                parentServices?["title"].toString().toLowerCase()
+        .toString()
+        .toLowerCase() ==
+        services?["title"].toString().toLowerCase() ||
+        widget.servicesViewModel.searchBody["search_services"]
+            .toString()
+            .toLowerCase() ==
+            parentServices?["title"].toString().toLowerCase()
         ? Padding(
+      padding: EdgeInsets.only(
+        top: context.appValues.appPadding.p10,
+        bottom: context.appValues.appPadding.p10,
+      ),
+      child: InkWell(
+        child: Container(
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: const BorderRadius.all(Radius.circular(20)),
+          ),
+          child: Padding(
             padding: EdgeInsets.only(
-              top: context.appValues.appPadding.p10,
-              bottom: context.appValues.appPadding.p10,
+              left: context.appValues.appPadding.p0,
+              bottom: context.appValues.appPadding.p0,
             ),
-            child: InkWell(
-              child: Container(
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: widget.servicesViewModel
-                                      .searchBody["search_services"]
-                                      .toString()
-                                      .toLowerCase() ==
-                                  services?["title"].toString().toLowerCase() ||
-                              widget.servicesViewModel
-                                      .searchBody["search_services"]
-                                      .toString()
-                                      .toLowerCase() ==
-                                  parentServices?["title"]
-                                      .toString()
-                                      .toLowerCase()
-                          ? const Color(0xffF2CA74).withOpacity(0.5)
-                          : widget.servicesViewModel
-                                          .searchBody["search_services"] ==
-                                      '' ||
-                                  widget.servicesViewModel
-                                          .searchBody["search_services"] ==
-                                      null
-                              ? const Color(0xffF2CA74).withOpacity(0.5)
-                              : Colors.grey.withOpacity(0.5),
-                      spreadRadius: 3,
-                      blurRadius: 10,
-                      offset: const Offset(0, 3),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 0),
+                  child: service["image"] != null
+                      ? SvgPicture.network(
+                    '${context.resources.image.networkImagePath2}/${service["image"]}',
+                    colorFilter: ColorFilter.mode(
+                      iconColor,
+                      BlendMode.srcIn,
                     ),
-                  ],
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
-                  color: widget.servicesViewModel.searchBody["search_services"]
-                                  .toString()
-                                  .toLowerCase() ==
-                              services?["title"].toString().toLowerCase() ||
-                          widget.servicesViewModel.searchBody["search_services"]
-                                  .toString()
-                                  .toLowerCase() ==
-                              parentServices?["title"].toString().toLowerCase()
-                      ? const Color(0xffF3D347)
-                      : widget.servicesViewModel
-                                      .searchBody["search_services"] ==
-                                  '' ||
-                              widget.servicesViewModel
-                                      .searchBody["search_services"] ==
-                                  null
-                          ? const Color(0xffF3D347)
-                          : Colors.grey,
-                ),
-                child: _isLoading
-                    ? SkeletonListView()
-                    : Stack(
-                        children: [
-                          LayoutBuilder(
-                            builder: (context, constraints) => Stack(
-                              children: [
-                                Positioned(
-                                  right: -constraints.maxWidth * .25,
-                                  bottom: constraints.maxHeight * .4,
-                                  top: constraints.maxHeight * .01,
-                                  child: service["image"] != null
-                                      ? ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                            topRight: Radius.circular(150),
-                                            bottomRight: Radius.circular(20),
-                                          ),
-                                          child: SvgPicture.network(
-                                            '${context.resources.image.networkImagePath2}/${service["image"]}',
-                                            colorFilter: ColorFilter.mode(
-                                              widget
-                                                              .servicesViewModel
-                                                              .searchBody[
-                                                                  "search_services"]
-                                                              .toString()
-                                                              .toLowerCase() ==
-                                                          services?["title"]
-                                                              .toString()
-                                                              .toLowerCase() ||
-                                                      widget
-                                                              .servicesViewModel
-                                                              .searchBody[
-                                                                  "search_services"]
-                                                              .toString()
-                                                              .toLowerCase() ==
-                                                          parentServices?["title"]
-                                                              .toString()
-                                                              .toLowerCase()
-                                                  ? const Color(0xffDDB504)
-                                                  : widget.servicesViewModel
-                                                                      .searchBody[
-                                                                  "search_services"] ==
-                                                              '' ||
-                                                          widget.servicesViewModel
-                                                                      .searchBody[
-                                                                  "search_services"] ==
-                                                              null
-                                                      ? const Color(0xffDDB504)
-                                                      : const Color.fromARGB(
-                                                          255, 124, 124, 124),
-                                              BlendMode.srcIn,
-                                            ),
-                                            width: 111.36,
-                                            height: 104.27,
-                                          ),
-                                        )
-                                      : ClipRRect(
-                                          borderRadius: const BorderRadius.only(
-                                            topRight: Radius.circular(150),
-                                            bottomRight: Radius.circular(20),
-                                          ),
-                                          child: Container(
-                                            width: context
-                                                .appValues.appSizePercent.w20,
-                                            height: context
-                                                .appValues.appSizePercent.h5,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                      Radius.circular(20)),
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                  service.image != null
-                                                      ? '${context.resources.image.networkImagePath2}${service.image["filename_disk"]}'
-                                                      : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg', // Specify the URL of your alternative image here
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                )
-                              ],
-                            ),
-                          ),
-                          // Positioned(
-                          //   bottom: 0,
-                          //   child: Padding(
-                          //     padding: EdgeInsets.only(
-                          //       left: context.appValues.appPadding.p20,
-                          //       bottom: context.appValues.appPadding.p20,
-                          //     ),
-                          //     child: Column(
-                          //       crossAxisAlignment: CrossAxisAlignment.center,
-                          //       children: [
-                          //         Text(
-                          //           services?["title"] ?? '',
-                          //           textAlign: TextAlign.center,
-                          //           maxLines: 2,
-                          //           overflow: TextOverflow.ellipsis,
-                          //           style: getPrimaryBoldStyle(
-                          //             fontSize: 16,
-                          //             color: context.resources.color.colorWhite,
-                          //           ),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //   ),
-                          // ),
-                          Positioned(
-                            bottom: 0,
-                            child: Padding(
-                              padding: EdgeInsets.only(
-                                left: context.appValues.appPadding.p20,
-                                bottom: context.appValues.appPadding.p20,
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(bottom: 20),
-                                    child: service["image"] != null
-                                        ? SvgPicture.network(
-                                            '${context.resources.image.networkImagePath2}/${service["image"]}',
-                                            colorFilter: const ColorFilter.mode(
-                                              Colors.white,
-                                              BlendMode.srcIn,
-                                            ),
-                                            width: 43,
-                                            height: 40,
-                                          )
-                                        : Container(
-                                            width: context
-                                                .appValues.appSizePercent.w20,
-                                            height: context
-                                                .appValues.appSizePercent.h5,
-                                            decoration: BoxDecoration(
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                  service["image"] != null
-                                                      ? '${context.resources.image.networkImagePath2}${service["image"]}'
-                                                      : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg', // Specify the URL of your alternative image here
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
-                                              // borderRadius: const BorderRadius.only(
-                                              //   topLeft: Radius.circular(15),
-                                              //   topRight: Radius.circular(15),
-                                              // ),
-                                            ),
-                                          ),
-                                  ),
-                                  SizedBox(
-                                    width: context.appValues.appSizePercent.w23,
-                                    child: Text(
-                                      services?["title"] ?? '',
-                                      textAlign: TextAlign.start,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: getPrimaryBoldStyle(
-                                        fontSize: 16,
-                                        color:
-                                            context.resources.color.colorWhite,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ],
+                    width: 30,
+                    height: 30,
+                  )
+                      : Container(
+                    width: context.appValues.appSizePercent.w20,
+                    height: context.appValues.appSizePercent.h5,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: NetworkImage(
+                          service["image"] != null
+                              ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                              : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
+                        ),
+                        fit: BoxFit.cover,
                       ),
-              ),
-              onTap: () {
-                widget.servicesViewModel.filterData(
-                    index: 'search_services', value: services?["title"]);
-                widget.servicesViewModel
-                    .setParentCategory('${parentServices?["title"]}');
-                debugPrint('search filter ${services?["title"]}');
-                Navigator.of(context).push(_createRoute(
-                  CategoriesScreen(
-                    categoriesViewModel: categoriesViewModel,
-                    initialTabIndex: index,
-                    serviceViewModel: widget.servicesViewModel,
+                    ),
                   ),
-                ));
-                categoriesViewModel.sortCategories(services?["title"]);
-              },
+                ),
+                SizedBox(
+                  width: context.appValues.appSizePercent.w23,
+                  child: Text(
+                    services?["title"] ?? '',
+                    textAlign: TextAlign.center,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: getPrimaryBoldStyle(
+                      fontSize: 14,
+                      color: textColor,
+                    ),
+                  ),
+                ),
+              ],
             ),
-          )
+          ),
+        ),
+        onTap: () {
+          widget.servicesViewModel.filterData(
+              index: 'search_services', value: services?["title"]);
+          widget.servicesViewModel
+              .setParentCategory('${parentServices?["title"]}');
+          debugPrint('search filter ${services?["title"]}');
+          Navigator.of(context).push(_createRoute(
+            CategoriesScreen(
+              categoriesViewModel: categoriesViewModel,
+              initialTabIndex: index,
+              serviceViewModel: widget.servicesViewModel,
+            ),
+          ));
+          categoriesViewModel.sortCategories(services?["title"]);
+        },
+      ),
+    )
         : Container();
   }
+
 }
 
 Route _createRoute(dynamic classname) {

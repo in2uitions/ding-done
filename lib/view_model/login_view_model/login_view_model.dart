@@ -281,6 +281,21 @@ class LoginViewModel with ChangeNotifier {
     }
   }
 
+  Future<bool> sendResetSMS() async {
+    try {
+      debugPrint('reset sms ${_loginCredentials["reset-phone"]}');
+      final response = _loginRepository
+          .sendResetSMS({'recipientPhone': _loginCredentials["reset-phone"]});
+      debugPrint('response sending sms $response');
+
+      return true;
+    } catch (error) {
+      debugPrint('error sending sms $error');
+      setLoginResponseData(ApiResponse.error(error.toString()));
+      return false;
+    }
+  }
+
   bool validate() {
     _loginErrors = {};
     String? emailMessage = AppValidation().isEmailValid(

@@ -19,6 +19,7 @@ import 'package:go_sell_sdk_flutter/model/models.dart';
 import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_web_browser/flutter_web_browser.dart';
 
 class ConfirmPaymentMethod extends StatefulWidget {
   var payment_method;
@@ -242,6 +243,207 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         // debugPrint('result url ${result["transaction"]["url"]}');
         if (result["transaction"] != null) {
           _launchUrl('${result["transaction"]["url"]}');
+          // Navigator.of(context).push(
+          //               _createRoute(Padding(
+          //                 padding: EdgeInsets.symmetric(
+          //                     horizontal: context.appValues.appPadding.p16),
+          //                 child: Row(
+          //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //                   children: [
+          //                     // Text('In app link'),
+          //                     if (Platform.isAndroid) ...[
+          //                       // const Text('test Android customizations'),
+          //                       Container(
+          //                         width: context.appValues.appSizePercent.w40,
+          //                         height: context.appValues.appSizePercent.h5,
+          //                         decoration: BoxDecoration(
+          //                           border: Border.all(
+          //                             width: 2.5,
+          //                             color: const Color(0xff112b78),
+          //                           ),
+          //                           borderRadius: BorderRadius.circular(10),
+          //                         ),
+          //                         child: ElevatedButton(
+          //                           onPressed: () {
+          //                             FlutterWebBrowser.openWebPage(
+          //                               url: '${result["transaction"]["url"]}',
+          //                               customTabsOptions: const CustomTabsOptions(
+          //                                 colorScheme: CustomTabsColorScheme.dark,
+          //                                 darkColorSchemeParams:
+          //                                 CustomTabsColorSchemeParams(
+          //                                   toolbarColor: Colors.deepPurple,
+          //                                   secondaryToolbarColor: Colors.green,
+          //                                   navigationBarColor: Colors.amber,
+          //                                   navigationBarDividerColor: Colors.cyan,
+          //                                 ),
+          //                                 shareState: CustomTabsShareState.on,
+          //                                 instantAppsEnabled: true,
+          //                                 showTitle: true,
+          //                                 urlBarHidingEnabled: true,
+          //                               ),
+          //                             );
+          //                           },
+          //                           style: ElevatedButton.styleFrom(
+          //                             // backgroundColor: Color(0xff112b78),
+          //                             backgroundColor: Colors.transparent,
+          //                             elevation: 0,
+          //                           ),
+          //                           child: Text(
+          //                            'Open Link',
+          //                             style: getPrimaryRegularStyle(
+          //                                 color: const Color(0xff112b78),
+          //                                 fontSize: 14),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                     ],
+          //                     if (Platform.isIOS) ...[
+          //                       // const Text('test iOS customizations'),
+          //                       Container(
+          //                         width: context.appValues.appSizePercent.w40,
+          //                         height: context.appValues.appSizePercent.h5,
+          //                         decoration: BoxDecoration(
+          //                           border: Border.all(
+          //                             width: 2.5,
+          //                             color: const Color(0xff112b78),
+          //                           ),
+          //                           borderRadius: BorderRadius.circular(10),
+          //                         ),
+          //                         child: ElevatedButton(
+          //                           onPressed: () {
+          //                             FlutterWebBrowser.openWebPage(
+          //                               url: '${result["transaction"]["url"]}',
+          //                               safariVCOptions:
+          //                               const SafariViewControllerOptions(
+          //                                 barCollapsingEnabled: true,
+          //                                 preferredBarTintColor: Colors.green,
+          //                                 preferredControlTintColor: Colors.amber,
+          //                                 dismissButtonStyle:
+          //                                 SafariViewControllerDismissButtonStyle
+          //                                     .close,
+          //                                 modalPresentationCapturesStatusBarAppearance:
+          //                                 true,
+          //                                 modalPresentationStyle:
+          //                                 UIModalPresentationStyle.popover,
+          //                               ),
+          //                             );
+          //                           },
+          //                           style: ElevatedButton.styleFrom(
+          //                             // backgroundColor: Color(0xff112b78),
+          //                             backgroundColor: Colors.transparent,
+          //                             elevation: 0,
+          //                           ),
+          //                           child: Text(
+          //                             translate('home_screen.openLink'),
+          //                             style: getPrimaryRegularStyle(
+          //                                 color: const Color(0xff112b78),
+          //                                 fontSize: 14),
+          //                           ),
+          //                         ),
+          //                       ),
+          //                       const Divider(),
+          //                       // Column(
+          //                       //   mainAxisSize: MainAxisSize.min,
+          //                       //   children: _events.map((e) {
+          //                       //     if (e is RedirectEvent) {
+          //                       //       return Text('redirect: ${e.url}');
+          //                       //     }
+          //                       //     if (e is CloseEvent) {
+          //                       //       return const Text('closed');
+          //                       //     }
+          //                       //
+          //                       //     return Text('Unknown event: $e');
+          //                       //   }).toList(),
+          //                       // ),
+          //                     ],
+          //                     Container(
+          //                       width: context.appValues.appSizePercent.w40,
+          //                       height: context.appValues.appSizePercent.h5,
+          //                       decoration: BoxDecoration(
+          //                         border: Border.all(
+          //                           width: 2.5,
+          //                           color: const Color(0xff112b78),
+          //                         ),
+          //                         borderRadius: BorderRadius.circular(10),
+          //                       ),
+          //                       child: ElevatedButton(
+          //                         onPressed: () =>
+          //                             Navigator.pop(context),
+          //                         style: ElevatedButton.styleFrom(
+          //                           // backgroundColor: Color(0xff112b78),
+          //                           backgroundColor: Colors.transparent,
+          //                           elevation: 0,
+          //                         ),
+          //                         child: Row(
+          //                           mainAxisAlignment: MainAxisAlignment.center,
+          //                           children: [
+          //                             Text(
+          //                               translate('home_screen.close'),
+          //                               style: getPrimaryRegularStyle(
+          //                                   color: const Color(0xff112b78),
+          //                                   fontSize: 14),
+          //                             ),
+          //                           ],
+          //                         ),
+          //                       ),
+          //                     ),
+          //                     // InkWell(
+          //                     //   child: Container(
+          //                     //     height: 40,
+          //                     //     width: context.appValues.appSizePercent.w90,
+          //                     //     decoration: BoxDecoration(
+          //                     //       borderRadius: BorderRadius.circular(
+          //                     //           context.appValues.appRadius.r5),
+          //                     //       // gradient: LinearGradient(
+          //                     //       //     colors: [
+          //                     //       //       context.resources.color.colorPrimary[900]!,
+          //                     //       //       context.resources.color.colorPrimary[850]!,
+          //                     //       //     ],
+          //                     //       //     begin: const FractionalOffset(0.0, 0.0),
+          //                     //       //     end: const FractionalOffset(1.0, 0.0),
+          //                     //       //     stops: const [0.0, 1.0],
+          //                     //       //     tileMode: TileMode.clamp),
+          //                     //       boxShadow: [
+          //                     //         BoxShadow(
+          //                     //           color: context.resources.color.colorBlack[900]!,
+          //                     //           spreadRadius: 2,
+          //                     //           blurRadius: 3,
+          //                     //           offset: const Offset(0, 3),
+          //                     //         ),
+          //                     //       ],
+          //                     //       color: context.resources.color.btnColorBlue,
+          //                     //     ),
+          //                     //     child: Row(
+          //                     //       crossAxisAlignment: CrossAxisAlignment.center,
+          //                     //       mainAxisAlignment: MainAxisAlignment.center,
+          //                     //       children: [
+          //                     //         Text(translate('home_screen.close'),
+          //                     //             style: getPrimaryRegularStyle(
+          //                     //                 color: context.resources.color.colorWhite)),
+          //                     //       ],
+          //                     //     ),
+          //                     //   ),
+          //                     //   onTap: () => Navigator.pop(widget.modelContext),
+          //                     // ),
+          //                   ],
+          //                 ),
+          //               )));
+          // FlutterWebBrowser.openWebPage(
+          //   url: '${result["transaction"]["url"]}',
+          //   safariVCOptions:
+          //   const SafariViewControllerOptions(
+          //     barCollapsingEnabled: true,
+          //     preferredBarTintColor: Colors.green,
+          //     preferredControlTintColor: Colors.amber,
+          //     dismissButtonStyle:
+          //     SafariViewControllerDismissButtonStyle
+          //         .close,
+          //     modalPresentationCapturesStatusBarAppearance:
+          //     true,
+          //     modalPresentationStyle:
+          //     UIModalPresentationStyle.popover,
+          //   ),
+          // );
         } else {
           showDialog(
               context: context,

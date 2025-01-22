@@ -488,6 +488,8 @@
   "formHints": {
     "email_address": "Ηλεκτρονική Διεύθυνση",
     "email": "Email",
+    "sms": "SMS",
+    "phone": "τηλέφωνο",
     "password": "Κωδικός",
     "first_name": "Όνομα",
     "last_name": "Επίθετο",

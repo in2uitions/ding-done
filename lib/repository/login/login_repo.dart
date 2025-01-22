@@ -20,7 +20,10 @@ class LoginRepository {
       NetworkApiService(url: ApiEndPoints().usersMe);
   final BaseApiService _apiUser =
       NetworkApiService(url: ApiEndPoints().userData);
-  final BaseApiService _refreshToken = NetworkApiService(url: ApiEndPoints().refreshToken);
+  final BaseApiService _refreshToken =
+      NetworkApiService(url: ApiEndPoints().refreshToken);
+  final BaseApiService _apisendSMS =
+      NetworkApiService(url: ApiEndPoints().sendSMS);
 
   final BaseApiService _apiSendReset =
       NetworkApiService(url: ApiEndPoints().apiSendReset);
@@ -39,12 +42,14 @@ class LoginRepository {
       rethrow;
     }
   }
+
   Future<LoginModel?> refreshAccessToken() async {
     try {
       final prefs = await SharedPreferences.getInstance();
 
       // Get the old refresh token from SharedPreferences
-      String? oldRefreshToken =await AppPreferences().get(key: userRefreshToken, isModel: false);
+      String? oldRefreshToken =
+          await AppPreferences().get(key: userRefreshToken, isModel: false);
 
       print('Old Refresh Token: $oldRefreshToken');
 
@@ -56,12 +61,11 @@ class LoginRepository {
       var body = {"refresh_token": "$oldRefreshToken", "mode": "json"};
 
       dynamic response =
-      await _refreshToken.postResponse(data: body, sendToken: true);
+          await _refreshToken.postResponse(data: body, sendToken: true);
       debugPrint('response is $response');
       final newTokenData = LoginModel.fromJson(response['data']);
       debugPrint('newTokenData is $newTokenData');
       return newTokenData;
-
     } catch (e) {
       debugPrint('Error refreshing access token repo: $e');
       return null;
@@ -75,12 +79,10 @@ class LoginRepository {
       // dynamic response=_apiSendReset.postResponse(data: body);
       // debugPrint('Request Sent ${response}');
 
-      http.Response res = await http.post(
-          Uri.parse(
-              "https://cms.dingdone.app/email/reset-data"),
-          body: {
-            'email': body['email'].toString(),
-          }).catchError((value) async {
+      http.Response res = await http
+          .post(Uri.parse("https://cms.dingdone.app/email/reset-data"), body: {
+        'email': body['email'].toString(),
+      }).catchError((value) async {
         debugPrint('error is ${value.body}');
 
         throw ('Error message ${value.body}');
@@ -94,19 +96,61 @@ class LoginRepository {
     }
   }
 
+  Future<dynamic> sendResetSMS(dynamic body) async {
+    try {
+      // Encode your Mailjet API key and secret in Base64
+      String apiCredentials = base64Encode(utf8.encode(
+          "${Constants.MJ_APIKEY_PUBLIC}:${Constants.MJ_APIKEY_PRIVATE}"));
+      var rndnumber = "";
+      var rnd = new Random();
+      for (var i = 0; i < 4; i++) {
+        rndnumber = rndnumber + rnd.nextInt(9).toString();
+      }
+      await AppPreferences()
+          .save(key: otpNumber, value: rndnumber, isModel: false);
+      // await AppPreferences()
+      //     .save(key: userIdTochangePassword, value: body["id"], isModel: false);
+      dynamic response = await _apisendSMS.postResponse(data: {
+        'recipientPhone': body['recipientPhone'].toString(),
+        'smsText': 'Hi,\n this is your OTP $rndnumber'
+      });
+
+      // http.Response res = await http.post(
+      //     Uri.parse("https://cms.dingdone.app/registerUser/sendOTP"),
+      //     body: {
+      //       'recipientPhone': body['recipientPhone'].toString(),
+      //       'smsText': 'Hi,\n this is your OTP $rndnumber'
+      //     }).catchError((value) async {
+      //   debugPrint('error is ${value.body}');
+      //
+      //   throw ('Error message ${value.body}');
+      // });
+      debugPrint('res.body is ${response}');
+      // sendResetEmail1(jsonDecode(response));
+      debugPrint('Request Sent');
+      return response;
+    } catch (e) {
+      debugPrint('error $e');
+    }
+  }
+
   Future<String?> sendResetEmail1(Map<String, dynamic> body) async {
     try {
       debugPrint('body is ${body}');
       // Encode your Mailjet API key and secret in Base64
-      String apiCredentials = base64Encode(utf8.encode("${Constants.MJ_APIKEY_PUBLIC}:${Constants.MJ_APIKEY_PRIVATE}"));
-      var rndnumber="";
-      var rnd= new Random();
+      String apiCredentials = base64Encode(utf8.encode(
+          "${Constants.MJ_APIKEY_PUBLIC}:${Constants.MJ_APIKEY_PRIVATE}"));
+      var rndnumber = "";
+      var rnd = new Random();
       for (var i = 0; i < 4; i++) {
         rndnumber = rndnumber + rnd.nextInt(9).toString();
       }
-      await AppPreferences().save(key: otpNumber, value: rndnumber, isModel: false);
-      await AppPreferences().save(key: userIdTochangePassword, value: body["id"], isModel: false);
-      http.Response res = await http.post(
+      await AppPreferences()
+          .save(key: otpNumber, value: rndnumber, isModel: false);
+      await AppPreferences()
+          .save(key: userIdTochangePassword, value: body["id"], isModel: false);
+      http.Response res = await http
+          .post(
         Uri.parse("https://api.mailjet.com/v3.1/send"),
         headers: {
           'Authorization': 'Basic $apiCredentials',
@@ -122,7 +166,7 @@ class LoginRepository {
               "To": [
                 {
                   "Email": body["email"],
-                  "Name": body["first_name"]+" "+body["last_name"]
+                  "Name": body["first_name"] + " " + body["last_name"]
                 }
               ],
               "TemplateID": 5532729,
@@ -131,13 +175,14 @@ class LoginRepository {
               "Variables": {
                 "reset_link": "com.in2uitions.dingdone://new_password/",
                 "email": body["email"],
-                "name":body["first_name"]+" "+body["last_name"],
-                "otp":rndnumber
+                "name": body["first_name"] + " " + body["last_name"],
+                "otp": rndnumber
               }
             }
           ]
         }),
-      ).catchError((value) async {
+      )
+          .catchError((value) async {
         debugPrint('error is ${value.body}');
         throw ('Error message ${value.body}');
       });
@@ -149,7 +194,6 @@ class LoginRepository {
       debugPrint('error $e');
     }
   }
-
 
   Future<UserModel?> getUserDetails() async {
     try {

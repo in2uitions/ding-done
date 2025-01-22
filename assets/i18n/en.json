@@ -484,6 +484,8 @@
   "formHints": {
     "email_address": "Your Email Address",
     "email": "Email",
+    "sms": "SMS",
+    "phone": "Phone",
     "password": "Password",
     "first_name": "First Name",
     "last_name": "Last Name",

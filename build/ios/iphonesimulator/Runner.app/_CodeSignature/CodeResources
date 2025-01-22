@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		bICXRKjez9pavIBnAS5cpbS/CoM=
+		+jCrXaa68ymhaQh8H1S7HD+pwYw=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		ln1uzm/k/plYO8qso/JMbW3Edcg=
+		YAjaT1Sqw0IisbhI1qq2F8B6WmU=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/._isolate_snapshot_data</key>
 		<data>
@@ -86,7 +86,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/NOTICES.Z</key>
 		<data>
-		b5kJEf9ePyH161eDAjne1064YZc=
+		b4VutJ705SFvcPu9R1+wcZc41/I=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/.env</key>
 		<data>
@@ -522,7 +522,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		alN80oyoUQTBqzXmznvYnP2mEl4=
+		5fbNWSWGTTWcXLkGrEJ6TnMYe78=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -4790,11 +4790,11 @@
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI</key>
 		<data>
-		RgB3xnbubYxjMedZGzU44a8Ci+E=
+		e4BNFNvB14bk2v3H0izd1yzl83A=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUIBundle.bundle/Assets.car</key>
 		<data>
-		AAB9YBm5yQdXZK48cCcsfT8t4D0=
+		f8jRjtWqcHgiQMemXsfcITRnb2U=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUIBundle.bundle/Info.plist</key>
 		<data>
@@ -5184,7 +5184,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/_CodeSignature/CodeResources</key>
 		<data>
-		s4Z7Y9t+K2qhfOmtVC8NJFEZDUA=
+		rGYzQEOoYzFoCfq74Jom0vLN72Q=
 		</data>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
 		<data>
@@ -6268,6 +6268,18 @@
 		<data>
 		XC/E35KfNpbkLfsx7cbwmOqxYyw=
 		</data>
+		<key>Frameworks/flutter_web_browser.framework/Info.plist</key>
+		<data>
+		euaY/BPMOhSH27d8sDz7L5yViZg=
+		</data>
+		<key>Frameworks/flutter_web_browser.framework/_CodeSignature/CodeResources</key>
+		<data>
+		u6BYlQ1zYsyeuWBWU03RQylLF30=
+		</data>
+		<key>Frameworks/flutter_web_browser.framework/flutter_web_browser</key>
+		<data>
+		0BQL1UYL/rEACVO6JIZ2VCG/JQU=
+		</data>
 		<key>Frameworks/geocoding_ios.framework/Info.plist</key>
 		<data>
 		yhdf6748Crh1iVjZolJh1caxX90=
@@ -6825,7 +6837,7 @@
 		</data>
 		<key>Frameworks/stripe_ios.framework/stripe_ios</key>
 		<data>
-		ijM6yqBr5ZOE5u0cAFNAiNuyjE4=
+		kbOUnznF307xSv/nfMJls46zGXA=
 		</data>
 		<key>Frameworks/syncfusion_flutter_pdfviewer.framework/Info.plist</key>
 		<data>
@@ -7956,7 +7968,7 @@
 		</data>
 		<key>Runner.debug.dylib</key>
 		<data>
-		QXbjK/OSHai8a7XjK5lCT803MMk=
+		17fCDsiqUT7EXp6J3/apUqtkbgE=
 		</data>
 		<key>__preview.dylib</key>
 		<data>
@@ -8077,7 +8089,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4citMr5guuzOIqbBPaIOAZVjJGCDxLZeurqPYnr3UzQ=
+			SOZCSJASksbrjO1TpF72O7I+R4blo+NgwJiqG6+9x9I=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -8091,7 +8103,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			753hp2p3u9p0lfWpEeN5Gfcx5+aWc5mNInQA8cD4NWo=
+			UChL2zD0BdbxORdd9XFTtgSqZgqjE2taBOjoeLtQZr0=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/._isolate_snapshot_data</key>
@@ -8133,7 +8145,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			woxyjuKV7p1GseqRbzH2DrK7nctjsAC3Dyg7eu6toNg=
+			Bh56FKf7atQiuTj8ANS14u2UeUErkWyGpNhc34Aw5p4=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/.env</key>
@@ -8896,7 +8908,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			7/M116c263Oo0KunE5tvpbiSupvoDqt0oW080GdRW20=
+			lA+oQbKGtcBHvH8fWyPVhdcdKsc/1tjovBcPtImksRs=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -14529,14 +14541,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			D5XzR2KJnl4AaR8eAg1mRpyBdRoLBDV/t+MQOjNn3Yw=
+			bUMyKc9LRAKrPWng673I2hwvjThinSAufQYX66e6g1g=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUIBundle.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			MuH846hjTgPVBY3V9WwAERIoUVK9Xkh39qY2PcoqplQ=
+			6A3+wrASAwjP1CX98HXnGvTsv65+ikkOhvnxw+hHzrg=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUIBundle.bundle/Info.plist</key>
@@ -14935,7 +14947,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			+Zpp2GbgYLMcCnZfw5RQVfmFR1roahgDquKQ9WRGwOI=
+			fCoaKUFS8e0+qn4lFdmXcRVrgsAPT+uhvYuGIUQ5n/s=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
@@ -16359,6 +16371,27 @@
 			wsE4C8bTrh1z9ptdFfNL+UIOmLv+kDJ3AGtAupT+/s8=
 			</data>
 		</dict>
+		<key>Frameworks/flutter_web_browser.framework/Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			HYr6JpnOlpyvvrXZegh5qHY06nUhjgoEMRCmhj/yzuU=
+			</data>
+		</dict>
+		<key>Frameworks/flutter_web_browser.framework/_CodeSignature/CodeResources</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			L8aFIbwuEsi/fCI1X0r/Szt27MbmvtlHxVNn4SiQttY=
+			</data>
+		</dict>
+		<key>Frameworks/flutter_web_browser.framework/flutter_web_browser</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			DvL9v+aAm9Z0cBeFjNQKp2nfCi3ryVb2jMw6KXzA40E=
+			</data>
+		</dict>
 		<key>Frameworks/geocoding_ios.framework/Info.plist</key>
 		<dict>
 			<key>hash2</key>
@@ -17314,7 +17347,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			hUbWV8yV7IlvANNDVzPaxTQ/NzR0OrigAjrWiq2Sizs=
+			DGs0zoJphLH5gc59J+THPWpKrX2ztzt24rt2fEjAv4s=
 			</data>
 		</dict>
 		<key>Frameworks/syncfusion_flutter_pdfviewer.framework/Info.plist</key>
@@ -18935,7 +18968,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			WDU36bZaAumcMf5K0TBFyw0N9XU2v9a+GSJIrjHfpNk=
+			0CgB25q6EGPb7FonkjCFvTzGYq12uFLALePOBfrjm60=
 			</data>
 		</dict>
 		<key>__preview.dylib</key>

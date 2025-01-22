@@ -66,6 +66,12 @@
 @import flutter_pdfview;
 #endif
 
+#if __has_include(<flutter_web_browser/FlutterWebBrowserPlugin.h>)
+#import <flutter_web_browser/FlutterWebBrowserPlugin.h>
+#else
+@import flutter_web_browser;
+#endif
+
 #if __has_include(<geocoding_ios/GeocodingPlugin.h>)
 #import <geocoding_ios/GeocodingPlugin.h>
 #else
@@ -193,6 +199,7 @@
   [FlutterLocalizationPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterLocalizationPlugin"]];
   [FlutterNativeSplashPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterNativeSplashPlugin"]];
   [FLTPDFViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPDFViewFlutterPlugin"]];
+  [FlutterWebBrowserPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterWebBrowserPlugin"]];
   [GeocodingPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeocodingPlugin"]];
   [GeolocatorPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeolocatorPlugin"]];
   [GoSellSdkFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"GoSellSdkFlutterPlugin"]];

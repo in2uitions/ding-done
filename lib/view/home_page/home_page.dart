@@ -790,11 +790,11 @@ class _HomePageState extends State<HomePage> {
                                                       horizontal: context
                                                           .appValues
                                                           .appPadding
-                                                          .p10,
+                                                          .p0,
                                                       vertical: context
                                                           .appValues
                                                           .appPadding
-                                                          .p15,
+                                                          .p0,
                                                     ),
                                                     decoration: BoxDecoration(
                                                       color: const Color(
@@ -806,6 +806,7 @@ class _HomePageState extends State<HomePage> {
                                                     child: Center(
                                                       child: Text(
                                                         'CONTACT US',
+                                                        textAlign: TextAlign.center,
                                                         style:
                                                             getPrimaryBoldStyle(
                                                           color: context

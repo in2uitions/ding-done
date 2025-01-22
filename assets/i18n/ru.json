@@ -487,6 +487,8 @@
   "formHints": {
     "email_address": "Ваш адрес электронной почты",
     "email": "Электронная почта",
+    "sms": "SMS",
+    "phone": "телефон",
     "password": "Пароль",
     "first_name": "Имя",
     "last_name": "Фамилия",

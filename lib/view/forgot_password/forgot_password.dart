@@ -18,10 +18,11 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   bool isLoading = false;
+  String selectedMethod = 'email'; // Default selection
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color(0xffF0F3F8),
       backgroundColor: const Color(0xffFFFFFF),
       body: Consumer<LoginViewModel>(builder: (context, loginViewModel, error) {
         return SafeArea(
@@ -32,7 +33,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               top: context.appValues.appPadding.p10,
             ),
             child: ListView(
-              // crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Align(
                   alignment: Alignment.centerLeft,
@@ -65,83 +65,107 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                const Gap(50),
-                Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: const Color(0xffEAEAFF),
-                      width: 2,
+                const Gap(30),
+
+                // Radio Buttons for Selection
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Radio<String>(
+                      value: 'email',
+                      groupValue: selectedMethod,
+                      activeColor: const Color(0xff4100E3),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedMethod = value!;
+                        });
+                      },
                     ),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                      topRight: Radius.circular(20),
+                    Text(
+                      translate('formHints.email'),
+                      style: getPrimaryRegularStyle(
+                        fontSize: 17,
+                        color: const Color(0xff1F1F39),
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: context.appValues.appPadding.p25,
-                      horizontal: context.appValues.appPadding.p15,
+                    const Gap(20),
+                    Radio<String>(
+                      value: 'sms',
+                      groupValue: selectedMethod,
+                      activeColor: const Color(0xff4100E3),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedMethod = value!;
+                        });
+                      },
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          translate('formHints.email'),
-                          style: getPrimaryRegularStyle(
-                            fontSize: 17,
-                            color: const Color(0xff1F1F39),
-                          ),
+                    Text(
+                      translate('formHints.sms'),
+                      style: getPrimaryRegularStyle(
+                        fontSize: 17,
+                        color: const Color(0xff1F1F39),
+                      ),
+                    ),
+                  ],
+                ),
+
+                const Gap(20),
+
+                // Toggle Fields Based on Selected Method
+                if (selectedMethod == 'email') ...[
+                  _buildEmailField(loginViewModel),
+                ] else if (selectedMethod == 'sms') ...[
+                  _buildPhoneField(loginViewModel),
+                ],
+
+                const Gap(30),
+
+                // Submit Button
+                SizedBox(
+                  height: 60,
+                  width: context.appValues.appSizePercent.w100,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff4100E3),
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(15),
                         ),
-                        const Gap(10),
-                        CustomTextField(
-                          index: 'reset-email',
-                          hintText: translate('formHints.email'),
-                          keyboardType: TextInputType.emailAddress,
-                          viewModel: loginViewModel.setInputValues,
-                        ),
-                        const Gap(30),
-                        SizedBox(
-                          height: 60,
-                          width: context.appValues.appSizePercent.w100,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xff4100E3),
-                              shape: const RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(15),
-                                ),
-                              ),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                isLoading = true;
-                              });
-                              loginViewModel.sendResetEmail();
-                              Navigator.of(context).push(
-                                  _createRoute(const OTPVerificationScreen()));
-                              setState(() {
-                                isLoading = false;
-                              });
-                            },
-                            child: (isLoading)
-                                ? const SizedBox(
-                                    width: 16,
-                                    height: 16,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 1.5,
-                                    ))
-                                : Text(
-                                    translate('button.sendMyCode'),
-                                    style: getPrimaryBoldStyle(
-                                      color: context.resources.color.colorWhite,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                          ),
-                        ),
-                      ],
+                      ),
+                    ),
+                    onPressed: () async {
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      if (selectedMethod == 'email') {
+                        await loginViewModel.sendResetEmail();
+                      } else if (selectedMethod == 'sms') {
+                        await loginViewModel.sendResetSMS();
+                      }
+
+                      Navigator.of(context).push(
+                        _createRoute(const OTPVerificationScreen()),
+                      );
+
+                      setState(() {
+                        isLoading = false;
+                      });
+                    },
+                    child: (isLoading)
+                        ? const SizedBox(
+                        width: 16,
+                        height: 16,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                          strokeWidth: 1.5,
+                        ))
+                        : Text(
+                      translate('button.sendMyCode'),
+                      style: getPrimaryBoldStyle(
+                        color: context.resources.color.colorWhite,
+                        fontSize: 20,
+                      ),
                     ),
                   ),
                 ),
@@ -152,22 +176,104 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       }),
     );
   }
-}
 
-Route _createRoute(dynamic classname) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => classname,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(1.0, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.ease;
+  Widget _buildEmailField(LoginViewModel loginViewModel) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: const Color(0xffEAEAFF),
+          width: 2,
+        ),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: context.appValues.appPadding.p25,
+          horizontal: context.appValues.appPadding.p15,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              translate('formHints.email'),
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: const Color(0xff1F1F39),
+              ),
+            ),
+            const Gap(10),
+            CustomTextField(
+              index: 'reset-email',
+              hintText: translate('formHints.email'),
+              keyboardType: TextInputType.emailAddress,
+              viewModel: loginViewModel.setInputValues,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+  Widget _buildPhoneField(LoginViewModel loginViewModel) {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: const Color(0xffEAEAFF),
+          width: 2,
+        ),
+        borderRadius: const BorderRadius.only(
+          bottomLeft: Radius.circular(20),
+          bottomRight: Radius.circular(20),
+          topRight: Radius.circular(20),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: context.appValues.appPadding.p25,
+          horizontal: context.appValues.appPadding.p15,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              translate('formHints.phone'),
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: const Color(0xff1F1F39),
+              ),
+            ),
+            const Gap(10),
+            CustomTextField(
+              index: 'reset-phone',
+              hintText: translate('formHints.phone'),
+              keyboardType: TextInputType.phone,
+              viewModel: loginViewModel.setInputValues,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 
-      return SlideTransition(
-        position: animation.drive(tween),
-        child: child,
-      );
-    },
-  );
+  Route _createRoute(dynamic classname) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => classname,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
 }
