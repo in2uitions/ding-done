@@ -9,6 +9,9 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
+import '../../view_model/signup_view_model/signup_view_model.dart';
+import '../widgets/custom/custom_phone_feild.dart';
+
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
 
@@ -247,12 +250,21 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               ),
             ),
             const Gap(10),
-            CustomTextField(
-              index: 'reset-phone',
-              hintText: translate('formHints.phone'),
-              keyboardType: TextInputType.phone,
-              viewModel: loginViewModel.setInputValues,
+            Consumer<SignUpViewModel>(builder: (context, signupViewModel, _) {
+                return CustomPhoneFeild(
+                  index: 'reset-phone',
+                  viewModel: loginViewModel.setInputValues,
+                  validator: (val) => signupViewModel.signUpErrors[
+                  context
+                      .resources.strings.formKeys['phone_number']!],
+                  errorText: signupViewModel.signUpErrors[context
+                      .resources.strings.formKeys['phone_number']!],
+                  hintText: translate('formHints.phone'),
+
+                );
+              }
             ),
+
           ],
         ),
       ),

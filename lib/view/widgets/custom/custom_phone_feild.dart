@@ -28,17 +28,22 @@ class CustomPhoneFeild extends StatefulWidget {
 
 class _CustomPhoneFeildState extends State<CustomPhoneFeild> {
   final GlobalKey<FormFieldState<String>> globalKey =
-      GlobalKey<FormFieldState<String>>();
-  bool obscureText = true;
+  GlobalKey<FormFieldState<String>>();
   final TextEditingController _customController = TextEditingController();
+
+  String countryCode = '+974'; // Default country code (e.g., Qatar)
 
   @override
   void initState() {
-    _customController.text = widget.value ?? '';
-    _customController.addListener(() {
-      widget.viewModel(index: widget.index, value: _customController.text);
-    });
     super.initState();
+    _customController.text = widget.value ?? '';
+
+    // Initialize the full phone number with the default country code
+    widget.viewModel(index: widget.index, value: '$countryCode${_customController.text}');
+
+    _customController.addListener(() {
+      widget.viewModel(index: widget.index, value: '$countryCode${_customController.text}');
+    });
   }
 
   @override
@@ -81,13 +86,25 @@ class _CustomPhoneFeildState extends State<CustomPhoneFeild> {
       ),
       initialCountryCode: 'QA',
       disableLengthCheck: true,
+      onChanged: (phone) {
+        // Update the full phone number when the text changes
+        widget.viewModel(index: widget.index, value: '$countryCode${phone.number}');
+      },
+      onCountryChanged: (country) {
+        setState(() {
+          // Update the country code when the selected country changes
+          countryCode = '+${country.dialCode}';
+        });
+        // Update the full phone number in the view model
+        widget.viewModel(index: widget.index, value: '$countryCode${_customController.text}');
+      },
     );
   }
 
   @override
   void dispose() {
-    _customController.removeListener(() {});
     _customController.dispose();
     super.dispose();
   }
 }
+
