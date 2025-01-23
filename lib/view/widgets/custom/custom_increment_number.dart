@@ -93,10 +93,26 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
       children: [
         Row(
           children: [
-            IconButton(
-              icon: const Icon(Icons.remove),
-              onPressed: _decrement,
-              color: const Color(0xffB4B4B4),
+            Stack(
+              children: [
+                Positioned(
+                  left: 9,
+                  bottom: 9.5,
+                  child: Container(
+                    width: 30,
+                    height: 30,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      color: Color(0xffF4F3FD),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.remove),
+                  onPressed: _decrement,
+                  color: const Color(0xffB4B4B4),
+                ),
+              ],
             ),
             Expanded(
               child: TextFormField(
@@ -135,10 +151,25 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
                 },
               ),
             ),
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: _increment,
-              color: const Color(0xffB4B4B4),
+            Stack(
+              children: [Positioned(
+                left: 9,
+                bottom: 9.5,
+                child: Container(
+                  width: 30,
+                  height: 30,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(50),
+                    color: Color(0xffF4F3FD),
+                  ),
+                ),
+              ),
+                IconButton(
+                  icon: const Icon(Icons.add),
+                  onPressed: _increment,
+                  color: const Color(0xffB4B4B4),
+                ),
+              ],
             ),
           ],
         ),

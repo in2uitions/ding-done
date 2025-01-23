@@ -135,7 +135,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                                     top: context.appValues.appPadding.p8,
                                   ),
                                   child: SvgPicture.asset(
-                                      'assets/img/back-new.svg'),
+                                      'assets/img/back.svg',color: Colors.white,),
                                 ),
                                 onTap: () {
                                   Navigator.pop(context);

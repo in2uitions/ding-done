@@ -87,11 +87,29 @@ class _CustomDatePicker extends State<CustomDatePicker> {
       onTap: () async {
         DateTime now = DateTime.now();
         DateTime eighteenYearsAgo = DateTime(now.year - 18, now.month, now.day);
+        // DateTime? pickedDate = await showDatePicker(
+        //   context: context,
+        //   initialDate: eighteenYearsAgo,
+        //   firstDate: DateTime(now.year - 100, 1, 1),
+        //   lastDate: eighteenYearsAgo,
+        // );
+
         DateTime? pickedDate = await showDatePicker(
-          context: context,
-          initialDate: eighteenYearsAgo,
-          firstDate: DateTime(now.year - 100, 1, 1),
-          lastDate: eighteenYearsAgo,
+            context: context,
+            initialDate: eighteenYearsAgo,
+            firstDate: DateTime(now.year - 100, 1, 1),
+            lastDate: eighteenYearsAgo,
+          builder: (context, child) {
+            return Theme(
+              data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.light(),
+                textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(),
+                ),
+              ),
+              child: child!,
+            );
+          },
         );
 
         if (pickedDate != null) {

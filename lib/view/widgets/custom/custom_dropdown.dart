@@ -42,25 +42,21 @@ class CustomDropDown extends StatefulWidget {
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
 }
-
 class _CustomDropDownState extends State<CustomDropDown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
-      // value: widget.value,
       icon: const Icon(Icons.keyboard_arrow_down),
       elevation: 16,
       isExpanded: true,
+      dropdownColor: Colors.white, // Set dropdown background color to white
       validator: widget.validator,
-      style:
-          // TextStyle(
-          //     overflow: TextOverflow.ellipsis, color: Colors.black, fontSize: 9),
-          getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
+      style: getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
       decoration: InputDecoration(
         hintText: widget.hintText,
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
+            color: Colors.white,
             width: 2.0,
           ),
         ),
@@ -72,27 +68,25 @@ class _CustomDropDownState extends State<CustomDropDown> {
         ),
         errorBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
+            color: Colors.white,
             width: 2.0,
           ),
         ),
         focusedErrorBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
+            color: Colors.white,
             width: 2.0,
           ),
         ),
         isDense: true,
         errorText: widget.errorText,
-        // contentPadding: EdgeInsets.all(context.appValues.appPadding.p8),
         border: const OutlineInputBorder(
-          // borderSide: BorderSide.,
           borderRadius: BorderRadius.all(
             Radius.circular(10),
           ),
         ),
         filled: true,
-        fillColor: context.resources.color.colorWhite,
+        fillColor: Colors.white,
       ),
       onChanged: widget.onChange,
       hint: Text(
@@ -107,7 +101,6 @@ class _CustomDropDownState extends State<CustomDropDown> {
           value: value['code'],
           child: Text(
             value['name'] ?? '',
-            // maxLines: 1,
             overflow: TextOverflow.ellipsis,
             softWrap: true,
           ),

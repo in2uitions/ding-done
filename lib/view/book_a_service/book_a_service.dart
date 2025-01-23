@@ -218,10 +218,10 @@ class _BookAServiceState extends State<BookAService> {
                                 InkWell(
                                   child: Padding(
                                     padding: EdgeInsets.only(
-                                      top: context.appValues.appPadding.p8,
+                                      top: context.appValues.appPadding.p13,
                                     ),
                                     child: SvgPicture.asset(
-                                        'assets/img/back-new.svg'),
+                                        'assets/img/back.svg',color: Colors.white,),
                                   ),
                                   onTap: () async {
                                     Navigator.pop(context);

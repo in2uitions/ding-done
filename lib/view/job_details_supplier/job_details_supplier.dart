@@ -1260,7 +1260,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                   style: ElevatedButton.styleFrom(
                     elevation: 0.0,
                     shadowColor: Colors.transparent,
-                    backgroundColor: context.resources.color.btnColorBlue,
+                    backgroundColor: Color(0xff4100E3),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -1321,6 +1321,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     ),
                   ),
                 ),
+                const Gap(7),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: context.appValues.appPadding.p32,
@@ -1330,10 +1331,12 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     textAlign: TextAlign.center,
                     style: getPrimaryRegularStyle(
                       fontSize: 17,
-                      color: context.resources.color.btnColorBlue,
+                      // color: context.resources.color.btnColorBlue,
+                      color: Color(0xff4100E3),
                     ),
                   ),
                 ),
+                const Gap(7),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: context.appValues.appPadding.p32,
@@ -1343,10 +1346,11 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     textAlign: TextAlign.center,
                     style: getPrimaryRegularStyle(
                       fontSize: 17,
-                      color: context.resources.color.btnColorBlue,
+                      color: Color(0xff4100E3),
                     ),
                   ),
                 ),
+                const Gap(7),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: context.appValues.appPadding.p32,
@@ -1356,10 +1360,11 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     textAlign: TextAlign.center,
                     style: getPrimaryRegularStyle(
                       fontSize: 17,
-                      color: context.resources.color.btnColorBlue,
+                      color: Color(0xff4100E3),
                     ),
                   ),
                 ),
+                const Gap(7),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     horizontal: context.appValues.appPadding.p32,
@@ -1369,7 +1374,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     textAlign: TextAlign.center,
                     style: getPrimaryRegularStyle(
                       fontSize: 17,
-                      color: context.resources.color.btnColorBlue,
+                      color: Color(0xff4100E3),
                     ),
                   ),
                 ),
@@ -1405,7 +1410,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                   style: ElevatedButton.styleFrom(
                     elevation: 0.0,
                     shadowColor: Colors.transparent,
-                    backgroundColor: context.resources.color.btnColorBlue,
+                    backgroundColor: Color(0xff4100E3),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),

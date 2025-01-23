@@ -728,14 +728,14 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           return Padding(
                                             padding: EdgeInsets.symmetric(
                                                 vertical: context
-                                                    .appValues.appPadding.p18,
+                                                    .appValues.appPadding.p13,
                                                 horizontal: context
                                                     .appValues.appPadding.p15),
                                             child: SizedBox(
                                               width: context
                                                   .appValues.appSizePercent.w40,
                                               height: context
-                                                  .appValues.appSizePercent.h10,
+                                                  .appValues.appSizePercent.h15,
                                               child: ElevatedButton(
                                                 onPressed: () {
                                                   setState(() {

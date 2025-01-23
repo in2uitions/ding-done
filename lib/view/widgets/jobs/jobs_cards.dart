@@ -504,6 +504,7 @@ class _JobsCardsState extends State<JobsCards> {
                               ],
                             ),
                           ),
+                          const Gap(15),
                           widget.active == 'bookedJobs'
                               ? Padding(
                                   padding: EdgeInsets.only(

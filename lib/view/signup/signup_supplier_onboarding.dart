@@ -733,18 +733,20 @@ class _SignUpSupplierOnBoardingScreenState
                                                       ? double.parse(data
                                                           .data['latitude']
                                                           .toString())
-                                                      : double.parse(
+                                                      : _currentPosition!=null?
+                                                  double.parse(
                                                           _currentPosition!
                                                               .latitude
-                                                              .toString()),
+                                                              .toString()):0,
                                                   data.data['longitude'] != null
                                                       ? double.parse(data
                                                           .data['longitude']
                                                           .toString())
-                                                      : double.parse(
+                                                      : _currentPosition!=null?
+                                                  double.parse(
                                                           _currentPosition!
                                                               .longitude
-                                                              .toString())),
+                                                              .toString()):0),
                                             ),
                                             mapType: MapType.normal,
                                             markers: <Marker>{
