@@ -90,6 +90,7 @@ class SignUpViewModel with ChangeNotifier {
 
     String? role = signUpBody['role'];
     if (role == Constants.supplierRoleId) {
+      debugPrint('role is supplier');
       if (index == 0) {
         firstnameMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['first_name']!] ?? '',
@@ -231,6 +232,7 @@ class SignUpViewModel with ChangeNotifier {
       }
 
       if (index == 5) {
+        debugPrint('index 5 avatar ${ signUpBody["avatar"]}');
 
         firstnameMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['first_name']!] ?? '',
@@ -285,8 +287,9 @@ class SignUpViewModel with ChangeNotifier {
             index: 'QID'):
         signUpBody['selectedOption'] =='company'?
         AppValidation().isNotEmpty(
-            value: signUpBody['company_id'] ?? '',
-            index: 'company_id'):'Please select a profile type';
+            value: signUpBody['company'] ?? '',
+            index: 'company'):'Please select a profile type';
+        debugPrint('signupbody avatar ${ signUpBody["avatar"]}');
         if (
             firstnameMessage == null &&
             lastnameMessage == null &&
@@ -330,7 +333,7 @@ class SignUpViewModel with ChangeNotifier {
         signUpErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
         signUpBody['selectedOption'] =='individual'?
         signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage:
-        signUpErrors[EnglishStrings().formKeys['company_id']!] = QIDMessage;
+        signUpErrors[EnglishStrings().formKeys['company']!] = QIDMessage;
 
         notifyListeners();
         return false;

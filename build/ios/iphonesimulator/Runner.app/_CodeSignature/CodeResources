@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		PLtiIFXgoj44BJAjESns6se5Pic=
+		HXVo5YwXkvT2cQ4Pr+vjOFgKAXw=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		6tpiGeZoIT+rKark7lf/QJMzMi4=
+		1HiqnYsl7d93q6QkuIHX/mb/Na4=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/._isolate_snapshot_data</key>
 		<data>
@@ -522,7 +522,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		axRzoRYMP6xd1sv00IxZgCsXd3s=
+		foaJ7+80PkTE2jLdBsn2Ojjd650=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -7924,7 +7924,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		Muth3ROPYqIGpeIsOvTagQqXxig=
+		3/mCOuWaxty6D9YoitN7HDZ0kb4=
 		</data>
 		<key>LatinOCRResources.bundle/Info.plist</key>
 		<data>
@@ -7968,7 +7968,7 @@
 		</data>
 		<key>Runner.debug.dylib</key>
 		<data>
-		K15rur/4bcFO3HkF76tKdvieiDY=
+		0dN8pkIr2vWJMXeYu3BS+BYUZ6U=
 		</data>
 		<key>__preview.dylib</key>
 		<data>
@@ -8089,7 +8089,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vrFMuLWOkgF0+PHYoARccJZvsXNLX/l6eYTEys2ulX4=
+			4xWRcWle3HrWwWTEdbnLA4smhla/h5d5TIoPZnYA0ss=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -8103,7 +8103,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HAgZEIBuQ1KumyQN0pUmpeg2wueq+7wjnFXOEe9EkVk=
+			D4xv0B5WsQZfZq8tSsIYPWcE7Gu0y89juQBcNvOJEY8=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/._isolate_snapshot_data</key>
@@ -8908,7 +8908,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			J65NDd9cpW/n3r5yEd5nt4KtoTpI9bM/DOmKqkfoQDs=
+			vtcqHW9jCZlIpK/4jvyOhmnvQtH0RN0GLX3vewiYW40=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -18968,7 +18968,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			tMLN65hQ/4tySviv1AZZB0/qKSf8fGfR1dGoElxtAgs=
+			4YUjoK4n5+zMlWUm2w4Zn8ceDNgrNrDNaT7nsa8sqAw=
 			</data>
 		</dict>
 		<key>__preview.dylib</key>

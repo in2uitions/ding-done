@@ -28,7 +28,7 @@ class EnglishStrings extends Strings {
     'contact_details': 'contact_details',
     'supplier_categories': 'supplier_categories',
     'supplier_services': 'supplier_services',
-    'company_id': 'company_id',
+    'company': 'company',
     // 'company_name': 'Company Name'
   };
 
@@ -62,7 +62,7 @@ class EnglishStrings extends Strings {
     'phone_number': 'Phone Number',
     'supplier_categories': 'Supplier Categories',
     'supplier_services': 'Supplier Services',
-    'company_id': 'Company Id',
+    'company': 'Company',
     // 'company_name': 'Company Name'
   };
   @override

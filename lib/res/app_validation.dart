@@ -76,7 +76,7 @@ class AppValidation {
 
   String? isNotEmpty({required String value, required String index}) {
     // final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
-    debugPrint('value is not empty $value');
+    debugPrint('value is not empty$index $value');
     if (value.isNotEmpty) {
       return null;
     } else {
