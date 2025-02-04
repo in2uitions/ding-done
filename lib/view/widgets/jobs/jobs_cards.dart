@@ -625,6 +625,7 @@ class _JobsCardsState extends State<JobsCards> {
 
     return SingleChildScrollView(
       child: AlertDialog(
+        backgroundColor: Colors.white,
         elevation: 15,
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -838,6 +839,7 @@ class _JobsCardsState extends State<JobsCards> {
 Widget simpleAlertWithMessage2(
     BuildContext context, String message, String message2) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     elevation: 15,
     content: Column(
       mainAxisSize: MainAxisSize.min,
@@ -882,6 +884,7 @@ Widget simpleAlertWithMessage2(
 
 Widget simpleAlert(BuildContext context, String message) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     elevation: 15,
     content: Column(
       mainAxisSize: MainAxisSize.min,

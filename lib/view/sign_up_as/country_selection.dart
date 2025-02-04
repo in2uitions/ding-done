@@ -151,6 +151,7 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
 
 Widget _buildPopupDialog(BuildContext context, String message) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,

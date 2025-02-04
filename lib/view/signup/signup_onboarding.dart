@@ -172,6 +172,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
 
   Widget _buildPopupDialog(BuildContext context, String message) {
     return AlertDialog(
+      backgroundColor: Colors.white,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -359,7 +360,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomPhoneFeild(
                           value:
-                              signupViewModel.signUpBody['phone_number'] ?? '',
+                              signupViewModel.signUpBody['phone'] ?? '',
                           index: 'phone_number',
                           viewModel: signupViewModel.setInputValues,
                           validator: (val) => signupViewModel.signUpErrors[
@@ -1234,6 +1235,7 @@ Route _createRoute(dynamic classname) {
 
 Widget _buildPopupDialog(BuildContext context, String message) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,

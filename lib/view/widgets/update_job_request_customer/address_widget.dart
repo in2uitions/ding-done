@@ -133,6 +133,7 @@ class _AddressWidgetState extends State<AddressWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: Text('Choose an option'),
           content: Column(
             mainAxisSize: MainAxisSize.min,

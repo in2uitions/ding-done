@@ -192,6 +192,7 @@ class UploadOneImageState extends State<UploadOneImage> {
 
   Widget _buildPopupDialog(BuildContext context) {
     return AlertDialog(
+      backgroundColor: Colors.white,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,

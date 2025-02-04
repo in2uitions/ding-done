@@ -40,9 +40,11 @@ class _CustomPhoneFeildState extends State<CustomPhoneFeild> {
 
     // Initialize the full phone number with the default country code
     widget.viewModel(index: widget.index, value: '$countryCode${_customController.text}');
+    widget.viewModel(index: 'phone', value: '${_customController.text}');
 
     _customController.addListener(() {
       widget.viewModel(index: widget.index, value: '$countryCode${_customController.text}');
+      widget.viewModel(index: 'phone', value: '${_customController.text}');
     });
   }
 
@@ -89,6 +91,7 @@ class _CustomPhoneFeildState extends State<CustomPhoneFeild> {
       onChanged: (phone) {
         // Update the full phone number when the text changes
         widget.viewModel(index: widget.index, value: '$countryCode${phone.number}');
+        widget.viewModel(index: 'phone', value: '${phone.number}');
       },
       onCountryChanged: (country) {
         setState(() {
@@ -97,6 +100,7 @@ class _CustomPhoneFeildState extends State<CustomPhoneFeild> {
         });
         // Update the full phone number in the view model
         widget.viewModel(index: widget.index, value: '$countryCode${_customController.text}');
+        widget.viewModel(index: 'phone', value: '${_customController.text}');
       },
     );
   }

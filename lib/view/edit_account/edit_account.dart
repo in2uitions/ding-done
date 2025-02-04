@@ -338,7 +338,7 @@ class _EditAccountState extends State<EditAccount> {
                                 const Gap(10),
                                 Expanded(
                                   child: Text(
-                                    '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
+                                    profileViewModel.getProfileBody['current_address']!=null?'${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}':'',
                                     style: getPrimaryRegularStyle(
                                       fontSize: 18,
                                       color: const Color(0xff190C39),
@@ -564,6 +564,7 @@ class _EditAccountState extends State<EditAccount> {
 
 Widget simpleAlert(BuildContext context, String message) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     elevation: 15,
     content: Column(
       mainAxisSize: MainAxisSize.min,

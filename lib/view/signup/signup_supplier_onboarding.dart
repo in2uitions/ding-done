@@ -138,6 +138,7 @@ class _SignUpSupplierOnBoardingScreenState
 
   Widget _buildPopupDialog(BuildContext context, String message) {
     return AlertDialog(
+      backgroundColor: Colors.white,
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -387,7 +388,7 @@ class _SignUpSupplierOnBoardingScreenState
                                     });
                                     signupViewModel.setInputValues(
                                         index: 'selectedOption',
-                                        value: selectedOption);
+                                        value: value);
                                   },
                                 ),
                                 Text(
@@ -404,6 +405,9 @@ class _SignUpSupplierOnBoardingScreenState
                                     setState(() {
                                       selectedOption = value;
                                     });
+                                    signupViewModel.setInputValues(
+                                        index: 'selectedOption',
+                                        value: value);
                                   },
                                 ),
                                 Text(
@@ -421,18 +425,18 @@ class _SignUpSupplierOnBoardingScreenState
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: CustomTextField(
                                 value:
-                                    signupViewModel.signUpBody["company_id"] ??
+                                    signupViewModel.getSignUpBody["company"] ??
                                         '',
                                 index: 'company',
                                 viewModel: signupViewModel.setInputValues,
                                 hintText: translate('signUp.companyId'),
-                                validator: (val) =>
-                                    signupViewModel.signUpErrors[context
-                                        .resources
-                                        .strings
-                                        .formKeys['company_id']!],
-                                errorText: signupViewModel.signUpErrors[context
-                                    .resources.strings.formKeys['company_id']!],
+                                // validator: (val) =>
+                                //     signupViewModel.signUpErrors[context
+                                //         .resources
+                                //         .strings
+                                //         .formKeys['company_id']!],
+                                // errorText: signupViewModel.signUpErrors[context
+                                //     .resources.strings.formKeys['company_id']!],
                                 keyboardType: TextInputType.text,
                               ),
                             ),
@@ -518,7 +522,7 @@ class _SignUpSupplierOnBoardingScreenState
                           ),
                         ),
                       if (signupViewModel.signUpErrors[context
-                                  .resources.strings.formKeys['company_id']] !=
+                                  .resources.strings.formKeys['company']] !=
                               null &&
                           signupViewModel.getSignUpBody['selectedOption'] ==
                               'company')
@@ -526,7 +530,7 @@ class _SignUpSupplierOnBoardingScreenState
                           padding: const EdgeInsets.fromLTRB(55, 0, 20, 20),
                           child: Text(
                             signupViewModel.signUpErrors[context
-                                .resources.strings.formKeys['company_id']]!,
+                                .resources.strings.formKeys['company']]!,
                             style:
                                 TextStyle(color: Colors.red[700], fontSize: 12),
                           ),
@@ -563,7 +567,7 @@ class _SignUpSupplierOnBoardingScreenState
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                           child: CustomPhoneFeild(
                             index: 'phone_number',
-                            value: signupViewModel.signUpBody['phone_number'] ??
+                            value: signupViewModel.signUpBody['phone'] ??
                                 '',
                             viewModel: signupViewModel.setInputValues,
                             validator: (val) => signupViewModel.signUpErrors[

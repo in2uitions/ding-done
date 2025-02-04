@@ -338,6 +338,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+          backgroundColor: Colors.white,
           title: const Text("Permission Required"),
           content: Text(message),
           actions: [

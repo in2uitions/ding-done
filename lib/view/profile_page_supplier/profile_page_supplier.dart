@@ -283,6 +283,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
 
 Widget simpleAlert(BuildContext context, String message) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     elevation: 15,
     content: Column(
       mainAxisSize: MainAxisSize.min,

@@ -540,6 +540,7 @@ Route _createRoute(dynamic classname) {
 
 Widget _buildPopupDialogNo(BuildContext context, String text) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     // title: const Text('Popup example'),
     content: Column(
       mainAxisSize: MainAxisSize.min,

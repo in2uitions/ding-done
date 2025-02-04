@@ -226,6 +226,7 @@ Route _createRoute(dynamic classname) {
 
 Widget _buildPopupDialog(BuildContext context, String message) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
@@ -260,6 +261,7 @@ Widget _buildPopupDialog(BuildContext context, String message) {
 
 Widget _buildPopupDialogChangedPassword(BuildContext context, String message) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,

@@ -722,6 +722,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
 
 Widget simpleAlert(BuildContext context, String message, String message2) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     elevation: 15,
     content: Column(
       mainAxisSize: MainAxisSize.min,

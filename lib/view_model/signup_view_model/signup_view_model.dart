@@ -100,14 +100,17 @@ class SignUpViewModel with ChangeNotifier {
         dobMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
             index: 'Date of birth');
+        debugPrint('selected option is ${signUpBody['selectedOption']}');
+
         QIDMessage = signUpBody['selectedOption'] =='individual'?
         AppValidation().isNotEmpty(
             value: signUpBody['id_image'] ?? '',
             index: 'QID'):
         signUpBody['selectedOption'] =='company'?
         AppValidation().isNotEmpty(
-            value: signUpBody['company_id'] ?? '',
-            index: 'company_id'):'Please select a profile type';
+            value: signUpBody['company'] ?? '',
+            index: 'company'):'Please select a profile type';
+        debugPrint('QIDMessage ${QIDMessage} ${signUpBody['selectedOption']}');
         if (firstnameMessage == null && lastnameMessage == null && dobMessage == null&& QIDMessage == null) {
           notifyListeners();
           return true;
@@ -118,7 +121,7 @@ class SignUpViewModel with ChangeNotifier {
         signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
         signUpBody['selectedOption'] =='individual'?
         signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage:
-        signUpErrors[EnglishStrings().formKeys['company_id']!] = QIDMessage;
+        signUpErrors[EnglishStrings().formKeys['company']!] = QIDMessage;
 
         notifyListeners();
         return false;

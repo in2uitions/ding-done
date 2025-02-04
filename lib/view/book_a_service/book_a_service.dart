@@ -290,6 +290,16 @@ class _BookAServiceState extends State<BookAService> {
                         controller: scrollController,
                         itemCount: 1,
                         itemBuilder: (BuildContext context, int index) {
+                          Map<String, dynamic>? service;
+                          Map<String, dynamic>? categories;
+
+                          for (Map<String, dynamic> translation in widget.service["translations"]) {
+
+                            if (translation["languages_code"] == widget.lang) {
+                              service = translation;
+                              break; // Break the loop once the translation is found
+                            }
+                          }
                           return Column(
                             children: [
                               Padding(
@@ -315,8 +325,9 @@ class _BookAServiceState extends State<BookAService> {
                                     //     ),
                                     //   ),
                                     // ),
+
                                     Text(
-                                      '${widget.service['xdescription']}',
+                                      '${service!['description']}',
                                       style: getPrimaryRegularStyle(
                                         fontSize: 14,
                                         color: const Color(0xff190C39),
@@ -852,6 +863,7 @@ Widget _buildPopupDialog(BuildContext context) {
 
 Widget _buildPopupDialogNo(BuildContext context, String message) {
   return AlertDialog(
+    backgroundColor: Colors.white,
     elevation: 15,
     content: Column(
       mainAxisSize: MainAxisSize.min,

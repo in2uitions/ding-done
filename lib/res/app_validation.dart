@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 class AppValidation {
   String? isEmailValid(String val) {
     final emailRegExp = RegExp(r"^[a-zA-Z0-9._]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
@@ -74,6 +76,7 @@ class AppValidation {
 
   String? isNotEmpty({required String value, required String index}) {
     // final emailRegExp = RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    debugPrint('value is not empty $value');
     if (value.isNotEmpty) {
       return null;
     } else {
