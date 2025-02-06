@@ -489,6 +489,7 @@
     "email_address": "Ηλεκτρονική Διεύθυνση",
     "email": "Email",
     "sms": "SMS",
+    "insert_otp": "Εισαγάγετε το OTP",
     "phone": "τηλέφωνο",
     "password": "Κωδικός",
     "first_name": "Όνομα",

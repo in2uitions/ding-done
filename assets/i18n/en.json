@@ -486,6 +486,7 @@
     "email": "Email",
     "sms": "SMS",
     "phone": "Phone",
+    "insert_otp": "Insert OTP",
     "password": "Password",
     "first_name": "First Name",
     "last_name": "Last Name",

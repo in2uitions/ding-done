@@ -93,7 +93,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        translate('formHints.email'),
+                        translate('formHints.insert_otp'),
                         style: getPrimaryRegularStyle(
                           fontSize: 17,
                           color: const Color(0xff1F1F39),

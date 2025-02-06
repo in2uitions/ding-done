@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>88505680032-uutqcn8ve1i2rg7grh2rdk4pbfbm86ho.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.88505680032-uutqcn8ve1i2rg7grh2rdk4pbfbm86ho</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBbffywaxw_Vpbbtk7vsLwhis0MlUXwlYE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>88505680032</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.in2uitions.theUltimateAdventure</string>
+	<key>PROJECT_ID</key>
+	<string>the-ultimate-adventure</string>
+	<key>STORAGE_BUCKET</key>
+	<string>the-ultimate-adventure.firebasestorage.app</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:88505680032:ios:4f50afd986f277617c49c5</string>
+</dict>
+</plist>

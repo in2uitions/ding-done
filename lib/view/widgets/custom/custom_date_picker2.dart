@@ -88,6 +88,17 @@ class _CustomDatePicker2 extends State<CustomDatePicker2> {
           initialDate: DateTime.now(),
           firstDate: DateTime(DateTime.now().year - 100, 1),
           lastDate: DateTime(DateTime.now().year + 100, 1),
+          builder: (BuildContext context, Widget? child) {
+            return Theme(
+              data: Theme.of(context).copyWith(
+                colorScheme: ColorScheme.light(),
+                textButtonTheme: TextButtonThemeData(
+                  style: TextButton.styleFrom(),
+                ),
+              ),
+              child: child!,
+            );
+          },
         );
 
         if (pickedDate != null) {
@@ -98,6 +109,7 @@ class _CustomDatePicker2 extends State<CustomDatePicker2> {
           });
           widget.viewModel(index: 'date', value: formattedDate.toString());
         }
+
       },
     );
   }

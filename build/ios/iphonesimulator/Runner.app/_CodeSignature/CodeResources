@@ -54,7 +54,7 @@
 		</data>
 		<key>Frameworks/App.framework/App</key>
 		<data>
-		HXVo5YwXkvT2cQ4Pr+vjOFgKAXw=
+		FdVfefrxgNnQ5zuJWbYC1fTLbUE=
 		</data>
 		<key>Frameworks/App.framework/Info.plist</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Frameworks/App.framework/_CodeSignature/CodeResources</key>
 		<data>
-		1HiqnYsl7d93q6QkuIHX/mb/Na4=
+		NZ7JLNa2WN0XV40a7h72xfNjvBs=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/._isolate_snapshot_data</key>
 		<data>
@@ -106,19 +106,19 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/ar.json</key>
 		<data>
-		70bAx12ym4ORXbT/WGheFtIqpvE=
+		nSHeeVrqv+0nssiZOwwvNOgx9oc=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/el.json</key>
 		<data>
-		tJgmlY5PrB6nsSF+f7HNnAuaJFU=
+		Ph4WjnLHix1Fqzg/4qDUWz1ERbc=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/en.json</key>
 		<data>
-		4aWZh/z7Vl0cV7B1vtSJzlcXxe4=
+		7FA/ob/e818S7v3R1k7169/fL+c=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/ru.json</key>
 		<data>
-		0qMycMxLpO7UDSuFX06WugnrzJ8=
+		sIQmYxknXDXv22/OiJGUPH5FbAo=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/014-google.svg</key>
 		<data>
@@ -522,7 +522,7 @@
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/kernel_blob.bin</key>
 		<data>
-		foaJ7+80PkTE2jLdBsn2Ojjd650=
+		FScOL5ShIMFQy+iGdYYUt9eGq/M=
 		</data>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
 		<data>
@@ -3609,11 +3609,11 @@
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet</key>
 		<data>
-		hKfb9Ngggu5tTLNOPIN/V9oQe3w=
+		z1tqJfOibbp7VgKLry59F8vc38I=
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheetBundle.bundle/Assets.car</key>
 		<data>
-		vW8nBzhoDRoMr7Gc839c1OtdSNA=
+		Ozu3I1sVNL8tCQZHB/aEUXHzZPk=
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheetBundle.bundle/Info.plist</key>
 		<data>
@@ -4007,7 +4007,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/_CodeSignature/CodeResources</key>
 		<data>
-		gX6DaZq4Zd/UdCXQxaNRYKdJWGs=
+		y49ysA4p1YTctmb6oyplfp8xomo=
 		</data>
 		<key>Frameworks/StripePayments.framework/Info.plist</key>
 		<data>
@@ -5192,11 +5192,11 @@
 		</data>
 		<key>Frameworks/StripeUICore.framework/StripeUICore</key>
 		<data>
-		ClOBAF5PrDK3co0Ce5S5Pq7WJxg=
+		c3XiVKbVCN0JqG+NeNxHE22PxtM=
 		</data>
 		<key>Frameworks/StripeUICore.framework/StripeUICoreBundle.bundle/Assets.car</key>
 		<data>
-		nCiZPMTLtfad94P3yh1ik1BT1no=
+		uq6gfVAOR6X6CyLskK1Mz2aTxRo=
 		</data>
 		<key>Frameworks/StripeUICore.framework/StripeUICoreBundle.bundle/Info.plist</key>
 		<data>
@@ -5581,7 +5581,7 @@
 		</dict>
 		<key>Frameworks/StripeUICore.framework/_CodeSignature/CodeResources</key>
 		<data>
-		ZL79yEKNf12sjd37V7XZG/YWq0k=
+		NNymlQQ1xcAbSbxSINxVbypiXxo=
 		</data>
 		<key>Frameworks/SwiftyGif.framework/Info.plist</key>
 		<data>
@@ -6326,15 +6326,15 @@
 		</data>
 		<key>Frameworks/goSellSDK.framework/_CodeSignature/CodeResources</key>
 		<data>
-		uNsXJLxW4J+a/GoocXULi7+0wkM=
+		vZCbxoTCgLBWs1lQRE0YG04FeLg=
 		</data>
 		<key>Frameworks/goSellSDK.framework/goSellSDK</key>
 		<data>
-		+uK71ljOmicisxWE7rnlH5gSlsI=
+		r5J+X53+rEbkCR7uKA9JDxevS/E=
 		</data>
 		<key>Frameworks/goSellSDK.framework/goSellSDKResources.bundle/Assets.car</key>
 		<data>
-		8VRlxd4t3qXgTTVvWMVaTL9SGpY=
+		S5mwYSpqSoToWQsxwIJUs8djbsw=
 		</data>
 		<key>Frameworks/goSellSDK.framework/goSellSDKResources.bundle/AsyncPaymentResultView.nib</key>
 		<data>
@@ -7922,9 +7922,13 @@
 		<data>
 		MSU/8tTfrlmybUfobsq9c+YzNNo=
 		</data>
+		<key>GoogleService-Info.plist</key>
+		<data>
+		AyJRsHDf2Inddk/Ej1Fpvj9gEdo=
+		</data>
 		<key>Info.plist</key>
 		<data>
-		3/mCOuWaxty6D9YoitN7HDZ0kb4=
+		ckgR886IwZzMmP38qSON1Ip79iw=
 		</data>
 		<key>LatinOCRResources.bundle/Info.plist</key>
 		<data>
@@ -7968,7 +7972,7 @@
 		</data>
 		<key>Runner.debug.dylib</key>
 		<data>
-		0dN8pkIr2vWJMXeYu3BS+BYUZ6U=
+		mwtct8ahSQcpvBOfFNeuWQvgwpc=
 		</data>
 		<key>__preview.dylib</key>
 		<data>
@@ -8089,7 +8093,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4xWRcWle3HrWwWTEdbnLA4smhla/h5d5TIoPZnYA0ss=
+			QP2DzxfJ0p/1s5OBrg/salFHJStGZi/rMz6rF/qpCyE=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/Info.plist</key>
@@ -8103,7 +8107,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			D4xv0B5WsQZfZq8tSsIYPWcE7Gu0y89juQBcNvOJEY8=
+			hFaVbNLye/z4fn4ahpHs36uXW9VgE+Nmd28qWegfQMU=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/._isolate_snapshot_data</key>
@@ -8180,28 +8184,28 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			WsMwpQI+gqqRl1U0bBvlgTWoLSiUbknFO9qbqQObip4=
+			UD0IA2d/+3urJM83FDYLuhvHsn0UIG9bTHi5Zn99MmY=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/el.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6jHRmPL0oRwYowSpxcjS9EOlnKcnZo7A1t2zgMv1Qnk=
+			xFHsrvZKuLxu3oaeipxOQJIVyNlhNawE//veV02bt2g=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/en.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			r510m2dVFA7mWk/fj//vi1IFtMFxxh+uhcpgJHXnC/8=
+			h0Ly3M3agKEYgnRYiY8AGqwnILStOaLm7UBjYThSimU=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/i18n/ru.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			hEIc1irifbrQqBAoVKGKmnWdnjlGVQUSFspIQ0tNFvs=
+			8fgbQ4KjOnWKfHYZkEerjRpZbenlNgjKoY4KUDghXxo=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/assets/img/014-google.svg</key>
@@ -8908,7 +8912,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			vtcqHW9jCZlIpK/4jvyOhmnvQtH0RN0GLX3vewiYW40=
+			XGo4/ON/wumlhjzupkOE7UH92bG5EYB+xDnCDdJuC+I=
 			</data>
 		</dict>
 		<key>Frameworks/App.framework/flutter_assets/packages/cupertino_icons/assets/CupertinoIcons.ttf</key>
@@ -13318,14 +13322,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			jMBX8bOp5ncbXh7n/hrPjbCvt/t27Lwa/LWSEU88CmM=
+			Ki9vn2h6Lj2hDdI3L5pMTov51Sy8bXENKAtpnA7ElMM=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheetBundle.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ChFvm6NXhDDtsiKVvw89xDZkkI5yOeDn1DitGkuvAQg=
+			/zrn690FKiJq7aDnrzEtJ2uRLi2kpDw1QFij49TGnpU=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheetBundle.bundle/Info.plist</key>
@@ -13731,7 +13735,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			TW/t1ixXxYoF32/M9B7Hjq9n+rrb+pUWAj0auv+DNw0=
+			d42PAtgK50RVVoKNn04A0C2A2I186E3eqP6mUwsE1/w=
 			</data>
 		</dict>
 		<key>Frameworks/StripePayments.framework/Info.plist</key>
@@ -14961,14 +14965,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			HWQE3N2x8WBYdtnQEtqz3WGyOIYy5h8BtaS6mbev/UA=
+			VCdQjvBtooEdPtgKnh/kWMo+ab51gtRCzi4ayRz2Hbw=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/StripeUICoreBundle.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			ajydYi3Ri27js75wP+JK0WZlUWdAsEc0X8VTRpKzGaM=
+			PgnokdVKF9Wbmqvod+l4wouGQqLDJ+SPX9KGqj1NCPk=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/StripeUICoreBundle.bundle/Info.plist</key>
@@ -15365,7 +15369,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			NEh2Ei+eweedqiIZEy9iEmOHzLq1vBCSrYHbeNhWZXg=
+			0k0emz6SA2Fjxlb82EN+4qwB5BAry73mtmDt33PolSw=
 			</data>
 		</dict>
 		<key>Frameworks/SwiftyGif.framework/Info.plist</key>
@@ -16473,21 +16477,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			BHD56g6tqO61+jTdswplMbfmNfIxDAC4hRoG3m3AXPA=
+			OYp8w5tk4jD2gpi6yE3Yslo1YKgoa/hRkq7xOStLkoY=
 			</data>
 		</dict>
 		<key>Frameworks/goSellSDK.framework/goSellSDK</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			YUeqBhW9gsz5gbgPSrGUR8pHen98NoceJoGeOa20Tog=
+			IVJA/ttwKC53uZdCYmeZUOeB1OLTJocd/UihdkvHriY=
 			</data>
 		</dict>
 		<key>Frameworks/goSellSDK.framework/goSellSDKResources.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			laFws9OZAnjTVyp1pFe4tv01QR3Ap5q4l3e1Z5Zk0r0=
+			YGt+qRmyTzhLqVAgp/h+wMjv51+TvbFiuQLX0rM9hmo=
 			</data>
 		</dict>
 		<key>Frameworks/goSellSDK.framework/goSellSDKResources.bundle/AsyncPaymentResultView.nib</key>
@@ -18901,6 +18905,13 @@
 			6y+p17S77KuYOhfOE9KLZ94PMqfw/BxzDOJXxN5D1NA=
 			</data>
 		</dict>
+		<key>GoogleService-Info.plist</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			1FBv11RgcTxlCEEoozlsvTbrpiRf/OIMoPXtoDAepJs=
+			</data>
+		</dict>
 		<key>LatinOCRResources.bundle/Info.plist</key>
 		<dict>
 			<key>hash2</key>
@@ -18968,7 +18979,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			4YUjoK4n5+zMlWUm2w4Zn8ceDNgrNrDNaT7nsa8sqAw=
+			pGzKQrBYOR/iCCYE8cHcaI5wggM0oSdvz4QyqlB985Q=
 			</data>
 		</dict>
 		<key>__preview.dylib</key>
