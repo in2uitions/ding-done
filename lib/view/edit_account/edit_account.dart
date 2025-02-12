@@ -103,9 +103,10 @@ class _EditAccountState extends State<EditAccount> {
                                           context.appValues.appPadding.p3,
                                         ),
                                         child: SvgPicture.asset(
-                                          'assets/img/back-new.svg',
+                                          'assets/img/back.svg',
                                           // colorFilter: const ColorFilter.mode(
-                                          //     Colors.white, BlendMode.srcIn),
+                                              colorFilter:ColorFilter.mode(Colors.white,BlendMode.srcIn),
+                                            // BlendMode.srcIn),
                                         ),
                                       ),
                                       onTap: () {

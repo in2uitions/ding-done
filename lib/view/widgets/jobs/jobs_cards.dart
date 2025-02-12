@@ -71,7 +71,6 @@ class _JobsCardsState extends State<JobsCards> {
                       : widget.jobsViewModel.getcustomerJobs
                           .where((e) => e.status == 'booked')
                           .toList();
-
       return ListView.builder(
           controller: widget.scrollController,
           padding: EdgeInsets.zero,
@@ -491,10 +490,10 @@ class _JobsCardsState extends State<JobsCards> {
                               children: [
                                 Text(
                                   // '',
-                                  data[index].total_amount != null &&
-                                          data[index].total_amount.toString() !=
+                                  data[index].supplier_total != null &&
+                                          data[index].supplier_total.toString() !=
                                               ''
-                                      ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
+                                      ? '${data[index].supplier_total} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
                                       : '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
                                   style: getPrimaryBoldStyle(
                                     fontSize: 14,

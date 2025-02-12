@@ -73,6 +73,7 @@ class JobsModel {
     this.supplier_to_job_time,
     this.translations,
     this.ratind_stars,
+    this.supplier_total,
   });
 
   int? id;
@@ -113,6 +114,7 @@ class JobsModel {
   dynamic supplier_to_job_time;
   dynamic translations;
   dynamic ratind_stars;
+  dynamic supplier_total;
 
   factory JobsModel.fromJson(Map<String, dynamic> json) => JobsModel(
     id: json["id"],
@@ -153,6 +155,7 @@ class JobsModel {
     supplier_to_job_time: json["supplier_to_job_time"],
     translations: json["translations"],
     ratind_stars: json["ratind_stars"],
+    supplier_total: json["supplier_total"],
 
   );
 
@@ -195,6 +198,7 @@ class JobsModel {
     "supplier_to_job_time": supplier_to_job_time,
     "translations": translations,
     "ratind_stars": ratind_stars,
+    "supplier_total": supplier_total,
   };
 
   Map<String, dynamic> toCarouselJson() => {
