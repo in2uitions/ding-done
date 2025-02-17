@@ -87,7 +87,7 @@
 	<false/>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:cms.dingdone.com</string>
+		<string>applinks:cms.dingdone.app</string>
 	</array>
 </dict>
 </plist>

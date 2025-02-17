@@ -98,7 +98,7 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="dingdone" android:host="cms.dingdone.com" />
+                <data android:scheme="dingdone" android:host="cms.dingdone.app" />
             </intent-filter>
         </activity>
         <activity
