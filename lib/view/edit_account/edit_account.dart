@@ -105,8 +105,9 @@ class _EditAccountState extends State<EditAccount> {
                                         child: SvgPicture.asset(
                                           'assets/img/back.svg',
                                           // colorFilter: const ColorFilter.mode(
-                                              colorFilter:ColorFilter.mode(Colors.white,BlendMode.srcIn),
-                                            // BlendMode.srcIn),
+                                          colorFilter: ColorFilter.mode(
+                                              Colors.white, BlendMode.srcIn),
+                                          // BlendMode.srcIn),
                                         ),
                                       ),
                                       onTap: () {
@@ -339,7 +340,13 @@ class _EditAccountState extends State<EditAccount> {
                                 const Gap(10),
                                 Expanded(
                                   child: Text(
-                                    profileViewModel.getProfileBody['current_address']!=null?'${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}':'',
+                                    profileViewModel.getProfileBody[
+                                                'current_address'] !=
+                                            null
+                                        ? profileViewModel.getProfileBody[
+                                                    'current_address']
+                                                ['address_label'] ?? '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}'
+                                        : '',
                                     style: getPrimaryRegularStyle(
                                       fontSize: 18,
                                       color: const Color(0xff190C39),

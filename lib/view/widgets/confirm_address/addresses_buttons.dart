@@ -99,7 +99,7 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
                         tag: "$index",
                         active: _active == "$index",
                         text:
-                            '${address["street_number"]}, ${address["city"]}, ${address["building_number"]}, ${address["apartment_number"]}, ${address["zone"]}',
+                        address['address_label'] ?? '${address["street_number"]}, ${address["city"]}, ${address["building_number"]}, ${address["apartment_number"]}, ${address["zone"]}',
                         address: address,
                       ),
                     ),

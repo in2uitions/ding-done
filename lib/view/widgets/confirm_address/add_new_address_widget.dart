@@ -789,6 +789,19 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       context.resources.strings.formKeys['zone']!],
                   keyboardType: TextInputType.text),
             ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+              child: CustomTextField(
+                  value: jobsViewModel.getjobsBody["address_label"] ?? '',
+                  index: 'address_label',
+                  viewModel: jobsViewModel.setInputValues,
+                  hintText: translate('formHints.address_label'),
+                  validator: (val) => jobsViewModel.jobsAddressError[
+                      context.resources.strings.formKeys['address_label']!],
+                  errorText: jobsViewModel.jobsAddressError[
+                      context.resources.strings.formKeys['address_label']!],
+                  keyboardType: TextInputType.text),
+            ),
             // FutureBuilder(
             //     future: Provider.of<SignUpViewModel>(context,
             //             listen: false)

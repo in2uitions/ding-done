@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
@@ -40,6 +41,7 @@ class _JobsPageState extends State<JobsPage> {
   void active(String btn) {
     setState(() => _active = btn);
   }
+  AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -58,10 +60,17 @@ class _JobsPageState extends State<JobsPage> {
         });
     }
   }
+  Future<void> playSound() async {
+    String soundPath =
+        "DingDone Hybrid.wav"; // Update with the actual path to your .wav file
+
+    await _audioPlayer.play(AssetSource(soundPath));
+  }
 
 // Function to show the review dialog
   void _showReviewDialog(
       BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
+    playSound();
     showDialog(
       context: context,
       builder: (BuildContext context) {

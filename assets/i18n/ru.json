@@ -512,7 +512,9 @@
     "apartment_number": "Номер квартиры",
     "apartment": "квартира",
     "city": "Город",
-    "zone": "Зона"
+    "zone": "Зона",
+    "address_label": "адресная метка"
+
   },
   "forgotPassword": {
     "title": "Забыли пароль",

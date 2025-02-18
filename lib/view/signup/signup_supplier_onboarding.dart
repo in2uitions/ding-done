@@ -381,7 +381,7 @@ class _SignUpSupplierOnBoardingScreenState
                               children: [
                                 Radio<String>(
                                   value: 'individual',
-                                  groupValue: selectedOption,
+                                  groupValue: signupViewModel.signUpBody['selectedOption']??selectedOption,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedOption = value;
@@ -400,7 +400,7 @@ class _SignUpSupplierOnBoardingScreenState
                                 ),
                                 Radio<String>(
                                   value: 'company',
-                                  groupValue: selectedOption,
+                                  groupValue: signupViewModel.signUpBody['selectedOption']??selectedOption,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedOption = value;
@@ -420,7 +420,7 @@ class _SignUpSupplierOnBoardingScreenState
                               ],
                             ),
                           ),
-                          if (selectedOption == 'company')
+                          if (signupViewModel.getSignUpBody['selectedOption']!=null?signupViewModel.getSignUpBody['selectedOption'] == 'company':selectedOption=='company')
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: CustomTextField(
@@ -440,7 +440,8 @@ class _SignUpSupplierOnBoardingScreenState
                                 keyboardType: TextInputType.text,
                               ),
                             ),
-                          if (selectedOption == 'individual')
+                          if(signupViewModel.getSignUpBody['selectedOption']!=null?signupViewModel.getSignUpBody['selectedOption'] == 'individual':selectedOption=='individual')
+                          // if (selectedOption == 'individual')
                             Container(
                               decoration: BoxDecoration(
                                 color: const Color(0xffededf6),
@@ -477,9 +478,13 @@ class _SignUpSupplierOnBoardingScreenState
                                 ),
                               ),
                             ),
-                          if (selectedOption == 'individual')
+                          if(signupViewModel.getSignUpBody['selectedOption']!=null?signupViewModel.getSignUpBody['selectedOption'] == 'individual':selectedOption=='individual')
+
+                            // if (selectedOption == 'individual')
                             SizedBox(height: context.appValues.appSize.s10),
-                          if (selectedOption == 'individual')
+                          if(signupViewModel.getSignUpBody['selectedOption']!=null?signupViewModel.getSignUpBody['selectedOption'] == 'individual':selectedOption=='individual')
+
+                            // if (selectedOption == 'individual')
                             Card(
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(15.0),
@@ -946,6 +951,19 @@ class _SignUpSupplierOnBoardingScreenState
                                 context.resources.strings.formKeys['zone']!],
                             errorText: signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['zone']!],
+                            keyboardType: TextInputType.text),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child: CustomTextField(
+                            value: signupViewModel.signUpBody["address_label"] ?? '',
+                            index: 'address_label',
+                            viewModel: signupViewModel.setInputValues,
+                            hintText: translate('formHints.address_label'),
+                            validator: (val) => signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['address_label']!],
+                            errorText: signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['address_label']!],
                             keyboardType: TextInputType.text),
                       ),
                       // }),

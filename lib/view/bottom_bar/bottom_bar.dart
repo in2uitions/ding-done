@@ -237,7 +237,7 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                                 height: context.appValues.appSizePercent.h3,
                                 color: currentTab == 0
                                     ? const Color(0xff6A39E5)
-                                    : const Color(0xffE5E5E5),
+                                    : const Color(0xff9d9d9d),
                               ),
                               // SizedBox(height: context.appValues.appSize.s5),
                               // Text(
@@ -281,7 +281,7 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                                           context.appValues.appSizePercent.h3,
                                       color: currentTab == 1
                                           ? const Color(0xff6A39E5)
-                                          : const Color(0xffE5E5E5),
+                                          : const Color(0xff9d9d9d),
                                     ),
                                     // SizedBox(
                                     //     height: context.appValues.appSize.s5),
@@ -367,7 +367,7 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                         height: context.appValues.appSizePercent.h3,
                         color: currentTab == 2
                             ? const Color(0xff6A39E5)
-                            : const Color(0xffE5E5E5),
+                            : const Color(0xff9d9d9d),
                       ),
                       if (hasNotifications) // Show red dot if there are notifications
                         Positioned(
@@ -421,7 +421,7 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                               height: context.appValues.appSizePercent.h3,
                               color: currentTab == 3
                                   ? const Color(0xff6A39E5)
-                                  : const Color(0xffE5E5E5),
+                                  : const Color(0xff9d9d9d),
                             ),
                             // SizedBox(height: context.appValues.appSize.s5),
                             // Text(

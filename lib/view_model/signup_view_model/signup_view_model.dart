@@ -74,6 +74,7 @@ class SignUpViewModel with ChangeNotifier {
     String? apartmentMessage = '';
     String? cityMessage = '';
     String? zoneMessage = '';
+    String? addressLabelMessage = '';
     String? countryMessage = '';
     String? floorMessage = '';
     String? longitudeMessage = '';
@@ -177,6 +178,9 @@ class SignUpViewModel with ChangeNotifier {
         zoneMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
             index: 'Zone');
+        addressLabelMessage = AppValidation().isNotEmpty(
+            value: signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
+            index: 'Address Label');
         countryMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
             index: 'Country');
@@ -193,7 +197,7 @@ class SignUpViewModel with ChangeNotifier {
             buildingMessage == null &&
             apartmentMessage == null &&
             cityMessage == null &&
-            zoneMessage == null &&
+            zoneMessage == null && addressLabelMessage == null &&
             countryMessage == null &&
             floorMessage == null && signUpBody['longitude']!=null &&signUpBody['latitude']!=null) {
           notifyListeners();
@@ -206,6 +210,7 @@ class SignUpViewModel with ChangeNotifier {
             apartmentMessage;
         signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
         signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+        signUpErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
         signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
         signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
         signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
@@ -268,6 +273,9 @@ class SignUpViewModel with ChangeNotifier {
         zoneMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
             index: 'Zone');
+        addressLabelMessage = AppValidation().isNotEmpty(
+            value: signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
+            index: 'Address Label');
         countryMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
             index: 'Country');
@@ -302,6 +310,7 @@ class SignUpViewModel with ChangeNotifier {
             apartmentMessage == null &&
             cityMessage == null &&
             zoneMessage == null &&
+            addressLabelMessage == null &&
                 countryMessage == null &&
             floorMessage == null &&
             QIDMessage == null &&
@@ -327,6 +336,7 @@ class SignUpViewModel with ChangeNotifier {
             apartmentMessage;
         signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
         signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+        signUpErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
         signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
         signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
         signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
@@ -422,6 +432,9 @@ class SignUpViewModel with ChangeNotifier {
           zoneMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
               index: 'Zone');
+          addressLabelMessage = AppValidation().isNotEmpty(
+              value: signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
+              index: 'Address Label');
           countryMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
               index: 'Country');
@@ -441,6 +454,7 @@ class SignUpViewModel with ChangeNotifier {
               apartmentMessage == null &&
               cityMessage == null &&
               zoneMessage == null &&
+              addressLabelMessage == null &&
               countryMessage == null &&
               floorMessage == null && latitudeMessage==null && longitudeMessage==null) {
             notifyListeners();
@@ -455,6 +469,7 @@ class SignUpViewModel with ChangeNotifier {
               apartmentMessage;
           signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
           signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+          signUpErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
           signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
           signUpErrors[EnglishStrings().formKeys['floor']!] =
               floorMessage;
@@ -501,6 +516,9 @@ class SignUpViewModel with ChangeNotifier {
           zoneMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
               index: 'Zone');
+          addressLabelMessage = AppValidation().isNotEmpty(
+              value: signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
+              index: 'Address Label');
           countryMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
               index: 'Country');
@@ -526,7 +544,7 @@ class SignUpViewModel with ChangeNotifier {
               cityMessage == null &&
               floorMessage == null &&
               countryMessage == null &&
-              zoneMessage == null  && latitudeMessage==null && longitudeMessage==null) {
+              zoneMessage == null  && addressLabelMessage == null  && latitudeMessage==null && longitudeMessage==null) {
             notifyListeners();
             return true;
           }
@@ -545,6 +563,7 @@ class SignUpViewModel with ChangeNotifier {
               apartmentMessage;
           signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
           signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+          signUpErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
           signUpErrors[EnglishStrings().formKeys['country']!] =
               countryMessage;
           signUpErrors[EnglishStrings().formKeys['floor']!] =

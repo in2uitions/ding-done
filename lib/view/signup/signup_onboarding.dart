@@ -1082,6 +1082,19 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                 context.resources.strings.formKeys['zone']!],
                             keyboardType: TextInputType.text),
                       ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child: CustomTextField(
+                            value: signupViewModel.signUpBody["address_label"] ?? '',
+                            index: 'address_label',
+                            viewModel: signupViewModel.setInputValues,
+                            hintText: translate('formHints.address_label'),
+                            validator: (val) => signupViewModel.signUpErrors[
+                            context.resources.strings.formKeys['address_label']!],
+                            errorText: signupViewModel.signUpErrors[
+                            context.resources.strings.formKeys['address_label']!],
+                            keyboardType: TextInputType.text),
+                      ),
                       // Padding(
                       //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                       //   child: CustomDropDown(

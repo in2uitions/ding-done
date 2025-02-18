@@ -161,6 +161,7 @@ Future<dynamic> getNotifications() async {
         "zone": body["zone"],
         "longitude": body["longitude"],
         "latitude": body["latitude"],
+        "address_label": body["address_label"],
         //Here we have to add the country
         "country": body["country"].toString(),
       };

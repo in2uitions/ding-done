@@ -513,7 +513,9 @@
     "apartment_number": "رقم الشقة",
     "apartment": "الشقة",
     "city": "المدينة",
-    "zone": "المنطقة"
+    "zone": "المنطقة",
+    "address_label": "تسمية العنوان"
+
   },
   "forgotPassword": {
     "title": "نسيت كلمة المرور",

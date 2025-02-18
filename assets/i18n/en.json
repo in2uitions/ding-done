@@ -509,7 +509,8 @@
     "apartment_number": "Apartment number",
     "apartment": "Apartment",
     "city": "City",
-    "zone": "Zone"
+    "zone": "Zone",
+    "address_label": "Address Label"
   },
   "forgotPassword": {
     "title": "Forgot Password",
