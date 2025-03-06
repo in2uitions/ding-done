@@ -1,11 +1,6 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
-
 import 'dart:io';
-
 import 'package:dingdone/res/app_context_extension.dart';
-import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:dingdone/view/widgets/confirm_payment_method/add_new_payment_method.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/card_info.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/payment_method_buttons.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -20,6 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class ConfirmPaymentMethod extends StatefulWidget {
   var payment_method;
@@ -243,11 +239,32 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         // debugPrint('result url ${result["transaction"]["url"]}');
         if (result["transaction"] != null) {
           // _launchUrl('${result["transaction"]["url"]}');
+          // final WebViewController controller  = WebViewController()
+          //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          //   ..setNavigationDelegate(
+          //     NavigationDelegate(
+          //       onProgress: (int progress) {
+          //         // Update loading bar.
+          //       },
+          //       onPageStarted: (String url) {},
+          //       onPageFinished: (String url) {},
+          //       onHttpError: (HttpResponseError error) {},
+          //       onWebResourceError: (WebResourceError error) {},
+          //       // onNavigationRequest: (NavigationRequest request) {
+          //       //   if (request.url.startsWith('${result["transaction"]['url']}')) {
+          //       //     return NavigationDecision.prevent;
+          //       //   }
+          //       //   return NavigationDecision.navigate;
+          //       // },
+          //     ),
+          //   )
+          //   ..loadRequest(Uri.parse('${result["transaction"]['url']}'));
           Navigator.of(context).push(
                         _createRoute(Padding(
                           padding: EdgeInsets.symmetric(
                               horizontal: context.appValues.appPadding.p16),
-                          child: Row(
+                          child:
+                          Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               // Text('In app link'),
@@ -282,6 +299,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                           urlBarHidingEnabled: true,
                                         ),
                                       );
+
                                     },
                                     style: ElevatedButton.styleFrom(
                                       // backgroundColor: Color(0xff112b78),
@@ -427,6 +445,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                               // ),
                             ],
                           ),
+                          // WebViewWidget(controller: controller)
                         )));
           FlutterWebBrowser.openWebPage(
             url: '${result["transaction"]["url"]}',

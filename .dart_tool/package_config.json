@@ -1424,6 +1424,30 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "webview_flutter",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/webview_flutter-4.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "webview_flutter_android",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/webview_flutter_android-4.3.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "webview_flutter_platform_interface",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/webview_flutter_platform_interface-2.10.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
+      "name": "webview_flutter_wkwebview",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/webview_flutter_wkwebview-3.18.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
       "name": "win32",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/win32-5.10.0",
       "packageUri": "lib/",
@@ -1466,7 +1490,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-02-17T14:39:18.031149Z",
+  "generated": "2025-03-05T13:10:34.548102Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Volumes/KINGSTON/flutter",

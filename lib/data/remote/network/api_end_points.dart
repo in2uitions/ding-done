@@ -40,8 +40,9 @@ class ApiEndPoints {
   final String finishJobAndCollectPayment = '/suppliers/finishJobAndCollectPayment';
   final String getAllPayments = '/items/customer_payment_cards?fields=*.*';
   final String downloadInvoice = '/invoices/downloadInvoice';
-  final String  customerInvoice= '/invoices/customerInvoice';
-  final String  supplierInvoice= '/invoices/supplierInvoice';
+  // final String  customerInvoice= '/invoices/customerInvoice';
+  // final String  supplierInvoice= '/invoices/supplierInvoice';
+  final String  invoices= '/invoices/download';
   // final String apiSendReset = '/email/reset-test';
   final String apiSendReset = '/email/reset-email';
   final String notifications = '/i18/notifications';

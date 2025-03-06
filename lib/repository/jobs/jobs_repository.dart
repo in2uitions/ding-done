@@ -44,10 +44,12 @@ class JobsRepository {
       NetworkApiService(url: ApiEndPoints().customerCancelJobNoPenalty);
   final BaseApiService _apicancelJobWithPenalty =
       NetworkApiService(url: ApiEndPoints().customerCancelJobWithPenalty);
-  final BaseApiService _apiCustomerInvoice =
-      NetworkApiService(url: ApiEndPoints().customerInvoice);
-  final BaseApiService _apiSupplierInvoice =
-      NetworkApiService(url: ApiEndPoints().supplierInvoice);
+  final BaseApiService _apiInvoice =
+      NetworkApiService(url: ApiEndPoints().invoices);
+  // final BaseApiService _apiCustomerInvoice =
+  //     NetworkApiService(url: ApiEndPoints().customerInvoice);
+  // final BaseApiService _apiSupplierInvoice =
+  //     NetworkApiService(url: ApiEndPoints().supplierInvoice);
 
   Future<JobsModelMain?> getAllJobs() async {
     try {
@@ -242,10 +244,10 @@ class JobsRepository {
       dynamic response;
 
       if(role==Constants.customerRoleId){
-        response = await _apiCustomerInvoice.getResponseFile(params: "?user_id=$id&job_id=$job_id");
+        response = await _apiInvoice.getResponseFile(params: "?job_id=$job_id&format=customer");
 
       }else{
-        response = await _apiSupplierInvoice.getResponseFile(params: "?user_id=$id&job_id=$job_id");
+        response = await _apiInvoice.getResponseFile(params: "?job_id=$job_id&format=supplier");
 
       }
         debugPrint('response of the downloaded invoice $response');

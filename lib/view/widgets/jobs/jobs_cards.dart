@@ -343,12 +343,14 @@ class _JobsCardsState extends State<JobsCards> {
                                         widget.userRole ==
                                             Constants.customerRoleId
                                     ? Text(
-                                        DateFormat('d MMMM yyyy, HH:mm').format(
+                                  data[index]
+                                      .actual_start_date!=null?
+                                  DateFormat('d MMMM yyyy, HH:mm').format(
                                             DateTime.parse(data[index]
                                                         .actual_start_date +
                                                     'Z')
                                                 .toUtc()
-                                                .toLocal()),
+                                                .toLocal()):'',
                                         style: getPrimaryRegularStyle(
                                           fontSize: 14,
                                           color: const Color(0xff78789D),

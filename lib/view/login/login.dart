@@ -283,116 +283,116 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     }),
                     SizedBox(height: context.appValues.appSize.s15),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.appValues.appPadding.p25,
-                      ),
-                      child: SizedBox(
-                        height: 56,
-                        width: context.appValues.appSizePercent.w100,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: context.resources.color.colorWhite,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(context.appValues.appSize.s10),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isLoadingGoogle = true;
-                            });
-                            setState(() {
-                              isLoadingGoogle = false;
-                            });
-                          },
-                          child: (isLoadingGoogle)
-                              ? const SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 1.5,
-                                  ))
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                        'assets/img/014-google.svg'),
-                                    SizedBox(
-                                        width: context.appValues.appSize.s10),
-                                    Text(
-                                      translate(
-                                          'login_screen.connectWithGoogle'),
-                                      style: getPrimaryRegularStyle(
-                                        color: context
-                                            .resources.color.secondColorBlue,
-                                        fontSize: 22,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: context.appValues.appSize.s15),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.appValues.appPadding.p25,
-                      ),
-                      child: SizedBox(
-                        height: 56,
-                        width: context.appValues.appSizePercent.w100,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: context.resources.color.colorWhite,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(context.appValues.appSize.s10),
-                              ),
-                            ),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              isLoadingApple = true;
-                            });
-                            setState(() {
-                              isLoadingApple = false;
-                            });
-                          },
-                          child: (isLoadingApple)
-                              ? const SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: CircularProgressIndicator(
-                                    color: Colors.white,
-                                    strokeWidth: 1.5,
-                                  ))
-                              : Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SvgPicture.asset(
-                                      'assets/img/applelogo.svg',
-                                      width: 24,
-                                    ),
-                                    SizedBox(
-                                        width: context.appValues.appSize.s10),
-                                    Text(
-                                      translate(
-                                          'login_screen.connectWithApple'),
-                                      style: getPrimaryRegularStyle(
-                                        color: context
-                                            .resources.color.secondColorBlue,
-                                        fontSize: 22,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: context.appValues.appSize.s15),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(
+                    //     horizontal: context.appValues.appPadding.p25,
+                    //   ),
+                    //   child: SizedBox(
+                    //     height: 56,
+                    //     width: context.appValues.appSizePercent.w100,
+                    //     child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //         backgroundColor: context.resources.color.colorWhite,
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.all(
+                    //             Radius.circular(context.appValues.appSize.s10),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       onPressed: () {
+                    //         setState(() {
+                    //           isLoadingGoogle = true;
+                    //         });
+                    //         setState(() {
+                    //           isLoadingGoogle = false;
+                    //         });
+                    //       },
+                    //       child: (isLoadingGoogle)
+                    //           ? const SizedBox(
+                    //               width: 16,
+                    //               height: 16,
+                    //               child: CircularProgressIndicator(
+                    //                 color: Colors.white,
+                    //                 strokeWidth: 1.5,
+                    //               ))
+                    //           : Row(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               children: [
+                    //                 SvgPicture.asset(
+                    //                     'assets/img/014-google.svg'),
+                    //                 SizedBox(
+                    //                     width: context.appValues.appSize.s10),
+                    //                 Text(
+                    //                   translate(
+                    //                       'login_screen.connectWithGoogle'),
+                    //                   style: getPrimaryRegularStyle(
+                    //                     color: context
+                    //                         .resources.color.secondColorBlue,
+                    //                     fontSize: 22,
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(height: context.appValues.appSize.s15),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(
+                    //     horizontal: context.appValues.appPadding.p25,
+                    //   ),
+                    //   child: SizedBox(
+                    //     height: 56,
+                    //     width: context.appValues.appSizePercent.w100,
+                    //     child: ElevatedButton(
+                    //       style: ElevatedButton.styleFrom(
+                    //         backgroundColor: context.resources.color.colorWhite,
+                    //         shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.all(
+                    //             Radius.circular(context.appValues.appSize.s10),
+                    //           ),
+                    //         ),
+                    //       ),
+                    //       onPressed: () {
+                    //         setState(() {
+                    //           isLoadingApple = true;
+                    //         });
+                    //         setState(() {
+                    //           isLoadingApple = false;
+                    //         });
+                    //       },
+                    //       child: (isLoadingApple)
+                    //           ? const SizedBox(
+                    //               width: 16,
+                    //               height: 16,
+                    //               child: CircularProgressIndicator(
+                    //                 color: Colors.white,
+                    //                 strokeWidth: 1.5,
+                    //               ))
+                    //           : Row(
+                    //               mainAxisAlignment: MainAxisAlignment.center,
+                    //               children: [
+                    //                 SvgPicture.asset(
+                    //                   'assets/img/applelogo.svg',
+                    //                   width: 24,
+                    //                 ),
+                    //                 SizedBox(
+                    //                     width: context.appValues.appSize.s10),
+                    //                 Text(
+                    //                   translate(
+                    //                       'login_screen.connectWithApple'),
+                    //                   style: getPrimaryRegularStyle(
+                    //                     color: context
+                    //                         .resources.color.secondColorBlue,
+                    //                     fontSize: 22,
+                    //                   ),
+                    //                 ),
+                    //               ],
+                    //             ),
+                    //     ),
+                    //   ),
+                    // ),
+                    // SizedBox(height: context.appValues.appSize.s15),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

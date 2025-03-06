@@ -513,7 +513,9 @@
     "apartment_number": "Αριθμός Διαμερίσματος",
     "apartment": "διαμέρισμα",
     "city": "Πόλη",
-    "zone": "Ζώνη"
+    "zone": "Ζώνη",
+    "address_label": "ετικέτα διεύθυνσης"
+
   },
   "forgotPassword": {
     "title": "Ξεχάσατε τον Κωδικό",
