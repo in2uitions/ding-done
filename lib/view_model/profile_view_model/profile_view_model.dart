@@ -243,6 +243,8 @@ Future<dynamic> getNotifications() async {
         "last_name": body["last_name"]!=null?body["last_name"]:profileBody["user"]["last_name"],
         "email": body["email"]!=null?body["email"]:profileBody["user"]["email"],
         "phone_number": body["phone_number"]!=null?body["phone_number"]:profileBody["user"]["phone_number"],
+        "phone": body["phone"]!=null?body["phone"]:profileBody["user"]["phone"],
+        "phone_code": body["phone_code"]!=null?body["phone_code"]:profileBody["user"]["phone_code"],
         "avatar": body["avatar"]!=null?body["avatar"]:profileBody["user"]["avatar"],
         "description": body["description"]!=null?body["description"]:profileBody["user"]["description"],
       };

@@ -1,6 +1,7 @@
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:provider/provider.dart';
 
@@ -167,6 +168,16 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
             }
           }
         },
+        hideBackButton: false,
+        backButton:  Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: InkWell(
+            child: SvgPicture.asset('assets/img/back.svg'),
+            onTap: () {
+              Navigator.pop(context);
+            },
+          ),
+        ),
         onSuggestionSelected: (PlacesDetailsResponse? result) {
           if (result != null) {
             var splitted = result.result.formattedAddress?.split(',');

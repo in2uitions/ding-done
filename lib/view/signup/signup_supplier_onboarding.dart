@@ -23,6 +23,8 @@ import 'package:map_location_picker/map_location_picker.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
 
+import '../widgets/custom/custom_phone_field_controller.dart';
+
 class SignUpSupplierOnBoardingScreen extends StatefulWidget {
   var initialIndex;
 
@@ -41,6 +43,7 @@ class _SignUpSupplierOnBoardingScreenState
   dynamic imageID = {};
   String? selectedOption;
   Position? _currentPosition;
+  final TextEditingController _phoneController = TextEditingController();
 
   @override
   void initState() {
@@ -570,18 +573,29 @@ class _SignUpSupplierOnBoardingScreenState
                           )),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                          child: CustomPhoneFeild(
-                            index: 'phone_number',
-                            value: signupViewModel.signUpBody['phone'] ??
-                                '',
+                          child:
+                          // CustomPhoneFeild(
+                          //   index: 'phone_number',
+                          //   value: signupViewModel.signUpBody['phone'] ??
+                          //       '',
+                          //   viewModel: signupViewModel.setInputValues,
+                          //   validator: (val) => signupViewModel.signUpErrors[
+                          //       context.resources.strings
+                          //           .formKeys['phone_number']!],
+                          //   errorText: signupViewModel.signUpErrors[context
+                          //       .resources.strings.formKeys['phone_number']!],
+                          //   hintText: translate('formHints.phone_number'),
+                          // )
+                          CustomPhoneFieldController(
+                            value: signupViewModel.signUpBody["phone"],
+                            phone_code:signupViewModel.signUpBody["phone_code"],
+                            phone_number:signupViewModel.signUpBody["phone_number"],
+                            index: 'phone',
                             viewModel: signupViewModel.setInputValues,
-                            validator: (val) => signupViewModel.signUpErrors[
-                                context.resources.strings
-                                    .formKeys['phone_number']!],
-                            errorText: signupViewModel.signUpErrors[context
-                                .resources.strings.formKeys['phone_number']!],
-                            hintText: translate('formHints.phone_number'),
-                          )),
+                            controller: _phoneController,
+                            keyboardType: TextInputType.number,
+                          ),
+                      ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(

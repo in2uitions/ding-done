@@ -680,19 +680,30 @@ class JobsViewModel with ChangeNotifier {
 
   }
 
+  // void launchWhatsApp() async {
+  //   String phoneNumber =
+  //       '+97451112825'; // Replace with the actual WhatsApp number
+  //   String message =
+  //       'Hello, I would like to inquire about online consultation.'; // Your default message
+  //
+  //   String whatsappUrl =
+  //       'https://wa.me/$phoneNumber?text=${Uri.encodeQueryComponent(message)}';
+  //
+  //   if (await canLaunch(whatsappUrl)) {
+  //     await launch(whatsappUrl);
+  //   } else {
+  //     // Handle the error
+  //     debugPrint('Could not launch WhatsApp.');
+  //   }
+  // }
   void launchWhatsApp() async {
-    String phoneNumber =
-        '+97451112825'; // Replace with the actual WhatsApp number
-    String message =
-        'Hello, I would like to inquire about online consultation.'; // Your default message
-
-    String whatsappUrl =
-        'https://wa.me/$phoneNumber?text=${Uri.encodeQueryComponent(message)}';
+    String phoneNumber = '97451112825'; // Remove the '+' sign
+    String message = 'Hello, I would like to inquire about online consultation.';
+    String whatsappUrl = 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
 
     if (await canLaunch(whatsappUrl)) {
       await launch(whatsappUrl);
     } else {
-      // Handle the error
       debugPrint('Could not launch WhatsApp.');
     }
   }

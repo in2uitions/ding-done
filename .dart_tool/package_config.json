@@ -500,6 +500,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "font_awesome_flutter",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/font_awesome_flutter-10.8.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "form_builder_extra_fields",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/form_builder_extra_fields-11.0.0",
       "packageUri": "lib/",
@@ -1490,7 +1496,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-03-05T13:10:34.548102Z",
+  "generated": "2025-03-11T10:17:50.890802Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Volumes/KINGSTON/flutter",

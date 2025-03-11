@@ -18,6 +18,7 @@ import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/constants.dart';
+import '../widgets/custom/custom_phone_field_controller.dart';
 
 class SignUpOnBoardingScreen extends StatefulWidget {
   var initialIndex;
@@ -33,6 +34,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
   late int index;
   dynamic image = {};
   Position? _currentPosition;
+  final TextEditingController _phoneController = TextEditingController();
 
   @override
   void initState() {
@@ -358,17 +360,27 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           )),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                        child: CustomPhoneFeild(
-                          value:
-                              signupViewModel.signUpBody['phone'] ?? '',
-                          index: 'phone_number',
+                        child:
+                        // CustomPhoneFeild(
+                        //   value:
+                        //       signupViewModel.signUpBody['phone'] ?? '',
+                        //   index: 'phone_number',
+                        //   viewModel: signupViewModel.setInputValues,
+                        //   validator: (val) => signupViewModel.signUpErrors[
+                        //       context
+                        //           .resources.strings.formKeys['phone_number']!],
+                        //   errorText: signupViewModel.signUpErrors[context
+                        //       .resources.strings.formKeys['phone_number']!],
+                        //   hintText: translate('formHints.phone_number'),
+                        // ),
+                        CustomPhoneFieldController(
+                          value: signupViewModel.signUpBody["phone"],
+                          phone_code:signupViewModel.signUpBody["phone_code"],
+                          phone_number:signupViewModel.signUpBody["phone_number"],
+                          index: 'phone',
                           viewModel: signupViewModel.setInputValues,
-                          validator: (val) => signupViewModel.signUpErrors[
-                              context
-                                  .resources.strings.formKeys['phone_number']!],
-                          errorText: signupViewModel.signUpErrors[context
-                              .resources.strings.formKeys['phone_number']!],
-                          hintText: translate('formHints.phone_number'),
+                          controller: _phoneController,
+                          keyboardType: TextInputType.number,
                         ),
                       ),
                       Padding(
@@ -900,6 +912,16 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                                 }
                                               }
                                             },
+                                            hideBackButton: false,
+                                            backButton:  Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: InkWell(
+                                                child: SvgPicture.asset('assets/img/back.svg'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            ),
                                             onSuggestionSelected:
                                                 (PlacesDetailsResponse?
                                                     result) {
@@ -962,6 +984,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                             },
                                           );
                                         },
+
                                       ),
                                     );
                                   },

@@ -18,6 +18,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -119,6 +120,7 @@ class _HomePageState extends State<HomePage> {
     'https://via.placeholder.com/800x400.png?text=Image+2',
     'https://via.placeholder.com/800x400.png?text=Image+3',
   ];
+
   @override
   Widget build(BuildContext context) {
     return Consumer4<ProfileViewModel, ServicesViewModel, CategoriesViewModel,
@@ -806,7 +808,8 @@ class _HomePageState extends State<HomePage> {
                                                     child: Center(
                                                       child: Text(
                                                         'CONTACT US',
-                                                        textAlign: TextAlign.center,
+                                                        textAlign:
+                                                            TextAlign.center,
                                                         style:
                                                             getPrimaryBoldStyle(
                                                           color: context
@@ -819,6 +822,52 @@ class _HomePageState extends State<HomePage> {
                                                     ),
                                                   ),
                                                 ),
+                                              ],
+                                            ),
+                                          ),
+                                          const Gap(10),
+                                          Container(
+                                            padding: const EdgeInsets.all(8.0),
+                                            color: Colors.white,
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                IconButton(
+                                                  icon: const FaIcon(
+                                                      FontAwesomeIcons
+                                                          .xTwitter),
+                                                  // X (Twitter)
+                                                  onPressed: () {
+                                                    // Handle X (Twitter) tap
+                                                  },
+                                                ),
+                                                IconButton(
+                                                  icon: const FaIcon(
+                                                      FontAwesomeIcons
+                                                          .facebook),
+                                                  onPressed: () {
+                                                    // Handle Facebook tap
+                                                  },
+                                                ),
+                                                IconButton(
+                                                  icon: const FaIcon(
+                                                      FontAwesomeIcons
+                                                          .instagram),
+                                                  onPressed: () {
+                                                    // Handle Instagram tap
+                                                  },
+                                                ),
+                                                IconButton(
+                                                  icon: const FaIcon(
+                                                      FontAwesomeIcons
+                                                          .linkedin),
+                                                  onPressed: () {
+                                                    // Handle LinkedIn tap
+                                                  },
+                                                ),
+                                                // Add more icons as needed...
                                               ],
                                             ),
                                           ),

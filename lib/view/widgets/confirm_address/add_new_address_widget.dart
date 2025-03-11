@@ -151,6 +151,16 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                             _createRoute(ConfirmAddress())));
                                   }
                                 },
+                                hideBackButton: false,
+                                backButton:  Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                    child: SvgPicture.asset('assets/img/back.svg'),
+                                    onTap: () {
+                                      Navigator.pop(context);
+                                    },
+                                  ),
+                                ),
                                 // onSuggestionSelected: (
                                 //     PlacesDetailsResponse? result) async {
                                 //   if (result != null) {
@@ -271,6 +281,16 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                           _createRoute(ConfirmAddress())));
                                 }
                               },
+                              hideBackButton: false,
+                              backButton:  Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: InkWell(
+                                  child: SvgPicture.asset('assets/img/back.svg'),
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                ),
+                              ),
                               // onSuggestionSelected: (
                               //     PlacesDetailsResponse? result) async {
                               //   if (result != null) {
@@ -477,6 +497,16 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                                   _createRoute(
                                                       ConfirmAddress())));
                                         },
+                                        hideBackButton: false,
+                                          backButton:  Padding(
+                                            padding: const EdgeInsets.all(8.0),
+                                            child: InkWell(
+                                              child: SvgPicture.asset('assets/img/back.svg'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                              },
+                                            ),
+                                          ),
                                         // onSuggestionSelected: (
                                         //     PlacesDetailsResponse? result) async {
                                         //   if (result != null) {

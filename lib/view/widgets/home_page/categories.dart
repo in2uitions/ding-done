@@ -59,39 +59,43 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
             ),
             SizedBox(
               width: context.appValues.appSizePercent.w100,
-              height: context.appValues.appSizePercent.h50,
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4, // Number of items in each row
-                  crossAxisSpacing: 4, // Spacing between items horizontally
-                  mainAxisSpacing: 4, // Spacing between items vertically
-                  childAspectRatio: 1, // Aspect ratio of each grid item
-                ),
-                padding: EdgeInsets.fromLTRB(
-                  context.appValues.appPadding.p10,
-                  context.appValues.appPadding.p10,
-                  context.appValues.appPadding.p0,
-                  context.appValues.appPadding.p10,
-                ),
-                physics:
-                    const NeverScrollableScrollPhysics(), // Disable grid view scrolling
-                shrinkWrap: true, // Wrap content inside the Column
-                itemCount: categoriesViewModel.categoriesList.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: EdgeInsets.only(
-                        left: context.appValues.appPadding.p5,
-                        right: context.appValues.appPadding.p5),
-                    child: buildServiceWidget(
-                        categoriesViewModel.categoriesList[index],
-                        categoriesViewModel,
-                        index),
-                  );
-                },
+              height: context.appValues.appSizePercent.h30,
+              child: ListView(
+                children: [
+                  GridView.builder(
+                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 3, // Number of items in each row
+                      crossAxisSpacing: 4, // Spacing between items horizontally
+                      mainAxisSpacing: 4, // Spacing between items vertically
+                      childAspectRatio: 1, // Aspect ratio of each grid item
+                    ),
+                    padding: EdgeInsets.fromLTRB(
+                      context.appValues.appPadding.p10,
+                      context.appValues.appPadding.p10,
+                      context.appValues.appPadding.p0,
+                      context.appValues.appPadding.p10,
+                    ),
+                    physics:
+                        const NeverScrollableScrollPhysics(), // Disable grid view scrolling
+                    shrinkWrap: true, // Wrap content inside the Column
+                    itemCount: categoriesViewModel.categoriesList.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: EdgeInsets.only(
+                            left: context.appValues.appPadding.p5,
+                            right: context.appValues.appPadding.p5),
+                        child: buildServiceWidget(
+                            categoriesViewModel.categoriesList[index],
+                            categoriesViewModel,
+                            index),
+                      );
+                    },
+                  ),
+                ],
               ),
             ),
-            const SizedBox(
-                height: 15), // Add space between the first and second row
+            // const SizedBox(
+            //     height: 15), // Add space between the first and second row
           ],
         );
       },
@@ -212,7 +216,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                   child: Text(
                     services?["title"] ?? '',
                     textAlign: TextAlign.center,
-                    maxLines: 2,
+                    maxLines: 3,
                     overflow: TextOverflow.ellipsis,
                     style: getPrimaryBoldStyle(
                       fontSize: 14,

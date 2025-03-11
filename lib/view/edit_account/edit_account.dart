@@ -16,6 +16,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
+import '../widgets/custom/custom_phone_field_controller.dart';
 
 class EditAccount extends StatefulWidget {
   const EditAccount({super.key});
@@ -46,6 +47,7 @@ class _EditAccountState extends State<EditAccount> {
       );
     }
   }
+  final TextEditingController _phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -261,13 +263,23 @@ class _EditAccountState extends State<EditAccount> {
                     Padding(
                       padding: EdgeInsets.fromLTRB(
                           0, context.appValues.appPadding.p10, 0, 0),
-                      child: CustomPhoneFeild(
-                        index: 'phone_number',
+                      child:
+                      // CustomPhoneFeild(
+                      //   index: 'phone_number',
+                      //   viewModel: profileViewModel.setInputValues,
+                      //   hintText: translate('formHints.phone_number'),
+                      //   errorText: '',
+                      //   value: profileViewModel.getProfileBody["user"]
+                      //       ["phone_number"],
+                      // ),
+                      CustomPhoneFieldController(
+                        value: profileViewModel.getProfileBody["user"]["phone"],
+                        phone_code:profileViewModel.getProfileBody["user"]["phone_code"],
+                        phone_number:profileViewModel.getProfileBody["user"]["phone_number"],
+                        index: 'phone',
                         viewModel: profileViewModel.setInputValues,
-                        hintText: translate('formHints.phone_number'),
-                        errorText: '',
-                        value: profileViewModel.getProfileBody["user"]
-                            ["phone_number"],
+                        controller: _phoneController,
+                        keyboardType: TextInputType.number,
                       ),
                     ),
                     // const Gap(10),
