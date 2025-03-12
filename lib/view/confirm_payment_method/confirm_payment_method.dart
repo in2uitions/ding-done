@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
@@ -6,17 +7,24 @@ import 'package:dingdone/view/widgets/confirm_payment_method/payment_method_butt
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:flutter_web_browser/flutter_web_browser.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'package:webview_flutter/webview_flutter.dart';
+// #docregion platform_imports
+// Import for Android features.
+import 'package:webview_flutter_android/webview_flutter_android.dart';
+// Import for iOS/macOS features.
+import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 class ConfirmPaymentMethod extends StatefulWidget {
   var payment_method;
   var role;
@@ -42,6 +50,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
   String sdkErrorCode = "";
   String sdkErrorMessage = "";
   String sdkErrorDescription = "";
+  late final WebViewController _controller;
 
   @override
   void initState() {
@@ -51,6 +60,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
     configureApp();
     // sdk session configurations
     setupSDKSession();
+
   }
 
   // configure app key and bundle-id (You must get those keys from tap)
@@ -85,18 +95,6 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> setupSDKSession() async {
     try {
-      debugPrint('setup sdk  app');
-      debugPrint('setup sdk  app ${widget.profileViewModel.getProfileBody}');
-      debugPrint(
-          'setup sdk  tap id ${widget.profileViewModel.getProfileBody['tap_id']}');
-      debugPrint(
-          'setup sdk  email ${widget.profileViewModel.getProfileBody['user']['email']}');
-      debugPrint(
-          'setup sdk  firstname ${widget.profileViewModel.getProfileBody['user']['first_name']}');
-      debugPrint(
-          'setup sdk  lastname ${widget.profileViewModel.getProfileBody['user']['last_name']}');
-      debugPrint(
-          'setup sdk  phone ${widget.profileViewModel.getProfileBody['user']['phone_number']}');
 
       GoSellSdkFlutter.sessionConfigurations(
         trxMode: TransactionMode.TOKENIZE_CARD,
@@ -191,293 +189,117 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
       tapSDKResult = {};
     });
   }
-
   Future<void> startSDK() async {
-
     try {
-      debugPrint('Start sdk');
       widget.paymentViewModel.setLoading(true);
       tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
-      debugPrint('SDK Result>>>> ${tapSDKResult?['sdk_result']}');
+      debugPrint('SDK Result: ${tapSDKResult?['sdk_result']}');
 
-      setState(() async {
-        switch (tapSDKResult!['sdk_result']) {
-          case "SUCCESS":
-            sdkStatus = "SUCCESS";
-            handleSDKResult();
-            break;
-          case "FAILED":
-            sdkStatus = "FAILED";
-            handleSDKResult();
-            break;
-          case "CANCELLED":
-            sdkStatus = "CANCELLED";
-            // handleSDKResult();
-            break;
-          case "SDK_ERROR":
-            debugPrint('sdk error............');
-            debugPrint(tapSDKResult!['sdk_error_code']);
-            debugPrint(tapSDKResult!['sdk_error_message']);
-            debugPrint(tapSDKResult!['sdk_error_description']);
-            debugPrint('sdk error............');
-            sdkErrorCode = tapSDKResult!['sdk_error_code'].toString();
-            sdkErrorMessage = tapSDKResult!['sdk_error_message'] ?? "";
-            sdkErrorDescription = tapSDKResult!['sdk_error_description'] ?? "";
-            break;
+      // Handle SDK result synchronously here.
+      String resultStatus = tapSDKResult?['sdk_result'];
+      if (resultStatus == "SUCCESS" || resultStatus == "FAILED") {
+        handleSDKResult();
+      } else if (resultStatus == "SDK_ERROR") {
+        sdkErrorCode = tapSDKResult!['sdk_error_code'].toString();
+        sdkErrorMessage = tapSDKResult!['sdk_error_message'] ?? "";
+        sdkErrorDescription = tapSDKResult!['sdk_error_description'] ?? "";
+      }
 
-          case "NOT_IMPLEMENTED":
-            sdkStatus = "NOT_IMPLEMENTED";
-            break;
-        }
-        debugPrint('authorizing card body $tapSDKResult');
+      // Perform asynchronous operations outside setState.
+      await widget.paymentViewModel.getPaymentMethodsTap();
+      dynamic result = await widget.paymentViewModel.authorizeCard(tapSDKResult);
 
-        await widget.paymentViewModel.getPaymentMethodsTap();
-        dynamic result =
-            await widget.paymentViewModel.authorizeCard(tapSDKResult);
+      // Now update state synchronously.
+      setState(() {
+        // Update any state variables if needed.
+      });
 
-        debugPrint('result of adding new card $result');
-        // debugPrint('result url ${result["transaction"]["url"]}');
-        if (result["transaction"] != null) {
-          // _launchUrl('${result["transaction"]["url"]}');
-          // final WebViewController controller  = WebViewController()
-          //   ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          //   ..setNavigationDelegate(
-          //     NavigationDelegate(
-          //       onProgress: (int progress) {
-          //         // Update loading bar.
-          //       },
-          //       onPageStarted: (String url) {},
-          //       onPageFinished: (String url) {},
-          //       onHttpError: (HttpResponseError error) {},
-          //       onWebResourceError: (WebResourceError error) {},
-          //       // onNavigationRequest: (NavigationRequest request) {
-          //       //   if (request.url.startsWith('${result["transaction"]['url']}')) {
-          //       //     return NavigationDecision.prevent;
-          //       //   }
-          //       //   return NavigationDecision.navigate;
-          //       // },
-          //     ),
-          //   )
-          //   ..loadRequest(Uri.parse('${result["transaction"]['url']}'));
-          Navigator.of(context).push(
-                        _createRoute(Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: context.appValues.appPadding.p16),
-                          child:
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              // Text('In app link'),
-                              if (Platform.isAndroid) ...[
-                                // const Text('test Android customizations'),
-                                Container(
-                                  width: context.appValues.appSizePercent.w40,
-                                  height: context.appValues.appSizePercent.h5,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 2.5,
-                                      color: const Color(0xff112b78),
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      FlutterWebBrowser.openWebPage(
-                                        url: '${result["transaction"]["url"]}',
-                                        customTabsOptions: const CustomTabsOptions(
-                                          colorScheme: CustomTabsColorScheme.dark,
-                                          darkColorSchemeParams:
-                                          CustomTabsColorSchemeParams(
-                                            toolbarColor: const Color(0xff112b78),
-                                            secondaryToolbarColor: Colors.white,
-                                            navigationBarColor: Colors.amber,
-                                            navigationBarDividerColor: Colors.cyan,
-                                          ),
-                                          shareState: CustomTabsShareState.on,
-                                          instantAppsEnabled: true,
-                                          showTitle: true,
-                                          urlBarHidingEnabled: true,
-                                        ),
-                                      );
-
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      // backgroundColor: Color(0xff112b78),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    ),
-                                    child: Text(
-                                     'Open Link',
-                                      style: getPrimaryRegularStyle(
-                                          color: const Color(0xff112b78),
-                                          fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                              if (Platform.isIOS) ...[
-                                // const Text('test iOS customizations'),
-                                Container(
-                                  width: context.appValues.appSizePercent.w40,
-                                  height: context.appValues.appSizePercent.h5,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 2.5,
-                                      color: const Color(0xff112b78),
-                                    ),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
-                                  child: ElevatedButton(
-                                    onPressed: () {
-                                      FlutterWebBrowser.openWebPage(
-                                        url: '${result["transaction"]["url"]}',
-                                        safariVCOptions:
-                                        const SafariViewControllerOptions(
-                                          barCollapsingEnabled: true,
-                                          preferredBarTintColor: Colors.white,
-                                          preferredControlTintColor: Colors.amber,
-                                          dismissButtonStyle:
-                                          SafariViewControllerDismissButtonStyle
-                                              .close,
-                                          modalPresentationCapturesStatusBarAppearance:
-                                          true,
-                                          modalPresentationStyle:
-                                          UIModalPresentationStyle.popover,
-                                        ),
-                                      );
-                                    },
-                                    style: ElevatedButton.styleFrom(
-                                      // backgroundColor: Color(0xff112b78),
-                                      backgroundColor: Colors.transparent,
-                                      elevation: 0,
-                                    ),
-                                    child: Text(
-                                      translate('home_screen.openLink'),
-                                      style: getPrimaryRegularStyle(
-                                          color: const Color(0xff112b78),
-                                          fontSize: 14),
-                                    ),
-                                  ),
-                                ),
-                                const Divider(),
-                                // Column(
-                                //   mainAxisSize: MainAxisSize.min,
-                                //   children: _events.map((e) {
-                                //     if (e is RedirectEvent) {
-                                //       return Text('redirect: ${e.url}');
-                                //     }
-                                //     if (e is CloseEvent) {
-                                //       return const Text('closed');
-                                //     }
-                                //
-                                //     return Text('Unknown event: $e');
-                                //   }).toList(),
-                                // ),
-                              ],
-                              Container(
-                                width: context.appValues.appSizePercent.w40,
-                                height: context.appValues.appSizePercent.h5,
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    width: 2.5,
-                                    color: const Color(0xff112b78),
-                                  ),
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                child: ElevatedButton(
-                                  onPressed: () =>
-                                      Navigator.pop(context),
-                                  style: ElevatedButton.styleFrom(
-                                    // backgroundColor: Color(0xff112b78),
-                                    backgroundColor: Colors.transparent,
-                                    elevation: 0,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        translate('home_screen.close'),
-                                        style: getPrimaryRegularStyle(
-                                            color: const Color(0xff112b78),
-                                            fontSize: 14),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              // InkWell(
-                              //   child: Container(
-                              //     height: 40,
-                              //     width: context.appValues.appSizePercent.w90,
-                              //     decoration: BoxDecoration(
-                              //       borderRadius: BorderRadius.circular(
-                              //           context.appValues.appRadius.r5),
-                              //       // gradient: LinearGradient(
-                              //       //     colors: [
-                              //       //       context.resources.color.colorPrimary[900]!,
-                              //       //       context.resources.color.colorPrimary[850]!,
-                              //       //     ],
-                              //       //     begin: const FractionalOffset(0.0, 0.0),
-                              //       //     end: const FractionalOffset(1.0, 0.0),
-                              //       //     stops: const [0.0, 1.0],
-                              //       //     tileMode: TileMode.clamp),
-                              //       boxShadow: [
-                              //         BoxShadow(
-                              //           color: context.resources.color.colorBlack[900]!,
-                              //           spreadRadius: 2,
-                              //           blurRadius: 3,
-                              //           offset: const Offset(0, 3),
-                              //         ),
-                              //       ],
-                              //       color: context.resources.color.btnColorBlue,
-                              //     ),
-                              //     child: Row(
-                              //       crossAxisAlignment: CrossAxisAlignment.center,
-                              //       mainAxisAlignment: MainAxisAlignment.center,
-                              //       children: [
-                              //         Text(translate('home_screen.close'),
-                              //             style: getPrimaryRegularStyle(
-                              //                 color: context.resources.color.colorWhite)),
-                              //       ],
-                              //     ),
-                              //   ),
-                              //   onTap: () => Navigator.pop(widget.modelContext),
-                              // ),
-                            ],
-                          ),
-                          // WebViewWidget(controller: controller)
-                        )));
-          FlutterWebBrowser.openWebPage(
-            url: '${result["transaction"]["url"]}',
-            safariVCOptions:
-            const SafariViewControllerOptions(
-              barCollapsingEnabled: true,
-              preferredBarTintColor: Colors.white,
-              preferredControlTintColor: Colors.amber,
-              dismissButtonStyle:
-              SafariViewControllerDismissButtonStyle
-                  .close,
-              modalPresentationCapturesStatusBarAppearance:
-              true,
-              modalPresentationStyle:
-              UIModalPresentationStyle.popover,
-            ),
+      if (result["transaction"] != null) {
+        // Launch the WebView.
+        // Make sure _createRoute is defined and returns a valid Route.
+        late final PlatformWebViewControllerCreationParams params;
+        if (WebViewPlatform.instance is WebKitWebViewPlatform) {
+          params = WebKitWebViewControllerCreationParams(
+            allowsInlineMediaPlayback: true,
+            mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
           );
         } else {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => simpleAlert(
-                  context,
-                  translate('button.failure'),
-                  '${result['errors'] != null ? result['errors'][0]['description'] : result['error']}'));
+          params = const PlatformWebViewControllerCreationParams();
         }
-        await widget.paymentViewModel.setLoading(false);
 
-      });
+        final WebViewController controller =
+        WebViewController.fromPlatformCreationParams(params);
+        controller
+          ..setJavaScriptMode(JavaScriptMode.unrestricted)
+          ..setNavigationDelegate(NavigationDelegate(
+            onProgress: (int progress) {
+              debugPrint('WebView loading: $progress%');
+            },
+            onPageStarted: (String url) {
+              debugPrint('Page started: $url');
+              if(url.contains('dingdone://com.in2uitions.dingdone')){
+                Future.delayed(Duration(seconds: 10));
+                Navigator.pop(context);
+              }
+            },
+            onPageFinished: (String url) {
+              debugPrint('Page finished: $url');
+            },
+            // onNavigationRequest: (NavigationRequest request) {
+            //   if (request.url.startsWith('https://www.youtube.com/')) {
+            //     return NavigationDecision.prevent;
+            //   }
+            //   return NavigationDecision.navigate;
+            // },
+            onWebResourceError: (WebResourceError error) {
+              debugPrint('WebView error: ${error.description}');
+            },
+          ))
+          ..addJavaScriptChannel('Toaster', onMessageReceived: (JavaScriptMessage message) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(message.message)),
+            );
+          })
+          ..loadRequest(Uri.parse('${result["transaction"]["url"]}'));
+
+        // If using Android-specific features.
+        if (controller.platform is AndroidWebViewController) {
+          AndroidWebViewController.enableDebugging(true);
+          (controller.platform as AndroidWebViewController)
+              .setMediaPlaybackRequiresUserGesture(false);
+        }
+
+        _controller = controller;
+        Navigator.of(context).push(_createRoute(Scaffold(
+          backgroundColor: Colors.green,
+          appBar: AppBar(
+            title: const Text('DingDone Payment'),
+            // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
+            actions: <Widget>[
+              NavigationControls(webViewController: _controller),
+              SampleMenu(webViewController: _controller),
+            ],
+          ),
+          body: WebViewWidget(controller: _controller),
+          // floatingActionButton: favoriteButton(),
+        )));
+      } else {
+        showDialog(
+            context: context,
+            builder: (BuildContext context) => simpleAlert(
+                context,
+                translate('button.failure'),
+                '${result['errors'] != null ? result['errors'][0]['description'] : result['error']}'
+            )
+        );
+      }
+      await widget.paymentViewModel.setLoading(false);
     } catch (error) {
-      debugPrint('error starting sdk $error');
+      debugPrint('Error starting SDK: $error');
     }
   }
+
+
 
   Future<void> _launchUrl(String url) async {
     if (Uri.tryParse(url)?.hasAbsolutePath != true) {
@@ -785,7 +607,364 @@ Widget simpleAlert(BuildContext context, String message, String message2) {
     ),
   );
 }
+class NavigationControls extends StatelessWidget {
+  const NavigationControls({super.key, required this.webViewController});
 
+  final WebViewController webViewController;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.arrow_back_ios),
+          onPressed: () async {
+            if (await webViewController.canGoBack()) {
+              await webViewController.goBack();
+            } else {
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('No back history item')),
+                );
+              }
+            }
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.arrow_forward_ios),
+          onPressed: () async {
+            if (await webViewController.canGoForward()) {
+              await webViewController.goForward();
+            } else {
+              if (context.mounted) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('No forward history item')),
+                );
+              }
+            }
+          },
+        ),
+        IconButton(
+          icon: const Icon(Icons.replay),
+          onPressed: () => webViewController.reload(),
+        ),
+      ],
+    );
+  }
+}
+
+enum MenuOptions {
+  showUserAgent,
+  listCookies,
+  clearCookies,
+  addToCache,
+  listCache,
+  clearCache,
+  navigationDelegate,
+  doPostRequest,
+  loadLocalFile,
+  loadFlutterAsset,
+  loadHtmlString,
+  transparentBackground,
+  setCookie,
+  logExample,
+  basicAuthentication,
+}
+
+class SampleMenu extends StatelessWidget {
+  SampleMenu({
+    super.key,
+    required this.webViewController,
+  });
+
+  final WebViewController webViewController;
+  late final WebViewCookieManager cookieManager = WebViewCookieManager();
+
+  @override
+  Widget build(BuildContext context) {
+    return PopupMenuButton<MenuOptions>(
+      key: const ValueKey<String>('ShowPopupMenu'),
+      onSelected: (MenuOptions value) {
+        switch (value) {
+          case MenuOptions.showUserAgent:
+            _onShowUserAgent();
+          case MenuOptions.listCookies:
+            _onListCookies(context);
+          case MenuOptions.clearCookies:
+            _onClearCookies(context);
+          case MenuOptions.addToCache:
+            _onAddToCache(context);
+          case MenuOptions.listCache:
+            _onListCache();
+          case MenuOptions.clearCache:
+            _onClearCache(context);
+          case MenuOptions.navigationDelegate:
+            // _onNavigationDelegateExample();
+          case MenuOptions.doPostRequest:
+            _onDoPostRequest();
+          case MenuOptions.loadLocalFile:
+            // _onLoadLocalFileExample();
+          case MenuOptions.loadFlutterAsset:
+            _onLoadFlutterAssetExample();
+          case MenuOptions.loadHtmlString:
+            // _onLoadHtmlStringExample();
+          case MenuOptions.transparentBackground:
+            // _onTransparentBackground();
+          case MenuOptions.setCookie:
+            _onSetCookie();
+          case MenuOptions.logExample:
+            // _onLogExample();
+          case MenuOptions.basicAuthentication:
+            // _promptForUrl(context);
+        }
+      },
+      itemBuilder: (BuildContext context) => <PopupMenuItem<MenuOptions>>[
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.showUserAgent,
+          child: Text('Show user agent'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.listCookies,
+          child: Text('List cookies'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.clearCookies,
+          child: Text('Clear cookies'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.addToCache,
+          child: Text('Add to cache'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.listCache,
+          child: Text('List cache'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.clearCache,
+          child: Text('Clear cache'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.navigationDelegate,
+          child: Text('Navigation Delegate example'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.doPostRequest,
+          child: Text('Post Request'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.loadHtmlString,
+          child: Text('Load HTML string'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.loadLocalFile,
+          child: Text('Load local file'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.loadFlutterAsset,
+          child: Text('Load Flutter Asset'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          key: ValueKey<String>('ShowTransparentBackgroundExample'),
+          value: MenuOptions.transparentBackground,
+          child: Text('Transparent background example'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.setCookie,
+          child: Text('Set cookie'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.logExample,
+          child: Text('Log example'),
+        ),
+        const PopupMenuItem<MenuOptions>(
+          value: MenuOptions.basicAuthentication,
+          child: Text('Basic Authentication Example'),
+        ),
+      ],
+    );
+  }
+  Future<void> _onShowUserAgent() {
+    // Send a message with the user agent string to the Toaster JavaScript channel we registered
+    // with the WebView.
+    return webViewController.runJavaScript(
+      'Toaster.postMessage("User Agent: " + navigator.userAgent);',
+    );
+  }
+
+  Future<void> _onListCookies(BuildContext context) async {
+    final String cookies = await webViewController
+        .runJavaScriptReturningResult('document.cookie') as String;
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            const Text('Cookies:'),
+            _getCookieList(cookies),
+          ],
+        ),
+      ));
+    }
+  }
+
+  Future<void> _onAddToCache(BuildContext context) async {
+    await webViewController.runJavaScript(
+      'caches.open("test_caches_entry"); localStorage["test_localStorage"] = "dummy_entry";',
+    );
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Added a test entry to cache.'),
+      ));
+    }
+  }
+
+  Future<void> _onListCache() {
+    return webViewController.runJavaScript('caches.keys()'
+    // ignore: missing_whitespace_between_adjacent_strings
+        '.then((cacheKeys) => JSON.stringify({"cacheKeys" : cacheKeys, "localStorage" : localStorage}))'
+        '.then((caches) => Toaster.postMessage(caches))');
+  }
+
+  Future<void> _onClearCache(BuildContext context) async {
+    await webViewController.clearCache();
+    await webViewController.clearLocalStorage();
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Cache cleared.'),
+      ));
+    }
+  }
+
+  Future<void> _onClearCookies(BuildContext context) async {
+    final bool hadCookies = await cookieManager.clearCookies();
+    String message = 'There were cookies. Now, they are gone!';
+    if (!hadCookies) {
+      message = 'There are no cookies.';
+    }
+    if (context.mounted) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(message),
+      ));
+    }
+  }
+
+  // Future<void> _onNavigationDelegateExample() {
+  //   final String contentBase64 = base64Encode(
+  //     const Utf8Encoder().convert(kNavigationExamplePage),
+  //   );
+  //   return webViewController.loadRequest(
+  //     Uri.parse('data:text/html;base64,$contentBase64'),
+  //   );
+  // }
+
+  Future<void> _onSetCookie() async {
+    await cookieManager.setCookie(
+      const WebViewCookie(
+        name: 'foo',
+        value: 'bar',
+        domain: 'httpbin.org',
+        path: '/anything',
+      ),
+    );
+    await webViewController.loadRequest(Uri.parse(
+      'https://httpbin.org/anything',
+    ));
+  }
+
+  Future<void> _onDoPostRequest() {
+    return webViewController.loadRequest(
+      Uri.parse('https://httpbin.org/post'),
+      method: LoadRequestMethod.post,
+      headers: <String, String>{'foo': 'bar', 'Content-Type': 'text/plain'},
+      body: Uint8List.fromList('Test Body'.codeUnits),
+    );
+  }
+
+  // Future<void> _onLoadLocalFileExample() async {
+  //   final String pathToIndex = await _prepareLocalFile();
+  //   await webViewController.loadFile(pathToIndex);
+  // }
+
+  Future<void> _onLoadFlutterAssetExample() {
+    return webViewController.loadFlutterAsset('assets/www/index.html');
+  }
+
+  // Future<void> _onLoadHtmlStringExample() {
+  //   return webViewController.loadHtmlString(kLocalExamplePage);
+  // }
+
+  // Future<void> _onTransparentBackground() {
+  //   return webViewController.loadHtmlString(kTransparentBackgroundPage);
+  // }
+
+  Widget _getCookieList(String cookies) {
+    if (cookies == '""') {
+      return Container();
+    }
+    final List<String> cookieList = cookies.split(';');
+    final Iterable<Text> cookieWidgets =
+    cookieList.map((String cookie) => Text(cookie));
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisSize: MainAxisSize.min,
+      children: cookieWidgets.toList(),
+    );
+  }
+
+  // static Future<String> _prepareLocalFile() async {
+  //   final String tmpDir = (await getTemporaryDirectory()).path;
+  //   final File indexFile = File(
+  //       <String>{tmpDir, 'www', 'index.html'}.join(Platform.pathSeparator));
+  //
+  //   await indexFile.create(recursive: true);
+  //   await indexFile.writeAsString(kLocalExamplePage);
+  //
+  //   return indexFile.path;
+  // }
+
+  // Future<void> _onLogExample() {
+  //   webViewController
+  //       .setOnConsoleMessage((JavaScriptConsoleMessage consoleMessage) {
+  //     debugPrint(
+  //         '== JS == ${consoleMessage.level.name}: ${consoleMessage.message}');
+  //   });
+  //
+  //   return webViewController.loadHtmlString(kLogExamplePage);
+  // }
+
+  Future<void> _promptForUrl(BuildContext context) {
+    final TextEditingController urlTextController = TextEditingController();
+
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Input URL to visit'),
+          content: TextField(
+            decoration: const InputDecoration(labelText: 'URL'),
+            autofocus: true,
+            controller: urlTextController,
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                if (urlTextController.text.isNotEmpty) {
+                  final Uri? uri = Uri.tryParse(urlTextController.text);
+                  if (uri != null && uri.scheme.isNotEmpty) {
+                    webViewController.loadRequest(uri);
+                    Navigator.pop(context);
+                  }
+                }
+              },
+              child: const Text('Visit'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => classname,
