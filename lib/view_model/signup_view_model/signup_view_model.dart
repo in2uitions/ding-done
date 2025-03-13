@@ -82,7 +82,7 @@ class SignUpViewModel with ChangeNotifier {
     String? emailMessage = '';
     String? passwordMessage = '';
     String? phoneMessage = '';
-    String? dobMessage = '';
+    // String? dobMessage = '';
     String? QIDMessage = '';
     String? paymentinfoMessage = '';
     String? categoriesMessage = '';
@@ -99,9 +99,9 @@ class SignUpViewModel with ChangeNotifier {
         lastnameMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['last_name']!] ?? '',
             index: 'Last name');
-        dobMessage = AppValidation().isNotEmpty(
-            value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
-            index: 'Date of birth');
+        // dobMessage = AppValidation().isNotEmpty(
+        //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
+        //     index: 'Date of birth');
         debugPrint('selected option is ${signUpBody['selectedOption']}');
 
         QIDMessage = signUpBody['selectedOption'] =='individual'?
@@ -113,14 +113,16 @@ class SignUpViewModel with ChangeNotifier {
             value: signUpBody['company'] ?? '',
             index: 'company'):'Please select a profile type';
         debugPrint('QIDMessage ${QIDMessage} ${signUpBody['selectedOption']}');
-        if (firstnameMessage == null && lastnameMessage == null && dobMessage == null&& QIDMessage == null) {
+        if (firstnameMessage == null && lastnameMessage == null
+            // && dobMessage == null
+            && QIDMessage == null) {
           notifyListeners();
           return true;
         }
         signUpErrors[EnglishStrings().formKeys['first_name']!] =
             firstnameMessage;
         signUpErrors[EnglishStrings().formKeys['last_name']!] = lastnameMessage;
-        signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
+        // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
         signUpBody['selectedOption'] =='individual'?
         signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage:
         signUpErrors[EnglishStrings().formKeys['company']!] = QIDMessage;
@@ -250,9 +252,9 @@ class SignUpViewModel with ChangeNotifier {
         phoneMessage = AppValidation().isValidPhoneNumber(
              signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
           );
-        dobMessage = AppValidation().isNotEmpty(
-            value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
-            index: 'Date of birth');
+        // dobMessage = AppValidation().isNotEmpty(
+        //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
+        //     index: 'Date of birth');
         passwordMessage = AppValidation().isValidPassword(
             signUpBody[EnglishStrings().formKeys['password']!] ?? '');
 
@@ -304,7 +306,7 @@ class SignUpViewModel with ChangeNotifier {
             emailMessage == null &&
             phoneMessage == null &&
             passwordMessage == null &&
-            dobMessage == null &&
+            // dobMessage == null &&
             streetMessage == null &&
             buildingMessage == null &&
             apartmentMessage == null &&
@@ -326,7 +328,7 @@ class SignUpViewModel with ChangeNotifier {
         signUpErrors[EnglishStrings().formKeys['email']!] = emailMessage;
         signUpErrors[EnglishStrings().formKeys['phone_number']!] = phoneMessage;
         signUpErrors[EnglishStrings().formKeys['password']!] = passwordMessage;
-        signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
+        // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
         signUpErrors[EnglishStrings().formKeys['supplier_services']!] =
             categoriesMessage;
         signUpErrors[EnglishStrings().formKeys['street_number']!] = streetMessage;
@@ -360,11 +362,13 @@ class SignUpViewModel with ChangeNotifier {
           lastnameMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['last_name']!] ?? '',
               index: 'Last name');
-          dobMessage = AppValidation().isNotEmpty(
-              value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
-              index: 'Date of birth');
+          // dobMessage = AppValidation().isNotEmpty(
+          //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
+          //     index: 'Date of birth');
 
-          if (firstnameMessage == null && lastnameMessage == null && dobMessage == null) {
+          if (firstnameMessage == null && lastnameMessage == null
+              // && dobMessage == null
+          ) {
             notifyListeners();
             return true;
           }
@@ -372,7 +376,7 @@ class SignUpViewModel with ChangeNotifier {
               firstnameMessage;
           signUpErrors[EnglishStrings().formKeys['last_name']!] =
               lastnameMessage;
-          signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
+          // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
 
           notifyListeners();
           return false;
@@ -491,9 +495,9 @@ class SignUpViewModel with ChangeNotifier {
           phoneMessage = AppValidation().isValidPhoneNumber(
               signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
             );
-          dobMessage = AppValidation().isNotEmpty(
-              value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
-              index: 'Date of birth');
+          // dobMessage = AppValidation().isNotEmpty(
+          //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
+          //     index: 'Date of birth');
           passwordMessage = AppValidation().isValidPassword(
               signUpBody[EnglishStrings().formKeys['password']!] ?? '');
           streetMessage = AppValidation().isNotEmpty(
@@ -537,7 +541,7 @@ class SignUpViewModel with ChangeNotifier {
               emailMessage == null &&
               phoneMessage == null &&
               passwordMessage == null &&
-              dobMessage == null &&
+              // dobMessage == null &&
               streetMessage == null &&
               buildingMessage == null &&
               apartmentMessage == null &&
@@ -554,7 +558,7 @@ class SignUpViewModel with ChangeNotifier {
           signUpErrors[EnglishStrings().formKeys['email']!] = emailMessage;
           signUpErrors[EnglishStrings().formKeys['phone_number']!] = phoneMessage;
           signUpErrors[EnglishStrings().formKeys['password']!] = passwordMessage;
-          signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
+          // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
           signUpErrors[EnglishStrings().formKeys['street_number']!] =
               streetMessage;
           signUpErrors[EnglishStrings().formKeys['building_number']!] =

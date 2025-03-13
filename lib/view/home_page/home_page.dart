@@ -332,6 +332,95 @@ class _HomePageState extends State<HomePage> {
                   ),
                   onTap: () => _onActionSheetPress(context),
                 ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: context.appValues.appPadding.p15,
+                    right: context.appValues.appPadding.p15,
+                  ),
+                  child: const Divider(
+                    height: 25,
+                    thickness: 2,
+                    color: Color(0xffEAEAFF),
+                  ),
+                ),
+                ListTile(
+                  title: Row(
+                    children: [
+                      const Icon(
+                        Icons.delete,
+                        size: 20,
+                        color: Colors.deepPurple,
+                      ),
+                      const Gap(10),
+                      Text(
+                        translate('drawer.deleteAccount'),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 16,
+                          color: const Color(0xff1F1F39),
+                        ),
+                      ),
+                    ],
+                  ),
+                  onTap: () async {
+                    // Show a confirmation dialog before executing deletion
+                    final bool? confirmed = await showDialog<bool>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          backgroundColor: Colors.white,
+
+                          title: const Text('Confirm Deletion'),
+                          content: const Text('Are you sure you want to delete your account?'),
+                          actions: <Widget>[
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text('Yes'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+
+                    if (confirmed == true) {
+                      // Execute deletion logic if the user confirmed
+                      await profileViewModel.patchUserData({'status': 'draft'});
+                      String? lang =
+                      await AppPreferences().get(key: language, isModel: false);
+                      AppPreferences().clear();
+                      AppProviders.disposeAllDisposableProviders(context);
+                      Navigator.of(context).push(_createRoute(const LoginScreen()));
+                      await AppPreferences().save(key: language, value: lang, isModel: false);
+                      if (lang == null) {
+                        lang = "en";
+                        await AppPreferences()
+                            .save(key: language, value: "en", isModel: false);
+                        await AppPreferences()
+                            .save(key: dblang, value: 'en-US', isModel: false);
+                      }
+                      if (lang == 'en') {
+                        await AppPreferences()
+                            .save(key: dblang, value: 'en-US', isModel: false);
+                      }
+                      if (lang == 'ar') {
+                        await AppPreferences()
+                            .save(key: dblang, value: 'ar-SA', isModel: false);
+                      }
+                      if (lang == 'ru') {
+                        await AppPreferences()
+                            .save(key: dblang, value: 'ru-RU', isModel: false);
+                      }
+                      if (lang == 'el') {
+                        await AppPreferences()
+                            .save(key: dblang, value: 'el-GR', isModel: false);
+                      }
+                    }
+                  },
+                ),
+
                 const Spacer(),
                 Padding(
                   padding: EdgeInsets.only(

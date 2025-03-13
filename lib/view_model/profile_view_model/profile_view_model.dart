@@ -247,6 +247,7 @@ Future<dynamic> getNotifications() async {
         "phone_code": body["phone_code"]!=null?body["phone_code"]:profileBody["user"]["phone_code"],
         "avatar": body["avatar"]!=null?body["avatar"]:profileBody["user"]["avatar"],
         "description": body["description"]!=null?body["description"]:profileBody["user"]["description"],
+        "status": body["status"]!=null?body["status"]:profileBody["user"]["status"],
       };
 
       // Add the new address to the existing list

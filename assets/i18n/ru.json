@@ -205,7 +205,8 @@
     "myAddressBook": "моя адресная книга",
     "support": "поддерживать",
     "aboutDingDone": "о DingDone",
-    "chooseLanguage": "выбрать язык"
+    "chooseLanguage": "выбрать язык",
+    "deleteAccount": "удалить аккаунт"
 
   },
   "termsAndConditionsCustomer": {

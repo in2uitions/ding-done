@@ -201,7 +201,8 @@
     "myAddressBook": "My Address Book",
     "support": "Support",
     "aboutDingDone": "About DingDone",
-    "chooseLanguage": "Choose Language"
+    "chooseLanguage": "Choose Language",
+    "deleteAccount": "Delete Account"
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "USERS AGREEMENT",

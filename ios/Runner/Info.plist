@@ -59,19 +59,19 @@
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>We need access to save files in the documents folder</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>Need location when in use</string>
+    <string>This app uses your location while in use to deliver personalized content and nearby services, ensuring a more relevant and enhanced experience</string>
     <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>Always and when in use!</string>
+    <string>This app requires access to your location both in the foreground and background to deliver personalized services, timely updates, and location-based notifications, ensuring you receive the most relevant information wherever you are</string>
     <key>NSLocationUsageDescription</key>
-    <string>Older devices need location.</string>
+    <string>This app uses your location to deliver personalized content and relevant local services, ensuring an enhanced experience tailored to where you are.</string>
     <key>NSLocationAlwaysUsageDescription</key>
-    <string>Can I have location always?</string>
+    <string>This app requires continuous access to your location to deliver personalized services, real-time updates, and location-based notifications—even when the app is not actively in use.</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app requires access to microphone for uploading audio</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>Example: You should fill this in</string>
+	<string>This app requires permission to add photos to your library so you can easily save and upload the requested service image or your personal image in your profile</string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Used to demonstrate image picker plugin</string>
+	<string>This app requires access to your photo library so you can select and share photos, enabling a personalized and engaging experience</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>LSApplicationQueriesSchemes</key>
