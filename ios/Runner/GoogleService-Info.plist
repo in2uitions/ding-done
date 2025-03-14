@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>88505680032-uutqcn8ve1i2rg7grh2rdk4pbfbm86ho.apps.googleusercontent.com</string>
+	<string>69249651926-ilrs70v68uss27839ks8065h818cjlua.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.88505680032-uutqcn8ve1i2rg7grh2rdk4pbfbm86ho</string>
+	<string>com.googleusercontent.apps.69249651926-ilrs70v68uss27839ks8065h818cjlua</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBbffywaxw_Vpbbtk7vsLwhis0MlUXwlYE</string>
+	<string>AIzaSyBHh__jTxcoBycZ-Dw4S-XEgSXABuWiK40</string>
 	<key>GCM_SENDER_ID</key>
-	<string>88505680032</string>
+	<string>69249651926</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.in2uitions.theUltimateAdventure</string>
+	<string>com.in2uitions.dingdone</string>
 	<key>PROJECT_ID</key>
-	<string>the-ultimate-adventure</string>
+	<string>dingdone-e23ab</string>
 	<key>STORAGE_BUCKET</key>
-	<string>the-ultimate-adventure.firebasestorage.app</string>
+	<string>dingdone-e23ab.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:88505680032:ios:4f50afd986f277617c49c5</string>
+	<string>1:69249651926:ios:ce796be610df8b3e1c6577</string>
 </dict>
 </plist>

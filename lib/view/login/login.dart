@@ -346,7 +346,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   // // Send the ID token to Directus for authentication
                                   final response = await http.post(
                                     Uri.parse(
-                                        'https://cms.dingdone.app/sso-login/google-sso-login'),
+                                        'https://cms.dingdone.app/sso-login/google'),
                                     headers: {
                                       'Content-Type': 'application/json',
                                       'Accept': 'application/json',

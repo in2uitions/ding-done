@@ -26,7 +26,7 @@
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>GIDClientID</key>
-    <string>88505680032-uutqcn8ve1i2rg7grh2rdk4pbfbm86ho.apps.googleusercontent.com</string>
+    <string>69249651926-ilrs70v68uss27839ks8065h818cjlua.apps.googleusercontent.com</string>
     <key>CFBundleURLTypes</key>
     <array>
         <dict>
@@ -34,7 +34,7 @@
         	<string>Editor</string>
         	<key>CFBundleURLSchemes</key>
         	<array>
-        	    <string>com.googleusercontent.apps.88505680032-uutqcn8ve1i2rg7grh2rdk4pbfbm86ho</string>
+        	    <string>com.googleusercontent.apps.69249651926-ilrs70v68uss27839ks8065h818cjlua</string>
         	</array>
         </dict>
         <dict>
