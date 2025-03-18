@@ -199,8 +199,10 @@ class LoginRepository {
     try {
       dynamic response = await _userApiService.getResponse();
       final jsonData = UserModel.fromJson(response['data']);
+      debugPrint('user details is $jsonData');
       return jsonData;
     } catch (e) {
+      debugPrint('error getting user details $e');
       rethrow;
     }
   }

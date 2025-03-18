@@ -15,6 +15,7 @@ import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
+import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,6 +24,7 @@ import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -287,10 +289,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     }),
                     SizedBox(height: context.appValues.appSize.s15),
-                    Consumer3<LoginViewModel, CategoriesViewModel,
-                        JobsViewModel>(
+                    Consumer4<LoginViewModel, CategoriesViewModel,
+                        JobsViewModel,ProfileViewModel>(
                         builder: (context, loginViewModel, categoriesViewModel,
-                            jobsViewModel, error) {
+                            jobsViewModel,profileViewModel, error) {
                         return Padding(
                           padding: EdgeInsets.symmetric(
                             horizontal: context.appValues.appPadding.p25,
@@ -363,13 +365,30 @@ class _LoginScreenState extends State<LoginScreen> {
                                   if (response.statusCode == 200) {
                                     final Map<String, dynamic> responseData =
                                         jsonDecode(response.body);
+                                    debugPrint('response data is $responseData');
                                     // Assuming Directus returns a user token
                                     final String directusToken =
                                         responseData['access_token'];
+                                    final prefs = await SharedPreferences.getInstance();
+
                                     await AppPreferences().save(
-                                        key: userTokenKey,
-                                        value: responseData['access_token'],
-                                        isModel: false);
+                                        key: userIdKey, value: responseData['user'], isModel: false);
+                                    await prefs.setString(userIdKey, '${responseData['user']}');
+                                    await AppPreferences().save(
+                                        key: userRoleKey, value: '008f8da4-ae7c-42f2-a498-68d490fe4593', isModel: false);
+                                    await prefs.setString(userRoleKey, '008f8da4-ae7c-42f2-a498-68d490fe4593');
+
+                                  await AppPreferences().save(
+                                      key: userTokenKey,
+                                      value: responseData['access_token'],
+                                      isModel: false);
+                                  await prefs.setString(
+                                      userIdKey, '${responseData['access_token']}');
+
+                                  await loginViewModel.isActiveUser();
+                                  await profileViewModel.getProfiledata();
+
+
                                     debugPrint(
                                         "Successfully signed in! Directus Token: $directusToken");
 
