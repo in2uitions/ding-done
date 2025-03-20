@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/card_info.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/payment_method_buttons.dart';
@@ -235,11 +236,34 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
             onProgress: (int progress) {
               debugPrint('WebView loading: $progress%');
             },
-            onPageStarted: (String url) {
+            onPageStarted: (String url) async {
               debugPrint('Page started: $url');
-              if(url.contains('dingdone://com.in2uitions.dingdone')){
-                Future.delayed(Duration(seconds: 10));
+              if(url.contains('dingdone://com.in2uitions.dingdone')) {
+                await Future.delayed(Duration(seconds: 6));
                 Navigator.pop(context);
+                Provider.of<PaymentViewModel>(context, listen: false).getPaymentMethodsTap();
+
+                // Consumer2<ProfileViewModel, PaymentViewModel>(
+                //   builder: (context, profileViewModel, paymentViewModel, _) {
+                //     // Ensure the payment methods are retrieved.
+                //     paymentViewModel.getPaymentMethods();
+                //
+                //     // Schedule the navigation after the current frame is built.
+                //     WidgetsBinding.instance.addPostFrameCallback((_) {
+                //       Navigator.of(context).push(_createRoute(
+                //         ConfirmPaymentMethod(
+                //           payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
+                //           paymentViewModel: paymentViewModel,
+                //           profileViewModel: profileViewModel,
+                //           role: userRole,
+                //         ),
+                //       ));
+                //     });
+                //
+                //     // Return an empty widget since nothing needs to be displayed here.
+                //     return Container();
+                //   },
+                // );
               }
             },
             onPageFinished: (String url) {

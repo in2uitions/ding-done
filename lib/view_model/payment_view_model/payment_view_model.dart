@@ -67,6 +67,7 @@ class PaymentViewModel extends DisposableViewModel {
 
   Future<dynamic> getPaymentMethodsTap() async {
     try {
+      debugPrint('getting cards https://api.tap.company/v2/card/${_profileViewModel.getProfileBody["tap_id"]}');
       var response = await http.get(
           Uri.parse(
               'https://api.tap.company/v2/card/${_profileViewModel.getProfileBody["tap_id"]}'),
@@ -77,6 +78,7 @@ class PaymentViewModel extends DisposableViewModel {
       var res = jsonDecode(response.body);
       debugPrint('response geetting cardn ${res["data"]}');
       _paymentCards=res["data"];
+      notifyListeners();
       return res["data"];
     } catch (e) {
       debugPrint('error in getting payments tap $e');

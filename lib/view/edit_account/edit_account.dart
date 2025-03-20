@@ -59,8 +59,10 @@ class _EditAccountState extends State<EditAccount> {
               : NetworkImage(
                   '${context.resources.image.networkImagePath}${image['image']}')
           : NetworkImage(
+              profileViewModel.getProfileBody['user']!=null?
               profileViewModel.getProfileBody['user']['avatar'] != null
                   ? '${context.resources.image.networkImagePath2}${profileViewModel.getProfileBody['user']['avatar']}'
+                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
                   : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
             );
 

@@ -4,8 +4,10 @@ import 'dart:convert';
 
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
+import 'package:dingdone/view/complete_profile/complete_profile.dart';
 import 'package:dingdone/view/forgot_password/forgot_password.dart';
 import 'package:dingdone/view/sign_up_as/country_selection.dart';
 import 'package:dingdone/view/sign_up_as/sign_up_as.dart';
@@ -290,169 +292,196 @@ class _LoginScreenState extends State<LoginScreen> {
                     }),
                     SizedBox(height: context.appValues.appSize.s15),
                     Consumer4<LoginViewModel, CategoriesViewModel,
-                        JobsViewModel,ProfileViewModel>(
+                            JobsViewModel, ProfileViewModel>(
                         builder: (context, loginViewModel, categoriesViewModel,
-                            jobsViewModel,profileViewModel, error) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: context.appValues.appPadding.p25,
-                          ),
-                          child: SizedBox(
-                            height: 56,
-                            width: context.appValues.appSizePercent.w100,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: context.resources.color.colorWhite,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.all(
-                                    Radius.circular(context.appValues.appSize.s10),
-                                  ),
+                            jobsViewModel, profileViewModel, error) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p25,
+                        ),
+                        child: SizedBox(
+                          height: 56,
+                          width: context.appValues.appSizePercent.w100,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  context.resources.color.colorWhite,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(
+                                      context.appValues.appSize.s10),
                                 ),
                               ),
-                              onPressed: () async {
-                                setState(() {
-                                  isLoadingGoogle = true;
-                                });
-                                try {
-                                  final GoogleSignIn _googleSignIn = GoogleSignIn(
-                                    scopes: ['email'],
-                                  );
-                                  // Sign out first to ensure fresh login
-                                  await _googleSignIn.signOut();
+                            ),
+                            onPressed: () async {
+                              setState(() {
+                                isLoadingGoogle = true;
+                              });
+                              try {
+                                final GoogleSignIn _googleSignIn = GoogleSignIn(
+                                  scopes: ['email'],
+                                );
+                                // Sign out first to ensure fresh login
+                                await _googleSignIn.signOut();
 
-                                  // Start Google Sign-In
-                                  final GoogleSignInAccount? googleUser =
-                                      await _googleSignIn.signIn();
-                                  if (googleUser == null) {
-                                    debugPrint("User canceled Google Sign-In");
-                                    return;
-                                  }
+                                // Start Google Sign-In
+                                final GoogleSignInAccount? googleUser =
+                                    await _googleSignIn.signIn();
+                                if (googleUser == null) {
+                                  debugPrint("User canceled Google Sign-In");
+                                  return;
+                                }
 
-                                  // Get authentication details from Google
-                                  final GoogleSignInAuthentication googleAuth =
-                                      await googleUser.authentication;
+                                // Get authentication details from Google
+                                final GoogleSignInAuthentication googleAuth =
+                                    await googleUser.authentication;
 
-                                  // Get the ID token (used for Directus authentication)
-                                  final String? idToken = googleAuth.idToken;
-                                  final String? accessToken =
-                                      googleAuth.accessToken;
+                                // Get the ID token (used for Directus authentication)
+                                final String? idToken = googleAuth.idToken;
+                                final String? accessToken =
+                                    googleAuth.accessToken;
 
-                                  debugPrint("Google ID Token: $idToken");
-                                  debugPrint("access Token: $accessToken");
-                                  //
-                                  if (idToken == null) {
-                                    debugPrint("Error: ID token is null.");
-                                    return;
-                                  }
-                                  //
-                                  // // Send the ID token to Directus for authentication
-                                  final response = await http.post(
-                                    Uri.parse(
-                                        'https://cms.dingdone.app/sso-login/google'),
-                                    headers: {
-                                      'Content-Type': 'application/json',
-                                      'Accept': 'application/json',
-                                    },
-                                    body: jsonEncode({'idToken': idToken}),
-                                  );
-                                  //
-                                  //
-                                  debugPrint(
-                                      'Directus Response Status: ${response.statusCode}');
-                                  debugPrint(
-                                      'Directus Response Body: ${response.body}');
-                                  //
-                                  if (response.statusCode == 200) {
-                                    final Map<String, dynamic> responseData =
-                                        jsonDecode(response.body);
-                                    debugPrint('response data is $responseData');
-                                    // Assuming Directus returns a user token
-                                    final String directusToken =
-                                        responseData['access_token'];
-                                    final prefs = await SharedPreferences.getInstance();
+                                debugPrint("Google ID Token: $idToken");
+                                debugPrint("access Token: $accessToken");
+                                //
+                                if (idToken == null) {
+                                  debugPrint("Error: ID token is null.");
+                                  return;
+                                }
+                                //
+                                // // Send the ID token to Directus for authentication
+                                final response = await http.post(
+                                  Uri.parse(
+                                      'https://cms.dingdone.app/sso-login/google'),
+                                  headers: {
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                  },
+                                  body: jsonEncode({'idToken': idToken}),
+                                );
+                                //
+                                //
+                                debugPrint(
+                                    'Directus Response Status: ${response.statusCode}');
+                                debugPrint(
+                                    'Directus Response Body: ${response.body}');
+                                //
+                                if (response.statusCode == 200) {
+                                  final Map<String, dynamic> responseData =
+                                      jsonDecode(response.body);
+                                  debugPrint('response data is $responseData');
+                                  // Assuming Directus returns a user token
+                                  final String directusToken =
+                                      responseData['access_token'];
+                                  final prefs =
+                                      await SharedPreferences.getInstance();
 
-                                    await AppPreferences().save(
-                                        key: userIdKey, value: responseData['user'], isModel: false);
-                                    await prefs.setString(userIdKey, '${responseData['user']}');
-                                    await AppPreferences().save(
-                                        key: userRoleKey, value: '008f8da4-ae7c-42f2-a498-68d490fe4593', isModel: false);
-                                    await prefs.setString(userRoleKey, '008f8da4-ae7c-42f2-a498-68d490fe4593');
+                                  await AppPreferences().save(
+                                      key: userIdKey,
+                                      value: responseData['user'],
+                                      isModel: false);
+                                  await prefs.setString(
+                                      userIdKey, '${responseData['user']}');
+                                  await AppPreferences().save(
+                                      key: userRoleKey,
+                                      value:
+                                          '008f8da4-ae7c-42f2-a498-68d490fe4593',
+                                      isModel: false);
+                                  await prefs.setString(userRoleKey,
+                                      '008f8da4-ae7c-42f2-a498-68d490fe4593');
 
                                   await AppPreferences().save(
                                       key: userTokenKey,
                                       value: responseData['access_token'],
                                       isModel: false);
                                   await prefs.setString(
-                                      userIdKey, '${responseData['access_token']}');
+                                      userTokenKey, '${responseData['access_token']}');
 
                                   await loginViewModel.isActiveUser();
                                   await profileViewModel.getProfiledata();
 
+                                  debugPrint(
+                                      "Successfully signed in! Directus Token: $directusToken");
 
-                                    debugPrint(
-                                        "Successfully signed in! Directus Token: $directusToken");
-
-                                        await categoriesViewModel
-                                            .getCategoriesAndServices();
-                                        await jobsViewModel.readJson();
-                                        Navigator.of(context).push(
-                                        _createRoute(BottomBar(
-                                            userRole: loginViewModel
-                                                .userRole)));
-
-
-                                    // TODO: Save token to local storage for future authenticated requests
-                                  } else {
-                                    debugPrint(
-                                        "Failed to sign in with Directus: ${response.body}");
-                                  }
-                                  // _handleGoogleSignIn();
-                                  // var data =await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'));
-                                  // debugPrint('dataaa $data');
-                                  // if (!await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'))) {
-                                  //   throw Exception('Could not launch url');
+                                  await categoriesViewModel
+                                      .getCategoriesAndServices();
+                                  await jobsViewModel.readJson();
+                                  // if(profileViewModel.getProfileBody['first_name']!=null
+                                  // && profileViewModel.getProfileBody['last_name']!=null
+                                  // && profileViewModel.getProfileBody['phone_number']!=null
+                                  // && profileViewModel.getProfileBody['email']!=null
+                                  // && profileViewModel.getProfileBody['latitude']!=null
+                                  // && profileViewModel.getProfileBody['longitude']!=null
+                                  // && profileViewModel.getProfileBody['address']!=null
+                                  // && profileViewModel.getProfileBody['city']!=null
+                                  // && profileViewModel.getProfileBody['street_number']!=null
+                                  // && profileViewModel.getProfileBody['building_number']!=null
+                                  // && profileViewModel.getProfileBody['floor']!=null
+                                  // && profileViewModel.getProfileBody['apartment_number']!=null
+                                  // && profileViewModel.getProfileBody['zone']!=null
+                                  // && profileViewModel.getProfileBody['address_label']!=null
+                                  // && profileViewModel.profileBody['user']['avatar']!=null
+                                  // ){
+                                    Navigator.of(context).push(_createRoute(
+                                        BottomBar(
+                                            userRole: Constants.customerRoleId)));
+                                  // }else{
+                                  //   Navigator.of(context).push(_createRoute(
+                                  //       CompleteProfileScreen(initialIndex: 0)));
                                   // }
-                                  // loginGoogle();
-                                  // _launchGoogleSignIn();
-                                } catch (e) {
-                                  debugPrint("Error signing in with Google: $e");
-                                }
+                                 
 
-                                setState(() {
-                                  isLoadingGoogle = false;
-                                });
-                              },
-                              child: (isLoadingGoogle)
-                                  ? const SizedBox(
-                                      width: 16,
-                                      height: 16,
-                                      child: CircularProgressIndicator(
-                                        color: Colors.white,
-                                        strokeWidth: 1.5,
-                                      ))
-                                  : Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        SvgPicture.asset(
-                                            'assets/img/014-google.svg'),
-                                        SizedBox(
-                                            width: context.appValues.appSize.s10),
-                                        Text(
-                                          translate(
-                                              'login_screen.connectWithGoogle'),
-                                          style: getPrimaryRegularStyle(
-                                            color: context
-                                                .resources.color.secondColorBlue,
-                                            fontSize: 22,
-                                          ),
+                                  // TODO: Save token to local storage for future authenticated requests
+                                } else {
+                                  debugPrint(
+                                      "Failed to sign in with Directus: ${response.body}");
+                                }
+                                // _handleGoogleSignIn();
+                                // var data =await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'));
+                                // debugPrint('dataaa $data');
+                                // if (!await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'))) {
+                                //   throw Exception('Could not launch url');
+                                // }
+                                // loginGoogle();
+                                // _launchGoogleSignIn();
+                              } catch (e) {
+                                debugPrint("Error signing in with Google: $e");
+                              }
+
+                              setState(() {
+                                isLoadingGoogle = false;
+                              });
+                            },
+                            child: (isLoadingGoogle)
+                                ? const SizedBox(
+                                    width: 16,
+                                    height: 16,
+                                    child: CircularProgressIndicator(
+                                      color: Colors.white,
+                                      strokeWidth: 1.5,
+                                    ))
+                                : Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/img/014-google.svg'),
+                                      SizedBox(
+                                          width: context.appValues.appSize.s10),
+                                      Text(
+                                        translate(
+                                            'login_screen.connectWithGoogle'),
+                                        style: getPrimaryRegularStyle(
+                                          color: context
+                                              .resources.color.secondColorBlue,
+                                          fontSize: 22,
                                         ),
-                                      ],
-                                    ),
-                            ),
+                                      ),
+                                    ],
+                                  ),
                           ),
-                        );
-                      }
-                    ),
+                        ),
+                      );
+                    }),
                     SizedBox(height: context.appValues.appSize.s15),
                     // Padding(
                     //   padding: EdgeInsets.symmetric(

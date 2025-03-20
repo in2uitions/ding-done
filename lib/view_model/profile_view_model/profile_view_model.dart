@@ -20,6 +20,8 @@ class ProfileViewModel extends DisposableViewModel {
   List<dynamic>? _selectedServices=List.empty();
   List<dynamic>? _notifications=List.empty();
   String? lang;
+  Map<String?, String?> profileErrors = {};
+
   Future<void> readJson() async {
 
     await getProfiledata();
@@ -334,6 +336,258 @@ Future<dynamic> getNotifications() async {
   }
   Future<dynamic> getData() async{
     return profileBody;
+  }
+  bool validateData({required int index}) {
+    // profileBody = {};
+    String? firstnameMessage = '';
+    String? lastnameMessage = '';
+    String? streetMessage = '';
+    String? buildingMessage = '';
+    String? apartmentMessage = '';
+    String? cityMessage = '';
+    String? zoneMessage = '';
+    String? addressLabelMessage = '';
+    String? countryMessage = '';
+    String? floorMessage = '';
+    String? longitudeMessage = '';
+    String? latitudeMessage = '';
+    String? emailMessage = '';
+    String? passwordMessage = '';
+    String? phoneMessage = '';
+    // String? dobMessage = '';
+
+    String? role = profileBody['role'];
+    debugPrint('profile body in validate $profileBody')
+;
+
+        if (index == 0) {
+          firstnameMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['first_name']!] ?? '',
+              index: 'First name');
+          lastnameMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['last_name']!] ?? '',
+              index: 'Last name');
+          // dobMessage = AppValidation().isNotEmpty(
+          //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
+          //     index: 'Date of birth');
+
+          if (firstnameMessage == null && lastnameMessage == null
+          // && dobMessage == null
+          ) {
+            notifyListeners();
+            return true;
+          }
+          profileBody[EnglishStrings().formKeys['first_name']!] =
+              firstnameMessage;
+          profileBody[EnglishStrings().formKeys['last_name']!] =
+              lastnameMessage;
+          // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
+
+          notifyListeners();
+          return false;
+        }
+
+        if (index == 1) {
+          emailMessage = AppValidation().isEmailValid(
+              profileBody[EnglishStrings().formKeys['email']!] ?? '');
+          phoneMessage = AppValidation().isValidPhoneNumber(
+
+            profileBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+          );
+
+          if (emailMessage == null && phoneMessage == null) {
+            notifyListeners();
+            return true;
+          }
+          profileErrors[EnglishStrings().formKeys['email']!] = emailMessage;
+          profileErrors[EnglishStrings().formKeys['phone_number']!] =
+              phoneMessage;
+          notifyListeners();
+          return false;
+        }
+
+        // if (index == 2) {
+        //   passwordMessage = AppValidation().isValidPassword(
+        //       profileBody[EnglishStrings().formKeys['password']!] ?? '');
+        //   if (passwordMessage == null) {
+        //     notifyListeners();
+        //     return true;
+        //   }
+        //   profileErrors[EnglishStrings().formKeys['password']!] =
+        //       passwordMessage;
+        //   notifyListeners();
+        //   return false;
+        //
+        // }
+
+        if (index == 2) {
+          streetMessage = AppValidation().isNotEmpty(
+              value:
+              profileBody[EnglishStrings().formKeys['street_number']!] ?? '',
+              index: 'Street Number');
+          buildingMessage = AppValidation().isNotEmpty(
+              value:
+              profileBody[EnglishStrings().formKeys['building_number']!] ??
+                  '',
+              index: 'Building Number');
+          apartmentMessage = AppValidation().isNotEmpty(
+              value:
+              profileBody[EnglishStrings().formKeys['apartment_number']!] ??
+                  '',
+              index: 'Apartment Number');
+          cityMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['city']!] ?? '',
+              index: 'City');
+          zoneMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['zone']!] ?? '',
+              index: 'Zone');
+          addressLabelMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['address_label']!] ?? '',
+              index: 'Address Label');
+          countryMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['country']!] ?? '',
+              index: 'Country');
+          floorMessage = AppValidation().isNotEmpty(
+              value:
+              profileBody[EnglishStrings().formKeys['floor']!] ?? '',
+              index: 'Floor');
+          longitudeMessage = AppValidation().isNotEmpty(
+              value: profileBody['longitude'] ?? '',
+              index: 'Longitude');
+          latitudeMessage = AppValidation().isNotEmpty(
+              value: profileBody['latitude'] ?? '',
+              index: 'Latitude');
+          if (
+          streetMessage == null &&
+              buildingMessage == null &&
+              apartmentMessage == null &&
+              cityMessage == null &&
+              zoneMessage == null &&
+              addressLabelMessage == null &&
+              countryMessage == null &&
+              floorMessage == null && latitudeMessage==null && longitudeMessage==null) {
+            notifyListeners();
+            return true;
+          }
+
+          profileErrors[EnglishStrings().formKeys['street_number']!] =
+              streetMessage;
+          profileErrors[EnglishStrings().formKeys['building_number']!] =
+              buildingMessage;
+          profileErrors[EnglishStrings().formKeys['apartment_number']!] =
+              apartmentMessage;
+          profileErrors[EnglishStrings().formKeys['city']!] = cityMessage;
+          profileErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+          profileErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
+          profileErrors[EnglishStrings().formKeys['country']!] = countryMessage;
+          profileErrors[EnglishStrings().formKeys['floor']!] =
+              floorMessage;
+          profileErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
+          profileErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
+          notifyListeners();
+          return false;
+        }
+
+        if (index == 3) {
+          firstnameMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['first_name']!] ?? '',
+              index: 'First name');
+          lastnameMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['last_name']!] ?? '',
+              index: 'Last name');
+          emailMessage = AppValidation().isEmailValid(
+              profileBody[EnglishStrings().formKeys['email']!] ?? '');
+          phoneMessage = AppValidation().isValidPhoneNumber(
+            profileBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+          );
+          // dobMessage = AppValidation().isNotEmpty(
+          //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
+          //     index: 'Date of birth');
+          passwordMessage = AppValidation().isValidPassword(
+              profileBody[EnglishStrings().formKeys['password']!] ?? '');
+          streetMessage = AppValidation().isNotEmpty(
+              value:
+              profileBody[EnglishStrings().formKeys['street_number']!] ?? '',
+              index: 'Street Number');
+          buildingMessage = AppValidation().isNotEmpty(
+              value:
+              profileBody[EnglishStrings().formKeys['building_number']!] ??
+                  '',
+              index: 'Building Number');
+          apartmentMessage = AppValidation().isNotEmpty(
+              value:
+              profileBody[EnglishStrings().formKeys['apartment_number']!] ??
+                  '',
+              index: 'Apartment Number');
+          cityMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['city']!] ?? '',
+              index: 'City');
+          zoneMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['zone']!] ?? '',
+              index: 'Zone');
+          addressLabelMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['address_label']!] ?? '',
+              index: 'Address Label');
+          countryMessage = AppValidation().isNotEmpty(
+              value: profileBody[EnglishStrings().formKeys['country']!] ?? '',
+              index: 'Country');
+          floorMessage = AppValidation().isNotEmpty(
+              value:
+              profileBody[EnglishStrings().formKeys['floor']!] ?? '',
+              index: 'Floor');
+          longitudeMessage = AppValidation().isNotEmpty(
+              value: profileBody['longitude'] ?? '',
+              index: 'Longitude');
+          latitudeMessage = AppValidation().isNotEmpty(
+              value: profileBody['latitude'] ?? '',
+              index: 'Latitude');
+          if (firstnameMessage == null &&
+              lastnameMessage == null &&
+              emailMessage == null &&
+              phoneMessage == null &&
+              // passwordMessage == null &&
+              // dobMessage == null &&
+              streetMessage == null &&
+              buildingMessage == null &&
+              apartmentMessage == null &&
+              cityMessage == null &&
+              floorMessage == null &&
+              countryMessage == null &&
+              zoneMessage == null  && addressLabelMessage == null  && latitudeMessage==null && longitudeMessage==null) {
+            notifyListeners();
+            return true;
+          }
+          profileErrors[EnglishStrings().formKeys['first_name']!] =
+              firstnameMessage;
+          profileErrors[EnglishStrings().formKeys['last_name']!] = lastnameMessage;
+          profileErrors[EnglishStrings().formKeys['email']!] = emailMessage;
+          profileErrors[EnglishStrings().formKeys['phone_number']!] = phoneMessage;
+          profileErrors[EnglishStrings().formKeys['password']!] = passwordMessage;
+          // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
+          profileErrors[EnglishStrings().formKeys['street_number']!] =
+              streetMessage;
+          profileErrors[EnglishStrings().formKeys['building_number']!] =
+              buildingMessage;
+          profileErrors[EnglishStrings().formKeys['apartment_number']!] =
+              apartmentMessage;
+          profileErrors[EnglishStrings().formKeys['city']!] = cityMessage;
+          profileErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+          profileErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
+          profileErrors[EnglishStrings().formKeys['country']!] =
+              countryMessage;
+          profileErrors[EnglishStrings().formKeys['floor']!] =
+              floorMessage;
+          profileErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
+          profileErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
+          notifyListeners();
+          return false;
+
+        }
+
+
+
+    notifyListeners();
+    return false;
   }
 
   Future<String> getUserId() async {

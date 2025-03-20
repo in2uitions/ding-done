@@ -211,6 +211,7 @@ class LoginViewModel with ChangeNotifier {
       await prefs.setString(userIdKey, '${_userModelResponse.data?.id}');
 
       _userRole = _userModelResponse.data?.role;
+      debugPrint('user role is $_userRole');
       await AppPreferences().save(
           key: userRoleKey,
           value: _userModelResponse.data?.role,
