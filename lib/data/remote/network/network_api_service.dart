@@ -101,6 +101,7 @@ class NetworkApiService extends BaseApiService {
     if (sendToken) {
       String tokenValue = await getToken();
       if (tokenValue != '') {
+        debugPrint('there is a token');
         headers[HttpHeaders.authorizationHeader] = tokenValue;
       }
       headers[HttpHeaders.authorizationHeader] = await getToken();
@@ -108,7 +109,7 @@ class NetworkApiService extends BaseApiService {
     debugPrint('final kkk}');
 
     headers[HttpHeaders.contentTypeHeader] = 'application/json';
-    headers[HttpHeaders.authorizationHeader] = await getToken();
+    // headers[HttpHeaders.authorizationHeader] = await getToken();
     // headers[HttpHeaders.authorizationHeader] =
     // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
     String finalUrl = baseUrl + url;
@@ -125,9 +126,11 @@ class NetworkApiService extends BaseApiService {
       response = await http.post(Uri.parse(finalUrl),
           headers: headers,
           body: jsonEncode(data));
+      debugPrint('response ${response.body}');
 
       responseJson = returnResponse(response);
     } catch (error) {
+      debugPrint('error network api $error');
       rethrow;
     }
     return responseJson;

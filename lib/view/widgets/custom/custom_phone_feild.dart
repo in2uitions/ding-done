@@ -31,7 +31,7 @@ class _CustomPhoneFeildState extends State<CustomPhoneFeild> {
   GlobalKey<FormFieldState<String>>();
   final TextEditingController _customController = TextEditingController();
 
-  String countryCode = '+974'; // Default country code (e.g., Qatar)
+  String countryCode = '974'; // Default country code (e.g., Qatar)
 
   @override
   void initState() {
@@ -96,7 +96,7 @@ class _CustomPhoneFeildState extends State<CustomPhoneFeild> {
       onCountryChanged: (country) {
         setState(() {
           // Update the country code when the selected country changes
-          countryCode = '+${country.dialCode}';
+          countryCode = '${country.dialCode}';
         });
         // Update the full phone number in the view model
         widget.viewModel(index: widget.index, value: '$countryCode${_customController.text}');

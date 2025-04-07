@@ -286,8 +286,8 @@ class LoginViewModel with ChangeNotifier {
     try {
       debugPrint('reset sms ${_loginCredentials["reset-phone"]}');
       final response = _loginRepository
-          .sendResetSMS({'recipientPhone': _loginCredentials["reset-phone"]});
-      debugPrint('response sending sms $response');
+          .sendResetSMS({'recipients': _loginCredentials["reset-phone"]});
+      debugPrint('response sending sms ${response}');
 
       return true;
     } catch (error) {

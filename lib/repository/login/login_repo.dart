@@ -111,9 +111,10 @@ class LoginRepository {
       // await AppPreferences()
       //     .save(key: userIdTochangePassword, value: body["id"], isModel: false);
       dynamic response = await _apisendSMS.postResponse(data: {
-        'recipientPhone': body['recipientPhone'].toString(),
-        'smsText': 'Hi,\n this is your OTP $rndnumber'
-      });
+        'recipients': [body['recipients'].toString()],
+        'text': 'Hi,\n this is your code $rndnumber',
+      'sender': 'Optica'
+      },sendToken: false);
 
       // http.Response res = await http.post(
       //     Uri.parse("https://cms.dingdone.app/registerUser/sendOTP"),
