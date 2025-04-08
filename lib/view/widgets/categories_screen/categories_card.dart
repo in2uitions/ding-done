@@ -33,7 +33,8 @@ class _CategoriescardState extends State<Categoriescard> {
         onTap: widget.onTap,
         child: Container(
           width: context.appValues.appSizePercent.w100,
-          height: context.appValues.appSizePercent.h15,
+          // height: context.appValues.appSizePercent.h15,
+          height: 76,
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
@@ -49,19 +50,19 @@ class _CategoriescardState extends State<Categoriescard> {
           child: Row(
             children: [
               Container(
-                width: context.appValues.appSizePercent.w35,
+                // width: context.appValues.appSizePercent.w35,
+                width: 76,
                 height: context.appValues.appSizePercent.h100,
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(widget.image),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(15),
-                      bottomRight: Radius.circular(50),
-                      topLeft: Radius.circular(15),
-                      topRight: Radius.circular(15),
-                    )),
+                  color: const Color(0xffEAEAFF),
+                  image: DecorationImage(
+                    image: NetworkImage(widget.image),
+                    fit: BoxFit.cover,
+                  ),
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(15),
+                  ),
+                ),
               ),
               const Gap(30),
               Flexible(
@@ -74,7 +75,7 @@ class _CategoriescardState extends State<Categoriescard> {
                       maxLines: 2, // Limit the number of lines to 1
                       overflow: TextOverflow.ellipsis,
                       style: getPrimaryBoldStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: context.resources.color.btnColorBlue,
                       ),
                     ),
@@ -83,8 +84,8 @@ class _CategoriescardState extends State<Categoriescard> {
                       maxLines: 1, // Limit the number of lines to 1
                       overflow: TextOverflow.ellipsis,
                       style: getPrimaryRegularStyle(
-                        fontSize: 14,
-                        color: context.resources.color.btnColorBlue,
+                        fontSize: 10,
+                        color: const Color(0xff6E6BE8),
                       ),
                     ),
                   ],

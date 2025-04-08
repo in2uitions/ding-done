@@ -14,16 +14,16 @@ import '../../view_model/services_view_model/services_view_model.dart';
 import '../book_a_service/book_a_service.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  var categoriesViewModel;
-  var initialTabIndex;
-  var serviceViewModel;
+  final dynamic categoriesViewModel;
+  final dynamic initialTabIndex;
+  final dynamic serviceViewModel;
 
   CategoriesScreen({
-    super.key,
+    Key? key,
     required this.categoriesViewModel,
     required this.initialTabIndex,
     required this.serviceViewModel,
-  });
+  }) : super(key: key);
 
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
@@ -31,10 +31,11 @@ class CategoriesScreen extends StatefulWidget {
 
 class _CategoriesScreenState extends State<CategoriesScreen>
     with TickerProviderStateMixin {
-  TabController? _tabController; // Declare a TabController
+  TabController? _tabController;
   final bool isSelected = false;
   String? lang;
 
+  @override
   void initState() {
     super.initState();
     _tabController = TabController(
@@ -60,8 +61,8 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   @override
   Widget build(BuildContext context) {
     if (lang == null) {
-      // Display a loading indicator or handle the case where lang is not initialized yet
-      return const CircularProgressIndicator(); // Placeholder loading indicator
+      // Display a loading indicator or handle the case where lang is not initialized yet.
+      return const Center(child: CircularProgressIndicator());
     }
 
     return Scaffold(
@@ -70,21 +71,16 @@ class _CategoriesScreenState extends State<CategoriesScreen>
         children: [
           Column(
             children: [
-              // Header with back button and title
+              // Header with back button and title.
               Padding(
                 padding: EdgeInsets.all(context.appValues.appPadding.p0),
                 child: Stack(
                   children: [
-                    // Background image
                     Container(
                       width: context.appValues.appSizePercent.w100,
                       height: context.appValues.appSizePercent.h50,
                       decoration: const BoxDecoration(
                         color: Color(0xff4100E3),
-                        // image: DecorationImage(
-                        //   image: AssetImage('assets/img/jobimage.png'),
-                        //   fit: BoxFit.cover,
-                        // ),
                       ),
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -129,7 +125,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
               ),
             ],
           ),
-          // DraggableScrollableSheet for content
+          // DraggableScrollableSheet for content.
           DraggableScrollableSheet(
             initialChildSize: 0.85,
             minChildSize: 0.85,
@@ -146,27 +142,42 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                 child: Column(
                   children: [
                     const Gap(30),
-                    // TabBar for categories
-                    SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: TabBar(
-                        tabAlignment: TabAlignment.start,
-                        controller: _tabController,
-                        labelStyle: getPrimaryBoldStyle(
-                          fontSize: 20,
-                          color: context.resources.color.btnColorBlue,
+                    // Updated custom styled TabBar:
+                    Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 16),
+                      decoration: BoxDecoration(
+                        color: const Color(0xffEAEAFF),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: TabBar(
+                          tabAlignment: TabAlignment.start,
+                          dividerColor: Colors.transparent,
+                          controller: _tabController,
+                          isScrollable: true,
+                          labelPadding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 5),
+                          indicatorSize: TabBarIndicatorSize.tab,
+                          indicatorPadding: const EdgeInsets.symmetric(
+                              horizontal: 5, vertical: 3),
+                          indicator: BoxDecoration(
+                            color: const Color(0xff4100E3),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          // Remove default underline.
+                          indicatorColor: Colors.transparent,
+                          indicatorWeight: 0,
+                          labelColor: Colors.white,
+                          unselectedLabelColor: const Color(0xff4100E3),
+                          tabs: widget.categoriesViewModel.categoriesList
+                              .map<Widget>(
+                                  (category) => buildCategoryWidget(category))
+                              .toList(),
                         ),
-                        unselectedLabelColor: const Color(0xffBEC2CE),
-                        indicatorSize: TabBarIndicatorSize.tab,
-                        indicatorWeight: 3,
-                        isScrollable: true, // Allow the TabBar to scroll
-                        tabs: widget.categoriesViewModel.categoriesList
-                            .map<Widget>(
-                                (category) => buildCategoryWidget(category))
-                            .toList(),
                       ),
                     ),
-                    // TabBarView for services in each category
+                    // TabBarView for services in each category.
                     Expanded(
                       child: TabBarView(
                         controller: _tabController,
@@ -188,7 +199,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                                     in service["translations"]) {
                                   if (translation["languages_code"] == lang) {
                                     services = translation;
-                                    break; // Break the loop once the translation is found
+                                    break;
                                   }
                                 }
                                 return Consumer2<JobsViewModel,
@@ -229,6 +240,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     );
   }
 
+  /// Simplified buildCategoryWidget that returns a Tab with the title.
   Widget buildCategoryWidget(Map<String, dynamic> category) {
     Map<String, dynamic>? categories;
     for (Map<String, dynamic> translation in category["translations"]) {
@@ -238,20 +250,12 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       }
     }
     return Tab(
-      child: Text(
-        categories != null ? categories!["title"].toString() : '',
-        style: TextStyle(
-          color: _tabController!.index == _tabController!.index
-              ? context.resources.color.btnColorBlue
-              : Colors.grey,
-        ),
-      ),
+      text: categories != null ? categories["title"].toString() : '',
     );
   }
 
   void _handleServiceSelection(Map<String, dynamic> service,
       JobsViewModel jobsViewModel, ProfileViewModel profileViewModel) {
-    // Logic to handle service selection and navigation to next screen
     if (lang == null) {
       lang = 'en-US';
     }
@@ -290,10 +294,8 @@ class _CategoriesScreenState extends State<CategoriesScreen>
         const begin = Offset(1.0, 0.0);
         const end = Offset.zero;
         const curve = Curves.ease;
-
         var tween =
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
         return SlideTransition(
           position: animation.drive(tween),
           child: child,
