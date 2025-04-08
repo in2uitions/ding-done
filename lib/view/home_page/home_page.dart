@@ -8,6 +8,7 @@ import 'package:dingdone/view/about/about_dingdone.dart';
 import 'package:dingdone/view/categories/parent_categories.dart';
 import 'package:dingdone/view/categories_screen/categories_screen.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
+import 'package:dingdone/view/services_screen/services_screen.dart';
 import 'package:dingdone/view/widgets/home_page/categories.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -368,9 +369,9 @@ class _HomePageState extends State<HomePage> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           backgroundColor: Colors.white,
-
                           title: const Text('Confirm Deletion'),
-                          content: const Text('Are you sure you want to delete your account?'),
+                          content: const Text(
+                              'Are you sure you want to delete your account?'),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(false),
@@ -388,12 +389,14 @@ class _HomePageState extends State<HomePage> {
                     if (confirmed == true) {
                       // Execute deletion logic if the user confirmed
                       await profileViewModel.patchUserData({'status': 'draft'});
-                      String? lang =
-                      await AppPreferences().get(key: language, isModel: false);
+                      String? lang = await AppPreferences()
+                          .get(key: language, isModel: false);
                       AppPreferences().clear();
                       AppProviders.disposeAllDisposableProviders(context);
-                      Navigator.of(context).push(_createRoute(const LoginScreen()));
-                      await AppPreferences().save(key: language, value: lang, isModel: false);
+                      Navigator.of(context)
+                          .push(_createRoute(const LoginScreen()));
+                      await AppPreferences()
+                          .save(key: language, value: lang, isModel: false);
                       if (lang == null) {
                         lang = "en";
                         await AppPreferences()
@@ -420,7 +423,6 @@ class _HomePageState extends State<HomePage> {
                     }
                   },
                 ),
-
                 const Spacer(),
                 Padding(
                   padding: EdgeInsets.only(
@@ -506,10 +508,11 @@ class _HomePageState extends State<HomePage> {
                         width: context.appValues.appSizePercent.w100,
                         height: context.appValues.appSizePercent.h50,
                         decoration: const BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage('assets/img/homepagebg.png'),
-                            fit: BoxFit.cover,
-                          ),
+                          // image: DecorationImage(
+                          //   image: AssetImage('assets/img/homepagebg.png'),
+                          //   fit: BoxFit.cover,
+                          // ),
+                          color: Color(0xff4100E3),
                         ),
                       ),
                       // Gradient overlay
@@ -541,17 +544,32 @@ class _HomePageState extends State<HomePage> {
                                         },
                                       ),
                                       const Gap(7),
-                                      Text(
-                                        profileViewModel
-                                                    .getProfileBody["user"] !=
-                                                null
-                                            ? '${translate('home_screen.Hi')} ${profileViewModel.getProfileBody["user"]["first_name"]}!'
-                                            : '',
-                                        style: getPrimaryBoldStyle(
-                                          color: context
-                                              .resources.color.colorWhite,
-                                          fontSize: 32,
-                                        ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            profileViewModel.getProfileBody[
+                                                        "user"] !=
+                                                    null
+                                                ? '${translate('home_screen.Hi')} '
+                                                : '',
+                                            style: getPrimaryBoldStyle(
+                                              color: const Color(0xffFFC500),
+                                              fontSize: 32,
+                                            ),
+                                          ),
+                                          Text(
+                                            profileViewModel.getProfileBody[
+                                                        "user"] !=
+                                                    null
+                                                ? '${profileViewModel.getProfileBody["user"]["first_name"]}!'
+                                                : '',
+                                            style: getPrimaryBoldStyle(
+                                              color: context
+                                                  .resources.color.colorWhite,
+                                              fontSize: 32,
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ],
                                   ),
@@ -585,11 +603,34 @@ class _HomePageState extends State<HomePage> {
                                   horizontal: context.appValues.appPadding.p20,
                                   vertical: context.appValues.appPadding.p15,
                                 ),
-                                child: SearchBar(
-                                  // index: 'search_services',
-                                  hintText: "Search for services...",
-                                  // viewModel: servicesViewModel.searchData,
+                                child: TextFormField(
                                   controller: searchController,
+                                  decoration: InputDecoration(
+                                    filled: true,
+                                    fillColor: const Color(0xffEAEAFF),
+                                    prefixIcon: const Icon(
+                                      Icons.search,
+                                      color: Color(0xFF6E6BE8),
+                                    ),
+                                    hintText: "Search for services...",
+                                    hintStyle: const TextStyle(
+                                      color: Color(0xFF6E6BE8),
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: BorderSide.none,
+                                    ),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(5),
+                                      borderSide: const BorderSide(
+                                        color: Color(0xFF6E6BE8),
+                                      ),
+                                    ),
+                                  ),
                                 ),
                               ),
                               const Gap(15),
@@ -645,45 +686,64 @@ class _HomePageState extends State<HomePage> {
                                                   .resources.color.btnColorBlue,
                                             ),
                                           ),
-                                          servicesViewModel.chosenParent
-                                              ? InkWell(
-                                                  child: Text(
-                                                    translate(
-                                                        'home_screen.seeAll'),
-                                                    style: getPrimaryBoldStyle(
-                                                      fontSize: 18,
-                                                      color: const Color(
-                                                          0xff9E9BB8),
-                                                    ),
-                                                  ),
-                                                  onTap: () {
-                                                    Navigator.of(context)
-                                                        .push(_createRoute(
-                                                      CategoriesScreen(
-                                                          categoriesViewModel:
-                                                              categoriesViewModel,
-                                                          initialTabIndex: 0,
-                                                          serviceViewModel:
-                                                              servicesViewModel),
-                                                    ));
-                                                  },
-                                                )
-                                              : Container(),
+                                          // servicesViewModel.chosenParent
+                                          //     ? InkWell(
+                                          //         child: Text(
+                                          //           translate(
+                                          //               'home_screen.seeAll'),
+                                          //           style: getPrimaryBoldStyle(
+                                          //             fontSize: 18,
+                                          //             color: const Color(
+                                          //                 0xff9E9BB8),
+                                          //           ),
+                                          //         ),
+                                          //         onTap: () {
+                                          //           Navigator.of(context)
+                                          //               .push(_createRoute(
+                                          //             CategoriesScreen(
+                                          //                 categoriesViewModel:
+                                          //                     categoriesViewModel,
+                                          //                 initialTabIndex: 0,
+                                          //                 serviceViewModel:
+                                          //                     servicesViewModel),
+                                          //           ));
+                                          //         },
+                                          //       )
+                                          //     : Container(),
                                         ],
                                       ),
                                     ),
-                                    servicesViewModel.chosenParent
-                                        ? CategoriesWidget(
-                                            servicesViewModel:
-                                                servicesViewModel)
-                                        : ParentCategoriesWidget(
-                                            servicesViewModel:
-                                                servicesViewModel),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(_createRoute(
+                                          const ServicesScreen(),
+                                        ));
+                                      },
+                                      child: ParentCategoriesWidget(
+                                          servicesViewModel: servicesViewModel),
+                                    ),
+                                    // servicesViewModel.chosenParent
+                                    //     ? CategoriesWidget(
+                                    //         servicesViewModel:
+                                    //             servicesViewModel)
+                                    //     : ParentCategoriesWidget(
+                                    //         servicesViewModel:
+                                    //             servicesViewModel),
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            context.appValues.appPadding.p20,
+                                      ),
+                                      child: const Divider(
+                                        color: Color(0xffD4D6DD),
+                                        height: 1,
+                                      ),
+                                    ),
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(
-                                        context.appValues.appPadding.p10,
                                         context.appValues.appPadding.p20,
-                                        context.appValues.appPadding.p10,
+                                        context.appValues.appPadding.p20,
+                                        context.appValues.appPadding.p20,
                                         context.appValues.appPadding.p20,
                                       ),
                                       child: Row(
@@ -705,20 +765,34 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           InkWell(
                                             onTap: () {},
-                                            child: Text(
-                                              translate('home_screen.seeAll'),
-                                              style: getPrimaryBoldStyle(
-                                                fontSize: 18,
-                                                color: const Color(0xff9E9BB8),
-                                              ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  translate(
+                                                      'home_screen.seeAll'),
+                                                  style: getPrimaryBoldStyle(
+                                                    fontSize: 12,
+                                                    color:
+                                                        const Color(0xff4100E3),
+                                                  ),
+                                                ),
+                                                const Gap(5),
+                                                const Icon(
+                                                  Icons.arrow_forward_ios_sharp,
+                                                  color: Color(0xff4100E3),
+                                                  size: 12,
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 8.0, left: 8.0),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            context.appValues.appPadding.p20,
+                                      ),
                                       child: Column(
                                         children: [
                                           Stack(
@@ -845,37 +919,44 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ],
                                           ),
-                                          const Gap(50),
+                                          const Gap(10),
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: context
+                                                  .appValues.appPadding.p20,
+                                            ),
+                                            child: const Divider(
+                                              color: Color(0xffD4D6DD),
+                                              height: 40,
+                                            ),
+                                          ),
                                           Container(
                                             padding: const EdgeInsets.all(8.0),
                                             color: Colors.white,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                            child: Column(
                                               children: [
-                                                Expanded(
+                                                Center(
                                                   child: Text(
                                                     translate(
                                                         'home_screen.availability'),
-                                                    // 'We are available Sat to Thur from 9 to 5, Fri from 2 to 5',
+                                                    textAlign: TextAlign.center,
                                                     style:
                                                         getPrimaryRegularStyle(
-                                                      fontSize: 13,
+                                                      fontSize: 14,
                                                       color: const Color(
-                                                          0xff180C38),
+                                                          0xff71727A),
                                                     ),
                                                   ),
                                                 ),
-                                                const Gap(10),
+                                                const Gap(15),
                                                 InkWell(
                                                   onTap: () {
                                                     jobsViewModel
                                                         .launchWhatsApp();
                                                   },
                                                   child: Container(
-                                                    width: 155,
-                                                    height: 52,
+                                                    width: 127,
+                                                    height: 44,
                                                     padding:
                                                         EdgeInsets.symmetric(
                                                       horizontal: context
@@ -889,24 +970,34 @@ class _HomePageState extends State<HomePage> {
                                                     ),
                                                     decoration: BoxDecoration(
                                                       color: const Color(
-                                                          0xff384ea2),
+                                                          0xff25D366),
                                                       borderRadius:
                                                           BorderRadius.circular(
-                                                              15),
+                                                              12),
                                                     ),
                                                     child: Center(
-                                                      child: Text(
-                                                        'CONTACT US',
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            getPrimaryBoldStyle(
-                                                          color: context
-                                                              .resources
-                                                              .color
-                                                              .colorWhite,
-                                                          fontSize: 16,
-                                                        ),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          SvgPicture.asset(
+                                                              'assets/img/wp.svg'),
+                                                          const Gap(5),
+                                                          Text(
+                                                            'CONTACT US',
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style:
+                                                                getPrimaryBoldStyle(
+                                                              color: context
+                                                                  .resources
+                                                                  .color
+                                                                  .colorWhite,
+                                                              fontSize: 12,
+                                                            ),
+                                                          ),
+                                                        ],
                                                       ),
                                                     ),
                                                   ),
@@ -916,6 +1007,8 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           const Gap(10),
                                           Container(
+                                            width: context
+                                                .appValues.appSizePercent.w50,
                                             padding: const EdgeInsets.all(8.0),
                                             color: Colors.white,
                                             child: Row(
@@ -926,16 +1019,9 @@ class _HomePageState extends State<HomePage> {
                                                 IconButton(
                                                   icon: const FaIcon(
                                                       FontAwesomeIcons
-                                                          .xTwitter),
-                                                  // X (Twitter)
-                                                  onPressed: () {
-                                                    // Handle X (Twitter) tap
-                                                  },
-                                                ),
-                                                IconButton(
-                                                  icon: const FaIcon(
-                                                      FontAwesomeIcons
                                                           .facebook),
+                                                  color:
+                                                      const Color(0xff8F9098),
                                                   onPressed: () {
                                                     // Handle Facebook tap
                                                   },
@@ -944,6 +1030,8 @@ class _HomePageState extends State<HomePage> {
                                                   icon: const FaIcon(
                                                       FontAwesomeIcons
                                                           .instagram),
+                                                  color:
+                                                      const Color(0xff8F9098),
                                                   onPressed: () {
                                                     // Handle Instagram tap
                                                   },
@@ -951,12 +1039,14 @@ class _HomePageState extends State<HomePage> {
                                                 IconButton(
                                                   icon: const FaIcon(
                                                       FontAwesomeIcons
-                                                          .linkedin),
+                                                          .xTwitter),
+                                                  color:
+                                                      const Color(0xff8F9098),
+                                                  // X (Twitter)
                                                   onPressed: () {
-                                                    // Handle LinkedIn tap
+                                                    // Handle X (Twitter) tap
                                                   },
                                                 ),
-                                                // Add more icons as needed...
                                               ],
                                             ),
                                           ),

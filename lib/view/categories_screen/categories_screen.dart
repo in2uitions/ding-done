@@ -80,30 +80,11 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                       width: context.appValues.appSizePercent.w100,
                       height: context.appValues.appSizePercent.h50,
                       decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/img/jobimage.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    // Gradient overlay
-                    Container(
-                      width: context.appValues.appSizePercent.w100,
-                      height: context.appValues.appSizePercent.h15,
-                      decoration: ShapeDecoration(
-                        gradient: LinearGradient(
-                          begin: const Alignment(0.00, 1),
-                          end: const Alignment(0, 0),
-                          colors: [
-                            const Color(0xffEECB0B).withOpacity(0),
-                            const Color(0xffEECB0B).withOpacity(0.4),
-                            const Color(0xffEECB0B).withOpacity(0.6),
-                            const Color(0xffEECB0B).withOpacity(0.9),
-                          ],
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(0),
-                        ),
+                        color: Color(0xff4100E3),
+                        // image: DecorationImage(
+                        //   image: AssetImage('assets/img/jobimage.png'),
+                        //   fit: BoxFit.cover,
+                        // ),
                       ),
                       child: Padding(
                         padding: EdgeInsets.only(
@@ -112,34 +93,31 @@ class _CategoriesScreenState extends State<CategoriesScreen>
                           right: context.appValues.appPadding.p20,
                         ),
                         child: SafeArea(
-                          child: Stack(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Title
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    translate('home_screen.categories'),
-                                    style: getPrimaryBoldStyle(
-                                      color: context.resources.color.colorWhite,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              // Back button
                               InkWell(
                                 child: Padding(
                                   padding: EdgeInsets.only(
-                                    top: context.appValues.appPadding.p8,
+                                    top: context.appValues.appPadding.p4,
                                   ),
                                   child: SvgPicture.asset(
-                                      'assets/img/back.svg',color: Colors.white,),
+                                    'assets/img/back.svg',
+                                    color: Colors.white,
+                                  ),
                                 ),
                                 onTap: () {
                                   Navigator.pop(context);
                                 },
+                              ),
+                              const Gap(10),
+                              Text(
+                                translate('home_screen.categories'),
+                                style: getPrimaryBoldStyle(
+                                  color: context.resources.color.colorWhite,
+                                  fontSize: 16,
+                                ),
                               ),
                             ],
                           ),
@@ -153,8 +131,8 @@ class _CategoriesScreenState extends State<CategoriesScreen>
           ),
           // DraggableScrollableSheet for content
           DraggableScrollableSheet(
-            initialChildSize: 0.80,
-            minChildSize: 0.80,
+            initialChildSize: 0.85,
+            minChildSize: 0.85,
             maxChildSize: 1,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(

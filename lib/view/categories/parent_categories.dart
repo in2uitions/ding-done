@@ -39,9 +39,9 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
       builder: (context, categoriesViewModel, _) {
         return Padding(
           padding: EdgeInsets.fromLTRB(
-            context.appValues.appPadding.p8,
+            context.appValues.appPadding.p20,
             context.appValues.appPadding.p0,
-            context.appValues.appPadding.p8,
+            context.appValues.appPadding.p20,
             context.appValues.appPadding.p0,
           ),
           child: Column(
@@ -51,9 +51,10 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4,
-                  mainAxisSpacing: 8,
-                  crossAxisSpacing: 8,
+                  crossAxisCount: 2, // Number of items in each row
+                  crossAxisSpacing: 20, // Spacing between items horizontally
+                  mainAxisSpacing: 4, // Spacing between items vertically
+                  childAspectRatio: 1.5, // Aspect ratio of each grid item
                 ),
                 itemCount: categoriesViewModel.parentCategoriesList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -78,7 +79,6 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
     if (lang == null) {
       lang = "en-US";
     }
-    debugPrint('category $category');
     for (Map<String, dynamic> translation in category["translations"]) {
       if (translation["languages_code"] == lang) {
         services = translation;
@@ -89,67 +89,36 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
     Color categoryColor;
     switch (index) {
       case 0:
-        categoryColor = const Color(0xFFdacce5); // Purple
+        categoryColor = const Color(0xFFEAEAFF); // Purple
         break;
       case 1:
-        categoryColor = const Color(0xFFf2d6ea); // Pink
-        break;
-      case 2:
-        categoryColor = const Color(0xFFccebcf); // Green
-        break;
-      case 3:
-        categoryColor = const Color(0xFFffe0a7); // Orange
+        categoryColor = const Color(0xFFEAEAFF); // Pink
         break;
       default:
-        categoryColor = const Color(0xffF3D347); // Default Yellow
+        categoryColor = const Color(0xFFEAEAFF); // Default Yellow
     }
 
-    return InkWell(
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(22),
-          ),
-          color: categoryColor,
-          // color: widget.servicesViewModel.searchBody["search_services"]
-          //                 .toString()
-          //                 .toLowerCase() ==
-          //             services?["title"].toString().toLowerCase() ||
-          //         widget.servicesViewModel.parentCategory
-          //                 .toString()
-          //                 .toLowerCase() ==
-          //             services?["title"].toString().toLowerCase()
-          //     ? const Color(0xffBEC2CE)
-          //     : widget.servicesViewModel.searchBody["search_services"] == '' ||
-          //             widget.servicesViewModel.searchBody["search_services"] ==
-          //                 null
-          //         ? categoryColor
-          //         : const Color(0xffF3D347),
+    // Build the image container only
+    Widget imageContainer = Container(
+      height: 76,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(
+          Radius.circular(16),
         ),
-        child: _isLoading
-            ? SkeletonListView()
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SvgPicture.network(
-                    '${context.resources.image.networkImagePath2}/${category["image"]}.svg',
-                    height: 40,
-                    width: 40,
-                  ),
-                  const SizedBox(height: 10),
-                  Text(
-                    services?["title"] ?? '',
-                    textAlign: TextAlign.center,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: getPrimaryBoldStyle(
-                      fontSize: 12,
-                      color: const Color(0xff180D38),
-                    ),
-                  ),
-                ],
-              ),
+        color: categoryColor,
       ),
+      child: _isLoading
+          ? SkeletonListView()
+          : Center(
+              child: SvgPicture.network(
+                '${context.resources.image.networkImagePath2}/${category["image"]}.svg',
+                height: 40,
+                width: 40,
+              ),
+            ),
+    );
+
+    return InkWell(
       onTap: () {
         debugPrint('search filter ${services?['title']}');
         widget.servicesViewModel.setParentCategoryExistence(true);
@@ -160,6 +129,23 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
         widget.servicesViewModel.setParentCategory(services?["title"]);
         categoriesViewModel.sortCategories(services?["title"]);
       },
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          imageContainer,
+          const SizedBox(height: 10),
+          Text(
+            services?["title"] ?? '',
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: getPrimaryRegularStyle(
+              fontSize: 12,
+              color: const Color(0xff180D38),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

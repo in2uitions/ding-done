@@ -41,6 +41,7 @@ class _JobsPageState extends State<JobsPage> {
   void active(String btn) {
     setState(() => _active = btn);
   }
+
   AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
@@ -60,6 +61,7 @@ class _JobsPageState extends State<JobsPage> {
         });
     }
   }
+
   Future<void> playSound() async {
     String soundPath =
         "DingDone Hybrid.wav"; // Update with the actual path to your .wav file
@@ -189,76 +191,57 @@ class _JobsPageState extends State<JobsPage> {
                           width: context.appValues.appSizePercent.w100,
                           height: context.appValues.appSizePercent.h50,
                           decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/img/jobimage.png'),
-                              fit: BoxFit.cover,
-                            ),
+                            // image: DecorationImage(
+                            //   image: AssetImage('assets/img/jobimage.png'),
+                            //   fit: BoxFit.cover,
+                            // ),
+                            color: Color(0xff4100E3),
                           ),
                         ),
-                        Container(
-                          width: context.appValues.appSizePercent.w100,
-                          height: context.appValues.appSizePercent.h15,
-                          decoration: ShapeDecoration(
-                            gradient: LinearGradient(
-                              begin: const Alignment(0.00, 1),
-                              end: const Alignment(0, 0),
-                              colors: [
-                                const Color(0xffEECB0B).withOpacity(0),
-                                const Color(0xffEECB0B).withOpacity(0.4),
-                                const Color(0xffEECB0B).withOpacity(0.6),
-                                const Color(0xffEECB0B).withOpacity(0.9),
-                              ],
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0),
-                            ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: context.appValues.appPadding.p8,
+                            left: context.appValues.appPadding.p20,
+                            right: context.appValues.appPadding.p20,
                           ),
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              top: context.appValues.appPadding.p8,
-                              left: context.appValues.appPadding.p20,
-                              right: context.appValues.appPadding.p20,
-                            ),
-                            child: SafeArea(
-                              child: Stack(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        translate('bottom_bar.jobs'),
-                                        style: getPrimaryBoldStyle(
-                                          color: context
-                                              .resources.color.colorWhite,
-                                          fontSize: 28,
-                                        ),
+                          child: SafeArea(
+                            child: Stack(
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      translate('bottom_bar.jobs'),
+                                      style: getPrimaryBoldStyle(
+                                        color:
+                                            context.resources.color.colorWhite,
+                                        fontSize: 16,
                                       ),
-                                    ],
-                                  ),
-                                  InkWell(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        top: context.appValues.appPadding.p8,
-                                      ),
-                                      child: SvgPicture.asset(
-                                          'assets/img/back-new.svg'),
                                     ),
-                                    onTap: () {
-                                      Navigator.pop(context);
+                                  ],
+                                ),
+                                // InkWell(
+                                //   child: Padding(
+                                //     padding: EdgeInsets.only(
+                                //       top: context.appValues.appPadding.p8,
+                                //     ),
+                                //     child: SvgPicture.asset(
+                                //         'assets/img/back-new.svg'),
+                                //   ),
+                                //   onTap: () {
+                                //     Navigator.pop(context);
 
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => BottomBar(
-                                              userRole: widget.userRole),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ],
-                              ),
+                                //     Navigator.push(
+                                //       context,
+                                //       MaterialPageRoute(
+                                //         builder: (context) => BottomBar(
+                                //             userRole: widget.userRole),
+                                //       ),
+                                //     );
+                                //   },
+                                // ),
+                              ],
                             ),
                           ),
                         ),
@@ -293,8 +276,8 @@ class _JobsPageState extends State<JobsPage> {
             ],
           ),
           DraggableScrollableSheet(
-              initialChildSize: 0.80,
-              minChildSize: 0.80,
+              initialChildSize: 0.85,
+              minChildSize: 0.85,
               maxChildSize: 1,
               builder:
                   (BuildContext context, ScrollController scrollController) {

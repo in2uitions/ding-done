@@ -130,16 +130,17 @@ class _JobsCardsState extends State<JobsCards> {
                   width: context.appValues.appSizePercent.w100,
                   // height: context.appValues.appSizePercent.h45,
                   decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: const Color(0xff000000).withOpacity(0.1),
-                        spreadRadius: 1,
-                        blurRadius: 5,
-                        offset:
-                            const Offset(0, 3), // changes position of shadow
-                      ),
-                    ],
-                    color: context.resources.color.colorWhite,
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: const Color(0xff000000).withOpacity(0.1),
+                    //     spreadRadius: 1,
+                    //     blurRadius: 5,
+                    //     offset:
+                    //         const Offset(0, 3), // changes position of shadow
+                    //   ),
+                    // ],
+                    // color: context.resources.color.colorWhite,
+                    color: const Color(0xffEAEAFF).withOpacity(0.4),
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
                   child: Column(children: [
@@ -207,8 +208,8 @@ class _JobsCardsState extends State<JobsCards> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: getPrimaryRegularStyle(
-                                        fontSize: 16,
-                                        color: const Color(0xff190C39),
+                                        fontSize: 14,
+                                        color: const Color(0xff180B3C),
                                       ),
                                     ),
                                   ),
@@ -229,8 +230,8 @@ class _JobsCardsState extends State<JobsCards> {
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: getPrimaryBoldStyle(
-                                        fontSize: 14,
-                                        color: const Color(0xff9E9AB7),
+                                        fontSize: 10,
+                                        color: const Color(0xff6E6BE8),
                                       ),
                                     ),
                                   ),
@@ -244,83 +245,171 @@ class _JobsCardsState extends State<JobsCards> {
                           Padding(
                             padding: EdgeInsets.only(
                                 right: context.appValues.appPadding.p8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                // widget.active == 'activeJobs'
-                                //     ? Text(
-                                //         translate('jobs.startTime'),
-                                //         style: getPrimaryRegularStyle(
-                                //             fontSize: 18,
-                                //             color: context.resources.color
-                                //                 .secondColorBlue),
-                                //       )
-                                //     : widget.userRole ==
-                                //                 Constants.supplierRoleId ||
-                                //             widget.active == 'requestedJobs'
-                                //         ? Text(
-                                //             translate('jobs.dateTime'),
-                                //             style: getPrimaryRegularStyle(
-                                //                 fontSize: 18,
-                                //                 color: context.resources.color
-                                //                     .secondColorBlue),
-                                //           )
-                                //         : Container(),
-                                widget.userRole == Constants.supplierRoleId ||
-                                        widget.active == 'requestedJobs'
-                                    ? widget.active == 'activeJobs'
-                                        ? Text(
-                                            data[index].actual_start_date !=
-                                                    null
-                                                ? DateFormat(
-                                                        'd MMMM yyyy, HH:mm')
-                                                    .format(DateTime.parse(data[
-                                                                    index]
-                                                                .actual_start_date +
-                                                            'Z')
-                                                        .toUtc()
-                                                        .toLocal())
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                              fontSize: 14,
-                                              color: const Color(0xff78789D),
-                                            ),
-                                          )
-                                        : Text(
-                                            data[index].start_date != null
-                                                ? DateFormat(
-                                                        'd MMMM yyyy, HH:mm')
-                                                    .format(DateTime.parse(
-                                                            data[index]
-                                                                .start_date)
-                                                        .toLocal())
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                              fontSize: 14,
-                                              color: const Color(0xff78789D),
-                                            ),
-                                          )
-                                    : widget.active == 'activeJobs'
-                                        ? Text(
-                                            data[index].actual_start_date !=
-                                                    null
-                                                ? DateFormat(
-                                                        'd MMMM yyyy, HH:mm')
-                                                    .format(DateTime.parse(data[
-                                                                    index]
-                                                                .actual_start_date +
-                                                            'Z')
-                                                        .toUtc()
-                                                        .toLocal())
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                                fontSize: 14,
-                                                color: context.resources.color
-                                                    .btnColorBlue),
-                                          )
-                                        : Container(),
-                              ],
-                            ),
+                            child: widget.userRole ==
+                                        Constants.supplierRoleId ||
+                                    widget.active == 'requestedJobs'
+                                ? widget.active == 'activeJobs'
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/calendarjobs.svg',
+                                              ),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].actual_start_date !=
+                                                        null
+                                                    ? DateFormat('d MMMM yyyy')
+                                                        .format(DateTime.parse(
+                                                                data[index]
+                                                                        .actual_start_date +
+                                                                    'Z')
+                                                            .toUtc()
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 14,
+                                                  color:
+                                                      const Color(0xff78789D),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/timejobs.svg',
+                                              ),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].actual_start_date !=
+                                                        null
+                                                    ? DateFormat('HH:mm').format(
+                                                        DateTime.parse(data[
+                                                                        index]
+                                                                    .actual_start_date +
+                                                                'Z')
+                                                            .toUtc()
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 14,
+                                                  color:
+                                                      const Color(0xff78789D),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/calendarjobs.svg',
+                                              ),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].start_date != null
+                                                    ? DateFormat('d MMMM yyyy')
+                                                        .format(DateTime.parse(
+                                                                data[index]
+                                                                    .start_date)
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 14,
+                                                  color:
+                                                      const Color(0xff78789D),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/timejobs.svg',
+                                              ),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].start_date != null
+                                                    ? DateFormat('HH:mm')
+                                                        .format(DateTime.parse(
+                                                                data[index]
+                                                                    .start_date)
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 14,
+                                                  color:
+                                                      const Color(0xff78789D),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                : widget.active == 'activeJobs'
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                  'assets/img/calendarjobs.svg'),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].actual_start_date !=
+                                                        null
+                                                    ? DateFormat('d MMMM yyyy')
+                                                        .format(DateTime.parse(
+                                                                data[index]
+                                                                        .actual_start_date +
+                                                                    'Z')
+                                                            .toUtc()
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                    fontSize: 14,
+                                                    color: context.resources
+                                                        .color.btnColorBlue),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/timejobs.svg',
+                                              ),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].actual_start_date !=
+                                                        null
+                                                    ? DateFormat('HH:mm').format(
+                                                        DateTime.parse(data[
+                                                                        index]
+                                                                    .actual_start_date +
+                                                                'Z')
+                                                            .toUtc()
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                    fontSize: 14,
+                                                    color: context.resources
+                                                        .color.btnColorBlue),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
                           ),
                           Padding(
                             padding: EdgeInsets.only(
@@ -343,14 +432,15 @@ class _JobsCardsState extends State<JobsCards> {
                                         widget.userRole ==
                                             Constants.customerRoleId
                                     ? Text(
-                                  data[index]
-                                      .actual_start_date!=null?
-                                  DateFormat('d MMMM yyyy, HH:mm').format(
-                                            DateTime.parse(data[index]
-                                                        .actual_start_date +
-                                                    'Z')
-                                                .toUtc()
-                                                .toLocal()):'',
+                                        data[index].actual_start_date != null
+                                            ? DateFormat('d MMMM yyyy, HH:mm')
+                                                .format(DateTime.parse(data[
+                                                                index]
+                                                            .actual_start_date +
+                                                        'Z')
+                                                    .toUtc()
+                                                    .toLocal())
+                                            : '',
                                         style: getPrimaryRegularStyle(
                                           fontSize: 14,
                                           color: const Color(0xff78789D),
@@ -381,22 +471,30 @@ class _JobsCardsState extends State<JobsCards> {
                                       Expanded(
                                         child: Align(
                                           alignment: Alignment.centerLeft,
-                                          child: Text(
-                                            data[index].job_address != null &&
-                                                    data[index]
-                                                            .job_address
-                                                            .toString() !=
-                                                        ''
-                                                ? '${data[index].job_address['city'] != null ? data[index].job_address['city'] : ''}, ${data[index].job_address['state'] != null ? data[index].job_address['state'] : ''}, ${data[index].job_address['street_number'] != null ? data[index].job_address['street_number'] : ''}'
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                              fontSize: 14,
-                                              color: const Color(0xff78789D),
-                                            ),
-                                            overflow: TextOverflow
-                                                .visible, // Ensure the text wraps to the next line
-                                            softWrap:
-                                                true, // Enable soft wrapping
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                  'assets/img/locationjobs.svg'),
+                                              Text(
+                                                data[index].job_address !=
+                                                            null &&
+                                                        data[index]
+                                                                .job_address
+                                                                .toString() !=
+                                                            ''
+                                                    ? '${data[index].job_address['city'] ?? ''}, ${data[index].job_address['state'] ?? ''}, ${data[index].job_address['street_number'] ?? ''}'
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 14,
+                                                  color:
+                                                      const Color(0xff78789D),
+                                                ),
+                                                overflow: TextOverflow
+                                                    .visible, // Ensure the text wraps to the next line
+                                                softWrap:
+                                                    true, // Enable soft wrapping
+                                              ),
+                                            ],
                                           ),
                                         ),
                                       ),
@@ -448,6 +546,31 @@ class _JobsCardsState extends State<JobsCards> {
                                     )
                                   : Container()
                               : Container(),
+
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: context.appValues.appPadding.p8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  // '',
+                                  data[index].supplier_total != null &&
+                                          data[index]
+                                                  .supplier_total
+                                                  .toString() !=
+                                              ''
+                                      ? '${data[index].supplier_total} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
+                                      : '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
+                                  style: getPrimaryBoldStyle(
+                                    fontSize: 14,
+                                    color: const Color(0xff180B3C),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          const Gap(5),
                           widget.active == 'requestedJobs'
                               ? Padding(
                                   padding: EdgeInsets.only(
@@ -476,35 +599,14 @@ class _JobsCardsState extends State<JobsCards> {
                                                               .toString()
                                                               .toLowerCase() ==
                                                           'major'
-                                                      ? Colors.red
+                                                      ? const Color(0xff4100E3)
                                                       : Colors.green
                                                   : Colors.white),
                                         ),
                                       ]),
                                 )
                               : Container(),
-                          const Gap(5),
-                          Padding(
-                            padding: EdgeInsets.only(
-                                right: context.appValues.appPadding.p8),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  // '',
-                                  data[index].supplier_total != null &&
-                                          data[index].supplier_total.toString() !=
-                                              ''
-                                      ? '${data[index].supplier_total} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
-                                      : '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
-                                  style: getPrimaryBoldStyle(
-                                    fontSize: 14,
-                                    color: const Color(0xff78789D),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
+
                           const Gap(15),
                           widget.active == 'bookedJobs'
                               ? Padding(

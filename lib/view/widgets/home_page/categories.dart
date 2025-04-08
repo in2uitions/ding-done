@@ -63,7 +63,8 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               child: ListView(
                 children: [
                   GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 3, // Number of items in each row
                       crossAxisSpacing: 4, // Spacing between items horizontally
                       mainAxisSpacing: 4, // Spacing between items vertically
@@ -116,7 +117,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
       }
     }
     for (Map<String, dynamic> translationParent in service["class"]
-    ["translations"]) {
+        ["translations"]) {
       if (translationParent["languages_code"] == lang) {
         parentServices = translationParent;
         break;
@@ -157,97 +158,96 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
     }
 
     return widget.servicesViewModel.searchBody["search_services"]
-        .toString()
-        .toLowerCase() ==
-        services?["title"].toString().toLowerCase() ||
-        widget.servicesViewModel.searchBody["search_services"]
-            .toString()
-            .toLowerCase() ==
-            parentServices?["title"].toString().toLowerCase()
+                    .toString()
+                    .toLowerCase() ==
+                services?["title"].toString().toLowerCase() ||
+            widget.servicesViewModel.searchBody["search_services"]
+                    .toString()
+                    .toLowerCase() ==
+                parentServices?["title"].toString().toLowerCase()
         ? Padding(
-      padding: EdgeInsets.only(
-        top: context.appValues.appPadding.p10,
-        bottom: context.appValues.appPadding.p10,
-      ),
-      child: InkWell(
-        child: Container(
-          decoration: BoxDecoration(
-            color: backgroundColor,
-            borderRadius: const BorderRadius.all(Radius.circular(20)),
-          ),
-          child: Padding(
             padding: EdgeInsets.only(
-              left: context.appValues.appPadding.p0,
-              bottom: context.appValues.appPadding.p0,
+              top: context.appValues.appPadding.p10,
+              bottom: context.appValues.appPadding.p10,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 0),
-                  child: service["image"] != null
-                      ? SvgPicture.network(
-                    '${context.resources.image.networkImagePath2}/${service["image"]}',
-                    colorFilter: ColorFilter.mode(
-                      iconColor,
-                      BlendMode.srcIn,
-                    ),
-                    width: 30,
-                    height: 30,
-                  )
-                      : Container(
-                    width: context.appValues.appSizePercent.w20,
-                    height: context.appValues.appSizePercent.h5,
-                    decoration: BoxDecoration(
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          service["image"] != null
-                              ? '${context.resources.image.networkImagePath2}${service["image"]}'
-                              : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
-                        ),
-                        fit: BoxFit.cover,
+            child: InkWell(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: backgroundColor,
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: context.appValues.appPadding.p0,
+                    bottom: context.appValues.appPadding.p0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 0),
+                        child: service["image"] != null
+                            ? SvgPicture.network(
+                                '${context.resources.image.networkImagePath2}/${service["image"]}',
+                                colorFilter: ColorFilter.mode(
+                                  iconColor,
+                                  BlendMode.srcIn,
+                                ),
+                                width: 30,
+                                height: 30,
+                              )
+                            : Container(
+                                width: context.appValues.appSizePercent.w20,
+                                height: context.appValues.appSizePercent.h5,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      service["image"] != null
+                                          ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                          : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
                       ),
-                    ),
+                      SizedBox(
+                        width: context.appValues.appSizePercent.w23,
+                        child: Text(
+                          services?["title"] ?? '',
+                          textAlign: TextAlign.center,
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: getPrimaryBoldStyle(
+                            fontSize: 14,
+                            color: textColor,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                SizedBox(
-                  width: context.appValues.appSizePercent.w23,
-                  child: Text(
-                    services?["title"] ?? '',
-                    textAlign: TextAlign.center,
-                    maxLines: 3,
-                    overflow: TextOverflow.ellipsis,
-                    style: getPrimaryBoldStyle(
-                      fontSize: 14,
-                      color: textColor,
-                    ),
+              ),
+              onTap: () {
+                widget.servicesViewModel.filterData(
+                    index: 'search_services', value: services?["title"]);
+                widget.servicesViewModel
+                    .setParentCategory('${parentServices?["title"]}');
+                debugPrint('search filter ${services?["title"]}');
+                Navigator.of(context).push(_createRoute(
+                  CategoriesScreen(
+                    categoriesViewModel: categoriesViewModel,
+                    initialTabIndex: index,
+                    serviceViewModel: widget.servicesViewModel,
                   ),
-                ),
-              ],
+                ));
+                categoriesViewModel.sortCategories(services?["title"]);
+              },
             ),
-          ),
-        ),
-        onTap: () {
-          widget.servicesViewModel.filterData(
-              index: 'search_services', value: services?["title"]);
-          widget.servicesViewModel
-              .setParentCategory('${parentServices?["title"]}');
-          debugPrint('search filter ${services?["title"]}');
-          Navigator.of(context).push(_createRoute(
-            CategoriesScreen(
-              categoriesViewModel: categoriesViewModel,
-              initialTabIndex: index,
-              serviceViewModel: widget.servicesViewModel,
-            ),
-          ));
-          categoriesViewModel.sortCategories(services?["title"]);
-        },
-      ),
-    )
+          )
         : Container();
   }
-
 }
 
 Route _createRoute(dynamic classname) {

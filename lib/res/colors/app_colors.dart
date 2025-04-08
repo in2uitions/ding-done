@@ -53,7 +53,7 @@ class AppColors implements BaseColors {
   Map<int, Color> get colorBlack => _black;
 
   @override
-  Color get btnColorBlue => const Color(0xff180C38);
+  Color get btnColorBlue => const Color(0xff180B3C);
   @override
   Color get secondColorBlue => const Color(0xff919AB0);
 

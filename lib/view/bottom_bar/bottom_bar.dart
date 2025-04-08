@@ -2,18 +2,20 @@
 
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
+import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/home_page/home_page.dart';
 import 'package:dingdone/view/home_page/home_page_supplier.dart';
-import 'package:dingdone/view/inbox_page/inbox_page.dart';
 import 'package:dingdone/view/jobs_page/jobs_page.dart';
 import 'package:dingdone/view/profile_page/profile_page.dart';
 import 'package:dingdone/view/profile_page_supplier/profile_page_supplier.dart';
+import 'package:dingdone/view/services_screen/services_screen.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
@@ -28,8 +30,8 @@ class BottomBar extends StatefulWidget {
   _BottomBarState createState() => _BottomBarState();
 }
 
-class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMixin {
-
+class _BottomBarState extends State<BottomBar>
+    with SingleTickerProviderStateMixin {
   // Properties & Variables needed
   String? lang;
 
@@ -66,19 +68,20 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
   }
-  getNotifications() async{
-    dynamic notifications= await Provider.of<ProfileViewModel>(context, listen: false).getNotifications();
-    if(notifications!=null){
-      if(notifications.isNotEmpty){
-        hasNotifications=true;
-      }else{
-      }
-    }else{
-      hasNotifications=false;
 
+  getNotifications() async {
+    dynamic notifications =
+        await Provider.of<ProfileViewModel>(context, listen: false)
+            .getNotifications();
+    if (notifications != null) {
+      if (notifications.isNotEmpty) {
+        hasNotifications = true;
+      } else {}
+    } else {
+      hasNotifications = false;
     }
-
   }
+
   // Widget currentScreen = HomePage(); // Our first view in viewport
   // Widget currentScreen = HomePageSupplier(); // Our first view in viewport
   @override
@@ -232,22 +235,23 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                               //       : Color(0xff180C39),
                               // ),
                               SvgPicture.asset(
-                                'assets/img/home-new.svg',
+                                currentTab == 0
+                                    ? 'assets/img/homeselected.svg'
+                                    : 'assets/img/homeunselected.svg',
                                 fit: BoxFit.contain,
                                 height: context.appValues.appSizePercent.h3,
-                                color: currentTab == 0
-                                    ? const Color(0xff6A39E5)
-                                    : const Color(0xff9d9d9d),
                               ),
-                              // SizedBox(height: context.appValues.appSize.s5),
-                              // Text(
-                              //   translate('bottom_bar.home'),
-                              //   style: getPrimaryRegularStyle(
-                              //     color: currentTab == 0
-                              //         ? const Color(0xff9F9AB7)
-                              //         : const Color(0xff180C39),
-                              //   ),
-                              // ),
+                              SizedBox(height: context.appValues.appSize.s5),
+                              Text(
+                                translate('bottom_bar.home'),
+                                style: currentTab == 0
+                                    ? getPrimaryBoldStyle(
+                                        color: const Color(0xff180B3C),
+                                      )
+                                    : getPrimaryRegularStyle(
+                                        color: const Color(0xff71727A),
+                                      ),
+                              ),
                             ],
                           ),
                         );
@@ -258,41 +262,40 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                           minWidth: 40,
                           onPressed: () {
                             setState(() {
-                              currentScreen = JobsPage(
-                                userRole: widget.userRole,
-                                lang: lang!,
-                                initialActiveTab: 'activeJobs',
-                                initialIndex: 0,
-                              );
+                              currentScreen = ServicesScreen();
                               currentTab = 1;
                             });
                           },
                           child: Container(
-                            width: context.appValues.appSizePercent.w9,
+                            // width: context.appValues.appSizePercent.w12,
                             child: Stack(
                               children: [
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     SvgPicture.asset(
-                                      'assets/img/briefcase-new.svg',
+                                      currentTab == 1
+                                          ? 'assets/img/serviceselected.svg'
+                                          : 'assets/img/servicesunselected.svg',
                                       fit: BoxFit.contain,
                                       height:
                                           context.appValues.appSizePercent.h3,
-                                      color: currentTab == 1
-                                          ? const Color(0xff6A39E5)
-                                          : const Color(0xff9d9d9d),
+                                      // color: currentTab == 1
+                                      //     ? const Color(0xff6A39E5)
+                                      //     : const Color(0xff9d9d9d),
                                     ),
-                                    // SizedBox(
-                                    //     height: context.appValues.appSize.s5),
-                                    // Text(
-                                    //   translate('bottom_bar.jobs'),
-                                    //   style: getPrimaryRegularStyle(
-                                    //     color: currentTab == 1
-                                    //         ? const Color(0xff9F9AB7)
-                                    //         : const Color(0xff180C39),
-                                    //   ),
-                                    // ),
+                                    SizedBox(
+                                        height: context.appValues.appSize.s5),
+                                    Text(
+                                      translate('updateJob.services'),
+                                      style: currentTab == 1
+                                          ? getPrimaryBoldStyle(
+                                              color: const Color(0xff180B3C),
+                                            )
+                                          : getPrimaryRegularStyle(
+                                              color: const Color(0xff71727A),
+                                            ),
+                                    ),
                                   ],
                                 ),
                                 // Notification bubble
@@ -347,54 +350,50 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                       //   crossAxisAlignment: CrossAxisAlignment.start,
                       //   children: <Widget>[
 
-               MaterialButton(
-              minWidth: 40,
-              onPressed: () {
-                setState(() {
-                  currentScreen =  InboxPage(hasNotifications: hasNotifications); // Set InboxPage as the active screen
-                  currentTab = 2;
-                  hasNotifications=false;
-                });
-              },
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Stack(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/img/bell2.svg',
-                        fit: BoxFit.contain,
-                        height: context.appValues.appSizePercent.h3,
-                        color: currentTab == 2
-                            ? const Color(0xff6A39E5)
-                            : const Color(0xff9d9d9d),
-                      ),
-                      if (hasNotifications) // Show red dot if there are notifications
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: AnimatedBuilder(
-                            animation: _controller,
-                            builder: (context, child) {
-                              return ScaleTransition(
-                                scale: _pulseAnimation, // Pulsing effect
-                                child: Container(
-                                  width: 10, // Adjust the size of the red dot
-                                  height: 10,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red,
-                                    shape: BoxShape.circle,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                      MaterialButton(
+                        minWidth: 40,
+                        onPressed: () {
+                          setState(() {
+                            // currentScreen = InboxPage(
+                            //     hasNotifications:
+                            //         hasNotifications); // Set InboxPage as the active screen
+                            currentScreen = JobsPage(
+                              userRole: widget.userRole,
+                              lang: lang!,
+                              initialActiveTab: 'activeJobs',
+                              initialIndex: 0,
+                            );
+                            currentTab = 2;
+                            // hasNotifications = false;
+                          });
+                        },
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            SvgPicture.asset(
+                              currentTab == 2
+                                  ? 'assets/img/jobsselected.svg'
+                                  : 'assets/img/jobsunselected.svg',
+                              fit: BoxFit.contain,
+                              height: context.appValues.appSizePercent.h3,
+                              // color: currentTab == 2
+                              //     ? const Color(0xff6A39E5)
+                              //     : const Color(0xff9d9d9d),
+                            ),
+                            SizedBox(height: context.appValues.appSize.s5),
+                            Text(
+                              translate('bottom_bar.jobs'),
+                              style: currentTab == 2
+                                  ? getPrimaryBoldStyle(
+                                      color: const Color(0xff180B3C),
+                                    )
+                                  : getPrimaryRegularStyle(
+                                      color: const Color(0xff71727A),
+                                    ),
+                            ),
+                          ],
                         ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+                      ),
                       MaterialButton(
                         minWidth: 40,
                         onPressed: () {
@@ -416,22 +415,26 @@ class _BottomBarState extends State<BottomBar> with SingleTickerProviderStateMix
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SvgPicture.asset(
-                              'assets/img/profile-new.svg',
+                              currentTab == 3
+                                  ? 'assets/img/profileselected.svg'
+                                  : 'assets/img/profileunselected.svg',
                               fit: BoxFit.contain,
                               height: context.appValues.appSizePercent.h3,
-                              color: currentTab == 3
-                                  ? const Color(0xff6A39E5)
-                                  : const Color(0xff9d9d9d),
+                              // color: currentTab == 3
+                              //     ? const Color(0xff6A39E5)
+                              //     : const Color(0xff9d9d9d),
                             ),
-                            // SizedBox(height: context.appValues.appSize.s5),
-                            // Text(
-                            //   translate('bottom_bar.profile'),
-                            //   style: getPrimaryRegularStyle(
-                            //     color: currentTab == 3
-                            //         ? const Color(0xff9F9AB7)
-                            //         : const Color(0xff180C39),
-                            //   ),
-                            // ),
+                            SizedBox(height: context.appValues.appSize.s5),
+                            Text(
+                              translate('profile.account'),
+                              style: currentTab == 3
+                                  ? getPrimaryBoldStyle(
+                                      color: const Color(0xff180B3C),
+                                    )
+                                  : getPrimaryRegularStyle(
+                                      color: const Color(0xff71727A),
+                                    ),
+                            ),
                           ],
                         ),
                       )

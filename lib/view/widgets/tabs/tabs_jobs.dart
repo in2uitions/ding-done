@@ -12,10 +12,10 @@ class TabsJobs extends StatefulWidget {
     required String initialActiveTab,
   }) : super(key: key);
 
-  final List<String> tabtitle; // Specify type as List<String>
-  final List<Widget> tabContent; // Specify type as List<Widget>
+  final List<String> tabtitle;
+  final List<Widget> tabContent;
   final int initialIndex;
-  final List<int> jobCounts; // List of job counts
+  final List<int> jobCounts;
 
   @override
   _TabsJobsState createState() => _TabsJobsState();
@@ -39,79 +39,47 @@ class _TabsJobsState extends State<TabsJobs>
   Widget build(BuildContext context) {
     return Column(
       children: [
-        // TabBar (scrollable)
-        TabBar(
-          tabAlignment: TabAlignment.start,
-          controller: _tabController,
-          labelStyle: getPrimaryBoldStyle(
-            fontSize: 20,
-            color: context.resources.color.btnColorBlue,
+        // Updated custom-styled TabBar:
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 16),
+          decoration: BoxDecoration(
+            color: const Color(0xffEAEAFF),
+            borderRadius: BorderRadius.circular(10),
           ),
-          onTap:(int index){
-            setState(() {
-              widget.jobCounts[index]=0;
-            });
-          },
-          unselectedLabelColor: const Color(0xffBEC2CE),
-          indicatorSize: TabBarIndicatorSize.tab,
-          indicatorWeight: 3,
-          isScrollable: true, // Allow the TabBar to scroll
-          labelPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-          tabs: List<Widget>.generate(widget.tabtitle.length, (index) {
-            return Stack(
-              clipBehavior: Clip.none,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: Tab(
-                    child: Text(
-                      widget.tabtitle[index],
-                      style: getPrimaryBoldStyle(
-                        fontSize: 18,
-                        color: const Color(0xff180C38),
-                      ),
-                    ),
-                  ),
-                ),
-                // if (widget.jobCounts[index] > 0)
-                //   Positioned(
-                //     right: -18,
-                //     top: -5,
-                //     child: Container(
-                //       padding: const EdgeInsets.all(4),
-                //       decoration: BoxDecoration(
-                //         color: Colors.green,
-                //         borderRadius: BorderRadius.circular(12),
-                //       ),
-                //       constraints: const BoxConstraints(
-                //         minWidth: 24,
-                //         minHeight: 24,
-                //       ),
-                //       child: Center(
-                //         child: Text(
-                //           '${widget.jobCounts[index]}',
-                //           style: const TextStyle(
-                //             color: Colors.white,
-                //             fontSize: 12,
-                //             fontWeight: FontWeight.bold,
-                //           ),
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-              ],
-            );
-          }),
+          child: TabBar(
+            tabAlignment: TabAlignment.start,
+            controller: _tabController,
+            isScrollable: true,
+            labelPadding:
+                const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+            indicatorSize: TabBarIndicatorSize.tab,
+            indicatorPadding:
+                const EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+            // Custom indicator that fills the entire tab with a little padding.
+            indicator: BoxDecoration(
+              color: const Color(0xff4100E3),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            // Remove any default underline.
+            indicatorColor: Colors.transparent,
+            dividerColor: Colors.transparent,
+            indicatorWeight: 0,
+            labelStyle: getPrimaryBoldStyle(fontSize: 12),
+            labelColor: Colors.white,
+            unselectedLabelColor: const Color(0xff4100E3),
+            tabs: List<Widget>.generate(
+              widget.tabtitle.length,
+              (index) => Tab(text: widget.tabtitle[index]),
+            ),
+          ),
         ),
-        // Expanded TabBarView to be inside the DraggableScrollableSheet
+        // Expanded TabBarView for the tab content.
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: widget
-                .tabContent, // Each tab content should already be a scrollable widget
+            children: widget.tabContent,
           ),
         ),
-        SizedBox(height: 200)
       ],
     );
   }
@@ -122,4 +90,3 @@ class _TabsJobsState extends State<TabsJobs>
     super.dispose();
   }
 }
-
