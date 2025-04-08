@@ -50,9 +50,9 @@ class _JobCategorieAndServiceWidgetState
                     ),
                     child: Text(
                       translate('updateJob.jobCategories'),
-                      style: getPrimaryBoldStyle(
+                      style: getPrimaryRegularStyle(
                         fontSize: 18,
-                        color: const Color(0xff180C38),
+                        color: const Color(0xff180B3C),
                       ),
                     ),
                   ),
@@ -80,7 +80,7 @@ class _JobCategorieAndServiceWidgetState
                         '${widget.category}',
                         style: getPrimaryRegularStyle(
                           fontSize: 18,
-                          color: const Color(0xff78789D),
+                          color: const Color(0xff71727A),
                         ),
                       ),
                     ),
@@ -118,9 +118,9 @@ class _JobCategorieAndServiceWidgetState
                     ),
                     child: Text(
                       translate('updateJob.services'),
-                      style: getPrimaryBoldStyle(
+                      style: getPrimaryRegularStyle(
                         fontSize: 18,
-                        color: const Color(0xff180C38),
+                        color: const Color(0xff180B3C),
                       ),
                     ),
                   ),
@@ -148,7 +148,7 @@ class _JobCategorieAndServiceWidgetState
                         '${widget.service}',
                         style: getPrimaryRegularStyle(
                           fontSize: 18,
-                          color: const Color(0xff78789D),
+                          color: const Color(0xff71727A),
                         ),
                       ),
                     ),

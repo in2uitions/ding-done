@@ -53,18 +53,19 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                 ),
                 child: Text(
                   translate('bookService.jobType'),
-                  style: getPrimaryBoldStyle(
+                  style: getPrimaryRegularStyle(
                     fontSize: 18,
-                    color: const Color(0xff38385E),
+                    color: const Color(0xff180B3C),
                   ),
                 ),
               ),
-              widget.tab == translate('jobs.completed') || widget.tab == 'booked'
+              widget.tab == translate('jobs.completed') ||
+                      widget.tab == 'booked'
                   ? Text(
                       '${widget.job_type}',
                       style: getPrimaryRegularStyle(
                         fontSize: 18,
-                        color: const Color(0xff78789D),
+                        color: const Color(0xff71727A),
                       ),
                     )
                   :

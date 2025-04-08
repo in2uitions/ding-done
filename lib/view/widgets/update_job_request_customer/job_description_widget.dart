@@ -62,9 +62,9 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                   vertical: context.appValues.appPadding.p10),
               child: Text(
                 translate('bookService.jobDescriptionByUser'),
-                style: getPrimaryBoldStyle(
+                style: getPrimaryRegularStyle(
                   fontSize: 16,
-                  color: const Color(0xff38385E),
+                  color: const Color(0xff180B3C),
                 ),
               ),
             ),
@@ -194,7 +194,7 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                         overflow: TextOverflow.ellipsis,
                         style: getPrimaryRegularStyle(
                           fontSize: 12,
-                          color: const Color(0xff78789D),
+                          color: const Color(0xff71727A),
                         ),
                       ),
                     ),

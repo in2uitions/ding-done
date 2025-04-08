@@ -10,10 +10,6 @@ import 'package:dingdone/view_model/categories_view_model/categories_view_model.
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart'; // Adjust path as needed
 import 'package:dingdone/res/app_prefs.dart';
 
-//
-// CategoriesGridWidget displays a grid of service categories for a type ("maintenance" or "pro").
-// It uses the provided filtering logic similar to your original CategoriesWidget.
-//
 class CategoriesGridWidget extends StatefulWidget {
   final ServicesViewModel servicesViewModel;
   final String categoryType; // "maintenance" or "pro"
@@ -45,13 +41,40 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // Use different filtering keys for Maintenance vs. PRO Services
-    final String searchKey = widget.categoryType == "maintenance"
-        ? "search_services"
-        : "pro_services";
-
     return Consumer<CategoriesViewModel>(
       builder: (context, categoriesViewModel, _) {
+        // Use an alternative filtering approach if a dedicated "categoryType" field is not present.
+        final List<dynamic> filteredCategories =
+            categoriesViewModel.categoriesList.where((service) {
+          String currentLang = lang ?? "en-US";
+
+          // Try to retrieve the parent translation.
+          Map<String, dynamic>? parentTranslation;
+          for (Map<String, dynamic> translation in service["class"]
+              ["translations"]) {
+            if (translation["languages_code"] == currentLang) {
+              parentTranslation = translation;
+              break;
+            }
+          }
+          if (parentTranslation == null) return false;
+
+          final String parentTitle =
+              parentTranslation["title"].toString().toLowerCase();
+          if (widget.categoryType == "maintenance") {
+            return parentTitle.contains("maintenance");
+          } else {
+            return parentTitle.contains("pro");
+          }
+        }).toList();
+
+        debugPrint(
+            "Filtered services for ${widget.categoryType}: ${filteredCategories.length}");
+
+        final String searchKey = widget.categoryType == "maintenance"
+            ? "search_services"
+            : "pro_services";
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -60,7 +83,7 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
               height: context.appValues.appSizePercent.h30,
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3, // Three items per row
+                  crossAxisCount: 3,
                   crossAxisSpacing: 4,
                   mainAxisSpacing: 4,
                   childAspectRatio: 1,
@@ -73,17 +96,18 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
                 ),
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
-                itemCount: categoriesViewModel.categoriesList.length,
+                itemCount: filteredCategories.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: context.appValues.appPadding.p5,
                     ),
                     child: buildServiceWidget(
-                        categoriesViewModel.categoriesList[index],
-                        categoriesViewModel,
-                        index,
-                        searchKey),
+                      filteredCategories[index],
+                      categoriesViewModel,
+                      index,
+                      searchKey,
+                    ),
                   );
                 },
               ),
@@ -270,19 +294,6 @@ class _ServicesScreenState extends State<ServicesScreen>
 
     return Scaffold(
       backgroundColor: Colors.white,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 1,
-        onTap: (index) {
-          // Handle bottom navigation if needed.
-        },
-        items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(
-              icon: Icon(Icons.design_services), label: 'Services'),
-          BottomNavigationBarItem(icon: Icon(Icons.work), label: 'Jobs'),
-          BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Account'),
-        ],
-      ),
       body: Stack(
         children: [
           // Purple header covering the top half.

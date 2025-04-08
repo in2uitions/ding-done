@@ -60,9 +60,9 @@ class _ServiceRateAndCurrnecyWidgetState
                     ),
                     child: Text(
                       translate('updateJob.serviceRate'),
-                      style: getPrimaryBoldStyle(
+                      style: getPrimaryRegularStyle(
                         fontSize: 18,
-                        color: const Color(0xff38385E),
+                        color: const Color(0xff180B3C),
                       ),
                     ),
                   ),
@@ -76,7 +76,7 @@ class _ServiceRateAndCurrnecyWidgetState
                       '${widget.service_rate}',
                       style: getPrimaryRegularStyle(
                         fontSize: 16,
-                        color: const Color(0xff78789D),
+                        color: const Color(0xff71727A),
                       ),
                     );
                     //     :widget.userRole==Constants.customerRoleId?
@@ -134,9 +134,9 @@ class _ServiceRateAndCurrnecyWidgetState
                     ),
                     child: Text(
                       translate('updateJob.currency'),
-                      style: getPrimaryBoldStyle(
+                      style: getPrimaryRegularStyle(
                         fontSize: 18,
-                        color: const Color(0xff38385E),
+                        color: const Color(0xff180B3C),
                       ),
                     ),
                   ),
@@ -144,7 +144,7 @@ class _ServiceRateAndCurrnecyWidgetState
                     '${widget.currency}',
                     style: getPrimaryRegularStyle(
                       fontSize: 16,
-                      color: const Color(0xff78789D),
+                      color: const Color(0xff71727A),
                     ),
                   ),
                 ],

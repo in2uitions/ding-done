@@ -1,10 +1,8 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
-import 'package:dingdone/view/home_page/home_page.dart';
 import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -21,8 +19,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:flutter_translate/flutter_translate.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:go_sell_sdk_flutter/model/models.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -30,7 +26,6 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
-import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:uni_links2/uni_links.dart';
 
 Future<void> main() async {
@@ -102,7 +97,8 @@ class _MyAppState extends State<MyApp> {
             builder: (_) => Consumer2<ProfileViewModel, PaymentViewModel>(
               builder: (context, profileViewModel, paymentViewModel, _) {
                 return ConfirmPaymentMethod(
-                  payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
+                  payment_method:
+                      paymentViewModel.getPaymentBody['tap_payments_card'],
                   paymentViewModel: paymentViewModel,
                   profileViewModel: profileViewModel,
                   role: role,
@@ -138,6 +134,7 @@ class _MyAppState extends State<MyApp> {
     });
     // }
   }
+
   Route _createRoute(dynamic classname) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => classname,
@@ -147,7 +144,7 @@ class _MyAppState extends State<MyApp> {
         const curve = Curves.ease;
 
         var tween =
-        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),
@@ -156,6 +153,7 @@ class _MyAppState extends State<MyApp> {
       },
     );
   }
+
   Future<void> initPlatformState() async {
     if (!mounted) return;
     OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
@@ -206,7 +204,6 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     var localizationDelegate = LocalizedApp.of(context).delegate;
     return LocalizationProvider(
-
       state: LocalizationProvider.of(context).state,
       child: MultiProvider(
         providers: [

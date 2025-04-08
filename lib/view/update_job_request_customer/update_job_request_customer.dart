@@ -70,97 +70,45 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                           width: context.appValues.appSizePercent.w100,
                           height: context.appValues.appSizePercent.h50,
                           decoration: const BoxDecoration(
-                            image: DecorationImage(
-                              image: AssetImage('assets/img/homepagebg.png'),
-                              fit: BoxFit.cover,
-                            ),
+                            // image: DecorationImage(
+                            //   image: AssetImage('assets/img/homepagebg.png'),
+                            //   fit: BoxFit.cover,
+                            // ),
+                            color: Color(0xff4100E3),
                           ),
-                        ),
-                        SizedBox(
-                          width: context.appValues.appSizePercent.w100,
-                          height: context.appValues.appSizePercent.h50,
-                          child: Padding(
-                            padding: EdgeInsets.only(
-                              top: context.appValues.appPadding.p8,
-                              left: context.appValues.appPadding.p20,
-                              right: context.appValues.appPadding.p20,
-                            ),
-                            child: SafeArea(
-                              child: Stack(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        translate('jobDetails.jobDetails'),
-                                        style: getPrimaryBoldStyle(
-                                          color: context
-                                              .resources.color.colorWhite,
-                                          fontSize: 25,
-                                        ),
-                                      ),
-                                    ],
+                          child: SafeArea(
+                            child: Stack(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 20,
+                                    top: 5,
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Consumer<JobsViewModel>(builder:
-                                            (context, jobsViewModel, _) {
-                                          return InkWell(
-                                            onTap: () {
-                                              jobsViewModel.launchWhatsApp();
-                                            },
-                                            child: SvgPicture.asset(
-                                              'assets/img/headphone.svg',
-                                            ),
-                                          );
-                                        }),
-                                      ],
-                                    ),
-                                  ),
-                                  InkWell(
-                                    child: Padding(
-                                      padding: EdgeInsets.only(
-                                        top: context.appValues.appPadding.p8,
-                                      ),
-                                      child: SvgPicture.asset(
-                                          'assets/img/back-new.svg'),
-                                    ),
+                                  child: InkWell(
                                     onTap: () {
                                       Navigator.pop(context);
                                     },
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          bottom: 50,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: context.appValues.appPadding.p20,
-                            ),
-                            child: SizedBox(
-                              width: context.appValues.appSizePercent.w80,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Title',
-                                    style: getPrimaryBoldStyle(
-                                      fontSize: 18,
+                                    child: Icon(
+                                      Icons.arrow_back_ios_new_sharp,
                                       color: context.resources.color.colorWhite,
+                                      size: 20,
                                     ),
                                   ),
-                                ],
-                              ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 55,
+                                    top: 3,
+                                  ),
+                                  child: Text(
+                                    translate('jobDetails.jobDetails'),
+                                    style: getPrimaryRegularStyle(
+                                      color: context.resources.color.colorWhite,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
@@ -172,8 +120,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
             ],
           ),
           DraggableScrollableSheet(
-              initialChildSize: 0.80,
-              minChildSize: 0.80,
+              initialChildSize: 0.85,
+              minChildSize: 0.85,
               maxChildSize: 1,
               builder:
                   (BuildContext context, ScrollController scrollController) {
@@ -185,623 +133,486 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     ),
                     color: Color(0xffFEFEFE),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(25.0),
-                    // Padding inside the container
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.grey[200]!, // Very light gray border
-                          width: 1.0, // Border thickness
-                        ),
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(20), // Inner border's radius
-                        ),
-                      ),
-                      child: ListView(
-                        padding: EdgeInsets.zero,
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: context.appValues.appPadding.p20),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          context.appValues.appPadding.p0,
-                                      vertical:
-                                          context.appValues.appPadding.p10),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        translate('updateJob.jobStatus'),
-                                        style: getPrimaryBoldStyle(
-                                          fontSize: 16,
-                                          color: Colors.purpleAccent[700],
-                                        ),
-                                      ),
-                                      Text(
-                                        widget.data.status,
-                                        // Fallback text if no matching translation is found
-                                        style: getPrimaryBoldStyle(
-                                          color: Colors.green,
-                                          fontSize: 16,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          context.appValues.appPadding.p0,
-                                      vertical:
-                                          context.appValues.appPadding.p10),
-                                  child: Text(
-                                    translate('bookService.jobTitle'),
-                                    style: getPrimaryBoldStyle(
-                                      fontSize: 16,
-                                      color: const Color(0xff180C38),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: context.appValues.appPadding.p0,
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        context.appValues.appPadding.p0,
-                                        0,
-                                        context.appValues.appPadding.p0,
-                                        0),
-                                    child: Text(
-                                      widget.title.toString(),
-                                      style: getPrimaryRegularStyle(
-                                        // color: context.resources.color.colorYellow,
-                                        color: const Color(0xff78789D),
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Gap(20),
-                          widget.fromWhere == translate('jobs.completed') ||
-                                  widget.fromWhere == translate('jobs.active')
-                              ? Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          context.appValues.appPadding.p20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                                context.appValues.appPadding.p0,
-                                            vertical: context
-                                                .appValues.appPadding.p10),
-                                        child: Text(
-                                          translate(
-                                              'bookService.jobDescription'),
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 16,
-                                            color: const Color(0xff180C38),
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              context.appValues.appPadding.p0,
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                            context.appValues.appPadding.p10,
-                                            0,
+                  child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: context.appValues.appPadding.p20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
                                             context.appValues.appPadding.p0,
-                                            0,
-                                          ),
-                                          child: Builder(
-                                            builder: (context) {
-                                              String? description;
-                                              for (var translation in widget
-                                                  .data
-                                                  .service['translations']) {
-                                                if (translation[
-                                                        'languages_code'] ==
-                                                    widget.lang) {
-                                                  description = translation[
-                                                      'description'];
-                                                  break; // Exit loop once the match is found
-                                                }
-                                              }
-
-                                              // Display the description if found, otherwise fallback to default
-                                              return Text(
-                                                description ??
-                                                    'No description available',
-                                                // Fallback text if no matching translation is found
-                                                style: getPrimaryRegularStyle(
-                                                  color:
-                                                      const Color(0xff78789D),
-                                                  fontSize: 16,
-                                                ),
-                                              );
-                                            },
+                                        vertical:
+                                            context.appValues.appPadding.p0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          translate('updateJob.jobStatus'),
+                                          style: getPrimaryRegularStyle(
+                                            fontSize: 16,
+                                            color: context
+                                                .resources.color.btnColorBlue,
                                           ),
                                         ),
-                                      )
-                                    ],
+                                        Text(
+                                          widget.data.status,
+                                          style: getPrimaryBoldStyle(
+                                            color: const Color(0xff4100E3),
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                )
-                              : Container(),
-                          // widget.fromWhere!=translate('jobs.active')?
-                          JobDescriptionWidget(
-                            description: widget.data.job_description,
-                            image: widget.data.uploaded_media,
-                          ),
-                          // :Container(),
-                          widget.fromWhere != translate('jobs.active') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.completed')
-                              ? AddressWidget(address: widget.data.job_address)
-                              : Container(),
-                          widget.fromWhere == translate('jobs.booked')
-                              ? Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        context.appValues.appPadding.p20,
-                                    vertical: context.appValues.appPadding.p10,
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            context.appValues.appPadding.p0,
+                                        vertical:
+                                            context.appValues.appPadding.p10),
+                                    child: Text(
+                                      translate('bookService.jobTitle'),
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 16,
+                                        color: const Color(0xff180C38),
+                                      ),
+                                    ),
                                   ),
-                                  child: SizedBox(
-                                    width: context.appValues.appSizePercent.w90,
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          context.appValues.appPadding.p0,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          context.appValues.appPadding.p0,
+                                          0,
+                                          context.appValues.appPadding.p0,
+                                          0),
+                                      child: Text(
+                                        widget.title.toString(),
+                                        style: getPrimaryRegularStyle(
+                                          // color: context.resources.color.colorYellow,
+                                          color: const Color(0xff71727A),
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Gap(20),
+                            widget.fromWhere == translate('jobs.completed') ||
+                                    widget.fromWhere == translate('jobs.active')
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            context.appValues.appPadding.p20),
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                            context.appValues.appPadding.p0,
-                                            context.appValues.appPadding.p10,
-                                            context.appValues.appPadding.p0,
-                                            context.appValues.appPadding.p0,
-                                          ),
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: context
+                                                  .appValues.appPadding.p0,
+                                              vertical: context
+                                                  .appValues.appPadding.p10),
                                           child: Text(
-                                            translate('jobs.estimatedTime'),
-                                            style: getPrimaryBoldStyle(
+                                            translate(
+                                                'bookService.jobDescription'),
+                                            style: getPrimaryRegularStyle(
                                               fontSize: 16,
                                               color: const Color(0xff180C38),
                                             ),
                                           ),
                                         ),
                                         Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                            context.appValues.appPadding.p0,
-                                            context.appValues.appPadding.p0,
-                                            context.appValues.appPadding.p0,
-                                            context.appValues.appPadding.p15,
-                                          ),
-                                          child: Row(
-                                            children: [
-                                              Text(
-                                                '${widget.data.supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
-                                                style: getPrimaryRegularStyle(
-                                                  fontSize: 16,
-                                                  color:
-                                                      const Color(0xff78789D),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                )
-                              : Container(),
-                          widget.fromWhere != translate('jobs.booked') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.active') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.completed')
-                              ? DateAndTimeWidget(
-                                  dateTime: widget.data.start_date)
-                              : Container(),
-
-                          // widget.fromWhere != translate('jobs.booked') &&
-                          //         widget.fromWhere !=
-                          //             translate('jobs.active') &&
-                          //         widget.fromWhere !=
-                          //             translate('jobs.completed')
-                          //     ? JobStatusWidget(
-                          //         status: widget.data.status,
-                          //       )
-                          //     : Container(),
-                          widget.fromWhere != translate('jobs.requestedJobs') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.booked') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.completed') &&
-                                  widget.fromWhere != translate('jobs.active')
-                              ? JobTypeWidget(
-                                  job_type: widget.data.job_type["code"],
-                                  tab: widget.fromWhere,
-                                  service: widget.data.service,
-                                )
-                              : Container(),
-
-                          widget.fromWhere != translate('jobs.requestedJobs') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.booked') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.completed') &&
-                                  widget.fromWhere != translate('jobs.active')
-                              ? JobCategorieAndServiceWidget(
-                                  category: widget.data.service["category"]
-                                      ["title"],
-                                  service: widget.data.service["title"],
-                                )
-                              : Container(),
-
-                          widget.fromWhere != translate('jobs.requestedJobs') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.active') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.completed')
-                              ? ServiceRateAndCurrnecyWidget(
-                                  currency: widget.data.job_address["country"]
-                                      ["currency"],
-                                  // currency: widget.data.currency,
-                                  service_rate: _getServiceRate(),
-
-                                  // currency: widget.data.currency,
-                                  // service_rate: widget.data.service["service_rates"],
-                                  fromWhere: widget.fromWhere,
-                                  userRole: Constants.customerRoleId)
-                              : Container(),
-
-                          widget.fromWhere != translate('jobs.requestedJobs') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.booked') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.active') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.completed')
-                              ? Padding(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: context.appValues.appPadding.p10,
-                                  ),
-                                  child: Consumer2<PaymentViewModel,
-                                          JobsViewModel>(
-                                      builder: (context, paymentViewModel,
-                                          jobsViewModel, _) {
-                                    return PaymentMethod(
-                                      fromWhere: widget.fromWhere,
-                                      payment_method:
-                                          paymentViewModel.paymentList,
-                                      tap_payments_card:
-                                          widget.data.tap_payments_card,
-                                      paymentViewModel: paymentViewModel,
-                                      jobsViewModel: jobsViewModel,
-                                      role: Constants.customerRoleId,
-                                    );
-                                  }),
-                                )
-                              : Container(),
-
-                          widget.fromWhere != translate('jobs.requestedJobs') &&
-                                  widget.fromWhere !=
-                                      translate('jobs.completed')
-                              ? CurrentSupplierWidget(
-                                  user: widget.data.supplier != null
-                                      ? '${widget.data.supplier["first_name"]} ${widget.data.supplier["last_name"]}'
-                                      : "")
-                              : Container(),
-
-                          widget.fromWhere != translate('jobs.requestedJobs') &&
-                                  widget.fromWhere != translate('jobs.booked')
-                              ? JobSizeWidget(
-                                  completed_units:
-                                      widget.data.completed_units ?? '',
-                                  number_of_units:
-                                      widget.data.number_of_units ?? '',
-                                  extra_fees: widget.data.extra_fees ?? '',
-                                  extra_fees_reason:
-                                      widget.data.extra_fees_reason ?? '',
-                                  userRole: Constants.customerRoleId,
-                                  fromWhere: widget.fromWhere,
-                                )
-                              : Container(),
-
-                          widget.fromWhere != translate('jobs.requestedJobs') &&
-                                  widget.fromWhere != translate('jobs.booked')
-                              ? ActualStartTimeWidget(
-                                  actual_start_date:
-                                      widget.data.actual_start_date,
-                                  actual_end_date: widget.data.finish_date)
-                              : Container(),
-                          widget.fromWhere == translate('jobs.completed')
-                              ? ActualEndTimeWidget(
-                                  actual_start_date:
-                                      widget.data.actual_start_date,
-                                  actual_end_date: widget.data.finish_date)
-                              : Container(),
-                          widget.fromWhere == translate('jobs.active') ||
-                                  widget.fromWhere ==
-                                      translate('jobs.completed')
-                              ? Padding(
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal:
-                                          context.appValues.appPadding.p20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
+                                          padding: EdgeInsets.symmetric(
                                             horizontal:
                                                 context.appValues.appPadding.p0,
-                                            vertical: context
-                                                .appValues.appPadding.p10),
-                                        child: Text(
-                                          translate('home_screen.totalPrice'),
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 16,
-                                            color: const Color(0xff180C38),
                                           ),
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              context.appValues.appPadding.p0,
-                                        ),
-                                        child: Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              context.appValues.appPadding.p0,
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                              context.appValues.appPadding.p10,
                                               0,
                                               context.appValues.appPadding.p0,
-                                              0),
-                                          child: Text(
-                                            widget.data.total_amount != null
-                                                ? '${widget.data.total_amount} ${widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"]["currency"] : ''}'
-                                                : '${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"]["curreny"]} ${widget.data.service["country_rates"][0]["unit_type"] != null ? widget.data.service["country_rates"][0]["unit_type"]["code"] : ''}',
-                                            style: getPrimaryRegularStyle(
-                                              // color: context.resources.color.colorYellow,
-                                              color: const Color(0xff78789D),
-                                              fontSize: 16,
+                                              0,
                                             ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              : Container(),
-                          // SizedBox(height: context.appValues.appSizePercent.h2),
+                                            child: Builder(
+                                              builder: (context) {
+                                                String? description;
+                                                for (var translation in widget
+                                                    .data
+                                                    .service['translations']) {
+                                                  if (translation[
+                                                          'languages_code'] ==
+                                                      widget.lang) {
+                                                    description = translation[
+                                                        'description'];
+                                                    break; // Exit loop once the match is found
+                                                  }
+                                                }
 
-                          //
-                          //
-                          //
-                          //
-                          //
-                          //
-                          Consumer<JobsViewModel>(
-                              builder: (context, jobsViewModel, _) {
-                            return SizedBox(
-                              height: context.appValues.appSizePercent.h8,
-                              width: context.appValues.appSizePercent.w100,
-                              // decoration: BoxDecoration(
-                              //   borderRadius: const BorderRadius.only(
-                              //       topLeft: Radius.circular(20),
-                              //       topRight: Radius.circular(20)),
-                              //   color: context.resources.color.btnColorBlue,
-                              // ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  // widget.fromWhere!='completed'?
-
-                                  widget.fromWhere !=
-                                              translate('jobs.requestedJobs') &&
-                                          widget.fromWhere !=
-                                              translate('jobs.active') &&
-                                          widget.fromWhere !=
-                                              translate('jobs.booked')
-                                      ? Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: context
-                                                  .appValues.appPadding.p10,
-                                              horizontal: context
-                                                  .appValues.appPadding.p15),
-                                          child: SizedBox(
-                                            width: context
-                                                .appValues.appSizePercent.w40,
-                                            height: context
-                                                .appValues.appSizePercent.h100,
-                                            child: ElevatedButton(
-                                              onPressed: () async {
-                                                setState(() {
-                                                  _isLoading2 = true;
-                                                });
-                                                widget.fromWhere ==
-                                                        translate(
-                                                            'jobs.completed')
-                                                    ? await jobsViewModel.downloadInvoice(widget.data.id) !=
-                                                            null
-                                                        ? await Navigator.push(
-                                                            context,
-                                                            MaterialPageRoute(
-                                                                builder: (context) =>
-                                                                    Scaffold(
-                                                                        appBar:
-                                                                            AppBar(
-                                                                          title:
-                                                                              const Text('Invoice'),
-                                                                        ),
-                                                                        body: SfPdfViewer.memory(jobsViewModel
-                                                                            .file))))
-                                                        : showDialog(
-                                                            context: context,
-                                                            builder: (BuildContext context) =>
-                                                                simpleAlert(
-                                                                    context,
-                                                                    translate(
-                                                                        'button.failure')))
-                                                    : await jobsViewModel.updateJob(widget.data.id) ==
-                                                            true
-                                                        ? showDialog(
-                                                            context: context,
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                simpleAlert(context, translate('button.success')))
-                                                        : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure')));
-                                                setState(() {
-                                                  _isLoading2 = false;
-                                                });
+                                                // Display the description if found, otherwise fallback to default
+                                                return Text(
+                                                  description ??
+                                                      'No description available',
+                                                  // Fallback text if no matching translation is found
+                                                  style: getPrimaryRegularStyle(
+                                                    color:
+                                                        const Color(0xff71727A),
+                                                    fontSize: 16,
+                                                  ),
+                                                );
                                               },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                    const Color(0xff2c2a5b),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(15),
-                                                ),
-                                              ),
-                                              child: widget.fromWhere ==
-                                                      translate(
-                                                          'jobs.completed')
-                                                  ? _isLoading2
-                                                      ? const CircularProgressIndicator()
-                                                      : Text(
-                                                          translate(
-                                                              'button.invoice'),
-                                                          style:
-                                                              getPrimaryBoldStyle(
-                                                            fontSize: 16,
-                                                            color: context
-                                                                .resources
-                                                                .color
-                                                                .colorWhite,
-                                                          ),
-                                                        )
-                                                  : _isLoading2
-                                                      ? const CircularProgressIndicator()
-                                                      : Text(
-                                                          translate(
-                                                              'button.update'),
-                                                          style:
-                                                              getPrimaryBoldStyle(
-                                                            fontSize: 16,
-                                                            color: context
-                                                                .resources
-                                                                .color
-                                                                .colorWhite,
-                                                          ),
-                                                        ),
                                             ),
                                           ),
                                         )
-                                      : Container(),
-                                  //     :
-                                  // Container(),
-                                  widget.fromWhere !=
-                                              translate('jobs.active') &&
-                                          widget.fromWhere !=
-                                              translate('jobs.completed')
-                                      ? Consumer2<JobsViewModel,
-                                              PaymentViewModel>(
-                                          builder: (context, jobsViewModel,
-                                              paymentViewModel, _) {
-                                          return Padding(
+                                      ],
+                                    ),
+                                  )
+                                : Container(),
+                            // widget.fromWhere!=translate('jobs.active')?
+                            JobDescriptionWidget(
+                              description: widget.data.job_description,
+                              image: widget.data.uploaded_media,
+                            ),
+                            // :Container(),
+                            widget.fromWhere != translate('jobs.active') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.completed')
+                                ? AddressWidget(
+                                    address: widget.data.job_address)
+                                : Container(),
+                            widget.fromWhere == translate('jobs.booked')
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          context.appValues.appPadding.p20,
+                                      vertical:
+                                          context.appValues.appPadding.p10,
+                                    ),
+                                    child: SizedBox(
+                                      width:
+                                          context.appValues.appSizePercent.w90,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                              context.appValues.appPadding.p0,
+                                              context.appValues.appPadding.p10,
+                                              context.appValues.appPadding.p0,
+                                              context.appValues.appPadding.p0,
+                                            ),
+                                            child: Text(
+                                              translate('jobs.estimatedTime'),
+                                              style: getPrimaryRegularStyle(
+                                                fontSize: 16,
+                                                color: const Color(0xff180C38),
+                                              ),
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                              context.appValues.appPadding.p0,
+                                              context.appValues.appPadding.p0,
+                                              context.appValues.appPadding.p0,
+                                              context.appValues.appPadding.p15,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  '${widget.data.supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
+                                                  style: getPrimaryRegularStyle(
+                                                    fontSize: 16,
+                                                    color:
+                                                        const Color(0xff71727A),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            widget.fromWhere != translate('jobs.booked') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.active') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.completed')
+                                ? DateAndTimeWidget(
+                                    dateTime: widget.data.start_date)
+                                : Container(),
+
+                            // widget.fromWhere != translate('jobs.booked') &&
+                            //         widget.fromWhere !=
+                            //             translate('jobs.active') &&
+                            //         widget.fromWhere !=
+                            //             translate('jobs.completed')
+                            //     ? JobStatusWidget(
+                            //         status: widget.data.status,
+                            //       )
+                            //     : Container(),
+                            widget.fromWhere !=
+                                        translate('jobs.requestedJobs') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.booked') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.completed') &&
+                                    widget.fromWhere != translate('jobs.active')
+                                ? JobTypeWidget(
+                                    job_type: widget.data.job_type["code"],
+                                    tab: widget.fromWhere,
+                                    service: widget.data.service,
+                                  )
+                                : Container(),
+
+                            widget.fromWhere !=
+                                        translate('jobs.requestedJobs') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.booked') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.completed') &&
+                                    widget.fromWhere != translate('jobs.active')
+                                ? JobCategorieAndServiceWidget(
+                                    category: widget.data.service["category"]
+                                        ["title"],
+                                    service: widget.data.service["title"],
+                                  )
+                                : Container(),
+
+                            widget.fromWhere !=
+                                        translate('jobs.requestedJobs') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.active') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.completed')
+                                ? ServiceRateAndCurrnecyWidget(
+                                    currency: widget.data.job_address["country"]
+                                        ["currency"],
+                                    // currency: widget.data.currency,
+                                    service_rate: _getServiceRate(),
+
+                                    // currency: widget.data.currency,
+                                    // service_rate: widget.data.service["service_rates"],
+                                    fromWhere: widget.fromWhere,
+                                    userRole: Constants.customerRoleId)
+                                : Container(),
+
+                            widget.fromWhere !=
+                                        translate('jobs.requestedJobs') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.booked') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.active') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.completed')
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical:
+                                          context.appValues.appPadding.p10,
+                                    ),
+                                    child: Consumer2<PaymentViewModel,
+                                            JobsViewModel>(
+                                        builder: (context, paymentViewModel,
+                                            jobsViewModel, _) {
+                                      return PaymentMethod(
+                                        fromWhere: widget.fromWhere,
+                                        payment_method:
+                                            paymentViewModel.paymentList,
+                                        tap_payments_card:
+                                            widget.data.tap_payments_card,
+                                        paymentViewModel: paymentViewModel,
+                                        jobsViewModel: jobsViewModel,
+                                        role: Constants.customerRoleId,
+                                      );
+                                    }),
+                                  )
+                                : Container(),
+
+                            widget.fromWhere !=
+                                        translate('jobs.requestedJobs') &&
+                                    widget.fromWhere !=
+                                        translate('jobs.completed')
+                                ? CurrentSupplierWidget(
+                                    user: widget.data.supplier != null
+                                        ? '${widget.data.supplier["first_name"]} ${widget.data.supplier["last_name"]}'
+                                        : "")
+                                : Container(),
+
+                            widget.fromWhere !=
+                                        translate('jobs.requestedJobs') &&
+                                    widget.fromWhere != translate('jobs.booked')
+                                ? JobSizeWidget(
+                                    completed_units:
+                                        widget.data.completed_units ?? '',
+                                    number_of_units:
+                                        widget.data.number_of_units ?? '',
+                                    extra_fees: widget.data.extra_fees ?? '',
+                                    extra_fees_reason:
+                                        widget.data.extra_fees_reason ?? '',
+                                    userRole: Constants.customerRoleId,
+                                    fromWhere: widget.fromWhere,
+                                  )
+                                : Container(),
+
+                            widget.fromWhere !=
+                                        translate('jobs.requestedJobs') &&
+                                    widget.fromWhere != translate('jobs.booked')
+                                ? ActualStartTimeWidget(
+                                    actual_start_date:
+                                        widget.data.actual_start_date,
+                                    actual_end_date: widget.data.finish_date)
+                                : Container(),
+                            widget.fromWhere == translate('jobs.completed')
+                                ? ActualEndTimeWidget(
+                                    actual_start_date:
+                                        widget.data.actual_start_date,
+                                    actual_end_date: widget.data.finish_date)
+                                : Container(),
+                            widget.fromWhere == translate('jobs.active') ||
+                                    widget.fromWhere ==
+                                        translate('jobs.completed')
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            context.appValues.appPadding.p20),
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            translate('home_screen.totalPrice'),
+                                            style: getPrimaryRegularStyle(
+                                              fontSize: 16,
+                                              color: const Color(0xff180C38),
+                                            ),
+                                          ),
+                                          Text(
+                                            widget.data.total_amount != null
+                                                ? '${widget.data.total_amount} ${widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"]["currency"] : ''}'
+                                                : '${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"]["curreny"]} ${widget.data.service["country_rates"][0]["unit_type"] != null ? widget.data.service["country_rates"][0]["unit_type"]["code"] : ''}',
+                                            style: getPrimaryBoldStyle(
+                                              color: const Color(0xff4100E3),
+                                              fontSize: 18,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : Container(),
+                            // SizedBox(height: context.appValues.appSizePercent.h2),
+
+                            //
+                            //
+                            //
+                            //
+                            //
+                            //
+                            Consumer<JobsViewModel>(
+                                builder: (context, jobsViewModel, _) {
+                              return SizedBox(
+                                height: context.appValues.appSizePercent.h8,
+                                width: context.appValues.appSizePercent.w100,
+                                // decoration: BoxDecoration(
+                                //   borderRadius: const BorderRadius.only(
+                                //       topLeft: Radius.circular(20),
+                                //       topRight: Radius.circular(20)),
+                                //   color: context.resources.color.btnColorBlue,
+                                // ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    // widget.fromWhere!='completed'?
+
+                                    widget.fromWhere !=
+                                                translate(
+                                                    'jobs.requestedJobs') &&
+                                            widget.fromWhere !=
+                                                translate('jobs.active') &&
+                                            widget.fromWhere !=
+                                                translate('jobs.booked')
+                                        ? Padding(
                                             padding: EdgeInsets.symmetric(
                                                 vertical: context
-                                                    .appValues.appPadding.p13,
+                                                    .appValues.appPadding.p10,
                                                 horizontal: context
                                                     .appValues.appPadding.p15),
                                             child: SizedBox(
                                               width: context
                                                   .appValues.appSizePercent.w40,
-                                              height: context
-                                                  .appValues.appSizePercent.h15,
+                                              height: context.appValues
+                                                  .appSizePercent.h100,
                                               child: ElevatedButton(
-                                                onPressed: () {
+                                                onPressed: () async {
                                                   setState(() {
-                                                    _isLoading = true;
+                                                    _isLoading2 = true;
                                                   });
-                                                  debugPrint(
-                                                      'tap_payments_card ${widget.data.tap_payments_card}');
                                                   widget.fromWhere ==
-                                                              'booked' ||
-                                                          widget.fromWhere ==
-                                                              translate(
-                                                                  'jobs.requestedJobs')
-                                                      ? showDialog(
-                                                          context: context,
-                                                          builder: (BuildContext
-                                                                  context) =>
-                                                              _buildPopupDialog(
+                                                          translate(
+                                                              'jobs.completed')
+                                                      ? await jobsViewModel.downloadInvoice(widget.data.id) !=
+                                                              null
+                                                          ? await Navigator
+                                                              .push(
                                                                   context,
-                                                                  jobsViewModel,
-                                                                  widget
-                                                                      .data.id,
-                                                                  widget
-                                                                      .fromWhere),
-                                                        )
-                                                      // : widget.fromWhere == translate('jobs.completed')
-                                                      //     ? (widget.fromWhere == translate('jobs.completed') &&
-                                                      //             !widget.data.is_paid)
-                                                      //         ? showDialog(
-                                                      //             context: context,
-                                                      //             builder:
-                                                      //                 (BuildContext context) =>
-                                                      //                     payFees(
-                                                      //                       context,
-                                                      //                       jobsViewModel,
-                                                      //                     ))
-                                                      //         : ''
-                                                      : widget.fromWhere ==
-                                                              translate(
-                                                                  'jobs.active')
-                                                          ?
-                                                          // widget.data.payment_card!=null?
-                                                          // showDialog(
-                                                          //                 context: context,
-                                                          //                 builder: (BuildContext context) =>
-                                                          //                     payFees(
-                                                          //                         context, jobsViewModel))
-                                                          //             :showDialog(
-                                                          //     context: context,
-                                                          //     builder: (BuildContext context) =>
-                                                          //         simpleAlert(
-                                                          //             context, 'Make sure that you have payed by cash'))
-                                                          showDialog(
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          Scaffold(
+                                                                              appBar:
+                                                                                  AppBar(
+                                                                                title: const Text('Invoice'),
+                                                                              ),
+                                                                              body: SfPdfViewer.memory(jobsViewModel
+                                                                                  .file))))
+                                                          : showDialog(
                                                               context: context,
-                                                              builder: (BuildContext
-                                                                      context) =>
-                                                                  review(
+                                                              builder: (BuildContext context) =>
+                                                                  simpleAlert(
                                                                       context,
-                                                                      jobsViewModel))
-                                                          : '';
+                                                                      translate(
+                                                                          'button.failure')))
+                                                      : await jobsViewModel.updateJob(widget.data.id) ==
+                                                              true
+                                                          ? showDialog(
+                                                              context: context,
+                                                              builder:
+                                                                  (BuildContext context) =>
+                                                                      simpleAlert(context, translate('button.success')))
+                                                          : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure')));
                                                   setState(() {
-                                                    _isLoading = false;
+                                                    _isLoading2 = false;
                                                   });
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor:
-                                                      const Color(0xff3c4499),
+                                                      const Color(0xff2c2a5b),
+                                                  elevation: 0,
+                                                  shadowColor:
+                                                      Colors.transparent,
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -809,14 +620,15 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                   ),
                                                 ),
                                                 child: widget.fromWhere ==
-                                                        translate('jobs.active')
-                                                    ? _isLoading
+                                                        translate(
+                                                            'jobs.completed')
+                                                    ? _isLoading2
                                                         ? const CircularProgressIndicator()
                                                         : Text(
                                                             translate(
-                                                                'button.finish'),
+                                                                'button.invoice'),
                                                             style:
-                                                                getPrimaryBoldStyle(
+                                                                getPrimaryRegularStyle(
                                                               fontSize: 16,
                                                               color: context
                                                                   .resources
@@ -824,36 +636,13 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                                   .colorWhite,
                                                             ),
                                                           )
-                                                    : widget.fromWhere ==
-                                                            translate(
-                                                                'jobs.completed')
-                                                        ? _isLoading
-                                                            ? const CircularProgressIndicator()
-                                                            : Text(
-                                                                widget.data.is_paid !=
-                                                                        null
-                                                                    ? (widget.fromWhere == translate('jobs.completed') &&
-                                                                            !widget
-                                                                                .data.is_paid)
-                                                                        ? translate(
-                                                                            'button.payFees')
-                                                                        : translate(
-                                                                            'button.paid')
-                                                                    : '',
-                                                                style:
-                                                                    getPrimaryBoldStyle(
-                                                                  fontSize: 16,
-                                                                  color: context
-                                                                      .resources
-                                                                      .color
-                                                                      .colorWhite,
-                                                                ),
-                                                              )
+                                                    : _isLoading2
+                                                        ? const CircularProgressIndicator()
                                                         : Text(
                                                             translate(
-                                                                'button.cancel'),
+                                                                'button.update'),
                                                             style:
-                                                                getPrimaryBoldStyle(
+                                                                getPrimaryRegularStyle(
                                                               fontSize: 16,
                                                               color: context
                                                                   .resources
@@ -863,18 +652,174 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                           ),
                                               ),
                                             ),
-                                          );
-                                        })
-                                      : Container(),
-                                ],
-                              ),
-                            );
-                          }),
-                          const Gap(10),
-                        ],
-                      ),
-                    ),
-                  ),
+                                          )
+                                        : Container(),
+                                    //     :
+                                    // Container(),
+                                    widget.fromWhere !=
+                                                translate('jobs.active') &&
+                                            widget.fromWhere !=
+                                                translate('jobs.completed')
+                                        ? Consumer2<JobsViewModel,
+                                                PaymentViewModel>(
+                                            builder: (context, jobsViewModel,
+                                                paymentViewModel, _) {
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: context
+                                                      .appValues.appPadding.p13,
+                                                  horizontal: context.appValues
+                                                      .appPadding.p15),
+                                              child: SizedBox(
+                                                width: context.appValues
+                                                    .appSizePercent.w40,
+                                                height: context.appValues
+                                                    .appSizePercent.h15,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      _isLoading = true;
+                                                    });
+                                                    debugPrint(
+                                                        'tap_payments_card ${widget.data.tap_payments_card}');
+                                                    widget.fromWhere ==
+                                                                'booked' ||
+                                                            widget.fromWhere ==
+                                                                translate(
+                                                                    'jobs.requestedJobs')
+                                                        ? showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext
+                                                                    context) =>
+                                                                _buildPopupDialog(
+                                                                    context,
+                                                                    jobsViewModel,
+                                                                    widget.data
+                                                                        .id,
+                                                                    widget
+                                                                        .fromWhere),
+                                                          )
+                                                        // : widget.fromWhere == translate('jobs.completed')
+                                                        //     ? (widget.fromWhere == translate('jobs.completed') &&
+                                                        //             !widget.data.is_paid)
+                                                        //         ? showDialog(
+                                                        //             context: context,
+                                                        //             builder:
+                                                        //                 (BuildContext context) =>
+                                                        //                     payFees(
+                                                        //                       context,
+                                                        //                       jobsViewModel,
+                                                        //                     ))
+                                                        //         : ''
+                                                        : widget.fromWhere ==
+                                                                translate(
+                                                                    'jobs.active')
+                                                            ?
+                                                            // widget.data.payment_card!=null?
+                                                            // showDialog(
+                                                            //                 context: context,
+                                                            //                 builder: (BuildContext context) =>
+                                                            //                     payFees(
+                                                            //                         context, jobsViewModel))
+                                                            //             :showDialog(
+                                                            //     context: context,
+                                                            //     builder: (BuildContext context) =>
+                                                            //         simpleAlert(
+                                                            //             context, 'Make sure that you have payed by cash'))
+                                                            showDialog(
+                                                                context:
+                                                                    context,
+                                                                builder: (BuildContext
+                                                                        context) =>
+                                                                    review(
+                                                                        context,
+                                                                        jobsViewModel))
+                                                            : '';
+                                                    setState(() {
+                                                      _isLoading = false;
+                                                    });
+                                                  },
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    elevation: 0,
+                                                    shadowColor:
+                                                        Colors.transparent,
+                                                    shape:
+                                                        RoundedRectangleBorder(
+                                                      side: const BorderSide(
+                                                        color:
+                                                            Color(0xff4100E3),
+                                                        width: 1.5,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                    ),
+                                                  ),
+                                                  child: widget.fromWhere ==
+                                                          translate(
+                                                              'jobs.active')
+                                                      ? _isLoading
+                                                          ? const CircularProgressIndicator()
+                                                          : Text(
+                                                              translate(
+                                                                  'button.finish'),
+                                                              style:
+                                                                  getPrimaryRegularStyle(
+                                                                fontSize: 16,
+                                                                color: const Color(
+                                                                    0xff4100E3),
+                                                              ),
+                                                            )
+                                                      : widget.fromWhere ==
+                                                              translate(
+                                                                  'jobs.completed')
+                                                          ? _isLoading
+                                                              ? const CircularProgressIndicator()
+                                                              : Text(
+                                                                  widget.data.is_paid !=
+                                                                          null
+                                                                      ? (widget.fromWhere == translate('jobs.completed') &&
+                                                                              !widget
+                                                                                  .data.is_paid)
+                                                                          ? translate(
+                                                                              'button.payFees')
+                                                                          : translate(
+                                                                              'button.paid')
+                                                                      : '',
+                                                                  style:
+                                                                      getPrimaryRegularStyle(
+                                                                    fontSize:
+                                                                        16,
+                                                                    color: const Color(
+                                                                        0xff4100E3),
+                                                                  ),
+                                                                )
+                                                          : Text(
+                                                              translate(
+                                                                  'button.cancel'),
+                                                              style:
+                                                                  getPrimaryRegularStyle(
+                                                                fontSize: 16,
+                                                                color: const Color(
+                                                                    0xff4100E3),
+                                                              ),
+                                                            ),
+                                                ),
+                                              ),
+                                            );
+                                          })
+                                        : Container(),
+                                  ],
+                                ),
+                              );
+                            }),
+                            const Gap(10),
+                          ],
+                        );
+                      }),
                 );
               }),
           // widget.fromWhere == 'active' || widget.fromWhere == 'booked'
@@ -1068,7 +1013,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                   style: ElevatedButton.styleFrom(
                     elevation: 0.0,
                     shadowColor: Colors.transparent,
-                    backgroundColor: const Color(0xffFFD105),
+                    backgroundColor: const Color(0xff4100E3),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -1081,7 +1026,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     translate('button.send'),
                     style: getPrimaryRegularStyle(
                       fontSize: 15,
-                      color: context.resources.color.btnColorBlue,
+                      color: context.resources.color.colorWhite,
                     ),
                   ),
                 ),

@@ -1,7 +1,5 @@
-import 'dart:convert';
 import 'dart:io';
 import 'package:dingdone/res/app_context_extension.dart';
-import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/card_info.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/payment_method_buttons.dart';
@@ -14,18 +12,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:flutter_web_browser/flutter_web_browser.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 // #docregion platform_imports
 // Import for Android features.
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 // Import for iOS/macOS features.
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
+
 class ConfirmPaymentMethod extends StatefulWidget {
   var payment_method;
   var role;
@@ -61,7 +57,6 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
     configureApp();
     // sdk session configurations
     setupSDKSession();
-
   }
 
   // configure app key and bundle-id (You must get those keys from tap)
@@ -96,7 +91,6 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> setupSDKSession() async {
     try {
-
       GoSellSdkFlutter.sessionConfigurations(
         trxMode: TransactionMode.TOKENIZE_CARD,
         transactionCurrency: "QAR",
@@ -190,6 +184,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
       tapSDKResult = {};
     });
   }
+
   Future<void> startSDK() async {
     try {
       widget.paymentViewModel.setLoading(true);
@@ -208,7 +203,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
 
       // Perform asynchronous operations outside setState.
       await widget.paymentViewModel.getPaymentMethodsTap();
-      dynamic result = await widget.paymentViewModel.authorizeCard(tapSDKResult);
+      dynamic result =
+          await widget.paymentViewModel.authorizeCard(tapSDKResult);
 
       // Now update state synchronously.
       setState(() {
@@ -229,7 +225,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         }
 
         final WebViewController controller =
-        WebViewController.fromPlatformCreationParams(params);
+            WebViewController.fromPlatformCreationParams(params);
         controller
           ..setJavaScriptMode(JavaScriptMode.unrestricted)
           ..setNavigationDelegate(NavigationDelegate(
@@ -238,10 +234,11 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
             },
             onPageStarted: (String url) async {
               debugPrint('Page started: $url');
-              if(url.contains('dingdone://com.in2uitions.dingdone')) {
-                await Future.delayed(Duration(seconds: 6));
+              if (url.contains('dingdone://com.in2uitions.dingdone')) {
+                await Future.delayed(const Duration(seconds: 6));
                 Navigator.pop(context);
-                Provider.of<PaymentViewModel>(context, listen: false).getPaymentMethodsTap();
+                Provider.of<PaymentViewModel>(context, listen: false)
+                    .getPaymentMethodsTap();
 
                 // Consumer2<ProfileViewModel, PaymentViewModel>(
                 //   builder: (context, profileViewModel, paymentViewModel, _) {
@@ -279,7 +276,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
               debugPrint('WebView error: ${error.description}');
             },
           ))
-          ..addJavaScriptChannel('Toaster', onMessageReceived: (JavaScriptMessage message) {
+          ..addJavaScriptChannel('Toaster',
+              onMessageReceived: (JavaScriptMessage message) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text(message.message)),
             );
@@ -313,17 +311,13 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
             builder: (BuildContext context) => simpleAlert(
                 context,
                 translate('button.failure'),
-                '${result['errors'] != null ? result['errors'][0]['description'] : result['error']}'
-            )
-        );
+                '${result['errors'] != null ? result['errors'][0]['description'] : result['error']}'));
       }
       await widget.paymentViewModel.setLoading(false);
     } catch (error) {
       debugPrint('Error starting SDK: $error');
     }
   }
-
-
 
   Future<void> _launchUrl(String url) async {
     if (Uri.tryParse(url)?.hasAbsolutePath != true) {
@@ -434,150 +428,197 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         backgroundColor: Colors.white,
         body: Stack(
           children: [
-            ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                SafeArea(
-                  child: Directionality(
-                    textDirection: TextDirection.ltr,
-                    child: Padding(
-                      padding: EdgeInsets.fromLTRB(
-                        context.appValues.appPadding.p20,
-                        context.appValues.appPadding.p10,
-                        context.appValues.appPadding.p20,
-                        context.appValues.appPadding.p10,
-                      ),
-                      child: Row(
-                        children: [
-                          InkWell(
-                            child: SvgPicture.asset('assets/img/back.svg'),
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
+            Container(
+              width: context.appValues.appSizePercent.w100,
+              height: context.appValues.appSizePercent.h50,
+              decoration: BoxDecoration(
+                color: Color(0xff4100E3),
+              ),
+              child: SafeArea(
+                child: Padding(
                   padding: EdgeInsets.symmetric(
-                      horizontal: context.appValues.appPadding.p20),
-                  child: Text(
-                    translate('paymentMethod.confirmPaymentMethod'),
-                    style: getPrimaryBoldStyle(
-                      color: context.resources.color.btnColorBlue,
-                      fontSize: 22,
+                    horizontal: context.appValues.appPadding.p20,
+                    vertical: context.appValues.appPadding.p10,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_sharp,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                      const Gap(10),
+                      Text(
+                        translate('profile.paymentMethods'),
+                        style: getPrimaryBoldStyle(
+                          color: context.resources.color.colorWhite,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            DraggableScrollableSheet(
+                initialChildSize: 0.85,
+                minChildSize: 0.85,
+                maxChildSize: 1,
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                      color: Color(0xffFEFEFE),
                     ),
-                  ),
-                ),
-                const Gap(30),
-                const CardInfo1(),
-                // Padding(
-                //   padding: EdgeInsets.symmetric(
-                //     horizontal: context.appValues.appPadding.p20,
-                //     vertical: context.appValues.appPadding.p20,
-                //   ),
-                //   child: Text(
-                //     translate('paymentMethod.addPaymentMethod'),
-                //     style: getPrimaryRegularStyle(
-                //         fontSize: 28,
-                //         color: context.resources.color.btnColorBlue),
-                //   ),
-                // ),
-                // AddNewPaymentMethodWidget(
-                //     payment_method: widget.payment_method),
-                Padding(
-                  padding: EdgeInsets.fromLTRB(
-                    context.appValues.appPadding.p20,
-                    context.appValues.appPadding.p20,
-                    context.appValues.appPadding.p20,
-                    context.appValues.appPadding.p20,
-                  ),
-                  child: Text(
-                    translate('paymentMethod.paymentMethods'),
-                    style: getPrimaryBoldStyle(
-                        fontSize: 16,
-                        color: context.resources.color.btnColorBlue),
-                  ),
-                ),
-                PaymentMethodButtons(
-                  payment_method: widget.payment_method,
-                  jobsViewModel: jobsViewModel,
-                  fromWhere: 'confirm_payment',
-                  role: widget.role,
-                ),
-                const Gap(10),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Container(
-                    height: context.appValues.appSizePercent.h6,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: const Color(0xfff3f2f9),
-                    ),
-                    child: InkWell(
-                      onTap: () async {
-                        widget.paymentViewModel.setLoading(true);
+                    child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: 1,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(children: [
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(
+                            //       horizontal: context.appValues.appPadding.p20),
+                            //   child: Text(
+                            //     translate('paymentMethod.confirmPaymentMethod'),
+                            //     style: getPrimaryBoldStyle(
+                            //       color: context.resources.color.btnColorBlue,
+                            //       fontSize: 22,
+                            //     ),
+                            //   ),
+                            // ),
+                            // const Gap(30),
+                            const CardInfo1(),
+                            // Padding(
+                            //   padding: EdgeInsets.symmetric(
+                            //     horizontal: context.appValues.appPadding.p20,
+                            //     vertical: context.appValues.appPadding.p20,
+                            //   ),
+                            //   child: Text(
+                            //     translate('paymentMethod.addPaymentMethod'),
+                            //     style: getPrimaryRegularStyle(
+                            //         fontSize: 28,
+                            //         color: context.resources.color.btnColorBlue),
+                            //   ),
+                            // ),
+                            // AddNewPaymentMethodWidget(
+                            //     payment_method: widget.payment_method),
+                            PaymentMethodButtons(
+                              payment_method: widget.payment_method,
+                              jobsViewModel: jobsViewModel,
+                              fromWhere: 'confirm_payment',
+                              role: widget.role,
+                            ),
+                            // const Gap(10),
+                            Divider(
+                              color: const Color(0xffD4D6DD),
+                              thickness: 1,
+                              height: context.appValues.appSizePercent.h5,
+                            ),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Container(
+                                height: context.appValues.appSizePercent.h6,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: const Color(0xff4100E3),
+                                ),
+                                child: InkWell(
+                                  onTap: () async {
+                                    widget.paymentViewModel.setLoading(true);
 
-                        dynamic payments = await widget.paymentViewModel
-                            .getPaymentMethodsTap();
-                        dynamic paymentList =
-                            widget.paymentViewModel.paymentList.toList();
-                        debugPrint('widget payment ${paymentList}');
-                        var found = false;
-                        if (paymentList.isNotEmpty) {
-                          for (var payment in paymentList) {
-                            if (payment['card_number'] ==
-                                widget.paymentViewModel
-                                    .getPaymentBody['card_number']) {
-                              found = true;
-                            }
-                          }
-                        }
+                                    dynamic payments = await widget
+                                        .paymentViewModel
+                                        .getPaymentMethodsTap();
+                                    dynamic paymentList = widget
+                                        .paymentViewModel.paymentList
+                                        .toList();
+                                    debugPrint('widget payment ${paymentList}');
+                                    var found = false;
+                                    if (paymentList.isNotEmpty) {
+                                      for (var payment in paymentList) {
+                                        if (payment['card_number'] ==
+                                            widget.paymentViewModel
+                                                    .getPaymentBody[
+                                                'card_number']) {
+                                          found = true;
+                                        }
+                                      }
+                                    }
 
-                        if (!found) {
-                          await widget.paymentViewModel
-                              .createPaymentMethodTap();
-                          await startSDK();
-                          // Navigator.of(context).pop();
-                          // Future.delayed(
-                          //     const Duration(seconds: 0),
-                          //     () => Navigator.of(context).push(
-                          //             _createRoute(ConfirmPaymentMethod(
-                          //           payment_method: widget.payment_method,
-                          //           paymentViewModel:
-                          //               widget.paymentViewModel,
-                          //           role: Constants.customerRoleId,
-                          //               profileViewModel: widget.profileViewModel,
-                          //         ))));
-                        } else {
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) => simpleAlert(
-                                  context,
-                                  translate('button.failure'),
-                                  'Card Number is already chosen'));
-                        }
-                        // await widget.paymentViewModel.setLoading(false);
-                      },
-                      child: widget.paymentViewModel.isLoading
-                          ? Container(width:30,height:30,child: Center(child: const CircularProgressIndicator()))
-                          : Center(
-                              child: Text(
-                                translate('paymentMethod.addPaymentMethod'),
-                                style: getPrimaryRegularStyle(
-                                  fontSize: 18,
-                                  color: const Color(0xff2c2b86),
+                                    if (!found) {
+                                      await widget.paymentViewModel
+                                          .createPaymentMethodTap();
+                                      await startSDK();
+                                      // Navigator.of(context).pop();
+                                      // Future.delayed(
+                                      //     const Duration(seconds: 0),
+                                      //     () => Navigator.of(context).push(
+                                      //             _createRoute(ConfirmPaymentMethod(
+                                      //           payment_method: widget.payment_method,
+                                      //           paymentViewModel:
+                                      //               widget.paymentViewModel,
+                                      //           role: Constants.customerRoleId,
+                                      //               profileViewModel: widget.profileViewModel,
+                                      //         ))));
+                                    } else {
+                                      showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              simpleAlert(
+                                                  context,
+                                                  translate('button.failure'),
+                                                  'Card Number is already chosen'));
+                                    }
+                                  },
+                                  child: widget.paymentViewModel.isLoading
+                                      ? Container(
+                                          width: 30,
+                                          height: 30,
+                                          child: const Center(
+                                              child:
+                                                  CircularProgressIndicator()))
+                                      : Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            const Icon(
+                                              Icons.add,
+                                              size: 18,
+                                              color: Colors.white,
+                                            ),
+                                            const Gap(5),
+                                            Text(
+                                              translate(
+                                                  'paymentMethod.addPaymentMethod'),
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 14,
+                                                color: const Color(0xffffffff),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                 ),
                               ),
                             ),
-                    ),
-                  ),
-                ),
-                const Gap(60),
-              ],
-            ),
+                            const Gap(60),
+                          ]);
+                        }),
+                  );
+                }),
           ],
         ),
       );
@@ -631,6 +672,7 @@ Widget simpleAlert(BuildContext context, String message, String message2) {
     ),
   );
 }
+
 class NavigationControls extends StatelessWidget {
   const NavigationControls({super.key, required this.webViewController});
 
@@ -723,23 +765,23 @@ class SampleMenu extends StatelessWidget {
           case MenuOptions.clearCache:
             _onClearCache(context);
           case MenuOptions.navigationDelegate:
-            // _onNavigationDelegateExample();
+          // _onNavigationDelegateExample();
           case MenuOptions.doPostRequest:
             _onDoPostRequest();
           case MenuOptions.loadLocalFile:
-            // _onLoadLocalFileExample();
+          // _onLoadLocalFileExample();
           case MenuOptions.loadFlutterAsset:
             _onLoadFlutterAssetExample();
           case MenuOptions.loadHtmlString:
-            // _onLoadHtmlStringExample();
+          // _onLoadHtmlStringExample();
           case MenuOptions.transparentBackground:
-            // _onTransparentBackground();
+          // _onTransparentBackground();
           case MenuOptions.setCookie:
             _onSetCookie();
           case MenuOptions.logExample:
-            // _onLogExample();
+          // _onLogExample();
           case MenuOptions.basicAuthentication:
-            // _promptForUrl(context);
+          // _promptForUrl(context);
         }
       },
       itemBuilder: (BuildContext context) => <PopupMenuItem<MenuOptions>>[
@@ -807,6 +849,7 @@ class SampleMenu extends StatelessWidget {
       ],
     );
   }
+
   Future<void> _onShowUserAgent() {
     // Send a message with the user agent string to the Toaster JavaScript channel we registered
     // with the WebView.
@@ -845,7 +888,7 @@ class SampleMenu extends StatelessWidget {
 
   Future<void> _onListCache() {
     return webViewController.runJavaScript('caches.keys()'
-    // ignore: missing_whitespace_between_adjacent_strings
+        // ignore: missing_whitespace_between_adjacent_strings
         '.then((cacheKeys) => JSON.stringify({"cacheKeys" : cacheKeys, "localStorage" : localStorage}))'
         '.then((caches) => Toaster.postMessage(caches))');
   }
@@ -928,7 +971,7 @@ class SampleMenu extends StatelessWidget {
     }
     final List<String> cookieList = cookies.split(';');
     final Iterable<Text> cookieWidgets =
-    cookieList.map((String cookie) => Text(cookie));
+        cookieList.map((String cookie) => Text(cookie));
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
       mainAxisSize: MainAxisSize.min,
@@ -989,6 +1032,7 @@ class SampleMenu extends StatelessWidget {
     );
   }
 }
+
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => classname,

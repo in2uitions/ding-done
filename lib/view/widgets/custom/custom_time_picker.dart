@@ -1,104 +1,3 @@
-// import 'package:flutter/material.dart';
-// import 'package:intl/intl.dart';
-// import 'package:dingdone/res/app_context_extension.dart';
-// import 'package:dingdone/res/fonts/styles_manager.dart';
-
-// class CustomTimePicker extends StatefulWidget {
-//   const CustomTimePicker({
-//     super.key,
-//     required this.index,
-//     required this.viewModel,
-//     this.hintText,
-//     this.value,
-//   });
-
-//   final dynamic viewModel;
-//   final String index;
-//   final String? hintText;
-//   final String? value;
-
-//   @override
-//   State<StatefulWidget> createState() {
-//     return _CustomTimePicker();
-//   }
-// }
-
-// class _CustomTimePicker extends State<CustomTimePicker> {
-//   TextEditingController dateinput = TextEditingController();
-
-//   @override
-//   void initState() {
-//     dateinput.text = widget.value ?? '';
-
-//     dateinput.addListener(() {
-//       widget.viewModel(index: widget.index, value: dateinput.text);
-//     });
-//     super.initState();
-//   }
-
-//   @override
-//   void dispose() {
-//     dateinput.removeListener(() {});
-//     super.dispose();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//         child: TextFormField(
-//       controller: dateinput,
-//       decoration: InputDecoration(
-//         isDense: true,
-//         border: OutlineInputBorder(
-//           borderRadius: BorderRadius.all(
-//             Radius.circular(context.appValues.appSize.s10),
-//           ),
-//           borderSide: BorderSide.none,
-//         ),
-//         enabledBorder: const UnderlineInputBorder(
-//           borderSide: BorderSide(
-//             color: Color(0xff9E9AB7),
-//             width: 2,
-//           ),
-//         ),
-//         focusedBorder: const UnderlineInputBorder(
-//           borderSide: BorderSide(
-//             color: Color(0xff9E9AB7),
-//             width: 2,
-//           ),
-//         ),
-//         filled: true,
-//         fillColor: context.resources.color.colorWhite,
-//         hintText: widget.hintText,
-//         hintStyle: getPrimaryRegularStyle(),
-//         prefixIcon: const Icon(
-//           Icons.access_time_rounded,
-//           color: Color(0xff57537A),
-//         ),
-//       ),
-//       readOnly: true,
-//       onTap: () async {
-//         DateTime? pickedDate = await showDatePicker(
-//           context: context,
-//           initialDate: DateTime.now(),
-//           // firstDate: DateTime(19),
-//           // lastDate: DateTime(2101)
-//           firstDate: DateTime(DateTime.now().year - 100, 1),
-//           lastDate: DateTime(DateTime.now().year + 100, 1),
-//         );
-
-//         if (pickedDate != null) {
-//           String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
-
-//           setState(() {
-//             dateinput.text = formattedDate;
-//           });
-//         }
-//       },
-//     ));
-//   }
-// }
-
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
@@ -110,85 +9,98 @@ class CustomTimePicker extends StatefulWidget {
     super.key,
     required this.index,
     required this.viewModel,
+    this.hintText,
+    this.value,
   });
 
   final dynamic viewModel;
   final String index;
+  final String? hintText;
+  final String? value;
 
   @override
   _CustomTimePickerState createState() => _CustomTimePickerState();
 }
 
 class _CustomTimePickerState extends State<CustomTimePicker> {
-  TimeOfDay _selectedTime = TimeOfDay.now();
+  late TimeOfDay _selectedTime;
+
+  @override
+  void initState() {
+    super.initState();
+    // If a value is provided, you could parse it to get a TimeOfDay.
+    // For simplicity, if no value is provided, we default to the current time.
+    _selectedTime = TimeOfDay.now();
+  }
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: _selectedTime,
     );
-    debugPrint('picked time ${picked}');
-
+    debugPrint('Picked time: $picked');
     if (picked != null && picked != _selectedTime) {
       setState(() {
         _selectedTime = picked;
       });
-      widget.viewModel(index: widget.index, value: _selectedTime.toString());
+      widget.viewModel(
+          index: widget.index, value: _selectedTime.format(context));
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 8,
-            ),
-            child: InkWell(
-              child: Container(
-                decoration: const BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Color(0xffEAEAFF),
-                      width: 2,
-                    ),
-                  ),
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.appValues.appPadding.p10,
+      ),
+      child: InkWell(
+        onTap: () => _selectTime(context),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                // Clock icon from SVG
+                SvgPicture.asset(
+                  'assets/img/clock.svg',
+                  width: 20,
+                  height: 20,
                 ),
-                child: Column(
+                const Gap(10),
+                // Column with a title and the formatted time
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Row(
-                      children: [
-                        const Gap(15),
-                        // const Icon(
-                        //   Icons.access_time_rounded,
-                        //   color: Color(0xff57537A),
-                        // ),
-                        SvgPicture.asset(
-                          'assets/img/clock.svg',
-                          width: 20,
-                          height: 20,
-                        ),
-                        const Gap(12),
-                        Text(
-                          _selectedTime.format(context),
-                          style: getPrimaryRegularStyle(
-                            fontSize: 13,
-                            color: context.resources.color.btnColorBlue,
-                          ),
-                        ),
-                      ],
+                    Text(
+                      'Working Time',
+                      style: getPrimaryRegularStyle(
+                        color: const Color(0xff180B3C),
+                        fontSize: 14,
+                      ),
                     ),
-                    const Gap(8),
+                    Text(
+                      // Display the selected time.
+                      _selectedTime.format(context),
+                      style: getPrimaryRegularStyle(
+                        color: const Color(0xff71727A),
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              onTap: () => _selectTime(context),
+              ],
             ),
-          ),
-        ],
+            // Trailing arrow icon
+            const Icon(
+              Icons.arrow_forward_ios_sharp,
+              size: 20,
+              color: Color(0xff8F9098),
+            ),
+          ],
+        ),
       ),
     );
   }

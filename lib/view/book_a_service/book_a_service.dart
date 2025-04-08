@@ -167,65 +167,40 @@ class _BookAServiceState extends State<BookAService> {
                       Container(
                         width: context.appValues.appSizePercent.w100,
                         height: context.appValues.appSizePercent.h50,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(widget.image),
-                            fit: BoxFit.cover,
-                          ),
+                        decoration: const BoxDecoration(
+                          color: Color(0xff4100E3),
+                          // image: DecorationImage(
+                          //   image: NetworkImage(widget.image),
+                          //   fit: BoxFit.cover,
+                          // ),
                         ),
-                      ),
-                      Container(
-                        width: context.appValues.appSizePercent.w100,
-                        height: context.appValues.appSizePercent.h20,
-                        decoration: ShapeDecoration(
-                          gradient: LinearGradient(
-                            begin: const Alignment(0.00, 1),
-                            end: const Alignment(0, 0),
-                            colors: [
-                              const Color(0xffEECB0B).withOpacity(0),
-                              const Color(0xffEECB0B).withOpacity(0.4),
-                              const Color(0xffEECB0B).withOpacity(0.6),
-                              const Color(0xffEECB0B).withOpacity(0.9),
-                            ],
-                          ),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(0),
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                            top: context.appValues.appPadding.p8,
-                            left: context.appValues.appPadding.p20,
-                            right: context.appValues.appPadding.p20,
-                          ),
-                          child: SafeArea(
-                            child: Stack(
+                        child: SafeArea(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.appValues.appPadding.p20,
+                              vertical: context.appValues.appPadding.p10,
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      translate('bookService.bookService'),
-                                      style: getPrimaryBoldStyle(
-                                        color:
-                                            context.resources.color.colorWhite,
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                  ],
-                                ),
                                 InkWell(
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                      top: context.appValues.appPadding.p13,
-                                    ),
-                                    child: SvgPicture.asset(
-                                        'assets/img/back.svg',color: Colors.white,),
-                                  ),
-                                  onTap: () async {
+                                  onTap: () {
                                     Navigator.pop(context);
                                   },
+                                  child: const Icon(
+                                    Icons.arrow_back_ios_new_sharp,
+                                    color: Colors.white,
+                                    size: 20,
+                                  ),
+                                ),
+                                const Gap(5),
+                                Text(
+                                  translate('bookService.bookService'),
+                                  style: getPrimaryBoldStyle(
+                                    color: context.resources.color.colorWhite,
+                                    fontSize: 16,
+                                  ),
                                 ),
                               ],
                             ),
@@ -249,8 +224,8 @@ class _BookAServiceState extends State<BookAService> {
                                       ? '${categories["title"]}'
                                       : '',
                                   style: getPrimaryBoldStyle(
-                                    fontSize: 18,
-                                    color: context.resources.color.colorWhite,
+                                    fontSize: 16,
+                                    color: context.resources.color.btnColorBlue,
                                   ),
                                 ),
                                 Text(
@@ -258,8 +233,8 @@ class _BookAServiceState extends State<BookAService> {
                                       ? '${services["title"]}'
                                       : '',
                                   style: getPrimaryBoldStyle(
-                                    fontSize: 25,
-                                    color: context.resources.color.colorWhite,
+                                    fontSize: 10,
+                                    color: const Color(0xff6E6BE8),
                                   ),
                                 ),
                               ],
@@ -273,8 +248,8 @@ class _BookAServiceState extends State<BookAService> {
               ],
             ),
             DraggableScrollableSheet(
-                initialChildSize: 0.55,
-                minChildSize: 0.55,
+                initialChildSize: 0.85,
+                minChildSize: 0.85,
                 maxChildSize: 1,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
@@ -293,8 +268,8 @@ class _BookAServiceState extends State<BookAService> {
                           Map<String, dynamic>? service;
                           Map<String, dynamic>? categories;
 
-                          for (Map<String, dynamic> translation in widget.service["translations"]) {
-
+                          for (Map<String, dynamic> translation
+                              in widget.service["translations"]) {
                             if (translation["languages_code"] == widget.lang) {
                               service = translation;
                               break; // Break the loop once the translation is found
@@ -309,23 +284,46 @@ class _BookAServiceState extends State<BookAService> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    // Padding(
-                                    //   padding: EdgeInsets.symmetric(
-                                    //     horizontal:
-                                    //     context.appValues.appPadding.p0,
-                                    //     vertical:
-                                    //     context.appValues.appPadding.p10,
-                                    //   ),
-                                    //   child: Text(
-                                    //     translate('bookService.jobDescription'),
-                                    //     style: getPrimaryBoldStyle(
-                                    //       fontSize: 20,
-                                    //       color: context
-                                    //           .resources.color.btnColorBlue,
-                                    //     ),
-                                    //   ),
-                                    // ),
-
+                                    Row(
+                                      children: [
+                                        Container(
+                                          width: 76,
+                                          height: 76,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xffEAEAFF),
+                                            borderRadius:
+                                                BorderRadius.circular(16),
+                                          ),
+                                        ),
+                                        const Gap(20),
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              categories != null
+                                                  ? '${categories["title"]}'
+                                                  : 'Leak',
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 16,
+                                                color: context.resources.color
+                                                    .btnColorBlue,
+                                              ),
+                                            ),
+                                            Text(
+                                              services != null
+                                                  ? '${services["title"]}'
+                                                  : '',
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 10,
+                                                color: const Color(0xff6E6BE8),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    const Gap(15),
                                     Text(
                                       '${service!['description']}',
                                       style: getPrimaryRegularStyle(
@@ -336,6 +334,7 @@ class _BookAServiceState extends State<BookAService> {
                                   ],
                                 ),
                               ),
+                              const Gap(15),
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -352,7 +351,7 @@ class _BookAServiceState extends State<BookAService> {
                                       ),
                                       child: Text(
                                         translate('bookService.jobDescription'),
-                                        style: getPrimaryBoldStyle(
+                                        style: getPrimaryRegularStyle(
                                           fontSize: 16,
                                           color: context
                                               .resources.color.btnColorBlue,
@@ -363,12 +362,22 @@ class _BookAServiceState extends State<BookAService> {
                                       index: 'job_description',
                                       viewModel: jobsViewModel.setInputValues,
                                       keyboardType: TextInputType.text,
-                                      maxlines: 7,
+                                      maxlines: 4,
                                     ),
                                   ],
                                 ),
                               ),
                               const AddMedia(),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: context.appValues.appPadding.p20,
+                                ),
+                                child: const Divider(
+                                  color: Color(0xffD4D6DD),
+                                  thickness: 1,
+                                  height: 5,
+                                ),
+                              ),
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -385,161 +394,112 @@ class _BookAServiceState extends State<BookAService> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              context.appValues.appPadding.p20,
-                                          vertical:
-                                              context.appValues.appPadding.p10,
-                                        ),
-                                        child: Text(
-                                          "Working Day",
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 16,
-                                            color: const Color(0xff1F1F39),
-                                          ),
-                                        ),
-                                      ),
+                                      // Padding(
+                                      //   padding: EdgeInsets.symmetric(
+                                      //     horizontal:
+                                      //         context.appValues.appPadding.p20,
+                                      //     vertical:
+                                      //         context.appValues.appPadding.p10,
+                                      //   ),
+                                      //   child: Text(
+                                      //     "Working Day",
+                                      //     style: getPrimaryBoldStyle(
+                                      //       fontSize: 16,
+                                      //       color: const Color(0xff1F1F39),
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      const Gap(15),
                                       const DatePickerWidget(),
-                                      SizedBox(
-                                          height: context
-                                              .appValues.appSizePercent.h3),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: context
-                                                .appValues.appPadding.p20,
-                                            vertical: context
-                                                .appValues.appPadding.p10),
-                                        child: Text(
-                                          // translate('bookService.dateAndTime'),
-                                          "Start Time",
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 16,
-                                            color: const Color(0xff1F1F39),
-                                          ),
-                                        ),
-                                      ),
+                                      const Gap(20),
                                       CustomTimePicker(
                                         index: 'time',
                                         viewModel: jobsViewModel.setInputValues,
                                       ),
-                                      // const TimePickerWidget(),
-                                      SizedBox(
-                                          height: context
-                                              .appValues.appSizePercent.h1),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              // const ButtonsBookService(),
-                              const Gap(20),
-                              Padding(
-                                padding: EdgeInsets.all(
-                                    context.appValues.appPadding.p0),
-                                child: Container(
-                                  width: context.appValues.appSizePercent.w100,
-                                  // height: context.appValues.appSizePercent.h,
-                                  decoration: BoxDecoration(
-                                    color: context.resources.color.colorWhite,
-                                    borderRadius: const BorderRadius.all(
-                                        Radius.circular(20)),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              context.appValues.appPadding.p40,
-                                          vertical:
-                                              context.appValues.appPadding.p0,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              translate('bookService.location'),
-                                              style: getPrimaryBoldStyle(
-                                                fontSize: 16,
-                                                color: context.resources.color
-                                                    .btnColorBlue,
-                                              ),
-                                            ),
-                                            // InkWell(
-                                            //   child: Text(
-                                            //     translate('profile.changeLocation'),
-                                            //     style: getPrimaryRegularStyle(
-                                            //       fontSize: 15,
-                                            //       color: context.resources.color.btnColorBlue,
-                                            //     ),
-                                            //   ),
-                                            //   onTap: () {
-                                            //     Navigator.of(context).push(_createRoute(
-                                            //         // MapScreen(viewModel: jobsViewModel)));
-                                            //         ConfirmAddress()));
-                                            //   },
-                                            // ),
-                                          ],
-                                        ),
-                                      ),
-                                      const Gap(10),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(
+                                      const Gap(20),
+                                      InkWell(
+                                        onTap: () {
+                                          // Navigate to the ConfirmAddress screen using a custom route.
+                                          Navigator.of(context).push(
+                                            _createRoute(ConfirmAddress()),
+                                          );
+                                        },
+                                        child: Container(
+                                          width: context
+                                              .appValues.appSizePercent.w100,
+                                          decoration: BoxDecoration(
+                                            color: context
+                                                .resources.color.colorWhite,
+                                            borderRadius:
+                                                const BorderRadius.all(
+                                                    Radius.circular(20)),
+                                          ),
+                                          // Adjust padding as needed
+                                          padding: EdgeInsets.symmetric(
                                             horizontal: context
-                                                .appValues.appPadding.p40),
-                                        child: Column(
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).push(
-                                                  _createRoute(
-                                                    // MapScreen(viewModel: jobsViewModel)));
-                                                    ConfirmAddress(),
-                                                  ),
-                                                );
-                                              },
-                                              child: Row(
+                                                .appValues.appPadding.p10,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Row(
                                                 crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                    CrossAxisAlignment.center,
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 5),
-                                                    child: SvgPicture.asset(
-                                                      'assets/img/locationbookservice.svg',
-                                                    ),
+                                                  // Location SVG icon
+                                                  SvgPicture.asset(
+                                                    'assets/img/locationbookservice.svg',
+                                                    width: 20,
+                                                    height: 20,
                                                   ),
                                                   const Gap(10),
-                                                  Expanded(
-                                                    child: Text(
-                                                      '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
-                                                      style:
-                                                          getPrimaryRegularStyle(
-                                                        fontSize: 18,
-                                                        color: const Color(
-                                                            0xff190C39),
+                                                  // Column with a title and the current location or hint
+                                                  Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        translate(
+                                                            'bookService.location'),
+                                                        style:
+                                                            getPrimaryRegularStyle(
+                                                          fontSize: 16,
+                                                          color: context
+                                                              .resources
+                                                              .color
+                                                              .btnColorBlue,
+                                                        ),
                                                       ),
-                                                    ),
+                                                      Text(
+                                                        '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
+                                                        style:
+                                                            getPrimaryRegularStyle(
+                                                          fontSize: 12,
+                                                          color: const Color(
+                                                              0xff71727A),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                 ],
                                               ),
-                                            ),
-                                            const Divider(
-                                              color: Color(0xffEAEAFF),
-                                              thickness: 2,
-                                              height: 5,
-                                            ),
-                                          ],
+                                              // Trailing arrow icon
+                                              const Icon(
+                                                Icons.arrow_forward_ios_sharp,
+                                                size: 20,
+                                                color: Color(0xff8F9098),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                      const Gap(15),
                                     ],
                                   ),
                                 ),
                               ),
+                              const Gap(20),
 
                               PaymentMethod(
                                 fromWhere: 'book a service',
@@ -598,6 +558,8 @@ class _BookAServiceState extends State<BookAService> {
                                   vertical: context.appValues.appPadding.p0,
                                 ),
                                 child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       translate('updateJob.jobSize'),
@@ -607,25 +569,37 @@ class _BookAServiceState extends State<BookAService> {
                                             .resources.color.btnColorBlue,
                                       ),
                                     ),
+                                    Consumer<JobsViewModel>(
+                                        builder: (context, jobsViewModel, _) {
+                                      return CustomIncrementFieldRequest(
+                                        index: 'number_of_units',
+                                        editable: isLumpsum ? false : true,
+                                        value: _matchingRate != null
+                                            ? '${_matchingRate['minimum_order']}'
+                                            : '0',
+                                        // hintText: 'Job Type',
+                                        viewModel: jobsViewModel.setInputValues,
+                                      );
+                                    }),
                                   ],
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    right: 40.0, left: 40.0),
-                                child: Consumer<JobsViewModel>(
-                                    builder: (context, jobsViewModel, _) {
-                                  return CustomIncrementFieldRequest(
-                                    index: 'number_of_units',
-                                    editable: isLumpsum ? false : true,
-                                    value: _matchingRate != null
-                                        ? '${_matchingRate['minimum_order']}'
-                                        : '0',
-                                    // hintText: 'Job Type',
-                                    viewModel: jobsViewModel.setInputValues,
-                                  );
-                                }),
-                              ),
+                              // Padding(
+                              //   padding: const EdgeInsets.only(
+                              //       right: 40.0, left: 40.0),
+                              //   child: Consumer<JobsViewModel>(
+                              //       builder: (context, jobsViewModel, _) {
+                              //     return CustomIncrementFieldRequest(
+                              //       index: 'number_of_units',
+                              //       editable: isLumpsum ? false : true,
+                              //       value: _matchingRate != null
+                              //           ? '${_matchingRate['minimum_order']}'
+                              //           : '0',
+                              //       // hintText: 'Job Type',
+                              //       viewModel: jobsViewModel.setInputValues,
+                              //     );
+                              //   }),
+                              // ),
                               const Gap(10),
                               Padding(
                                 padding: EdgeInsets.symmetric(
@@ -653,10 +627,10 @@ class _BookAServiceState extends State<BookAService> {
                                 child: Row(
                                   children: [
                                     Text(
-                                      '${_getServiceRate(profileViewModel, jobsViewModel)}',
-                                      style: getPrimaryRegularStyle(
-                                        color:
-                                            context.resources.color.colorYellow,
+                                      _getServiceRate(
+                                          profileViewModel, jobsViewModel),
+                                      style: getPrimaryBoldStyle(
+                                        color: const Color(0xff4100E3),
                                         fontSize: 15,
                                       ),
                                     ),
@@ -732,7 +706,7 @@ class _BookAServiceState extends State<BookAService> {
                                             translate(
                                                 'bookService.requestService'),
                                             style: getPrimaryBoldStyle(
-                                              fontSize: 18,
+                                              fontSize: 15,
                                               color: context
                                                   .resources.color.colorWhite,
                                             ),

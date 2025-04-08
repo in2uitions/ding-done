@@ -46,7 +46,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
           // ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              context.appValues.appPadding.p20,
+              context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
@@ -63,9 +63,9 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                   ),
                   child: Text(
                     translate('updateJob.jobSize'),
-                    style: getPrimaryBoldStyle(
+                    style: getPrimaryRegularStyle(
                       fontSize: 16,
-                      color: const Color(0xff38385E),
+                      color: const Color(0xff180B3C),
                     ),
                   ),
                 ),
@@ -76,7 +76,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             '${widget.completed_units}',
                             style: getPrimaryRegularStyle(
                               fontSize: 20,
-                              color: const Color(0xff78789D),
+                              color: const Color(0xff71727A),
                             ),
                           )
                         : Padding(
@@ -95,7 +95,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                         '${widget.completed_units}',
                         style: getPrimaryRegularStyle(
                           fontSize: 16,
-                          color: const Color(0xff78789D),
+                          color: const Color(0xff71727A),
                         ),
                       ),
               ],
@@ -110,7 +110,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
           // ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              context.appValues.appPadding.p20,
+              context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
@@ -127,9 +127,9 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                   ),
                   child: Text(
                     translate('updateJob.currentNumberOfUnits'),
-                    style: getPrimaryBoldStyle(
+                    style: getPrimaryRegularStyle(
                       fontSize: 16,
-                      color: const Color(0xff38385E),
+                      color: const Color(0xff180B3C),
                     ),
                   ),
                 ),
@@ -140,7 +140,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             '${widget.number_of_units}',
                             style: getPrimaryRegularStyle(
                               fontSize: 16,
-                              color: const Color(0xff78789D),
+                              color: const Color(0xff71727A),
                             ),
                           )
                         : Padding(
@@ -159,7 +159,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                         '${widget.number_of_units}',
                         style: getPrimaryRegularStyle(
                           fontSize: 16,
-                          color: const Color(0xff78789D),
+                          color: const Color(0xff71727A),
                         ),
                       ),
               ],
@@ -174,7 +174,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
           // ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              context.appValues.appPadding.p20,
+              context.appValues.appPadding.p0,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
@@ -191,9 +191,9 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                   ),
                   child: Text(
                     translate('updateJob.extraFees'),
-                    style: getPrimaryBoldStyle(
+                    style: getPrimaryRegularStyle(
                       fontSize: 16,
-                      color: const Color(0xff38385E),
+                      color: const Color(0xff180B3C),
                     ),
                   ),
                 ),
@@ -204,7 +204,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             '${widget.extra_fees}',
                             style: getPrimaryRegularStyle(
                               fontSize: 16,
-                              color: const Color(0xff78789D),
+                              color: const Color(0xff71727A),
                             ),
                           )
                         : Padding(
@@ -223,7 +223,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                         '${widget.extra_fees}',
                         style: getPrimaryRegularStyle(
                           fontSize: 16,
-                          color: const Color(0xff78789D),
+                          color: const Color(0xff71727A),
                         ),
                       ),
               ],
@@ -238,7 +238,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
           // ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              context.appValues.appPadding.p20,
+              context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
@@ -255,9 +255,9 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                   ),
                   child: Text(
                     translate('updateJob.extraFeesReason'),
-                    style: getPrimaryBoldStyle(
+                    style: getPrimaryRegularStyle(
                       fontSize: 16,
-                      color: const Color(0xff38385E),
+                      color: const Color(0xff180B3C),
                     ),
                   ),
                 ),
@@ -268,7 +268,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             '${widget.extra_fees_reason}',
                             style: getPrimaryRegularStyle(
                               fontSize: 16,
-                              color: const Color(0xff78789D),
+                              color: const Color(0xff71727A),
                             ),
                           )
                         : Padding(
@@ -287,7 +287,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                         '${widget.extra_fees_reason}',
                         style: getPrimaryRegularStyle(
                           fontSize: 16,
-                          color: const Color(0xff78789D),
+                          color: const Color(0xff71727A),
                         ),
                       ),
               ],

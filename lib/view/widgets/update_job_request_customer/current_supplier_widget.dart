@@ -43,9 +43,9 @@ class _CurrentSupplierWidgetState extends State<CurrentSupplierWidget> {
                 ),
                 child: Text(
                   translate('updateJob.currentSupplier'),
-                  style: getPrimaryBoldStyle(
+                  style: getPrimaryRegularStyle(
                     fontSize: 16,
-                    color: const Color(0xff180C38),
+                    color: const Color(0xff180B3C),
                   ),
                 ),
               ),
@@ -53,7 +53,7 @@ class _CurrentSupplierWidgetState extends State<CurrentSupplierWidget> {
                 '${widget.user}',
                 style: getPrimaryRegularStyle(
                   fontSize: 16,
-                  color: const Color(0xff78789D),
+                  color: const Color(0xff71727A),
                 ),
               ),
             ],

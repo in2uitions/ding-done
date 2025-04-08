@@ -37,9 +37,9 @@ class _AddressWidgetState extends State<AddressWidget> {
               ),
               child: Text(
                 translate('formHints.location'),
-                style: getPrimaryBoldStyle(
+                style: getPrimaryRegularStyle(
                   fontSize: 18,
-                  color: const Color(0xff38385E),
+                  color: const Color(0xff180B3C),
                 ),
               ),
             ),
@@ -55,14 +55,14 @@ class _AddressWidgetState extends State<AddressWidget> {
                       overflow: TextOverflow.ellipsis,
                       style: getPrimaryRegularStyle(
                         fontSize: 16,
-                        color: const Color(0xff78789D),
+                        color: const Color(0xff71727A),
                       ),
                     ),
                   ),
                   IconButton(
                     icon: Icon(
                       Icons.location_on,
-                      color: const Color(0xff78789D),
+                      color: const Color(0xff71727A),
                       size: 50,
                     ),
                     onPressed: () {

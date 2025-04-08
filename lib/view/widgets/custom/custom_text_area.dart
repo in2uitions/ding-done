@@ -79,18 +79,7 @@ class _CustomTextAreaState extends State<CustomTextArea> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        // decoration: BoxDecoration(
-        //   boxShadow: [
-        //     BoxShadow(
-        //       color: const Color(0xff000000).withOpacity(0.1),
-        //       spreadRadius: 1,
-        //       blurRadius: 5,
-        //       offset: const Offset(0, 3), // changes position of shadow
-        //     ),
-        //   ],
-        // ),
-        child: TextFormField(
+    return TextFormField(
       controller: _customController,
       textAlignVertical: TextAlignVertical.center,
       obscureText: widget.hintText == "Password" ? obscureText : false,
@@ -105,38 +94,23 @@ class _CustomTextAreaState extends State<CustomTextArea> {
       decoration: InputDecoration(
         hintStyle: getPrimaryRegularStyle(
           fontSize: 15,
-          color: const Color(0xffEAEAFF),
+          color: const Color(0xffC5C6CC),
         ),
-        // border: const OutlineInputBorder(
-        //   borderRadius: BorderRadius.only(
-        //     topRight: Radius.circular(30),
-        //     bottomLeft: Radius.circular(30),
-        //     bottomRight: Radius.circular(30),
-        //   ),
-        //   borderSide: BorderSide(
-        //     color: Color(0xffEAEAFF),
-        //     width: 1.0,
-        //   ),
-        // ),
         enabledBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30),
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
           ),
           borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
+            color: Color(0xffC5C6CC),
             width: 1.0,
           ),
         ),
         focusedBorder: const OutlineInputBorder(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(30),
-            bottomLeft: Radius.circular(30),
-            bottomRight: Radius.circular(30),
+          borderRadius: BorderRadius.all(
+            Radius.circular(12),
           ),
           borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
+            color: Color(0xffC5C6CC),
             width: 1.0,
           ),
         ),
@@ -144,6 +118,6 @@ class _CustomTextAreaState extends State<CustomTextArea> {
         fillColor: context.resources.color.colorWhite,
         hintText: widget.hintText,
       ),
-    ));
+    );
   }
 }

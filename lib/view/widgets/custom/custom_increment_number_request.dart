@@ -41,10 +41,12 @@ class CustomIncrementFieldRequest extends StatefulWidget {
   final TextInputType keyboardType;
 
   @override
-  _CustomIncrementFieldRequestState createState() => _CustomIncrementFieldRequestState();
+  _CustomIncrementFieldRequestState createState() =>
+      _CustomIncrementFieldRequestState();
 }
 
-class _CustomIncrementFieldRequestState extends State<CustomIncrementFieldRequest> {
+class _CustomIncrementFieldRequestState
+    extends State<CustomIncrementFieldRequest> {
   final GlobalKey<FormFieldState<String>> globalKey =
       GlobalKey<FormFieldState<String>>();
   int currentValue = 0;
@@ -58,13 +60,14 @@ class _CustomIncrementFieldRequestState extends State<CustomIncrementFieldReques
         ? int.parse(widget.value.toString())
         : 0;
     _customController.text = currentValue.toString();
+    // Keeping the listener in case the viewModel needs to know the updates.
     _customController.addListener(() {
       widget.viewModel(index: widget.index, value: _customController.text);
     });
   }
 
   void _increment() {
-    if(widget.editable!){
+    if (widget.editable != null && widget.editable!) {
       if (currentValue < 99) {
         setState(() {
           currentValue++;
@@ -76,13 +79,13 @@ class _CustomIncrementFieldRequestState extends State<CustomIncrementFieldReques
         }
       }
     }
-
   }
 
   void _decrement() {
-    if (widget.editable!) {
-      if (currentValue >
-          (widget.value != null ? int.parse(widget.value!) : 0)) {
+    if (widget.editable != null && widget.editable!) {
+      // Preserve the lower bound (original value) if provided.
+      final lowerBound = widget.value != null ? int.parse(widget.value!) : 0;
+      if (currentValue > lowerBound) {
         setState(() {
           currentValue--;
           _customController.text = currentValue.toString();
@@ -94,6 +97,7 @@ class _CustomIncrementFieldRequestState extends State<CustomIncrementFieldReques
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -105,41 +109,16 @@ class _CustomIncrementFieldRequestState extends State<CustomIncrementFieldReques
               onPressed: _decrement,
               color: const Color(0xffB4B4B4),
             ),
-            Expanded(
-              child: TextFormField(
-                cursorColor: const Color(0xffB4B4B4),
-                controller: _customController,
+            Container(
+              alignment: Alignment.center,
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Text(
+                _customController.text,
                 textAlign: TextAlign.center,
-                keyboardType: widget.keyboardType,
                 style: getPrimaryRegularStyle(
                   color: const Color(0xff78789D),
                   fontSize: 15,
                 ),
-                decoration: InputDecoration(
-                  isDense: true,
-                  errorText: widget.errorText,
-                  border: InputBorder.none, // Removed the border here
-                  hintText: widget.hintText,
-                  hintStyle: getPrimaryRegularStyle(
-                    fontSize: 15,
-                    color: const Color(0xffB4B4B4),
-                  ),
-                  helperText: widget.helperText,
-                ),
-                onChanged: (value) {
-                  int? newValue = int.tryParse(value);
-                  if (newValue != null && newValue >= 0 && newValue <= 99) {
-                    setState(() {
-                      currentValue = newValue;
-                    });
-                    widget.viewModel(index: widget.index, value: value);
-                    if (widget.onChanged != null) {
-                      widget.onChanged!(value);
-                    }
-                  } else {
-                    _customController.text = currentValue.toString();
-                  }
-                },
               ),
             ),
             IconButton(
@@ -148,11 +127,6 @@ class _CustomIncrementFieldRequestState extends State<CustomIncrementFieldReques
               color: const Color(0xffB4B4B4),
             ),
           ],
-        ),
-        const Divider(
-          color: Color(0xffEAEAFF),
-          thickness: 2,
-          height: 5,
         ),
       ],
     );
