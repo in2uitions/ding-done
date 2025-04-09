@@ -66,8 +66,8 @@ class _CustomPhoneFieldControllerState
   @override
   Widget build(BuildContext context) {
     return IntlPhoneField(
-      initialValue: widget.phone_number!=null?widget.phone_number:'',
-      initialCountryCode: widget.phone_code!=null?widget.phone_code:'AE',
+      initialValue: widget.phone_number != null ? widget.phone_number : '',
+      initialCountryCode: widget.phone_code != null ? widget.phone_code : 'AE',
       onChanged: (PhoneNumber number) {
         // Concatenate the country code and phone number
         final fullPhoneNumber = '${number.countryCode}${number.number}';
@@ -92,34 +92,37 @@ class _CustomPhoneFieldControllerState
         widget.viewModel(index: 'phone_number', value: phone);
         widget.viewModel(index: 'phone_code', value: country.code);
         debugPrint('country code 2 ${country.code}');
-
       },
       decoration: InputDecoration(
         errorText: widget.errorText,
         hintText: translate('formHints.phone_number'),
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        focusedErrorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
         filled: true,
         fillColor: context.resources.color.colorWhite,

@@ -27,6 +27,7 @@ class CategoriesGridWidget extends StatefulWidget {
 class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
   final bool _isLoading = false;
   String? lang;
+  TextEditingController searchController = TextEditingController();
 
   @override
   void initState() {
@@ -296,17 +297,52 @@ class _ServicesScreenState extends State<ServicesScreen>
       backgroundColor: Colors.white,
       body: Stack(
         children: [
-          // Purple header covering the top half.
           Container(
             width: screenSize.width,
             height: screenSize.height * 1.5,
             decoration: const BoxDecoration(
               color: Color(0xff4100E3),
             ),
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p20,
+                  vertical: context.appValues.appPadding.p15,
+                ),
+                child: TextFormField(
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color(0xffEAEAFF),
+                    prefixIcon: const Icon(
+                      Icons.search,
+                      color: Color(0xFF6E6BE8),
+                    ),
+                    hintText: "I’m done with...",
+                    hintStyle: const TextStyle(
+                      color: Color(0xFF6E6BE8),
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(
+                        color: Color(0xFF6E6BE8),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ),
           DraggableScrollableSheet(
-            initialChildSize: 0.85,
-            minChildSize: 0.85,
+            initialChildSize: 0.82,
+            minChildSize: 0.82,
             maxChildSize: 1.0,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(

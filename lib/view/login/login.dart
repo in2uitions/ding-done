@@ -7,11 +7,8 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
-import 'package:dingdone/view/complete_profile/complete_profile.dart';
 import 'package:dingdone/view/forgot_password/forgot_password.dart';
 import 'package:dingdone/view/sign_up_as/country_selection.dart';
-import 'package:dingdone/view/sign_up_as/sign_up_as.dart';
-import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild_login.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -81,507 +78,613 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       // backgroundColor: context.resources.color.btnColorBlue,
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/img/bglogin.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: SafeArea(
-          bottom: false,
-          child: ListView(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: context.appValues.appPadding.p10,
-                  right: context.appValues.appPadding.p10,
-                ),
-                child: Align(
-                  alignment: Alignment.topRight,
-                  child: InkWell(
-                    child: const Icon(
-                      Icons.language,
-                      color: Colors.white,
+      body: Stack(
+        children: [
+          Container(
+            width: context.appValues.appSizePercent.w100,
+            height: context.appValues.appSizePercent.h60,
+            decoration: const BoxDecoration(
+              color: Color(0xff4100E3),
+            ),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  const Gap(10),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: context.appValues.appPadding.p10,
+                      right: context.appValues.appPadding.p10,
                     ),
-                    onTap: () => _onActionSheetPress(context),
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: context.appValues.appPadding.p20,
-                  right: context.appValues.appPadding.p20,
-                  top: context.appValues.appPadding.p15,
-                ),
-                child: Column(
-                  // mainAxisAlignment: MainAxisAlignment.center,
-                  // crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SvgPicture.asset(
-                      'assets/img/logo-new.svg',
-                    ),
-                    SizedBox(height: context.appValues.appSize.s25),
-                    Consumer3<LoginViewModel, CategoriesViewModel,
-                            JobsViewModel>(
-                        builder: (context, loginViewModel, categoriesViewModel,
-                            jobsViewModel, error) {
-                      return Column(
-                        children: [
-                          CustomTextFieldLogin(
-                            viewModel: loginViewModel.setInputValues,
-                            index: context.resources.strings.formKeys['email']!,
-                            // hintText: context
-                            //     .resources.strings.formHints['email_address']!,
-                            hintText: translate('formHints.email'),
-                            validator: (val) => loginViewModel.loginErrors[
-                                context.resources.strings.formKeys['email']!],
-                            errorText: loginViewModel.loginErrors[
-                                context.resources.strings.formKeys['email']!],
-                            keyboardType: TextInputType.emailAddress,
-                            value: email ?? '',
-                          ),
-                          const Gap(15),
-                          CustomTextFieldLogin(
-                            viewModel: loginViewModel.setInputValues,
-                            index:
-                                context.resources.strings.formKeys['password']!,
-                            // hintText: context
-                            //     .resources.strings.formHints['password']!,
-                            hintText: translate('formHints.password'),
-                            errorText: loginViewModel.loginErrors[context
-                                .resources.strings.formKeys['password']!],
-                            keyboardType: TextInputType.visiblePassword,
-                            value: password ?? '',
-                          ),
-                          const Gap(10),
-                          loginViewModel.errorMsg != null
-                              ? Text(
-                                  loginViewModel.errorMsg,
-                                  style: getPrimaryRegularStyle(
-                                      color: context
-                                          .resources.color.colorText['red']),
-                                )
-                              : Container(),
-                          SizedBox(height: context.appValues.appSize.s10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Align(
-                                alignment: Alignment.centerLeft,
-                                child: SizedBox(
-                                  width: context.appValues.appSizePercent.w45,
-                                  child: CheckboxListTile(
-                                    title: Text(
-                                      translate('login_screen.rememberMe'),
-                                      style: getPrimaryRegularStyle(
-                                        fontSize: 18,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    side: const BorderSide(color: Colors.white),
-                                    contentPadding: EdgeInsets.zero,
-                                    // Remove padding
-                                    activeColor: Colors.white,
-                                    checkColor:
-                                        context.resources.color.btnColorBlue,
-                                    dense: true,
-                                    // Make the tile more compact
-                                    controlAffinity:
-                                        ListTileControlAffinity.leading,
-                                    // Checkbox before text
-                                    visualDensity: VisualDensity(
-                                        horizontal: -4, vertical: -4),
-                                    // Reduce space
-                                    value: _isChecked,
-                                    onChanged: (newValue) async {
-                                      setState(() {
-                                        _isChecked = newValue!;
-                                      });
-                                    },
-                                  ),
-                                ),
-                              ),
-
-                              // SizedBox(height: context.appValues.appSize.s15),
-                              Align(
-                                alignment: Alignment.centerRight,
-                                child: InkWell(
-                                  child: Text(
-                                    translate('login_screen.forgotPassword'),
-                                    style: getPrimaryRegularStyle(
-                                      color: const Color(0xffB4B4B4),
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  onTap: () {
-                                    Navigator.of(context).push(_createRoute(
-                                        const ForgotPasswordScreen()));
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: context.appValues.appSize.s35),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: context.appValues.appPadding.p25,
-                            ),
-                            child: SizedBox(
-                              height: 56,
-                              width: context.appValues.appSizePercent.w100,
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      context.resources.color.colorYellow,
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(
-                                          context.appValues.appSize.s10),
-                                    ),
-                                  ),
-                                ),
-                                onPressed: () async {
-                                  setState(() {
-                                    isLoading = true;
-                                  });
-
-                                  if (loginViewModel.validate()) {
-                                    if (await loginViewModel.login()) {
-                                      if (await loginViewModel.isActiveUser()) {
-                                        if (loginViewModel.isLoggedIn) {
-                                          await loginViewModel.setCredentials();
-                                          await categoriesViewModel
-                                              .getCategoriesAndServices();
-                                          await jobsViewModel.readJson();
-                                          Navigator.of(context).push(
-                                              _createRoute(BottomBar(
-                                                  userRole: loginViewModel
-                                                      .userRole)));
-                                        } else {
-                                          const CircularProgressIndicator();
-                                        }
-                                      }
-                                    }
-                                  }
-                                  setState(() {
-                                    isLoading = false;
-                                  });
-                                },
-                                child: (isLoading)
-                                    ? const SizedBox(
-                                        width: 16,
-                                        height: 16,
-                                        child: CircularProgressIndicator(
-                                          color: Colors.white,
-                                          strokeWidth: 1.5,
-                                        ))
-                                    : Text(
-                                        translate('login_screen.signIn'),
-                                        style: getPrimaryRegularStyle(
-                                          color: context
-                                              .resources.color.colorWhite,
-                                          fontSize: 22,
-                                        ),
-                                      ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      );
-                    }),
-                    SizedBox(height: context.appValues.appSize.s15),
-                    Consumer4<LoginViewModel, CategoriesViewModel,
-                            JobsViewModel, ProfileViewModel>(
-                        builder: (context, loginViewModel, categoriesViewModel,
-                            jobsViewModel, profileViewModel, error) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: context.appValues.appPadding.p25,
+                    child: Align(
+                      alignment: Alignment.topRight,
+                      child: InkWell(
+                        child: const Icon(
+                          Icons.language,
+                          color: Colors.white,
                         ),
-                        child: SizedBox(
-                          height: 56,
-                          width: context.appValues.appSizePercent.w100,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  context.resources.color.colorWhite,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(
-                                      context.appValues.appSize.s10),
-                                ),
+                        onTap: () => _onActionSheetPress(context),
+                      ),
+                    ),
+                  ),
+                  SvgPicture.asset(
+                    'assets/img/logo-new.svg',
+                  ),
+                ],
+              ),
+            ),
+          ),
+          DraggableScrollableSheet(
+              initialChildSize: 0.60,
+              minChildSize: 0.60,
+              maxChildSize: 1,
+              builder:
+                  (BuildContext context, ScrollController scrollController) {
+                return Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                    color: Colors.white,
+                  ),
+                  child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: 1,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(
+                                left: context.appValues.appPadding.p20,
+                                right: context.appValues.appPadding.p20,
                               ),
-                            ),
-                            onPressed: () async {
-                              setState(() {
-                                isLoadingGoogle = true;
-                              });
-                              try {
-                                final GoogleSignIn _googleSignIn = GoogleSignIn(
-                                  scopes: ['email'],
-                                );
-                                // Sign out first to ensure fresh login
-                                await _googleSignIn.signOut();
+                              child: Column(
+                                children: [
+                                  Consumer3<LoginViewModel, CategoriesViewModel,
+                                          JobsViewModel>(
+                                      builder: (context,
+                                          loginViewModel,
+                                          categoriesViewModel,
+                                          jobsViewModel,
+                                          error) {
+                                    return Column(
+                                      children: [
+                                        CustomTextFieldLogin(
+                                          viewModel:
+                                              loginViewModel.setInputValues,
+                                          index: context.resources.strings
+                                              .formKeys['email']!,
+                                          // hintText: context
+                                          //     .resources.strings.formHints['email_address']!,
+                                          hintText:
+                                              translate('formHints.email'),
+                                          validator: (val) =>
+                                              loginViewModel.loginErrors[context
+                                                  .resources
+                                                  .strings
+                                                  .formKeys['email']!],
+                                          errorText: loginViewModel.loginErrors[
+                                              context.resources.strings
+                                                  .formKeys['email']!],
+                                          keyboardType:
+                                              TextInputType.emailAddress,
+                                          value: email ?? '',
+                                        ),
+                                        const Gap(15),
+                                        CustomTextFieldLogin(
+                                          viewModel:
+                                              loginViewModel.setInputValues,
+                                          index: context.resources.strings
+                                              .formKeys['password']!,
+                                          // hintText: context
+                                          //     .resources.strings.formHints['password']!,
+                                          hintText:
+                                              translate('formHints.password'),
+                                          errorText: loginViewModel.loginErrors[
+                                              context.resources.strings
+                                                  .formKeys['password']!],
+                                          keyboardType:
+                                              TextInputType.visiblePassword,
+                                          value: password ?? '',
+                                        ),
+                                        const Gap(10),
+                                        loginViewModel.errorMsg != null
+                                            ? Text(
+                                                loginViewModel.errorMsg,
+                                                style: getPrimaryRegularStyle(
+                                                    color: context
+                                                        .resources
+                                                        .color
+                                                        .colorText['red']),
+                                              )
+                                            : Container(),
+                                        SizedBox(
+                                            height:
+                                                context.appValues.appSize.s10),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: SizedBox(
+                                                width: context.appValues
+                                                    .appSizePercent.w45,
+                                                child: CheckboxListTile(
+                                                  title: Text(
+                                                    translate(
+                                                        'login_screen.rememberMe'),
+                                                    style:
+                                                        getPrimaryRegularStyle(
+                                                      fontSize: 16,
+                                                      color: const Color(
+                                                          0xff71727A),
+                                                    ),
+                                                  ),
+                                                  side: const BorderSide(
+                                                    color: Color(0xff71727A),
+                                                  ),
+                                                  contentPadding:
+                                                      EdgeInsets.zero,
+                                                  // Remove padding
+                                                  activeColor:
+                                                      const Color(0xff71727A),
+                                                  checkColor: context.resources
+                                                      .color.btnColorBlue,
+                                                  dense: true,
+                                                  // Make the tile more compact
+                                                  controlAffinity:
+                                                      ListTileControlAffinity
+                                                          .leading,
+                                                  // Checkbox before text
+                                                  visualDensity:
+                                                      const VisualDensity(
+                                                          horizontal: -4,
+                                                          vertical: -4),
+                                                  // Reduce space
+                                                  value: _isChecked,
+                                                  onChanged: (newValue) async {
+                                                    setState(() {
+                                                      _isChecked = newValue!;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
 
-                                // Start Google Sign-In
-                                final GoogleSignInAccount? googleUser =
-                                    await _googleSignIn.signIn();
-                                if (googleUser == null) {
-                                  debugPrint("User canceled Google Sign-In");
-                                  return;
-                                }
+                                            // SizedBox(height: context.appValues.appSize.s15),
+                                            Align(
+                                              alignment: Alignment.centerRight,
+                                              child: InkWell(
+                                                child: Text(
+                                                  translate(
+                                                      'login_screen.forgotPassword'),
+                                                  style: getPrimaryRegularStyle(
+                                                    color:
+                                                        const Color(0xff4100E3),
+                                                    fontSize: 18,
+                                                  ),
+                                                ),
+                                                onTap: () {
+                                                  Navigator.of(context).push(
+                                                      _createRoute(
+                                                          const ForgotPasswordScreen()));
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                            height:
+                                                context.appValues.appSize.s35),
+                                        SizedBox(
+                                          height: 48,
+                                          width: context
+                                              .appValues.appSizePercent.w100,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  const Color(0xff4100E3),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                  Radius.circular(context
+                                                      .appValues.appSize.s10),
+                                                ),
+                                              ),
+                                            ),
+                                            onPressed: () async {
+                                              setState(() {
+                                                isLoading = true;
+                                              });
 
-                                // Get authentication details from Google
-                                final GoogleSignInAuthentication googleAuth =
-                                    await googleUser.authentication;
-
-                                // Get the ID token (used for Directus authentication)
-                                final String? idToken = googleAuth.idToken;
-                                final String? accessToken =
-                                    googleAuth.accessToken;
-
-                                debugPrint("Google ID Token: $idToken");
-                                debugPrint("access Token: $accessToken");
-                                //
-                                if (idToken == null) {
-                                  debugPrint("Error: ID token is null.");
-                                  return;
-                                }
-                                //
-                                // // Send the ID token to Directus for authentication
-                                final response = await http.post(
-                                  Uri.parse(
-                                      'https://cms.dingdone.app/sso-login/google'),
-                                  headers: {
-                                    'Content-Type': 'application/json',
-                                    'Accept': 'application/json',
-                                  },
-                                  body: jsonEncode({'idToken': idToken}),
-                                );
-                                //
-                                //
-                                debugPrint(
-                                    'Directus Response Status: ${response.statusCode}');
-                                debugPrint(
-                                    'Directus Response Body: ${response.body}');
-                                //
-                                if (response.statusCode == 200) {
-                                  final Map<String, dynamic> responseData =
-                                      jsonDecode(response.body);
-                                  debugPrint('response data is $responseData');
-                                  // Assuming Directus returns a user token
-                                  final String directusToken =
-                                      responseData['access_token'];
-                                  final prefs =
-                                      await SharedPreferences.getInstance();
-
-                                  await AppPreferences().save(
-                                      key: userIdKey,
-                                      value: responseData['user'],
-                                      isModel: false);
-                                  await prefs.setString(
-                                      userIdKey, '${responseData['user']}');
-                                  await AppPreferences().save(
-                                      key: userRoleKey,
-                                      value:
-                                          '008f8da4-ae7c-42f2-a498-68d490fe4593',
-                                      isModel: false);
-                                  await prefs.setString(userRoleKey,
-                                      '008f8da4-ae7c-42f2-a498-68d490fe4593');
-
-                                  await AppPreferences().save(
-                                      key: userTokenKey,
-                                      value: responseData['access_token'],
-                                      isModel: false);
-                                  await prefs.setString(
-                                      userTokenKey, '${responseData['access_token']}');
-
-                                  await loginViewModel.isActiveUser();
-                                  await profileViewModel.getProfiledata();
-
-                                  debugPrint(
-                                      "Successfully signed in! Directus Token: $directusToken");
-
-                                  await categoriesViewModel
-                                      .getCategoriesAndServices();
-                                  await jobsViewModel.readJson();
-                                  // if(profileViewModel.getProfileBody['first_name']!=null
-                                  // && profileViewModel.getProfileBody['last_name']!=null
-                                  // && profileViewModel.getProfileBody['phone_number']!=null
-                                  // && profileViewModel.getProfileBody['email']!=null
-                                  // && profileViewModel.getProfileBody['latitude']!=null
-                                  // && profileViewModel.getProfileBody['longitude']!=null
-                                  // && profileViewModel.getProfileBody['address']!=null
-                                  // && profileViewModel.getProfileBody['city']!=null
-                                  // && profileViewModel.getProfileBody['street_number']!=null
-                                  // && profileViewModel.getProfileBody['building_number']!=null
-                                  // && profileViewModel.getProfileBody['floor']!=null
-                                  // && profileViewModel.getProfileBody['apartment_number']!=null
-                                  // && profileViewModel.getProfileBody['zone']!=null
-                                  // && profileViewModel.getProfileBody['address_label']!=null
-                                  // && profileViewModel.profileBody['user']['avatar']!=null
-                                  // ){
-                                    Navigator.of(context).push(_createRoute(
-                                        BottomBar(
-                                            userRole: Constants.customerRoleId)));
-                                  // }else{
-                                  //   Navigator.of(context).push(_createRoute(
-                                  //       CompleteProfileScreen(initialIndex: 0)));
-                                  // }
-                                 
-
-                                  // TODO: Save token to local storage for future authenticated requests
-                                } else {
-                                  debugPrint(
-                                      "Failed to sign in with Directus: ${response.body}");
-                                }
-                                // _handleGoogleSignIn();
-                                // var data =await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'));
-                                // debugPrint('dataaa $data');
-                                // if (!await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'))) {
-                                //   throw Exception('Could not launch url');
-                                // }
-                                // loginGoogle();
-                                // _launchGoogleSignIn();
-                              } catch (e) {
-                                debugPrint("Error signing in with Google: $e");
-                              }
-
-                              setState(() {
-                                isLoadingGoogle = false;
-                              });
-                            },
-                            child: (isLoadingGoogle)
-                                ? const SizedBox(
-                                    width: 16,
-                                    height: 16,
-                                    child: CircularProgressIndicator(
-                                      color: Colors.white,
-                                      strokeWidth: 1.5,
-                                    ))
-                                : Row(
+                                              if (loginViewModel.validate()) {
+                                                if (await loginViewModel
+                                                    .login()) {
+                                                  if (await loginViewModel
+                                                      .isActiveUser()) {
+                                                    if (loginViewModel
+                                                        .isLoggedIn) {
+                                                      await loginViewModel
+                                                          .setCredentials();
+                                                      await categoriesViewModel
+                                                          .getCategoriesAndServices();
+                                                      await jobsViewModel
+                                                          .readJson();
+                                                      Navigator.of(context).push(
+                                                          _createRoute(BottomBar(
+                                                              userRole:
+                                                                  loginViewModel
+                                                                      .userRole)));
+                                                    } else {
+                                                      const CircularProgressIndicator();
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                              setState(() {
+                                                isLoading = false;
+                                              });
+                                            },
+                                            child: (isLoading)
+                                                ? const SizedBox(
+                                                    width: 16,
+                                                    height: 16,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                      strokeWidth: 1.5,
+                                                    ))
+                                                : Text(
+                                                    translate(
+                                                        'login_screen.signIn'),
+                                                    style:
+                                                        getPrimaryRegularStyle(
+                                                      color: context.resources
+                                                          .color.colorWhite,
+                                                      fontSize: 16,
+                                                    ),
+                                                  ),
+                                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }),
+                                  const Gap(15),
+                                  Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SvgPicture.asset(
-                                          'assets/img/014-google.svg'),
-                                      SizedBox(
-                                          width: context.appValues.appSize.s10),
                                       Text(
-                                        translate(
-                                            'login_screen.connectWithGoogle'),
+                                        translate('login_screen.signUnMessage'),
                                         style: getPrimaryRegularStyle(
-                                          color: context
-                                              .resources.color.secondColorBlue,
-                                          fontSize: 22,
+                                          color: const Color(0xff71727A),
+                                          fontSize: 14,
                                         ),
+                                      ),
+                                      const Gap(5),
+                                      InkWell(
+                                        child: Text(
+                                          translate('login_screen.signUp'),
+                                          style: getPrimaryRegularStyle(
+                                            color: const Color(0xff4100E3),
+                                            fontSize: 14,
+                                          ),
+                                        ),
+                                        onTap: () {
+                                          // Navigator.of(context).push(_createRoute(SignUpScreen()));
+                                          Navigator.of(context)
+                                              // .push(_createRoute(SignUpOnBoardingScreen()));
+                                              .push(_createRoute(
+                                                  const CountrySelectionScreen()));
+                                        },
                                       ),
                                     ],
                                   ),
-                          ),
-                        ),
-                      );
-                    }),
-                    SizedBox(height: context.appValues.appSize.s15),
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(
-                    //     horizontal: context.appValues.appPadding.p25,
-                    //   ),
-                    //   child: SizedBox(
-                    //     height: 56,
-                    //     width: context.appValues.appSizePercent.w100,
-                    //     child: ElevatedButton(
-                    //       style: ElevatedButton.styleFrom(
-                    //         backgroundColor: context.resources.color.colorWhite,
-                    //         shape: RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.all(
-                    //             Radius.circular(context.appValues.appSize.s10),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //       onPressed: () {
-                    //         setState(() {
-                    //           isLoadingApple = true;
-                    //         });
-                    //         setState(() {
-                    //           isLoadingApple = false;
-                    //         });
-                    //       },
-                    //       child: (isLoadingApple)
-                    //           ? const SizedBox(
-                    //               width: 16,
-                    //               height: 16,
-                    //               child: CircularProgressIndicator(
-                    //                 color: Colors.white,
-                    //                 strokeWidth: 1.5,
-                    //               ))
-                    //           : Row(
-                    //               mainAxisAlignment: MainAxisAlignment.center,
-                    //               children: [
-                    //                 SvgPicture.asset(
-                    //                   'assets/img/applelogo.svg',
-                    //                   width: 24,
-                    //                 ),
-                    //                 SizedBox(
-                    //                     width: context.appValues.appSize.s10),
-                    //                 Text(
-                    //                   translate(
-                    //                       'login_screen.connectWithApple'),
-                    //                   style: getPrimaryRegularStyle(
-                    //                     color: context
-                    //                         .resources.color.secondColorBlue,
-                    //                     fontSize: 22,
-                    //                   ),
-                    //                 ),
-                    //               ],
-                    //             ),
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(height: context.appValues.appSize.s15),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // Text(
-                        //   // "You don't have an account?",
-                        //   translate('login_screen.signUpMessage'),
-                        //   style: getPrimaryRegularStyle(
-                        //       color: context.resources.color.secondColorBlue,
-                        //       fontSize: 15),
-                        // ),
-                        InkWell(
-                          child: Text(
-                            translate('login_screen.signUp'),
-                            style: TextStyle(
-                              color: context.resources.color.colorWhite,
-                              fontSize: 18,
-                              fontFamily: 'Popins',
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.white,
-                              // height: 0.5,
+                                  const Gap(15),
+                                  const Divider(
+                                    color: Color(0xffD4D6DD),
+                                    thickness: 1,
+                                  ),
+                                  const Gap(10),
+                                  Text(
+                                    'Or continue with',
+                                    style: getPrimaryRegularStyle(
+                                      color: const Color(0xff71727A),
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  const Gap(10),
+                                  Consumer4<LoginViewModel, CategoriesViewModel,
+                                          JobsViewModel, ProfileViewModel>(
+                                      builder: (context,
+                                          loginViewModel,
+                                          categoriesViewModel,
+                                          jobsViewModel,
+                                          profileViewModel,
+                                          error) {
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            context.appValues.appPadding.p25,
+                                      ),
+                                      child: SizedBox(
+                                        height: 44,
+                                        width: context
+                                            .appValues.appSizePercent.w100,
+                                        child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                            elevation: 0,
+                                            shadowColor: Colors.transparent,
+                                            backgroundColor: context
+                                                .resources.color.colorWhite,
+                                            shape: const RoundedRectangleBorder(
+                                              side: BorderSide(
+                                                color: Color(0xffC5C6CC),
+                                              ),
+                                              borderRadius: BorderRadius.all(
+                                                Radius.circular(12),
+                                              ),
+                                            ),
+                                          ),
+                                          onPressed: () async {
+                                            setState(() {
+                                              isLoadingGoogle = true;
+                                            });
+                                            try {
+                                              final GoogleSignIn _googleSignIn =
+                                                  GoogleSignIn(
+                                                scopes: ['email'],
+                                              );
+                                              // Sign out first to ensure fresh login
+                                              await _googleSignIn.signOut();
+
+                                              // Start Google Sign-In
+                                              final GoogleSignInAccount?
+                                                  googleUser =
+                                                  await _googleSignIn.signIn();
+                                              if (googleUser == null) {
+                                                debugPrint(
+                                                    "User canceled Google Sign-In");
+                                                return;
+                                              }
+
+                                              // Get authentication details from Google
+                                              final GoogleSignInAuthentication
+                                                  googleAuth = await googleUser
+                                                      .authentication;
+
+                                              // Get the ID token (used for Directus authentication)
+                                              final String? idToken =
+                                                  googleAuth.idToken;
+                                              final String? accessToken =
+                                                  googleAuth.accessToken;
+
+                                              debugPrint(
+                                                  "Google ID Token: $idToken");
+                                              debugPrint(
+                                                  "access Token: $accessToken");
+                                              //
+                                              if (idToken == null) {
+                                                debugPrint(
+                                                    "Error: ID token is null.");
+                                                return;
+                                              }
+                                              //
+                                              // // Send the ID token to Directus for authentication
+                                              final response = await http.post(
+                                                Uri.parse(
+                                                    'https://cms.dingdone.app/sso-login/google'),
+                                                headers: {
+                                                  'Content-Type':
+                                                      'application/json',
+                                                  'Accept': 'application/json',
+                                                },
+                                                body: jsonEncode(
+                                                    {'idToken': idToken}),
+                                              );
+                                              //
+                                              //
+                                              debugPrint(
+                                                  'Directus Response Status: ${response.statusCode}');
+                                              debugPrint(
+                                                  'Directus Response Body: ${response.body}');
+                                              //
+                                              if (response.statusCode == 200) {
+                                                final Map<String, dynamic>
+                                                    responseData =
+                                                    jsonDecode(response.body);
+                                                debugPrint(
+                                                    'response data is $responseData');
+                                                // Assuming Directus returns a user token
+                                                final String directusToken =
+                                                    responseData[
+                                                        'access_token'];
+                                                final prefs =
+                                                    await SharedPreferences
+                                                        .getInstance();
+
+                                                await AppPreferences().save(
+                                                    key: userIdKey,
+                                                    value: responseData['user'],
+                                                    isModel: false);
+                                                await prefs.setString(userIdKey,
+                                                    '${responseData['user']}');
+                                                await AppPreferences().save(
+                                                    key: userRoleKey,
+                                                    value:
+                                                        '008f8da4-ae7c-42f2-a498-68d490fe4593',
+                                                    isModel: false);
+                                                await prefs.setString(
+                                                    userRoleKey,
+                                                    '008f8da4-ae7c-42f2-a498-68d490fe4593');
+
+                                                await AppPreferences().save(
+                                                    key: userTokenKey,
+                                                    value: responseData[
+                                                        'access_token'],
+                                                    isModel: false);
+                                                await prefs.setString(
+                                                    userTokenKey,
+                                                    '${responseData['access_token']}');
+
+                                                await loginViewModel
+                                                    .isActiveUser();
+                                                await profileViewModel
+                                                    .getProfiledata();
+
+                                                debugPrint(
+                                                    "Successfully signed in! Directus Token: $directusToken");
+
+                                                await categoriesViewModel
+                                                    .getCategoriesAndServices();
+                                                await jobsViewModel.readJson();
+                                                // if(profileViewModel.getProfileBody['first_name']!=null
+                                                // && profileViewModel.getProfileBody['last_name']!=null
+                                                // && profileViewModel.getProfileBody['phone_number']!=null
+                                                // && profileViewModel.getProfileBody['email']!=null
+                                                // && profileViewModel.getProfileBody['latitude']!=null
+                                                // && profileViewModel.getProfileBody['longitude']!=null
+                                                // && profileViewModel.getProfileBody['address']!=null
+                                                // && profileViewModel.getProfileBody['city']!=null
+                                                // && profileViewModel.getProfileBody['street_number']!=null
+                                                // && profileViewModel.getProfileBody['building_number']!=null
+                                                // && profileViewModel.getProfileBody['floor']!=null
+                                                // && profileViewModel.getProfileBody['apartment_number']!=null
+                                                // && profileViewModel.getProfileBody['zone']!=null
+                                                // && profileViewModel.getProfileBody['address_label']!=null
+                                                // && profileViewModel.profileBody['user']['avatar']!=null
+                                                // ){
+                                                Navigator.of(context).push(
+                                                    _createRoute(BottomBar(
+                                                        userRole: Constants
+                                                            .customerRoleId)));
+                                                // }else{
+                                                //   Navigator.of(context).push(_createRoute(
+                                                //       CompleteProfileScreen(initialIndex: 0)));
+                                                // }
+
+                                                // TODO: Save token to local storage for future authenticated requests
+                                              } else {
+                                                debugPrint(
+                                                    "Failed to sign in with Directus: ${response.body}");
+                                              }
+                                              // _handleGoogleSignIn();
+                                              // var data =await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'));
+                                              // debugPrint('dataaa $data');
+                                              // if (!await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'))) {
+                                              //   throw Exception('Could not launch url');
+                                              // }
+                                              // loginGoogle();
+                                              // _launchGoogleSignIn();
+                                            } catch (e) {
+                                              debugPrint(
+                                                  "Error signing in with Google: $e");
+                                            }
+
+                                            setState(() {
+                                              isLoadingGoogle = false;
+                                            });
+                                          },
+                                          child: (isLoadingGoogle)
+                                              ? const SizedBox(
+                                                  width: 16,
+                                                  height: 16,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: Colors.white,
+                                                    strokeWidth: 1.5,
+                                                  ))
+                                              : Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                        'assets/img/014-google.svg'),
+                                                    SizedBox(
+                                                        width: context.appValues
+                                                            .appSize.s10),
+                                                    Text(
+                                                      translate(
+                                                          'login_screen.connectWithGoogle'),
+                                                      style:
+                                                          getPrimaryRegularStyle(
+                                                        color: context.resources
+                                                            .color.btnColorBlue,
+                                                        fontSize: 14,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                                  // Padding(
+                                  //   padding: EdgeInsets.symmetric(
+                                  //     horizontal: context.appValues.appPadding.p25,
+                                  //   ),
+                                  //   child: SizedBox(
+                                  //     height: 56,
+                                  //     width: context.appValues.appSizePercent.w100,
+                                  //     child: ElevatedButton(
+                                  //       style: ElevatedButton.styleFrom(
+                                  //         backgroundColor: context.resources.color.colorWhite,
+                                  //         shape: RoundedRectangleBorder(
+                                  //           borderRadius: BorderRadius.all(
+                                  //             Radius.circular(context.appValues.appSize.s10),
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //       onPressed: () {
+                                  //         setState(() {
+                                  //           isLoadingApple = true;
+                                  //         });
+                                  //         setState(() {
+                                  //           isLoadingApple = false;
+                                  //         });
+                                  //       },
+                                  //       child: (isLoadingApple)
+                                  //           ? const SizedBox(
+                                  //               width: 16,
+                                  //               height: 16,
+                                  //               child: CircularProgressIndicator(
+                                  //                 color: Colors.white,
+                                  //                 strokeWidth: 1.5,
+                                  //               ))
+                                  //           : Row(
+                                  //               mainAxisAlignment: MainAxisAlignment.center,
+                                  //               children: [
+                                  //                 SvgPicture.asset(
+                                  //                   'assets/img/applelogo.svg',
+                                  //                   width: 24,
+                                  //                 ),
+                                  //                 SizedBox(
+                                  //                     width: context.appValues.appSize.s10),
+                                  //                 Text(
+                                  //                   translate(
+                                  //                       'login_screen.connectWithApple'),
+                                  //                   style: getPrimaryRegularStyle(
+                                  //                     color: context
+                                  //                         .resources.color.secondColorBlue,
+                                  //                     fontSize: 22,
+                                  //                   ),
+                                  //                 ),
+                                  //               ],
+                                  //             ),
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                  // SizedBox(height: context.appValues.appSize.s15),
+
+                                  const Gap(30),
+                                ],
+                              ),
                             ),
-                            // getPrimaryRegularStyle(
-                            //   color: context.resources.color.colorWhite,
-                            //   fontSize: 18,
-                            // ),
-                          ),
-                          onTap: () {
-                            // Navigator.of(context).push(_createRoute(SignUpScreen()));
-                            Navigator.of(context)
-                                // .push(_createRoute(SignUpOnBoardingScreen()));
-                                .push(_createRoute(
-                                    const CountrySelectionScreen()));
-                          },
-                        ),
-                      ],
-                    ),
-                    const Gap(30),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
+                          ],
+                        );
+                      }),
+                );
+              }),
+        ],
       ),
     );
   }

@@ -385,15 +385,15 @@
     "fees5": "6.5. When a Booking is complete, Business will submit to the User and DingDone confirmation that the Booking is complete. So long as Business has completed the steps necessary to set up a direct deposit account and provided those details to DingDone, DingDone shall then remit payment to the Service Pro for each Booking via direct debit, or other payment methods (cash, cheques,…) less DingDone’s Booking Fee, in accordance with DingDone’s billing schedule as advised to Business from time to time.",
     "fees6": "6.6. Without limiting any other provision of this Agreement, DingDone may withhold and offset Job Fees by any amounts Business owes to DingDone or to a User in respect of any Services, including previous overpayments, refunds to Users, chargebacks, damages (including property damage) claimed by a User in respect of the Service Provider’s provision of a Service.  In the event that DingDone refunds or pays amounts to Users in excess of its payment to Business, Business will pay DingDone for such amounts within 30 days of DingDone’s request.",
     "fees7": "6.7. Except as specifically set out in this Clause 6, DingDone will retain all revenues derived from or in connection with its services.",
-    "businessConduct":"7. BUSINESS CONDUCT",
-    "businessConduct1":"7.1. Without limiting any other provision of this Agreement, in connection with Business’s use of the Platform and provision of the Services, Business may not and agrees that it will not:",
-    "businessConduct1a":"(a) contact a User for any purpose other than in connection with a Booking;",
-    "businessConduct1b":"(b) impersonate any person or entity, or falsify or otherwise misrepresent itself or its affiliation with any person or entity;",
-    "businessConduct1c":"(c) use the Platform to find a User and then complete a Booking independent of the Platform in order to circumvent the obligation to pay the Booking Fee or any other fees related to DingDone’s provision of the Platform;",
-    "businessConduct1d":"(d) accept direct payment from the User, or attempt to directly charge the user for any services in connection with a Booking;",
-    "businessConduct1e":"(e) without the written consent of DingDone, directly contract to provide services to a User outside of the Platform (and thereby exclude DingDone). Where such a direct relationship is formed without the consent of the Company, the Business agrees to pay to the Company 50% of the Service Fees that would have applied to had those services been undertaken as Bookings.",
-    "representationsAndWarranties":"8. REPRESENTATIONS AND WARRANTIES",
-    "representationsAndWarranties1":"Business represents and warrants to DingDone that: (a) Business has the legal right to provide the Services that are contemplated by this Agreement in Qatar; (b) Business is fully-licenced (to the extent required by applicable law) and authorised to provide the Services contemplated by this Agreement within the jurisdiction in which Business intends to offer such Services, and has the required skill, experience, and qualifications to perform the Services; (c) Business shall perform the Services in a professional and diligent manner in accordance with best industry standards for similar services, including the completion of all Bookings referred to Business that it opts to book through the Platform; (d) Business shall perform the Services in accordance with all applicable Qatari laws, rules and regulations; and (e) all Personnel utilized in connection with the Services have the legal right to work in Qatar. Business acknowledges that its failure to comply with this clause 8 shall constitute a material breach of this Agreement.",
+    "businessConduct": "7. BUSINESS CONDUCT",
+    "businessConduct1": "7.1. Without limiting any other provision of this Agreement, in connection with Business’s use of the Platform and provision of the Services, Business may not and agrees that it will not:",
+    "businessConduct1a": "(a) contact a User for any purpose other than in connection with a Booking;",
+    "businessConduct1b": "(b) impersonate any person or entity, or falsify or otherwise misrepresent itself or its affiliation with any person or entity;",
+    "businessConduct1c": "(c) use the Platform to find a User and then complete a Booking independent of the Platform in order to circumvent the obligation to pay the Booking Fee or any other fees related to DingDone’s provision of the Platform;",
+    "businessConduct1d": "(d) accept direct payment from the User, or attempt to directly charge the user for any services in connection with a Booking;",
+    "businessConduct1e": "(e) without the written consent of DingDone, directly contract to provide services to a User outside of the Platform (and thereby exclude DingDone). Where such a direct relationship is formed without the consent of the Company, the Business agrees to pay to the Company 50% of the Service Fees that would have applied to had those services been undertaken as Bookings.",
+    "representationsAndWarranties": "8. REPRESENTATIONS AND WARRANTIES",
+    "representationsAndWarranties1": "Business represents and warrants to DingDone that: (a) Business has the legal right to provide the Services that are contemplated by this Agreement in Qatar; (b) Business is fully-licenced (to the extent required by applicable law) and authorised to provide the Services contemplated by this Agreement within the jurisdiction in which Business intends to offer such Services, and has the required skill, experience, and qualifications to perform the Services; (c) Business shall perform the Services in a professional and diligent manner in accordance with best industry standards for similar services, including the completion of all Bookings referred to Business that it opts to book through the Platform; (d) Business shall perform the Services in accordance with all applicable Qatari laws, rules and regulations; and (e) all Personnel utilized in connection with the Services have the legal right to work in Qatar. Business acknowledges that its failure to comply with this clause 8 shall constitute a material breach of this Agreement.",
     "indemnification": "9. INDEMNIFICATION",
     "indemnification1": "9.1. Business shall defend, indemnify and hold harmless Ding Done and its affiliates and their officers, directors, employees, agents, successors, and assigns from and against all losses, damages, liabilities, deficiencies, actions, judgments, interest, awards, penalties, fines, costs, or expenses of whatever kind (including reasonable attorneys’ fees) arising out of or resulting from: (a) bodily injury, death of any person, theft or damage to real or tangible, personal property resulting from Business’s acts or omissions; and (b) Business’s breach of any representation, warranty, or obligation under this Agreement and the Service Agreement.",
     "indemnification2": "9.2. The Services that Business provides pursuant the Service Agreement and are Business’s sole and absolute responsibility. DingDone is not responsible or liable for the actions or inactions of a User or other third party in relation to the Services provided by Business. Business acknowledges, therefore, that by using the DingDone Platform, Business may be introduced to third parties that may be potentially dangerous, and that Business uses the DingDone Platform and enter into any transactions with Users at its own risk.",
@@ -448,7 +448,7 @@
     "signInAs": "Sign In As",
     "signUp": "Sign Up",
     "signInMessage": "Please sign in to your registered\naccount",
-    "signUnMessage": "You don't have an account?",
+    "signUnMessage": "Don't have an account?",
     "forgotPassword": "Forgot password?",
     "resetPassword": "Reset here",
     "signUpInstead": "Sign Up Instead",
@@ -479,9 +479,9 @@
     "selectYourSkills": "Select your Skills",
     "identificationCard": "Upload Your ID"
   },
-  "map":{
-  "map": "Map"
-},
+  "map": {
+    "map": "Map"
+  },
   "formHints": {
     "email_address": "Your Email Address",
     "email": "Email",

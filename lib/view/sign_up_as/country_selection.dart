@@ -41,7 +41,12 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
-                      child: SvgPicture.asset('assets/img/back.svg'),
+                      // child: SvgPicture.asset('assets/img/back.svg'),
+                      child: Icon(
+                        Icons.arrow_back_ios_new_sharp,
+                        color: context.resources.color.colorBlack[50],
+                        size: 20,
+                      ),
                       onTap: () {
                         Navigator.pop(context);
                       },
@@ -108,7 +113,7 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
                           if (signupViewModel.getSignUpBody['country'] !=
                               null) {
                             Navigator.of(context).push(
-                              _createRoute(SignUpAsScreen()),
+                              _createRoute(const SignUpAsScreen()),
                             );
                           } else {
                             showDialog(
@@ -123,7 +128,7 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
                           width: context.appValues.appSizePercent.w80,
                           height: context.appValues.appSizePercent.h6,
                           decoration: BoxDecoration(
-                            color: const Color(0xff384ea2),
+                            color: const Color(0xff4100E3),
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Center(

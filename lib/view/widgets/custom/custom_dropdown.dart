@@ -42,6 +42,7 @@ class CustomDropDown extends StatefulWidget {
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();
 }
+
 class _CustomDropDownState extends State<CustomDropDown> {
   @override
   Widget build(BuildContext context) {
@@ -51,32 +52,37 @@ class _CustomDropDownState extends State<CustomDropDown> {
       isExpanded: true,
       dropdownColor: Colors.white, // Set dropdown background color to white
       validator: widget.validator,
-      style: getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
+      style:
+          getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
       decoration: InputDecoration(
         hintText: widget.hintText,
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.white,
-            width: 2.0,
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.white,
-            width: 2.0,
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        focusedErrorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.white,
-            width: 2.0,
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
         isDense: true,
         errorText: widget.errorText,

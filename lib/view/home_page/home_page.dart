@@ -2,14 +2,9 @@
 
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
-import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:dingdone/view/about/about_dingdone.dart';
 import 'package:dingdone/view/categories/parent_categories.dart';
-import 'package:dingdone/view/categories_screen/categories_screen.dart';
-import 'package:dingdone/view/confirm_address/confirm_address.dart';
 import 'package:dingdone/view/services_screen/services_screen.dart';
-import 'package:dingdone/view/widgets/home_page/categories.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -23,12 +18,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import '../../view_model/dispose_view_model/app_view_model.dart';
-import '../agreement/user_agreement.dart';
 import '../book_a_service/book_a_service.dart';
 import '../bottom_bar/bottom_bar.dart';
-import '../jobs_page/jobs_page.dart';
-import '../login/login.dart';
 import '../widgets/categories_screen/categories_screen_cards.dart';
 
 class HomePage extends StatefulWidget {
@@ -131,369 +122,369 @@ class _HomePageState extends State<HomePage> {
       return Scaffold(
         key: _scaffoldKey,
         backgroundColor: const Color(0xffFEFEFE),
-        drawer: Drawer(
-          child: Container(
-            color: Colors.white,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Gap(120),
-                ListTile(
-                  title: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/img/orderHistory.svg',
-                        width: context.appValues.appSizePercent.w4,
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('drawer.orderHistory'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 16,
-                          color: const Color(0xff1F1F39),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => JobsPage(
-                          userRole: Constants.customerRoleId,
-                          lang: lang!,
-                          initialActiveTab: 'completedJobs',
-                          initialIndex: 3,
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: context.appValues.appPadding.p15,
-                    right: context.appValues.appPadding.p15,
-                  ),
-                  child: const Divider(
-                    height: 25,
-                    thickness: 2,
-                    color: Color(0xffEAEAFF),
-                  ),
-                ),
-                ListTile(
-                  title: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/img/addressBook.svg',
-                        width: context.appValues.appSizePercent.w4,
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('drawer.myAddressBook'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 16,
-                          color: const Color(0xff1F1F39),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.of(context).push(_createRoute(ConfirmAddress()));
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: context.appValues.appPadding.p15,
-                    right: context.appValues.appPadding.p15,
-                  ),
-                  child: const Divider(
-                    height: 25,
-                    thickness: 2,
-                    color: Color(0xffEAEAFF),
-                  ),
-                ),
-                ListTile(
-                  title: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/img/headphone.svg',
-                        width: context.appValues.appSizePercent.w5,
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('drawer.support'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 16,
-                          color: const Color(0xff1F1F39),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    // Handle Help! tap
-                    // Navigator.pop(context);
-                    jobsViewModel.launchWhatsApp();
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: context.appValues.appPadding.p15,
-                    right: context.appValues.appPadding.p15,
-                  ),
-                  child: const Divider(
-                    height: 25,
-                    thickness: 2,
-                    color: Color(0xffEAEAFF),
-                  ),
-                ),
-                ListTile(
-                  title: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/img/aboutDingDone.svg',
-                        width: context.appValues.appSizePercent.w5,
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('drawer.aboutDingDone'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 16,
-                          color: const Color(0xff1F1F39),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    // Handle About DingDone tap
-                    Navigator.of(context).push(_createRoute(About()));
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: context.appValues.appPadding.p15,
-                    right: context.appValues.appPadding.p15,
-                  ),
-                  child: const Divider(
-                    height: 25,
-                    thickness: 2,
-                    color: Color(0xffEAEAFF),
-                  ),
-                ),
-                ListTile(
-                  title: Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/img/termofuse.svg',
-                        width: context.appValues.appSizePercent.w5,
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('drawer.termsAndConditions'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 16,
-                          color: const Color(0xff1F1F39),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () {
-                    // Handle Terms and Conditions tap
-                    Navigator.of(context)
-                        .push(_createRoute(UserAgreement(index: null)));
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: context.appValues.appPadding.p15,
-                    right: context.appValues.appPadding.p15,
-                  ),
-                  child: const Divider(
-                    height: 25,
-                    thickness: 2,
-                    color: Color(0xffEAEAFF),
-                  ),
-                ),
-                ListTile(
-                  title: Row(
-                    children: [
-                      const Icon(
-                        Icons.language,
-                        size: 20,
-                        color: Colors.deepPurple,
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('drawer.chooseLanguage'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 16,
-                          color: const Color(0xff1F1F39),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () => _onActionSheetPress(context),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: context.appValues.appPadding.p15,
-                    right: context.appValues.appPadding.p15,
-                  ),
-                  child: const Divider(
-                    height: 25,
-                    thickness: 2,
-                    color: Color(0xffEAEAFF),
-                  ),
-                ),
-                ListTile(
-                  title: Row(
-                    children: [
-                      const Icon(
-                        Icons.delete,
-                        size: 20,
-                        color: Colors.deepPurple,
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('drawer.deleteAccount'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 16,
-                          color: const Color(0xff1F1F39),
-                        ),
-                      ),
-                    ],
-                  ),
-                  onTap: () async {
-                    // Show a confirmation dialog before executing deletion
-                    final bool? confirmed = await showDialog<bool>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          backgroundColor: Colors.white,
-                          title: const Text('Confirm Deletion'),
-                          content: const Text(
-                              'Are you sure you want to delete your account?'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(true),
-                              child: const Text('Yes'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
+        // drawer: Drawer(
+        //   child: Container(
+        //     color: Colors.white,
+        //     child: Column(
+        //       crossAxisAlignment: CrossAxisAlignment.stretch,
+        //       children: [
+        //         const Gap(120),
+        //         ListTile(
+        //           title: Row(
+        //             children: [
+        //               SvgPicture.asset(
+        //                 'assets/img/orderHistory.svg',
+        //                 width: context.appValues.appSizePercent.w4,
+        //               ),
+        //               const Gap(10),
+        //               Text(
+        //                 translate('drawer.orderHistory'),
+        //                 style: getPrimaryRegularStyle(
+        //                   fontSize: 16,
+        //                   color: const Color(0xff1F1F39),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           onTap: () {
+        //             Navigator.push(
+        //               context,
+        //               MaterialPageRoute(
+        //                 builder: (context) => JobsPage(
+        //                   userRole: Constants.customerRoleId,
+        //                   lang: lang!,
+        //                   initialActiveTab: 'completedJobs',
+        //                   initialIndex: 3,
+        //                 ),
+        //               ),
+        //             );
+        //           },
+        //         ),
+        //         Padding(
+        //           padding: EdgeInsets.only(
+        //             left: context.appValues.appPadding.p15,
+        //             right: context.appValues.appPadding.p15,
+        //           ),
+        //           child: const Divider(
+        //             height: 25,
+        //             thickness: 2,
+        //             color: Color(0xffEAEAFF),
+        //           ),
+        //         ),
+        //         ListTile(
+        //           title: Row(
+        //             children: [
+        //               SvgPicture.asset(
+        //                 'assets/img/addressBook.svg',
+        //                 width: context.appValues.appSizePercent.w4,
+        //               ),
+        //               const Gap(10),
+        //               Text(
+        //                 translate('drawer.myAddressBook'),
+        //                 style: getPrimaryRegularStyle(
+        //                   fontSize: 16,
+        //                   color: const Color(0xff1F1F39),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           onTap: () {
+        //             Navigator.of(context).push(_createRoute(ConfirmAddress()));
+        //           },
+        //         ),
+        //         Padding(
+        //           padding: EdgeInsets.only(
+        //             left: context.appValues.appPadding.p15,
+        //             right: context.appValues.appPadding.p15,
+        //           ),
+        //           child: const Divider(
+        //             height: 25,
+        //             thickness: 2,
+        //             color: Color(0xffEAEAFF),
+        //           ),
+        //         ),
+        //         ListTile(
+        //           title: Row(
+        //             children: [
+        //               SvgPicture.asset(
+        //                 'assets/img/headphone.svg',
+        //                 width: context.appValues.appSizePercent.w5,
+        //               ),
+        //               const Gap(10),
+        //               Text(
+        //                 translate('drawer.support'),
+        //                 style: getPrimaryRegularStyle(
+        //                   fontSize: 16,
+        //                   color: const Color(0xff1F1F39),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           onTap: () {
+        //             // Handle Help! tap
+        //             // Navigator.pop(context);
+        //             jobsViewModel.launchWhatsApp();
+        //           },
+        //         ),
+        //         Padding(
+        //           padding: EdgeInsets.only(
+        //             left: context.appValues.appPadding.p15,
+        //             right: context.appValues.appPadding.p15,
+        //           ),
+        //           child: const Divider(
+        //             height: 25,
+        //             thickness: 2,
+        //             color: Color(0xffEAEAFF),
+        //           ),
+        //         ),
+        //         ListTile(
+        //           title: Row(
+        //             children: [
+        //               SvgPicture.asset(
+        //                 'assets/img/aboutDingDone.svg',
+        //                 width: context.appValues.appSizePercent.w5,
+        //               ),
+        //               const Gap(10),
+        //               Text(
+        //                 translate('drawer.aboutDingDone'),
+        //                 style: getPrimaryRegularStyle(
+        //                   fontSize: 16,
+        //                   color: const Color(0xff1F1F39),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           onTap: () {
+        //             // Handle About DingDone tap
+        //             Navigator.of(context).push(_createRoute(About()));
+        //           },
+        //         ),
+        //         Padding(
+        //           padding: EdgeInsets.only(
+        //             left: context.appValues.appPadding.p15,
+        //             right: context.appValues.appPadding.p15,
+        //           ),
+        //           child: const Divider(
+        //             height: 25,
+        //             thickness: 2,
+        //             color: Color(0xffEAEAFF),
+        //           ),
+        //         ),
+        //         ListTile(
+        //           title: Row(
+        //             children: [
+        //               SvgPicture.asset(
+        //                 'assets/img/termofuse.svg',
+        //                 width: context.appValues.appSizePercent.w5,
+        //               ),
+        //               const Gap(10),
+        //               Text(
+        //                 translate('drawer.termsAndConditions'),
+        //                 style: getPrimaryRegularStyle(
+        //                   fontSize: 16,
+        //                   color: const Color(0xff1F1F39),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           onTap: () {
+        //             // Handle Terms and Conditions tap
+        //             Navigator.of(context)
+        //                 .push(_createRoute(UserAgreement(index: null)));
+        //           },
+        //         ),
+        //         Padding(
+        //           padding: EdgeInsets.only(
+        //             left: context.appValues.appPadding.p15,
+        //             right: context.appValues.appPadding.p15,
+        //           ),
+        //           child: const Divider(
+        //             height: 25,
+        //             thickness: 2,
+        //             color: Color(0xffEAEAFF),
+        //           ),
+        //         ),
+        //         ListTile(
+        //           title: Row(
+        //             children: [
+        //               const Icon(
+        //                 Icons.language,
+        //                 size: 20,
+        //                 color: Colors.deepPurple,
+        //               ),
+        //               const Gap(10),
+        //               Text(
+        //                 translate('drawer.chooseLanguage'),
+        //                 style: getPrimaryRegularStyle(
+        //                   fontSize: 16,
+        //                   color: const Color(0xff1F1F39),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           onTap: () => _onActionSheetPress(context),
+        //         ),
+        //         Padding(
+        //           padding: EdgeInsets.only(
+        //             left: context.appValues.appPadding.p15,
+        //             right: context.appValues.appPadding.p15,
+        //           ),
+        //           child: const Divider(
+        //             height: 25,
+        //             thickness: 2,
+        //             color: Color(0xffEAEAFF),
+        //           ),
+        //         ),
+        //         ListTile(
+        //           title: Row(
+        //             children: [
+        //               const Icon(
+        //                 Icons.delete,
+        //                 size: 20,
+        //                 color: Colors.deepPurple,
+        //               ),
+        //               const Gap(10),
+        //               Text(
+        //                 translate('drawer.deleteAccount'),
+        //                 style: getPrimaryRegularStyle(
+        //                   fontSize: 16,
+        //                   color: const Color(0xff1F1F39),
+        //                 ),
+        //               ),
+        //             ],
+        //           ),
+        //           onTap: () async {
+        //             // Show a confirmation dialog before executing deletion
+        //             final bool? confirmed = await showDialog<bool>(
+        //               context: context,
+        //               builder: (BuildContext context) {
+        //                 return AlertDialog(
+        //                   backgroundColor: Colors.white,
+        //                   title: const Text('Confirm Deletion'),
+        //                   content: const Text(
+        //                       'Are you sure you want to delete your account?'),
+        //                   actions: <Widget>[
+        //                     TextButton(
+        //                       onPressed: () => Navigator.of(context).pop(false),
+        //                       child: const Text('Cancel'),
+        //                     ),
+        //                     TextButton(
+        //                       onPressed: () => Navigator.of(context).pop(true),
+        //                       child: const Text('Yes'),
+        //                     ),
+        //                   ],
+        //                 );
+        //               },
+        //             );
 
-                    if (confirmed == true) {
-                      // Execute deletion logic if the user confirmed
-                      await profileViewModel.patchUserData({'status': 'draft'});
-                      String? lang = await AppPreferences()
-                          .get(key: language, isModel: false);
-                      AppPreferences().clear();
-                      AppProviders.disposeAllDisposableProviders(context);
-                      Navigator.of(context)
-                          .push(_createRoute(const LoginScreen()));
-                      await AppPreferences()
-                          .save(key: language, value: lang, isModel: false);
-                      if (lang == null) {
-                        lang = "en";
-                        await AppPreferences()
-                            .save(key: language, value: "en", isModel: false);
-                        await AppPreferences()
-                            .save(key: dblang, value: 'en-US', isModel: false);
-                      }
-                      if (lang == 'en') {
-                        await AppPreferences()
-                            .save(key: dblang, value: 'en-US', isModel: false);
-                      }
-                      if (lang == 'ar') {
-                        await AppPreferences()
-                            .save(key: dblang, value: 'ar-SA', isModel: false);
-                      }
-                      if (lang == 'ru') {
-                        await AppPreferences()
-                            .save(key: dblang, value: 'ru-RU', isModel: false);
-                      }
-                      if (lang == 'el') {
-                        await AppPreferences()
-                            .save(key: dblang, value: 'el-GR', isModel: false);
-                      }
-                    }
-                  },
-                ),
-                const Spacer(),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: context.appValues.appPadding.p5,
-                    left: context.appValues.appPadding.p15,
-                    right: context.appValues.appPadding.p15,
-                  ),
-                  child: InkWell(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            SvgPicture.asset(
-                              'assets/img/logout.svg',
-                              width: context.appValues.appSizePercent.w4,
-                            ),
-                            const Gap(10),
-                            Text(
-                              translate('profile.logOut'),
-                              style: getPrimaryRegularStyle(
-                                fontSize: 16,
-                                color: const Color(0xff78789D),
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Gap(50)
-                      ],
-                    ),
-                    onTap: () async {
-                      String? lang = await AppPreferences()
-                          .get(key: language, isModel: false);
-                      AppPreferences().clear();
-                      AppProviders.disposeAllDisposableProviders(context);
-                      Navigator.of(context)
-                          .push(_createRoute(const LoginScreen()));
-                      await AppPreferences()
-                          .save(key: language, value: lang, isModel: false);
-                      if (lang == null) {
-                        lang = "en";
-                        await AppPreferences()
-                            .save(key: language, value: "en", isModel: false);
-                        await AppPreferences()
-                            .save(key: dblang, value: 'en-US', isModel: false);
-                      }
+        //             if (confirmed == true) {
+        //               // Execute deletion logic if the user confirmed
+        //               await profileViewModel.patchUserData({'status': 'draft'});
+        //               String? lang = await AppPreferences()
+        //                   .get(key: language, isModel: false);
+        //               AppPreferences().clear();
+        //               AppProviders.disposeAllDisposableProviders(context);
+        //               Navigator.of(context)
+        //                   .push(_createRoute(const LoginScreen()));
+        //               await AppPreferences()
+        //                   .save(key: language, value: lang, isModel: false);
+        //               if (lang == null) {
+        //                 lang = "en";
+        //                 await AppPreferences()
+        //                     .save(key: language, value: "en", isModel: false);
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'en-US', isModel: false);
+        //               }
+        //               if (lang == 'en') {
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'en-US', isModel: false);
+        //               }
+        //               if (lang == 'ar') {
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'ar-SA', isModel: false);
+        //               }
+        //               if (lang == 'ru') {
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'ru-RU', isModel: false);
+        //               }
+        //               if (lang == 'el') {
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'el-GR', isModel: false);
+        //               }
+        //             }
+        //           },
+        //         ),
+        //         const Spacer(),
+        //         Padding(
+        //           padding: EdgeInsets.only(
+        //             top: context.appValues.appPadding.p5,
+        //             left: context.appValues.appPadding.p15,
+        //             right: context.appValues.appPadding.p15,
+        //           ),
+        //           child: InkWell(
+        //             child: Row(
+        //               mainAxisAlignment: MainAxisAlignment.end,
+        //               children: [
+        //                 Row(
+        //                   mainAxisAlignment: MainAxisAlignment.end,
+        //                   children: [
+        //                     SvgPicture.asset(
+        //                       'assets/img/logout.svg',
+        //                       width: context.appValues.appSizePercent.w4,
+        //                     ),
+        //                     const Gap(10),
+        //                     Text(
+        //                       translate('profile.logOut'),
+        //                       style: getPrimaryRegularStyle(
+        //                         fontSize: 16,
+        //                         color: const Color(0xff78789D),
+        //                       ),
+        //                     ),
+        //                   ],
+        //                 ),
+        //                 const Gap(50)
+        //               ],
+        //             ),
+        //             onTap: () async {
+        //               String? lang = await AppPreferences()
+        //                   .get(key: language, isModel: false);
+        //               AppPreferences().clear();
+        //               AppProviders.disposeAllDisposableProviders(context);
+        //               Navigator.of(context)
+        //                   .push(_createRoute(const LoginScreen()));
+        //               await AppPreferences()
+        //                   .save(key: language, value: lang, isModel: false);
+        //               if (lang == null) {
+        //                 lang = "en";
+        //                 await AppPreferences()
+        //                     .save(key: language, value: "en", isModel: false);
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'en-US', isModel: false);
+        //               }
 
-                      if (lang == 'en') {
-                        await AppPreferences()
-                            .save(key: dblang, value: 'en-US', isModel: false);
-                      }
-                      if (lang == 'ar') {
-                        await AppPreferences()
-                            .save(key: dblang, value: 'ar-SA', isModel: false);
-                      }
-                      if (lang == 'ru') {
-                        await AppPreferences()
-                            .save(key: dblang, value: 'ru-RU', isModel: false);
-                      }
-                      if (lang == 'el') {
-                        await AppPreferences()
-                            .save(key: dblang, value: 'el-GR', isModel: false);
-                      }
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+        //               if (lang == 'en') {
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'en-US', isModel: false);
+        //               }
+        //               if (lang == 'ar') {
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'ar-SA', isModel: false);
+        //               }
+        //               if (lang == 'ru') {
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'ru-RU', isModel: false);
+        //               }
+        //               if (lang == 'el') {
+        //                 await AppPreferences()
+        //                     .save(key: dblang, value: 'el-GR', isModel: false);
+        //               }
+        //             },
+        //           ),
+        //         ),
+        //       ],
+        //     ),
+        //   ),
+        // ),
         body: RefreshIndicator(
           onRefresh: _handleRefresh,
           child: Stack(
@@ -531,18 +522,18 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   Row(
                                     children: [
-                                      IconButton(
-                                        icon: Icon(
-                                          Icons.menu,
-                                          size: 30,
-                                          color: context
-                                              .resources.color.colorWhite,
-                                        ),
-                                        onPressed: () {
-                                          _scaffoldKey.currentState
-                                              ?.openDrawer();
-                                        },
-                                      ),
+                                      // IconButton(
+                                      //   icon: Icon(
+                                      //     Icons.menu,
+                                      //     size: 30,
+                                      //     color: context
+                                      //         .resources.color.colorWhite,
+                                      //   ),
+                                      //   onPressed: () {
+                                      //     _scaffoldKey.currentState
+                                      //         ?.openDrawer();
+                                      //   },
+                                      // ),
                                       const Gap(7),
                                       Row(
                                         children: [
@@ -573,29 +564,30 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ],
                                   ),
-                                  Container(
-                                    width:
-                                        context.appValues.appSizePercent.w10p5,
-                                    height:
-                                        context.appValues.appSizePercent.h5p1,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: NetworkImage(
-                                          profileViewModel.getProfileBody[
-                                                          'user'] !=
-                                                      null &&
-                                                  profileViewModel
-                                                              .getProfileBody[
-                                                          'user']['avatar'] !=
-                                                      null
-                                              ? '${context.resources.image.networkImagePath2}${profileViewModel.getProfileBody['user']['avatar']}'
-                                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                        ),
-                                      ),
-                                    ),
-                                  ),
+                                  SvgPicture.asset('assets/img/yellowbell.svg'),
+                                  // Container(
+                                  //   width:
+                                  //       context.appValues.appSizePercent.w10p5,
+                                  //   height:
+                                  //       context.appValues.appSizePercent.h5p1,
+                                  //   decoration: BoxDecoration(
+                                  //     borderRadius: BorderRadius.circular(50),
+                                  //     image: DecorationImage(
+                                  //       fit: BoxFit.cover,
+                                  //       image: NetworkImage(
+                                  //         profileViewModel.getProfileBody[
+                                  //                         'user'] !=
+                                  //                     null &&
+                                  //                 profileViewModel
+                                  //                             .getProfileBody[
+                                  //                         'user']['avatar'] !=
+                                  //                     null
+                                  //             ? '${context.resources.image.networkImagePath2}${profileViewModel.getProfileBody['user']['avatar']}'
+                                  //             : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  // ),
                                 ],
                               ),
                               Padding(
@@ -612,20 +604,20 @@ class _HomePageState extends State<HomePage> {
                                       Icons.search,
                                       color: Color(0xFF6E6BE8),
                                     ),
-                                    hintText: "Search for services...",
+                                    hintText: "I’m done with...",
                                     hintStyle: const TextStyle(
                                       color: Color(0xFF6E6BE8),
                                     ),
                                     border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
+                                      borderRadius: BorderRadius.circular(12),
                                       borderSide: BorderSide.none,
                                     ),
                                     enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
+                                      borderRadius: BorderRadius.circular(12),
                                       borderSide: BorderSide.none,
                                     ),
                                     focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(5),
+                                      borderRadius: BorderRadius.circular(12),
                                       borderSide: const BorderSide(
                                         color: Color(0xFF6E6BE8),
                                       ),
@@ -633,7 +625,6 @@ class _HomePageState extends State<HomePage> {
                                   ),
                                 ),
                               ),
-                              const Gap(15),
                             ],
                           ),
                         ),
@@ -644,8 +635,8 @@ class _HomePageState extends State<HomePage> {
               ),
               searchController.text.isEmpty
                   ? DraggableScrollableSheet(
-                      initialChildSize: 0.70,
-                      minChildSize: 0.70,
+                      initialChildSize: 0.73,
+                      minChildSize: 0.73,
                       maxChildSize: 1,
                       builder: (BuildContext context,
                           ScrollController scrollController) {
@@ -675,11 +666,11 @@ class _HomePageState extends State<HomePage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                            servicesViewModel.chosenParent
-                                                ? translate(
-                                                    'home_screen.servicesCategories')
-                                                : translate(
-                                                    'home_screen.categories'),
+                                            // servicesViewModel.chosenParent
+                                            //     ? translate(
+                                            //         'home_screen.servicesCategories')
+                                            //     :
+                                            translate('home_screen.categories'),
                                             style: getPrimarySemiBoldStyle(
                                               fontSize: 22,
                                               color: context

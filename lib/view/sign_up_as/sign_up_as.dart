@@ -8,6 +8,7 @@ import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 class SignUpAsScreen extends StatefulWidget {
@@ -41,7 +42,12 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
-                      child: SvgPicture.asset('assets/img/back.svg'),
+                      // child: SvgPicture.asset('assets/img/back.svg'),
+                      child: Icon(
+                        Icons.arrow_back_ios_new_sharp,
+                        color: context.resources.color.colorBlack[50],
+                        size: 20,
+                      ),
                       onTap: () {
                         Navigator.pop(context);
                       },
@@ -56,13 +62,14 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      translate('signUp.areYouA'),
+                      // translate('signUp.areYouA'),
+                      'Get started as a',
                       style: getPrimaryBoldStyle(
-                        color: const Color(0xff190C39),
-                        fontSize: 32,
+                        color: context.resources.color.btnColorBlue,
+                        fontSize: 18,
                       ),
                     ),
-                    SizedBox(height: context.appValues.appSizePercent.h3),
+                    const Gap(10),
                     Padding(
                       padding: EdgeInsets.all(context.appValues.appPadding.p20),
                       child: InkWell(
@@ -82,7 +89,7 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                           width: context.appValues.appSizePercent.w80,
                           height: context.appValues.appSizePercent.h6,
                           decoration: BoxDecoration(
-                            color: const Color(0xff384ea2),
+                            color: const Color(0xff4100E3),
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Center(
@@ -129,7 +136,7 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                               width: context.appValues.appSizePercent.w80,
                               height: context.appValues.appSizePercent.h6,
                               decoration: BoxDecoration(
-                                color: const Color(0xffffc329),
+                                color: const Color(0xffFFC500),
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Center(
@@ -137,7 +144,7 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                                   translate('signUp.supplier'),
                                   style: getPrimaryBoldStyle(
                                     fontSize: 14,
-                                    color: context.resources.color.colorWhite,
+                                    color: context.resources.color.btnColorBlue,
                                   ),
                                 ),
                               ),

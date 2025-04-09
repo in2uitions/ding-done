@@ -6,7 +6,6 @@ import 'package:dingdone/view/agreement/user_agreement.dart';
 import 'package:dingdone/view/login/login.dart';
 import 'package:dingdone/view/signup/signup_supplier_onboarding.dart';
 import 'package:dingdone/view/widgets/custom/custom_date_picker.dart';
-import 'package:dingdone/view/widgets/custom/custom_phone_feild.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/image_component/upload_one_image.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
@@ -361,22 +360,23 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child:
-                        // CustomPhoneFeild(
-                        //   value:
-                        //       signupViewModel.signUpBody['phone'] ?? '',
-                        //   index: 'phone_number',
-                        //   viewModel: signupViewModel.setInputValues,
-                        //   validator: (val) => signupViewModel.signUpErrors[
-                        //       context
-                        //           .resources.strings.formKeys['phone_number']!],
-                        //   errorText: signupViewModel.signUpErrors[context
-                        //       .resources.strings.formKeys['phone_number']!],
-                        //   hintText: translate('formHints.phone_number'),
-                        // ),
-                        CustomPhoneFieldController(
+                            // CustomPhoneFeild(
+                            //   value:
+                            //       signupViewModel.signUpBody['phone'] ?? '',
+                            //   index: 'phone_number',
+                            //   viewModel: signupViewModel.setInputValues,
+                            //   validator: (val) => signupViewModel.signUpErrors[
+                            //       context
+                            //           .resources.strings.formKeys['phone_number']!],
+                            //   errorText: signupViewModel.signUpErrors[context
+                            //       .resources.strings.formKeys['phone_number']!],
+                            //   hintText: translate('formHints.phone_number'),
+                            // ),
+                            CustomPhoneFieldController(
                           value: signupViewModel.signUpBody["phone"],
-                          phone_code:signupViewModel.signUpBody["phone_code"],
-                          phone_number:signupViewModel.signUpBody["phone_number"],
+                          phone_code: signupViewModel.signUpBody["phone_code"],
+                          phone_number:
+                              signupViewModel.signUpBody["phone_number"],
                           index: 'phone',
                           viewModel: signupViewModel.setInputValues,
                           controller: _phoneController,
@@ -685,27 +685,36 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                         return GestureDetector(
                                           child: GoogleMap(
                                             onMapCreated: null,
-                                            initialCameraPosition: CameraPosition(
-                                                zoom: 16.0,
-                                                target: LatLng(
-                                                    data.data["latitude"] != null
-                                                        ? double.parse(data
-                                                            .data['latitude']
-                                                            .toString())
-                                                        :  _currentPosition!=null?
-                                                    double.parse(
-                                                            _currentPosition!
-                                                                .latitude
-                                                                .toString()):0,
-                                                    data.data['longitude'] != null
-                                                        ? double.parse(data
-                                                            .data['longitude']
-                                                            .toString())
-                                                        : _currentPosition!=null?
-                                                    double.parse(
-                                                            _currentPosition!
-                                                                .longitude
-                                                                .toString()):0)),
+                                            initialCameraPosition:
+                                                CameraPosition(
+                                                    zoom: 16.0,
+                                                    target: LatLng(
+                                                        data.data["latitude"] !=
+                                                                null
+                                                            ? double.parse(data
+                                                                .data[
+                                                                    'latitude']
+                                                                .toString())
+                                                            : _currentPosition !=
+                                                                    null
+                                                                ? double.parse(
+                                                                    _currentPosition!
+                                                                        .latitude
+                                                                        .toString())
+                                                                : 0,
+                                                        data.data['longitude'] !=
+                                                                null
+                                                            ? double.parse(data
+                                                                .data[
+                                                                    'longitude']
+                                                                .toString())
+                                                            : _currentPosition !=
+                                                                    null
+                                                                ? double.parse(
+                                                                    _currentPosition!
+                                                                        .longitude
+                                                                        .toString())
+                                                                : 0)),
                                             mapType: MapType.normal,
                                             markers: <Marker>{
                                               Marker(
@@ -913,10 +922,12 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                               }
                                             },
                                             hideBackButton: false,
-                                            backButton:  Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                            backButton: Padding(
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: InkWell(
-                                                child: SvgPicture.asset('assets/img/back.svg'),
+                                                child: SvgPicture.asset(
+                                                    'assets/img/back.svg'),
                                                 onTap: () {
                                                   Navigator.pop(context);
                                                 },
@@ -984,7 +995,6 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                             },
                                           );
                                         },
-
                                       ),
                                     );
                                   },
@@ -1108,14 +1118,17 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
-                            value: signupViewModel.signUpBody["address_label"] ?? '',
+                            value:
+                                signupViewModel.signUpBody["address_label"] ??
+                                    '',
                             index: 'address_label',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.address_label'),
                             validator: (val) => signupViewModel.signUpErrors[
-                            context.resources.strings.formKeys['address_label']!],
-                            errorText: signupViewModel.signUpErrors[
-                            context.resources.strings.formKeys['address_label']!],
+                                context.resources.strings
+                                    .formKeys['address_label']!],
+                            errorText: signupViewModel.signUpErrors[context
+                                .resources.strings.formKeys['address_label']!],
                             keyboardType: TextInputType.text),
                       ),
                       // Padding(

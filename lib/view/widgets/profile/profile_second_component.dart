@@ -33,240 +33,243 @@ class _ProfileSeconComponentState extends State<ProfileSeconComponent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p15,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/img/notifications.svg',
-                    ),
-                    const Gap(10),
-                    Text(
-                      translate('profile.notifications'),
-                      style: getPrimaryRegularStyle(
-                        fontSize: 20,
-                        color: const Color(0xff1F1F39),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: context.appValues.appPadding.p15,
-              right: context.appValues.appPadding.p100,
-            ),
-            child: const Divider(
-              height: 50,
-              thickness: 2,
-              color: Color(0xffEAEAFF),
-            ),
-          ),
-          Consumer< JobsViewModel>(
-              builder: (context, jobsViewModel, _) {
-
-                return InkWell(
-                onTap: (){
-                  jobsViewModel.launchWhatsApp();
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p15,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(
-                            'assets/img/headphone.svg',
-                          ),
-                          const Gap(10),
-                          Text(
-                            translate('profile.help'),
-                            style: getPrimaryRegularStyle(
-                              fontSize: 20,
-                              color: const Color(0xff1F1F39),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
-            }
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: context.appValues.appPadding.p15,
-              right: context.appValues.appPadding.p100,
-            ),
-            child: const Divider(
-              height: 50,
-              thickness: 2,
-              color: Color(0xffEAEAFF),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-                top: context.appValues.appPadding.p5,
-                left: context.appValues.appPadding.p15,
-                right: context.appValues.appPadding.p15),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  children: [
-                    SvgPicture.asset(
-                      'assets/img/policy.svg',
-                    ),
-                    const Gap(10),
-                    Text(
-                      translate('profile.privacyPolicy'),
-                      style: getPrimaryRegularStyle(
-                        fontSize: 20,
-                        color: const Color(0xff1F1F39),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: context.appValues.appPadding.p15,
-              right: context.appValues.appPadding.p100,
-            ),
-            child: const Divider(
-              height: 50,
-              thickness: 2,
-              color: Color(0xffEAEAFF),
-            ),
-          ),
-          InkWell(
-            onTap: () {
-              Navigator.of(context)
-                  .push(_createRoute(UserAgreement(index: null)));
-            },
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: context.appValues.appPadding.p5,
-                left: context.appValues.appPadding.p15,
-                right: context.appValues.appPadding.p15,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/img/termofuse.svg',
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('profile.termsOfUse'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 20,
-                          color: const Color(0xff1F1F39),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-         Padding(
-              padding: EdgeInsets.only(
-                left: context.appValues.appPadding.p15,
-                right: context.appValues.appPadding.p100,
-              ),
-              child: const Divider(
-                height: 50,
-                thickness: 2,
-                color: Color(0xffEAEAFF),
-              ),
-
-          ),
-          InkWell(
-            onTap: () => _onActionSheetPress(context),
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: context.appValues.appPadding.p5,
-                left: context.appValues.appPadding.p15,
-                right: context.appValues.appPadding.p15,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.language,
-                        size: 30,
-                        color: Colors.deepPurple,
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('drawer.chooseLanguage'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 20,
-                          color: const Color(0xff1F1F39),
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: context.appValues.appPadding.p15,
-              right: context.appValues.appPadding.p100,
-            ),
-            child: const Divider(
-              height: 50,
-              thickness: 2,
-              color: Color(0xffEAEAFF),
-            ),
-          ),
+          // Padding(
+          //   padding: EdgeInsets.symmetric(
+          //     horizontal: context.appValues.appPadding.p15,
+          //   ),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Row(
+          //         children: [
+          //           SvgPicture.asset(
+          //             'assets/img/notifications.svg',
+          //           ),
+          //           const Gap(10),
+          //           Text(
+          //             translate('profile.notifications'),
+          //             style: getPrimaryRegularStyle(
+          //               fontSize: 20,
+          //               color: const Color(0xff1F1F39),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.only(
+          //     left: context.appValues.appPadding.p15,
+          //     right: context.appValues.appPadding.p100,
+          //   ),
+          //   child: const Divider(
+          //     height: 50,
+          //     thickness: 2,
+          //     color: Color(0xffEAEAFF),
+          //   ),
+          // ),
+          // Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+          //   return InkWell(
+          //     onTap: () {
+          //       jobsViewModel.launchWhatsApp();
+          //     },
+          //     child: Padding(
+          //       padding: EdgeInsets.symmetric(
+          //         horizontal: context.appValues.appPadding.p15,
+          //       ),
+          //       child: Row(
+          //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //         children: [
+          //           Row(
+          //             children: [
+          //               SvgPicture.asset(
+          //                 'assets/img/headphone.svg',
+          //               ),
+          //               const Gap(10),
+          //               Text(
+          //                 translate('profile.help'),
+          //                 style: getPrimaryRegularStyle(
+          //                   fontSize: 20,
+          //                   color: const Color(0xff1F1F39),
+          //                 ),
+          //               ),
+          //             ],
+          //           ),
+          //         ],
+          //       ),
+          //     ),
+          //   );
+          // }),
+          // Padding(
+          //   padding: EdgeInsets.only(
+          //     left: context.appValues.appPadding.p15,
+          //     right: context.appValues.appPadding.p100,
+          //   ),
+          //   child: const Divider(
+          //     height: 50,
+          //     thickness: 2,
+          //     color: Color(0xffEAEAFF),
+          //   ),
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.only(
+          //       top: context.appValues.appPadding.p5,
+          //       left: context.appValues.appPadding.p15,
+          //       right: context.appValues.appPadding.p15),
+          //   child: Row(
+          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //     children: [
+          //       Row(
+          //         children: [
+          //           SvgPicture.asset(
+          //             'assets/img/policy.svg',
+          //           ),
+          //           const Gap(10),
+          //           Text(
+          //             translate('profile.privacyPolicy'),
+          //             style: getPrimaryRegularStyle(
+          //               fontSize: 20,
+          //               color: const Color(0xff1F1F39),
+          //             ),
+          //           ),
+          //         ],
+          //       ),
+          //     ],
+          //   ),
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.only(
+          //     left: context.appValues.appPadding.p15,
+          //     right: context.appValues.appPadding.p100,
+          //   ),
+          //   child: const Divider(
+          //     height: 50,
+          //     thickness: 2,
+          //     color: Color(0xffEAEAFF),
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () {
+          //     Navigator.of(context)
+          //         .push(_createRoute(UserAgreement(index: null)));
+          //   },
+          //   child: Padding(
+          //     padding: EdgeInsets.only(
+          //       top: context.appValues.appPadding.p5,
+          //       left: context.appValues.appPadding.p15,
+          //       right: context.appValues.appPadding.p15,
+          //     ),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Row(
+          //           children: [
+          //             SvgPicture.asset(
+          //               'assets/img/termofuse.svg',
+          //             ),
+          //             const Gap(10),
+          //             Text(
+          //               translate('profile.termsOfUse'),
+          //               style: getPrimaryRegularStyle(
+          //                 fontSize: 20,
+          //                 color: const Color(0xff1F1F39),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.only(
+          //     left: context.appValues.appPadding.p15,
+          //     right: context.appValues.appPadding.p100,
+          //   ),
+          //   child: const Divider(
+          //     height: 50,
+          //     thickness: 2,
+          //     color: Color(0xffEAEAFF),
+          //   ),
+          // ),
+          // InkWell(
+          //   onTap: () => _onActionSheetPress(context),
+          //   child: Padding(
+          //     padding: EdgeInsets.only(
+          //       top: context.appValues.appPadding.p5,
+          //       left: context.appValues.appPadding.p15,
+          //       right: context.appValues.appPadding.p15,
+          //     ),
+          //     child: Row(
+          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          //       children: [
+          //         Row(
+          //           children: [
+          //             const Icon(
+          //               Icons.language,
+          //               size: 30,
+          //               color: Colors.deepPurple,
+          //             ),
+          //             const Gap(10),
+          //             Text(
+          //               translate('drawer.chooseLanguage'),
+          //               style: getPrimaryRegularStyle(
+          //                 fontSize: 20,
+          //                 color: const Color(0xff1F1F39),
+          //               ),
+          //             ),
+          //           ],
+          //         ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
+          // Padding(
+          //   padding: EdgeInsets.only(
+          //     left: context.appValues.appPadding.p15,
+          //     right: context.appValues.appPadding.p100,
+          //   ),
+          //   child: const Divider(
+          //     height: 50,
+          //     thickness: 2,
+          //     color: Color(0xffEAEAFF),
+          //   ),
+          // ),
           Padding(
             padding: EdgeInsets.only(
                 // top: context.appValues.appPadding.p5,
                 left: context.appValues.appPadding.p15,
                 right: context.appValues.appPadding.p15),
             child: InkWell(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      SvgPicture.asset(
-                        'assets/img/logout-new.svg',
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('profile.logOut'),
-                        style: getPrimaryRegularStyle(
-                          fontSize: 20,
-                          color: const Color(0xff78789D),
-                        ),
-                      ),
-                    ],
+              child: Container(
+                width: 327,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(
+                    width: 1.5,
+                    color: const Color(0xff4100E3),
                   ),
-                ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SvgPicture.asset(
+                      'assets/img/logout-new.svg',
+                    ),
+                    const Gap(10),
+                    Text(
+                      translate('profile.logOut'),
+                      style: getPrimaryBoldStyle(
+                        fontSize: 12,
+                        color: const Color(0xff4100E3),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               onTap: () async {
                 String? lang =
@@ -309,6 +312,7 @@ class _ProfileSeconComponentState extends State<ProfileSeconComponent> {
     );
   }
 }
+
 void _onActionSheetPress(BuildContext context) {
   showDemoActionSheet(
     context: context,
@@ -362,6 +366,7 @@ void _onActionSheetPress(BuildContext context) {
     ),
   );
 }
+
 void showDemoActionSheet(
     {required BuildContext context, required Widget child}) {
   showCupertinoModalPopup<String>(
@@ -371,6 +376,7 @@ void showDemoActionSheet(
     if (value != null) changeLocale(context, value);
   });
 }
+
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => classname,

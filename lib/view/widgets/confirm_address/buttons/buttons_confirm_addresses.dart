@@ -20,7 +20,8 @@ class ButtonsConfirmAddresses extends StatefulWidget {
   });
 
   @override
-  _ButtonsConfirmAddressesState createState() => _ButtonsConfirmAddressesState();
+  _ButtonsConfirmAddressesState createState() =>
+      _ButtonsConfirmAddressesState();
 }
 
 class _ButtonsConfirmAddressesState extends State<ButtonsConfirmAddresses> {
@@ -40,20 +41,29 @@ class _ButtonsConfirmAddressesState extends State<ButtonsConfirmAddresses> {
           setState(() {
             widget.action(widget.tag);
           });
-          jobsViewModel.setInputValues(index: 'longitude', value: widget.address['longitude'] ?? '');
-          jobsViewModel.setInputValues(index: 'latitude', value: widget.address['latitude'] ?? '');
-          jobsViewModel.setInputValues(index: 'address', value: widget.address['state_district'] ?? '');
-          jobsViewModel.setInputValues(index: 'city', value: widget.address['state_district'] ?? '');
-          jobsViewModel.setInputValues(index: 'state', value: widget.address['state'] ?? '');
-          jobsViewModel.setInputValues(index: 'street_name', value: widget.address['road'] ?? '');
-          jobsViewModel.setInputValues(index: 'postal_code', value: widget.address['postcode'] ?? '');
-          jobsViewModel.setInputValues(index: 'job_address', value: widget.address ?? '');
+          jobsViewModel.setInputValues(
+              index: 'longitude', value: widget.address['longitude'] ?? '');
+          jobsViewModel.setInputValues(
+              index: 'latitude', value: widget.address['latitude'] ?? '');
+          jobsViewModel.setInputValues(
+              index: 'address', value: widget.address['state_district'] ?? '');
+          jobsViewModel.setInputValues(
+              index: 'city', value: widget.address['state_district'] ?? '');
+          jobsViewModel.setInputValues(
+              index: 'state', value: widget.address['state'] ?? '');
+          jobsViewModel.setInputValues(
+              index: 'street_name', value: widget.address['road'] ?? '');
+          jobsViewModel.setInputValues(
+              index: 'postal_code', value: widget.address['postcode'] ?? '');
+          jobsViewModel.setInputValues(
+              index: 'job_address', value: widget.address ?? '');
         },
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
           child: Container(
             decoration: BoxDecoration(
-              color: widget.active ? context.resources.color.btnColorBlue.withOpacity(0.5) : Colors.transparent,
+              color:
+                  widget.active ? const Color(0xff4100E3) : Colors.transparent,
               borderRadius: BorderRadius.circular(10),
               // border: Border.all(
               //   color: widget.active ? context.resources.color.btnColorBlue : const Color(0xffEDF1F7),
@@ -72,7 +82,9 @@ class _ButtonsConfirmAddressesState extends State<ButtonsConfirmAddresses> {
                     overflow: TextOverflow.ellipsis,
                     style: getPrimaryRegularStyle(
                       fontSize: 18,
-                      color: widget.active ? Colors.white : const Color(0xff180C38),
+                      color: widget.active
+                          ? Colors.white
+                          : const Color(0xff180C38),
                     ),
                   ),
                 ),

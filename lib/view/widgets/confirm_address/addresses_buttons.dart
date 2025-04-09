@@ -6,9 +6,6 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../../res/app_prefs.dart';
-import '../../job_details_supplier/job_details_supplier.dart';
-
 class AddressesButtonsWidget extends StatefulWidget {
   const AddressesButtonsWidget({super.key});
 
@@ -99,21 +96,32 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
                         action: (tag) {
                           active(tag);
                           profileViewModel.setCurrentAddress(address);
-                          jobsViewModel.setInputValues(index: 'street_number', value: address["street_number"]);
-                          jobsViewModel.setInputValues(index: 'address_label', value: address["address_label"]);
-                          jobsViewModel.setInputValues(index: 'city', value: address["city"]);
-                          jobsViewModel.setInputValues(index: 'floor', value: address["floor"]);
-                          jobsViewModel.setInputValues(index: 'building_number', value: address["building_number"]);
-                          jobsViewModel.setInputValues(index: 'apartment_number', value: address["apartment_number"]);
-                          jobsViewModel.setInputValues(index: 'zone', value: address["zone"]);
-                          jobsViewModel.setInputValues(index: 'country', value: address["country"]);
+                          jobsViewModel.setInputValues(
+                              index: 'street_number',
+                              value: address["street_number"]);
+                          jobsViewModel.setInputValues(
+                              index: 'address_label',
+                              value: address["address_label"]);
+                          jobsViewModel.setInputValues(
+                              index: 'city', value: address["city"]);
+                          jobsViewModel.setInputValues(
+                              index: 'floor', value: address["floor"]);
+                          jobsViewModel.setInputValues(
+                              index: 'building_number',
+                              value: address["building_number"]);
+                          jobsViewModel.setInputValues(
+                              index: 'apartment_number',
+                              value: address["apartment_number"]);
+                          jobsViewModel.setInputValues(
+                              index: 'zone', value: address["zone"]);
+                          jobsViewModel.setInputValues(
+                              index: 'country', value: address["country"]);
                           _handleRefresh();
-
                         },
                         tag: "$index",
                         active: _active == "$index",
-                        text:
-                        address['address_label'] ?? '${address["street_number"]}, ${address["city"]}, ${address["building_number"]}, ${address["apartment_number"]}, ${address["zone"]}',
+                        text: address['address_label'] ??
+                            '${address["street_number"]}, ${address["city"]}, ${address["building_number"]}, ${address["apartment_number"]}, ${address["zone"]}',
                         address: address,
                       ),
                     ),
@@ -127,6 +135,7 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
       },
     );
   }
+
   Future<void> _handleRefresh() async {
     try {
       // Simulate network fetch or database query
@@ -143,6 +152,7 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
       );
     }
   }
+
   Route _createRoute(dynamic classname) {
     return PageRouteBuilder(
       pageBuilder: (context, animation, secondaryAnimation) => classname,
@@ -151,7 +161,8 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
         const end = Offset.zero;
         const curve = Curves.ease;
 
-        var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),

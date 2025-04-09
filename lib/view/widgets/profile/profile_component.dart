@@ -2,6 +2,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
 import 'package:dingdone/view/edit_account/edit_account.dart';
+import 'package:dingdone/view/my_address_book/my_address_book.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class _ProfileComponentState extends State<ProfileComponent> {
     return Padding(
       padding: EdgeInsets.fromLTRB(
         context.appValues.appPadding.p20,
-        context.appValues.appPadding.p15,
+        context.appValues.appPadding.p0,
         context.appValues.appPadding.p20,
         context.appValues.appPadding.p0,
       ),
@@ -68,40 +69,24 @@ class _ProfileComponentState extends State<ProfileComponent> {
                 children: [
                   Row(
                     children: [
-                      // Container(
-                      //   width: 40,
-                      //   height: 40,
-                      //   decoration: BoxDecoration(
-                      //       borderRadius: const BorderRadius.all(
-                      //         Radius.circular(50),
-                      //       ),
-                      //       color: context.resources.color
-                      //           .btnColorBlue),
-                      //   child: Align(
-                      //     alignment: Alignment.center,
-                      //     child: SvgPicture.asset(
-                      //       'assets/img/account.svg',
-                      //       width: 16,
-                      //       height: 16,
-                      //     ),
-                      //   ),
-                      // ),
                       SvgPicture.asset(
                         'assets/img/account.svg',
-                        // width: 16,
-                        // height: 16,
                       ),
                       const Gap(10),
                       Text(
                         translate('profile.account'),
                         style: getPrimaryRegularStyle(
-                          fontSize: 20,
-                          color: const Color(0xff1F1F39),
+                          fontSize: 14,
+                          color: context.resources.color.btnColorBlue,
                         ),
                       ),
                     ],
                   ),
-                  // SvgPicture.asset('assets/img/right-arrow.svg'),
+                  const Icon(
+                    Icons.arrow_forward_ios_sharp,
+                    color: Color(0xff8F9098),
+                    size: 12,
+                  ),
                 ],
               ),
             ),
@@ -109,17 +94,48 @@ class _ProfileComponentState extends State<ProfileComponent> {
               Navigator.of(context).push(_createRoute(const EditAccount()));
             },
           ),
-          Padding(
-            padding: EdgeInsets.only(
-              left: context.appValues.appPadding.p15,
-              right: context.appValues.appPadding.p100,
-            ),
-            child: const Divider(
-              height: 50,
-              thickness: 2,
-              color: Color(0xffEAEAFF),
-            ),
-          ),
+          const Gap(30),
+          Consumer<PaymentViewModel>(builder: (context, paymentViewModel, _) {
+            return InkWell(
+              child: Padding(
+                padding: EdgeInsets.only(
+                    top: context.appValues.appPadding.p5,
+                    left: context.appValues.appPadding.p15,
+                    right: context.appValues.appPadding.p15),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/img/address-book.svg',
+                          // width: 16,
+                          // height: 16,
+                        ),
+                        const Gap(10),
+                        Text(
+                          translate('drawer.myAddressBook'),
+                          style: getPrimaryRegularStyle(
+                            fontSize: 14,
+                            color: context.resources.color.btnColorBlue,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Icon(
+                      Icons.arrow_forward_ios_sharp,
+                      color: Color(0xff8F9098),
+                      size: 12,
+                    ),
+                  ],
+                ),
+              ),
+              onTap: () {
+                Navigator.of(context).push(_createRoute(const MyaddressBook()));
+              },
+            );
+          }),
+          const Gap(30),
           Consumer<PaymentViewModel>(builder: (context, paymentViewModel, _) {
             return InkWell(
               child: Padding(
@@ -141,103 +157,43 @@ class _ProfileComponentState extends State<ProfileComponent> {
                         Text(
                           translate('profile.paymentMethods'),
                           style: getPrimaryRegularStyle(
-                            fontSize: 20,
-                            color: const Color(0xff1F1F39),
+                            fontSize: 14,
+                            color: context.resources.color.btnColorBlue,
                           ),
                         ),
                       ],
                     ),
-                    // SvgPicture.asset('assets/img/right-arrow.svg'),
+                    const Icon(
+                      Icons.arrow_forward_ios_sharp,
+                      color: Color(0xff8F9098),
+                      size: 12,
+                    ),
                   ],
                 ),
               ),
               onTap: () async {
                 await Provider.of<PaymentViewModel>(context, listen: false)
                     .getPaymentMethodsTap();
-                Navigator.of(context).push(_createRoute(
+                Navigator.of(context).push(
+                  _createRoute(
                     Consumer<ProfileViewModel>(
                         builder: (context, profileViewModel, _) {
-
-                  return ConfirmPaymentMethod(
-                    profileViewModel: profileViewModel,
-                    payment_method:
-                        paymentViewModel.getPaymentBody['tap_payments_card'],
-                    paymentViewModel: paymentViewModel,
-                    role: widget.role,
-                  );
-                })));
-                // Navigator.of(context)
-                //     .push(_createRoute(Consumer<ProfileViewModel>(
-                //     builder: (context, profileViewModel, _) {
-                //         return TapPaymentExample(profileViewModel:profileViewModel
-                //                                   );
-                //       }
-                //     )));
+                      return ConfirmPaymentMethod(
+                        profileViewModel: profileViewModel,
+                        payment_method: paymentViewModel
+                            .getPaymentBody['tap_payments_card'],
+                        paymentViewModel: paymentViewModel,
+                        role: widget.role,
+                      );
+                    }),
+                  ),
+                );
               },
             );
           }),
-          // Padding(
-          //   padding: EdgeInsets.symmetric(
-          //       horizontal: context.appValues.appPadding.p15),
-          //   child: const Divider(
-          //     height: 20,
-          //     thickness: 2,
-          //     color: Color(0xffEDF1F7),
-          //   ),
-          // ),
-          // Padding(
-          //     padding: EdgeInsets.only(
-          //         top: context.appValues.appPadding.p5,
-          //         left: context.appValues.appPadding.p15,
-          //         right: context.appValues.appPadding.p15),
-          //     child: Row(
-          //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          //       children: [
-          //         Row(
-          //           children: [
-          //             Container(
-          //               width: 40,
-          //               height: 40,
-          //               decoration: BoxDecoration(
-          //                   borderRadius: const BorderRadius.all(
-          //                     Radius.circular(50),
-          //                   ),
-          //                   color: context.resources.color
-          //                       .btnColorBlue),
-          //               child: Align(
-          //                 alignment: Alignment.center,
-          //                 child: SvgPicture.asset(
-          //                   'assets/img/bell.svg',
-          //                   width: 16,
-          //                   height: 16,
-          //                 ),
-          //               ),
-          //             ),
-          //             SizedBox(width: context.appValues.appSize.s10),
-          //             Text(
-          //               translate('profile.notifications'),
-          //               style: getPrimaryRegularStyle(
-          //                   fontSize: 20,
-          //                   color: context.resources.color
-          //                       .btnColorBlue),
-          //             ),
-          //           ],
-          //         ),
-          //         // SvgPicture.asset('assets/img/right-arrow.svg'),
-          //       ],
-          //     )),
         ],
       ),
-      // ),
     );
-    //     } else if (data.hasError) {
-    //       return Container(
-    //         child: Text(translate('button.error')),
-    //       );
-    //     }
-    //   }
-    //   return Container();
-    // });
   }
 }
 

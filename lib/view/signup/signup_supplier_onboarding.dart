@@ -9,7 +9,6 @@ import 'package:dingdone/view/map_screen/google_maps.dart';
 
 import 'package:dingdone/view/widgets/custom/custom_date_picker.dart';
 import 'package:dingdone/view/widgets/custom/custom_multiple_selection_checkbox.dart';
-import 'package:dingdone/view/widgets/custom/custom_phone_feild.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/image_component/upload_one_image.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -384,14 +383,15 @@ class _SignUpSupplierOnBoardingScreenState
                               children: [
                                 Radio<String>(
                                   value: 'individual',
-                                  groupValue: signupViewModel.signUpBody['selectedOption']??selectedOption,
+                                  groupValue: signupViewModel
+                                          .signUpBody['selectedOption'] ??
+                                      selectedOption,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedOption = value;
                                     });
                                     signupViewModel.setInputValues(
-                                        index: 'selectedOption',
-                                        value: value);
+                                        index: 'selectedOption', value: value);
                                   },
                                 ),
                                 Text(
@@ -403,14 +403,15 @@ class _SignUpSupplierOnBoardingScreenState
                                 ),
                                 Radio<String>(
                                   value: 'company',
-                                  groupValue: signupViewModel.signUpBody['selectedOption']??selectedOption,
+                                  groupValue: signupViewModel
+                                          .signUpBody['selectedOption'] ??
+                                      selectedOption,
                                   onChanged: (value) {
                                     setState(() {
                                       selectedOption = value;
                                     });
                                     signupViewModel.setInputValues(
-                                        index: 'selectedOption',
-                                        value: value);
+                                        index: 'selectedOption', value: value);
                                   },
                                 ),
                                 Text(
@@ -423,7 +424,12 @@ class _SignUpSupplierOnBoardingScreenState
                               ],
                             ),
                           ),
-                          if (signupViewModel.getSignUpBody['selectedOption']!=null?signupViewModel.getSignUpBody['selectedOption'] == 'company':selectedOption=='company')
+                          if (signupViewModel.getSignUpBody['selectedOption'] !=
+                                  null
+                              ? signupViewModel
+                                      .getSignUpBody['selectedOption'] ==
+                                  'company'
+                              : selectedOption == 'company')
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: CustomTextField(
@@ -443,8 +449,13 @@ class _SignUpSupplierOnBoardingScreenState
                                 keyboardType: TextInputType.text,
                               ),
                             ),
-                          if(signupViewModel.getSignUpBody['selectedOption']!=null?signupViewModel.getSignUpBody['selectedOption'] == 'individual':selectedOption=='individual')
-                          // if (selectedOption == 'individual')
+                          if (signupViewModel.getSignUpBody['selectedOption'] !=
+                                  null
+                              ? signupViewModel
+                                      .getSignUpBody['selectedOption'] ==
+                                  'individual'
+                              : selectedOption == 'individual')
+                            // if (selectedOption == 'individual')
                             Container(
                               decoration: BoxDecoration(
                                 color: const Color(0xffededf6),
@@ -481,11 +492,21 @@ class _SignUpSupplierOnBoardingScreenState
                                 ),
                               ),
                             ),
-                          if(signupViewModel.getSignUpBody['selectedOption']!=null?signupViewModel.getSignUpBody['selectedOption'] == 'individual':selectedOption=='individual')
+                          if (signupViewModel.getSignUpBody['selectedOption'] !=
+                                  null
+                              ? signupViewModel
+                                      .getSignUpBody['selectedOption'] ==
+                                  'individual'
+                              : selectedOption == 'individual')
 
                             // if (selectedOption == 'individual')
                             SizedBox(height: context.appValues.appSize.s10),
-                          if(signupViewModel.getSignUpBody['selectedOption']!=null?signupViewModel.getSignUpBody['selectedOption'] == 'individual':selectedOption=='individual')
+                          if (signupViewModel.getSignUpBody['selectedOption'] !=
+                                  null
+                              ? signupViewModel
+                                      .getSignUpBody['selectedOption'] ==
+                                  'individual'
+                              : selectedOption == 'individual')
 
                             // if (selectedOption == 'individual')
                             Card(
@@ -537,8 +558,8 @@ class _SignUpSupplierOnBoardingScreenState
                         Padding(
                           padding: const EdgeInsets.fromLTRB(55, 0, 20, 20),
                           child: Text(
-                            signupViewModel.signUpErrors[context
-                                .resources.strings.formKeys['company']]!,
+                            signupViewModel.signUpErrors[
+                                context.resources.strings.formKeys['company']]!,
                             style:
                                 TextStyle(color: Colors.red[700], fontSize: 12),
                           ),
@@ -572,29 +593,30 @@ class _SignUpSupplierOnBoardingScreenState
                             ),
                           )),
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-                          child:
-                          // CustomPhoneFeild(
-                          //   index: 'phone_number',
-                          //   value: signupViewModel.signUpBody['phone'] ??
-                          //       '',
-                          //   viewModel: signupViewModel.setInputValues,
-                          //   validator: (val) => signupViewModel.signUpErrors[
-                          //       context.resources.strings
-                          //           .formKeys['phone_number']!],
-                          //   errorText: signupViewModel.signUpErrors[context
-                          //       .resources.strings.formKeys['phone_number']!],
-                          //   hintText: translate('formHints.phone_number'),
-                          // )
-                          CustomPhoneFieldController(
-                            value: signupViewModel.signUpBody["phone"],
-                            phone_code:signupViewModel.signUpBody["phone_code"],
-                            phone_number:signupViewModel.signUpBody["phone_number"],
-                            index: 'phone',
-                            viewModel: signupViewModel.setInputValues,
-                            controller: _phoneController,
-                            keyboardType: TextInputType.number,
-                          ),
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                        child:
+                            // CustomPhoneFeild(
+                            //   index: 'phone_number',
+                            //   value: signupViewModel.signUpBody['phone'] ??
+                            //       '',
+                            //   viewModel: signupViewModel.setInputValues,
+                            //   validator: (val) => signupViewModel.signUpErrors[
+                            //       context.resources.strings
+                            //           .formKeys['phone_number']!],
+                            //   errorText: signupViewModel.signUpErrors[context
+                            //       .resources.strings.formKeys['phone_number']!],
+                            //   hintText: translate('formHints.phone_number'),
+                            // )
+                            CustomPhoneFieldController(
+                          value: signupViewModel.signUpBody["phone"],
+                          phone_code: signupViewModel.signUpBody["phone_code"],
+                          phone_number:
+                              signupViewModel.signUpBody["phone_number"],
+                          index: 'phone',
+                          viewModel: signupViewModel.setInputValues,
+                          controller: _phoneController,
+                          keyboardType: TextInputType.number,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
@@ -756,20 +778,22 @@ class _SignUpSupplierOnBoardingScreenState
                                                       ? double.parse(data
                                                           .data['latitude']
                                                           .toString())
-                                                      : _currentPosition!=null?
-                                                  double.parse(
-                                                          _currentPosition!
-                                                              .latitude
-                                                              .toString()):0,
+                                                      : _currentPosition != null
+                                                          ? double.parse(
+                                                              _currentPosition!
+                                                                  .latitude
+                                                                  .toString())
+                                                          : 0,
                                                   data.data['longitude'] != null
                                                       ? double.parse(data
                                                           .data['longitude']
                                                           .toString())
-                                                      : _currentPosition!=null?
-                                                  double.parse(
-                                                          _currentPosition!
-                                                              .longitude
-                                                              .toString()):0),
+                                                      : _currentPosition != null
+                                                          ? double.parse(
+                                                              _currentPosition!
+                                                                  .longitude
+                                                                  .toString())
+                                                          : 0),
                                             ),
                                             mapType: MapType.normal,
                                             markers: <Marker>{
@@ -970,14 +994,17 @@ class _SignUpSupplierOnBoardingScreenState
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                         child: CustomTextField(
-                            value: signupViewModel.signUpBody["address_label"] ?? '',
+                            value:
+                                signupViewModel.signUpBody["address_label"] ??
+                                    '',
                             index: 'address_label',
                             viewModel: signupViewModel.setInputValues,
                             hintText: translate('formHints.address_label'),
                             validator: (val) => signupViewModel.signUpErrors[
-                                context.resources.strings.formKeys['address_label']!],
-                            errorText: signupViewModel.signUpErrors[
-                                context.resources.strings.formKeys['address_label']!],
+                                context.resources.strings
+                                    .formKeys['address_label']!],
+                            errorText: signupViewModel.signUpErrors[context
+                                .resources.strings.formKeys['address_label']!],
                             keyboardType: TextInputType.text),
                       ),
                       // }),

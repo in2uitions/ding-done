@@ -87,9 +87,9 @@ class _CustomTextFieldLoginState extends State<CustomTextFieldLogin> {
         filled: true,
         fillColor: context.resources.color.colorWhite,
         hintText: widget.hintText,
-        hintStyle: getPrimaryBoldStyle(
+        hintStyle: getPrimaryRegularStyle(
           fontSize: 15,
-          color: const Color(0xffB4B4B4),
+          color: const Color(0xff8F9098),
         ),
         helperText: widget.helperText,
         suffixIcon: widget.hintText == "Password"
@@ -103,17 +103,33 @@ class _CustomTextFieldLoginState extends State<CustomTextFieldLogin> {
                     Icon(obscureText ? Icons.visibility : Icons.visibility_off),
               )
             : null,
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: BorderSide.none,
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: BorderSide.none,
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(15.0),
-          borderSide: BorderSide.none,
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
+          ),
+          borderRadius: BorderRadius.circular(12),
         ),
         contentPadding:
             const EdgeInsets.symmetric(vertical: 13.0, horizontal: 16.0),

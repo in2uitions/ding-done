@@ -59,15 +59,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
   void initState() {
     _customController.text = widget.value ?? '';
     _customController.addListener(() {
-      // if (widget.tag == '') {
       widget.viewModel(index: widget.index, value: _customController.text);
-      // } else {
-      //   widget.viewModel(
-      //       index: widget.index,
-      //       value: _customController.text,
-      //       arrayIndex: widget.arrayIndex,
-      //       tag: widget.tag);
-      // }
     });
     super.initState();
   }
@@ -89,29 +81,34 @@ class _CustomTextFieldState extends State<CustomTextField> {
       decoration: InputDecoration(
         isDense: true,
         errorText: widget.errorText,
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        // Using OutlineInputBorder for all borders so that they appear all around.
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        focusedErrorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
         prefixIcon: widget.isPrfixShown
             ? Padding(

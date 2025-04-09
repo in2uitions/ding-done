@@ -51,91 +51,122 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
           backgroundColor: const Color(0xffFEFEFE),
           body: Stack(
             children: [
-              ListView(
-                padding: EdgeInsets.zero,
-                children: [
-                  SafeArea(
-                    bottom: false,
-                    child: Directionality(
-                      textDirection: TextDirection.ltr,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(
-                          context.appValues.appPadding.p20,
-                          context.appValues.appPadding.p20,
-                          context.appValues.appPadding.p20,
-                          context.appValues.appPadding.p10,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            InkWell(
-                              child: SvgPicture.asset('assets/img/back.svg'),
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                            ),
-                            Text(
-                              translate('confirmAddress.confirmAddress'),
-                              style: getPrimaryBoldStyle(
-                                color: const Color(0xff180C38),
-                                fontSize: 25,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                  Padding(
+              Container(
+                width: context.appValues.appSizePercent.w100,
+                height: context.appValues.appSizePercent.h50,
+                decoration: const BoxDecoration(
+                  color: Color(0xff4100E3),
+                ),
+                child: SafeArea(
+                  child: Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: context.appValues.appPadding.p20,
                       vertical: context.appValues.appPadding.p10,
                     ),
-                    child: Text(
-                      translate('profile.addresses'),
-                      style: getPrimaryBoldStyle(
-                        fontSize: 17,
-                        color: const Color(0xff180C38),
-                      ),
-                    ),
-                  ),
-                  const AddressesButtonsWidget(),
-                  const AddNewAddressWidget(),
-                  // SizedBox(height: context.appValues.appSize.s90),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: context.appValues.appPadding.p10,
-                      horizontal: context.appValues.appPadding.p25,
-                    ),
-                    child: Container(
-                      width: context.appValues.appSizePercent.w90,
-                      height: context.appValues.appSizePercent.h6,
-                      decoration: BoxDecoration(
-                        color: const Color(0xfff3f2f9),
-                        borderRadius: BorderRadius.circular(15),
-                      ),
-                      child: InkWell(
-                        onTap: () async {
-                          if (jobsViewModel.validate()) {
-                            await profileViewModel
-                                .patchProfileData(jobsViewModel.getjobsBody);
-                          }
-                        },
-                        child: Center(
-                          child: Text(
-                            translate('confirmAddress.addNewAddress'),
-                            style: getPrimarySemiBoldStyle(
-                              fontSize: 16,
-                              color: const Color(0xff2c2b86),
-                            ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.arrow_back_ios_new_sharp,
+                            color: Colors.white,
+                            size: 20,
                           ),
                         ),
-                      ),
+                        const Gap(10),
+                        Text(
+                          translate('confirmAddress.confirmAddress'),
+                          style: getPrimaryBoldStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
-                  const Gap(20),
-                ],
+                ),
               ),
+              DraggableScrollableSheet(
+                  initialChildSize: 0.85,
+                  minChildSize: 0.85,
+                  maxChildSize: 1,
+                  builder: (BuildContext context,
+                      ScrollController scrollController) {
+                    return Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                        color: Color(0xffFEFEFE),
+                      ),
+                      child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        context.appValues.appPadding.p20,
+                                    vertical: context.appValues.appPadding.p10,
+                                  ),
+                                  child: Text(
+                                    translate('profile.addresses'),
+                                    style: getPrimaryRegularStyle(
+                                      fontSize: 12,
+                                      color: const Color(0xff2F3036),
+                                    ),
+                                  ),
+                                ),
+                                const AddressesButtonsWidget(),
+                                const AddNewAddressWidget(),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: context.appValues.appPadding.p10,
+                                    horizontal:
+                                        context.appValues.appPadding.p25,
+                                  ),
+                                  child: Container(
+                                    width: 327,
+                                    height: 44,
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xff4100E3),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: InkWell(
+                                      onTap: () async {
+                                        if (jobsViewModel.validate()) {
+                                          await profileViewModel
+                                              .patchProfileData(
+                                                  jobsViewModel.getjobsBody);
+                                        }
+                                      },
+                                      child: Center(
+                                        child: Text(
+                                          translate(
+                                              'confirmAddress.addNewAddress'),
+                                          style: getPrimaryBoldStyle(
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Gap(20),
+                              ],
+                            );
+                          }),
+                    );
+                  }),
             ],
           ),
         ),

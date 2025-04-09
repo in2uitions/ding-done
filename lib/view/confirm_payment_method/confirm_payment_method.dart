@@ -583,12 +583,11 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                     }
                                   },
                                   child: widget.paymentViewModel.isLoading
-                                      ? Container(
-                                          width: 30,
-                                          height: 30,
-                                          child: const Center(
-                                              child:
-                                                  CircularProgressIndicator()))
+                                      ? const Center(
+                                          child: CircularProgressIndicator(
+                                            color: Colors.white,
+                                          ),
+                                        )
                                       : Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,

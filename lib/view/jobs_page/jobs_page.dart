@@ -208,7 +208,8 @@ class _JobsPageState extends State<JobsPage> {
                             child: Stack(
                               children: [
                                 Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
@@ -219,6 +220,8 @@ class _JobsPageState extends State<JobsPage> {
                                         fontSize: 16,
                                       ),
                                     ),
+                                    SvgPicture.asset(
+                                        'assets/img/bellwhite.svg'),
                                   ],
                                 ),
                                 // InkWell(
