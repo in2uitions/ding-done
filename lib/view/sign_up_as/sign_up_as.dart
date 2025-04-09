@@ -1,5 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/signup/signup_new.dart';
+import 'package:dingdone/view/signup/signup_new_supplier.dart';
 import 'package:dingdone/view/signup/signup_onboarding.dart';
 import 'package:dingdone/view/signup/signup_supplier_onboarding.dart';
 import 'package:dingdone/res/constants.dart';
@@ -78,10 +80,12 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                             index: 'role',
                             value: Constants.customerRoleId,
                           );
-                          Navigator.of(context)
-                              .push(_createRoute(SignUpOnBoardingScreen(
-                            initialIndex: 0,
-                          )));
+                          Navigator.of(context).push(_createRoute(
+                            // SignUpOnBoardingScreen(
+                            //   initialIndex: 0,
+                            // ),
+                            const SignUpNew(),
+                          ));
                           // Navigator.of(context)
                           //     .push(_createRoute(UserAgreement(index: 0)));
                         },
@@ -122,9 +126,12 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                               await categoriesViewModel
                                   .getCategoriesAndServices();
                               Navigator.of(context).push(
-                                _createRoute(SignUpSupplierOnBoardingScreen(
-                                  initialIndex: 0,
-                                )),
+                                _createRoute(
+                                  // SignUpSupplierOnBoardingScreen(
+                                  //   initialIndex: 0,
+                                  // ),
+                                  SignUpNewSupplier(),
+                                ),
                               );
                               // Navigator.of(context).push(
                               //   _createRoute(SupplierAgreement(index: 0,

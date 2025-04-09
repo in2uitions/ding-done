@@ -47,29 +47,33 @@ class _CustomDatePicker extends State<CustomDatePicker> {
       controller: dateinput,
       decoration: InputDecoration(
         isDense: true,
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        enabledBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        focusedBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        errorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        errorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
-        focusedErrorBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Color(0xffEAEAFF),
-            width: 2.0,
+        focusedErrorBorder: OutlineInputBorder(
+          borderSide: const BorderSide(
+            color: Color(0xffC5C6CC),
+            width: 1,
           ),
+          borderRadius: BorderRadius.circular(12),
         ),
         filled: true,
         fillColor: Colors.white,
@@ -95,10 +99,10 @@ class _CustomDatePicker extends State<CustomDatePicker> {
         // );
 
         DateTime? pickedDate = await showDatePicker(
-            context: context,
-            initialDate: eighteenYearsAgo,
-            firstDate: DateTime(now.year - 100, 1, 1),
-            lastDate: eighteenYearsAgo,
+          context: context,
+          initialDate: eighteenYearsAgo,
+          firstDate: DateTime(now.year - 100, 1, 1),
+          lastDate: eighteenYearsAgo,
           builder: (context, child) {
             return Theme(
               data: Theme.of(context).copyWith(
