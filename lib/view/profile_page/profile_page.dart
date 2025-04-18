@@ -135,8 +135,22 @@ class _ProfilePageState extends State<ProfilePage> {
                         itemCount: 1,
                         itemBuilder: (BuildContext context, int index) {
                           return Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // const Gap(10),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: context.appValues.appPadding.p20,
+                                ),
+                                child: Text(
+                                  'Manage Account',
+                                  style: getPrimaryBoldStyle(
+                                    fontSize: 14,
+                                    color: const Color(0xff180B3C),
+                                  ),
+                                ),
+                              ),
+                              const Gap(10),
                               ProfileComponent(
                                 // payment_method: data.data,
                                 role: profileViewModel.getProfileBody["user"] !=

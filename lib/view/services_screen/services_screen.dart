@@ -355,7 +355,7 @@ class _ServicesScreenState extends State<ServicesScreen>
                 ),
                 child: Column(
                   children: [
-                    const Gap(30),
+                    const Gap(10),
                     // Updated TabBar container.
                     Container(
                       margin: const EdgeInsets.symmetric(horizontal: 16),

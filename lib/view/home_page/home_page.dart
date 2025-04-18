@@ -545,19 +545,30 @@ class _HomePageState extends State<HomePage> {
                                                 : '',
                                             style: getPrimaryBoldStyle(
                                               color: const Color(0xffFFC500),
-                                              fontSize: 32,
+                                              fontSize: 24,
                                             ),
                                           ),
                                           Text(
                                             profileViewModel.getProfileBody[
                                                         "user"] !=
                                                     null
-                                                ? '${profileViewModel.getProfileBody["user"]["first_name"]}!'
+                                                ? '${profileViewModel.getProfileBody["user"]["first_name"]}'
                                                 : '',
                                             style: getPrimaryBoldStyle(
                                               color: context
                                                   .resources.color.colorWhite,
-                                              fontSize: 32,
+                                              fontSize: 24,
+                                            ),
+                                          ),
+                                          Text(
+                                            profileViewModel.getProfileBody[
+                                                        "user"] !=
+                                                    null
+                                                ? '!'
+                                                : '',
+                                            style: getPrimaryBoldStyle(
+                                              color: const Color(0xffFFC500),
+                                              fontSize: 24,
                                             ),
                                           ),
                                         ],
@@ -672,9 +683,31 @@ class _HomePageState extends State<HomePage> {
                                             //     :
                                             translate('home_screen.categories'),
                                             style: getPrimarySemiBoldStyle(
-                                              fontSize: 22,
+                                              fontSize: 16,
                                               color: context
                                                   .resources.color.btnColorBlue,
+                                            ),
+                                          ),
+                                          InkWell(
+                                            onTap: () {},
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  translate(
+                                                      'home_screen.seeAll'),
+                                                  style: getPrimaryBoldStyle(
+                                                    fontSize: 12,
+                                                    color:
+                                                        const Color(0xff4100E3),
+                                                  ),
+                                                ),
+                                                const Gap(5),
+                                                const Icon(
+                                                  Icons.arrow_forward_ios_sharp,
+                                                  color: Color(0xff4100E3),
+                                                  size: 12,
+                                                ),
+                                              ],
                                             ),
                                           ),
                                           // servicesViewModel.chosenParent
@@ -749,7 +782,7 @@ class _HomePageState extends State<HomePage> {
                                             translate(
                                                 'home_screen.featuredServices'),
                                             style: getPrimarySemiBoldStyle(
-                                              fontSize: 22,
+                                              fontSize: 16,
                                               color: context
                                                   .resources.color.btnColorBlue,
                                             ),
@@ -855,7 +888,7 @@ class _HomePageState extends State<HomePage> {
                                                                       style:
                                                                           getPrimaryBoldStyle(
                                                                         fontSize:
-                                                                            22,
+                                                                            20,
                                                                         color: context
                                                                             .resources
                                                                             .color

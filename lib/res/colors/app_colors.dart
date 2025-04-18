@@ -14,7 +14,7 @@ class AppColors implements BaseColors {
     800: const Color.fromRGBO(22, 134, 206, 0.9),
     850: const Color.fromRGBO(22, 134, 206, 1.0),
     900: const Color(0xFFA1D3FC),
-    950: const Color(0xff112b78),
+    950: const Color(0xff4100E3),
   };
   final Map<int, Color> _black = {
     50: const Color.fromARGB(255, 0, 0, 0),
@@ -31,7 +31,7 @@ class AppColors implements BaseColors {
 
   final Map<String, Color> _textColor = {
     'red': const Color(0xFFEF5350),
-    'blue': const Color(0xff112b78),
+    'blue': const Color(0xff4100E3),
   };
 
   @override

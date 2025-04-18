@@ -126,7 +126,8 @@ class _EditAccountState extends State<EditAccount> {
                         color: Color(0xffFEFEFE),
                       ),
                       child: ListView.builder(
-                          controller: scrollController,
+                          // controller: scrollController,
+                          physics: const NeverScrollableScrollPhysics(),
                           itemCount: 1,
                           itemBuilder: (BuildContext context, int index) {
                             return Column(
@@ -492,6 +493,7 @@ class _EditAccountState extends State<EditAccount> {
                     width: 154,
                     height: context.appValues.appSizePercent.h21,
                     child: Stack(
+                      clipBehavior: Clip.none,
                       children: [
                         Container(
                           width: 154,

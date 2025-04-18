@@ -72,7 +72,7 @@ class UploadOneImageState extends State<UploadOneImage> {
           uiSettings: [
             AndroidUiSettings(
                 toolbarTitle: 'Edit',
-                toolbarColor: const Color(0xff112b78),
+                toolbarColor: const Color(0xff4100E3),
                 toolbarWidgetColor: Colors.white,
                 initAspectRatio: CropAspectRatioPreset.original,
                 lockAspectRatio: false),
@@ -137,9 +137,8 @@ class UploadOneImageState extends State<UploadOneImage> {
         };
         debugPrint('tiokeeen $token');
         request.files.add(multipartFile);
-        if(token!=null && token!=''){
+        if (token != null && token != '') {
           request.headers.addAll({'Authorization': 'Bearer $token'});
-
         }
         requests.add(request);
       }
@@ -221,7 +220,7 @@ class UploadOneImageState extends State<UploadOneImage> {
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff112b78)),
+                    backgroundColor: Color(0xff4100E3)),
                 child: Text(
                   'Open camera',
                   style:
@@ -248,7 +247,7 @@ class UploadOneImageState extends State<UploadOneImage> {
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff112b78)),
+                    backgroundColor: Color(0xff4100E3)),
                 child: Text(
                   'Open gallery',
                   style:
