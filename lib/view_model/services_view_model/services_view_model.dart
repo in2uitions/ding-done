@@ -66,9 +66,9 @@ class ServicesViewModel with ChangeNotifier {
         for (Map<String,
             dynamic> translation1 in translation["services_id"]["translations"]) {
           if (translation1["languages_code"] == lang) {
-            firstTranslationDescription = translation1["description"];
-            firstTranslationTitle = translation1["title"];
-            firstTranslationCategoryTitle = translation1["title"];
+            firstTranslationDescription = translation1["description"]??'';
+            firstTranslationTitle = translation1["title"]??'';
+            firstTranslationCategoryTitle = translation1["title"]??'';
 
             break; // Break the loop once the translation is found
           }

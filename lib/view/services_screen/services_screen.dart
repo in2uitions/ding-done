@@ -10,6 +10,11 @@ import 'package:dingdone/view_model/categories_view_model/categories_view_model.
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart'; // Adjust path as needed
 import 'package:dingdone/res/app_prefs.dart';
 
+import '../../view_model/jobs_view_model/jobs_view_model.dart';
+import '../../view_model/profile_view_model/profile_view_model.dart';
+import '../book_a_service/book_a_service.dart';
+import '../widgets/categories_screen/categories_screen_cards.dart';
+
 class CategoriesGridWidget extends StatefulWidget {
   final ServicesViewModel servicesViewModel;
   final String categoryType; // "maintenance" or "pro"
@@ -27,12 +32,13 @@ class CategoriesGridWidget extends StatefulWidget {
 class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
   final bool _isLoading = false;
   String? lang;
-  TextEditingController searchController = TextEditingController();
+
 
   @override
   void initState() {
     super.initState();
     getLanguage();
+
   }
 
   Future<void> getLanguage() async {
@@ -273,13 +279,86 @@ class ServicesScreen extends StatefulWidget {
 class _ServicesScreenState extends State<ServicesScreen>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+  TextEditingController searchController = TextEditingController();
+  List<dynamic> filteredServices = [];
+  String? lang;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-  }
+    getLanguage();
+    // _tabController = TabController(length: 2, vsync: this);
+    final servicesViewModel = Provider.of<ServicesViewModel>(context, listen: false);
 
+    // Determine the initial tab index based on the search filter
+    final maintenanceFilter = servicesViewModel.searchBody['search_services'];
+
+    int initialIndex = 0;
+    if (maintenanceFilter != null && maintenanceFilter.toString().isNotEmpty && maintenanceFilter.toString()=='PRO Services') {
+      initialIndex = 1;
+    }
+
+    _tabController = TabController(length: 2, vsync: this, initialIndex: initialIndex);
+    var categoriesViewModel =
+    Provider.of<CategoriesViewModel>(context, listen: false);
+    searchController.addListener(_filterServices);
+    // Initially display all services
+    filteredServices = categoriesViewModel.servicesList2;
+  }
+  Future<void> getLanguage() async {
+    lang = await AppPreferences().get(key: dblang, isModel: false);
+    setState(() {});
+    setState(() {});
+  }
+  void _filterServices() {
+    String searchText = searchController.text.toLowerCase();
+    var categoriesViewModel =
+    Provider.of<CategoriesViewModel>(context, listen: false);
+    categoriesViewModel.searchData(index: 'search_services', value: searchText);
+    debugPrint('categories search result ${categoriesViewModel.servicesList2}');
+
+    setState(() {
+      if (searchText.isEmpty) {
+        // Display all services if search text is empty
+        filteredServices = categoriesViewModel.servicesList2;
+      } else {
+        filteredServices = categoriesViewModel.servicesList2;
+      }
+    });
+  }
+  void _handleServiceSelection(dynamic service, JobsViewModel jobsViewModel,
+      ProfileViewModel profileViewModel) {
+    // Logic to handle service selection and navigation to next screen
+    if (lang == null) {
+      lang = 'en-US';
+    }
+    jobsViewModel.setInputValues(index: 'service', value: service["id"]);
+    jobsViewModel.setInputValues(
+      index: 'job_address',
+      value: profileViewModel.getProfileBody['current_address'],
+    );
+
+    jobsViewModel.setInputValues(
+      index: 'address',
+      value:
+      '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
+    );
+    jobsViewModel.setInputValues(
+        index: 'latitude',
+        value: profileViewModel.getProfileBody['current_address']['latitude']);
+    jobsViewModel.setInputValues(
+        index: 'longitude',
+        value: profileViewModel.getProfileBody['current_address']['longitude']);
+    jobsViewModel.setInputValues(index: 'payment_method', value: 'Card');
+
+    Navigator.of(context).push(_createRoute(BookAService(
+      service: service,
+      lang: lang,
+      image: service["image"] != null
+          ? '${context.resources.image.networkImagePath2}${service["image"]}'
+          : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
+    )));
+  }
   @override
   void dispose() {
     _tabController.dispose();
@@ -310,6 +389,7 @@ class _ServicesScreenState extends State<ServicesScreen>
                   vertical: context.appValues.appPadding.p15,
                 ),
                 child: TextFormField(
+                  controller: searchController,
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color(0xffEAEAFF),
@@ -340,6 +420,7 @@ class _ServicesScreenState extends State<ServicesScreen>
               ),
             ),
           ),
+          searchController.text.isEmpty?
           DraggableScrollableSheet(
             initialChildSize: 0.82,
             minChildSize: 0.82,
@@ -408,6 +489,82 @@ class _ServicesScreenState extends State<ServicesScreen>
               );
             },
           )
+          :
+          DraggableScrollableSheet(
+            initialChildSize: 0.70,
+            minChildSize: 0.70,
+            maxChildSize: 1,
+            builder: (BuildContext context,
+                ScrollController scrollController) {
+              return Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(30),
+                      topRight: Radius.circular(30),
+                    ),
+                    color: Color(0xffFEFEFE),
+                  ),
+                  child: ListView.builder(
+                    controller: scrollController,
+                    itemCount: filteredServices.length,
+                    itemBuilder: (context, index) {
+                      var service = filteredServices[index];
+
+                      // Find the translation where language_code == lang
+                      // var lang = 'ar-SA'; // Replace this with the actual language code you're using
+                      var translation =
+                      service['translations'].firstWhere(
+                            (t) => t['languages_code'] == lang,
+                        orElse: () => null,
+                      );
+
+                      // If no translation is found, fallback to default
+                      if (translation == null) {
+                        translation = {
+                          'title': service["xtitle"] ?? '',
+                          'description': service["xdescription"] ?? ''
+                        };
+                      }
+                      debugPrint('translation si $translation');
+
+                      return Consumer2<JobsViewModel,
+                          ProfileViewModel>(
+                        builder: (context, jobsViewModel,
+                            profileViewModel, _) {
+                          return CategoriesScreenCards(
+                            category: service["category"],
+                            title: translation != null
+                                ? translation["title"]
+                                : '',
+                            cost: 0,
+                            // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
+                            image: service["image"] != null
+                                ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                            onTap: () {
+                              _handleServiceSelection(service,
+                                  jobsViewModel, profileViewModel);
+                            },
+                          );
+                        },
+                      );
+                    },
+                  )
+
+                // child: ListView.builder(
+                //   controller: scrollController,
+                //   itemCount: filteredServices.length,
+                //   itemBuilder: (BuildContext context, int index) {
+                //     var service = filteredServices[index];
+                //     return ListTile(
+                //       title: Text(service.title),
+                //       subtitle: Text(service!=null && service.description !=null ?service.description:''),
+                //     );
+                //   },
+                // ),
+              );
+            },
+          ),
         ],
       ),
     );

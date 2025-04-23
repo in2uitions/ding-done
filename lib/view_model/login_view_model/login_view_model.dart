@@ -69,7 +69,7 @@ class LoginViewModel with ChangeNotifier {
       if (!await isActiveUser()) {
         await loginSharedPreference();
       } else {
-        NavigationService().navigateToScreen(BottomBar(userRole: userRole));
+        NavigationService().navigateToScreen(BottomBar(userRole: userRole, currentTab: 0,));
       }
     } else {
       NavigationService().navigateToScreen(const OnBoardingScreen());
@@ -116,7 +116,7 @@ class LoginViewModel with ChangeNotifier {
         _loginCredentials['password'] != '') {
       if (await login()) {
         if (await isActiveUser()) {
-          NavigationService().navigateToScreen(BottomBar(userRole: userRole));
+          NavigationService().navigateToScreen(BottomBar(userRole: userRole, currentTab: 0,));
         } else {
           NavigationService().navigateToScreen(const OnBoardingScreen());
         }

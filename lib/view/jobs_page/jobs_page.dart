@@ -457,7 +457,7 @@ class _JobsPageState extends State<JobsPage> {
                       final role = prefs.getString(userRoleKey);
 
                       Navigator.of(context).push(
-                        _createRoute(BottomBar(userRole: role)),
+                        _createRoute(BottomBar(userRole: role, currentTab: 0,)),
                       );
                     },
                   ),

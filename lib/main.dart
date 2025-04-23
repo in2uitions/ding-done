@@ -109,7 +109,7 @@ class _MyAppState extends State<MyApp> {
         );
       } else {
         navigatorKey.currentState?.push(
-          _createRoute(BottomBar(userRole: role)),
+          _createRoute(BottomBar(userRole: role, currentTab: 0,)),
         );
       }
     });
@@ -237,7 +237,7 @@ class _MyAppState extends State<MyApp> {
           locale: localLang,
           debugShowCheckedModeBanner: false,
           home: _doLogin
-              ? BottomBar(userRole: userRole)
+              ? BottomBar(userRole: userRole, currentTab: 0,)
               : const OnBoardingScreen(),
           // home: LoginScreen(),
         ),

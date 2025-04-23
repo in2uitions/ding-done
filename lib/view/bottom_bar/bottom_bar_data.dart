@@ -20,7 +20,7 @@ class _BottomBarDataState extends State<BottomBarData> {
       builder: (context, AsyncSnapshot data) {
         if (data.hasData) {
           debugPrint('data . data ${data.data}');
-          return BottomBar(userRole: data.data.role);
+          return BottomBar(userRole: data.data.role, currentTab: 0,);
         } else if (data.hasError) {
           return LoginScreen();
         } else {

@@ -74,7 +74,7 @@ class _ProfileComponentState extends State<ProfileComponent> {
                       ),
                       const Gap(10),
                       Text(
-                        translate('profile.account'),
+                        translate('profile.myProfile'),
                         style: getPrimaryRegularStyle(
                           fontSize: 14,
                           color: context.resources.color.btnColorBlue,

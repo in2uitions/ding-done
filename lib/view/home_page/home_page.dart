@@ -90,7 +90,7 @@ class _HomePageState extends State<HomePage> {
       // Simulate network fetch or database query
       await Future.delayed(const Duration(seconds: 2));
       // Update the list of items and refresh the UI
-      Navigator.of(context).push(_createRoute(BottomBar(userRole: role)));
+      Navigator.of(context).push(_createRoute(BottomBar(userRole: role, currentTab: 0,)));
       Provider.of<CategoriesViewModel>(context, listen: false).readJson();
       Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(
           Provider.of<ServicesViewModel>(context, listen: false)
@@ -688,28 +688,28 @@ class _HomePageState extends State<HomePage> {
                                                   .resources.color.btnColorBlue,
                                             ),
                                           ),
-                                          InkWell(
-                                            onTap: () {},
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  translate(
-                                                      'home_screen.seeAll'),
-                                                  style: getPrimaryBoldStyle(
-                                                    fontSize: 12,
-                                                    color:
-                                                        const Color(0xff4100E3),
-                                                  ),
-                                                ),
-                                                const Gap(5),
-                                                const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  color: Color(0xff4100E3),
-                                                  size: 12,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                          // InkWell(
+                                          //   onTap: () {},
+                                          //   child: Row(
+                                          //     children: [
+                                          //       Text(
+                                          //         translate(
+                                          //             'home_screen.seeAll'),
+                                          //         style: getPrimaryBoldStyle(
+                                          //           fontSize: 12,
+                                          //           color:
+                                          //               const Color(0xff4100E3),
+                                          //         ),
+                                          //       ),
+                                          //       const Gap(5),
+                                          //       const Icon(
+                                          //         Icons.arrow_forward_ios_sharp,
+                                          //         color: Color(0xff4100E3),
+                                          //         size: 12,
+                                          //       ),
+                                          //     ],
+                                          //   ),
+                                          // ),
                                           // servicesViewModel.chosenParent
                                           //     ? InkWell(
                                           //         child: Text(

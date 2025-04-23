@@ -112,7 +112,7 @@ class LoginRepository {
       //     .save(key: userIdTochangePassword, value: body["id"], isModel: false);
       dynamic response = await _apisendSMS.postResponse(data: {
         'recipients': [body['recipients'].toString()],
-        'text': 'Hi,\n this is your code $rndnumber',
+        'text': '$rndnumber is you one time password (OTP) for Ding Done app. Do not share this passcode with anyone. If you have not raised this request, please ignore.',
       'sender': 'Optica'
       },sendToken: false);
 

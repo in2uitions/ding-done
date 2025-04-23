@@ -66,7 +66,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
       // Simulate network fetch or database query
       await Future.delayed(const Duration(seconds: 2));
       // Update the list of items and refresh the UI
-      Navigator.of(context).push(_createRoute(BottomBar(userRole: role)));
+      Navigator.of(context).push(_createRoute(BottomBar(userRole: role, currentTab: 0,)));
     } catch (error) {
       // Handle the error, e.g., by displaying a snackbar
       ScaffoldMessenger.of(context).showSnackBar(

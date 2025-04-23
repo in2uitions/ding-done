@@ -610,16 +610,22 @@ class SignUpViewModel with ChangeNotifier {
     try {
       dynamic response = await _signUpRepository.getCountries();
       debugPrint('response getting countries $response');
-      // _apiCountriesResponse = ApiResponse.completed(response);
-      _listCountries = response['data'];
+
+      // Filter only published countries
+      _listCountries = response['data']
+          .where((country) => country['status'] == 'published')
+          .toList();
+
       return _listCountries;
     } catch (error) {
       debugPrint('error getting countries $error');
-      // _apiRoleResponse = ApiResponse.error(error.toString());
     }
-    notifyListeners();
+
+    notifyListeners(); // This line is technically unreachable if there's no error
+    return null;
   }
- 
+
+
   // Future<void> getUserRoleFromId(String id) async {
   //   try {
   //     String? user_role = await _signUpRepository.getUserRoleFromId(id);

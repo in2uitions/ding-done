@@ -228,7 +228,7 @@ class _UserAgreementSigninState extends State<UserAgreementSignin> {
                                   const Duration(seconds: 0),
                                   () => Navigator.of(context)
                                       .push(_createRoute( BottomBar(
-                                      userRole: Constants.customerRoleId))));
+                                      userRole: Constants.customerRoleId, currentTab: 0,))));
                             } else {
                               showDialog(
                                 context: context,

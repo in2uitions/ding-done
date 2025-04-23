@@ -9,6 +9,7 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
 import 'package:dingdone/view/forgot_password/forgot_password.dart';
 import 'package:dingdone/view/sign_up_as/country_selection.dart';
+import 'package:dingdone/view/signup/signup_new.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild_login.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -314,7 +315,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           _createRoute(BottomBar(
                                                               userRole:
                                                                   loginViewModel
-                                                                      .userRole)));
+                                                                      .userRole, currentTab: 0,)));
                                                     } else {
                                                       const CircularProgressIndicator();
                                                     }
@@ -556,10 +557,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 Navigator.of(context).push(
                                                     _createRoute(BottomBar(
                                                         userRole: Constants
-                                                            .customerRoleId)));
+                                                            .customerRoleId, currentTab: 0,)));
                                                 // }else{
                                                 //   Navigator.of(context).push(_createRoute(
-                                                //       CompleteProfileScreen(initialIndex: 0)));
+                                                //       SignUpNew()));
                                                 // }
 
                                                 // TODO: Save token to local storage for future authenticated requests

@@ -24,7 +24,9 @@ import '../../res/app_prefs.dart';
 class BottomBar extends StatefulWidget {
   var userRole;
 
-  BottomBar({super.key, required this.userRole});
+  var currentTab;
+
+  BottomBar({super.key, required this.userRole,required this.currentTab});
 
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -35,7 +37,7 @@ class _BottomBarState extends State<BottomBar>
   // Properties & Variables needed
   String? lang;
 
-  int currentTab = 0;
+  // int currentTab = 0;
   late Widget currentScreen;
   final PageStorageBucket bucket = PageStorageBucket();
   final JobsViewModel _jobsViewModel = JobsViewModel();
@@ -55,9 +57,14 @@ class _BottomBarState extends State<BottomBar>
     _handleLocationPermission();
     _getCurrentPosition();
     _jobsViewModel.readJson();
-    currentScreen = widget.userRole == Constants.supplierRoleId
+    currentScreen =
+    widget.currentTab==0?
+    widget.userRole == Constants.supplierRoleId
         ? const HomePageSupplier()
-        : const HomePage();
+        : const HomePage()
+    :widget.currentTab==1?
+    const ServicesScreen():
+    Container();
 
     _controller = AnimationController(
       duration: const Duration(seconds: 1),
@@ -221,7 +228,7 @@ class _BottomBarState extends State<BottomBar>
                                   widget.userRole == Constants.supplierRoleId
                                       ? const HomePageSupplier()
                                       : const HomePage();
-                              currentTab = 0;
+                              widget.currentTab = 0;
                             });
                           },
                           child: Column(
@@ -235,7 +242,7 @@ class _BottomBarState extends State<BottomBar>
                               //       : Color(0xff180C39),
                               // ),
                               SvgPicture.asset(
-                                currentTab == 0
+                                widget.currentTab == 0
                                     ? 'assets/img/homeselected.svg'
                                     : 'assets/img/homeunselected.svg',
                                 fit: BoxFit.contain,
@@ -244,7 +251,7 @@ class _BottomBarState extends State<BottomBar>
                               SizedBox(height: context.appValues.appSize.s5),
                               Text(
                                 translate('bottom_bar.home'),
-                                style: currentTab == 0
+                                style: widget.currentTab == 0
                                     ? getPrimaryBoldStyle(
                                         color: const Color(0xff180B3C),
                                       )
@@ -263,7 +270,7 @@ class _BottomBarState extends State<BottomBar>
                           onPressed: () {
                             setState(() {
                               currentScreen = ServicesScreen();
-                              currentTab = 1;
+                              widget.currentTab = 1;
                             });
                           },
                           child: Container(
@@ -274,7 +281,7 @@ class _BottomBarState extends State<BottomBar>
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: <Widget>[
                                     SvgPicture.asset(
-                                      currentTab == 1
+                                      widget.currentTab == 1
                                           ? 'assets/img/serviceselected.svg'
                                           : 'assets/img/servicesunselected.svg',
                                       fit: BoxFit.contain,
@@ -288,7 +295,7 @@ class _BottomBarState extends State<BottomBar>
                                         height: context.appValues.appSize.s5),
                                     Text(
                                       translate('updateJob.services'),
-                                      style: currentTab == 1
+                                      style: widget.currentTab == 1
                                           ? getPrimaryBoldStyle(
                                               color: const Color(0xff180B3C),
                                             )
@@ -363,7 +370,7 @@ class _BottomBarState extends State<BottomBar>
                               initialActiveTab: 'activeJobs',
                               initialIndex: 0,
                             );
-                            currentTab = 2;
+                            widget.currentTab = 2;
                             // hasNotifications = false;
                           });
                         },
@@ -371,7 +378,7 @@ class _BottomBarState extends State<BottomBar>
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SvgPicture.asset(
-                              currentTab == 2
+                              widget.currentTab == 2
                                   ? 'assets/img/jobsselected.svg'
                                   : 'assets/img/jobsunselected.svg',
                               fit: BoxFit.contain,
@@ -383,7 +390,7 @@ class _BottomBarState extends State<BottomBar>
                             SizedBox(height: context.appValues.appSize.s5),
                             Text(
                               translate('bottom_bar.jobs'),
-                              style: currentTab == 2
+                              style: widget.currentTab == 2
                                   ? getPrimaryBoldStyle(
                                       color: const Color(0xff180B3C),
                                     )
@@ -408,14 +415,14 @@ class _BottomBarState extends State<BottomBar>
                                             categoriesViewModel.categoriesList);
                                   })
                                 : const ProfilePage();
-                            currentTab = 3;
+                            widget.currentTab = 3;
                           });
                         },
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             SvgPicture.asset(
-                              currentTab == 3
+                              widget.currentTab == 3
                                   ? 'assets/img/profileselected.svg'
                                   : 'assets/img/profileunselected.svg',
                               fit: BoxFit.contain,
@@ -427,7 +434,7 @@ class _BottomBarState extends State<BottomBar>
                             SizedBox(height: context.appValues.appSize.s5),
                             Text(
                               translate('profile.account'),
-                              style: currentTab == 3
+                              style: widget.currentTab == 3
                                   ? getPrimaryBoldStyle(
                                       color: const Color(0xff180B3C),
                                     )

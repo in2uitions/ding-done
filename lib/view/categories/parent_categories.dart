@@ -1,4 +1,5 @@
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:skeletons/skeletons.dart';
 
 import '../../../res/app_prefs.dart';
+import '../bottom_bar/bottom_bar.dart';
+import '../services_screen/services_screen.dart';
 
 class ParentCategoriesWidget extends StatefulWidget {
   var servicesViewModel;
@@ -128,6 +131,12 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
             index: 'search_services', value: services?["title"]);
         widget.servicesViewModel.setParentCategory(services?["title"]);
         categoriesViewModel.sortCategories(services?["title"]);
+        Navigator.of(context).push(_createRoute(
+          const ServicesScreen(),
+        ));
+        Navigator.of(context).push(_createRoute(
+          BottomBar(userRole: Constants.customerRoleId,currentTab: 1,),
+        ));
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
