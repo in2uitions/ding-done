@@ -10,7 +10,7 @@
 		</data>
 		<key>AppIcon60x60@2x.png</key>
 		<data>
-		it7u3h0GclxJhAC8cq9vqhox3jQ=
+		Bm1Eh5YeNjn1edWQiJTbdH0NIW0=
 		</data>
 		<key>AppIcon76x76@2x~ipad.png</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Assets.car</key>
 		<data>
-		eWxSDQbVaGvnQ469ZdkGXg09878=
+		HDfLglMIRzpTNlvV1hqiQFJnqC8=
 		</data>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
@@ -4243,11 +4243,11 @@
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheet</key>
 		<data>
-		z1tqJfOibbp7VgKLry59F8vc38I=
+		hKfb9Ngggu5tTLNOPIN/V9oQe3w=
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheetBundle.bundle/Assets.car</key>
 		<data>
-		Ozu3I1sVNL8tCQZHB/aEUXHzZPk=
+		vW8nBzhoDRoMr7Gc839c1OtdSNA=
 		</data>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheetBundle.bundle/Info.plist</key>
 		<data>
@@ -4641,7 +4641,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/_CodeSignature/CodeResources</key>
 		<data>
-		y49ysA4p1YTctmb6oyplfp8xomo=
+		gX6DaZq4Zd/UdCXQxaNRYKdJWGs=
 		</data>
 		<key>Frameworks/StripePayments.framework/Info.plist</key>
 		<data>
@@ -5424,11 +5424,11 @@
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUI</key>
 		<data>
-		e4BNFNvB14bk2v3H0izd1yzl83A=
+		RgB3xnbubYxjMedZGzU44a8Ci+E=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUIBundle.bundle/Assets.car</key>
 		<data>
-		f8jRjtWqcHgiQMemXsfcITRnb2U=
+		AAB9YBm5yQdXZK48cCcsfT8t4D0=
 		</data>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUIBundle.bundle/Info.plist</key>
 		<data>
@@ -5818,7 +5818,7 @@
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/_CodeSignature/CodeResources</key>
 		<data>
-		rGYzQEOoYzFoCfq74Jom0vLN72Q=
+		s4Z7Y9t+K2qhfOmtVC8NJFEZDUA=
 		</data>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
 		<data>
@@ -6960,15 +6960,15 @@
 		</data>
 		<key>Frameworks/goSellSDK.framework/_CodeSignature/CodeResources</key>
 		<data>
-		uNsXJLxW4J+a/GoocXULi7+0wkM=
+		vZCbxoTCgLBWs1lQRE0YG04FeLg=
 		</data>
 		<key>Frameworks/goSellSDK.framework/goSellSDK</key>
 		<data>
-		nIQSNl0IG9xjzOrVJYF/qVURTuc=
+		LIlhk1tqhXFVMa20VkM/wrWnSyg=
 		</data>
 		<key>Frameworks/goSellSDK.framework/goSellSDKResources.bundle/Assets.car</key>
 		<data>
-		8VRlxd4t3qXgTTVvWMVaTL9SGpY=
+		S5mwYSpqSoToWQsxwIJUs8djbsw=
 		</data>
 		<key>Frameworks/goSellSDK.framework/goSellSDKResources.bundle/AsyncPaymentResultView.nib</key>
 		<data>
@@ -8582,7 +8582,7 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		8e0FxPBRlt4VGV6TQJ8yGxRtDvU=
+		c05pelX08ZgUuLmh2jJ954Upfh4=
 		</data>
 		<key>LatinOCRResources.bundle/Info.plist</key>
 		<data>
@@ -8678,7 +8678,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			9RRcckNj4rpWtRi+V4AtEZF/2LftmasLRrzwvk2bLHM=
+			chvmgnF1txfgIx8KZkILZAGxKtOSYO1tppBCVjNDzbE=
 			</data>
 		</dict>
 		<key>AppIcon76x76@2x~ipad.png</key>
@@ -8692,7 +8692,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			NMnILK/efz0VnP1HjhljFTyA/ZIu/y/9d+mmlJJDxaY=
+			BuGDmqSecR8mhknIZeNooNPJTKCGP7BFETuFj1ncaRc=
 			</data>
 		</dict>
 		<key>Base.lproj/LaunchScreen.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
@@ -14837,14 +14837,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			Ki9vn2h6Lj2hDdI3L5pMTov51Sy8bXENKAtpnA7ElMM=
+			jMBX8bOp5ncbXh7n/hrPjbCvt/t27Lwa/LWSEU88CmM=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheetBundle.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			/zrn690FKiJq7aDnrzEtJ2uRLi2kpDw1QFij49TGnpU=
+			ChFvm6NXhDDtsiKVvw89xDZkkI5yOeDn1DitGkuvAQg=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentSheet.framework/StripePaymentSheetBundle.bundle/Info.plist</key>
@@ -15250,7 +15250,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			d42PAtgK50RVVoKNn04A0C2A2I186E3eqP6mUwsE1/w=
+			TW/t1ixXxYoF32/M9B7Hjq9n+rrb+pUWAj0auv+DNw0=
 			</data>
 		</dict>
 		<key>Frameworks/StripePayments.framework/Info.plist</key>
@@ -16060,14 +16060,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			bUMyKc9LRAKrPWng673I2hwvjThinSAufQYX66e6g1g=
+			D5XzR2KJnl4AaR8eAg1mRpyBdRoLBDV/t+MQOjNn3Yw=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUIBundle.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			6A3+wrASAwjP1CX98HXnGvTsv65+ikkOhvnxw+hHzrg=
+			MuH846hjTgPVBY3V9WwAERIoUVK9Xkh39qY2PcoqplQ=
 			</data>
 		</dict>
 		<key>Frameworks/StripePaymentsUI.framework/StripePaymentsUIBundle.bundle/Info.plist</key>
@@ -16466,7 +16466,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			fCoaKUFS8e0+qn4lFdmXcRVrgsAPT+uhvYuGIUQ5n/s=
+			+Zpp2GbgYLMcCnZfw5RQVfmFR1roahgDquKQ9WRGwOI=
 			</data>
 		</dict>
 		<key>Frameworks/StripeUICore.framework/Info.plist</key>
@@ -17992,21 +17992,21 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			BHD56g6tqO61+jTdswplMbfmNfIxDAC4hRoG3m3AXPA=
+			OYp8w5tk4jD2gpi6yE3Yslo1YKgoa/hRkq7xOStLkoY=
 			</data>
 		</dict>
 		<key>Frameworks/goSellSDK.framework/goSellSDK</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			TTIveLID9/sxONMh8blJBQ+hXOLAzq9yWr4U434tlNw=
+			wbM6vksd232/TZ72muQcejEeNURmQ0cXBq0EV6Kn/9M=
 			</data>
 		</dict>
 		<key>Frameworks/goSellSDK.framework/goSellSDKResources.bundle/Assets.car</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			laFws9OZAnjTVyp1pFe4tv01QR3Ap5q4l3e1Z5Zk0r0=
+			YGt+qRmyTzhLqVAgp/h+wMjv51+TvbFiuQLX0rM9hmo=
 			</data>
 		</dict>
 		<key>Frameworks/goSellSDK.framework/goSellSDKResources.bundle/AsyncPaymentResultView.nib</key>
