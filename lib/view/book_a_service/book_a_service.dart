@@ -310,13 +310,20 @@ class _BookAServiceState extends State<BookAService> {
                                                     .btnColorBlue,
                                               ),
                                             ),
-                                            Text(
-                                              services != null
-                                                  ? '${services["title"]}'
-                                                  : '',
-                                              style: getPrimaryBoldStyle(
-                                                fontSize: 10,
-                                                color: const Color(0xff6E6BE8),
+                                            SizedBox(
+                                              width: context
+                                                  .appValues.appSizePercent.w62,
+                                              child: Text(
+                                                services != null
+                                                    ? '${services["title"]}'
+                                                    : '',
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: getPrimaryBoldStyle(
+                                                  fontSize: 10,
+                                                  color:
+                                                      const Color(0xff6E6BE8),
+                                                ),
                                               ),
                                             ),
                                           ],

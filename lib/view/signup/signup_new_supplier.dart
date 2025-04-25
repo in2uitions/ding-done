@@ -3,7 +3,6 @@
 import 'dart:io';
 
 import 'package:dingdone/res/app_context_extension.dart';
-import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/agreement/supplier_agreement.dart';
 import 'package:dingdone/view/login/login.dart';
@@ -516,6 +515,66 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       ],
     );
 
+    Widget buildPasswordRequirements(String password) {
+      final requirements = [
+        {
+          'label': translate('passRequirments.req1'),
+          'valid': password.length >= 8,
+        },
+        {
+          'label': translate('passRequirments.req2'),
+          'valid': RegExp(r'[A-Z]').hasMatch(password),
+        },
+        {
+          'label': translate('passRequirments.req3'),
+          'valid': RegExp(r'[a-z]').hasMatch(password),
+        },
+        {
+          'label': translate('passRequirments.req4'),
+          'valid': RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(password),
+        },
+        {
+          'label': translate('passRequirments.req5'),
+          'valid': RegExp(r'\d').hasMatch(password),
+        },
+      ];
+
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: requirements.map((req) {
+          final isValid = req['valid'] as bool;
+          final color = isValid
+              ? const Color(0xFF4CAF50) // green when valid
+              : const Color(0xFF8F9098); // your gray/unmet color
+          // final icon = isValid ? Icons.check_circle : Icons.circle;
+
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Row(
+              children: [
+                // Icon(icon, size: 12, color: color),
+                Text(
+                  '●',
+                  style: getPrimarySemiBoldStyle(
+                    color: color,
+                    fontSize: 12,
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  req['label'] as String,
+                  style: getPrimaryRegularStyle(
+                    fontSize: 12,
+                    color: color,
+                  ),
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      );
+    }
+
     // Page 3: Security Information.
     Widget page3 = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -529,7 +588,9 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               Text(
                 translate('formHints.password'),
                 style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
+                  color: const Color(0xff180C38),
+                  fontSize: 12,
+                ),
               ),
               const Gap(10),
               CustomTextField(
@@ -548,10 +609,8 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
         ),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0),
-          child: Text(
-            translate('signUp.requirments'),
-            style: getPrimaryRegularStyle(
-                fontSize: 12, color: const Color(0xff8F9098)),
+          child: buildPasswordRequirements(
+            signupViewModel.signUpBody['password'] ?? '',
           ),
         ),
         const SizedBox(height: 8.0),
@@ -968,10 +1027,17 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
         children: [
           // Top header with purple background.
           Container(
-            height: context.appValues.appSizePercent.h50,
+            height: context.appValues.appSizePercent.h35,
             width: context.appValues.appSizePercent.w100,
             decoration: const BoxDecoration(
-              color: Color(0xff4100E3),
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF20136C),
+                  Color(0xFF4100E3),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
             child: SafeArea(
               child: Padding(

@@ -9,7 +9,6 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
 import 'package:dingdone/view/forgot_password/forgot_password.dart';
 import 'package:dingdone/view/sign_up_as/country_selection.dart';
-import 'package:dingdone/view/signup/signup_new.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild_login.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -83,9 +82,16 @@ class _LoginScreenState extends State<LoginScreen> {
         children: [
           Container(
             width: context.appValues.appSizePercent.w100,
-            height: context.appValues.appSizePercent.h60,
+            height: context.appValues.appSizePercent.h55,
             decoration: const BoxDecoration(
-              color: Color(0xff4100E3),
+              gradient: LinearGradient(
+                colors: [
+                  Color(0xFF20136C),
+                  Color(0xFF4100E3),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
             ),
             child: SafeArea(
               child: Column(
@@ -150,6 +156,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                           error) {
                                     return Column(
                                       children: [
+                                        Text(
+                                          translate(
+                                              'login_screen.signInToYourAccount'),
+                                          style: getPrimarySemiBoldStyle(
+                                            fontSize: 16,
+                                            color: const Color(0xff180B3C),
+                                          ),
+                                        ),
+                                        const Gap(10),
                                         CustomTextFieldLogin(
                                           viewModel:
                                               loginViewModel.setInputValues,
@@ -217,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         'login_screen.rememberMe'),
                                                     style:
                                                         getPrimaryRegularStyle(
-                                                      fontSize: 16,
+                                                      fontSize: 12,
                                                       color: const Color(
                                                           0xff71727A),
                                                     ),
@@ -263,7 +278,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                   style: getPrimaryRegularStyle(
                                                     color:
                                                         const Color(0xff4100E3),
-                                                    fontSize: 18,
+                                                    fontSize: 12,
                                                   ),
                                                 ),
                                                 onTap: () {
@@ -275,9 +290,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                             ),
                                           ],
                                         ),
-                                        SizedBox(
-                                            height:
-                                                context.appValues.appSize.s35),
+                                        const Gap(25),
                                         SizedBox(
                                           height: 48,
                                           width: context
@@ -286,10 +299,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
                                                   const Color(0xff4100E3),
-                                              shape: RoundedRectangleBorder(
+                                              shape:
+                                                  const RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
-                                                  Radius.circular(context
-                                                      .appValues.appSize.s10),
+                                                  Radius.circular(12),
                                                 ),
                                               ),
                                             ),
@@ -311,11 +324,13 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           .getCategoriesAndServices();
                                                       await jobsViewModel
                                                           .readJson();
-                                                      Navigator.of(context).push(
-                                                          _createRoute(BottomBar(
-                                                              userRole:
-                                                                  loginViewModel
-                                                                      .userRole, currentTab: 0,)));
+                                                      Navigator.of(context)
+                                                          .push(_createRoute(
+                                                              BottomBar(
+                                                        userRole: loginViewModel
+                                                            .userRole,
+                                                        currentTab: 0,
+                                                      )));
                                                     } else {
                                                       const CircularProgressIndicator();
                                                     }
@@ -342,7 +357,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         getPrimaryRegularStyle(
                                                       color: context.resources
                                                           .color.colorWhite,
-                                                      fontSize: 16,
+                                                      fontSize: 12,
                                                     ),
                                                   ),
                                           ),
@@ -358,16 +373,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                         translate('login_screen.signUnMessage'),
                                         style: getPrimaryRegularStyle(
                                           color: const Color(0xff71727A),
-                                          fontSize: 14,
+                                          fontSize: 12,
                                         ),
                                       ),
                                       const Gap(5),
                                       InkWell(
                                         child: Text(
-                                          translate('login_screen.signUp'),
-                                          style: getPrimaryRegularStyle(
+                                          translate('login_screen.signUpNow'),
+                                          style: getPrimaryBoldStyle(
                                             color: const Color(0xff4100E3),
-                                            fontSize: 14,
+                                            fontSize: 12,
                                           ),
                                         ),
                                         onTap: () {
@@ -390,7 +405,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     'Or continue with',
                                     style: getPrimaryRegularStyle(
                                       color: const Color(0xff71727A),
-                                      fontSize: 14,
+                                      fontSize: 12,
                                     ),
                                   ),
                                   const Gap(10),
@@ -556,8 +571,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 // ){
                                                 Navigator.of(context).push(
                                                     _createRoute(BottomBar(
-                                                        userRole: Constants
-                                                            .customerRoleId, currentTab: 0,)));
+                                                  userRole:
+                                                      Constants.customerRoleId,
+                                                  currentTab: 0,
+                                                )));
                                                 // }else{
                                                 //   Navigator.of(context).push(_createRoute(
                                                 //       SignUpNew()));
@@ -610,7 +627,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           getPrimaryRegularStyle(
                                                         color: context.resources
                                                             .color.btnColorBlue,
-                                                        fontSize: 14,
+                                                        fontSize: 12,
                                                       ),
                                                     ),
                                                   ],
@@ -700,72 +717,117 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void _onActionSheetPress(BuildContext context) {
-    showDemoActionSheet(
+    showModalBottomSheet(
       context: context,
-      child: CupertinoActionSheet(
-        // title: Text(translate('language.selection.title')),
-        title: const Text('Title'),
-        // message: Text(translate('language.selection.message')),
-        message: const Text('Message'),
-        actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text(translate('language.name.en-US')),
-            onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'en', isModel: false);
-              AppPreferences()
-                  .save(key: dblang, value: 'en-US', isModel: false);
-
-              Navigator.pop(context, 'en');
-              RestartWidget.restartApp(context);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(translate('language.name.ar-SA')),
-            onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'ar', isModel: false);
-              AppPreferences()
-                  .save(key: dblang, value: 'ar-SA', isModel: false);
-
-              Navigator.pop(context, 'ar');
-              RestartWidget.restartApp(context);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(translate('language.name.el-GR')),
-            onPressed: () async {
-              debugPrint('el is saving }');
-              await AppPreferences()
-                  .save(key: language, value: 'el', isModel: false);
-              AppPreferences()
-                  .save(key: dblang, value: 'el-GR', isModel: false);
-
-              Navigator.pop(context, 'el');
-              RestartWidget.restartApp(context);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(translate('language.name.ru-RU')),
-            onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'ru', isModel: false);
-              AppPreferences()
-                  .save(key: dblang, value: 'ru-RU', isModel: false);
-
-              Navigator.pop(context, 'ru');
-              RestartWidget.restartApp(context);
-            },
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          // child: Text(translate('button.cancel')),
-          isDefaultAction: true,
-          onPressed: () => Navigator.pop(context, null),
-          // child: Text(translate('button.cancel')),
-          child: const Text('Cancel'),
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(32),
+          topRight: Radius.circular(32),
+          bottomLeft: Radius.circular(0),
+          bottomRight: Radius.circular(0),
         ),
       ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Gap(15),
+            _languageTile(
+              ctx,
+              label: translate('language.name.en-US'),
+              value: 'en',
+              dblangValue: 'en-US',
+            ),
+            _languageTile(
+              ctx,
+              label: translate('language.name.ar-SA'),
+              value: 'ar',
+              dblangValue: 'ar-SA',
+            ),
+            _languageTile(
+              ctx,
+              label: translate('language.name.el-GR'),
+              value: 'el',
+              dblangValue: 'el-GR',
+            ),
+            _languageTile(
+              ctx,
+              label: translate('language.name.ru-RU'),
+              value: 'ru',
+              dblangValue: 'ru-RU',
+            ),
+            const Gap(5),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p16),
+              child: const Divider(
+                color: Color(0xffD4D6DD),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: context.appValues.appPadding.p12,
+                horizontal: context.appValues.appPadding.p16,
+              ),
+              child: InkWell(
+                onTap: () => Navigator.pop(ctx),
+                child: Container(
+                  height: 44,
+                  width: context.appValues.appSizePercent.w100,
+                  decoration: BoxDecoration(
+                    color: context.resources.color.colorWhite,
+                    borderRadius: const BorderRadius.all(Radius.circular(12)),
+                    border: Border.all(
+                      color: const Color(0xff4100E3),
+                      width: 1.5,
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      translate('button.cancel'),
+                      textAlign: TextAlign.center,
+                      style: getPrimarySemiBoldStyle(
+                        fontSize: 12,
+                        color: const Color(0xff4100E3),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _languageTile(
+    BuildContext ctx, {
+    required String label,
+    required String value,
+    required String dblangValue,
+  }) {
+    return ListTile(
+      title: Text(
+        label,
+        style: getPrimaryRegularStyle(
+          fontSize: 14,
+          color: const Color(0xff180B3C),
+        ),
+      ),
+      trailing: const Icon(
+        Icons.chevron_right,
+        color: Color(0xff8F9098),
+      ),
+      onTap: () async {
+        await AppPreferences()
+            .save(key: language, value: value, isModel: false);
+        await AppPreferences()
+            .save(key: dblang, value: dblangValue, isModel: false);
+        Navigator.pop(ctx);
+        RestartWidget.restartApp(ctx);
+      },
     );
   }
 }

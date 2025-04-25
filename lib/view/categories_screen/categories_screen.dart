@@ -4,230 +4,245 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/categories_screen/categories_screen_cards.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+
 import '../../view_model/categories_view_model/categories_view_model.dart';
 import '../../view_model/jobs_view_model/jobs_view_model.dart';
 import '../../view_model/profile_view_model/profile_view_model.dart';
-import '../../view_model/services_view_model/services_view_model.dart';
 import '../book_a_service/book_a_service.dart';
 
 class CategoriesScreen extends StatefulWidget {
-  final dynamic categoriesViewModel;
-  final dynamic initialTabIndex;
+  final CategoriesViewModel categoriesViewModel;
   final dynamic serviceViewModel;
+  final int initialTabIndex;
 
-  CategoriesScreen({
+  const CategoriesScreen({
     Key? key,
     required this.categoriesViewModel,
-    required this.initialTabIndex,
     required this.serviceViewModel,
+    required this.initialTabIndex,
   }) : super(key: key);
 
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
 
-class _CategoriesScreenState extends State<CategoriesScreen>
-    with TickerProviderStateMixin {
-  TabController? _tabController;
-  final bool isSelected = false;
-  String? lang;
+class _CategoriesScreenState extends State<CategoriesScreen> {
+  String lang = 'en-US';
+  late Map<String, dynamic> selectedCategory;
+  late List<dynamic> filteredServices;
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(
-      length: widget.categoriesViewModel.categoriesList.length,
-      vsync: this,
-      initialIndex: 0,
+    selectedCategory =
+        widget.categoriesViewModel.categoriesList[widget.initialTabIndex];
+    _loadLanguage();
+    _filterServices();
+  }
+
+  Future<void> _loadLanguage() async {
+    final stored = await AppPreferences().get(key: dblang, isModel: false);
+    if (stored != null) lang = stored;
+    setState(() {});
+  }
+
+  void _filterServices() {
+    filteredServices = widget.categoriesViewModel.servicesList.where((service) {
+      final catTransList = service['category']['translations'] as List;
+      final firstTrans = catTransList.first;
+      return firstTrans['categories_id'].toString() ==
+          selectedCategory['id'].toString();
+    }).toList();
+  }
+
+  String get _currentCategoryTitle {
+    final list = selectedCategory['translations'] as List<dynamic>;
+    final match = list.firstWhere(
+      (t) => t['languages_code'] == lang,
+      orElse: () => list.first,
     );
-    initializeLanguage();
+    return match['title']?.toString() ?? '';
   }
 
-  void initializeLanguage() async {
-    lang = await AppPreferences().get(key: dblang, isModel: false);
-    lang ??= 'en-US';
-    setState(() {}); // Trigger a rebuild after initializing the language
-  }
-
-  @override
-  void dispose() {
-    _tabController?.dispose(); // Dispose of the TabController
-    super.dispose();
+  String get _parentCategoryTitle {
+    return widget.serviceViewModel.parentCategory?.toString() ?? '';
   }
 
   @override
   Widget build(BuildContext context) {
-    if (lang == null) {
-      // Display a loading indicator or handle the case where lang is not initialized yet.
-      return const Center(child: CircularProgressIndicator());
-    }
-
     return Scaffold(
       backgroundColor: const Color(0xffFEFEFE),
       body: Stack(
         children: [
-          Column(
-            children: [
-              // Header with back button and title.
-              Padding(
-                padding: EdgeInsets.all(context.appValues.appPadding.p0),
-                child: Stack(
+          // purple header
+          Container(
+            width: double.infinity,
+            height: context.appValues.appSizePercent.h50,
+            color: const Color(0xff4100E3),
+            child: SafeArea(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p20,
+                  vertical: context.appValues.appPadding.p10,
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
-                      width: context.appValues.appSizePercent.w100,
-                      height: context.appValues.appSizePercent.h50,
-                      decoration: const BoxDecoration(
-                        color: Color(0xff4100E3),
+                    InkWell(
+                      onTap: () => Navigator.pop(context),
+                      child: const Icon(
+                        Icons.arrow_back_ios_new_sharp,
+                        size: 20,
+                        color: Colors.white,
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.only(
-                          top: context.appValues.appPadding.p8,
-                          left: context.appValues.appPadding.p20,
-                          right: context.appValues.appPadding.p20,
-                        ),
-                        child: SafeArea(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              InkWell(
-                                child: Padding(
-                                  padding: EdgeInsets.only(
-                                    top: context.appValues.appPadding.p4,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    'assets/img/back.svg',
-                                    color: Colors.white,
-                                  ),
-                                ),
-                                onTap: () {
-                                  Navigator.pop(context);
-                                },
-                              ),
-                              const Gap(10),
-                              Text(
-                                translate('home_screen.categories'),
-                                style: getPrimaryBoldStyle(
-                                  color: context.resources.color.colorWhite,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                    ),
+                    InkWell(
+                      onTap: () {},
+                      child: const Icon(
+                        Icons.search,
+                        size: 25,
+                        color: Colors.white,
                       ),
                     ),
                   ],
                 ),
               ),
-            ],
+            ),
           ),
-          // DraggableScrollableSheet for content.
+
+          // white sheet
           DraggableScrollableSheet(
             initialChildSize: 0.85,
             minChildSize: 0.85,
-            maxChildSize: 1,
-            builder: (BuildContext context, ScrollController scrollController) {
+            maxChildSize: 1.0,
+            builder: (context, scrollController) {
               return Container(
                 decoration: const BoxDecoration(
+                  color: Color(0xffFEFEFE),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(30),
                     topRight: Radius.circular(30),
                   ),
-                  color: Color(0xffFEFEFE),
                 ),
                 child: Column(
                   children: [
-                    const Gap(30),
-                    // Updated custom styled TabBar:
-                    Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 16),
-                      decoration: BoxDecoration(
-                        color: const Color(0xffEAEAFF),
-                        borderRadius: BorderRadius.circular(10),
+                    const Gap(20),
+                    // category titles above cards
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p16,
                       ),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: TabBar(
-                          tabAlignment: TabAlignment.start,
-                          dividerColor: Colors.transparent,
-                          controller: _tabController,
-                          isScrollable: true,
-                          labelPadding: const EdgeInsets.symmetric(
-                              horizontal: 16, vertical: 5),
-                          indicatorSize: TabBarIndicatorSize.tab,
-                          indicatorPadding: const EdgeInsets.symmetric(
-                              horizontal: 5, vertical: 3),
-                          indicator: BoxDecoration(
-                            color: const Color(0xff4100E3),
-                            borderRadius: BorderRadius.circular(10),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SvgPicture.asset('assets/img/categoriesIcon.svg'),
+                          const Gap(4),
+                          Text(
+                            _parentCategoryTitle,
+                            style: getPrimaryRegularStyle(
+                              color: const Color(0xff180D38),
+                              fontSize: 12,
+                            ),
                           ),
-                          // Remove default underline.
-                          indicatorColor: Colors.transparent,
-                          indicatorWeight: 0,
-                          labelColor: Colors.white,
-                          unselectedLabelColor: const Color(0xff4100E3),
-                          tabs: widget.categoriesViewModel.categoriesList
-                              .map<Widget>(
-                                  (category) => buildCategoryWidget(category))
-                              .toList(),
-                        ),
+                          const Gap(4),
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: context.appValues.appPadding.p3,
+                            ),
+                            child: const Icon(
+                              Icons.keyboard_arrow_right_sharp,
+                              size: 12,
+                              color: Color(0xff8F9098),
+                            ),
+                          ),
+                          const Gap(4),
+                          SizedBox(
+                            width: context.appValues.appSizePercent.w58,
+                            child: Text(
+                              _currentCategoryTitle,
+                              overflow: TextOverflow.ellipsis,
+                              style: getPrimaryRegularStyle(
+                                color: const Color(0xff4100E3),
+                                fontSize: 12,
+                              ),
+                            ),
+                          ),
+                          const Gap(16),
+                        ],
                       ),
                     ),
-                    // TabBarView for services in each category.
+                    // list of cards
                     Expanded(
-                      child: TabBarView(
-                        controller: _tabController,
-                        children: widget.categoriesViewModel.categoriesList
-                            .map<Widget>((category) {
-                          return ListView.builder(
-                            controller: scrollController,
-                            itemCount:
-                                widget.categoriesViewModel.servicesList.length,
-                            itemBuilder: (context, index) {
-                              Map<String, dynamic> service = widget
-                                  .categoriesViewModel.servicesList[index];
-                              if (service["category"]["translations"][0]
-                                          ['categories_id']
-                                      .toString() ==
-                                  category["id"].toString()) {
-                                dynamic services;
-                                for (Map<String, dynamic> translation
-                                    in service["translations"]) {
-                                  if (translation["languages_code"] == lang) {
-                                    services = translation;
-                                    break;
-                                  }
-                                }
-                                return Consumer2<JobsViewModel,
-                                        ProfileViewModel>(
-                                    builder: (context, jobsViewModel,
-                                        profileViewModel, _) {
-                                  return CategoriesScreenCards(
-                                    category: category,
-                                    title: services != null
-                                        ? services["title"].toString()
-                                        : '',
-                                    cost:
-                                        '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["currency"]}',
-                                    image: service["image"] != null
-                                        ? '${context.resources.image.networkImagePath2}${service["image"]}?width=600'
-                                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                    onTap: () {
-                                      _handleServiceSelection(service,
-                                          jobsViewModel, profileViewModel);
-                                    },
+                      child: ListView.builder(
+                        controller: scrollController,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p0,
+                          vertical: 0,
+                        ),
+                        itemCount: filteredServices.length,
+                        itemBuilder: (context, index) {
+                          final service = filteredServices[index];
+                          dynamic trans;
+                          for (var t
+                              in service['translations'] as List<dynamic>) {
+                            if (t['languages_code'] == lang) {
+                              trans = t;
+                              break;
+                            }
+                          }
+                          final title = trans?['title']?.toString() ?? '';
+                          final rate = service['country_rates'][0];
+                          final cost =
+                              '${rate['unit_rate']} ${rate['country']['currency']}';
+                          final img = service['image'] != null
+                              ? "${context.resources.image.networkImagePath2}${service['image']}?quality=60"
+                              : null;
+
+                          return Consumer2<JobsViewModel, ProfileViewModel>(
+                            builder: (ctx, jobsVM, profVM, _) {
+                              return CategoriesScreenCards(
+                                category: selectedCategory,
+                                title: title,
+                                cost: cost,
+                                image: img ??
+                                    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                onTap: () {
+                                  jobsVM.setInputValues(
+                                      index: 'service', value: service['id']);
+                                  final addr =
+                                      profVM.getProfileBody['current_address'];
+                                  jobsVM.setInputValues(
+                                      index: 'job_address', value: addr);
+                                  jobsVM.setInputValues(
+                                    index: 'address',
+                                    value:
+                                        '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}',
                                   );
-                                });
-                              } else {
-                                return const SizedBox.shrink();
-                              }
+                                  jobsVM.setInputValues(
+                                      index: 'latitude',
+                                      value: addr['latitude']);
+                                  jobsVM.setInputValues(
+                                      index: 'longitude',
+                                      value: addr['longitude']);
+                                  jobsVM.setInputValues(
+                                      index: 'payment_method', value: 'Card');
+                                  Navigator.of(context).push(
+                                    PageRouteBuilder(
+                                      pageBuilder: (c, a1, a2) => BookAService(
+                                        service: service,
+                                        lang: lang,
+                                        image: img,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
                             },
                           );
-                        }).toList(),
+                        },
                       ),
                     ),
                   ],
@@ -237,70 +252,6 @@ class _CategoriesScreenState extends State<CategoriesScreen>
           ),
         ],
       ),
-    );
-  }
-
-  /// Simplified buildCategoryWidget that returns a Tab with the title.
-  Widget buildCategoryWidget(Map<String, dynamic> category) {
-    Map<String, dynamic>? categories;
-    for (Map<String, dynamic> translation in category["translations"]) {
-      if (translation["languages_code"] == lang) {
-        categories = translation;
-        break;
-      }
-    }
-    return Tab(
-      text: categories != null ? categories["title"].toString() : '',
-    );
-  }
-
-  void _handleServiceSelection(Map<String, dynamic> service,
-      JobsViewModel jobsViewModel, ProfileViewModel profileViewModel) {
-    if (lang == null) {
-      lang = 'en-US';
-    }
-    jobsViewModel.setInputValues(index: 'service', value: service['id']);
-    jobsViewModel.setInputValues(
-      index: 'job_address',
-      value: profileViewModel.getProfileBody['current_address'],
-    );
-
-    jobsViewModel.setInputValues(
-      index: 'address',
-      value:
-          '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
-    );
-    jobsViewModel.setInputValues(
-        index: 'latitude',
-        value: profileViewModel.getProfileBody['current_address']['latitude']);
-    jobsViewModel.setInputValues(
-        index: 'longitude',
-        value: profileViewModel.getProfileBody['current_address']['longitude']);
-    jobsViewModel.setInputValues(index: 'payment_method', value: 'Card');
-
-    Navigator.of(context).push(_createRoute(BookAService(
-      service: service,
-      lang: lang,
-      image: service["image"] != null
-          ? '${context.resources.image.networkImagePath2}${service["image"]}?quality=60'
-          : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
-    )));
-  }
-
-  Route _createRoute(dynamic classname) {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => classname,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-        return SlideTransition(
-          position: animation.drive(tween),
-          child: child,
-        );
-      },
     );
   }
 }

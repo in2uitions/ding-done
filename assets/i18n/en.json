@@ -448,6 +448,7 @@
     "signIn": "Sign In",
     "signInAs": "Sign In As",
     "signUp": "Sign Up",
+    "signUpNow": "Sign up now",
     "signInMessage": "Please sign in to your registered\naccount",
     "signUnMessage": "Don't have an account?",
     "forgotPassword": "Forgot password?",
@@ -456,7 +457,8 @@
     "rememberMe": "Remember me",
     "connectWithApple": "Connect with Apple",
     "connectWithGoogle": "Connect with Google",
-    "swipe": "Swipe right to go back"
+    "swipe": "Swipe right to go back",
+    "signInToYourAccount": "Sign in to your account"
   },
   "resetPassword_screen": {
     "resetPassword": "Reset Password",
@@ -479,6 +481,13 @@
     "companyId": "Company Id",
     "selectYourSkills": "Select your Skills",
     "identificationCard": "Upload Your ID"
+  },
+  "passRequirments": {
+    "req1": "Minimum 8 characters",
+    "req2": "An uppercase letter",
+    "req3": "A lowercase letter",
+    "req4": "A special character",
+    "req5": "A number"
   },
   "map": {
     "map": "Map"

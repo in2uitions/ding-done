@@ -62,7 +62,7 @@ class _ProfilePageState extends State<ProfilePage> {
                         padding: EdgeInsets.only(
                           top: context.appValues.appPadding.p10,
                           bottom: context.appValues.appPadding.p15,
-                          left: context.appValues.appPadding.p20,
+                          left: context.appValues.appPadding.p0,
                         ),
                         child: Container(
                           width: 100,
@@ -105,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ? '${profileViewModel.getProfileBody["user"]["email"]}'
                                 : '',
                             style: getPrimaryRegularStyle(
-                              fontSize: 18,
+                              fontSize: 12,
                               color: Colors.white,
                             ),
                           ),
@@ -117,8 +117,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
             ),
             DraggableScrollableSheet(
-                initialChildSize: 0.60,
-                minChildSize: 0.60,
+                initialChildSize: 0.62,
+                minChildSize: 0.62,
                 maxChildSize: 1,
                 builder:
                     (BuildContext context, ScrollController scrollController) {

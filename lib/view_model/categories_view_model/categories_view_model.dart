@@ -17,9 +17,9 @@ class CategoriesViewModel with ChangeNotifier {
   List<dynamic>? _categoriesList2 = List.empty();
   List<dynamic>? _parentCategoriesList = List.empty();
   ApiResponse<DropDownModelMain> _apiCategoriesResponse = ApiResponse.loading();
-  ApiResponse<DropDownModelMain> _apiParentCategoriesResponse = ApiResponse.loading();
+  ApiResponse<DropDownModelMain> _apiParentCategoriesResponse =
+      ApiResponse.loading();
   String? lang;
-
 
   CategoriesViewModel() {
     readJson();
@@ -29,6 +29,7 @@ class CategoriesViewModel with ChangeNotifier {
     await getCategoriesAndServices();
     getLanguage();
   }
+
   getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
   }
@@ -66,22 +67,30 @@ class CategoriesViewModel with ChangeNotifier {
 
       dynamic response = await _categoriesRepository.getCategoriesAndServices();
 
-      debugPrint('Getting categories and services2 $response');
+      // debugPrint('Getting categories and services2 $response');
 
       // _apiCategoriesResponse = ApiResponse.completed(response["categories"]);
       // _categoriesList = _apiCategoriesResponse.data?.dropDownList;
-      _categoriesList=response["categories"];
-      _parentCategoriesList = _categoriesList!.where((category) => category["class"] == null && category["status"]=='published').toList();
-      _categoriesList = _categoriesList!.where((category) => category["class"] != null && category["status"]=='published').toList();
+      _categoriesList = response["categories"];
+      _parentCategoriesList = _categoriesList!
+          .where((category) =>
+              category["class"] == null && category["status"] == 'published')
+          .toList();
+      _categoriesList = _categoriesList!
+          .where((category) =>
+              category["class"] != null && category["status"] == 'published')
+          .toList();
       // _categoriesList2 = _categoriesList!.where((category) => category.classs == servicesViewModel.searchBody['search_services']).toList();
-      _servicesList=response["services"];
-      _servicesList = _servicesList!.where((service) => service["status"].toString().toLowerCase() == 'published').toList();
+      _servicesList = response["services"];
+      _servicesList = _servicesList!
+          .where((service) =>
+              service["status"].toString().toLowerCase() == 'published')
+          .toList();
 
       _servicesList2 = _servicesList;
 
       notifyListeners();
       return _categoriesList;
-
     } catch (error) {
       debugPrint('Error fetching categories and services ${error}');
     }
@@ -91,9 +100,8 @@ class CategoriesViewModel with ChangeNotifier {
 
   Future<void> sortCategories(dynamic serv) async {
     try {
-      if(lang==null){
-        lang='en-US';
-
+      if (lang == null) {
+        lang = 'en-US';
       }
 
       // Filter the categories list to only include those with the chosen parent category
@@ -107,66 +115,64 @@ class CategoriesViewModel with ChangeNotifier {
 
           // for (Map<String,
           //     dynamic> translation1 in translation["categories_id"]["translations"]) {
-            if (translation["languages_code"] == lang) {
-              services = translation;
-              break; // Break the loop once the translation is found
-            }
+          if (translation["languages_code"] == lang) {
+            services = translation;
+            break; // Break the loop once the translation is found
+          }
           // }
         }
-        for (Map<String, dynamic> translationParent in category["class"]["translations"]) {
+        for (Map<String, dynamic> translationParent in category["class"]
+            ["translations"]) {
           // for (Map<String,
           //     dynamic> translation1 in translationParent["categories_id"]["translations"]) {
-            if (translationParent["languages_code"] == lang) {
-              parentServices = translationParent;
-              break; // Break the loop once the translation is found
-            }
+          if (translationParent["languages_code"] == lang) {
+            parentServices = translationParent;
+            break; // Break the loop once the translation is found
           }
+        }
         // }
         debugPrint('servvv to search for $serv');
         debugPrint('services to search for ${services?["title"]}');
 
         // Check if the category or its parent matches the chosen parent category
-        return serv.toString().toLowerCase() == services?["title"].toString().toLowerCase() ||
-            serv.toString().toLowerCase() == parentServices?["title"].toString().toLowerCase();
+        return serv.toString().toLowerCase() ==
+                services?["title"].toString().toLowerCase() ||
+            serv.toString().toLowerCase() ==
+                parentServices?["title"].toString().toLowerCase();
       }).toList();
 
       _categoriesList?.sort((a, b) {
-
         // Define a function to check if a service is yellow
         bool isYellow(Map<String, dynamic> service) {
           Map<String, dynamic>? services;
           Map<String, dynamic>? parentServices;
           for (Map<String, dynamic> translation in service["translations"]) {
-          //   for (Map<String,
-          //       dynamic> translation1 in translation["categories_id"]["translations"]) {
-              if (translation["languages_code"]== lang) {
-                services = translation;
-                break; // Break the loop once the translation is found
-              }
+            //   for (Map<String,
+            //       dynamic> translation1 in translation["categories_id"]["translations"]) {
+            if (translation["languages_code"] == lang) {
+              services = translation;
+              break; // Break the loop once the translation is found
+            }
             // }
           }
-          for (Map<String, dynamic> translationParent in service["class"]["translations"]) {
+          for (Map<String, dynamic> translationParent in service["class"]
+              ["translations"]) {
             // for (Map<String,
             //     dynamic> translation1 in translationParent["categories_id"]["translations"]) {
-              if (translationParent["languages_code"] == lang) {
-                parentServices = translationParent;
-                break; // Break the loop once the translation is found
-              }
+            if (translationParent["languages_code"] == lang) {
+              parentServices = translationParent;
+              break; // Break the loop once the translation is found
+            }
             // }
           }
 
           // Logic to determine if the service is yellow
           // You should replace this with your actual logic
-          return serv
-              .toString()
-              .toLowerCase() ==
-              services?["title"].toString().toLowerCase() ||
-              serv
-                  .toString()
-                  .toLowerCase() ==
+          return serv.toString().toLowerCase() ==
+                  services?["title"].toString().toLowerCase() ||
+              serv.toString().toLowerCase() ==
                   parentServices?["title"].toString().toLowerCase();
         }
-
 
         // Determine if services A and B are yellow
         bool isAYellow = isYellow(a);
@@ -188,6 +194,7 @@ class CategoriesViewModel with ChangeNotifier {
     }
     // notifyListeners();
   }
+
   Future<void> searchData({required String index, dynamic value}) async {
     String? lang = await AppPreferences().get(key: dblang, isModel: false);
 
@@ -198,16 +205,16 @@ class CategoriesViewModel with ChangeNotifier {
       String firstTranslationClass = '';
       Map<String, dynamic>? parentServices;
       for (Map<String, dynamic> translation in element["translations"]) {
-          if (translation["languages_code"] == lang) {
-            firstTranslationDescription = translation["description"].toString();
-            firstTranslationTitle = translation["title"].toString();
-            firstTranslationCategoryTitle = translation["title"].toString();
-            break; // Break the loop once the translation is found
-          }
+        if (translation["languages_code"] == lang) {
+          firstTranslationDescription = translation["description"].toString();
+          firstTranslationTitle = translation["title"].toString();
+          firstTranslationCategoryTitle = translation["title"].toString();
+          break; // Break the loop once the translation is found
+        }
       }
 
-      for (Map<String, dynamic> translation
-      in element["category"]["translations"]) {
+      for (Map<String, dynamic> translation in element["category"]
+          ["translations"]) {
         if (translation["languages_code"] == lang) {
           firstTranslationCategoryTitle = translation["title"].toString();
           break; // Break the loop once the translation is found
@@ -216,19 +223,17 @@ class CategoriesViewModel with ChangeNotifier {
       // }
 
       return firstTranslationDescription
-          .toLowerCase()
-          .contains(value.toString().toLowerCase()) ||
+              .toLowerCase()
+              .contains(value.toString().toLowerCase()) ||
           firstTranslationTitle
               .toLowerCase()
-              .contains(value.toString().toLowerCase())||
+              .contains(value.toString().toLowerCase()) ||
           firstTranslationCategoryTitle
               .toLowerCase()
-              .contains(value.toString().toLowerCase())
-          ||
+              .contains(value.toString().toLowerCase()) ||
           firstTranslationClass
               .toLowerCase()
-              .contains(value.toString().toLowerCase())
-      ;
+              .contains(value.toString().toLowerCase());
     }).toList();
 
     notifyListeners();
@@ -240,8 +245,6 @@ class CategoriesViewModel with ChangeNotifier {
 //     // You should replace this with your actual logic
 //     return _getColorForService(service) == Colors.yellow;
 //   }
-
-
 
   // Future<List<DropdownRoleModel>?> getParentCategories() async {
   //   try {
@@ -260,7 +263,6 @@ class CategoriesViewModel with ChangeNotifier {
   //   return _categoriesList;
   // }
 
-
   // get isActive => _userModelResponse.data?.status == 'active';
   get servicesList => _servicesList;
   get servicesList2 => _servicesList2;
@@ -268,5 +270,4 @@ class CategoriesViewModel with ChangeNotifier {
   get categoriesList => _categoriesList;
   get categoriesList2 => _categoriesList2;
   get parentCategoriesList => _parentCategoriesList;
-
 }

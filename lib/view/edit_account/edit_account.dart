@@ -100,7 +100,7 @@ class _EditAccountState extends State<EditAccount> {
                         ),
                         const Gap(10),
                         Text(
-                          translate('bottom_bar.profile'),
+                          translate('profile.myProfile'),
                           style: getPrimaryBoldStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -296,9 +296,9 @@ class _EditAccountState extends State<EditAccount> {
                                           value: profileViewModel
                                                   .getProfileBody["user"]
                                               ["first_name"],
-                                          prefixIcon:
-                                              'assets/img/account-feild.svg',
-                                          isPrfixShown: true,
+                                          // prefixIcon:
+                                          //     'assets/img/account-feild.svg',
+                                          // isPrfixShown: true,
                                         ),
                                       ),
                                       const Gap(10),
@@ -316,9 +316,9 @@ class _EditAccountState extends State<EditAccount> {
                                           value: profileViewModel
                                                   .getProfileBody["user"]
                                               ["last_name"],
-                                          prefixIcon:
-                                              'assets/img/account-feild.svg',
-                                          isPrfixShown: true,
+                                          // prefixIcon:
+                                          //     'assets/img/account-feild.svg',
+                                          // isPrfixShown: true,
                                         ),
                                       ),
                                       const Gap(10),
@@ -402,9 +402,8 @@ class _EditAccountState extends State<EditAccount> {
                                               TextInputType.emailAddress,
                                           value: profileViewModel
                                               .getProfileBody["user"]["email"],
-                                          prefixIcon:
-                                              'assets/img/email-feild.svg',
-                                          isPrfixShown: true,
+                                          // prefixIcon:
+                                          //     'assets/img/email-feild.svg',
                                         ),
                                       ),
                                       const Gap(20),

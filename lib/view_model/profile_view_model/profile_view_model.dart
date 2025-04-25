@@ -1,4 +1,3 @@
-
 import 'package:dingdone/data/remote/response/ApiResponse.dart';
 import 'package:dingdone/models/profile_model.dart';
 import 'package:dingdone/models/user_model.dart';
@@ -10,35 +9,31 @@ import 'package:flutter/foundation.dart';
 import '../../res/app_validation.dart';
 import '../../res/strings/english_strings.dart';
 
-
 class ProfileViewModel extends DisposableViewModel {
   ProfileRepository _homeRepository = ProfileRepository();
   ApiResponse<ProfileModel> _apiProfileResponse = ApiResponse.loading();
   ApiResponse<UserModel> _apiUserResponse = ApiResponse.loading();
   Map<String, dynamic> profileBody = {};
   Map<String?, String?> verifyPassword = {};
-  List<dynamic>? _selectedServices=List.empty();
-  List<dynamic>? _notifications=List.empty();
+  List<dynamic>? _selectedServices = List.empty();
+  List<dynamic>? _notifications = List.empty();
   String? lang;
   Map<String?, String?> profileErrors = {};
 
   Future<void> readJson() async {
-
     await getProfiledata();
     await getLanguage();
     notifyListeners();
   }
+
   getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
     if (lang == null) {
-
-        lang = 'en-US';
-
+      lang = 'en-US';
     }
   }
+
   get errorMsg => null;
-
-
 
   Future<dynamic> getProfiledata() async {
     //Todo sign up save user
@@ -46,7 +41,7 @@ class ProfileViewModel extends DisposableViewModel {
       ProfileModel? response = await _homeRepository.getProfileBody();
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       profileBody = _apiProfileResponse.data?.toJson() ?? {};
-      debugPrint('PROFILEREE ${profileBody}');
+      // debugPrint('PROFILEREE ${profileBody}');
 
       notifyListeners();
       return profileBody;
@@ -57,7 +52,7 @@ class ProfileViewModel extends DisposableViewModel {
     }
   }
 
-Future<dynamic> getNotifications() async {
+  Future<dynamic> getNotifications() async {
     //Todo sign up save user
     try {
       await getLanguage();
@@ -65,7 +60,7 @@ Future<dynamic> getNotifications() async {
       // _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       // profileBody = _apiProfileResponse.data?.toJson() ?? {};
       debugPrint('notifications ${response}');
-      _notifications=response;
+      _notifications = response;
       notifyListeners();
 
       return response;
@@ -76,14 +71,10 @@ Future<dynamic> getNotifications() async {
     }
   }
 
-
   Future<void> patchProfileState(dynamic state) async {
     try {
-      ProfileModel? response = await _homeRepository.patchProfileState(
-          id: profileBody["id"],
-          body: {
-            "state" :state
-      });
+      ProfileModel? response = await _homeRepository
+          .patchProfileState(id: profileBody["id"], body: {"state": state});
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       // profileBody = _apiProfileResponse.data?.toJson() ?? {};
       await getProfiledata();
@@ -93,6 +84,7 @@ Future<dynamic> getNotifications() async {
       notifyListeners();
     }
   }
+
   Future<bool>? patchProfileServices() async {
     try {
       debugPrint('patching Selected services $_selectedServices');
@@ -113,12 +105,12 @@ Future<dynamic> getNotifications() async {
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
       notifyListeners();
       return false;
-
     }
   }
+
   Future<void> setSelectedServices(dynamic services) async {
     try {
-      _selectedServices=services;
+      _selectedServices = services;
       notifyListeners();
     } catch (error) {
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
@@ -126,15 +118,16 @@ Future<dynamic> getNotifications() async {
     }
   }
 
-  Future<void> changeCurrentLocation(dynamic latitude,dynamic longitude) async {
+  Future<void> changeCurrentLocation(
+      dynamic latitude, dynamic longitude) async {
     try {
       debugPrint('Changing current location');
       dynamic response = await _homeRepository.changeCurrentLocation(
           // id: profileBody["id"],
           body: {
-            "latitude" :latitude,
-            "longitude" :longitude,
-      });
+            "latitude": latitude,
+            "longitude": longitude,
+          });
       // _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       // profileBody = _apiProfileResponse.data?.toJson() ?? {};
       debugPrint('response view model change location $response');
@@ -149,7 +142,8 @@ Future<dynamic> getNotifications() async {
   Future<void> patchProfileData(dynamic body) async {
     try {
       String userId = await getUserId();
-      List<Map<String, dynamic>> existingAddresses = List.from(profileBody["address"]);
+      List<Map<String, dynamic>> existingAddresses =
+          List.from(profileBody["address"]);
       // Create a new address
       debugPrint('body in patch profile data ${body}');
       Map<String, dynamic> newAddress = {
@@ -176,9 +170,9 @@ Future<dynamic> getNotifications() async {
           id: profileBody["id"],
           body: {
             "user": userId,
-            "address" :existingAddresses,
-            "current_address":newAddress
-      });
+            "address": existingAddresses,
+            "current_address": newAddress
+          });
       debugPrint('adding new address ${response}');
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       profileBody = _apiProfileResponse.data?.toJson() ?? {};
@@ -192,7 +186,8 @@ Future<dynamic> getNotifications() async {
   }
 
   void deleteAddress(int index) async {
-    List<Map<String, dynamic>> updatedAddresses = List.from(profileBody['address']);
+    List<Map<String, dynamic>> updatedAddresses =
+        List.from(profileBody['address']);
     updatedAddresses.removeAt(index);
 
     try {
@@ -202,7 +197,8 @@ Future<dynamic> getNotifications() async {
         body: {
           "user": userId,
           "address": updatedAddresses,
-          "current_address": updatedAddresses.isNotEmpty ? updatedAddresses.first : null,
+          "current_address":
+              updatedAddresses.isNotEmpty ? updatedAddresses.first : null,
         },
       );
       // Update the local address list
@@ -213,16 +209,13 @@ Future<dynamic> getNotifications() async {
     }
   }
 
- Future<void> setCurrentAddress(dynamic body) async {
+  Future<void> setCurrentAddress(dynamic body) async {
     try {
       String userId = await getUserId();
       debugPrint('current address data $body');
       ProfileModel? response = await _homeRepository.patchProfile(
           id: profileBody["id"],
-          body: {
-            "user": userId,
-            "current_address":body
-      });
+          body: {"user": userId, "current_address": body});
       debugPrint('adding new address ${response}');
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       profileBody = _apiProfileResponse.data?.toJson() ?? {};
@@ -234,31 +227,46 @@ Future<dynamic> getNotifications() async {
     }
   }
 
- Future<bool?> patchUserData(dynamic body) async {
+  Future<bool?> patchUserData(dynamic body) async {
     try {
-
       String userId = await getUserId();
       // Create a new address
       Map<String, dynamic> newUser = {
-        "id":userId,
-        "first_name": body["first_name"]!=null?body["first_name"]:profileBody["user"]["first_name"],
-        "last_name": body["last_name"]!=null?body["last_name"]:profileBody["user"]["last_name"],
-        "email": body["email"]!=null?body["email"]:profileBody["user"]["email"],
-        "phone_number": body["phone_number"]!=null?body["phone_number"]:profileBody["user"]["phone_number"],
-        "phone": body["phone"]!=null?body["phone"]:profileBody["user"]["phone"],
-        "phone_code": body["phone_code"]!=null?body["phone_code"]:profileBody["user"]["phone_code"],
-        "avatar": body["avatar"]!=null?body["avatar"]:profileBody["user"]["avatar"],
-        "description": body["description"]!=null?body["description"]:profileBody["user"]["description"],
-        "status": body["status"]!=null?body["status"]:profileBody["user"]["status"],
+        "id": userId,
+        "first_name": body["first_name"] != null
+            ? body["first_name"]
+            : profileBody["user"]["first_name"],
+        "last_name": body["last_name"] != null
+            ? body["last_name"]
+            : profileBody["user"]["last_name"],
+        "email": body["email"] != null
+            ? body["email"]
+            : profileBody["user"]["email"],
+        "phone_number": body["phone_number"] != null
+            ? body["phone_number"]
+            : profileBody["user"]["phone_number"],
+        "phone": body["phone"] != null
+            ? body["phone"]
+            : profileBody["user"]["phone"],
+        "phone_code": body["phone_code"] != null
+            ? body["phone_code"]
+            : profileBody["user"]["phone_code"],
+        "avatar": body["avatar"] != null
+            ? body["avatar"]
+            : profileBody["user"]["avatar"],
+        "description": body["description"] != null
+            ? body["description"]
+            : profileBody["user"]["description"],
+        "status": body["status"] != null
+            ? body["status"]
+            : profileBody["user"]["status"],
       };
 
       // Add the new address to the existing list
 
-      ProfileModel? response = await _homeRepository.patchProfile(
-          id: profileBody["id"],
-          body: {
-            "user": newUser,
-
+      ProfileModel? response =
+          await _homeRepository.patchProfile(id: profileBody["id"], body: {
+        "user": newUser,
       });
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       await getProfiledata();
@@ -272,24 +280,18 @@ Future<dynamic> getNotifications() async {
       return false;
     }
   }
- Future<bool?> patchPassword() async {
+
+  Future<bool?> patchPassword() async {
     try {
-
-      String userId = await AppPreferences().get(key: userIdTochangePassword, isModel: false);
+      String userId = await AppPreferences()
+          .get(key: userIdTochangePassword, isModel: false);
       // Create a new address
-      Map<String, dynamic> newUser = {
-
-
-      };
+      Map<String, dynamic> newUser = {};
 
       // Add the new address to the existing list
 
       dynamic response = await _homeRepository.patchPassword(
-          id: userId,
-          body: {
-            "password":profileBody["new_password"]
-
-      });
+          id: userId, body: {"password": profileBody["new_password"]});
       debugPrint('response $response');
       // _apiUserResponse = ApiResponse<UserModel>.completed(response);
 
@@ -301,31 +303,32 @@ Future<dynamic> getNotifications() async {
       return false;
     }
   }
+
   bool validate() {
     verifyPassword = {};
     String? newPasswordMessage = '';
     String? confirmNewPasswordMessage = '';
     String? mustmatch = '';
 
-        newPasswordMessage = AppValidation().isValidPassword(
-            profileBody['new_password'] ?? '');
-        debugPrint('new password message ${newPasswordMessage}');
-        debugPrint('profileBody new password ${profileBody['new_password']}');
-    confirmNewPasswordMessage = AppValidation().isValidPassword(
-        profileBody['confirm_new_password'] ?? '');
-    mustmatch=AppValidation().matchingPasswords(profileBody['new_password']==profileBody['confirm_new_password']);
-        if (newPasswordMessage == null && confirmNewPasswordMessage==null && mustmatch==null) {
-          notifyListeners();
-          return true;
-        }
+    newPasswordMessage =
+        AppValidation().isValidPassword(profileBody['new_password'] ?? '');
+    debugPrint('new password message ${newPasswordMessage}');
+    debugPrint('profileBody new password ${profileBody['new_password']}');
+    confirmNewPasswordMessage = AppValidation()
+        .isValidPassword(profileBody['confirm_new_password'] ?? '');
+    mustmatch = AppValidation().matchingPasswords(
+        profileBody['new_password'] == profileBody['confirm_new_password']);
+    if (newPasswordMessage == null &&
+        confirmNewPasswordMessage == null &&
+        mustmatch == null) {
+      notifyListeners();
+      return true;
+    }
     verifyPassword['new_password'] = newPasswordMessage;
     verifyPassword['confirm_new_password'] = confirmNewPasswordMessage;
-    verifyPassword['confirm_new_password']=mustmatch;
+    verifyPassword['confirm_new_password'] = mustmatch;
     notifyListeners();
     return false;
-
-
-
   }
 
   void setInputValues({required String index, dynamic value}) {
@@ -334,9 +337,11 @@ Future<dynamic> getNotifications() async {
 
     notifyListeners();
   }
-  Future<dynamic> getData() async{
+
+  Future<dynamic> getData() async {
     return profileBody;
   }
+
   bool validateData({required int index}) {
     // profileBody = {};
     String? firstnameMessage = '';
@@ -357,234 +362,217 @@ Future<dynamic> getNotifications() async {
     // String? dobMessage = '';
 
     String? role = profileBody['role'];
-    debugPrint('profile body in validate $profileBody')
-;
+    debugPrint('profile body in validate $profileBody');
 
-        if (index == 0) {
-          firstnameMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['first_name']!] ?? '',
-              index: 'First name');
-          lastnameMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['last_name']!] ?? '',
-              index: 'Last name');
-          // dobMessage = AppValidation().isNotEmpty(
-          //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
-          //     index: 'Date of birth');
+    if (index == 0) {
+      firstnameMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['first_name']!] ?? '',
+          index: 'First name');
+      lastnameMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['last_name']!] ?? '',
+          index: 'Last name');
+      // dobMessage = AppValidation().isNotEmpty(
+      //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
+      //     index: 'Date of birth');
 
-          if (firstnameMessage == null && lastnameMessage == null
+      if (firstnameMessage == null && lastnameMessage == null
           // && dobMessage == null
           ) {
-            notifyListeners();
-            return true;
-          }
-          profileBody[EnglishStrings().formKeys['first_name']!] =
-              firstnameMessage;
-          profileBody[EnglishStrings().formKeys['last_name']!] =
-              lastnameMessage;
-          // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
+        notifyListeners();
+        return true;
+      }
+      profileBody[EnglishStrings().formKeys['first_name']!] = firstnameMessage;
+      profileBody[EnglishStrings().formKeys['last_name']!] = lastnameMessage;
+      // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
 
-          notifyListeners();
-          return false;
-        }
+      notifyListeners();
+      return false;
+    }
 
-        if (index == 1) {
-          emailMessage = AppValidation().isEmailValid(
-              profileBody[EnglishStrings().formKeys['email']!] ?? '');
-          phoneMessage = AppValidation().isValidPhoneNumber(
+    if (index == 1) {
+      emailMessage = AppValidation()
+          .isEmailValid(profileBody[EnglishStrings().formKeys['email']!] ?? '');
+      phoneMessage = AppValidation().isValidPhoneNumber(
+        profileBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+      );
 
-            profileBody[EnglishStrings().formKeys['phone_number']!] ?? '',
-          );
+      if (emailMessage == null && phoneMessage == null) {
+        notifyListeners();
+        return true;
+      }
+      profileErrors[EnglishStrings().formKeys['email']!] = emailMessage;
+      profileErrors[EnglishStrings().formKeys['phone_number']!] = phoneMessage;
+      notifyListeners();
+      return false;
+    }
 
-          if (emailMessage == null && phoneMessage == null) {
-            notifyListeners();
-            return true;
-          }
-          profileErrors[EnglishStrings().formKeys['email']!] = emailMessage;
-          profileErrors[EnglishStrings().formKeys['phone_number']!] =
-              phoneMessage;
-          notifyListeners();
-          return false;
-        }
+    // if (index == 2) {
+    //   passwordMessage = AppValidation().isValidPassword(
+    //       profileBody[EnglishStrings().formKeys['password']!] ?? '');
+    //   if (passwordMessage == null) {
+    //     notifyListeners();
+    //     return true;
+    //   }
+    //   profileErrors[EnglishStrings().formKeys['password']!] =
+    //       passwordMessage;
+    //   notifyListeners();
+    //   return false;
+    //
+    // }
 
-        // if (index == 2) {
-        //   passwordMessage = AppValidation().isValidPassword(
-        //       profileBody[EnglishStrings().formKeys['password']!] ?? '');
-        //   if (passwordMessage == null) {
-        //     notifyListeners();
-        //     return true;
-        //   }
-        //   profileErrors[EnglishStrings().formKeys['password']!] =
-        //       passwordMessage;
-        //   notifyListeners();
-        //   return false;
-        //
-        // }
+    if (index == 2) {
+      streetMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['street_number']!] ?? '',
+          index: 'Street Number');
+      buildingMessage = AppValidation().isNotEmpty(
+          value:
+              profileBody[EnglishStrings().formKeys['building_number']!] ?? '',
+          index: 'Building Number');
+      apartmentMessage = AppValidation().isNotEmpty(
+          value:
+              profileBody[EnglishStrings().formKeys['apartment_number']!] ?? '',
+          index: 'Apartment Number');
+      cityMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['city']!] ?? '',
+          index: 'City');
+      zoneMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['zone']!] ?? '',
+          index: 'Zone');
+      addressLabelMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['address_label']!] ?? '',
+          index: 'Address Label');
+      countryMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['country']!] ?? '',
+          index: 'Country');
+      floorMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['floor']!] ?? '',
+          index: 'Floor');
+      longitudeMessage = AppValidation().isNotEmpty(
+          value: profileBody['longitude'] ?? '', index: 'Longitude');
+      latitudeMessage = AppValidation()
+          .isNotEmpty(value: profileBody['latitude'] ?? '', index: 'Latitude');
+      if (streetMessage == null &&
+          buildingMessage == null &&
+          apartmentMessage == null &&
+          cityMessage == null &&
+          zoneMessage == null &&
+          addressLabelMessage == null &&
+          countryMessage == null &&
+          floorMessage == null &&
+          latitudeMessage == null &&
+          longitudeMessage == null) {
+        notifyListeners();
+        return true;
+      }
 
-        if (index == 2) {
-          streetMessage = AppValidation().isNotEmpty(
-              value:
-              profileBody[EnglishStrings().formKeys['street_number']!] ?? '',
-              index: 'Street Number');
-          buildingMessage = AppValidation().isNotEmpty(
-              value:
-              profileBody[EnglishStrings().formKeys['building_number']!] ??
-                  '',
-              index: 'Building Number');
-          apartmentMessage = AppValidation().isNotEmpty(
-              value:
-              profileBody[EnglishStrings().formKeys['apartment_number']!] ??
-                  '',
-              index: 'Apartment Number');
-          cityMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['city']!] ?? '',
-              index: 'City');
-          zoneMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['zone']!] ?? '',
-              index: 'Zone');
-          addressLabelMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['address_label']!] ?? '',
-              index: 'Address Label');
-          countryMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['country']!] ?? '',
-              index: 'Country');
-          floorMessage = AppValidation().isNotEmpty(
-              value:
-              profileBody[EnglishStrings().formKeys['floor']!] ?? '',
-              index: 'Floor');
-          longitudeMessage = AppValidation().isNotEmpty(
-              value: profileBody['longitude'] ?? '',
-              index: 'Longitude');
-          latitudeMessage = AppValidation().isNotEmpty(
-              value: profileBody['latitude'] ?? '',
-              index: 'Latitude');
-          if (
+      profileErrors[EnglishStrings().formKeys['street_number']!] =
+          streetMessage;
+      profileErrors[EnglishStrings().formKeys['building_number']!] =
+          buildingMessage;
+      profileErrors[EnglishStrings().formKeys['apartment_number']!] =
+          apartmentMessage;
+      profileErrors[EnglishStrings().formKeys['city']!] = cityMessage;
+      profileErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+      profileErrors[EnglishStrings().formKeys['address_label']!] =
+          addressLabelMessage;
+      profileErrors[EnglishStrings().formKeys['country']!] = countryMessage;
+      profileErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
+      profileErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
+      profileErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
+      notifyListeners();
+      return false;
+    }
+
+    if (index == 3) {
+      firstnameMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['first_name']!] ?? '',
+          index: 'First name');
+      lastnameMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['last_name']!] ?? '',
+          index: 'Last name');
+      emailMessage = AppValidation()
+          .isEmailValid(profileBody[EnglishStrings().formKeys['email']!] ?? '');
+      phoneMessage = AppValidation().isValidPhoneNumber(
+        profileBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+      );
+      // dobMessage = AppValidation().isNotEmpty(
+      //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
+      //     index: 'Date of birth');
+      passwordMessage = AppValidation().isValidPassword(
+          profileBody[EnglishStrings().formKeys['password']!] ?? '');
+      streetMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['street_number']!] ?? '',
+          index: 'Street Number');
+      buildingMessage = AppValidation().isNotEmpty(
+          value:
+              profileBody[EnglishStrings().formKeys['building_number']!] ?? '',
+          index: 'Building Number');
+      apartmentMessage = AppValidation().isNotEmpty(
+          value:
+              profileBody[EnglishStrings().formKeys['apartment_number']!] ?? '',
+          index: 'Apartment Number');
+      cityMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['city']!] ?? '',
+          index: 'City');
+      zoneMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['zone']!] ?? '',
+          index: 'Zone');
+      addressLabelMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['address_label']!] ?? '',
+          index: 'Address Label');
+      countryMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['country']!] ?? '',
+          index: 'Country');
+      floorMessage = AppValidation().isNotEmpty(
+          value: profileBody[EnglishStrings().formKeys['floor']!] ?? '',
+          index: 'Floor');
+      longitudeMessage = AppValidation().isNotEmpty(
+          value: profileBody['longitude'] ?? '', index: 'Longitude');
+      latitudeMessage = AppValidation()
+          .isNotEmpty(value: profileBody['latitude'] ?? '', index: 'Latitude');
+      if (firstnameMessage == null &&
+          lastnameMessage == null &&
+          emailMessage == null &&
+          phoneMessage == null &&
+          // passwordMessage == null &&
+          // dobMessage == null &&
           streetMessage == null &&
-              buildingMessage == null &&
-              apartmentMessage == null &&
-              cityMessage == null &&
-              zoneMessage == null &&
-              addressLabelMessage == null &&
-              countryMessage == null &&
-              floorMessage == null && latitudeMessage==null && longitudeMessage==null) {
-            notifyListeners();
-            return true;
-          }
-
-          profileErrors[EnglishStrings().formKeys['street_number']!] =
-              streetMessage;
-          profileErrors[EnglishStrings().formKeys['building_number']!] =
-              buildingMessage;
-          profileErrors[EnglishStrings().formKeys['apartment_number']!] =
-              apartmentMessage;
-          profileErrors[EnglishStrings().formKeys['city']!] = cityMessage;
-          profileErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
-          profileErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
-          profileErrors[EnglishStrings().formKeys['country']!] = countryMessage;
-          profileErrors[EnglishStrings().formKeys['floor']!] =
-              floorMessage;
-          profileErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
-          profileErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
-          notifyListeners();
-          return false;
-        }
-
-        if (index == 3) {
-          firstnameMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['first_name']!] ?? '',
-              index: 'First name');
-          lastnameMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['last_name']!] ?? '',
-              index: 'Last name');
-          emailMessage = AppValidation().isEmailValid(
-              profileBody[EnglishStrings().formKeys['email']!] ?? '');
-          phoneMessage = AppValidation().isValidPhoneNumber(
-            profileBody[EnglishStrings().formKeys['phone_number']!] ?? '',
-          );
-          // dobMessage = AppValidation().isNotEmpty(
-          //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
-          //     index: 'Date of birth');
-          passwordMessage = AppValidation().isValidPassword(
-              profileBody[EnglishStrings().formKeys['password']!] ?? '');
-          streetMessage = AppValidation().isNotEmpty(
-              value:
-              profileBody[EnglishStrings().formKeys['street_number']!] ?? '',
-              index: 'Street Number');
-          buildingMessage = AppValidation().isNotEmpty(
-              value:
-              profileBody[EnglishStrings().formKeys['building_number']!] ??
-                  '',
-              index: 'Building Number');
-          apartmentMessage = AppValidation().isNotEmpty(
-              value:
-              profileBody[EnglishStrings().formKeys['apartment_number']!] ??
-                  '',
-              index: 'Apartment Number');
-          cityMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['city']!] ?? '',
-              index: 'City');
-          zoneMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['zone']!] ?? '',
-              index: 'Zone');
-          addressLabelMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['address_label']!] ?? '',
-              index: 'Address Label');
-          countryMessage = AppValidation().isNotEmpty(
-              value: profileBody[EnglishStrings().formKeys['country']!] ?? '',
-              index: 'Country');
-          floorMessage = AppValidation().isNotEmpty(
-              value:
-              profileBody[EnglishStrings().formKeys['floor']!] ?? '',
-              index: 'Floor');
-          longitudeMessage = AppValidation().isNotEmpty(
-              value: profileBody['longitude'] ?? '',
-              index: 'Longitude');
-          latitudeMessage = AppValidation().isNotEmpty(
-              value: profileBody['latitude'] ?? '',
-              index: 'Latitude');
-          if (firstnameMessage == null &&
-              lastnameMessage == null &&
-              emailMessage == null &&
-              phoneMessage == null &&
-              // passwordMessage == null &&
-              // dobMessage == null &&
-              streetMessage == null &&
-              buildingMessage == null &&
-              apartmentMessage == null &&
-              cityMessage == null &&
-              floorMessage == null &&
-              countryMessage == null &&
-              zoneMessage == null  && addressLabelMessage == null  && latitudeMessage==null && longitudeMessage==null) {
-            notifyListeners();
-            return true;
-          }
-          profileErrors[EnglishStrings().formKeys['first_name']!] =
-              firstnameMessage;
-          profileErrors[EnglishStrings().formKeys['last_name']!] = lastnameMessage;
-          profileErrors[EnglishStrings().formKeys['email']!] = emailMessage;
-          profileErrors[EnglishStrings().formKeys['phone_number']!] = phoneMessage;
-          profileErrors[EnglishStrings().formKeys['password']!] = passwordMessage;
-          // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
-          profileErrors[EnglishStrings().formKeys['street_number']!] =
-              streetMessage;
-          profileErrors[EnglishStrings().formKeys['building_number']!] =
-              buildingMessage;
-          profileErrors[EnglishStrings().formKeys['apartment_number']!] =
-              apartmentMessage;
-          profileErrors[EnglishStrings().formKeys['city']!] = cityMessage;
-          profileErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
-          profileErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
-          profileErrors[EnglishStrings().formKeys['country']!] =
-              countryMessage;
-          profileErrors[EnglishStrings().formKeys['floor']!] =
-              floorMessage;
-          profileErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
-          profileErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
-          notifyListeners();
-          return false;
-
-        }
-
-
+          buildingMessage == null &&
+          apartmentMessage == null &&
+          cityMessage == null &&
+          floorMessage == null &&
+          countryMessage == null &&
+          zoneMessage == null &&
+          addressLabelMessage == null &&
+          latitudeMessage == null &&
+          longitudeMessage == null) {
+        notifyListeners();
+        return true;
+      }
+      profileErrors[EnglishStrings().formKeys['first_name']!] =
+          firstnameMessage;
+      profileErrors[EnglishStrings().formKeys['last_name']!] = lastnameMessage;
+      profileErrors[EnglishStrings().formKeys['email']!] = emailMessage;
+      profileErrors[EnglishStrings().formKeys['phone_number']!] = phoneMessage;
+      profileErrors[EnglishStrings().formKeys['password']!] = passwordMessage;
+      // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
+      profileErrors[EnglishStrings().formKeys['street_number']!] =
+          streetMessage;
+      profileErrors[EnglishStrings().formKeys['building_number']!] =
+          buildingMessage;
+      profileErrors[EnglishStrings().formKeys['apartment_number']!] =
+          apartmentMessage;
+      profileErrors[EnglishStrings().formKeys['city']!] = cityMessage;
+      profileErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
+      profileErrors[EnglishStrings().formKeys['address_label']!] =
+          addressLabelMessage;
+      profileErrors[EnglishStrings().formKeys['country']!] = countryMessage;
+      profileErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
+      profileErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
+      profileErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
+      notifyListeners();
+      return false;
+    }
 
     notifyListeners();
     return false;
@@ -593,7 +581,7 @@ Future<dynamic> getNotifications() async {
   Future<String> getUserId() async {
     try {
       String? token =
-      await AppPreferences().get(key: userIdKey, isModel: false);
+          await AppPreferences().get(key: userIdKey, isModel: false);
       return token ?? '';
     } catch (err) {
       return '';
@@ -607,6 +595,5 @@ Future<dynamic> getNotifications() async {
   @override
   void disposeValues() {
     _homeRepository = ProfileRepository();
-
   }
 }

@@ -19,10 +19,12 @@ class CategoriesRepo {
       rethrow;
     }
   }
- Future<dynamic> getCategoriesAndServices() async {
+
+  Future<dynamic> getCategoriesAndServices() async {
     try {
-      dynamic response = await _apiCategoriesAndServices.getResponse(sendToken: false);
-      debugPrint('response in get categories and serices $response');
+      dynamic response =
+          await _apiCategoriesAndServices.getResponse(sendToken: false);
+      // debugPrint('response in get categories and serices $response');
       return response;
     } catch (error) {
       debugPrint('error in get categories and serices $error');
@@ -30,5 +32,4 @@ class CategoriesRepo {
       rethrow;
     }
   }
-
 }

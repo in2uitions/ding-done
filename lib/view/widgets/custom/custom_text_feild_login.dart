@@ -88,7 +88,7 @@ class _CustomTextFieldLoginState extends State<CustomTextFieldLogin> {
         fillColor: context.resources.color.colorWhite,
         hintText: widget.hintText,
         hintStyle: getPrimaryRegularStyle(
-          fontSize: 15,
+          fontSize: 14,
           color: const Color(0xff8F9098),
         ),
         helperText: widget.helperText,

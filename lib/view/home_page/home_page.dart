@@ -4,6 +4,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/categories/parent_categories.dart';
+import 'package:dingdone/view/notifications_screen/notifications_screen.dart';
 import 'package:dingdone/view/services_screen/services_screen.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
@@ -90,7 +91,10 @@ class _HomePageState extends State<HomePage> {
       // Simulate network fetch or database query
       await Future.delayed(const Duration(seconds: 2));
       // Update the list of items and refresh the UI
-      Navigator.of(context).push(_createRoute(BottomBar(userRole: role, currentTab: 0,)));
+      Navigator.of(context).push(_createRoute(BottomBar(
+        userRole: role,
+        currentTab: 0,
+      )));
       Provider.of<CategoriesViewModel>(context, listen: false).readJson();
       Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(
           Provider.of<ServicesViewModel>(context, listen: false)
@@ -575,7 +579,15 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ],
                                   ),
-                                  SvgPicture.asset('assets/img/yellowbell.svg'),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(_createRoute(
+                                        const NotificationsScreen(),
+                                      ));
+                                    },
+                                    child: SvgPicture.asset(
+                                        'assets/img/yellowbell.svg'),
+                                  ),
                                   // Container(
                                   //   width:
                                   //       context.appValues.appSizePercent.w10p5,

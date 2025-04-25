@@ -180,8 +180,12 @@ class _JobsPageState extends State<JobsPage> {
         fit: StackFit.expand,
         children: [
           Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: EdgeInsets.all(context.appValues.appPadding.p0),
@@ -457,7 +461,10 @@ class _JobsPageState extends State<JobsPage> {
                       final role = prefs.getString(userRoleKey);
 
                       Navigator.of(context).push(
-                        _createRoute(BottomBar(userRole: role, currentTab: 0,)),
+                        _createRoute(BottomBar(
+                          userRole: role,
+                          currentTab: 0,
+                        )),
                       );
                     },
                   ),

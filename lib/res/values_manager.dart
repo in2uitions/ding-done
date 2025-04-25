@@ -117,7 +117,13 @@ class AppSizePercentage {
   double get w48 => width * 0.48;
   double get w47 => width * 0.47;
   double get w55 => width * 0.55;
+  double get w56 => width * 0.56;
+  double get w57 => width * 0.57;
+  double get w58 => width * 0.58;
+  double get w59 => width * 0.59;
   double get w60 => width * 0.60;
+  double get w62 => width * 0.62;
+  double get w61 => width * 0.61;
   double get w65 => width * 0.65;
   double get w64 => width * 0.64;
   double get w63 => width * 0.63;

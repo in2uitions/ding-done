@@ -19,9 +19,9 @@ class ProfileRepository {
   final BaseApiService _apiCustomerLocation =
       NetworkApiService(url: ApiEndPoints().customerChangeLocation);
   final BaseApiService _userApi =
-  NetworkApiService(url: ApiEndPoints().userData);
+      NetworkApiService(url: ApiEndPoints().userData);
   final BaseApiService _apiNotifications =
-  NetworkApiService(url: ApiEndPoints().notifications);
+      NetworkApiService(url: ApiEndPoints().notifications);
 
   Future<ProfileModel?> getProfileBody() async {
     try {
@@ -40,7 +40,7 @@ class ProfileRepository {
               params: '?fields=*.*.*&filter[user][_eq]=$userId');
         }
       }
-      debugPrint('resounse is ${response['data'][0]}');
+      // debugPrint('resounse is ${response['data'][0]}');
       if (response['data'] != null && response['data'].length > 0) {
         jsonData = ProfileModel.fromJson(response['data'][0]);
       }
@@ -53,8 +53,8 @@ class ProfileRepository {
 
   Future<dynamic> getNotifications(var lang) async {
     try {
-
-      dynamic response = await _apiNotifications.getResponse(params: '?language=$lang');
+      dynamic response =
+          await _apiNotifications.getResponse(params: '?language=$lang');
       debugPrint('response notifications $response');
       return response['data'];
     } catch (error) {
@@ -87,8 +87,8 @@ class ProfileRepository {
       rethrow;
     }
   }
-  Future<dynamic> changeCurrentLocation(
-      {dynamic body}) async {
+
+  Future<dynamic> changeCurrentLocation({dynamic body}) async {
     try {
       String userId = await getUserId();
       String role = await getRole();
@@ -96,16 +96,14 @@ class ProfileRepository {
       if (Constants.customerRoleId == role) {
         body["customer_id"] = userId;
         debugPrint('customer change location ');
-        response = await _apiCustomerLocation.postResponse(
-           data: body);
+        response = await _apiCustomerLocation.postResponse(data: body);
       } else {
         if (Constants.supplierRoleId == role) {
           body["supplier_id"] = userId;
 
           debugPrint('supplier change location ');
           debugPrint('supplier body ${body}');
-          response = await _apiSupplierLocation.postResponse(
-            data: body);
+          response = await _apiSupplierLocation.postResponse(data: body);
         }
       }
       debugPrint('response of change location $response');
@@ -115,6 +113,7 @@ class ProfileRepository {
       rethrow;
     }
   }
+
 // Function to recursively remove the 'token' field
   void removeToken(Map<String, dynamic> map) {
     map.remove('token'); // Remove the 'token' at the current level
@@ -134,6 +133,7 @@ class ProfileRepository {
       }
     });
   }
+
   Future<ProfileModel?> patchProfile({required int id, dynamic body}) async {
     try {
       String userId = await getUserId();
@@ -142,7 +142,6 @@ class ProfileRepository {
       dynamic response;
       debugPrint('patching daa $body');
       if (Constants.customerRoleId == role) {
-
         response = await _apiCustomerProfile.patchResponse(
             id: id, data: body, params: '?fields=*.*');
         debugPrint('customer ${response}');
@@ -153,16 +152,16 @@ class ProfileRepository {
           // Remove the 'token' field from the cleanedBody
           removeToken(cleanedBody);
           debugPrint('clean body address ${cleanedBody["address"]}');
-          debugPrint('clean body current address ${cleanedBody["current_address"]}');
+          debugPrint(
+              'clean body current address ${cleanedBody["current_address"]}');
 
           // Call the patchResponse method with the cleanedBody
           var finalBody = <String, dynamic>{};
-          finalBody["user"]=cleanedBody["user"];
-          finalBody["current_address"]=cleanedBody["current_address"];
+          finalBody["user"] = cleanedBody["user"];
+          finalBody["current_address"] = cleanedBody["current_address"];
           debugPrint('address is ${cleanedBody['address']}');
-          if(cleanedBody["address"]!=null){
-            finalBody["address"]=cleanedBody["address"];
-
+          if (cleanedBody["address"] != null) {
+            finalBody["address"] = cleanedBody["address"];
           }
           debugPrint('supplier finalBody body ${finalBody}');
 
@@ -185,12 +184,10 @@ class ProfileRepository {
 
   Future<dynamic> patchPassword({required String id, dynamic body}) async {
     try {
-
       dynamic response;
-        response = await _userApi.patchResponse(
-            id: id, data: body, params: '?fields=*.*');
-        debugPrint('patch passqw response repo ${response}');
-
+      response = await _userApi.patchResponse(
+          id: id, data: body, params: '?fields=*.*');
+      debugPrint('patch passqw response repo ${response}');
 
       // final jsonData = UserModel.fromJson(response['data']);
       debugPrint('jsondata repo ${response}');
@@ -200,14 +197,12 @@ class ProfileRepository {
       rethrow;
     }
   }
-  Future<dynamic> patchProfileServices(dynamic id,dynamic body) async {
+
+  Future<dynamic> patchProfileServices(dynamic id, dynamic body) async {
     try {
-
       dynamic response;
-        response = await _apiSupplierProfile.patchResponse(
-            id: id, data: body);
-        debugPrint('patch passqw response repo ${response}');
-
+      response = await _apiSupplierProfile.patchResponse(id: id, data: body);
+      debugPrint('patch passqw response repo ${response}');
 
       // final jsonData = UserModel.fromJson(response['data']);
       debugPrint('jsondata repo ${response}');
