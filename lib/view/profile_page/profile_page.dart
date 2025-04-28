@@ -1,5 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/login/login.dart';
+import 'package:dingdone/view/settings_screen/settings_screen.dart';
 import 'package:dingdone/view/widgets/profile/profile_component.dart';
 import 'package:dingdone/view/widgets/profile/profile_second_component.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
@@ -49,12 +51,20 @@ class _ProfilePageState extends State<ProfilePage> {
                           children: [
                             Text(
                               translate('profile.account'),
-                              style: getPrimaryBoldStyle(
+                              style: getPrimarySemiBoldStyle(
                                 fontSize: 16,
                                 color: Colors.white,
                               ),
                             ),
-                            SvgPicture.asset('assets/img/settings.svg'),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).push(_createRoute(
+                                  const SettingsScreen(),
+                                ));
+                              },
+                              child:
+                                  SvgPicture.asset('assets/img/settings.svg'),
+                            ),
                           ],
                         ),
                       ),
@@ -95,7 +105,7 @@ class _ProfilePageState extends State<ProfilePage> {
                             profileViewModel.getProfileBody["user"] != null
                                 ? '${profileViewModel.getProfileBody["user"]["first_name"]} ${profileViewModel.getProfileBody["user"]["last_name"]}'
                                 : '',
-                            style: getPrimaryBoldStyle(
+                            style: getPrimarySemiBoldStyle(
                               fontSize: 18,
                               color: Colors.white,
                             ),
@@ -133,18 +143,21 @@ class _ProfilePageState extends State<ProfilePage> {
                     child: ListView.builder(
                         controller: scrollController,
                         itemCount: 1,
+                        padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
                           return Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              const Gap(30),
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                   horizontal: context.appValues.appPadding.p20,
+                                  // vertical: context.appValues.appPadding.p30,
                                 ),
                                 child: Text(
                                   'Manage Account',
-                                  style: getPrimaryBoldStyle(
+                                  style: getPrimaryMediumStyle(
                                     fontSize: 14,
                                     color: const Color(0xff180B3C),
                                   ),
@@ -159,7 +172,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ["role"]
                                     : '',
                               ),
-                              const Gap(20),
+                              const Gap(40),
                               const ProfileSeconComponent(),
                             ],
                           );
@@ -171,4 +184,22 @@ class _ProfilePageState extends State<ProfilePage> {
       }),
     );
   }
+}
+
+Route _createRoute(dynamic classname) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => classname,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

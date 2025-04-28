@@ -66,16 +66,16 @@ class _CategoriescardState extends State<Categoriescard> {
                       widget.title,
                       maxLines: 2, // Limit the number of lines to 1
                       overflow: TextOverflow.ellipsis,
-                      style: getPrimaryBoldStyle(
+                      style: getPrimaryMediumStyle(
                         fontSize: 14,
                         color: context.resources.color.btnColorBlue,
                       ),
                     ),
                     Text(
-                      'Cost: ${widget.cost}',
-                      maxLines: 1, // Limit the number of lines to 1
+                      'COST: ${widget.cost}',
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: getPrimaryRegularStyle(
+                      style: getPrimarySemiBoldStyle(
                         fontSize: 10,
                         color: const Color(0xff6E6BE8),
                       ),

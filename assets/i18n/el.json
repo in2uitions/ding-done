@@ -16,6 +16,7 @@
     "map": "ο χάρτης"
   },
   "button": {
+    "submit": "Υποβολή",
     "cancel": "Ακύρωση",
     "change_language": "Αλλαγή Γλώσσας",
     "accept": "Αποδοχή",
@@ -50,6 +51,16 @@
     "stopCancel": "Διακοπή / Ακύρωση",
     "next": "Επόμενο",
     "letsStart": "Αρχή"
+  },
+  "settings": {
+    "settings": "Ρυθμίσεις",
+    "language": "Γλώσσα",
+    "about": "Σχετικά με το DingDone",
+    "privacyPolicy": "Πολιτική Απορρήτου",
+    "helpAndSupport": "Βοήθεια & Υποστήριξη",
+    "contactUs": "Επικοινωνήστε μαζί μας",
+    "appSettings": "Ρυθμίσεις Εφαρμογής",
+    "general": "Γενικά"
   },
   "bottom_bar": {
     "home": "Αρχική",
@@ -522,7 +533,8 @@
     "apartment": "διαμέρισμα",
     "city": "Πόλη",
     "zone": "Ζώνη",
-    "address_label": "ετικέτα διεύθυνσης"
+    "address_label": "ετικέτα διεύθυνσης",
+    "area": "Περιοχή"
   },
   "forgotPassword": {
     "title": "Ξεχάσατε τον Κωδικό",

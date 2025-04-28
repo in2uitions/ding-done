@@ -547,7 +547,7 @@ class _HomePageState extends State<HomePage> {
                                                     null
                                                 ? '${translate('home_screen.Hi')} '
                                                 : '',
-                                            style: getPrimaryBoldStyle(
+                                            style: getPrimarySemiBoldStyle(
                                               color: const Color(0xffFFC500),
                                               fontSize: 24,
                                             ),
@@ -558,7 +558,7 @@ class _HomePageState extends State<HomePage> {
                                                     null
                                                 ? '${profileViewModel.getProfileBody["user"]["first_name"]}'
                                                 : '',
-                                            style: getPrimaryBoldStyle(
+                                            style: getPrimarySemiBoldStyle(
                                               color: context
                                                   .resources.color.colorWhite,
                                               fontSize: 24,
@@ -628,8 +628,9 @@ class _HomePageState extends State<HomePage> {
                                       color: Color(0xFF6E6BE8),
                                     ),
                                     hintText: "I’m done with...",
-                                    hintStyle: const TextStyle(
-                                      color: Color(0xFF6E6BE8),
+                                    hintStyle: getPrimaryRegularStyle(
+                                      color: const Color(0xFF6E6BE8),
+                                      fontSize: 14,
                                     ),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12),
@@ -674,13 +675,14 @@ class _HomePageState extends State<HomePage> {
                           child: ListView.builder(
                               controller: scrollController,
                               itemCount: 1,
+                              padding: EdgeInsets.zero,
                               itemBuilder: (BuildContext context, int index) {
                                 return Column(
                                   children: [
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(
                                         context.appValues.appPadding.p20,
-                                        context.appValues.appPadding.p0,
+                                        context.appValues.appPadding.p30,
                                         context.appValues.appPadding.p20,
                                         context.appValues.appPadding.p10,
                                       ),
@@ -806,7 +808,8 @@ class _HomePageState extends State<HomePage> {
                                                 Text(
                                                   translate(
                                                       'home_screen.seeAll'),
-                                                  style: getPrimaryBoldStyle(
+                                                  style:
+                                                      getPrimarySemiBoldStyle(
                                                     fontSize: 12,
                                                     color:
                                                         const Color(0xff4100E3),
@@ -898,7 +901,7 @@ class _HomePageState extends State<HomePage> {
                                                                     child: Text(
                                                                       'Bed Frames Assembly',
                                                                       style:
-                                                                          getPrimaryBoldStyle(
+                                                                          getPrimarySemiBoldStyle(
                                                                         fontSize:
                                                                             20,
                                                                         color: context
@@ -1025,7 +1028,7 @@ class _HomePageState extends State<HomePage> {
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style:
-                                                                getPrimaryBoldStyle(
+                                                                getPrimarySemiBoldStyle(
                                                               color: context
                                                                   .resources
                                                                   .color

@@ -13,6 +13,7 @@
     }
   },
   "button": {
+    "submit": "Submit",
     "cancel": "Cancel",
     "change_language": "Change Language",
     "accept": "Accept",
@@ -48,6 +49,16 @@
     "next": "Next",
     "letsStart": "Start"
   },
+  "settings": {
+    "settings": "Settings",
+    "language": "Language",
+    "about": "About DingDone",
+    "privacyPolicy": "Privacy Policy",
+    "helpAndSupport": "Help & Support",
+    "contactUs": "Contact Us",
+    "appSettings": "App Settings",
+    "general": "General"
+  },
   "bottom_bar": {
     "home": "Home",
     "jobs": "Jobs",
@@ -82,11 +93,11 @@
     "couldNotIgnored": "Failure \n We couldn't ignore your job."
   },
   "jobs": {
-    "activeJobs": "Active Jobs",
-    "bookedJobs": "Booked Jobs",
-    "confirmedJobs": "Confirmed Jobs",
-    "requestedJobs": "Requested Jobs",
-    "completedJobs": "Completed Jobs",
+    "activeJobs": "Active",
+    "bookedJobs": "Booked",
+    "confirmedJobs": "Confirmed",
+    "requestedJobs": "Requested",
+    "completedJobs": "Completed",
     "active": "active",
     "completed": "completed",
     "booked": "booked",
@@ -160,14 +171,14 @@
     "jobTitle": "Job Title",
     "jobDescription": "Job Description",
     "job_duration": "Job Duration",
-    "jobDescriptionByUser": "Job Description By User",
+    "jobDescriptionByUser": "User Description",
     "dateAndTime": "Date and Time",
     "location": "Location",
     "addMedia": "Add Media",
     "Now": "Now",
     "scheduleForLater": "Schedule for later",
     "requestService": "Request Service",
-    "chat": "Chat",
+    "chat": "Support",
     "customerName": "Customer Name",
     "serviceRequestConfirmed": "Service Request Confirmed",
     "serviceRequestConfirmedMsg": "We are looking for the best match now and you will receive an update once confirmed"
@@ -196,7 +207,7 @@
   },
   "drawer": {
     "faqs": "FAQs",
-    "termsAndConditions": "Terms and Conditions",
+    "termsAndConditions": "Terms & Conditions",
     "logout": "Log out",
     "orderHistory": "Order History",
     "myAddressBook": "My Address Book",
@@ -521,7 +532,8 @@
     "apartment": "Apartment",
     "city": "City",
     "zone": "Zone",
-    "address_label": "Address Label"
+    "address_label": "Address Label",
+    "area": "Area"
   },
   "forgotPassword": {
     "title": "Forgot Password",

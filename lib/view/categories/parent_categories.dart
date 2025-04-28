@@ -135,7 +135,10 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
           const ServicesScreen(),
         ));
         Navigator.of(context).push(_createRoute(
-          BottomBar(userRole: Constants.customerRoleId,currentTab: 1,),
+          BottomBar(
+            userRole: Constants.customerRoleId,
+            currentTab: 1,
+          ),
         ));
       },
       child: Column(
@@ -148,7 +151,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
             textAlign: TextAlign.center,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: getPrimaryRegularStyle(
+            style: getPrimaryMediumStyle(
               fontSize: 12,
               color: const Color(0xff180D38),
             ),

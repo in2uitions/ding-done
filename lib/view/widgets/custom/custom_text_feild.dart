@@ -76,9 +76,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
           : widget.validator,
       keyboardType: widget.keyboardType,
       style: getPrimaryRegularStyle(
-        fontSize: 15,
+        fontSize: 14,
       ),
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: context.appValues.appPadding.p16,
+          vertical: context.appValues.appPadding.p12,
+        ),
         isDense: true,
         errorText: widget.errorText,
         // Using OutlineInputBorder for all borders so that they appear all around.

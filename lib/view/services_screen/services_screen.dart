@@ -235,7 +235,7 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: getPrimaryRegularStyle(
-                fontSize: 12,
+                fontSize: 10,
                 color: const Color(0xff180D38),
               ),
             ),
@@ -379,6 +379,7 @@ class _ServicesScreenState extends State<ServicesScreen>
     final screenSize = MediaQuery.of(context).size;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Stack(
         children: [
@@ -404,8 +405,9 @@ class _ServicesScreenState extends State<ServicesScreen>
                       color: Color(0xFF6E6BE8),
                     ),
                     hintText: "I’m done with...",
-                    hintStyle: const TextStyle(
-                      color: Color(0xFF6E6BE8),
+                    hintStyle: getPrimaryRegularStyle(
+                      color: const Color(0xFF6E6BE8),
+                      fontSize: 14,
                     ),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
@@ -427,149 +429,164 @@ class _ServicesScreenState extends State<ServicesScreen>
             ),
           ),
           searchController.text.isEmpty
-              ? DraggableScrollableSheet(
-                  initialChildSize: 0.80,
-                  minChildSize: 0.80,
-                  maxChildSize: 1.0,
-                  builder: (BuildContext context,
-                      ScrollController scrollController) {
-                    return Container(
-                      decoration: const BoxDecoration(
-                        color: Color(0xffFEFEFE),
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
-                      ),
-                      child: Column(
-                        children: [
-                          const Gap(10),
-                          // Updated TabBar container.
-                          Container(
-                            margin: const EdgeInsets.symmetric(horizontal: 16),
-                            decoration: BoxDecoration(
-                              color: const Color(0xffEAEAFF),
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: TabBar(
-                              controller: _tabController,
-                              indicatorSize: TabBarIndicatorSize.tab,
-                              // Add padding to the indicator for a little breathing room.
-                              indicatorPadding: const EdgeInsets.symmetric(
-                                horizontal: 5,
-                                vertical: 3,
-                              ),
-                              // Use a custom indicator BoxDecoration.
-                              indicator: BoxDecoration(
-                                color: const Color(0xff4100E3),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              // Remove any default underline by setting these to transparent.
-                              indicatorColor: Colors.white,
-                              indicatorWeight: 0,
-                              dividerColor: Colors.transparent,
-                              labelColor: Colors.white,
-                              unselectedLabelColor: const Color(0xff4100E3),
-                              tabs: const [
-                                Tab(text: 'Maintenance'),
-                                Tab(text: 'PRO Services'),
-                              ],
-                            ),
-                          ),
-                          // The TabBarView for the two categories grids.
-                          Expanded(
-                            child: TabBarView(
-                              controller: _tabController,
-                              children: [
-                                CategoriesGridWidget(
-                                  servicesViewModel: servicesViewModel,
-                                  categoryType: "maintenance",
-                                ),
-                                CategoriesGridWidget(
-                                  servicesViewModel: servicesViewModel,
-                                  categoryType: "pro",
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                )
-              : DraggableScrollableSheet(
-                  initialChildSize: 0.70,
-                  minChildSize: 0.70,
-                  maxChildSize: 1,
-                  builder: (BuildContext context,
-                      ScrollController scrollController) {
-                    return Container(
+              ? MediaQuery.removeViewInsets(
+                  context: context,
+                  removeBottom: true,
+                  child: DraggableScrollableSheet(
+                    initialChildSize: 0.80,
+                    minChildSize: 0.80,
+                    maxChildSize: 1.0,
+                    builder: (BuildContext context,
+                        ScrollController scrollController) {
+                      return Container(
                         decoration: const BoxDecoration(
+                          color: Color(0xffFEFEFE),
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(30),
                             topRight: Radius.circular(30),
                           ),
-                          color: Color(0xffFEFEFE),
                         ),
-                        child: ListView.builder(
-                          controller: scrollController,
-                          itemCount: filteredServices.length,
-                          itemBuilder: (context, index) {
-                            var service = filteredServices[index];
+                        child: Column(
+                          children: [
+                            const Gap(10),
+                            // Updated TabBar container.
+                            Container(
+                              margin:
+                                  const EdgeInsets.symmetric(horizontal: 16),
+                              decoration: BoxDecoration(
+                                color: const Color(0xffEAEAFF),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              child: TabBar(
+                                controller: _tabController,
+                                indicatorSize: TabBarIndicatorSize.tab,
+                                // Add padding to the indicator for a little breathing room.
+                                indicatorPadding: const EdgeInsets.symmetric(
+                                  horizontal: 5,
+                                  vertical: 3,
+                                ),
+                                // Use a custom indicator BoxDecoration.
+                                indicator: BoxDecoration(
+                                  color: const Color(0xff4100E3),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                // Remove any default underline by setting these to transparent.
+                                indicatorColor: Colors.white,
+                                indicatorWeight: 0,
+                                dividerColor: Colors.transparent,
+                                labelColor: Colors.white,
+                                unselectedLabelColor: const Color(0xff4100E3),
+                                labelStyle: getPrimarySemiBoldStyle(
+                                  fontSize: 12,
+                                ),
+                                unselectedLabelStyle: getPrimaryMediumStyle(
+                                  fontSize: 12,
+                                ),
+                                tabs: const [
+                                  Tab(text: 'Maintenance'),
+                                  Tab(text: 'PRO Services'),
+                                ],
+                              ),
+                            ),
+                            // The TabBarView for the two categories grids.
+                            Expanded(
+                              child: TabBarView(
+                                controller: _tabController,
+                                children: [
+                                  CategoriesGridWidget(
+                                    servicesViewModel: servicesViewModel,
+                                    categoryType: "maintenance",
+                                  ),
+                                  CategoriesGridWidget(
+                                    servicesViewModel: servicesViewModel,
+                                    categoryType: "pro",
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                )
+              : MediaQuery.removeViewInsets(
+                  context: context,
+                  removeBottom: true,
+                  child: DraggableScrollableSheet(
+                    initialChildSize: 0.75,
+                    minChildSize: 0.75,
+                    maxChildSize: 1,
+                    builder: (BuildContext context,
+                        ScrollController scrollController) {
+                      return Container(
+                          decoration: const BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(30),
+                              topRight: Radius.circular(30),
+                            ),
+                            color: Color(0xffFEFEFE),
+                          ),
+                          child: ListView.builder(
+                            controller: scrollController,
+                            itemCount: filteredServices.length,
+                            itemBuilder: (context, index) {
+                              var service = filteredServices[index];
 
-                            // Find the translation where language_code == lang
-                            // var lang = 'ar-SA'; // Replace this with the actual language code you're using
-                            var translation =
-                                service['translations'].firstWhere(
-                              (t) => t['languages_code'] == lang,
-                              orElse: () => null,
-                            );
+                              // Find the translation where language_code == lang
+                              // var lang = 'ar-SA'; // Replace this with the actual language code you're using
+                              var translation =
+                                  service['translations'].firstWhere(
+                                (t) => t['languages_code'] == lang,
+                                orElse: () => null,
+                              );
 
-                            // If no translation is found, fallback to default
-                            if (translation == null) {
-                              translation = {
-                                'title': service["xtitle"] ?? '',
-                                'description': service["xdescription"] ?? ''
-                              };
-                            }
-                            debugPrint('translation si $translation');
+                              // If no translation is found, fallback to default
+                              if (translation == null) {
+                                translation = {
+                                  'title': service["xtitle"] ?? '',
+                                  'description': service["xdescription"] ?? ''
+                                };
+                              }
+                              debugPrint('translation si $translation');
 
-                            return Consumer2<JobsViewModel, ProfileViewModel>(
-                              builder: (context, jobsViewModel,
-                                  profileViewModel, _) {
-                                return CategoriesScreenCards(
-                                  category: service["category"],
-                                  title: translation != null
-                                      ? translation["title"]
-                                      : '',
-                                  cost: 0,
-                                  // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
-                                  image: service["image"] != null
-                                      ? '${context.resources.image.networkImagePath2}${service["image"]}'
-                                      : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                  onTap: () {
-                                    _handleServiceSelection(service,
-                                        jobsViewModel, profileViewModel);
-                                  },
-                                );
-                              },
-                            );
-                          },
-                        )
+                              return Consumer2<JobsViewModel, ProfileViewModel>(
+                                builder: (context, jobsViewModel,
+                                    profileViewModel, _) {
+                                  return CategoriesScreenCards(
+                                    category: service["category"],
+                                    title: translation != null
+                                        ? translation["title"]
+                                        : '',
+                                    cost: 0,
+                                    // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
+                                    image: service["image"] != null
+                                        ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                        : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                    onTap: () {
+                                      _handleServiceSelection(service,
+                                          jobsViewModel, profileViewModel);
+                                    },
+                                  );
+                                },
+                              );
+                            },
+                          )
 
-                        // child: ListView.builder(
-                        //   controller: scrollController,
-                        //   itemCount: filteredServices.length,
-                        //   itemBuilder: (BuildContext context, int index) {
-                        //     var service = filteredServices[index];
-                        //     return ListTile(
-                        //       title: Text(service.title),
-                        //       subtitle: Text(service!=null && service.description !=null ?service.description:''),
-                        //     );
-                        //   },
-                        // ),
-                        );
-                  },
+                          // child: ListView.builder(
+                          //   controller: scrollController,
+                          //   itemCount: filteredServices.length,
+                          //   itemBuilder: (BuildContext context, int index) {
+                          //     var service = filteredServices[index];
+                          //     return ListTile(
+                          //       title: Text(service.title),
+                          //       subtitle: Text(service!=null && service.description !=null ?service.description:''),
+                          //     );
+                          //   },
+                          // ),
+                          );
+                    },
+                  ),
                 ),
         ],
       ),

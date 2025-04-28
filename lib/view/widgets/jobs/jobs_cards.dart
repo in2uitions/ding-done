@@ -207,7 +207,7 @@ class _JobsCardsState extends State<JobsCards> {
                                           : '${services!["title"]}',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: getPrimaryRegularStyle(
+                                      style: getPrimaryMediumStyle(
                                         fontSize: 14,
                                         color: const Color(0xff180B3C),
                                       ),
@@ -229,7 +229,7 @@ class _JobsCardsState extends State<JobsCards> {
                                       //     : '',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
-                                      style: getPrimaryBoldStyle(
+                                      style: getPrimarySemiBoldStyle(
                                         fontSize: 10,
                                         color: const Color(0xff6E6BE8),
                                       ),
@@ -296,9 +296,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                             .toLocal())
                                                     : '',
                                                 style: getPrimaryRegularStyle(
-                                                  fontSize: 14,
-                                                  color:
-                                                      const Color(0xff78789D),
+                                                  fontSize: 12,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
                                                 ),
                                               ),
                                             ],
@@ -324,9 +324,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                             .toLocal())
                                                     : '',
                                                 style: getPrimaryRegularStyle(
-                                                  fontSize: 14,
-                                                  color:
-                                                      const Color(0xff78789D),
+                                                  fontSize: 12,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
                                                 ),
                                               ),
                                             ],
@@ -346,9 +346,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                             .toLocal())
                                                     : '',
                                                 style: getPrimaryRegularStyle(
-                                                  fontSize: 14,
-                                                  color:
-                                                      const Color(0xff78789D),
+                                                  fontSize: 12,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
                                                 ),
                                               ),
                                             ],
@@ -377,7 +377,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                             .toLocal())
                                                     : '',
                                                 style: getPrimaryRegularStyle(
-                                                    fontSize: 14,
+                                                    fontSize: 12,
                                                     color: context.resources
                                                         .color.btnColorBlue),
                                               ),
@@ -442,8 +442,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                     .toLocal())
                                             : '',
                                         style: getPrimaryRegularStyle(
-                                          fontSize: 14,
-                                          color: const Color(0xff78789D),
+                                          fontSize: 12,
+                                          color: context
+                                              .resources.color.btnColorBlue,
                                         ),
                                       )
                                     : Container(),
@@ -485,9 +486,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                     ? '${data[index].job_address['city'] ?? ''}, ${data[index].job_address['state'] ?? ''}, ${data[index].job_address['street_number'] ?? ''}'
                                                     : '',
                                                 style: getPrimaryRegularStyle(
-                                                  fontSize: 14,
-                                                  color:
-                                                      const Color(0xff78789D),
+                                                  fontSize: 12,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
                                                 ),
                                                 overflow: TextOverflow
                                                     .visible, // Ensure the text wraps to the next line
@@ -562,7 +563,7 @@ class _JobsCardsState extends State<JobsCards> {
                                               ''
                                       ? '${data[index].supplier_total} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
                                       : '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
-                                  style: getPrimaryBoldStyle(
+                                  style: getPrimarySemiBoldStyle(
                                     fontSize: 14,
                                     color: const Color(0xff180B3C),
                                   ),
@@ -586,11 +587,11 @@ class _JobsCardsState extends State<JobsCards> {
                                                           .toString()
                                                           .toLowerCase() ==
                                                       'major'
-                                                  ? 'Urgent'
-                                                  : 'Normal'
+                                                  ? 'URGENT'
+                                                  : 'NORMAL'
                                               : '',
-                                          style: getPrimaryRegularStyle(
-                                              fontSize: 14,
+                                          style: getPrimarySemiBoldStyle(
+                                              fontSize: 10,
                                               color: data[index]
                                                           .severity_level !=
                                                       null

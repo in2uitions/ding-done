@@ -26,7 +26,7 @@ class BottomBar extends StatefulWidget {
 
   var currentTab;
 
-  BottomBar({super.key, required this.userRole,required this.currentTab});
+  BottomBar({super.key, required this.userRole, required this.currentTab});
 
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -57,14 +57,13 @@ class _BottomBarState extends State<BottomBar>
     _handleLocationPermission();
     _getCurrentPosition();
     _jobsViewModel.readJson();
-    currentScreen =
-    widget.currentTab==0?
-    widget.userRole == Constants.supplierRoleId
-        ? const HomePageSupplier()
-        : const HomePage()
-    :widget.currentTab==1?
-    const ServicesScreen():
-    Container();
+    currentScreen = widget.currentTab == 0
+        ? widget.userRole == Constants.supplierRoleId
+            ? const HomePageSupplier()
+            : const HomePage()
+        : widget.currentTab == 1
+            ? const ServicesScreen()
+            : Container();
 
     _controller = AnimationController(
       duration: const Duration(seconds: 1),
@@ -252,10 +251,12 @@ class _BottomBarState extends State<BottomBar>
                               Text(
                                 translate('bottom_bar.home'),
                                 style: widget.currentTab == 0
-                                    ? getPrimaryBoldStyle(
+                                    ? getPrimarySemiBoldStyle(
+                                        fontSize: 10,
                                         color: const Color(0xff180B3C),
                                       )
                                     : getPrimaryRegularStyle(
+                                        fontSize: 10,
                                         color: const Color(0xff71727A),
                                       ),
                               ),
@@ -269,7 +270,7 @@ class _BottomBarState extends State<BottomBar>
                           minWidth: 40,
                           onPressed: () {
                             setState(() {
-                              currentScreen = ServicesScreen();
+                              currentScreen = const ServicesScreen();
                               widget.currentTab = 1;
                             });
                           },
@@ -296,10 +297,12 @@ class _BottomBarState extends State<BottomBar>
                                     Text(
                                       translate('updateJob.services'),
                                       style: widget.currentTab == 1
-                                          ? getPrimaryBoldStyle(
+                                          ? getPrimarySemiBoldStyle(
+                                              fontSize: 10,
                                               color: const Color(0xff180B3C),
                                             )
                                           : getPrimaryRegularStyle(
+                                              fontSize: 10,
                                               color: const Color(0xff71727A),
                                             ),
                                     ),
@@ -391,10 +394,12 @@ class _BottomBarState extends State<BottomBar>
                             Text(
                               translate('bottom_bar.jobs'),
                               style: widget.currentTab == 2
-                                  ? getPrimaryBoldStyle(
+                                  ? getPrimarySemiBoldStyle(
+                                      fontSize: 10,
                                       color: const Color(0xff180B3C),
                                     )
                                   : getPrimaryRegularStyle(
+                                      fontSize: 10,
                                       color: const Color(0xff71727A),
                                     ),
                             ),
@@ -435,10 +440,12 @@ class _BottomBarState extends State<BottomBar>
                             Text(
                               translate('profile.account'),
                               style: widget.currentTab == 3
-                                  ? getPrimaryBoldStyle(
+                                  ? getPrimarySemiBoldStyle(
+                                      fontSize: 10,
                                       color: const Color(0xff180B3C),
                                     )
                                   : getPrimaryRegularStyle(
+                                      fontSize: 10,
                                       color: const Color(0xff71727A),
                                     ),
                             ),

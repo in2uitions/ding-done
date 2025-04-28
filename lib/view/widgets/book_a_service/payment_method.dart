@@ -62,8 +62,8 @@ class _PaymentMethodState extends State<PaymentMethod> {
                           children: [
                             Text(
                               translate('paymentMethod.paymentMethod'),
-                              style: getPrimaryBoldStyle(
-                                  fontSize: 18,
+                              style: getPrimaryMediumStyle(
+                                  fontSize: 14,
                                   color: context.resources.color.btnColorBlue),
                             ),
                           ],
@@ -112,16 +112,18 @@ class _PaymentMethodState extends State<PaymentMethod> {
                             ),
                           ),
                           onTap: () {
-                            Navigator.of(context)
-                                .push(_createRoute(Consumer2<ProfileViewModel,PaymentViewModel>(
-                                builder: (context, profileViewModel,paymentViewModel, _) {
-                                    return ConfirmPaymentMethod(
-                                                                  payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
-                                                                  paymentViewModel: widget.paymentViewModel,
-                                                                  role: widget.role, profileViewModel: profileViewModel,
-                                                                );
-                                  }
-                                )));
+                            Navigator.of(context).push(_createRoute(
+                                Consumer2<ProfileViewModel, PaymentViewModel>(
+                                    builder: (context, profileViewModel,
+                                        paymentViewModel, _) {
+                              return ConfirmPaymentMethod(
+                                payment_method: paymentViewModel
+                                    .getPaymentBody['tap_payments_card'],
+                                paymentViewModel: widget.paymentViewModel,
+                                role: widget.role,
+                                profileViewModel: profileViewModel,
+                              );
+                            })));
                           },
                         ),
                       )

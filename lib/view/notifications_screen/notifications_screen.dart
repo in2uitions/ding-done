@@ -1,5 +1,6 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/settings_screen/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -55,7 +56,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       ],
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.of(context).push(_createRoute(
+                          const SettingsScreen(),
+                        ));
+                      },
                       child: Padding(
                         padding: EdgeInsets.only(
                           top: context.appValues.appPadding.p8,
@@ -84,9 +89,11 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 child: ListView.builder(
                   controller: scrollController,
                   itemCount: 1,
+                  padding: EdgeInsets.zero,
                   itemBuilder: (BuildContext context, int index) {
                     return Column(
                       children: [
+                        const Gap(30),
                         Padding(
                           padding: EdgeInsets.fromLTRB(
                             context.appValues.appPadding.p20,
@@ -129,4 +136,22 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       ),
     );
   }
+}
+
+Route _createRoute(dynamic classname) {
+  return PageRouteBuilder(
+    pageBuilder: (context, animation, secondaryAnimation) => classname,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      const begin = Offset(1.0, 0.0);
+      const end = Offset.zero;
+      const curve = Curves.ease;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return SlideTransition(
+        position: animation.drive(tween),
+        child: child,
+      );
+    },
+  );
 }

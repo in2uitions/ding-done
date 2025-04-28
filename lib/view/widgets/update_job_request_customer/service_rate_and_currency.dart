@@ -33,7 +33,7 @@ class _ServiceRateAndCurrnecyWidgetState
         Padding(
           padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p20,
-              vertical: context.appValues.appPadding.p10),
+              vertical: context.appValues.appPadding.p0),
           child: SizedBox(
             width: context.appValues.appSizePercent.w90,
             // decoration: BoxDecoration(
@@ -43,7 +43,7 @@ class _ServiceRateAndCurrnecyWidgetState
             child: Padding(
               padding: EdgeInsets.fromLTRB(
                 context.appValues.appPadding.p0,
-                context.appValues.appPadding.p10,
+                context.appValues.appPadding.p0,
                 context.appValues.appPadding.p0,
                 context.appValues.appPadding.p20,
               ),
@@ -61,7 +61,7 @@ class _ServiceRateAndCurrnecyWidgetState
                     child: Text(
                       translate('updateJob.serviceRate'),
                       style: getPrimaryRegularStyle(
-                        fontSize: 18,
+                        fontSize: 14,
                         color: const Color(0xff180B3C),
                       ),
                     ),
@@ -75,7 +75,7 @@ class _ServiceRateAndCurrnecyWidgetState
                       // widget.service_rate!=null?widget.service_rate[0]["unit_rate"].toString():'',
                       '${widget.service_rate}',
                       style: getPrimaryRegularStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: const Color(0xff71727A),
                       ),
                     );
@@ -116,7 +116,7 @@ class _ServiceRateAndCurrnecyWidgetState
             // ),
             child: Padding(
               padding: EdgeInsets.fromLTRB(
-                context.appValues.appPadding.p20,
+                context.appValues.appPadding.p0,
                 context.appValues.appPadding.p0,
                 context.appValues.appPadding.p0,
                 context.appValues.appPadding.p20,
@@ -135,7 +135,7 @@ class _ServiceRateAndCurrnecyWidgetState
                     child: Text(
                       translate('updateJob.currency'),
                       style: getPrimaryRegularStyle(
-                        fontSize: 18,
+                        fontSize: 14,
                         color: const Color(0xff180B3C),
                       ),
                     ),
@@ -143,7 +143,7 @@ class _ServiceRateAndCurrnecyWidgetState
                   Text(
                     '${widget.currency}',
                     style: getPrimaryRegularStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: const Color(0xff71727A),
                     ),
                   ),

@@ -63,7 +63,7 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
               child: Text(
                 translate('bookService.jobDescriptionByUser'),
                 style: getPrimaryRegularStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   color: const Color(0xff180B3C),
                 ),
               ),
@@ -92,6 +92,21 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    SizedBox(
+                      width: context.appValues.appSizePercent.w40,
+                      child: Text(
+                        widget.description != null
+                            ? '${widget.description}'
+                            : 'No Job Description',
+                        maxLines: 5,
+                        overflow: TextOverflow.ellipsis,
+                        style: getPrimaryRegularStyle(
+                          fontSize: 14,
+                          color: const Color(0xff71727A),
+                        ),
+                      ),
+                    ),
+                    const Gap(10),
                     Padding(
                       padding: EdgeInsets.only(
                         top: context.appValues.appPadding.p0,
@@ -99,12 +114,14 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                         right: context.appValues.appPadding.p10,
                       ),
                       child: Container(
-                        width: context.appValues.appSizePercent.w100,
-                        height: context.appValues.appSizePercent.h20,
+                        // width: context.appValues.appSizePercent.w100,
+                        // height: context.appValues.appSizePercent.h20,
+                        width: 72,
+                        height: 72,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            topLeft: Radius.circular(20),
+                            bottomLeft: Radius.circular(16),
+                            topLeft: Radius.circular(16),
                           ),
                         ),
                         child: widget.image != null && widget.image.isNotEmpty
@@ -119,7 +136,7 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                                       return Container(
                                         decoration: BoxDecoration(
                                           borderRadius:
-                                              BorderRadius.circular(20),
+                                              BorderRadius.circular(16),
                                           // borderRadius: const BorderRadius.only(
                                           //   bottomLeft: Radius.circular(20),
                                           //   topLeft: Radius.circular(20),
@@ -181,21 +198,6 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                                   ),
                                 ),
                               ),
-                      ),
-                    ),
-                    const Gap(10),
-                    SizedBox(
-                      width: context.appValues.appSizePercent.w40,
-                      child: Text(
-                        widget.description != null
-                            ? '${widget.description}'
-                            : 'No Job Description',
-                        maxLines: 5,
-                        overflow: TextOverflow.ellipsis,
-                        style: getPrimaryRegularStyle(
-                          fontSize: 12,
-                          color: const Color(0xff71727A),
-                        ),
                       ),
                     ),
                   ],

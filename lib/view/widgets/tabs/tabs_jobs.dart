@@ -64,7 +64,8 @@ class _TabsJobsState extends State<TabsJobs>
             indicatorColor: Colors.transparent,
             dividerColor: Colors.transparent,
             indicatorWeight: 0,
-            labelStyle: getPrimaryBoldStyle(fontSize: 12),
+            labelStyle: getPrimarySemiBoldStyle(fontSize: 12),
+            unselectedLabelStyle: getPrimaryMediumStyle(fontSize: 12),
             labelColor: Colors.white,
             unselectedLabelColor: const Color(0xff4100E3),
             tabs: List<Widget>.generate(

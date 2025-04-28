@@ -16,25 +16,22 @@ import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-// #docregion platform_imports
-// Import for Android features.
 import 'package:webview_flutter_android/webview_flutter_android.dart';
-// Import for iOS/macOS features.
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
 
 class ConfirmPaymentMethod extends StatefulWidget {
-  var payment_method;
-  var role;
+  final dynamic payment_method;
+  final dynamic role;
+  final PaymentViewModel paymentViewModel;
+  final ProfileViewModel profileViewModel;
 
-  var paymentViewModel;
-  var profileViewModel;
-
-  ConfirmPaymentMethod(
-      {super.key,
-      required this.payment_method,
-      required this.paymentViewModel,
-      required this.profileViewModel,
-      required this.role});
+  ConfirmPaymentMethod({
+    super.key,
+    required this.payment_method,
+    required this.paymentViewModel,
+    required this.profileViewModel,
+    required this.role,
+  });
 
   @override
   State<ConfirmPaymentMethod> createState() => _ConfirmPaymentMethodState();
@@ -42,27 +39,19 @@ class ConfirmPaymentMethod extends StatefulWidget {
 
 class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
   Map<dynamic, dynamic>? tapSDKResult;
-  String responseID = "";
-  String sdkStatus = "";
-  String sdkErrorCode = "";
-  String sdkErrorMessage = "";
-  String sdkErrorDescription = "";
   late final WebViewController _controller;
+  String responseID = "";
+  bool sdkLoading = false;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    // configure app
     configureApp();
-    // sdk session configurations
     setupSDKSession();
   }
 
-  // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     try {
-      debugPrint('configuring app');
       GoSellSdkFlutter.configureApp(
         bundleId: Platform.isAndroid
             ? "com.in2uitions.dingdone"
@@ -74,21 +63,12 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
             ? "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn"
             : "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn",
         lang: "en",
-        // bundleId: '23e85@tap',
       );
-
-      // GoSellSdkFlutter.configureApp(
-      //   bundleId: Platform.isAndroid? "ANDROID-PACKAGE-NAME" : "IOS-APP-ID",
-      //   lang: "en",
-      //   productionSecretKey:  Platform.isAndroid? "Android-Live-KEY" : "iOS-Live-KEY",
-      //   sandBoxSecretKey:  Platform.isAndroid?"Android-SANDBOX-KEY" : "iOS-SANDBOX-KEY",
-      // );
     } catch (error) {
       debugPrint('error configuring app $error');
     }
   }
 
-  // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> setupSDKSession() async {
     try {
       GoSellSdkFlutter.sessionConfigurations(
@@ -96,9 +76,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         transactionCurrency: "QAR",
         amount: 1,
         customer: Customer(
-          // customerId: widget.profileViewModel.getProfileBody['stripe_customer_id'],
           customerId: widget.profileViewModel.getProfileBody['tap_id'] ?? "",
-          // customer id is important to retrieve cards saved for this customer
           email: '${widget.profileViewModel.getProfileBody['user']['email']}',
           isdNumber: "961",
           number:
@@ -108,23 +86,13 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
           middleName: "",
           lastName:
               '${widget.profileViewModel.getProfileBody['user']['last_name']}',
-          metaData: null,
         ),
         paymentItems: <PaymentItem>[],
-
-        // List of taxes
         taxes: [],
-        // List of shipping
         shippings: [],
         postURL: "https://tap.company",
-        // Payment description
         paymentDescription: "Save Card",
-        // Payment Metadata
-        paymentMetaData: {
-          "a": "a meta",
-          "b": "b meta",
-        },
-        // Payment Reference
+        paymentMetaData: {"a": "a meta", "b": "b meta"},
         paymentReference: Reference(
           acquirer: "acquirer",
           gateway: "gateway",
@@ -133,346 +101,99 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
           transaction: "trans_910101",
           order: "order_262625",
         ),
-        // payment Descriptor
         paymentStatementDescriptor: "paymentStatementDescriptor",
-        // Save Card Switch
         isUserAllowedToSaveCard: true,
-        // Enable/Disable 3DSecure
         isRequires3DSecure: true,
-        // Receipt SMS/Email
         receipt: Receipt(true, false),
-        // Authorize Action [Capture - Void]
-        authorizeAction:
-            AuthorizeAction(type: AuthorizeActionType.CAPTURE, timeInHours: 10),
-        // Destinations
-        destinations: null,
-        // merchant id
+        authorizeAction: AuthorizeAction(
+          type: AuthorizeActionType.CAPTURE,
+          timeInHours: 10,
+        ),
         merchantID: "49941248",
-        // Allowed cards
         allowedCadTypes: CardType.ALL,
         applePayMerchantID: "merchant.applePayMerchantID",
         allowsToSaveSameCardMoreThanOnce: true,
-        // pass the card holder name to the SDK
         cardHolderName:
             "${widget.profileViewModel.getProfileBody['user']['first_name']} ${widget.profileViewModel.getProfileBody['user']['last_name']}",
-        // disable changing the card holder name by the user
         allowsToEditCardHolderName: true,
-        // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
         paymentType: PaymentType.ALL,
-        // Supported payment methods List
         supportedPaymentMethods: [
           "VISA",
           "MASTERCARD",
           "AMERICAN_EXPRESS",
-          // "knet",
-          // "Benefit",
-          "GOOGLE_PAY"
+          "GOOGLE_PAY",
         ],
-        // Transaction mode
         sdkMode: SDKMode.Sandbox,
         appearanceMode: SDKAppearanceMode.fullscreen,
         googlePayWalletMode: GooglePayWalletMode.ENVIRONMENT_TEST,
       );
     } catch (error) {
       debugPrint('error setting up sdk $error');
-      // platformVersion = 'Failed to get platform version.';
     }
-
-    if (!mounted) return;
-
-    setState(() {
-      tapSDKResult = {};
-    });
+    if (mounted) setState(() => tapSDKResult = {});
   }
 
   Future<void> startSDK() async {
-    try {
-      widget.paymentViewModel.setLoading(true);
-      tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
-      debugPrint('SDK Result: ${tapSDKResult?['sdk_result']}');
-
-      // Handle SDK result synchronously here.
-      String resultStatus = tapSDKResult?['sdk_result'];
-      if (resultStatus == "SUCCESS" || resultStatus == "FAILED") {
-        handleSDKResult();
-      } else if (resultStatus == "SDK_ERROR") {
-        sdkErrorCode = tapSDKResult!['sdk_error_code'].toString();
-        sdkErrorMessage = tapSDKResult!['sdk_error_message'] ?? "";
-        sdkErrorDescription = tapSDKResult!['sdk_error_description'] ?? "";
-      }
-
-      // Perform asynchronous operations outside setState.
-      await widget.paymentViewModel.getPaymentMethodsTap();
-      dynamic result =
-          await widget.paymentViewModel.authorizeCard(tapSDKResult);
-
-      // Now update state synchronously.
-      setState(() {
-        // Update any state variables if needed.
-      });
-
-      if (result["transaction"] != null) {
-        // Launch the WebView.
-        // Make sure _createRoute is defined and returns a valid Route.
-        late final PlatformWebViewControllerCreationParams params;
-        if (WebViewPlatform.instance is WebKitWebViewPlatform) {
-          params = WebKitWebViewControllerCreationParams(
-            allowsInlineMediaPlayback: true,
-            mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
-          );
-        } else {
-          params = const PlatformWebViewControllerCreationParams();
-        }
-
-        final WebViewController controller =
-            WebViewController.fromPlatformCreationParams(params);
-        controller
-          ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..setNavigationDelegate(NavigationDelegate(
-            onProgress: (int progress) {
-              debugPrint('WebView loading: $progress%');
-            },
-            onPageStarted: (String url) async {
-              debugPrint('Page started: $url');
-              if (url.contains('dingdone://com.in2uitions.dingdone')) {
-                await Future.delayed(const Duration(seconds: 6));
-                Navigator.pop(context);
-                Provider.of<PaymentViewModel>(context, listen: false)
-                    .getPaymentMethodsTap();
-
-                // Consumer2<ProfileViewModel, PaymentViewModel>(
-                //   builder: (context, profileViewModel, paymentViewModel, _) {
-                //     // Ensure the payment methods are retrieved.
-                //     paymentViewModel.getPaymentMethods();
-                //
-                //     // Schedule the navigation after the current frame is built.
-                //     WidgetsBinding.instance.addPostFrameCallback((_) {
-                //       Navigator.of(context).push(_createRoute(
-                //         ConfirmPaymentMethod(
-                //           payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
-                //           paymentViewModel: paymentViewModel,
-                //           profileViewModel: profileViewModel,
-                //           role: userRole,
-                //         ),
-                //       ));
-                //     });
-                //
-                //     // Return an empty widget since nothing needs to be displayed here.
-                //     return Container();
-                //   },
-                // );
-              }
-            },
-            onPageFinished: (String url) {
-              debugPrint('Page finished: $url');
-            },
-            // onNavigationRequest: (NavigationRequest request) {
-            //   if (request.url.startsWith('https://www.youtube.com/')) {
-            //     return NavigationDecision.prevent;
-            //   }
-            //   return NavigationDecision.navigate;
-            // },
-            onWebResourceError: (WebResourceError error) {
-              debugPrint('WebView error: ${error.description}');
-            },
-          ))
-          ..addJavaScriptChannel('Toaster',
-              onMessageReceived: (JavaScriptMessage message) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text(message.message)),
-            );
-          })
-          ..loadRequest(Uri.parse('${result["transaction"]["url"]}'));
-
-        // If using Android-specific features.
-        if (controller.platform is AndroidWebViewController) {
-          AndroidWebViewController.enableDebugging(true);
-          (controller.platform as AndroidWebViewController)
-              .setMediaPlaybackRequiresUserGesture(false);
-        }
-
-        _controller = controller;
-        Navigator.of(context).push(_createRoute(Scaffold(
-          backgroundColor: Colors.green,
-          appBar: AppBar(
-            title: const Text('DingDone Payment'),
-            // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
-            actions: <Widget>[
-              NavigationControls(webViewController: _controller),
-              SampleMenu(webViewController: _controller),
-            ],
-          ),
-          body: WebViewWidget(controller: _controller),
-          // floatingActionButton: favoriteButton(),
-        )));
-      } else {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) => simpleAlert(
-                context,
-                translate('button.failure'),
-                '${result['errors'] != null ? result['errors'][0]['description'] : result['error']}'));
-      }
-      await widget.paymentViewModel.setLoading(false);
-    } catch (error) {
-      debugPrint('Error starting SDK: $error');
-    }
-  }
-
-  Future<void> _launchUrl(String url) async {
-    if (Uri.tryParse(url)?.hasAbsolutePath != true) {
-      debugPrint('Invalid URL: $url');
-      return;
-    }
-
-    final Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
-    }
-  }
-
-  void handleSDKResult() {
-    debugPrint('SDK Result>>>> $tapSDKResult');
-    debugPrint('SDK Result TOKEN>>>> ${tapSDKResult?['token']}');
-
-    debugPrint('Transaction mode>>>> ${tapSDKResult!['trx_mode']}');
-
-    switch (tapSDKResult!['trx_mode']) {
-      case "CHARGE":
-        printSDKResult('Charge');
-        break;
-
-      case "AUTHORIZE":
-        printSDKResult('Authorize');
-        break;
-
-      case "SAVE_CARD":
-        printSDKResult('Save Card');
-        debugPrint('Save Card : ${tapSDKResult!['token']}');
-        break;
-
-      case "TOKENIZE":
-        debugPrint('TOKENIZE token : ${tapSDKResult!['token']}');
-        debugPrint(
-            'TOKENIZE token_currency  : ${tapSDKResult!['token_currency']}');
-        debugPrint(
-            'TOKENIZE card_first_six : ${tapSDKResult!['card_first_six']}');
-        debugPrint(
-            'TOKENIZE card_last_four : ${tapSDKResult!['card_last_four']}');
-        debugPrint('TOKENIZE card_object  : ${tapSDKResult!['card_object']}');
-        debugPrint(
-            'TOKENIZE card_holder_name  : ${tapSDKResult!['card_holder_name']}');
-        debugPrint(
-            'TOKENIZE card_exp_month : ${tapSDKResult!['card_exp_month']}');
-        debugPrint(
-            'TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
-        debugPrint(
-            'TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
-        debugPrint('TOKENIZE issuer_id    : ${tapSDKResult!['issuer_id']}');
-        debugPrint('TOKENIZE issuer_bank    : ${tapSDKResult!['issuer_bank']}');
-        debugPrint(
-            'TOKENIZE issuer_country    : ${tapSDKResult!['issuer_country']}');
-        responseID = tapSDKResult!['token'] ?? "";
-        break;
-    }
-  }
-
-  void printSDKResult(String trxMode) {
-    debugPrint('$trxMode status                : ${tapSDKResult!['status']}');
-    if (trxMode == "Authorize") {
-      debugPrint('$trxMode id              : ${tapSDKResult!['authorize_id']}');
-    } else {
-      debugPrint('$trxMode id               : ${tapSDKResult!['charge_id']}');
-    }
-    debugPrint(
-        '$trxMode  description        : ${tapSDKResult!['description']}');
-    debugPrint('$trxMode  message           : ${tapSDKResult!['message']}');
-    debugPrint('$trxMode  card_first_six : ${tapSDKResult!['card_first_six']}');
-    debugPrint(
-        '$trxMode  card_last_four   : ${tapSDKResult!['card_last_four']}');
-    debugPrint(
-        '$trxMode  card_object         : ${tapSDKResult!['card_object']}');
-    debugPrint('$trxMode  card_id         : ${tapSDKResult!['card_id']}');
-    debugPrint(
-        '$trxMode  card_brand          : ${tapSDKResult!['card_brand']}');
-    debugPrint(
-        '$trxMode  card_exp_month  : ${tapSDKResult!['card_exp_month']}');
-    debugPrint('$trxMode  card_exp_year: ${tapSDKResult!['card_exp_year']}');
-    debugPrint('$trxMode  acquirer_id  : ${tapSDKResult!['acquirer_id']}');
-    debugPrint(
-        "$trxMode payment agreement : ${tapSDKResult!['payment_agreement']}");
-    debugPrint(
-        '$trxMode  acquirer_response_code : ${tapSDKResult!['acquirer_response_code']}');
-    debugPrint(
-        '$trxMode  acquirer_response_message: ${tapSDKResult!['acquirer_response_message']}');
-    debugPrint('$trxMode  source_id: ${tapSDKResult!['source_id']}');
-    debugPrint(
-        '$trxMode  source_channel     : ${tapSDKResult!['source_channel']}');
-    debugPrint(
-        '$trxMode  source_object      : ${tapSDKResult!['source_object']}');
-    debugPrint(
-        '$trxMode source_payment_type : ${tapSDKResult!['source_payment_type']}');
-
-    if (trxMode == "Authorize") {
-      responseID = tapSDKResult!['authorize_id'] ?? "";
-    } else {
-      responseID = tapSDKResult!['charge_id'] ?? "";
-    }
+    setState(() => sdkLoading = true);
+    tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
+    await widget.paymentViewModel.getPaymentMethodsTap();
+    dynamic result = await widget.paymentViewModel.authorizeCard(tapSDKResult);
+    setState(() => sdkLoading = false);
+    // handle navigation or errors...
   }
 
   @override
   Widget build(BuildContext context) {
-    return Consumer3<ProfileViewModel, JobsViewModel, PaymentViewModel>(builder:
-        (context, profileViewModel, jobsViewModel, paymentViewModel, _) {
-      return Scaffold(
-        backgroundColor: Colors.white,
-        body: Stack(
-          children: [
-            Container(
-              width: context.appValues.appSizePercent.w100,
-              height: context.appValues.appSizePercent.h50,
-              decoration: BoxDecoration(
-                color: Color(0xff4100E3),
-              ),
-              child: SafeArea(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p20,
-                    vertical: context.appValues.appPadding.p10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      InkWell(
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                        child: const Icon(
-                          Icons.arrow_back_ios_new_sharp,
-                          color: Colors.white,
-                          size: 20,
+    return Consumer3<ProfileViewModel, JobsViewModel, PaymentViewModel>(
+      builder: (context, profileVM, jobsVM, payVM, _) {
+        return Scaffold(
+          backgroundColor: Colors.white,
+          body: Stack(
+            children: [
+              Container(
+                width: context.appValues.appSizePercent.w100,
+                height: context.appValues.appSizePercent.h50,
+                decoration: const BoxDecoration(
+                  color: Color(0xff4100E3),
+                ),
+                child: SafeArea(
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.appValues.appPadding.p20,
+                      vertical: context.appValues.appPadding.p10,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Icon(
+                            Icons.arrow_back_ios_new_sharp,
+                            color: Colors.white,
+                            size: 20,
+                          ),
                         ),
-                      ),
-                      const Gap(10),
-                      Text(
-                        translate('profile.paymentMethods'),
-                        style: getPrimaryBoldStyle(
-                          color: context.resources.color.colorWhite,
-                          fontSize: 16,
+                        const Gap(10),
+                        Text(
+                          translate('profile.paymentMethods'),
+                          style: getPrimarySemiBoldStyle(
+                            color: context.resources.color.colorWhite,
+                            fontSize: 16,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-            DraggableScrollableSheet(
+              DraggableScrollableSheet(
                 initialChildSize: 0.85,
                 minChildSize: 0.85,
                 maxChildSize: 1,
-                builder:
-                    (BuildContext context, ScrollController scrollController) {
+                builder: (context, scrollController) {
                   return Container(
                     decoration: const BoxDecoration(
                       borderRadius: BorderRadius.only(
@@ -481,53 +202,38 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                       ),
                       color: Color(0xffFEFEFE),
                     ),
-                    child: ListView.builder(
-                        controller: scrollController,
-                        itemCount: 1,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(children: [
-                            // Padding(
-                            //   padding: EdgeInsets.symmetric(
-                            //       horizontal: context.appValues.appPadding.p20),
-                            //   child: Text(
-                            //     translate('paymentMethod.confirmPaymentMethod'),
-                            //     style: getPrimaryBoldStyle(
-                            //       color: context.resources.color.btnColorBlue,
-                            //       fontSize: 22,
-                            //     ),
-                            //   ),
-                            // ),
-                            // const Gap(30),
-                            const CardInfo1(),
-                            // Padding(
-                            //   padding: EdgeInsets.symmetric(
-                            //     horizontal: context.appValues.appPadding.p20,
-                            //     vertical: context.appValues.appPadding.p20,
-                            //   ),
-                            //   child: Text(
-                            //     translate('paymentMethod.addPaymentMethod'),
-                            //     style: getPrimaryRegularStyle(
-                            //         fontSize: 28,
-                            //         color: context.resources.color.btnColorBlue),
-                            //   ),
-                            // ),
-                            // AddNewPaymentMethodWidget(
-                            //     payment_method: widget.payment_method),
-                            PaymentMethodButtons(
-                              payment_method: widget.payment_method,
-                              jobsViewModel: jobsViewModel,
-                              fromWhere: 'confirm_payment',
-                              role: widget.role,
-                            ),
-                            // const Gap(10),
-                            Divider(
-                              color: const Color(0xffD4D6DD),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child: ListView(
+                            controller: scrollController,
+                            padding: EdgeInsets.zero,
+                            children: [
+                              const Gap(20),
+                              const CardInfo1(),
+                              const Gap(20),
+                              PaymentMethodButtons(
+                                payment_method: widget.payment_method,
+                                jobsViewModel: jobsVM,
+                                fromWhere: 'confirm_payment',
+                                role: widget.role,
+                              ),
+                              const Gap(10),
+                            ],
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            const Divider(
+                              color: Color(0xffD4D6DD),
                               thickness: 1,
-                              height: context.appValues.appSizePercent.h5,
                             ),
+                            const Gap(10),
                             Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
+                              padding: EdgeInsets.symmetric(
+                                horizontal: context.appValues.appPadding.p20,
+                                vertical: context.appValues.appPadding.p10,
+                              ),
                               child: Container(
                                 height: context.appValues.appSizePercent.h6,
                                 decoration: BoxDecoration(
@@ -536,137 +242,97 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                 ),
                                 child: InkWell(
                                   onTap: () async {
-                                    widget.paymentViewModel.setLoading(true);
-
-                                    dynamic payments = await widget
-                                        .paymentViewModel
-                                        .getPaymentMethodsTap();
-                                    dynamic paymentList = widget
-                                        .paymentViewModel.paymentList
-                                        .toList();
-                                    debugPrint('widget payment ${paymentList}');
-                                    var found = false;
-                                    if (paymentList.isNotEmpty) {
-                                      for (var payment in paymentList) {
-                                        if (payment['card_number'] ==
-                                            widget.paymentViewModel
-                                                    .getPaymentBody[
-                                                'card_number']) {
-                                          found = true;
-                                        }
-                                      }
-                                    }
-
-                                    if (!found) {
-                                      await widget.paymentViewModel
-                                          .createPaymentMethodTap();
+                                    await payVM.setLoading(true);
+                                    dynamic methods =
+                                        await payVM.getPaymentMethodsTap();
+                                    var exists = payVM.paymentList.any((c) =>
+                                        c['card_number'] ==
+                                        payVM.getPaymentBody['card_number']);
+                                    if (!exists) {
+                                      await payVM.createPaymentMethodTap();
                                       await startSDK();
-                                      // Navigator.of(context).pop();
-                                      // Future.delayed(
-                                      //     const Duration(seconds: 0),
-                                      //     () => Navigator.of(context).push(
-                                      //             _createRoute(ConfirmPaymentMethod(
-                                      //           payment_method: widget.payment_method,
-                                      //           paymentViewModel:
-                                      //               widget.paymentViewModel,
-                                      //           role: Constants.customerRoleId,
-                                      //               profileViewModel: widget.profileViewModel,
-                                      //         ))));
                                     } else {
                                       showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              simpleAlert(
-                                                  context,
-                                                  translate('button.failure'),
-                                                  'Card Number is already chosen'));
-                                    }
-                                  },
-                                  child: widget.paymentViewModel.isLoading
-                                      ? const Center(
-                                          child: CircularProgressIndicator(
-                                            color: Colors.white,
-                                          ),
-                                        )
-                                      : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          children: [
-                                            const Icon(
-                                              Icons.add,
-                                              size: 18,
-                                              color: Colors.white,
-                                            ),
-                                            const Gap(5),
-                                            Text(
-                                              translate(
-                                                  'paymentMethod.addPaymentMethod'),
-                                              style: getPrimaryBoldStyle(
-                                                fontSize: 14,
-                                                color: const Color(0xffffffff),
-                                              ),
-                                            ),
-                                          ],
+                                        context: context,
+                                        builder: (_) => simpleAlert(
+                                          context,
+                                          translate('button.failure'),
+                                          'Card Number is already chosen',
                                         ),
+                                      );
+                                    }
+                                    await payVM.setLoading(false);
+                                  },
+                                  child: Center(
+                                    child: payVM.isLoading
+                                        ? const CircularProgressIndicator(
+                                            color: Colors.white)
+                                        : Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              const Icon(Icons.add,
+                                                  color: Colors.white,
+                                                  size: 18),
+                                              const Gap(5),
+                                              Text(
+                                                translate(
+                                                    'paymentMethod.addPaymentMethod'),
+                                                style: getPrimaryBoldStyle(
+                                                  fontSize: 14,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                  ),
                                 ),
                               ),
                             ),
-                            const Gap(60),
-                          ]);
-                        }),
+                          ],
+                        ),
+                        // const SafeArea(child: SizedBox()),
+                      ],
+                    ),
                   );
-                }),
-          ],
-        ),
-      );
-    });
+                },
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
 
-Widget simpleAlert(BuildContext context, String message, String message2) {
+Widget simpleAlert(BuildContext context, String title, String message) {
   return AlertDialog(
     backgroundColor: Colors.white,
     elevation: 15,
     content: Column(
       mainAxisSize: MainAxisSize.min,
-      // crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                child: SvgPicture.asset('assets/img/x.svg'),
-                onTap: () {
-                  Navigator.pop(context);
-                  Future.delayed(const Duration(seconds: 0),
-                      () => Navigator.of(context).pop());
-                },
-              ),
-            ],
-          ),
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            InkWell(
+              onTap: () => Navigator.pop(context),
+              child: SvgPicture.asset('assets/img/x.svg'),
+            ),
+          ],
         ),
-        message == 'Success'
+        const Gap(20),
+        title == 'Success'
             ? SvgPicture.asset('assets/img/service-popup-image.svg')
             : SvgPicture.asset('assets/img/failure.svg'),
-        SizedBox(height: context.appValues.appSize.s40),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: context.appValues.appPadding.p32,
-          ),
-          child: Text(
-            message2,
-            textAlign: TextAlign.center,
-            style: getPrimaryRegularStyle(
-              fontSize: 17,
-              color: context.resources.color.btnColorBlue,
-            ),
+        const Gap(20),
+        Text(
+          message,
+          textAlign: TextAlign.center,
+          style: getPrimaryRegularStyle(
+            fontSize: 17,
+            color: context.resources.color.btnColorBlue,
           ),
         ),
-        SizedBox(height: context.appValues.appSize.s20),
       ],
     ),
   );
@@ -674,9 +340,7 @@ Widget simpleAlert(BuildContext context, String message, String message2) {
 
 class NavigationControls extends StatelessWidget {
   const NavigationControls({super.key, required this.webViewController});
-
   final WebViewController webViewController;
-
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -687,11 +351,9 @@ class NavigationControls extends StatelessWidget {
             if (await webViewController.canGoBack()) {
               await webViewController.goBack();
             } else {
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('No back history item')),
-                );
-              }
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('No back history item')),
+              );
             }
           },
         ),
@@ -701,11 +363,9 @@ class NavigationControls extends StatelessWidget {
             if (await webViewController.canGoForward()) {
               await webViewController.goForward();
             } else {
-              if (context.mounted) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('No forward history item')),
-                );
-              }
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('No forward history item')),
+              );
             }
           },
         ),
@@ -714,320 +374,6 @@ class NavigationControls extends StatelessWidget {
           onPressed: () => webViewController.reload(),
         ),
       ],
-    );
-  }
-}
-
-enum MenuOptions {
-  showUserAgent,
-  listCookies,
-  clearCookies,
-  addToCache,
-  listCache,
-  clearCache,
-  navigationDelegate,
-  doPostRequest,
-  loadLocalFile,
-  loadFlutterAsset,
-  loadHtmlString,
-  transparentBackground,
-  setCookie,
-  logExample,
-  basicAuthentication,
-}
-
-class SampleMenu extends StatelessWidget {
-  SampleMenu({
-    super.key,
-    required this.webViewController,
-  });
-
-  final WebViewController webViewController;
-  late final WebViewCookieManager cookieManager = WebViewCookieManager();
-
-  @override
-  Widget build(BuildContext context) {
-    return PopupMenuButton<MenuOptions>(
-      key: const ValueKey<String>('ShowPopupMenu'),
-      onSelected: (MenuOptions value) {
-        switch (value) {
-          case MenuOptions.showUserAgent:
-            _onShowUserAgent();
-          case MenuOptions.listCookies:
-            _onListCookies(context);
-          case MenuOptions.clearCookies:
-            _onClearCookies(context);
-          case MenuOptions.addToCache:
-            _onAddToCache(context);
-          case MenuOptions.listCache:
-            _onListCache();
-          case MenuOptions.clearCache:
-            _onClearCache(context);
-          case MenuOptions.navigationDelegate:
-          // _onNavigationDelegateExample();
-          case MenuOptions.doPostRequest:
-            _onDoPostRequest();
-          case MenuOptions.loadLocalFile:
-          // _onLoadLocalFileExample();
-          case MenuOptions.loadFlutterAsset:
-            _onLoadFlutterAssetExample();
-          case MenuOptions.loadHtmlString:
-          // _onLoadHtmlStringExample();
-          case MenuOptions.transparentBackground:
-          // _onTransparentBackground();
-          case MenuOptions.setCookie:
-            _onSetCookie();
-          case MenuOptions.logExample:
-          // _onLogExample();
-          case MenuOptions.basicAuthentication:
-          // _promptForUrl(context);
-        }
-      },
-      itemBuilder: (BuildContext context) => <PopupMenuItem<MenuOptions>>[
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.showUserAgent,
-          child: Text('Show user agent'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.listCookies,
-          child: Text('List cookies'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.clearCookies,
-          child: Text('Clear cookies'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.addToCache,
-          child: Text('Add to cache'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.listCache,
-          child: Text('List cache'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.clearCache,
-          child: Text('Clear cache'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.navigationDelegate,
-          child: Text('Navigation Delegate example'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.doPostRequest,
-          child: Text('Post Request'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.loadHtmlString,
-          child: Text('Load HTML string'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.loadLocalFile,
-          child: Text('Load local file'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.loadFlutterAsset,
-          child: Text('Load Flutter Asset'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          key: ValueKey<String>('ShowTransparentBackgroundExample'),
-          value: MenuOptions.transparentBackground,
-          child: Text('Transparent background example'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.setCookie,
-          child: Text('Set cookie'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.logExample,
-          child: Text('Log example'),
-        ),
-        const PopupMenuItem<MenuOptions>(
-          value: MenuOptions.basicAuthentication,
-          child: Text('Basic Authentication Example'),
-        ),
-      ],
-    );
-  }
-
-  Future<void> _onShowUserAgent() {
-    // Send a message with the user agent string to the Toaster JavaScript channel we registered
-    // with the WebView.
-    return webViewController.runJavaScript(
-      'Toaster.postMessage("User Agent: " + navigator.userAgent);',
-    );
-  }
-
-  Future<void> _onListCookies(BuildContext context) async {
-    final String cookies = await webViewController
-        .runJavaScriptReturningResult('document.cookie') as String;
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            const Text('Cookies:'),
-            _getCookieList(cookies),
-          ],
-        ),
-      ));
-    }
-  }
-
-  Future<void> _onAddToCache(BuildContext context) async {
-    await webViewController.runJavaScript(
-      'caches.open("test_caches_entry"); localStorage["test_localStorage"] = "dummy_entry";',
-    );
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Added a test entry to cache.'),
-      ));
-    }
-  }
-
-  Future<void> _onListCache() {
-    return webViewController.runJavaScript('caches.keys()'
-        // ignore: missing_whitespace_between_adjacent_strings
-        '.then((cacheKeys) => JSON.stringify({"cacheKeys" : cacheKeys, "localStorage" : localStorage}))'
-        '.then((caches) => Toaster.postMessage(caches))');
-  }
-
-  Future<void> _onClearCache(BuildContext context) async {
-    await webViewController.clearCache();
-    await webViewController.clearLocalStorage();
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-        content: Text('Cache cleared.'),
-      ));
-    }
-  }
-
-  Future<void> _onClearCookies(BuildContext context) async {
-    final bool hadCookies = await cookieManager.clearCookies();
-    String message = 'There were cookies. Now, they are gone!';
-    if (!hadCookies) {
-      message = 'There are no cookies.';
-    }
-    if (context.mounted) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text(message),
-      ));
-    }
-  }
-
-  // Future<void> _onNavigationDelegateExample() {
-  //   final String contentBase64 = base64Encode(
-  //     const Utf8Encoder().convert(kNavigationExamplePage),
-  //   );
-  //   return webViewController.loadRequest(
-  //     Uri.parse('data:text/html;base64,$contentBase64'),
-  //   );
-  // }
-
-  Future<void> _onSetCookie() async {
-    await cookieManager.setCookie(
-      const WebViewCookie(
-        name: 'foo',
-        value: 'bar',
-        domain: 'httpbin.org',
-        path: '/anything',
-      ),
-    );
-    await webViewController.loadRequest(Uri.parse(
-      'https://httpbin.org/anything',
-    ));
-  }
-
-  Future<void> _onDoPostRequest() {
-    return webViewController.loadRequest(
-      Uri.parse('https://httpbin.org/post'),
-      method: LoadRequestMethod.post,
-      headers: <String, String>{'foo': 'bar', 'Content-Type': 'text/plain'},
-      body: Uint8List.fromList('Test Body'.codeUnits),
-    );
-  }
-
-  // Future<void> _onLoadLocalFileExample() async {
-  //   final String pathToIndex = await _prepareLocalFile();
-  //   await webViewController.loadFile(pathToIndex);
-  // }
-
-  Future<void> _onLoadFlutterAssetExample() {
-    return webViewController.loadFlutterAsset('assets/www/index.html');
-  }
-
-  // Future<void> _onLoadHtmlStringExample() {
-  //   return webViewController.loadHtmlString(kLocalExamplePage);
-  // }
-
-  // Future<void> _onTransparentBackground() {
-  //   return webViewController.loadHtmlString(kTransparentBackgroundPage);
-  // }
-
-  Widget _getCookieList(String cookies) {
-    if (cookies == '""') {
-      return Container();
-    }
-    final List<String> cookieList = cookies.split(';');
-    final Iterable<Text> cookieWidgets =
-        cookieList.map((String cookie) => Text(cookie));
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.end,
-      mainAxisSize: MainAxisSize.min,
-      children: cookieWidgets.toList(),
-    );
-  }
-
-  // static Future<String> _prepareLocalFile() async {
-  //   final String tmpDir = (await getTemporaryDirectory()).path;
-  //   final File indexFile = File(
-  //       <String>{tmpDir, 'www', 'index.html'}.join(Platform.pathSeparator));
-  //
-  //   await indexFile.create(recursive: true);
-  //   await indexFile.writeAsString(kLocalExamplePage);
-  //
-  //   return indexFile.path;
-  // }
-
-  // Future<void> _onLogExample() {
-  //   webViewController
-  //       .setOnConsoleMessage((JavaScriptConsoleMessage consoleMessage) {
-  //     debugPrint(
-  //         '== JS == ${consoleMessage.level.name}: ${consoleMessage.message}');
-  //   });
-  //
-  //   return webViewController.loadHtmlString(kLogExamplePage);
-  // }
-
-  Future<void> _promptForUrl(BuildContext context) {
-    final TextEditingController urlTextController = TextEditingController();
-
-    return showDialog<String>(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Input URL to visit'),
-          content: TextField(
-            decoration: const InputDecoration(labelText: 'URL'),
-            autofocus: true,
-            controller: urlTextController,
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                if (urlTextController.text.isNotEmpty) {
-                  final Uri? uri = Uri.tryParse(urlTextController.text);
-                  if (uri != null && uri.scheme.isNotEmpty) {
-                    webViewController.loadRequest(uri);
-                    Navigator.pop(context);
-                  }
-                }
-              },
-              child: const Text('Visit'),
-            ),
-          ],
-        );
-      },
     );
   }
 }

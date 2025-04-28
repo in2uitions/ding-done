@@ -101,7 +101,7 @@ class _EditAccountState extends State<EditAccount> {
                         const Gap(10),
                         Text(
                           translate('profile.myProfile'),
-                          style: getPrimaryBoldStyle(
+                          style: getPrimarySemiBoldStyle(
                             fontSize: 16,
                             color: Colors.white,
                           ),
@@ -272,8 +272,9 @@ class _EditAccountState extends State<EditAccount> {
                                               .appValues.appSizePercent.w100,
                                           child: Text(
                                             translate('profile.yourName'),
-                                            style: getPrimaryRegularStyle(
-                                              color: const Color(0xff71727A),
+                                            style: getPrimaryMediumStyle(
+                                              color: context
+                                                  .resources.color.btnColorBlue,
                                               fontSize: 12,
                                             ),
                                           ),
@@ -301,7 +302,6 @@ class _EditAccountState extends State<EditAccount> {
                                           // isPrfixShown: true,
                                         ),
                                       ),
-                                      const Gap(10),
                                       Padding(
                                         padding: EdgeInsets.symmetric(
                                             vertical: context
@@ -321,7 +321,7 @@ class _EditAccountState extends State<EditAccount> {
                                           // isPrfixShown: true,
                                         ),
                                       ),
-                                      const Gap(10),
+                                      const Gap(20),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             0, 5, 0, 0),
@@ -330,8 +330,9 @@ class _EditAccountState extends State<EditAccount> {
                                               .appValues.appSizePercent.w100,
                                           child: Text(
                                             translate('formHints.phone_number'),
-                                            style: getPrimaryRegularStyle(
-                                              color: const Color(0xff71727A),
+                                            style: getPrimaryMediumStyle(
+                                              color: context
+                                                  .resources.color.btnColorBlue,
                                               fontSize: 12,
                                             ),
                                           ),
@@ -369,7 +370,7 @@ class _EditAccountState extends State<EditAccount> {
                                           keyboardType: TextInputType.number,
                                         ),
                                       ),
-                                      // const Gap(10),
+                                      const Gap(20),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             0, 0, 0, 0),
@@ -378,8 +379,9 @@ class _EditAccountState extends State<EditAccount> {
                                               .appValues.appSizePercent.w100,
                                           child: Text(
                                             translate('formHints.email'),
-                                            style: getPrimaryRegularStyle(
-                                              color: const Color(0xff71727A),
+                                            style: getPrimaryMediumStyle(
+                                              color: context
+                                                  .resources.color.btnColorBlue,
                                               fontSize: 12,
                                             ),
                                           ),
@@ -409,6 +411,11 @@ class _EditAccountState extends State<EditAccount> {
                                       const Gap(20),
                                     ],
                                   ),
+                                ),
+                                Divider(
+                                  color: const Color(0xffE5E5E5),
+                                  thickness: 1.5,
+                                  height: context.appValues.appSizePercent.h2,
                                 ),
                                 SizedBox(
                                   height: context.appValues.appSizePercent.h8,
@@ -468,7 +475,7 @@ class _EditAccountState extends State<EditAccount> {
                                             child: Text(
                                               'Save',
                                               style: getPrimarySemiBoldStyle(
-                                                fontSize: 16,
+                                                fontSize: 12,
                                                 color: Colors.white,
                                               ),
                                             ),

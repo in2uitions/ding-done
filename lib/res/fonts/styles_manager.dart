@@ -11,11 +11,42 @@ TextStyle _getTextStyle(
   );
 }
 
+TextStyle getPrimaryThinStyle(
+    {double fontSize = FontSizeConstants.s12, Color? color}) {
+  return _getTextStyle(fontSize, FontConstants.primaryFontFamily,
+      FontWeightConstants.thin, color);
+}
+
+TextStyle getPrimaryExtraLightStyle(
+    {double fontSize = FontSizeConstants.s12, Color? color}) {
+  return _getTextStyle(fontSize, FontConstants.primaryFontFamily,
+      FontWeightConstants.extraLight, color);
+}
+
+TextStyle getPrimaryLightStyle(
+    {double fontSize = FontSizeConstants.s12, Color? color}) {
+  return _getTextStyle(fontSize, FontConstants.primaryFontFamily,
+      FontWeightConstants.light, color);
+}
+
 // regular style
 TextStyle getPrimaryRegularStyle(
     {double fontSize = FontSizeConstants.s12, Color? color}) {
   return _getTextStyle(fontSize, FontConstants.primaryFontFamily,
       FontWeightConstants.regular, color);
+}
+
+TextStyle getPrimaryMediumStyle(
+    {double fontSize = FontSizeConstants.s12, Color? color}) {
+  return _getTextStyle(fontSize, FontConstants.primaryFontFamily,
+      FontWeightConstants.medium, color);
+}
+
+// semi Bold style
+TextStyle getPrimarySemiBoldStyle(
+    {double fontSize = FontSizeConstants.s12, Color? color}) {
+  return _getTextStyle(fontSize, FontConstants.primaryFontFamily,
+      FontWeightConstants.semiBold, color);
 }
 
 // Bold style
@@ -25,11 +56,18 @@ TextStyle getPrimaryBoldStyle(
       FontWeightConstants.bold, color);
 }
 
-// semi Bold style
-TextStyle getPrimarySemiBoldStyle(
+// Extra Bold style
+TextStyle getPrimaryExtraBoldStyle(
     {double fontSize = FontSizeConstants.s12, Color? color}) {
   return _getTextStyle(fontSize, FontConstants.primaryFontFamily,
-      FontWeightConstants.semiBold, color);
+      FontWeightConstants.extraBold, color);
+}
+
+// Black style
+TextStyle getPrimaryBlackStyle(
+    {double fontSize = FontSizeConstants.s12, Color? color}) {
+  return _getTextStyle(fontSize, FontConstants.primaryFontFamily,
+      FontWeightConstants.black, color);
 }
 
 // Bold style

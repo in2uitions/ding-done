@@ -197,7 +197,7 @@ class _BookAServiceState extends State<BookAService> {
                                 const Gap(5),
                                 Text(
                                   translate('bookService.bookService'),
-                                  style: getPrimaryBoldStyle(
+                                  style: getPrimarySemiBoldStyle(
                                     color: context.resources.color.colorWhite,
                                     fontSize: 16,
                                   ),
@@ -264,6 +264,7 @@ class _BookAServiceState extends State<BookAService> {
                     child: ListView.builder(
                         controller: scrollController,
                         itemCount: 1,
+                        padding: EdgeInsets.zero,
                         itemBuilder: (BuildContext context, int index) {
                           Map<String, dynamic>? service;
                           Map<String, dynamic>? categories;
@@ -277,6 +278,7 @@ class _BookAServiceState extends State<BookAService> {
                           }
                           return Column(
                             children: [
+                              const Gap(30),
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -304,7 +306,7 @@ class _BookAServiceState extends State<BookAService> {
                                               categories != null
                                                   ? '${categories["title"]}'
                                                   : 'Leak',
-                                              style: getPrimaryBoldStyle(
+                                              style: getPrimarySemiBoldStyle(
                                                 fontSize: 16,
                                                 color: context.resources.color
                                                     .btnColorBlue,
@@ -316,10 +318,11 @@ class _BookAServiceState extends State<BookAService> {
                                               child: Text(
                                                 services != null
                                                     ? '${services["title"]}'
+                                                        .toUpperCase()
                                                     : '',
                                                 maxLines: 3,
                                                 overflow: TextOverflow.ellipsis,
-                                                style: getPrimaryBoldStyle(
+                                                style: getPrimarySemiBoldStyle(
                                                   fontSize: 10,
                                                   color:
                                                       const Color(0xff6E6BE8),
@@ -334,7 +337,8 @@ class _BookAServiceState extends State<BookAService> {
                                     Text(
                                       '${service!['description']}',
                                       style: getPrimaryRegularStyle(
-                                        fontSize: 14,
+                                        fontSize: 12,
+                                        //
                                         color: const Color(0xff190C39),
                                       ),
                                     )
@@ -358,7 +362,7 @@ class _BookAServiceState extends State<BookAService> {
                                       ),
                                       child: Text(
                                         translate('bookService.jobDescription'),
-                                        style: getPrimaryRegularStyle(
+                                        style: getPrimaryMediumStyle(
                                           fontSize: 16,
                                           color: context
                                               .resources.color.btnColorBlue,
@@ -367,6 +371,8 @@ class _BookAServiceState extends State<BookAService> {
                                     ),
                                     CustomTextArea(
                                       index: 'job_description',
+                                      hintText: translate(
+                                          'bookService.jobDescription'),
                                       viewModel: jobsViewModel.setInputValues,
                                       keyboardType: TextInputType.text,
                                       maxlines: 4,
@@ -418,6 +424,7 @@ class _BookAServiceState extends State<BookAService> {
                                       // ),
                                       const Gap(15),
                                       const DatePickerWidget(),
+
                                       const Gap(20),
                                       CustomTimePicker(
                                         index: 'time',
@@ -507,6 +514,14 @@ class _BookAServiceState extends State<BookAService> {
                                 ),
                               ),
                               const Gap(20),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Divider(
+                                  color: Color(0xffD4D6DD),
+                                  thickness: 1,
+                                  height: 5,
+                                ),
+                              ),
 
                               PaymentMethod(
                                 fromWhere: 'book a service',
@@ -515,18 +530,26 @@ class _BookAServiceState extends State<BookAService> {
                                 payment_method: paymentViewModel.paymentList,
                                 role: Constants.customerRoleId,
                               ),
-
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Divider(
+                                  color: Color(0xffD4D6DD),
+                                  thickness: 1,
+                                  height: 5,
+                                ),
+                              ),
+                              const Gap(20),
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: context.appValues.appPadding.p40,
+                                  horizontal: context.appValues.appPadding.p20,
                                   vertical: context.appValues.appPadding.p0,
                                 ),
                                 child: Row(
                                   children: [
                                     Text(
                                       translate('bookService.unitPrice'),
-                                      style: getPrimaryBoldStyle(
-                                        fontSize: 16,
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 14,
                                         color: context
                                             .resources.color.btnColorBlue,
                                       ),
@@ -536,13 +559,13 @@ class _BookAServiceState extends State<BookAService> {
                               ),
                               Padding(
                                   padding: const EdgeInsets.only(
-                                      right: 40.0, left: 40.0),
+                                      right: 20.0, left: 20.0),
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(),
                                     child: Row(
                                       children: [
                                         Text(
-                                          '${_getUnitPrice(profileViewModel)}',
+                                          _getUnitPrice(profileViewModel),
                                           style: getPrimaryRegularStyle(
                                               color: context.resources.color
                                                   .secondColorBlue,
@@ -561,7 +584,7 @@ class _BookAServiceState extends State<BookAService> {
                               const Gap(10),
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: context.appValues.appPadding.p40,
+                                  horizontal: context.appValues.appPadding.p20,
                                   vertical: context.appValues.appPadding.p0,
                                 ),
                                 child: Row(
@@ -570,8 +593,8 @@ class _BookAServiceState extends State<BookAService> {
                                   children: [
                                     Text(
                                       translate('updateJob.jobSize'),
-                                      style: getPrimaryBoldStyle(
-                                        fontSize: 16,
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 14,
                                         color: context
                                             .resources.color.btnColorBlue,
                                       ),
@@ -610,15 +633,15 @@ class _BookAServiceState extends State<BookAService> {
                               const Gap(10),
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: context.appValues.appPadding.p40,
+                                  horizontal: context.appValues.appPadding.p20,
                                   vertical: context.appValues.appPadding.p0,
                                 ),
                                 child: Row(
                                   children: [
                                     Text(
                                       translate('home_screen.totalPrice'),
-                                      style: getPrimaryBoldStyle(
-                                        fontSize: 16,
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 14,
                                         color: context
                                             .resources.color.btnColorBlue,
                                       ),
@@ -628,7 +651,7 @@ class _BookAServiceState extends State<BookAService> {
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: context.appValues.appPadding.p40,
+                                  horizontal: context.appValues.appPadding.p20,
                                   vertical: context.appValues.appPadding.p0,
                                 ),
                                 child: Row(
@@ -636,15 +659,24 @@ class _BookAServiceState extends State<BookAService> {
                                     Text(
                                       _getServiceRate(
                                           profileViewModel, jobsViewModel),
-                                      style: getPrimaryBoldStyle(
+                                      style: getPrimarySemiBoldStyle(
                                         color: const Color(0xff4100E3),
-                                        fontSize: 15,
+                                        fontSize: 16,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
-
+                              const Gap(20),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 20),
+                                child: Divider(
+                                  color: Color(0xffD4D6DD),
+                                  thickness: 1,
+                                  height: 5,
+                                ),
+                              ),
+                              const Gap(10),
                               Container(
                                 height: context.appValues.appSizePercent.h8,
                                 width: context.appValues.appSizePercent.w100,
@@ -661,7 +693,7 @@ class _BookAServiceState extends State<BookAService> {
                                     children: [
                                       SizedBox(
                                         width: context
-                                            .appValues.appSizePercent.w55,
+                                            .appValues.appSizePercent.w57,
                                         height: context
                                             .appValues.appSizePercent.h100,
                                         child: ElevatedButton(
@@ -712,8 +744,8 @@ class _BookAServiceState extends State<BookAService> {
                                           child: Text(
                                             translate(
                                                 'bookService.requestService'),
-                                            style: getPrimaryBoldStyle(
-                                              fontSize: 15,
+                                            style: getPrimarySemiBoldStyle(
+                                              fontSize: 12,
                                               color: context
                                                   .resources.color.colorWhite,
                                             ),
@@ -722,7 +754,7 @@ class _BookAServiceState extends State<BookAService> {
                                       ),
                                       SizedBox(
                                         width: context
-                                            .appValues.appSizePercent.w30,
+                                            .appValues.appSizePercent.w31,
                                         height: context
                                             .appValues.appSizePercent.h100,
                                         child: ElevatedButton(
@@ -746,16 +778,12 @@ class _BookAServiceState extends State<BookAService> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               SvgPicture.asset(
-                                                'assets/img/chat.svg',
-                                                color: const Color(0xff4100E3),
+                                                'assets/img/support-icon.svg',
                                               ),
-                                              // SizedBox(
-                                              //   height: context.appValues.appSize.s5,
-                                              // ),
                                               Text(
                                                 translate('bookService.chat'),
-                                                style: getPrimaryRegularStyle(
-                                                  fontSize: 19,
+                                                style: getPrimarySemiBoldStyle(
+                                                  fontSize: 12,
                                                   color:
                                                       const Color(0xff4100E3),
                                                 ),

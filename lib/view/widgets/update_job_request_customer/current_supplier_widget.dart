@@ -17,10 +17,10 @@ class _CurrentSupplierWidgetState extends State<CurrentSupplierWidget> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(
-          horizontal: context.appValues.appPadding.p20,
+          horizontal: context.appValues.appPadding.p0,
           vertical: context.appValues.appPadding.p10),
       child: Container(
-        // width: context.appValues.appSizePercent.w90,
+        width: context.appValues.appSizePercent.w90,
         // // height: context.appValues.appSizePercent.h10,
         // decoration: BoxDecoration(
         //   borderRadius: BorderRadius.circular(15),
@@ -35,6 +35,7 @@ class _CurrentSupplierWidgetState extends State<CurrentSupplierWidget> {
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -44,7 +45,7 @@ class _CurrentSupplierWidgetState extends State<CurrentSupplierWidget> {
                 child: Text(
                   translate('updateJob.currentSupplier'),
                   style: getPrimaryRegularStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     color: const Color(0xff180B3C),
                   ),
                 ),
@@ -52,7 +53,7 @@ class _CurrentSupplierWidgetState extends State<CurrentSupplierWidget> {
               Text(
                 '${widget.user}',
                 style: getPrimaryRegularStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   color: const Color(0xff71727A),
                 ),
               ),

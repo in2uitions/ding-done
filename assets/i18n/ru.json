@@ -16,6 +16,7 @@
     "map": "карта"
   },
   "button": {
+    "submit": "Отправить",
     "cancel": "Отменить",
     "change_language": "Сменить язык",
     "accept": "Принять",
@@ -50,6 +51,16 @@
     "stopCancel": "Остановить / Отменить",
     "next": "Далее",
     "letsStart": "Начинать"
+  },
+  "settings": {
+    "settings": "Настройки",
+    "language": "Язык",
+    "about": "О DingDone",
+    "privacyPolicy": "Политика конфиденциальности",
+    "helpAndSupport": "Справка и поддержка",
+    "contactUs": "Свяжитесь с нами",
+    "appSettings": "Настройки приложения",
+    "general": "Общее"
   },
   "bottom_bar": {
     "home": "Главная",
@@ -522,7 +533,8 @@
     "apartment": "квартира",
     "city": "Город",
     "zone": "Зона",
-    "address_label": "адресная метка"
+    "address_label": "адресная метка",
+    "area": "Регион"
   },
   "forgotPassword": {
     "title": "Забыли пароль",

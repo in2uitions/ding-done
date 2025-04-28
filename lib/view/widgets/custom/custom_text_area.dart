@@ -93,7 +93,7 @@ class _CustomTextAreaState extends State<CustomTextArea> {
           getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
       decoration: InputDecoration(
         hintStyle: getPrimaryRegularStyle(
-          fontSize: 15,
+          fontSize: 14,
           color: const Color(0xffC5C6CC),
         ),
         enabledBorder: const OutlineInputBorder(

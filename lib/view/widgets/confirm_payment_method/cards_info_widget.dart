@@ -1,10 +1,9 @@
-import 'package:dingdone/res/app_context_extension.dart';
-import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CardInfoWidget extends StatefulWidget {
-  CardInfoWidget({super.key, required this.image, required this.name});
-  String name, image;
+  CardInfoWidget({super.key, required this.image});
+  String image;
 
   @override
   State<CardInfoWidget> createState() => _CardInfoWidgetState();
@@ -13,20 +12,18 @@ class CardInfoWidget extends StatefulWidget {
 class _CardInfoWidgetState extends State<CardInfoWidget> {
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: context.appValues.appSizePercent.w22,
-      child: Column(
-        children: [
-          Image.asset(widget.image),
-          Text(
-            widget.name,
-            textAlign: TextAlign.center,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: getPrimaryBoldStyle(
-                fontSize: 7, color: context.resources.color.btnColorBlue),
-          ),
-        ],
+    return Container(
+      width: 69,
+      height: 44,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: const Color(0xffD4D6DD),
+          width: 1,
+        ),
+      ),
+      child: Center(
+        child: SvgPicture.asset(widget.image),
       ),
     );
   }

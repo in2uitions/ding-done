@@ -15,28 +15,21 @@ class _CardInfoState extends State<CardInfo1> {
     return Padding(
       padding:
           EdgeInsets.symmetric(horizontal: context.appValues.appPadding.p15),
-      child: Wrap(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           CardInfoWidget(
-            image: 'assets/img/mastercard.png',
-            name: 'Mastercard',
+            image: 'assets/img/logos_mastercard.svg',
           ),
           CardInfoWidget(
-            image: 'assets/img/visa.png',
-            name: 'Visa Card',
+            image: 'assets/img/logos_visa.svg',
           ),
           CardInfoWidget(
-            image: 'assets/img/naps.png',
-            name: 'Qatar ATM Cards',
+            image: 'assets/img/logos_naps.svg',
           ),
           CardInfoWidget(
-            image: 'assets/img/himyan.png',
-            name: 'Himyan card',
+            image: 'assets/img/logos_himyan.svg',
           ),
-          // CardInfoWidget(
-          //   image: 'assets/img/cards_cash.png',
-          //   name: 'Card & cash On delivery',
-          // ),
         ],
       ),
     );

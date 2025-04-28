@@ -47,7 +47,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                 horizontal: context.appValues.appPadding.p20,
               ),
               child: Text(
-                translate('confirmAddress.addNewAddress'),
+                translate('bookService.location'),
                 style: getPrimaryRegularStyle(
                   fontSize: 12,
                   color: const Color(0xff180C38),
@@ -448,7 +448,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Area',
+                    translate('formHints.area'),
                     style: getPrimaryRegularStyle(
                       fontSize: 12,
                       color: const Color(0xff2F3036),
@@ -459,7 +459,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                     value: jobsViewModel.getjobsBody["country"] ?? '',
                     index: 'country',
                     viewModel: jobsViewModel.setInputValues,
-                    hintText: translate('formHints.country'),
+                    hintText: translate('formHints.area'),
                     validator: (val) => jobsViewModel.jobsAddressError[
                         context.resources.strings.formKeys['country']!],
                     errorText: jobsViewModel.jobsAddressError[
@@ -502,56 +502,95 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  Text(
-                    'Building Name',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 12,
-                      color: const Color(0xff2F3036),
+                  Expanded(
+                    flex: 3,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Building Name',
+                          style: getPrimaryRegularStyle(
+                            fontSize: 12,
+                            color: const Color(0xff2F3036),
+                          ),
+                        ),
+                        const Gap(5),
+                        CustomTextField(
+                            value:
+                                jobsViewModel.getjobsBody['building_number'] ??
+                                    '',
+                            index: 'building_number',
+                            viewModel: jobsViewModel.setInputValues,
+                            hintText: translate('formHints.building'),
+                            validator: (val) => jobsViewModel.jobsAddressError[
+                                context.resources.strings
+                                    .formKeys['building_number']!],
+                            errorText: jobsViewModel.jobsAddressError[context
+                                .resources
+                                .strings
+                                .formKeys['building_number']!],
+                            keyboardType: TextInputType.text),
+                      ],
                     ),
                   ),
-                  const Gap(5),
-                  CustomTextField(
-                      value: jobsViewModel.getjobsBody['building_number'] ?? '',
-                      index: 'building_number',
-                      viewModel: jobsViewModel.setInputValues,
-                      hintText: translate('formHints.building'),
-                      validator: (val) => jobsViewModel.jobsAddressError[context
-                          .resources.strings.formKeys['building_number']!],
-                      errorText: jobsViewModel.jobsAddressError[context
-                          .resources.strings.formKeys['building_number']!],
-                      keyboardType: TextInputType.text),
+                  const Gap(15),
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Floor Number',
+                          style: getPrimaryRegularStyle(
+                            fontSize: 12,
+                            color: const Color(0xff2F3036),
+                          ),
+                        ),
+                        const Gap(5),
+                        CustomTextField(
+                            value: jobsViewModel.getjobsBody['floor'] ?? '',
+                            index: 'floor',
+                            viewModel: jobsViewModel.setInputValues,
+                            hintText: translate('formHints.floor'),
+                            validator: (val) => jobsViewModel.jobsAddressError[
+                                context.resources.strings.formKeys['floor']!],
+                            errorText: jobsViewModel.jobsAddressError[
+                                context.resources.strings.formKeys['floor']!],
+                            keyboardType: TextInputType.text),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Floor Number',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 12,
-                      color: const Color(0xff2F3036),
-                    ),
-                  ),
-                  const Gap(5),
-                  CustomTextField(
-                      value: jobsViewModel.getjobsBody['floor'] ?? '',
-                      index: 'floor',
-                      viewModel: jobsViewModel.setInputValues,
-                      hintText: translate('formHints.floor'),
-                      validator: (val) => jobsViewModel.jobsAddressError[
-                          context.resources.strings.formKeys['floor']!],
-                      errorText: jobsViewModel.jobsAddressError[
-                          context.resources.strings.formKeys['floor']!],
-                      keyboardType: TextInputType.text),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text(
+            //         'Floor Number',
+            //         style: getPrimaryRegularStyle(
+            //           fontSize: 12,
+            //           color: const Color(0xff2F3036),
+            //         ),
+            //       ),
+            //       const Gap(5),
+            //       CustomTextField(
+            //           value: jobsViewModel.getjobsBody['floor'] ?? '',
+            //           index: 'floor',
+            //           viewModel: jobsViewModel.setInputValues,
+            //           hintText: translate('formHints.floor'),
+            //           validator: (val) => jobsViewModel.jobsAddressError[
+            //               context.resources.strings.formKeys['floor']!],
+            //           errorText: jobsViewModel.jobsAddressError[
+            //               context.resources.strings.formKeys['floor']!],
+            //           keyboardType: TextInputType.text),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Column(
@@ -592,7 +631,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'City',
+                    translate('formHints.city'),
                     style: getPrimaryRegularStyle(
                       fontSize: 12,
                       color: const Color(0xff2F3036),
@@ -640,16 +679,29 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-              child: CustomTextField(
-                  value: jobsViewModel.getjobsBody["address_label"] ?? '',
-                  index: 'address_label',
-                  viewModel: jobsViewModel.setInputValues,
-                  hintText: translate('formHints.address_label'),
-                  validator: (val) => jobsViewModel.jobsAddressError[
-                      context.resources.strings.formKeys['address_label']!],
-                  errorText: jobsViewModel.jobsAddressError[
-                      context.resources.strings.formKeys['address_label']!],
-                  keyboardType: TextInputType.text),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    translate('formHints.address_label'),
+                    style: getPrimaryRegularStyle(
+                      fontSize: 12,
+                      color: const Color(0xff2F3036),
+                    ),
+                  ),
+                  const Gap(5),
+                  CustomTextField(
+                      value: jobsViewModel.getjobsBody["address_label"] ?? '',
+                      index: 'address_label',
+                      viewModel: jobsViewModel.setInputValues,
+                      hintText: translate('formHints.address_label'),
+                      validator: (val) => jobsViewModel.jobsAddressError[
+                          context.resources.strings.formKeys['address_label']!],
+                      errorText: jobsViewModel.jobsAddressError[
+                          context.resources.strings.formKeys['address_label']!],
+                      keyboardType: TextInputType.text),
+                ],
+              ),
             ),
             // FutureBuilder(
             //     future: Provider.of<SignUpViewModel>(context,

@@ -128,7 +128,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                   child: Text(
                     translate('updateJob.currentNumberOfUnits'),
                     style: getPrimaryRegularStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: const Color(0xff180B3C),
                     ),
                   ),
@@ -139,7 +139,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                         ? Text(
                             '${widget.number_of_units}',
                             style: getPrimaryRegularStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: const Color(0xff71727A),
                             ),
                           )
@@ -158,7 +158,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     : Text(
                         '${widget.number_of_units}',
                         style: getPrimaryRegularStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: const Color(0xff71727A),
                         ),
                       ),
@@ -192,7 +192,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                   child: Text(
                     translate('updateJob.extraFees'),
                     style: getPrimaryRegularStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: const Color(0xff180B3C),
                     ),
                   ),
@@ -203,7 +203,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                         ? Text(
                             '${widget.extra_fees}',
                             style: getPrimaryRegularStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: const Color(0xff71727A),
                             ),
                           )
@@ -222,7 +222,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     : Text(
                         '${widget.extra_fees}',
                         style: getPrimaryRegularStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: const Color(0xff71727A),
                         ),
                       ),
@@ -256,7 +256,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                   child: Text(
                     translate('updateJob.extraFeesReason'),
                     style: getPrimaryRegularStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: const Color(0xff180B3C),
                     ),
                   ),
@@ -267,7 +267,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                         ? Text(
                             '${widget.extra_fees_reason}',
                             style: getPrimaryRegularStyle(
-                              fontSize: 16,
+                              fontSize: 14,
                               color: const Color(0xff71727A),
                             ),
                           )
@@ -286,7 +286,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     : Text(
                         '${widget.extra_fees_reason}',
                         style: getPrimaryRegularStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: const Color(0xff71727A),
                         ),
                       ),

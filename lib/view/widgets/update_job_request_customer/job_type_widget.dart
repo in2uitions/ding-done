@@ -54,7 +54,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                 child: Text(
                   translate('bookService.jobType'),
                   style: getPrimaryRegularStyle(
-                    fontSize: 18,
+                    fontSize: 14,
                     color: const Color(0xff180B3C),
                   ),
                 ),
@@ -64,7 +64,7 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                   ? Text(
                       '${widget.job_type}',
                       style: getPrimaryRegularStyle(
-                        fontSize: 18,
+                        fontSize: 14,
                         color: const Color(0xff71727A),
                       ),
                     )

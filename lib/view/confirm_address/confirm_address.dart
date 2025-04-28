@@ -80,7 +80,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                         const Gap(10),
                         Text(
                           translate('confirmAddress.confirmAddress'),
-                          style: getPrimaryBoldStyle(
+                          style: getPrimarySemiBoldStyle(
                             fontSize: 16,
                             color: Colors.white,
                           ),
@@ -107,10 +107,12 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                       child: ListView.builder(
                           controller: scrollController,
                           itemCount: 1,
+                          padding: EdgeInsets.zero,
                           itemBuilder: (BuildContext context, int index) {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                const Gap(30),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
                                     horizontal:
@@ -150,8 +152,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                                       },
                                       child: Center(
                                         child: Text(
-                                          translate(
-                                              'confirmAddress.addNewAddress'),
+                                          translate('button.save'),
                                           style: getPrimaryBoldStyle(
                                             fontSize: 12,
                                             color: Colors.white,

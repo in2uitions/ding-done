@@ -52,9 +52,13 @@ class _CustomDropDownState extends State<CustomDropDown> {
       isExpanded: true,
       dropdownColor: Colors.white, // Set dropdown background color to white
       validator: widget.validator,
-      style:
-          getPrimaryRegularStyle(color: context.resources.color.colorBlack[50]),
+      style: getPrimaryRegularStyle(
+          fontSize: 14, color: context.resources.color.colorBlack[50]),
       decoration: InputDecoration(
+        contentPadding: EdgeInsets.symmetric(
+          horizontal: context.appValues.appPadding.p16,
+          vertical: context.appValues.appPadding.p12,
+        ),
         hintText: widget.hintText,
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(

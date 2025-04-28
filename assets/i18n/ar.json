@@ -16,6 +16,7 @@
     "map": "الخريطة"
   },
   "button": {
+    "submit": "إرسال",
     "cancel": "إلغاء",
     "change_language": "تغيير اللغة",
     "accept": "قبول",
@@ -50,6 +51,16 @@
     "stopCancel": "إيقاف / إلغاء",
     "next": "التالي",
     "letsStart": "لنبدأ"
+  },
+  "settings": {
+    "settings": "الإعدادات",
+    "language": "اللغة",
+    "about": "حول DingDone",
+    "privacyPolicy": "سياسة الخصوصية",
+    "helpAndSupport": "المساعدة والدعم",
+    "contactUs": "اتصل بنا",
+    "appSettings": "إعدادات التطبيق",
+    "general": "عام"
   },
   "bottom_bar": {
     "home": "الصفحة الرئيسية",
@@ -521,7 +532,8 @@
     "apartment": "الشقة",
     "city": "المدينة",
     "zone": "المنطقة",
-    "address_label": "تسمية العنوان"
+    "address_label": "تسمية العنوان",
+    "area": "المنطقة"
   },
   "forgotPassword": {
     "title": "نسيت كلمة المرور",

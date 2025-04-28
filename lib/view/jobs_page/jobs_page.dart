@@ -2,6 +2,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/notifications_screen/notifications_screen.dart';
 import 'package:dingdone/view/widgets/jobs/jobs_cards.dart';
 import 'package:dingdone/view/widgets/tabs/tabs_jobs.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -9,6 +10,7 @@ import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -218,14 +220,21 @@ class _JobsPageState extends State<JobsPage> {
                                   children: [
                                     Text(
                                       translate('bottom_bar.jobs'),
-                                      style: getPrimaryBoldStyle(
+                                      style: getPrimarySemiBoldStyle(
                                         color:
                                             context.resources.color.colorWhite,
                                         fontSize: 16,
                                       ),
                                     ),
-                                    SvgPicture.asset(
-                                        'assets/img/bellwhite.svg'),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(_createRoute(
+                                          const NotificationsScreen(),
+                                        ));
+                                      },
+                                      child: SvgPicture.asset(
+                                          'assets/img/bellwhite.svg'),
+                                    ),
                                   ],
                                 ),
                                 // InkWell(
@@ -299,9 +308,11 @@ class _JobsPageState extends State<JobsPage> {
                   child: ListView.builder(
                       controller: scrollController,
                       itemCount: 1,
+                      padding: EdgeInsets.zero,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
                           children: [
+                            const Gap(30),
                             Consumer<JobsViewModel>(
                               builder: (context, jobsViewModel, _) {
                                 List<int> jobCounts =

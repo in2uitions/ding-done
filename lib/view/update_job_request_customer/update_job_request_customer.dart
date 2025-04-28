@@ -102,7 +102,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   ),
                                   child: Text(
                                     translate('jobDetails.jobDetails'),
-                                    style: getPrimaryRegularStyle(
+                                    style: getPrimarySemiBoldStyle(
                                       color: context.resources.color.colorWhite,
                                       fontSize: 16,
                                     ),
@@ -136,9 +136,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                   child: ListView.builder(
                       controller: scrollController,
                       itemCount: 1,
+                      padding: EdgeInsets.zero,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
                           children: [
+                            const Gap(30),
                             Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: context.appValues.appPadding.p20),
@@ -158,21 +160,22 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                         Text(
                                           translate('updateJob.jobStatus'),
                                           style: getPrimaryRegularStyle(
-                                            fontSize: 16,
+                                            fontSize: 14,
                                             color: context
                                                 .resources.color.btnColorBlue,
                                           ),
                                         ),
                                         Text(
                                           widget.data.status,
-                                          style: getPrimaryBoldStyle(
+                                          style: getPrimarySemiBoldStyle(
                                             color: const Color(0xff4100E3),
-                                            fontSize: 14,
+                                            fontSize: 10,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
+                                  const Gap(20),
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
@@ -182,7 +185,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     child: Text(
                                       translate('bookService.jobTitle'),
                                       style: getPrimaryRegularStyle(
-                                        fontSize: 16,
+                                        fontSize: 14,
                                         color: const Color(0xff180C38),
                                       ),
                                     ),
@@ -203,7 +206,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                         style: getPrimaryRegularStyle(
                                           // color: context.resources.color.colorYellow,
                                           color: const Color(0xff71727A),
-                                          fontSize: 16,
+                                          fontSize: 14,
                                         ),
                                       ),
                                     ),
@@ -272,7 +275,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                   style: getPrimaryRegularStyle(
                                                     color:
                                                         const Color(0xff71727A),
-                                                    fontSize: 16,
+                                                    fontSize: 14,
                                                   ),
                                                 );
                                               },
@@ -322,7 +325,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                             child: Text(
                                               translate('jobs.estimatedTime'),
                                               style: getPrimaryRegularStyle(
-                                                fontSize: 16,
+                                                fontSize: 14,
                                                 color: const Color(0xff180C38),
                                               ),
                                             ),
@@ -339,7 +342,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                 Text(
                                                   '${widget.data.supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
                                                   style: getPrimaryRegularStyle(
-                                                    fontSize: 16,
+                                                    fontSize: 14,
                                                     color:
                                                         const Color(0xff71727A),
                                                   ),
@@ -505,7 +508,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           Text(
                                             translate('home_screen.totalPrice'),
                                             style: getPrimaryRegularStyle(
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               color: const Color(0xff180C38),
                                             ),
                                           ),
@@ -513,9 +516,9 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                             widget.data.total_amount != null
                                                 ? '${widget.data.total_amount} ${widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"]["currency"] : ''}'
                                                 : '${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"]["curreny"]} ${widget.data.service["country_rates"][0]["unit_type"] != null ? widget.data.service["country_rates"][0]["unit_type"]["code"] : ''}',
-                                            style: getPrimaryBoldStyle(
+                                            style: getPrimarySemiBoldStyle(
                                               color: const Color(0xff4100E3),
-                                              fontSize: 18,
+                                              fontSize: 16,
                                             ),
                                           ),
                                         ],
@@ -524,6 +527,16 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   )
                                 : Container(),
                             // SizedBox(height: context.appValues.appSizePercent.h2),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: context.appValues.appPadding.p20,
+                              ),
+                              child: Divider(
+                                color: const Color(0xffEAEAFF),
+                                thickness: 1.5,
+                                height: context.appValues.appSizePercent.h2,
+                              ),
+                            ),
 
                             //
                             //
@@ -534,7 +547,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             Consumer<JobsViewModel>(
                                 builder: (context, jobsViewModel, _) {
                               return SizedBox(
-                                height: context.appValues.appSizePercent.h8,
+                                // height: context.appValues.appSizePercent.h,
                                 width: context.appValues.appSizePercent.w100,
                                 // decoration: BoxDecoration(
                                 //   borderRadius: const BorderRadius.only(
@@ -542,9 +555,9 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 //       topRight: Radius.circular(20)),
                                 //   color: context.resources.color.btnColorBlue,
                                 // ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                child: Column(
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceBetween,
                                   children: [
                                     // widget.fromWhere!='completed'?
 
@@ -562,10 +575,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                 horizontal: context
                                                     .appValues.appPadding.p15),
                                             child: SizedBox(
-                                              width: context
-                                                  .appValues.appSizePercent.w40,
-                                              height: context.appValues
-                                                  .appSizePercent.h100,
+                                              width: context.appValues
+                                                  .appSizePercent.w100,
+                                              // height: context.appValues
+                                              //     .appSizePercent.h1,
+                                              height: 44,
                                               child: ElevatedButton(
                                                 onPressed: () async {
                                                   setState(() {
@@ -609,7 +623,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                 },
                                                 style: ElevatedButton.styleFrom(
                                                   backgroundColor:
-                                                      const Color(0xff2c2a5b),
+                                                      const Color(0xff4100E3),
                                                   elevation: 0,
                                                   shadowColor:
                                                       Colors.transparent,
@@ -628,8 +642,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                             translate(
                                                                 'button.invoice'),
                                                             style:
-                                                                getPrimaryRegularStyle(
-                                                              fontSize: 16,
+                                                                getPrimarySemiBoldStyle(
+                                                              fontSize: 12,
                                                               color: context
                                                                   .resources
                                                                   .color
@@ -642,8 +656,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                             translate(
                                                                 'button.update'),
                                                             style:
-                                                                getPrimaryRegularStyle(
-                                                              fontSize: 16,
+                                                                getPrimarySemiBoldStyle(
+                                                              fontSize: 12,
                                                               color: context
                                                                   .resources
                                                                   .color
@@ -654,6 +668,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                             ),
                                           )
                                         : Container(),
+                                    const Gap(10),
                                     //     :
                                     // Container(),
                                     widget.fromWhere !=
@@ -672,9 +687,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                       .appPadding.p15),
                                               child: SizedBox(
                                                 width: context.appValues
-                                                    .appSizePercent.w40,
-                                                height: context.appValues
-                                                    .appSizePercent.h15,
+                                                    .appSizePercent.w100,
+                                                // height: context.appValues
+                                                //     .appSizePercent.h15,
+                                                height: 44,
                                                 child: ElevatedButton(
                                                   onPressed: () {
                                                     setState(() {
@@ -801,8 +817,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                               translate(
                                                                   'button.cancel'),
                                                               style:
-                                                                  getPrimaryRegularStyle(
-                                                                fontSize: 16,
+                                                                  getPrimarySemiBoldStyle(
+                                                                fontSize: 12,
                                                                 color: const Color(
                                                                     0xff4100E3),
                                                               ),
@@ -873,25 +889,49 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                   ],
                 ),
               ),
-              SvgPicture.asset('assets/img/service-popup-image.svg'),
+              SvgPicture.asset('assets/img/cancelation-icon.svg'),
               SizedBox(height: context.appValues.appSize.s40),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.appValues.appPadding.p32,
+              Text(
+                'Important!',
+                textAlign: TextAlign.center,
+                style: getPrimarySemiBoldStyle(
+                  fontSize: 16,
+                  color: context.resources.color.btnColorBlue,
                 ),
-                child: Text(
-                  message,
-                  textAlign: TextAlign.center,
-                  style: getPrimaryRegularStyle(
-                    fontSize: 17,
-                    color: context.resources.color.btnColorBlue,
-                  ),
+              ),
+              const Gap(10),
+              Text(
+                'Cancellations made within 4 hours of the job start time will incur a 50 QAR fee.',
+                textAlign: TextAlign.center,
+                style: getPrimaryRegularStyle(
+                  fontSize: 12,
+                  color: const Color(0xff71727A),
+                ),
+              ),
+              const Gap(10),
+              Text(
+                'Would you like to continue with the cancellation?',
+                textAlign: TextAlign.center,
+                style: getPrimaryRegularStyle(
+                  fontSize: 12,
+                  color: const Color(0xff71727A),
                 ),
               ),
               SizedBox(height: context.appValues.appSize.s20),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Cancelation reason',
+                  textAlign: TextAlign.left,
+                  style: getPrimaryRegularStyle(
+                    fontSize: 12,
+                    color: const Color(0xff71727A),
+                  ),
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: context.appValues.appPadding.p32,
+                  horizontal: context.appValues.appPadding.p0,
                 ),
                 // child: CustomTextArea(
                 //   index: 'cancellation_reason',
@@ -904,12 +944,20 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     builder: (context, jobsViewModel1, _) {
                   return Column(
                     children: [
+                      const Gap(10),
                       // Radio buttons
                       for (int i = 0; i < reasons.length; i++)
-                        RadioListTile(
-                          title: Text(reasons[i]),
+                        RadioListTile<String>(
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                          visualDensity: const VisualDensity(vertical: -4),
+                          title: Text(
+                            reasons[i],
+                            style: getPrimaryRegularStyle(fontSize: 12),
+                          ),
                           value: reasons[i],
-                          groupValue: jobsViewModel1.selectedReason,
+                          groupValue: jobsViewModel.selectedReason,
+                          activeColor: Theme.of(context).primaryColor,
                           onChanged: (value) {
                             setState(() {
                               // You can perform additional actions based on the selected reason if needed
@@ -926,6 +974,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             }
                           },
                         ),
+                      const Gap(10),
                       // Your other widgets can go here
                       if (jobsViewModel1.showCustomTextArea)
                         CustomTextArea(
@@ -940,7 +989,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                  horizontal: context.appValues.appPadding.p32,
+                  horizontal: context.appValues.appPadding.p0,
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
@@ -1018,14 +1067,14 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     fixedSize: Size(
-                      context.appValues.appSizePercent.w30,
+                      context.appValues.appSizePercent.w100,
                       context.appValues.appSizePercent.h5,
                     ),
                   ),
                   child: Text(
-                    translate('button.send'),
-                    style: getPrimaryRegularStyle(
-                      fontSize: 15,
+                    translate('button.submit'),
+                    style: getPrimarySemiBoldStyle(
+                      fontSize: 12,
                       color: context.resources.color.colorWhite,
                     ),
                   ),

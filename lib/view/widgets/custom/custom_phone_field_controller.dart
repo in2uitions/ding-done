@@ -68,6 +68,12 @@ class _CustomPhoneFieldControllerState
     return IntlPhoneField(
       initialValue: widget.phone_number != null ? widget.phone_number : '',
       initialCountryCode: widget.phone_code != null ? widget.phone_code : 'AE',
+      dropdownTextStyle: getPrimaryRegularStyle(
+        fontSize: 14,
+      ),
+      style: getPrimaryRegularStyle(
+        fontSize: 14,
+      ),
       onChanged: (PhoneNumber number) {
         // Concatenate the country code and phone number
         final fullPhoneNumber = '${number.countryCode}${number.number}';
@@ -96,6 +102,15 @@ class _CustomPhoneFieldControllerState
       decoration: InputDecoration(
         errorText: widget.errorText,
         hintText: translate('formHints.phone_number'),
+        hintStyle: getPrimaryRegularStyle(
+          fontSize: 14,
+        ),
+        labelStyle: getPrimaryRegularStyle(
+          fontSize: 14,
+        ),
+        suffixStyle: getPrimaryRegularStyle(
+          fontSize: 14,
+        ),
         enabledBorder: OutlineInputBorder(
           borderSide: const BorderSide(
             color: Color(0xffC5C6CC),
