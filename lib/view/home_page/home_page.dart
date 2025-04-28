@@ -36,6 +36,7 @@ class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController searchController = TextEditingController();
   List<dynamic> filteredServices = [];
+  List<dynamic> featuredServices = [];
 
   @override
   void initState() {
@@ -123,6 +124,9 @@ class _HomePageState extends State<HomePage> {
             JobsViewModel>(
         builder: (context, profileViewModel, servicesViewModel,
             categoriesViewModel, jobsViewModel, _) {
+      featuredServices = categoriesViewModel.servicesList2
+          .where((s) => s['is_featured'].toString() == 'true')
+          .toList();
       return Scaffold(
         key: _scaffoldKey,
         backgroundColor: const Color(0xffFEFEFE),
@@ -752,10 +756,20 @@ class _HomePageState extends State<HomePage> {
                                       ),
                                     ),
                                     InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).push(_createRoute(
-                                          const ServicesScreen(),
-                                        ));
+                                      onTap: () async {
+                                        String? role = await AppPreferences()
+                                            .get(
+                                                key: userRoleKey,
+                                                isModel: false);
+                                        // Simulate network fetch or database query
+                                        await Future.delayed(
+                                            const Duration(seconds: 2));
+                                        // Update the list of items and refresh the UI
+                                        Navigator.of(context)
+                                            .push(_createRoute(BottomBar(
+                                          userRole: role,
+                                          currentTab: 1,
+                                        )));
                                       },
                                       child: ParentCategoriesWidget(
                                           servicesViewModel: servicesViewModel),
@@ -852,71 +866,73 @@ class _HomePageState extends State<HomePage> {
                                                     });
                                                   },
                                                 ),
-                                                items: imgList
-                                                    .map((item) => Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        20),
-                                                            image:
-                                                                const DecorationImage(
-                                                              fit: BoxFit.cover,
-                                                              image:
-                                                                  NetworkImage(
-                                                                'https://media.istockphoto.com/id/1158769712/photo/professional-furniture-assembly-worker-assembles-shelf-professional-handyman-doing-assembly.jpg?s=612x612&w=0&k=20&c=BBvngif9SB8VbAb1gSD4DaBzob6Chnm0KZpP09lCLrc=',
-                                                              ),
-                                                            ),
+                                                items: featuredServices
+                                                    .map((service) {
+                                                  // pull out translation in the current lang:
+                                                  final trans =
+                                                      (service['translations']
+                                                              as List)
+                                                          .cast<
+                                                              Map<String,
+                                                                  dynamic>>()
+                                                          .firstWhere(
+                                                            (t) =>
+                                                                t['languages_code'] ==
+                                                                lang,
+                                                            orElse: () =>
+                                                                service['translations']
+                                                                        [0]
+                                                                    as Map<
+                                                                        String,
+                                                                        dynamic>,
+                                                          );
+                                                  final imageUrl = service[
+                                                              'image'] !=
+                                                          null
+                                                      ? '${context.resources.image.networkImagePath2}${service['image']}'
+                                                      : 'https://via.placeholder.com/800x400';
+
+                                                  return Container(
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20),
+                                                      image: DecorationImage(
+                                                        fit: BoxFit.cover,
+                                                        image: NetworkImage(
+                                                            imageUrl),
+                                                      ),
+                                                    ),
+                                                    child: Align(
+                                                      alignment:
+                                                          Alignment.bottomLeft,
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                          left: context
+                                                              .appValues
+                                                              .appPadding
+                                                              .p10,
+                                                          bottom: context
+                                                              .appValues
+                                                              .appPadding
+                                                              .p35,
+                                                        ),
+                                                        child: Text(
+                                                          trans['title'] ?? '',
+                                                          style:
+                                                              getPrimaryBoldStyle(
+                                                            fontSize: 20,
+                                                            color: context
+                                                                .resources
+                                                                .color
+                                                                .colorWhite,
                                                           ),
-                                                          // color:
-                                                          //     context.resources.color.btnColorBlue,
-                                                          child: Center(
-                                                            child: Column(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .end,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Align(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .bottomLeft,
-                                                                  child:
-                                                                      Padding(
-                                                                    padding:
-                                                                        EdgeInsets
-                                                                            .only(
-                                                                      left: context
-                                                                          .appValues
-                                                                          .appPadding
-                                                                          .p10,
-                                                                      bottom: context
-                                                                          .appValues
-                                                                          .appPadding
-                                                                          .p35,
-                                                                    ),
-                                                                    child: Text(
-                                                                      'Bed Frames Assembly',
-                                                                      style:
-                                                                          getPrimarySemiBoldStyle(
-                                                                        fontSize:
-                                                                            20,
-                                                                        color: context
-                                                                            .resources
-                                                                            .color
-                                                                            .colorWhite,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ))
-                                                    .toList(),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }).toList(),
                                               ),
                                               Positioned(
                                                 bottom: 15,

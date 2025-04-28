@@ -129,6 +129,7 @@ class LoginViewModel with ChangeNotifier {
   }
 
   void setInputValues({required String index, dynamic value}) {
+    debugPrint('value $value');
     _loginCredentials[index] = value;
   }
 
@@ -299,6 +300,8 @@ class LoginViewModel with ChangeNotifier {
 
   bool validate() {
     _loginErrors = {};
+    debugPrint('email ${_loginCredentials[EnglishStrings().formKeys['email']!]}');
+    debugPrint('password ${_loginCredentials[EnglishStrings().formKeys['password']!]}');
     String? emailMessage = AppValidation().isEmailValid(
         _loginCredentials[EnglishStrings().formKeys['email']!] ?? '');
     String? passwordMessage = AppValidation().isValidLoginPassword(

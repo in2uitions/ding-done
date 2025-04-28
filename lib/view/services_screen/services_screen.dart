@@ -74,7 +74,7 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
         }).toList();
 
         debugPrint(
-            "Filtered services for ${widget.categoryType}: ${filteredCategories.length}");
+            "Filtered services for ${widget.categoryType}: ${filteredCategories}");
 
         final String searchKey = widget.categoryType == "maintenance"
             ? "search_services"
@@ -164,13 +164,14 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
               filterValue == parentServices?["title"]?.toString().toLowerCase();
     }
 
-    if (!shouldShow) {
-      return Container();
-    }
+    // if (!shouldShow) {
+    //   return Container();
+    // }
 
     return InkWell(
       onTap: () {
         // Apply filtering based on the type.
+        debugPrint('search_key $searchKey');
         if (searchKey == "search_services") {
           widget.servicesViewModel
               .filterData(index: 'search_services', value: services?["title"]);
@@ -178,9 +179,11 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
           widget.servicesViewModel
               .filterData(index: 'pro_services', value: services?["title"]);
         }
+
         widget.servicesViewModel
             .setParentCategory('${parentServices?["title"]}');
         debugPrint('search filter ${services?["title"]}');
+        debugPrint('index $index');
         Navigator.of(context).push(_createRoute(
           CategoriesScreen(
             categoriesViewModel:
@@ -189,7 +192,7 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
             serviceViewModel: widget.servicesViewModel,
           ),
         ));
-        categoriesViewModel.sortCategories(services?["title"]);
+        // categoriesViewModel.sortCategories(services?["title"]);
       },
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,

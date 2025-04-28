@@ -367,7 +367,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                     serviceViewModel: widget.servicesViewModel,
                   ),
                 ));
-                categoriesViewModel.sortCategories(services?["title"]);
+                // categoriesViewModel.sortCategories(services?["title"]);
               },
             ),
           )

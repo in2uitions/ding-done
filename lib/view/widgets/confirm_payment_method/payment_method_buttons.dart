@@ -16,13 +16,14 @@ class PaymentMethodButtons extends StatefulWidget {
   var fromWhere;
   var role;
 
-  PaymentMethodButtons(
-      {super.key,
-      required this.payment_method,
-      required this.jobsViewModel,
-      required this.fromWhere,
-      required this.role,
-      this.tap_payments_card});
+  PaymentMethodButtons({
+    super.key,
+    required this.payment_method,
+    required this.jobsViewModel,
+    required this.fromWhere,
+    required this.role,
+    this.tap_payments_card,
+  });
 
   @override
   State<PaymentMethodButtons> createState() => _PaymentMethodButtonsState();
@@ -37,46 +38,50 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
   }
 
   Future<void> deletePaymentMethod(String paymentMethodId) async {
-    // Call your ViewModel's delete method here
     await Provider.of<PaymentViewModel>(context, listen: false)
         .deletePaymentMethod(paymentMethodId);
+  }
+
+  Future<bool> _showDeleteConfirmDialog(BuildContext context) async {
+    final result = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: const Text('Confirm Deletion'),
+        content: const Text('Are you sure you want to delete this card?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            child: const Text('Delete'),
+          ),
+        ],
+      ),
+    );
+    return result == true;
   }
 
   @override
   void initState() {
     super.initState();
-
-    debugPrint('payment card in init ${widget.tap_payments_card}');
-    debugPrint('data ${data}');
     if (widget.tap_payments_card == null) {
       _active = "cash";
-    } else {
-      if (widget.role == Constants.supplierRoleId) {
-        List<dynamic> filteredPaymentMethods = widget.payment_method
-            .where((paymentMethod) =>
-                paymentMethod['id'].toString() ==
-                widget.tap_payments_card.toString())
-            .toList();
-        debugPrint('filteredPaymentMethods: $filteredPaymentMethods');
-
-        if (filteredPaymentMethods.isNotEmpty) {
-          _active = filteredPaymentMethods[0]["id"].toString();
-          data = filteredPaymentMethods[0];
-        } else {
-          debugPrint('filteredPaymentMethods is empty');
-        }
-      } else {
-        if (widget.payment_method.length == 1) {
-          widget.tap_payments_card = widget.payment_method[0];
-          setState(() {
-            _active = widget.payment_method[0]["id"].toString();
-            data = widget.payment_method[0];
-          });
-        } else {
-          _active = widget.tap_payments_card["id"].toString();
-          data = widget.tap_payments_card;
-        }
+    } else if (widget.role == Constants.supplierRoleId) {
+      final filtered = widget.payment_method.where((pm) =>
+      pm['id'].toString() == widget.tap_payments_card.toString()).toList();
+      if (filtered.isNotEmpty) {
+        _active = filtered[0]['id'].toString();
+        data = filtered[0];
       }
+    } else if (widget.payment_method.length == 1) {
+      data = widget.payment_method[0];
+      _active = data['id'].toString();
+    } else {
+      data = widget.tap_payments_card;
+      _active = data['id'].toString();
     }
     Provider.of<PaymentViewModel>(context, listen: false)
         .getPaymentMethodsTap();
@@ -84,13 +89,8 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
 
   @override
   Widget build(BuildContext context) {
-    // return FutureBuilder(
-    //     future: Provider.of<PaymentViewModel>(context, listen: false)
-    //         .getPaymentMethodsTap(),
-    //     builder: (context, AsyncSnapshot snapshot) {
-    //       if (snapshot.connectionState == ConnectionState.done) {
-    //         if (snapshot.hasData && snapshot.data != null) {
-    return Consumer<PaymentViewModel>(builder: (context, paymentViewModel, _) {
+    return Consumer<PaymentViewModel>(builder: (context, vm, _) {
+      final cards = vm.paymentCards ?? [];
       return Padding(
         padding: const EdgeInsets.only(bottom: 10),
         child: Column(
@@ -98,134 +98,109 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
             ListView.builder(
               padding: EdgeInsets.zero,
               shrinkWrap: true,
-              itemCount: paymentViewModel.paymentCards.length + 1,
+              itemCount: cards.length + 1,
               physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (BuildContext context, int index) {
+              itemBuilder: (context, index) {
                 if (index == 0) {
-                  return GestureDetector(
-                    onTap: () {
-                      // Handle tap
-                    },
-                    child: Column(
+                  if ((widget.fromWhere == translate('jobs.completed') ||
+                      widget.role == Constants.supplierRoleId) &&
+                      cards.isNotEmpty) {
+                    final pm = cards[0] as Map<String, dynamic>;
+                    return Column(
                       children: [
-                        // Removed by Rim to be added later on Cash on Delivery
-                        (widget.fromWhere == translate('jobs.completed') &&
-                                    data != null) ||
-                                (widget.role == Constants.supplierRoleId &&
-                                    data != null)
-                            ?
-                            // snapshot.data.isNotEmpty?
-                            ButtonConfirmPaymentMethod(
-                                action: active,
-                                tag:
-                                    "${paymentViewModel.paymentCards![0]['id']}",
-                                active: true,
-                                text:
-                                    "${paymentViewModel.paymentCards![0]['brand']}",
-                                image: 'assets/img/logos_mastercard.svg',
-                                jobsViewModel: widget.jobsViewModel,
-                                data: paymentViewModel.paymentCards![0]['id'],
-                                last_digits: paymentViewModel.paymentCards![0]
-                                    ['last_four'],
-                                payment_method: "Card",
-                                nickname:
-                                    "${paymentViewModel.paymentCards![0]['name']}",
-                              )
-                            : paymentViewModel.paymentCards.isNotEmpty
-                                ? Container()
-                                : Text(
-                                    translate('paymentMethod.noPaymentMethod'),
-                                    style: getPrimaryRegularStyle(
-                                      fontSize: 18,
-                                      color: const Color(0xff38385E),
-                                    ),
-                                  ),
-                        //Removed by Rim to be added later on Cash on Delivery
-
-                        //     :
-                        // ButtonCahsOnDelevery(
-                        //   action: active,
-                        //   tag: "cash",
-                        //   active: _active == "cash" ? true : false,
-                        //   text: translate('paymentMethod.cashOnDelivery'),
-                        //   image: 'assets/img/cod-icon-new.svg',
-                        //   data: '',
-                        //   payment_method: 'Cash On Delivery',
-                        //   jobsViewModel: widget.jobsViewModel,
-                        //   last_digits: '',
-                        // ),
+                        ButtonConfirmPaymentMethod(
+                          action: active,
+                          tag: pm['id'].toString(),
+                          active: true,
+                          text: pm['brand'] ?? '',
+                          image: pm['brand'].toString().toUpperCase() == 'MASTERCARD'
+                              ? 'assets/img/mastercard.png'
+                              : pm['brand'].toString().toUpperCase() == 'VISA'
+                              ? 'assets/img/visa.png'
+                              : pm['brand'].toString().toUpperCase() == 'NAPS'
+                              ? 'assets/img/naps.png'
+                              : pm['brand'].toString().toUpperCase() == 'HIMYAN'
+                              ? 'assets/img/himyan.png'
+                              : 'assets/img/card-icon.png',
+                          jobsViewModel: widget.jobsViewModel,
+                          data: pm['id'],
+                          last_digits: pm['last_four'] ?? '',
+                          payment_method: 'Card',
+                          nickname: pm['name'] ?? '',
+                        ),
                         SizedBox(height: context.appValues.appSize.s10),
                       ],
+                    );
+                  }
+                  return cards.isEmpty
+                      ? Text(
+                    translate('paymentMethod.noPaymentMethod'),
+                    style: getPrimaryRegularStyle(
+                      fontSize: 18,
+                      color: const Color(0xff38385E),
                     ),
-                  );
-                } else {
-                  if (widget.role == Constants.customerRoleId) {
-                    var card = paymentViewModel.paymentCards![index - 1];
-                    return widget.fromWhere != translate('jobs.completed')
-                        ? Dismissible(
-                            key: Key(card['id'].toString()),
-                            direction: DismissDirection.endToStart,
-                            onDismissed: (direction) async {
-                              deletePaymentMethod(card['id'].toString());
-                            },
-                            background: Container(
-                              color: Colors.red,
-                              alignment: Alignment.centerRight,
-                              padding: const EdgeInsets.only(right: 20),
-                              child: const Icon(
-                                Icons.delete,
-                                color: Colors.white,
-                              ),
-                            ),
-                            child: GestureDetector(
-                              onTap: () {
-                                debugPrint('card is $card');
-                                // Handle tap
-                              },
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  ButtonConfirmPaymentMethod(
-                                    action: active,
-                                    tag: "${card['id']}",
-                                    active:
-                                        paymentViewModel.paymentCards.length !=
-                                                1
-                                            ? _active == "${card['id']}"
-                                                ? true
-                                                : false
-                                            : true,
-                                    text: '${card['brand']}',
-                                    image: 'assets/img/card-icon.svg',
-                                    jobsViewModel: widget.jobsViewModel,
-                                    data: card['id'],
-                                    last_digits: card['last_four'],
-                                    payment_method: "Card",
-                                    nickname: "${card['name']}",
-                                  ),
-                                  SizedBox(
-                                      height: context.appValues.appSize.s10),
-                                ],
-                              ),
-                            ),
-                          )
-                        : Container();
+                  )
+                      : const SizedBox.shrink();
+                }
+                if (widget.role == Constants.customerRoleId) {
+                  final card = cards[index - 1] as Map<String, dynamic>;
+                  if (widget.fromWhere != translate('jobs.completed')) {
+                    return Dismissible(
+                      key: Key(card['id'].toString()),
+                      direction: DismissDirection.endToStart,
+                      confirmDismiss: (_) async {
+                        final confirm = await _showDeleteConfirmDialog(context);
+                        if (confirm) {
+                          await deletePaymentMethod(card['id'].toString());
+                        }
+                        return confirm;
+                      },
+                      background: Container(
+                        color: Colors.red,
+                        alignment: Alignment.centerRight,
+                        padding: const EdgeInsets.only(right: 20),
+                        child: const Icon(
+                          Icons.delete,
+                          color: Colors.white,
+                        ),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          ButtonConfirmPaymentMethod(
+                            action: active,
+                            tag: card['id'].toString(),
+                            active: cards.length == 1 ||
+                                _active == card['id'].toString(),
+                            text: card['brand'] ?? '',
+                            image: card['brand'].toString().toUpperCase() ==
+                                'MASTERCARD'
+                                ? 'assets/img/mastercard.png'
+                                : card['brand'].toString().toUpperCase() == 'VISA'
+                                ? 'assets/img/visa.png'
+                                : card['brand'].toString().toUpperCase() == 'NAPS'
+                                ? 'assets/img/naps.png'
+                                : card['brand'].toString().toUpperCase() == 'HIMYAN'
+                                ? 'assets/img/himyan.png'
+                                : 'assets/img/card-icon.png',
+                            jobsViewModel: widget.jobsViewModel,
+                            data: card['id'],
+                            last_digits: card['last_four'] ?? '',
+                            payment_method: 'Card',
+                            nickname: card['name'] ?? '',
+                          ),
+                          SizedBox(height: context.appValues.appSize.s10),
+                        ],
+                      ),
+                    );
                   }
                 }
+                return const SizedBox.shrink();
               },
             ),
           ],
         ),
       );
     });
-    //     } else {
-    //       return const Center(child: Text('No payment methods available.'));
-    //     }
-    //   } else if (snapshot.connectionState == ConnectionState.waiting) {
-    //     return const Center(child: CircularProgressIndicator());
-    //   } else {
-    //     return const Center(child: Text('Error loading payment methods.'));
-    //   }
-    // });
   }
 }

@@ -251,31 +251,40 @@ class _BookAServiceState extends State<BookAService> {
                 initialChildSize: 0.85,
                 minChildSize: 0.85,
                 maxChildSize: 1,
-                builder:
-                    (BuildContext context, ScrollController scrollController) {
+                builder: (context, scrollController) {
                   return Container(
                     decoration: const BoxDecoration(
+                      color: Color(0xffFEFEFE),
                       borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30),
                       ),
-                      color: Color(0xffFEFEFE),
                     ),
                     child: ListView.builder(
                         controller: scrollController,
                         itemCount: 1,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (BuildContext context, int index) {
-                          Map<String, dynamic>? service;
-                          Map<String, dynamic>? categories;
 
-                          for (Map<String, dynamic> translation
-                              in widget.service["translations"]) {
-                            if (translation["languages_code"] == widget.lang) {
-                              service = translation;
-                              break; // Break the loop once the translation is found
+                        padding: EdgeInsets.zero,
+
+                        itemBuilder: (context, index) {
+                          // 1) Grab the **subcategory** translation:
+                          Map<String, dynamic>? subCatTrans;
+                          for (var t in widget.service["translations"] as List) {
+                            if (t["languages_code"] == widget.lang) {
+                              subCatTrans = t;
+                              break;
                             }
                           }
+
+                          // 2) (Optional) Grab the **parent** category translation too:
+                          Map<String, dynamic>? parentCatTrans;
+                          for (var t in widget.service["category"]["translations"] as List) {
+                            if (t["languages_code"] == widget.lang) {
+                              parentCatTrans = t;
+                              break;
+                            }
+                          }
+
                           return Column(
                             children: [
                               const Gap(30),
@@ -304,7 +313,7 @@ class _BookAServiceState extends State<BookAService> {
                                           children: [
                                             Text(
                                               categories != null
-                                                  ? '${categories["title"]}'
+                                                  ? '${parentCatTrans!['title']}'
                                                   : 'Leak',
                                               style: getPrimarySemiBoldStyle(
                                                 fontSize: 16,
@@ -316,9 +325,8 @@ class _BookAServiceState extends State<BookAService> {
                                               width: context
                                                   .appValues.appSizePercent.w62,
                                               child: Text(
-                                                services != null
-                                                    ? '${services["title"]}'
-                                                        .toUpperCase()
+                                                subCatTrans != null
+                                                    ? '${subCatTrans!["title"]}'
                                                     : '',
                                                 maxLines: 3,
                                                 overflow: TextOverflow.ellipsis,
@@ -335,7 +343,7 @@ class _BookAServiceState extends State<BookAService> {
                                     ),
                                     const Gap(15),
                                     Text(
-                                      '${service!['description']}',
+                                      '${subCatTrans!['description']}',
                                       style: getPrimaryRegularStyle(
                                         fontSize: 12,
                                         //
