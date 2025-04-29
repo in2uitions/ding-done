@@ -49,28 +49,34 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
     return Consumer<CategoriesViewModel>(
       builder: (context, categoriesViewModel, _) {
         // Use an alternative filtering approach if a dedicated "categoryType" field is not present.
-        final List<dynamic> filteredCategories =
-            categoriesViewModel.categoriesList.where((service) {
-          String currentLang = lang ?? "en-US";
+        // final List<dynamic> filteredCategories =
+        //     categoriesViewModel.categoriesList.where((service) {
+        //   String currentLang = lang ?? "en-US";
+        //
+        //   // Try to retrieve the parent translation.
+        //   Map<String, dynamic>? parentTranslation;
+        //   for (Map<String, dynamic> translation in service["class"]
+        //       ["translations"]) {
+        //     if (translation["languages_code"] == currentLang) {
+        //       parentTranslation = translation;
+        //       break;
+        //     }
+        //   }
+        //   if (parentTranslation == null) return false;
+        //
+        //   final String parentTitle =
+        //       parentTranslation["title"].toString().toLowerCase();
+        //   if (widget.categoryType == "maintenance") {
+        //     return parentTitle.contains("maintenance");
+        //   } else {
+        //     return parentTitle.contains("pro");
+        //   }
+        // }).toList();
+        final int parentId = int.tryParse(widget.categoryType) ?? -1;
 
-          // Try to retrieve the parent translation.
-          Map<String, dynamic>? parentTranslation;
-          for (Map<String, dynamic> translation in service["class"]
-              ["translations"]) {
-            if (translation["languages_code"] == currentLang) {
-              parentTranslation = translation;
-              break;
-            }
-          }
-          if (parentTranslation == null) return false;
-
-          final String parentTitle =
-              parentTranslation["title"].toString().toLowerCase();
-          if (widget.categoryType == "maintenance") {
-            return parentTitle.contains("maintenance");
-          } else {
-            return parentTitle.contains("pro");
-          }
+        // now grab _all_ services whose class.id == parentId
+        final filteredCategories = categoriesViewModel.categoriesList.where((service) {
+          return service['class']['id'] == parentId;
         }).toList();
 
         debugPrint(
@@ -102,16 +108,16 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
                 physics: const NeverScrollableScrollPhysics(),
                 shrinkWrap: true,
                 itemCount: filteredCategories.length,
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (context, i) {
                   return Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: context.appValues.appPadding.p5,
                     ),
                     child: buildServiceWidget(
-                      filteredCategories[index],
+                      filteredCategories[i],
                       categoriesViewModel,
-                      index,
-                      searchKey,
+                      i,
+                      'null', // you won’t need searchKey here unless you re-add filtering
                     ),
                   );
                 },
@@ -271,7 +277,8 @@ Route _createRoute(dynamic classname) {
 // that contains the search bar, a styled TabBar, and two TabBarViews for Maintenance and PRO Services.
 //
 class ServicesScreen extends StatefulWidget {
-  const ServicesScreen({Key? key}) : super(key: key);
+  final int initialTabIndex;
+  const ServicesScreen({Key? key,this.initialTabIndex = 0,}) : super(key: key);
 
   @override
   State<ServicesScreen> createState() => _ServicesScreenState();
@@ -293,17 +300,30 @@ class _ServicesScreenState extends State<ServicesScreen>
         Provider.of<ServicesViewModel>(context, listen: false);
 
     // Determine the initial tab index based on the search filter
-    final maintenanceFilter = servicesViewModel.searchBody['search_services'];
-
-    int initialIndex = 0;
-    if (maintenanceFilter != null &&
-        maintenanceFilter.toString().isNotEmpty &&
-        maintenanceFilter.toString() == 'PRO Services') {
-      initialIndex = 1;
-    }
-
-    _tabController =
-        TabController(length: 2, vsync: this, initialIndex: initialIndex);
+    // final maintenanceFilter = servicesViewModel.searchBody['search_services'];
+    //
+    // int initialIndex = 0;
+    // if (maintenanceFilter != null &&
+    //     maintenanceFilter.toString().isNotEmpty &&
+    //     maintenanceFilter.toString() == 'PRO Services') {
+    //   initialIndex = 1;
+    // }
+    //
+    // _tabController =
+    //     TabController(length: 2, vsync: this, initialIndex: initialIndex);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final parentCats =
+          Provider.of<CategoriesViewModel>(context, listen: false)
+              .parentCategoriesList;
+      _tabController = TabController(
+        length: parentCats.length,
+        vsync: this,
+        initialIndex: widget.initialTabIndex
+            .clamp(0, parentCats.length - 1)
+            .toInt(),  // cast num → int
+      );
+      setState(() {});
+    });
     var categoriesViewModel =
         Provider.of<CategoriesViewModel>(context, listen: false);
     searchController.addListener(_filterServices);
@@ -380,7 +400,8 @@ class _ServicesScreenState extends State<ServicesScreen>
     final servicesViewModel =
         Provider.of<ServicesViewModel>(context, listen: false);
     final screenSize = MediaQuery.of(context).size;
-
+    final catsVM = Provider.of<CategoriesViewModel>(context);
+    final parentCats = catsVM.parentCategoriesList;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
@@ -453,58 +474,44 @@ class _ServicesScreenState extends State<ServicesScreen>
                           children: [
                             const Gap(10),
                             // Updated TabBar container.
-                            Container(
-                              margin:
-                                  const EdgeInsets.symmetric(horizontal: 16),
-                              decoration: BoxDecoration(
-                                color: const Color(0xffEAEAFF),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              child: TabBar(
-                                controller: _tabController,
-                                indicatorSize: TabBarIndicatorSize.tab,
-                                // Add padding to the indicator for a little breathing room.
-                                indicatorPadding: const EdgeInsets.symmetric(
-                                  horizontal: 5,
-                                  vertical: 3,
-                                ),
-                                // Use a custom indicator BoxDecoration.
-                                indicator: BoxDecoration(
-                                  color: const Color(0xff4100E3),
+                            if (parentCats.isNotEmpty)
+                              Container(
+                                margin: const EdgeInsets.symmetric(horizontal: 16),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xffEAEAFF),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                // Remove any default underline by setting these to transparent.
-                                indicatorColor: Colors.white,
-                                indicatorWeight: 0,
-                                dividerColor: Colors.transparent,
-                                labelColor: Colors.white,
-                                unselectedLabelColor: const Color(0xff4100E3),
-                                labelStyle: getPrimarySemiBoldStyle(
-                                  fontSize: 12,
+                                child: TabBar(
+                                  controller: _tabController,
+                                  isScrollable: true,
+                                  indicator: BoxDecoration(
+                                    color: const Color(0xff4100E3),
+                                    borderRadius: BorderRadius.circular(10),
+                                  ),
+                                  labelColor: Colors.white,
+                                  unselectedLabelColor: const Color(0xff4100E3),
+                                  tabs: parentCats.map<Widget>((cat) {
+                                    final tr = (cat['translations'] as List)
+                                        .firstWhere(
+                                          (t) => t['languages_code'] == lang,
+                                      orElse: () => cat['translations'][0],
+                                    );
+                                    return Tab(text: tr['title']);
+                                  }).toList(),
                                 ),
-                                unselectedLabelStyle: getPrimaryMediumStyle(
-                                  fontSize: 12,
-                                ),
-                                tabs: const [
-                                  Tab(text: 'Maintenance'),
-                                  Tab(text: 'PRO Services'),
-                                ],
                               ),
-                            ),
                             // The TabBarView for the two categories grids.
                             Expanded(
                               child: TabBarView(
                                 controller: _tabController,
-                                children: [
-                                  CategoriesGridWidget(
-                                    servicesViewModel: servicesViewModel,
-                                    categoryType: "maintenance",
-                                  ),
-                                  CategoriesGridWidget(
-                                    servicesViewModel: servicesViewModel,
-                                    categoryType: "pro",
-                                  ),
-                                ],
+                                children: parentCats.map<Widget>((cat) {
+                                  // build a grid for this specific parent
+                                  return CategoriesGridWidget(
+                                    servicesViewModel:
+                                    Provider.of<ServicesViewModel>(context, listen: false),
+                                    categoryType: cat['id'].toString(),
+                                  );
+                                }).toList(),
                               ),
                             ),
                           ],

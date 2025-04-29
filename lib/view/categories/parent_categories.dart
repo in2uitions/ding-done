@@ -132,8 +132,8 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
         widget.servicesViewModel.setParentCategory(services?["title"]);
         categoriesViewModel.sortCategories(services?["title"]);
         Navigator.of(context).push(_createRoute(
-          const ServicesScreen(),
-        ));
+                  ServicesScreen(initialTabIndex: index),
+                ));
         Navigator.of(context).push(_createRoute(
           BottomBar(
             userRole: Constants.customerRoleId,
