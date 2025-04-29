@@ -483,12 +483,21 @@ class _ServicesScreenState extends State<ServicesScreen>
                                 ),
                                 child: TabBar(
                                   controller: _tabController,
+                                  tabAlignment:TabAlignment.center,
                                   isScrollable: true,
+                                    indicatorSize: TabBarIndicatorSize.tab,
+                                    // Add padding to the indicator for a little breathing room.
+                                    indicatorPadding: const EdgeInsets.symmetric(
+                                      horizontal:0,
+                                      vertical: 1,
+                                    ),
                                   indicator: BoxDecoration(
                                     color: const Color(0xff4100E3),
                                     borderRadius: BorderRadius.circular(10),
                                   ),
+
                                   labelColor: Colors.white,
+                                  dividerColor: Colors.transparent,
                                   unselectedLabelColor: const Color(0xff4100E3),
                                   tabs: parentCats.map<Widget>((cat) {
                                     final tr = (cat['translations'] as List)
