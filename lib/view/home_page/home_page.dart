@@ -903,39 +903,92 @@ class _HomePageState extends State<HomePage> {
                                                             imageUrl),
                                                       ),
                                                     ),
-                                                    child: Align(
-                                                      alignment:
-                                                          Alignment.bottomLeft,
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsets.only(
-                                                          left: context
-                                                              .appValues
-                                                              .appPadding
-                                                              .p10,
-                                                          bottom: context
-                                                              .appValues
-                                                              .appPadding
-                                                              .p35,
-                                                        ),
-                                                        child: Text(
-                                                          trans['title'] ?? '',
-                                                          style:
-                                                              getPrimaryBoldStyle(
-                                                            fontSize: 20,
-                                                            color: context
-                                                                .resources
-                                                                .color
-                                                                .colorWhite,
+                                                    child: Stack(
+                                                      children: [
+                                                        Positioned(
+                                                          bottom: 0,
+                                                          child: Padding(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                              horizontal: context
+                                                                  .appValues
+                                                                  .appPadding
+                                                                  .p0,
+                                                            ),
+                                                            child: Container(
+                                                              width: context
+                                                                  .appValues
+                                                                  .appSizePercent
+                                                                  .w90,
+                                                              height: 200,
+                                                              decoration:
+                                                                  BoxDecoration(
+                                                                // color: Colors
+                                                                //     .black
+                                                                //     .withOpacity(
+                                                                //         0.9),
+                                                                gradient:
+                                                                    LinearGradient(
+                                                                  begin: Alignment
+                                                                      .bottomCenter,
+                                                                  end: Alignment
+                                                                      .topCenter,
+                                                                  colors: [
+                                                                    // Colors.black
+                                                                    //     .withOpacity(
+                                                                    //         0.3),
+                                                                    Colors.black
+                                                                        .withOpacity(
+                                                                            0.2),
+                                                                    Colors.black
+                                                                        .withOpacity(
+                                                                            0.1),
+                                                                  ],
+                                                                ),
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            20),
+                                                              ),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
+                                                        Align(
+                                                          alignment: Alignment
+                                                              .bottomLeft,
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsets.only(
+                                                              left: context
+                                                                  .appValues
+                                                                  .appPadding
+                                                                  .p10,
+                                                              bottom: context
+                                                                  .appValues
+                                                                  .appPadding
+                                                                  .p35,
+                                                            ),
+                                                            child: Text(
+                                                              trans['title'] ??
+                                                                  '',
+                                                              style:
+                                                                  getPrimarySemiBoldStyle(
+                                                                fontSize: 20,
+                                                                color: context
+                                                                    .resources
+                                                                    .color
+                                                                    .colorWhite,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                     ),
                                                   );
                                                 }).toList(),
                                               ),
                                               Positioned(
-                                                bottom: 15,
+                                                bottom: 10,
                                                 left: 0,
                                                 right: 0,
                                                 child: Row(
@@ -950,8 +1003,8 @@ class _HomePageState extends State<HomePage> {
                                                           .animateToPage(
                                                               entry.key),
                                                       child: Container(
-                                                        width: 12.0,
-                                                        height: 12.0,
+                                                        width: 5.0,
+                                                        height: 5.0,
                                                         margin: const EdgeInsets
                                                             .symmetric(
                                                             vertical: 8.0,
@@ -962,10 +1015,10 @@ class _HomePageState extends State<HomePage> {
                                                               BoxShape.circle,
                                                           color: _current ==
                                                                   entry.key
-                                                              ? Colors.white
-                                                              : Colors.white
-                                                                  .withOpacity(
-                                                                      0.4),
+                                                              ? const Color(
+                                                                  0xffFFC500)
+                                                              : const Color(
+                                                                  0xff180B3C),
                                                         ),
                                                       ),
                                                     );

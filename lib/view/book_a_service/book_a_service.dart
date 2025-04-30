@@ -263,13 +263,12 @@ class _BookAServiceState extends State<BookAService> {
                     child: ListView.builder(
                         controller: scrollController,
                         itemCount: 1,
-
                         padding: EdgeInsets.zero,
-
                         itemBuilder: (context, index) {
                           // 1) Grab the **subcategory** translation:
                           Map<String, dynamic>? subCatTrans;
-                          for (var t in widget.service["translations"] as List) {
+                          for (var t
+                              in widget.service["translations"] as List) {
                             if (t["languages_code"] == widget.lang) {
                               subCatTrans = t;
                               break;
@@ -278,7 +277,8 @@ class _BookAServiceState extends State<BookAService> {
 
                           // 2) (Optional) Grab the **parent** category translation too:
                           Map<String, dynamic>? parentCatTrans;
-                          for (var t in widget.service["category"]["translations"] as List) {
+                          for (var t in widget.service["category"]
+                              ["translations"] as List) {
                             if (t["languages_code"] == widget.lang) {
                               parentCatTrans = t;
                               break;
@@ -775,7 +775,7 @@ class _BookAServiceState extends State<BookAService> {
                                             shape: RoundedRectangleBorder(
                                               side: const BorderSide(
                                                 color: Color(0xff4100E3),
-                                                width: 3,
+                                                width: 1.5,
                                               ),
                                               borderRadius:
                                                   BorderRadius.circular(12),
