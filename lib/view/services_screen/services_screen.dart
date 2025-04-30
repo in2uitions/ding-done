@@ -278,7 +278,7 @@ Route _createRoute(dynamic classname) {
 //
 class ServicesScreen extends StatefulWidget {
   final int initialTabIndex;
-  const ServicesScreen({Key? key,this.initialTabIndex = 0,}) : super(key: key);
+  const ServicesScreen({Key? key,required this.initialTabIndex ,}) : super(key: key);
 
   @override
   State<ServicesScreen> createState() => _ServicesScreenState();
@@ -295,6 +295,7 @@ class _ServicesScreenState extends State<ServicesScreen>
   void initState() {
     super.initState();
     getLanguage();
+    debugPrint('initial; tab index ${widget.initialTabIndex}');
     // _tabController = TabController(length: 2, vsync: this);
     final servicesViewModel =
         Provider.of<ServicesViewModel>(context, listen: false);
@@ -311,7 +312,7 @@ class _ServicesScreenState extends State<ServicesScreen>
     //
     // _tabController =
     //     TabController(length: 2, vsync: this, initialIndex: initialIndex);
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
       final parentCats =
           Provider.of<CategoriesViewModel>(context, listen: false)
               .parentCategoriesList;
@@ -319,11 +320,10 @@ class _ServicesScreenState extends State<ServicesScreen>
         length: parentCats.length,
         vsync: this,
         initialIndex: widget.initialTabIndex
-            .clamp(0, parentCats.length - 1)
-            .toInt(),  // cast num → int
+            ,  // cast num → int
       );
       setState(() {});
-    });
+    // });
     var categoriesViewModel =
         Provider.of<CategoriesViewModel>(context, listen: false);
     searchController.addListener(_filterServices);

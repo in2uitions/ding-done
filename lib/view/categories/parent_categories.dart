@@ -131,13 +131,14 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
             index: 'search_services', value: services?["title"]);
         widget.servicesViewModel.setParentCategory(services?["title"]);
         categoriesViewModel.sortCategories(services?["title"]);
-        Navigator.of(context).push(_createRoute(
-                  ServicesScreen(initialTabIndex: index),
-                ));
+        // Navigator.of(context).push(_createRoute(
+        //           ServicesScreen(initialTabIndex: index),
+        //         ));
         Navigator.of(context).push(_createRoute(
           BottomBar(
             userRole: Constants.customerRoleId,
             currentTab: 1,
+            initialServicesTabIndex: index,
           ),
         ));
       },

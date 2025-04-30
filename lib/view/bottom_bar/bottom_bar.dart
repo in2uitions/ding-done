@@ -25,8 +25,8 @@ class BottomBar extends StatefulWidget {
   var userRole;
 
   var currentTab;
-
-  BottomBar({super.key, required this.userRole, required this.currentTab});
+  var initialServicesTabIndex;
+  BottomBar({super.key, required this.userRole, required this.currentTab, this.initialServicesTabIndex,});
 
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -62,7 +62,9 @@ class _BottomBarState extends State<BottomBar>
             ? const HomePageSupplier()
             : const HomePage()
         : widget.currentTab == 1
-            ? const ServicesScreen()
+            ? widget.initialServicesTabIndex!=null?
+    ServicesScreen(initialTabIndex: widget.initialServicesTabIndex):
+    const ServicesScreen(initialTabIndex: 0,)
             : Container();
 
     _controller = AnimationController(
@@ -270,7 +272,9 @@ class _BottomBarState extends State<BottomBar>
                           minWidth: 40,
                           onPressed: () {
                             setState(() {
-                              currentScreen = const ServicesScreen();
+                              currentScreen = widget.initialServicesTabIndex!=null?
+                              ServicesScreen(initialTabIndex: widget.initialServicesTabIndex):
+                              const ServicesScreen(initialTabIndex: 0,);
                               widget.currentTab = 1;
                             });
                           },
