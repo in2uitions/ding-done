@@ -312,9 +312,9 @@ class _BookAServiceState extends State<BookAService> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Text(
-                                              categories != null
-                                                  ? '${parentCatTrans!['title']}'
-                                                  : 'Leak',
+                                              subCatTrans != null
+                                                  ? '${subCatTrans!["title"]}'
+                                                  : '',
                                               style: getPrimarySemiBoldStyle(
                                                 fontSize: 16,
                                                 color: context.resources.color
@@ -325,9 +325,10 @@ class _BookAServiceState extends State<BookAService> {
                                               width: context
                                                   .appValues.appSizePercent.w62,
                                               child: Text(
-                                                subCatTrans != null
-                                                    ? '${subCatTrans!["title"]}'
-                                                    : '',
+                                                categories != null
+                                                    ? '${parentCatTrans!['title'].toString().toUpperCase()}'
+                                                    : 'Leak',
+
                                                 maxLines: 3,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: getPrimarySemiBoldStyle(

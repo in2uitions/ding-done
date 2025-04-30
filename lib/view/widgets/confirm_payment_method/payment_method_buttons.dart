@@ -114,19 +114,25 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                           active: true,
                           text: pm['brand'] ?? '',
                           image: pm['brand'].toString().toUpperCase() == 'MASTERCARD'
-                              ? 'assets/img/mastercard.png'
+                              ? 'assets/img/logos_mastercard.svg'
                               : pm['brand'].toString().toUpperCase() == 'VISA'
-                              ? 'assets/img/visa.png'
+                              ? 'assets/img/logos_visa.svg'
                               : pm['brand'].toString().toUpperCase() == 'NAPS'
-                              ? 'assets/img/naps.png'
+                              ? 'assets/img/logos_naps.svg'
                               : pm['brand'].toString().toUpperCase() == 'HIMYAN'
-                              ? 'assets/img/himyan.png'
-                              : 'assets/img/card-icon.png',
+                              ? 'assets/img/logos_himyan.svg'
+                              : 'assets/img/card-icon.svg',
                           jobsViewModel: widget.jobsViewModel,
                           data: pm['id'],
                           last_digits: pm['last_four'] ?? '',
                           payment_method: 'Card',
-                          nickname: pm['name'] ?? '',
+                          nickname: pm['name'] ?? '',  onDelete: (tag) async {
+                          final ok = await _showDeleteConfirmDialog(context);
+                          if (ok) {
+                            await deletePaymentMethod(tag);
+                            setState((){}); // refresh the list
+                          }
+                        },
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                       ],
@@ -145,26 +151,27 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                 if (widget.role == Constants.customerRoleId) {
                   final card = cards[index - 1] as Map<String, dynamic>;
                   if (widget.fromWhere != translate('jobs.completed')) {
-                    return Dismissible(
-                      key: Key(card['id'].toString()),
-                      direction: DismissDirection.endToStart,
-                      confirmDismiss: (_) async {
-                        final confirm = await _showDeleteConfirmDialog(context);
-                        if (confirm) {
-                          await deletePaymentMethod(card['id'].toString());
-                        }
-                        return confirm;
-                      },
-                      background: Container(
-                        color: Colors.red,
-                        alignment: Alignment.centerRight,
-                        padding: const EdgeInsets.only(right: 20),
-                        child: const Icon(
-                          Icons.delete,
-                          color: Colors.white,
-                        ),
-                      ),
-                      child: Column(
+                    // return Dismissible(
+                    //   key: Key(card['id'].toString()),
+                    //   direction: DismissDirection.endToStart,
+                    //   confirmDismiss: (_) async {
+                    //     final confirm = await _showDeleteConfirmDialog(context);
+                    //     if (confirm) {
+                    //       await deletePaymentMethod(card['id'].toString());
+                    //     }
+                    //     return confirm;
+                    //   },
+                    //   background: Container(
+                    //     color: Colors.red,
+                    //     alignment: Alignment.centerRight,
+                    //     padding: const EdgeInsets.only(right: 20),
+                    //     child: const Icon(
+                    //       Icons.delete,
+                    //       color: Colors.white,
+                    //     ),
+                    //   ),
+                    //   child:
+                      return Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           ButtonConfirmPaymentMethod(
@@ -175,24 +182,30 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                             text: card['brand'] ?? '',
                             image: card['brand'].toString().toUpperCase() ==
                                 'MASTERCARD'
-                                ? 'assets/img/mastercard.png'
+                                ? 'assets/img/logos_mastercard.svg'
                                 : card['brand'].toString().toUpperCase() == 'VISA'
-                                ? 'assets/img/visa.png'
+                                ? 'assets/img/logos_visa.svg'
                                 : card['brand'].toString().toUpperCase() == 'NAPS'
-                                ? 'assets/img/naps.png'
+                                ? 'assets/img/logos_naps.svg'
                                 : card['brand'].toString().toUpperCase() == 'HIMYAN'
-                                ? 'assets/img/himyan.png'
-                                : 'assets/img/card-icon.png',
+                                ? 'assets/img/logos_himyan.svg'
+                                : 'assets/img/card-icon.svg',
                             jobsViewModel: widget.jobsViewModel,
                             data: card['id'],
                             last_digits: card['last_four'] ?? '',
                             payment_method: 'Card',
-                            nickname: card['name'] ?? '',
+                            nickname: card['name'] ?? '',  onDelete: (tag) async {
+                            final ok = await _showDeleteConfirmDialog(context);
+                            if (ok) {
+                              await deletePaymentMethod(tag);
+                              setState((){}); // refresh the list
+                            }
+                          },
                           ),
                           SizedBox(height: context.appValues.appSize.s10),
                         ],
-                      ),
-                    );
+                      );
+                    // );
                   }
                 }
                 return const SizedBox.shrink();

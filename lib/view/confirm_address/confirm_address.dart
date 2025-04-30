@@ -13,13 +13,16 @@ import 'package:provider/provider.dart';
 import '../../res/app_prefs.dart';
 
 class ConfirmAddress extends StatefulWidget {
-  ConfirmAddress({super.key});
+  final Map<String, dynamic>? initialAddress;
+  ConfirmAddress({super.key, this.initialAddress});
 
   @override
   State<ConfirmAddress> createState() => _ConfirmAddressState();
 }
 
 class _ConfirmAddressState extends State<ConfirmAddress> {
+  bool _didInit = false;
+
   Future<void> _handleRefresh() async {
     try {
       String? role =
@@ -40,6 +43,32 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
     }
   }
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_didInit) {
+      final jobsVM = Provider.of<JobsViewModel>(context, listen: false);
+
+      if (widget.initialAddress != null) {
+        final a = widget.initialAddress!;
+        // prefill every field you need:
+        jobsVM.setInputValues(index: 'street_number', value: a['street_number']?.toString() ?? '');
+        jobsVM.setInputValues(index: 'building_number', value: a['building_number']?.toString() ?? '');
+        jobsVM.setInputValues(index: 'floor',           value: a['floor']?.toString()           ?? '');
+        jobsVM.setInputValues(index: 'apartment_number', value: a['apartment_number']?.toString() ?? '');
+        jobsVM.setInputValues(index: 'city',            value: a['city']?.toString()            ?? '');
+        jobsVM.setInputValues(index: 'zone',            value: a['zone']?.toString()            ?? '');
+        jobsVM.setInputValues(index: 'address_label',   value: a['address_label']?.toString()   ?? '');
+        jobsVM.setInputValues(index: 'latitude',        value: a['latitude']?.toString()        ?? '');
+        jobsVM.setInputValues(index: 'longitude',       value: a['longitude']?.toString()       ?? '');
+      } else {
+        // new address: clear any leftover values
+        // jobsVM.clearJobsBody(); // implement this in your ViewModel
+      }
+
+      _didInit = true;
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer2<ProfileViewModel, JobsViewModel>(
@@ -127,7 +156,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                                     ),
                                   ),
                                 ),
-                                const AddressesButtonsWidget(),
+                                // const AddressesButtonsWidget(),
                                 const AddNewAddressWidget(),
                                 Padding(
                                   padding: EdgeInsets.symmetric(

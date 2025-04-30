@@ -19,6 +19,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import '../../res/constants.dart';
 import '../book_a_service/book_a_service.dart';
 import '../bottom_bar/bottom_bar.dart';
 import '../widgets/categories_screen/categories_screen_cards.dart';
@@ -816,7 +817,14 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                           InkWell(
-                                            onTap: () {},
+                                            onTap: () {
+                                              Navigator.of(context).push(_createRoute(
+                                                BottomBar(
+                                                  userRole: Constants.customerRoleId,
+                                                  currentTab: 1,
+                                                ),
+                                              ));
+                                            },
                                             child: Row(
                                               children: [
                                                 Text(

@@ -3,10 +3,13 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+
+import '../../view_model/jobs_view_model/jobs_view_model.dart';
 
 class MyaddressBook extends StatefulWidget {
   const MyaddressBook({super.key});
@@ -96,84 +99,168 @@ class _MyaddressBookState extends State<MyaddressBook> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Gap(10),
-                            InkWell(
-                              onTap: () {
-                                // pass the whole address if your ConfirmAddress supports it
-                                Navigator.of(context).push(
-                                  _createRoute(ConfirmAddress()),
-                                );
-                              },
-                              child: Container(
-                                width: context.appValues.appSizePercent.w100,
-                                decoration: BoxDecoration(
-                                  color: context.resources.color.colorWhite,
-                                  borderRadius: const BorderRadius.all(
-                                    Radius.circular(20),
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(top: 5),
-                                          child: SvgPicture.asset(
-                                            'assets/img/locationbookservice.svg',
-                                            width: 20,
-                                            height: 20,
-                                          ),
-                                        ),
-                                        const Gap(10),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            // 4a. Label from each address
-                                            Text(
-                                              address['address_label'] as String? ??
-                                                  translate('bookService.location'),
-                                              style: getPrimaryBoldStyle(
-                                                fontSize: 16,
-                                                color: context
-                                                    .resources.color.btnColorBlue,
-                                              ),
-                                            ),
-                                            // 4b. Detail line from each address
-                                            Text(
-                                              '${address["street_number"] ?? ''} '
-                                                  '${address["building_number"] ?? ''}, '
-                                                  '${address["apartment_number"] ?? ''}, '
-                                                  '${address["floor"] ?? ''}',
-                                              style: getPrimaryRegularStyle(
-                                                fontSize: 12,
-                                                color: const Color(0xff71727A),
-                                              ),
-                                            ),
+                            Slidable(
+                              key: Key(address['id'].toString()),
+                              endActionPane: ActionPane(
+                                motion: const DrawerMotion(),
+                                extentRatio: 0.25,
+                                children: [
+                                  CustomSlidableAction(
+                                    onPressed: (_) async {
+                                      final confirmed = await showDialog<bool>(
+                                        context: context,
+                                        builder: (ctx) => AlertDialog(
+                                          title: const Text('Confirm Deletion'),
+                                          content: const Text('Delete this address?'),
+                                          actions: [
+                                            TextButton(onPressed: () => Navigator.pop(ctx, false), child: const Text('Cancel')),
+                                            TextButton(onPressed: () => Navigator.pop(ctx, true),  child: const Text('Delete')),
                                           ],
                                         ),
-                                      ],
+                                      );
+                                      if (confirmed == true) {
+                                        Provider.of<ProfileViewModel>(context, listen: false)
+                                            .deleteAddress(index);
+                                        setState(() {});
+                                      }
+                                    },
+                                    backgroundColor: Colors.transparent,
+                                    autoClose: true,
+                                    child: Center(
+                                      child: SvgPicture.asset(
+                                        'assets/img/bin.svg',
+                                        width: 24,
+                                        height: 24,
+                                        // color: Colors.white,
+                                      ),
                                     ),
-                                    const Icon(
-                                      Icons.arrow_forward_ios_sharp,
-                                      size: 20,
-                                      color: Color(0xff8F9098),
-                                    ),
-                                  ],
+                                  ),
+                                ],
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    _createRoute(ConfirmAddress(initialAddress: address)),
+                                  );
+                                },
+                                child: Container(
+                                  width: context.appValues.appSizePercent.w100,
+                                  decoration: BoxDecoration(
+                                    color: context.resources.color.colorWhite,
+                                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(top: 5),
+                                            child: SvgPicture.asset(
+                                              'assets/img/locationbookservice.svg',
+                                              width: 20,
+                                              height: 20,
+                                            ),
+                                          ),
+                                          const Gap(10),
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                address['address_label'] as String? ??
+                                                    translate('bookService.location'),
+                                                style: getPrimaryBoldStyle(
+                                                  fontSize: 16,
+                                                  color: context.resources.color.btnColorBlue,
+                                                ),
+                                              ),
+                                              Text(
+                                                '${address["street_number"] ?? ''} '
+                                                    '${address["building_number"] ?? ''}, '
+                                                    '${address["apartment_number"] ?? ''}, '
+                                                    '${address["floor"] ?? ''}',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 12,
+                                                  color: const Color(0xff71727A),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                      const Icon(
+                                        Icons.arrow_forward_ios_sharp,
+                                        size: 20,
+                                        color: Color(0xff8F9098),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                             const Gap(15),
+
                           ],
                         ),
                       );
+
                     },
                   ),
                 );
+
+
               },
             );
-          }),
 
+          }
+          ),
+          Positioned(
+            bottom: 20,
+            child: Column(
+                    children: [
+            Divider(
+              color: const Color(0xffE5E5E5),
+              thickness: 1.5,
+              height: context.appValues.appSizePercent.h2,
+            ),
+            SizedBox(
+              width: context.appValues.appSizePercent.w100,
+              height: context.appValues.appSizePercent.h8,
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p20,
+                  vertical: context.appValues.appPadding.p10,
+                ),
+                child: ElevatedButton(
+                  onPressed: () {
+                    final jobsVM = Provider.of<JobsViewModel>(context, listen: false);
+
+                    jobsVM.clearJobsBody(); // implement this in your ViewModel
+                    Navigator.of(context).push(
+                      _createRoute(ConfirmAddress()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff4100E3),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  child: Text(
+                    translate('confirmAddress.addNewAddress'),
+                    style: getPrimarySemiBoldStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+
+            ),
+            ]
+                  ),
+          )
         ],
       ),
     );
