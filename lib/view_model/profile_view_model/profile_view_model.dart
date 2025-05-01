@@ -141,12 +141,18 @@ class ProfileViewModel extends DisposableViewModel {
 
   Future<void> patchProfileData(dynamic body) async {
     try {
-      String userId = await getUserId();
-      List<Map<String, dynamic>> existingAddresses =
-          List.from(profileBody["address"]);
-      // Create a new address
-      debugPrint('body in patch profile data ${body}');
-      Map<String, dynamic> newAddress = {
+      final String userId = await getUserId();
+
+      // make a mutable copy of your existing addresses
+      final List<Map<String, dynamic>> existingAddresses =
+      List<Map<String, dynamic>>.from(profileBody["address"] as List);
+
+      debugPrint('body in patch profile data: $body');
+      final addressId = body['id'];
+
+      // build a map of the incoming address fields
+      final Map<String, dynamic> addressMap = {
+        if (addressId != null) 'id': addressId,        // preserve id if present
         "street_name": body["address"],
         "street_number": body["street_number"],
         "building_number": body["building_number"],
@@ -158,29 +164,50 @@ class ProfileViewModel extends DisposableViewModel {
         "longitude": body["longitude"],
         "latitude": body["latitude"],
         "address_label": body["address_label"],
-        //Here we have to add the country
         "country": body["country"].toString(),
       };
-      debugPrint('adding new address $newAddress');
+      debugPrint('constructed addressMap: $addressMap');
 
-      // Add the new address to the existing list
-      existingAddresses.add(newAddress);
+      Map<String, dynamic> updatedCurrent;
+      if (addressId != null) {
+        // try to find an existing entry with the same id
+        final idx = existingAddresses.indexWhere((a) => a['id'] == addressId);
+        if (idx != -1) {
+          // overwrite only that entry
+          existingAddresses[idx] = {
+            ...existingAddresses[idx],
+            ...addressMap,
+          };
+          updatedCurrent = existingAddresses[idx];
+          debugPrint('updated address at index $idx');
+        } else {
+          // id provided but not found → treat as new
+          existingAddresses.add(addressMap);
+          updatedCurrent = addressMap;
+          debugPrint('id not found, added as new');
+        }
+      } else {
+        // no id → always add new
+        existingAddresses.add(addressMap);
+        updatedCurrent = addressMap;
+        debugPrint('added new address');
+      }
 
-      ProfileModel? response = await _homeRepository.patchProfile(
-          id: profileBody["id"],
-          body: {
-            "user": userId,
-            "address": existingAddresses,
-            "current_address": newAddress
-          });
-      debugPrint('adding new address ${response}');
+      final ProfileModel? response = await _homeRepository.patchProfile(
+        id: profileBody["id"],
+        body: {
+          "user": userId,
+          "address": existingAddresses,
+          "current_address": updatedCurrent,
+        },
+      );
+      debugPrint('patch response: $response');
+
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       profileBody = _apiProfileResponse.data?.toJson() ?? {};
-
       notifyListeners();
     } catch (error) {
-      debugPrint('error in patching profile data  $error');
-      // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
+      debugPrint('error in patching profile data: $error');
       notifyListeners();
     }
   }

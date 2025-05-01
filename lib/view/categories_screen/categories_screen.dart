@@ -31,10 +31,16 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   String lang = 'en-US';
   late Map<String, dynamic> selectedCategory;
+  late List<dynamic> _allCategoryServices;     // ← store the unfiltered, category-only list
   late List<dynamic> filteredServices;
+  bool _isSearching = false;
+  late TextEditingController _searchController;
+  List<dynamic> _filteredServices = [];
+
   @override
   void initState() {
     super.initState();
+    _searchController = TextEditingController()..addListener(_filterServices);
     _loadLanguage();
 
     // *** NEW: build the SAME filtered list you used in the grid ***
@@ -55,7 +61,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     selectedCategory = filteredCats[widget.initialTabIndex];
 
     // now filter your services by that category.id
-    _filterServices();
+    _allCategoryServices = widget.categoriesViewModel.servicesList!.where((service) {
+           // you could also just compare service['category']['id'], if you have it on the model
+            final catTransList = service['category']['translations'] as List;
+            final firstTrans = catTransList.first;
+            return firstTrans['categories_id'].toString()
+                == selectedCategory['id'].toString();
+         }).toList();
+
+        // start with the full service list shown
+        filteredServices = List.from(_allCategoryServices);
   }
 
   Future<void> _loadLanguage() async {
@@ -65,14 +80,24 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   void _filterServices() {
-    final catId = selectedCategory['id'].toString();
-    filteredServices = widget.categoriesViewModel.servicesList!.where((service) {
-      final catTransList = service['category']['translations'] as List;
-      final firstTrans = catTransList.first;
-      return firstTrans['categories_id'].toString() == catId;
-    }).toList();
-  }
-
+        final q = _searchController.text.trim().toLowerCase();
+        setState(() {
+          if (q.isEmpty) {
+            // no query → show everything in the category
+            filteredServices = List.from(_allCategoryServices);
+          } else {
+            // only show those whose translated title contains q
+           filteredServices = _allCategoryServices.where((service) {
+             final trans = (service['translations'] as List).firstWhere(
+                (t) => t['languages_code'] == lang,
+                orElse: () => null,
+              );
+              if (trans == null) return false;
+              return trans['title'].toString().toLowerCase().contains(q);
+            }).toList();
+          }
+        });
+      }
   String get _currentCategoryTitle {
     final list = selectedCategory['translations'] as List<dynamic>;
     final match = list.firstWhere(
@@ -103,7 +128,32 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   horizontal: context.appValues.appPadding.p20,
                   vertical: context.appValues.appPadding.p10,
                 ),
-                child: Row(
+                child:_isSearching
+                    ? TextField(
+                  controller: _searchController,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: const Color(0xffEAEAFF),
+                    prefixIcon: IconButton(
+                      icon: const Icon(Icons.arrow_back, color: Color(0xFF6E6BE8)),
+                      onPressed: () => setState(() {
+                        _isSearching = false;
+                        _searchController.clear();
+                      }),
+                    ),
+                    hintText: "Search services...",
+                    hintStyle: getPrimaryRegularStyle(
+                      color: const Color(0xFF6E6BE8),
+                      fontSize: 14,
+                    ),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                )
+                    :  Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -116,7 +166,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                       ),
                     ),
                     InkWell(
-                      onTap: () {},
+                      onTap: () => setState(() => _isSearching = true),
                       child: const Icon(
                         Icons.search,
                         size: 25,

@@ -52,6 +52,8 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
       if (widget.initialAddress != null) {
         final a = widget.initialAddress!;
         // prefill every field you need:
+
+        jobsVM.setInputValues(index: 'id', value: a['id']?.toString() ?? '');
         jobsVM.setInputValues(index: 'street_number', value: a['street_number']?.toString() ?? '');
         jobsVM.setInputValues(index: 'building_number', value: a['building_number']?.toString() ?? '');
         jobsVM.setInputValues(index: 'floor',           value: a['floor']?.toString()           ?? '');
