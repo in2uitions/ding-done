@@ -664,8 +664,8 @@ class _HomePageState extends State<HomePage> {
               ),
               searchController.text.isEmpty
                   ? DraggableScrollableSheet(
-                      initialChildSize: 0.73,
-                      minChildSize: 0.73,
+                      initialChildSize: 0.75,
+                      minChildSize: 0.75,
                       maxChildSize: 1,
                       builder: (BuildContext context,
                           ScrollController scrollController) {
@@ -687,7 +687,7 @@ class _HomePageState extends State<HomePage> {
                                     Padding(
                                       padding: EdgeInsets.fromLTRB(
                                         context.appValues.appPadding.p20,
-                                        context.appValues.appPadding.p30,
+                                        context.appValues.appPadding.p20,
                                         context.appValues.appPadding.p20,
                                         context.appValues.appPadding.p10,
                                       ),
@@ -818,9 +818,11 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           InkWell(
                                             onTap: () {
-                                              Navigator.of(context).push(_createRoute(
+                                              Navigator.of(context)
+                                                  .push(_createRoute(
                                                 BottomBar(
-                                                  userRole: Constants.customerRoleId,
+                                                  userRole:
+                                                      Constants.customerRoleId,
                                                   currentTab: 1,
                                                 ),
                                               ));

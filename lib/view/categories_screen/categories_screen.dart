@@ -31,7 +31,8 @@ class CategoriesScreen extends StatefulWidget {
 class _CategoriesScreenState extends State<CategoriesScreen> {
   String lang = 'en-US';
   late Map<String, dynamic> selectedCategory;
-  late List<dynamic> _allCategoryServices;     // ← store the unfiltered, category-only list
+  late List<dynamic>
+      _allCategoryServices; // ← store the unfiltered, category-only list
   late List<dynamic> filteredServices;
   bool _isSearching = false;
   late TextEditingController _searchController;
@@ -45,12 +46,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
     // *** NEW: build the SAME filtered list you used in the grid ***
     final allCats = widget.categoriesViewModel.categoriesList!;
-    final parentTitle = widget.serviceViewModel.parentCategory?.toString().toLowerCase();
+    final parentTitle =
+        widget.serviceViewModel.parentCategory?.toString().toLowerCase();
     final filteredCats = allCats.where((service) {
       // find that service['class'] translation in `lang`
       final transList = (service['class']['translations'] as List);
       final t = transList.firstWhere(
-            (t) => t['languages_code'] == lang,
+        (t) => t['languages_code'] == lang,
         orElse: () => null,
       );
       if (t == null) return false;
@@ -61,16 +63,17 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
     selectedCategory = filteredCats[widget.initialTabIndex];
 
     // now filter your services by that category.id
-    _allCategoryServices = widget.categoriesViewModel.servicesList!.where((service) {
-           // you could also just compare service['category']['id'], if you have it on the model
-            final catTransList = service['category']['translations'] as List;
-            final firstTrans = catTransList.first;
-            return firstTrans['categories_id'].toString()
-                == selectedCategory['id'].toString();
-         }).toList();
+    _allCategoryServices =
+        widget.categoriesViewModel.servicesList!.where((service) {
+      // you could also just compare service['category']['id'], if you have it on the model
+      final catTransList = service['category']['translations'] as List;
+      final firstTrans = catTransList.first;
+      return firstTrans['categories_id'].toString() ==
+          selectedCategory['id'].toString();
+    }).toList();
 
-        // start with the full service list shown
-        filteredServices = List.from(_allCategoryServices);
+    // start with the full service list shown
+    filteredServices = List.from(_allCategoryServices);
   }
 
   Future<void> _loadLanguage() async {
@@ -80,24 +83,25 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   }
 
   void _filterServices() {
-        final q = _searchController.text.trim().toLowerCase();
-        setState(() {
-          if (q.isEmpty) {
-            // no query → show everything in the category
-            filteredServices = List.from(_allCategoryServices);
-          } else {
-            // only show those whose translated title contains q
-           filteredServices = _allCategoryServices.where((service) {
-             final trans = (service['translations'] as List).firstWhere(
-                (t) => t['languages_code'] == lang,
-                orElse: () => null,
-              );
-              if (trans == null) return false;
-              return trans['title'].toString().toLowerCase().contains(q);
-            }).toList();
-          }
-        });
+    final q = _searchController.text.trim().toLowerCase();
+    setState(() {
+      if (q.isEmpty) {
+        // no query → show everything in the category
+        filteredServices = List.from(_allCategoryServices);
+      } else {
+        // only show those whose translated title contains q
+        filteredServices = _allCategoryServices.where((service) {
+          final trans = (service['translations'] as List).firstWhere(
+            (t) => t['languages_code'] == lang,
+            orElse: () => null,
+          );
+          if (trans == null) return false;
+          return trans['title'].toString().toLowerCase().contains(q);
+        }).toList();
       }
+    });
+  }
+
   String get _currentCategoryTitle {
     final list = selectedCategory['translations'] as List<dynamic>;
     final match = list.firstWhere(
@@ -128,53 +132,54 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                   horizontal: context.appValues.appPadding.p20,
                   vertical: context.appValues.appPadding.p10,
                 ),
-                child:_isSearching
+                child: _isSearching
                     ? TextField(
-                  controller: _searchController,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color(0xffEAEAFF),
-                    prefixIcon: IconButton(
-                      icon: const Icon(Icons.arrow_back, color: Color(0xFF6E6BE8)),
-                      onPressed: () => setState(() {
-                        _isSearching = false;
-                        _searchController.clear();
-                      }),
-                    ),
-                    hintText: "Search services...",
-                    hintStyle: getPrimaryRegularStyle(
-                      color: const Color(0xFF6E6BE8),
-                      fontSize: 14,
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                )
-                    :  Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    InkWell(
-                      onTap: () => Navigator.pop(context),
-                      child: const Icon(
-                        Icons.arrow_back_ios_new_sharp,
-                        size: 20,
-                        color: Colors.white,
+                        controller: _searchController,
+                        autofocus: true,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: const Color(0xffEAEAFF),
+                          prefixIcon: IconButton(
+                            icon: const Icon(Icons.arrow_back,
+                                color: Color(0xFF6E6BE8)),
+                            onPressed: () => setState(() {
+                              _isSearching = false;
+                              _searchController.clear();
+                            }),
+                          ),
+                          hintText: "Search services...",
+                          hintStyle: getPrimaryRegularStyle(
+                            color: const Color(0xFF6E6BE8),
+                            fontSize: 14,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: BorderSide.none,
+                          ),
+                        ),
+                      )
+                    : Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          InkWell(
+                            onTap: () => Navigator.pop(context),
+                            child: const Icon(
+                              Icons.arrow_back_ios_new_sharp,
+                              size: 20,
+                              color: Colors.white,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () => setState(() => _isSearching = true),
+                            child: const Icon(
+                              Icons.search,
+                              size: 25,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    InkWell(
-                      onTap: () => setState(() => _isSearching = true),
-                      child: const Icon(
-                        Icons.search,
-                        size: 25,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ],
-                ),
               ),
             ),
           ),
@@ -226,7 +231,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           ),
                           const Gap(4),
                           SizedBox(
-                            width: context.appValues.appSizePercent.w58,
+                            width: context.appValues.appSizePercent.w40,
                             child: Text(
                               _currentCategoryTitle,
                               overflow: TextOverflow.ellipsis,

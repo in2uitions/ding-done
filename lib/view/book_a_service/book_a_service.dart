@@ -14,6 +14,7 @@ import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -124,9 +125,182 @@ class _BookAServiceState extends State<BookAService> {
     }
   }
 
+  void showDemoActionSheet(
+      {required BuildContext context, required Widget child}) {
+    showCupertinoModalPopup<String>(
+        context: context,
+        builder: (BuildContext context) => child).then((String? value) {
+      if (value != null) changeLocale(context, value);
+    });
+  }
+
+  void _onActionSheetPress(BuildContext context) {
+    int selectedIndex = -1;
+
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(32),
+          topRight: Radius.circular(32),
+        ),
+      ),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) {
+          return SafeArea(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Gap(15),
+
+                // Two items (or however many you need)
+                ...List.generate(2, (i) {
+                  final isSelected = i == selectedIndex;
+                  return Consumer<ProfileViewModel>(
+                      builder: (context, profileViewModel, _) {
+                    return InkWell(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = i;
+                        });
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: context.appValues.appPadding.p12,
+                          horizontal: context.appValues.appPadding.p20,
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              isSelected
+                                  ? Icons.circle_rounded
+                                  : Icons.circle_outlined,
+                              color: isSelected
+                                  ? const Color(0xff4100E3)
+                                  : const Color(0xffC5C6CC),
+                              size: 16,
+                            ),
+                            const Gap(10),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                // Location SVG icon
+                                SvgPicture.asset(
+                                  'assets/img/locationbookservice.svg',
+                                  width: 20,
+                                  height: 20,
+                                ),
+                                const Gap(10),
+                                // Column with a title and the current location or hint
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      translate('bookService.location'),
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 16,
+                                        color: context
+                                            .resources.color.btnColorBlue,
+                                      ),
+                                    ),
+                                    Text(
+                                      '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 12,
+                                        color: const Color(0xff71727A),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+                }),
+
+                const Gap(5),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: context.appValues.appPadding.p20),
+                  child: const Divider(color: Color(0xffD4D6DD)),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: context.appValues.appPadding.p12,
+                    horizontal: context.appValues.appPadding.p20,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: () => Navigator.pop(ctx),
+                          child: Container(
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: context.resources.color.colorWhite,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(12)),
+                              border: Border.all(
+                                color: const Color(0xff4100E3),
+                                width: 1.5,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Add / Edit Methods",
+                                style: getPrimarySemiBoldStyle(
+                                  fontSize: 12,
+                                  color: const Color(0xff4100E3),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const Gap(15),
+                      Expanded(
+                        child: InkWell(
+                          onTap: () {
+                            // here you can read selectedIndex!
+                            Navigator.pop(ctx);
+                          },
+                          child: Container(
+                            height: 44,
+                            decoration: const BoxDecoration(
+                              color: Color(0xff4100E3),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(12)),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "Select",
+                                style: getPrimarySemiBoldStyle(
+                                  fontSize: 12,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+  }
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 
@@ -311,14 +485,20 @@ class _BookAServiceState extends State<BookAService> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(
-                                              subCatTrans != null
-                                                  ? '${subCatTrans!["title"]}'
-                                                  : '',
-                                              style: getPrimarySemiBoldStyle(
-                                                fontSize: 16,
-                                                color: context.resources.color
-                                                    .btnColorBlue,
+                                            SizedBox(
+                                              width: context
+                                                  .appValues.appSizePercent.w62,
+                                              child: Text(
+                                                subCatTrans != null
+                                                    ? '${subCatTrans!["title"]}'
+                                                    : '',
+                                                maxLines: 2,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: getPrimarySemiBoldStyle(
+                                                  fontSize: 16,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
+                                                ),
                                               ),
                                             ),
                                             SizedBox(
@@ -328,7 +508,6 @@ class _BookAServiceState extends State<BookAService> {
                                                 categories != null
                                                     ? '${parentCatTrans!['title'].toString().toUpperCase()}'
                                                     : 'Leak',
-
                                                 maxLines: 3,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: getPrimarySemiBoldStyle(
@@ -442,10 +621,10 @@ class _BookAServiceState extends State<BookAService> {
                                       const Gap(20),
                                       InkWell(
                                         onTap: () {
-                                          // Navigate to the ConfirmAddress screen using a custom route.
-                                          Navigator.of(context).push(
-                                            _createRoute(ConfirmAddress()),
-                                          );
+                                          // Navigator.of(context).push(
+                                          //   _createRoute(ConfirmAddress()),
+                                          // );
+                                          _onActionSheetPress(context);
                                         },
                                         child: Container(
                                           width: context
@@ -844,7 +1023,7 @@ Widget _buildPopupDialog(BuildContext context) {
             ],
           ),
         ),
-        SvgPicture.asset('assets/img/service-popup-image.svg'),
+        SvgPicture.asset('assets/img/booking-confirmation-icon.svg'),
         SizedBox(height: context.appValues.appSize.s40),
         Padding(
           padding: EdgeInsets.symmetric(
@@ -853,8 +1032,8 @@ Widget _buildPopupDialog(BuildContext context) {
           child: Text(
             translate('bookService.serviceRequestConfirmed'),
             textAlign: TextAlign.center,
-            style: getPrimaryRegularStyle(
-              fontSize: 17,
+            style: getPrimarySemiBoldStyle(
+              fontSize: 16,
               color: context.resources.color.btnColorBlue,
             ),
           ),
@@ -868,8 +1047,8 @@ Widget _buildPopupDialog(BuildContext context) {
             translate('bookService.serviceRequestConfirmedMsg'),
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
-              fontSize: 15,
-              color: context.resources.color.secondColorBlue,
+              fontSize: 12,
+              color: const Color(0xff71727A),
             ),
           ),
         ),
