@@ -1,11 +1,16 @@
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 
 import '../../../../res/fonts/styles_manager.dart';
+import '../../../../view_model/payment_view_model/payment_view_model.dart';
+import '../../../../view_model/profile_view_model/profile_view_model.dart';
+import '../../../confirm_payment_method/confirm_payment_method.dart';
 
 class ButtonConfirmPaymentMethod extends StatefulWidget {
   final ValueChanged<String> action;
@@ -61,16 +66,19 @@ class _ButtonConfirmPaymentMethodState
   }
 
   void _onActionSheetPress(BuildContext context) {
-    int selectedIndex = -1;
+    final paymentVM = Provider.of<PaymentViewModel>(context, listen: false);
+    // grab the real list of cards
+    final methods = paymentVM.paymentCards ?? <Map<String, dynamic>>[];
+
+    int selectedIndex =
+        methods.indexWhere((m) => m['id'].toString() == widget.tag);
 
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(32),
-          topRight: Radius.circular(32),
-        ),
+            topLeft: Radius.circular(32), topRight: Radius.circular(32)),
       ),
       builder: (ctx) => StatefulBuilder(
         builder: (ctx, setState) {
@@ -79,61 +87,75 @@ class _ButtonConfirmPaymentMethodState
               mainAxisSize: MainAxisSize.min,
               children: [
                 const Gap(15),
-
-                // Two items (or however many you need)
-                ...List.generate(2, (i) {
+                if (methods.isEmpty)
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      'No payment methods available.',
+                      style: getPrimaryRegularStyle(
+                          fontSize: 14, color: const Color(0xff190C39)),
+                    ),
+                  ),
+                // now this will iterate over your real cards
+                ...methods.asMap().entries.map((entry) {
+                  final i = entry.key;
+                  final m = entry.value;
                   final isSelected = i == selectedIndex;
+                  // pick SVG by brand...
+                  String asset = _assetForBrand(m['brand'] as String);
                   return InkWell(
-                    onTap: () {
-                      setState(() {
-                        selectedIndex = i;
-                      });
-                    },
+                    onTap: () => setState(() => selectedIndex = i),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: context.appValues.appPadding.p12,
                         horizontal: context.appValues.appPadding.p20,
                       ),
-                      child: Row(
-                        children: [
-                          Icon(
+                      child: Row(children: [
+                        Icon(
                             isSelected
                                 ? Icons.circle_rounded
                                 : Icons.circle_outlined,
                             color: isSelected
                                 ? const Color(0xff4100E3)
                                 : const Color(0xffC5C6CC),
-                            size: 16,
+                            size: 16),
+                        const Gap(10),
+                        Container(
+                          width: 40,
+                          height: 40,
+                          alignment: Alignment.center,
+                          child: SvgPicture.asset(
+                            asset,
+                            fit: BoxFit.contain,
+                            // no width/height here, let the container constrain it
                           ),
-                          const Gap(10),
-                          SvgPicture.asset(widget.image, width: 32, height: 32),
-                          const Gap(10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              if (widget.nickname != null &&
-                                  widget.nickname != 'null')
-                                Text(
-                                  widget.nickname!,
+                        ),
+                        const Gap(10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if ((m['name'] as String?)?.isNotEmpty ?? false)
+                              Text(m['name'],
                                   style: getPrimaryRegularStyle(
-                                    fontSize: 14,
-                                    color: const Color(0xff190C39),
-                                  ),
-                                ),
-                              Text(
-                                "•••• ${widget.last_digits ?? ''}",
+                                      fontSize: 14,
+                                      color: const Color(0xff190C39))),
+                            Text("•••• ${m['last_four'] ?? ''}",
                                 style: getPrimaryRegularStyle(
-                                  fontSize: 12,
-                                  color: const Color(0xff190C39),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                                    fontSize: 12,
+                                    color: const Color(0xff190C39))),
+                          ],
+                        ),
+                      ]),
                     ),
                   );
-                }),
+                }).toList(),
+                const Gap(5),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: context.appValues.appPadding.p20),
+                  child: const Divider(color: Color(0xffD4D6DD)),
+                ),
+                // … your Add/Edit and Select buttons …
 
                 const Gap(5),
                 Padding(
@@ -151,7 +173,20 @@ class _ButtonConfirmPaymentMethodState
                     children: [
                       Expanded(
                         child: InkWell(
-                          onTap: () => Navigator.pop(ctx),
+                          onTap: () => {
+                            Navigator.of(context).push(_createRoute(
+                                Consumer2<ProfileViewModel, PaymentViewModel>(
+                                    builder: (context, profileViewModel,
+                                        paymentViewModel, _) {
+                              return ConfirmPaymentMethod(
+                                payment_method: paymentViewModel
+                                    .getPaymentBody['tap_payments_card'],
+                                paymentViewModel: paymentViewModel,
+                                role: Constants.customerRoleId,
+                                profileViewModel: profileViewModel,
+                              );
+                            })))
+                          },
                           child: Container(
                             height: 44,
                             decoration: BoxDecoration(
@@ -180,8 +215,30 @@ class _ButtonConfirmPaymentMethodState
                         child: InkWell(
                           onTap: () {
                             // here you can read selectedIndex!
+                            if (selectedIndex >= 0) {
+                              final chosen = methods[selectedIndex] as Map<String,dynamic>;
+                              // notify the parent callback
+                              widget.action(chosen['id'].toString());
+                              // update your jobsViewModel exactly like handleTap would
+                              widget.jobsViewModel.setInputValues(
+                                index: 'tap_payments_card',
+                                value: chosen['id'],
+                              );
+                              widget.jobsViewModel.setUpdatedJob(
+                                index: 'tap_payments_card',
+                                value: chosen['id'],
+                              );
+                              widget.jobsViewModel.setInputValues(
+                                index: 'payment_method',
+                                value: widget.payment_method,
+                              );
+                              widget.jobsViewModel.setUpdatedJob(
+                                index: 'payment_method',
+                                value: widget.payment_method,
+                              );
+                            }
                             Navigator.pop(ctx);
-                          },
+                            },
                           child: Container(
                             height: 44,
                             decoration: const BoxDecoration(
@@ -209,6 +266,40 @@ class _ButtonConfirmPaymentMethodState
           );
         },
       ),
+    );
+  }
+
+  String _assetForBrand(String brand) {
+    switch (brand.toUpperCase()) {
+      case 'MASTERCARD':
+        return 'assets/img/logos_mastercard.svg';
+      case 'VISA':
+        return 'assets/img/logos_visa.svg';
+      case 'NAPS':
+        return 'assets/img/logos_naps.svg';
+      case 'HIMYAN':
+        return 'assets/img/logos_himyan.svg';
+      default:
+        return 'assets/img/card-icon.svg';
+    }
+  }
+
+  Route _createRoute(dynamic classname) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => classname,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 
@@ -322,7 +413,16 @@ class _ButtonConfirmPaymentMethodState
                   // left side: card details
                   Row(
                     children: [
-                      SvgPicture.asset(widget.image, width: 32, height: 32),
+                      Container(
+                        width: 40,
+                        height: 40,
+                        alignment: Alignment.center,
+                        child: SvgPicture.asset(
+                          widget.image,
+                          fit: BoxFit.contain,
+                          // no width/height here, let the container constrain it
+                        ),
+                      ),
                       const Gap(10),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
