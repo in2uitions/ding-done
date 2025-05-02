@@ -192,6 +192,10 @@ class AppSizePercentage {
   double get h55 => height * 0.55;
   double get h60 => height * 0.60;
   double get h65 => height * 0.65;
+  double get h66 => height * 0.66;
+  double get h67 => height * 0.67;
+  double get h68 => height * 0.68;
+  double get h69 => height * 0.69;
   double get h40 => height * 0.40;
   double get h41 => height * 0.41;
   double get h45 => height * 0.45;

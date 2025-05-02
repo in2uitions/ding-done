@@ -39,12 +39,13 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
     // *** NEW: build the SAME filtered list you used in the grid ***
     final allCats = widget.categoriesViewModel.categoriesList!;
-    final parentTitle = widget.serviceViewModel.parentCategory?.toString().toLowerCase();
+    final parentTitle =
+        widget.serviceViewModel.parentCategory?.toString().toLowerCase();
     final filteredCats = allCats.where((service) {
       // find that service['class'] translation in `lang`
       final transList = (service['class']['translations'] as List);
       final t = transList.firstWhere(
-            (t) => t['languages_code'] == lang,
+        (t) => t['languages_code'] == lang,
         orElse: () => null,
       );
       if (t == null) return false;
@@ -66,7 +67,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   void _filterServices() {
     final catId = selectedCategory['id'].toString();
-    filteredServices = widget.categoriesViewModel.servicesList!.where((service) {
+    filteredServices =
+        widget.categoriesViewModel.servicesList!.where((service) {
       final catTransList = service['category']['translations'] as List;
       final firstTrans = catTransList.first;
       return firstTrans['categories_id'].toString() == catId;
@@ -176,7 +178,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                           ),
                           const Gap(4),
                           SizedBox(
-                            width: context.appValues.appSizePercent.w58,
+                            width: context.appValues.appSizePercent.w40,
                             child: Text(
                               _currentCategoryTitle,
                               overflow: TextOverflow.ellipsis,
