@@ -424,17 +424,17 @@ class _SignUpSupplierOnBoardingScreenState
                               ],
                             ),
                           ),
-                          if (signupViewModel.getSignUpBody['selectedOption'] !=
+                          if (signupViewModel.signUpBody['selectedOption'] !=
                                   null
                               ? signupViewModel
-                                      .getSignUpBody['selectedOption'] ==
+                                      .signUpBody['selectedOption'] ==
                                   'company'
                               : selectedOption == 'company')
                             Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: CustomTextField(
                                 value:
-                                    signupViewModel.getSignUpBody["company"] ??
+                                    signupViewModel.signUpBody["company"] ??
                                         '',
                                 index: 'company',
                                 viewModel: signupViewModel.setInputValues,
@@ -449,10 +449,10 @@ class _SignUpSupplierOnBoardingScreenState
                                 keyboardType: TextInputType.text,
                               ),
                             ),
-                          if (signupViewModel.getSignUpBody['selectedOption'] !=
+                          if (signupViewModel.signUpBody['selectedOption'] !=
                                   null
                               ? signupViewModel
-                                      .getSignUpBody['selectedOption'] ==
+                                      .signUpBody['selectedOption'] ==
                                   'individual'
                               : selectedOption == 'individual')
                             // if (selectedOption == 'individual')
@@ -495,10 +495,10 @@ class _SignUpSupplierOnBoardingScreenState
                                 ),
                               ),
                             ),
-                          if (signupViewModel.getSignUpBody['selectedOption'] !=
+                          if (signupViewModel.signUpBody['selectedOption'] !=
                                   null
                               ? signupViewModel
-                                      .getSignUpBody['selectedOption'] ==
+                                      .signUpBody['selectedOption'] ==
                                   'individual'
                               : selectedOption == 'individual')
 
@@ -556,7 +556,7 @@ class _SignUpSupplierOnBoardingScreenState
                       if (signupViewModel.signUpErrors[context
                                   .resources.strings.formKeys['company']] !=
                               null &&
-                          signupViewModel.getSignUpBody['selectedOption'] ==
+                          signupViewModel.signUpBody['selectedOption'] ==
                               'company')
                         Padding(
                           padding: const EdgeInsets.fromLTRB(55, 0, 20, 20),

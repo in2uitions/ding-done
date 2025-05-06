@@ -445,6 +445,25 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
         if ((signupViewModel.getSignUpBody['selectedOption'] ??
                 selectedOption) ==
             'company')
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+            child: CustomTextField(
+              value:
+              signupViewModel.signUpBody["company"] ??
+                  '',
+              index: 'company',
+              viewModel: signupViewModel.setInputValues,
+              hintText: translate('signUp.companyId'),
+              // validator: (val) =>
+              //     signupViewModel.signUpErrors[context
+              //         .resources
+              //         .strings
+              //         .formKeys['company_id']!],
+              // errorText: signupViewModel.signUpErrors[context
+              //     .resources.strings.formKeys['company_id']!],
+              keyboardType: TextInputType.text,
+            ),
+          ),
           if (signupViewModel.signUpErrors[
                   context.resources.strings.formKeys['company']] !=
               null)
@@ -456,6 +475,8 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                 style: TextStyle(color: Colors.red[700], fontSize: 12),
               ),
             ),
+
+
       ],
     );
 
