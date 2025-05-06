@@ -206,7 +206,7 @@ class _CustomDatePicker2 extends State<CustomDatePicker2> {
                   'assets/img/calendarbookservice.svg',
                 ),
               ),
-              const Gap(15),
+              const Gap(10),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
