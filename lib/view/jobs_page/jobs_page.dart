@@ -206,7 +206,7 @@ class _JobsPageState extends State<JobsPage> {
                         ),
                         Padding(
                           padding: EdgeInsets.only(
-                            top: context.appValues.appPadding.p8,
+                            top: context.appValues.appPadding.p15,
                             left: context.appValues.appPadding.p20,
                             right: context.appValues.appPadding.p20,
                           ),
