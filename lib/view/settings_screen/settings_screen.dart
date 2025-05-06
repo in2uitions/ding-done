@@ -1,12 +1,16 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/settings_screen/webview_page.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
+
+import '../../view_model/jobs_view_model/jobs_view_model.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -63,145 +67,177 @@ class _SettingsScreenState extends State<SettingsScreen> {
             ),
           ),
           // White draggable sheet
-          DraggableScrollableSheet(
-            initialChildSize: 0.85,
-            minChildSize: 0.85,
-            maxChildSize: 1,
-            builder: (BuildContext context, ScrollController scrollController) {
-              return Container(
-                decoration: const BoxDecoration(
-                  color: Color(0xffFEFEFE),
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                ),
-                child: ListView(
-                  controller: scrollController,
-                  padding: EdgeInsets.zero,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.appValues.appPadding.p20,
+          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+              return DraggableScrollableSheet(
+                initialChildSize: 0.85,
+                minChildSize: 0.85,
+                maxChildSize: 1,
+                builder: (BuildContext context, ScrollController scrollController) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      color: Color(0xffFEFEFE),
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Gap(30),
-                          // App Settings section
-                          Text(
-                            translate('settings.appSettings'),
-                            style: getPrimaryMediumStyle(
-                              fontSize: 14,
-                              color: const Color(0xff180B3C),
-                            ),
+                    ),
+                    child: ListView(
+                      controller: scrollController,
+                      padding: EdgeInsets.zero,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: context.appValues.appPadding.p20,
                           ),
-                          const Gap(20),
-                          InkWell(
-                            onTap: () => _onActionSheetPress(context),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Row(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Gap(30),
+                              // App Settings section
+                              Text(
+                                translate('settings.appSettings'),
+                                style: getPrimaryMediumStyle(
+                                  fontSize: 14,
+                                  color: const Color(0xff180B3C),
+                                ),
+                              ),
+                              const Gap(20),
+                              InkWell(
+                                onTap: () => _onActionSheetPress(context),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    SvgPicture.asset(
-                                        'assets/img/lang-settings.svg'),
-                                    const Gap(10),
-                                    Text(
-                                      translate('settings.language'),
-                                      style: getPrimaryRegularStyle(
-                                        fontSize: 14,
-                                        color: const Color(0xff180B3C),
-                                      ),
+                                    Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                            'assets/img/lang-settings.svg'),
+                                        const Gap(10),
+                                        Text(
+                                          translate('settings.language'),
+                                          style: getPrimaryRegularStyle(
+                                            fontSize: 14,
+                                            color: const Color(0xff180B3C),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const Icon(
+                                      Icons.arrow_forward_ios_sharp,
+                                      size: 12,
+                                      color: Color(0xff8F9098),
                                     ),
                                   ],
                                 ),
-                                const Icon(
-                                  Icons.arrow_forward_ios_sharp,
-                                  size: 12,
-                                  color: Color(0xff8F9098),
-                                ),
-                              ],
-                            ),
-                          ),
-                          const Gap(20),
+                              ),
+                              const Gap(20),
 
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SvgPicture.asset(
-                                      'assets/img/bell-settings.svg'),
-                                  const Gap(10),
-                                  Text(
-                                    translate('notifications.notifications'),
-                                    style: getPrimaryRegularStyle(
-                                      fontSize: 14,
-                                      color: const Color(0xff180B3C),
-                                    ),
+                                  Row(
+                                    children: [
+                                      SvgPicture.asset(
+                                          'assets/img/bell-settings.svg'),
+                                      const Gap(10),
+                                      Text(
+                                        translate('notifications.notifications'),
+                                        style: getPrimaryRegularStyle(
+                                          fontSize: 14,
+                                          color: const Color(0xff180B3C),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Switch(
+                                    value: _notificationsEnabled,
+                                    activeColor: const Color(0xff4100E3),
+                                    onChanged: (bool value) {
+                                      setState(() {
+                                        _notificationsEnabled = value;
+                                      });
+                                    },
                                   ),
                                 ],
                               ),
-                              Switch(
-                                value: _notificationsEnabled,
-                                activeColor: const Color(0xff4100E3),
-                                onChanged: (bool value) {
-                                  setState(() {
-                                    _notificationsEnabled = value;
-                                  });
+                              const Gap(20),
+                              const Divider(
+                                color: Color(0xffD4D6DD),
+                                thickness: 1,
+                                height: 1,
+                              ),
+                              const Gap(20),
+                              Text(
+                                translate('settings.general'),
+                                style: getPrimaryMediumStyle(
+                                  fontSize: 14,
+                                  color: const Color(0xff180B3C),
+                                ),
+                              ),
+                              const Gap(20),
+
+                              // General items
+                              _buildGeneralItem(
+                                icon: 'assets/img/support-icon-new.svg',
+                                label: translate('drawer.support'),
+                                onTap: () {
+                                  jobsViewModel.launchWhatsApp();
                                 },
                               ),
+                              const Gap(30),
+                              _buildGeneralItem(
+                                icon: 'assets/img/about-icon.svg',
+                                label: translate('settings.about'),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => WebViewPage(
+                                        url: 'https://www.dingdone.app/',
+                                        title: translate('settings.about'),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              const Gap(30),
+                              _buildGeneralItem(
+                                icon: 'assets/img/privacy-icon.svg',
+                                label: translate('settings.privacyPolicy'),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => WebViewPage(
+                                        url: 'https://www.dingdone.app/privacy-policy',
+                                        title: translate('settings.privacyPolicy'),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              const Gap(30),
+                              _buildGeneralItem(
+                                icon: 'assets/img/terms-icon.svg',
+                                label: translate('drawer.termsAndConditions'),
+                                onTap: () {
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (_) => WebViewPage(
+                                        url: 'https://www.dingdone.app/user-agreement',
+                                        title: translate('drawer.termsAndConditions'),
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                              const Gap(40),
                             ],
                           ),
-                          const Gap(20),
-                          const Divider(
-                            color: Color(0xffD4D6DD),
-                            thickness: 1,
-                            height: 1,
-                          ),
-                          const Gap(20),
-                          Text(
-                            translate('settings.general'),
-                            style: getPrimaryMediumStyle(
-                              fontSize: 14,
-                              color: const Color(0xff180B3C),
-                            ),
-                          ),
-                          const Gap(20),
-
-                          // General items
-                          _buildGeneralItem(
-                            icon: 'assets/img/support-icon-new.svg',
-                            label: translate('drawer.support'),
-                            onTap: () {},
-                          ),
-                          const Gap(30),
-                          _buildGeneralItem(
-                            icon: 'assets/img/about-icon.svg',
-                            label: translate('settings.about'),
-                            onTap: () {},
-                          ),
-                          const Gap(30),
-                          _buildGeneralItem(
-                            icon: 'assets/img/privacy-icon.svg',
-                            label: translate('settings.privacyPolicy'),
-                            onTap: () {},
-                          ),
-                          const Gap(30),
-                          _buildGeneralItem(
-                            icon: 'assets/img/terms-icon.svg',
-                            label: translate('drawer.termsAndConditions'),
-                            onTap: () {},
-                          ),
-                          const Gap(40),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  );
+                },
               );
-            },
+            }
           ),
         ],
       ),

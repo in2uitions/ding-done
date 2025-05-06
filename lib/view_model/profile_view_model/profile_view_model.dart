@@ -139,7 +139,7 @@ class ProfileViewModel extends DisposableViewModel {
     }
   }
 
-  Future<void> patchProfileData(dynamic body) async {
+  Future<bool?> patchProfileData(dynamic body) async {
     try {
       final String userId = await getUserId();
 
@@ -205,10 +205,13 @@ class ProfileViewModel extends DisposableViewModel {
 
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       profileBody = _apiProfileResponse.data?.toJson() ?? {};
+
       notifyListeners();
+      return true;
     } catch (error) {
       debugPrint('error in patching profile data: $error');
       notifyListeners();
+      return false;
     }
   }
 

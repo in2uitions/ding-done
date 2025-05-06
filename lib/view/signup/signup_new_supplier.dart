@@ -936,7 +936,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                   return Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
                     child: CustomMultipleSelectionCheckBoxList(
-                      list: data.data,
+                      // list: data.data,
                       onChange: (selectedValues) {
                         setState(() {}); // Optionally store selectedValues.
                         signupViewModel.setInputValues(
@@ -948,8 +948,8 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                       errorText: signupViewModel.signUpErrors[context
                           .resources.strings.formKeys['supplier_services']!],
                       index: 'supplier_services',
-                      servicesViewModel: Provider.of<ServicesViewModel>(context,
-                          listen: false),
+                      // servicesViewModel: Provider.of<ServicesViewModel>(context,
+                      //     listen: false),
                     ),
                   );
                 } else {

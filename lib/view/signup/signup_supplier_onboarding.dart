@@ -467,6 +467,8 @@ class _SignUpSupplierOnBoardingScreenState
                               ),
                               child: UploadOneImage(
                                 callback: (picked, save) async {
+                                  debugPrint('saved  image ${picked[0]}');
+
                                   if (picked != null) {
                                     setState(() {
                                       imageID = {
@@ -475,6 +477,7 @@ class _SignUpSupplierOnBoardingScreenState
                                       };
                                     });
                                   }
+                                  debugPrint('saved  image ${save[0]["image"]}');
                                   if (save != null) {
                                     debugPrint('save 0 ${save[0]}');
                                     signupViewModel.setInputValues(
@@ -1096,17 +1099,18 @@ class _SignUpSupplierOnBoardingScreenState
                             ),
                           ),
                         ),
-                        FutureBuilder(
-                            future: Provider.of<CategoriesViewModel>(context,
-                                    listen: false)
-                                .getCategoriesAndServices(),
-                            builder: (context, AsyncSnapshot data) {
-                              if (data.data != null) {
-                                return Padding(
+                        // FutureBuilder(
+                        //     future: Provider.of<CategoriesViewModel>(context,
+                        //             listen: false)
+                        //         .getCategoriesAndServices(),
+                        //     builder: (context, AsyncSnapshot data) {
+                        //       if (data.data != null) {
+                        //         return
+                                  Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(20, 0, 0, 20),
                                   child: CustomMultipleSelectionCheckBoxList(
-                                    list: data.data,
+                                    // list: data.data,
                                     // values: [],// Pass your selected values here
                                     onChange: (selectedValues) {
                                       // Handle selected values
@@ -1127,13 +1131,13 @@ class _SignUpSupplierOnBoardingScreenState
                                     // context.resources.strings.formKeys['categories']!],
                                     // hint: 'Categories',
                                     index: 'supplier_services',
-                                    servicesViewModel: servicesViewModel,
+                                    // servicesViewModel: servicesViewModel,
                                   ),
-                                );
-                              } else {
-                                return Container();
-                              }
-                            }),
+                                ),
+                              // } else {
+                              //   return Container();
+                              // }
+                            // }),
                       ],
                     ),
                   ),

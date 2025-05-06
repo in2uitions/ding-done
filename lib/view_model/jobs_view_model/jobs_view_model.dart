@@ -46,6 +46,8 @@ class JobsViewModel with ChangeNotifier {
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
   String _selectedReason = '';
   bool _showCustomTextArea = false;
+  bool _addressSaved = false;
+
   dynamic _file;
   Map<String?, String?> jobsAddressError = {};
 
@@ -597,6 +599,7 @@ class JobsViewModel with ChangeNotifier {
 
 
   void setInputValues({required String index, dynamic value}) {
+    _addressSaved=false;
     jobsBody[index] = value;
     debugPrint('jobsBody $jobsBody');
     debugPrint('hhhh $index $value');
@@ -676,6 +679,11 @@ class JobsViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void setSaved(bool value) {
+   _addressSaved=value;
+    notifyListeners();
+  }
+
   void setUpdatedJobWithoutNotify({required String index, dynamic value}) {
     if ((index == 'tap_payments_card' || index == 'payment_method') &&
         userRole == Constants.supplierRoleId) {
@@ -748,4 +756,5 @@ class JobsViewModel with ChangeNotifier {
   get showCustomTextArea => _showCustomTextArea;
 
   get file => _file;
+  get saved => _addressSaved;
 }

@@ -22,6 +22,7 @@ class ConfirmAddress extends StatefulWidget {
 
 class _ConfirmAddressState extends State<ConfirmAddress> {
   bool _didInit = false;
+  bool isLoading = false;
 
   Future<void> _handleRefresh() async {
     try {
@@ -66,6 +67,8 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
       } else {
         // new address: clear any leftover values
         // jobsVM.clearJobsBody(); // implement this in your ViewModel
+        jobsVM.setSaved(false);
+
       }
 
       _didInit = true;
@@ -175,14 +178,31 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                                     ),
                                     child: InkWell(
                                       onTap: () async {
-                                        if (jobsViewModel.validate()) {
-                                          await profileViewModel
-                                              .patchProfileData(
-                                                  jobsViewModel.getjobsBody);
+                                        if(!jobsViewModel.saved){
+                                          isLoading=true;
+
+                                          if (jobsViewModel.validate()) {
+                                            if(await profileViewModel
+                                                .patchProfileData(
+                                                jobsViewModel.getjobsBody)==true){
+                                              jobsViewModel.setSaved(true);
+                                              // jobsViewModel.saved=true;
+                                            }
+                                          }
+                                          isLoading=false;
                                         }
+
                                       },
                                       child: Center(
-                                        child: Text(
+                                        child: isLoading?
+                                        CircularProgressIndicator():
+                                        jobsViewModel.saved?Text(
+                                          translate('button.saved'),
+                                          style: getPrimaryBoldStyle(
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                          ),
+                                        ):Text(
                                           translate('button.save'),
                                           style: getPrimaryBoldStyle(
                                             fontSize: 12,

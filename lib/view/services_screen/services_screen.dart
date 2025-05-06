@@ -86,13 +86,15 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
             ? "search_services"
             : "pro_services";
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        return ListView(
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
+          padding: EdgeInsets.zero,           // ← no more default top inset
           children: [
-            SizedBox(
-              width: context.appValues.appSizePercent.w100,
-              height: context.appValues.appSizePercent.h30,
-              child: GridView.builder(
+            // SizedBox(
+            //   width: context.appValues.appSizePercent.w100,
+            //   height: context.appValues.appSizePercent.h60,
+            //   child:
+              GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3,
                   crossAxisSpacing: 4,
@@ -122,7 +124,7 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
                   );
                 },
               ),
-            ),
+            // ),
           ],
         );
       },

@@ -82,7 +82,7 @@ class CategoriesViewModel with ChangeNotifier {
           .toList();
       // _categoriesList2 = _categoriesList!.where((category) => category.classs == servicesViewModel.searchBody['search_services']).toList();
       _servicesList = response["services"];
-      debugPrint('services list $_servicesList');
+      // debugPrint('services list $_servicesList');
       _servicesList = _servicesList!
           .where((service) =>
               service["status"].toString().toLowerCase() == 'published')
