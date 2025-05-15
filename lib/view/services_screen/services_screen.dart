@@ -75,7 +75,8 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
         final int parentId = int.tryParse(widget.categoryType) ?? -1;
 
         // now grab _all_ services whose class.id == parentId
-        final filteredCategories = categoriesViewModel.categoriesList.where((service) {
+        final filteredCategories =
+            categoriesViewModel.categoriesList.where((service) {
           return service['class']['id'] == parentId;
         }).toList();
 
@@ -88,42 +89,42 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
 
         return ListView(
           // crossAxisAlignment: CrossAxisAlignment.stretch,
-          padding: EdgeInsets.zero,           // ← no more default top inset
+          padding: EdgeInsets.zero, // ← no more default top inset
           children: [
             // SizedBox(
             //   width: context.appValues.appSizePercent.w100,
             //   height: context.appValues.appSizePercent.h60,
             //   child:
-              GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  crossAxisSpacing: 4,
-                  mainAxisSpacing: 4,
-                  childAspectRatio: 1,
-                ),
-                padding: EdgeInsets.fromLTRB(
-                  context.appValues.appPadding.p10,
-                  context.appValues.appPadding.p10,
-                  context.appValues.appPadding.p0,
-                  context.appValues.appPadding.p10,
-                ),
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: filteredCategories.length,
-                itemBuilder: (context, i) {
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.appValues.appPadding.p5,
-                    ),
-                    child: buildServiceWidget(
-                      filteredCategories[i],
-                      categoriesViewModel,
-                      i,
-                      'null', // you won’t need searchKey here unless you re-add filtering
-                    ),
-                  );
-                },
+            GridView.builder(
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 3,
+                crossAxisSpacing: 4,
+                mainAxisSpacing: 4,
+                childAspectRatio: 1,
               ),
+              padding: EdgeInsets.fromLTRB(
+                context.appValues.appPadding.p10,
+                context.appValues.appPadding.p10,
+                context.appValues.appPadding.p0,
+                context.appValues.appPadding.p10,
+              ),
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: filteredCategories.length,
+              itemBuilder: (context, i) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.appValues.appPadding.p5,
+                  ),
+                  child: buildServiceWidget(
+                    filteredCategories[i],
+                    categoriesViewModel,
+                    i,
+                    'null', // you won’t need searchKey here unless you re-add filtering
+                  ),
+                );
+              },
+            ),
             // ),
           ],
         );
@@ -217,8 +218,8 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
               child: service["image"] != null
                   ? SvgPicture.network(
                       '${context.resources.image.networkImagePath2}/${service["image"]}',
-                      width: 30,
-                      height: 30,
+                      width: 40,
+                      height: 40,
                     )
                   : Container(
                       width: context.appValues.appSizePercent.w20,
@@ -280,7 +281,10 @@ Route _createRoute(dynamic classname) {
 //
 class ServicesScreen extends StatefulWidget {
   final int initialTabIndex;
-  const ServicesScreen({Key? key,required this.initialTabIndex ,}) : super(key: key);
+  const ServicesScreen({
+    Key? key,
+    required this.initialTabIndex,
+  }) : super(key: key);
 
   @override
   State<ServicesScreen> createState() => _ServicesScreenState();
@@ -315,16 +319,14 @@ class _ServicesScreenState extends State<ServicesScreen>
     // _tabController =
     //     TabController(length: 2, vsync: this, initialIndex: initialIndex);
     // WidgetsBinding.instance.addPostFrameCallback((_) {
-      final parentCats =
-          Provider.of<CategoriesViewModel>(context, listen: false)
-              .parentCategoriesList;
-      _tabController = TabController(
-        length: parentCats.length,
-        vsync: this,
-        initialIndex: widget.initialTabIndex
-            ,  // cast num → int
-      );
-      setState(() {});
+    final parentCats = Provider.of<CategoriesViewModel>(context, listen: false)
+        .parentCategoriesList;
+    _tabController = TabController(
+      length: parentCats.length,
+      vsync: this,
+      initialIndex: widget.initialTabIndex, // cast num → int
+    );
+    setState(() {});
     // });
     var categoriesViewModel =
         Provider.of<CategoriesViewModel>(context, listen: false);
@@ -478,21 +480,22 @@ class _ServicesScreenState extends State<ServicesScreen>
                             // Updated TabBar container.
                             if (parentCats.isNotEmpty)
                               Container(
-                                margin: const EdgeInsets.symmetric(horizontal: 16),
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 16),
                                 decoration: BoxDecoration(
                                   color: const Color(0xffEAEAFF),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 child: TabBar(
                                   controller: _tabController,
-                                  tabAlignment:TabAlignment.center,
+                                  tabAlignment: TabAlignment.center,
                                   isScrollable: true,
-                                    indicatorSize: TabBarIndicatorSize.tab,
-                                    // Add padding to the indicator for a little breathing room.
-                                    indicatorPadding: const EdgeInsets.symmetric(
-                                      horizontal:0,
-                                      vertical: 1,
-                                    ),
+                                  indicatorSize: TabBarIndicatorSize.tab,
+                                  // Add padding to the indicator for a little breathing room.
+                                  indicatorPadding: const EdgeInsets.symmetric(
+                                    horizontal: 0,
+                                    vertical: 1,
+                                  ),
                                   indicator: BoxDecoration(
                                     color: const Color(0xff4100E3),
                                     borderRadius: BorderRadius.circular(10),
@@ -504,7 +507,7 @@ class _ServicesScreenState extends State<ServicesScreen>
                                   tabs: parentCats.map<Widget>((cat) {
                                     final tr = (cat['translations'] as List)
                                         .firstWhere(
-                                          (t) => t['languages_code'] == lang,
+                                      (t) => t['languages_code'] == lang,
                                       orElse: () => cat['translations'][0],
                                     );
                                     return Tab(text: tr['title']);
@@ -519,7 +522,8 @@ class _ServicesScreenState extends State<ServicesScreen>
                                   // build a grid for this specific parent
                                   return CategoriesGridWidget(
                                     servicesViewModel:
-                                    Provider.of<ServicesViewModel>(context, listen: false),
+                                        Provider.of<ServicesViewModel>(context,
+                                            listen: false),
                                     categoryType: cat['id'].toString(),
                                   );
                                 }).toList(),

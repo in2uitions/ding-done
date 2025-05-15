@@ -3,7 +3,6 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/job_details_supplier/job_details_supplier.dart';
-import 'package:dingdone/view/widgets/custom/custom_status_dropdown.dart';
 import 'package:dingdone/view/widgets/home_page_supplier/job_in_progress.dart';
 import 'package:dingdone/view/widgets/home_page_supplier/job_requests.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -17,15 +16,8 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
-import '../../res/constants.dart';
 import '../../view_model/categories_view_model/categories_view_model.dart';
-import '../../view_model/dispose_view_model/app_view_model.dart';
-import '../about/about_dingdone.dart';
-import '../agreement/supplier_agreement.dart';
 import '../bottom_bar/bottom_bar.dart';
-import '../confirm_address/confirm_address.dart';
-import '../jobs_page/jobs_page.dart';
-import '../login/login.dart';
 import '../widgets/restart/restart_widget.dart';
 
 class HomePageSupplier extends StatefulWidget {
@@ -66,7 +58,10 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
       // Simulate network fetch or database query
       await Future.delayed(const Duration(seconds: 2));
       // Update the list of items and refresh the UI
-      Navigator.of(context).push(_createRoute(BottomBar(userRole: role, currentTab: 0,)));
+      Navigator.of(context).push(_createRoute(BottomBar(
+        userRole: role,
+        currentTab: 0,
+      )));
     } catch (error) {
       // Handle the error, e.g., by displaying a snackbar
       ScaffoldMessenger.of(context).showSnackBar(
@@ -575,7 +570,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                     //   ],
                                     // ),
                                     SvgPicture.asset(
-                                        'assets/img/yellowbell.svg'),
+                                        'assets/img/white-bell.svg'),
                                   ],
                                 ),
                               ),
