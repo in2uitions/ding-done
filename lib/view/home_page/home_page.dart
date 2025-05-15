@@ -5,7 +5,6 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/categories/parent_categories.dart';
 import 'package:dingdone/view/notifications_screen/notifications_screen.dart';
-import 'package:dingdone/view/services_screen/services_screen.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -496,391 +495,407 @@ class _HomePageState extends State<HomePage> {
         // ),
         body: RefreshIndicator(
           onRefresh: _handleRefresh,
-          child: Stack(
-            children: [
-              Column(
+          child: Container(
+            color: const Color(0xff4100E3),
+            child: SafeArea(
+              child: Stack(
                 children: [
-                  // Header with back button and title
-                  Stack(
+                  Column(
                     children: [
-                      // Background image
-                      Container(
-                        width: context.appValues.appSizePercent.w100,
-                        height: context.appValues.appSizePercent.h50,
-                        decoration: const BoxDecoration(
-                          // image: DecorationImage(
-                          //   image: AssetImage('assets/img/homepagebg.png'),
-                          //   fit: BoxFit.cover,
-                          // ),
-                          color: Color(0xff4100E3),
-                        ),
-                      ),
-                      // Gradient overlay
-                      Padding(
-                        padding: EdgeInsets.only(
-                          top: context.appValues.appPadding.p8,
-                          left: context.appValues.appPadding.p20,
-                          right: context.appValues.appPadding.p20,
-                        ),
-                        child: SafeArea(
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                      // Header with back button and title
+                      Stack(
+                        children: [
+                          // Background image
+                          Container(
+                            width: context.appValues.appSizePercent.w100,
+                            height: context.appValues.appSizePercent.h50,
+                            decoration: const BoxDecoration(
+                              // image: DecorationImage(
+                              //   image: AssetImage('assets/img/homepagebg.png'),
+                              //   fit: BoxFit.cover,
+                              // ),
+                              color: Color(0xff4100E3),
+                            ),
+                          ),
+                          // Gradient overlay
+                          Padding(
+                            padding: EdgeInsets.only(
+                              top: context.appValues.appPadding.p8,
+                              left: context.appValues.appPadding.p20,
+                              right: context.appValues.appPadding.p20,
+                            ),
+                            child: SafeArea(
+                              child: Column(
                                 children: [
                                   Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
-                                      // IconButton(
-                                      //   icon: Icon(
-                                      //     Icons.menu,
-                                      //     size: 30,
-                                      //     color: context
-                                      //         .resources.color.colorWhite,
-                                      //   ),
-                                      //   onPressed: () {
-                                      //     _scaffoldKey.currentState
-                                      //         ?.openDrawer();
-                                      //   },
-                                      // ),
-                                      const Gap(7),
                                       Row(
                                         children: [
-                                          Text(
-                                            profileViewModel.getProfileBody[
-                                                        "user"] !=
-                                                    null
-                                                ? '${translate('home_screen.Hi')} '
-                                                : '',
-                                            style: getPrimarySemiBoldStyle(
-                                              color: const Color(0xffFFC500),
-                                              fontSize: 24,
-                                            ),
-                                          ),
-                                          Text(
-                                            profileViewModel.getProfileBody[
-                                                        "user"] !=
-                                                    null
-                                                ? '${profileViewModel.getProfileBody["user"]["first_name"]}'
-                                                : '',
-                                            style: getPrimarySemiBoldStyle(
-                                              color: context
-                                                  .resources.color.colorWhite,
-                                              fontSize: 24,
-                                            ),
-                                          ),
-                                          Text(
-                                            profileViewModel.getProfileBody[
-                                                        "user"] !=
-                                                    null
-                                                ? '!'
-                                                : '',
-                                            style: getPrimaryBoldStyle(
-                                              color: const Color(0xffFFC500),
-                                              fontSize: 24,
-                                            ),
+                                          // IconButton(
+                                          //   icon: Icon(
+                                          //     Icons.menu,
+                                          //     size: 30,
+                                          //     color: context
+                                          //         .resources.color.colorWhite,
+                                          //   ),
+                                          //   onPressed: () {
+                                          //     _scaffoldKey.currentState
+                                          //         ?.openDrawer();
+                                          //   },
+                                          // ),
+                                          const Gap(7),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                profileViewModel.getProfileBody[
+                                                            "user"] !=
+                                                        null
+                                                    ? '${translate('home_screen.Hi')} '
+                                                    : '',
+                                                style: getPrimarySemiBoldStyle(
+                                                  color:
+                                                      const Color(0xffFFC500),
+                                                  fontSize: 24,
+                                                ),
+                                              ),
+                                              Text(
+                                                profileViewModel.getProfileBody[
+                                                            "user"] !=
+                                                        null
+                                                    ? '${profileViewModel.getProfileBody["user"]["first_name"]}'
+                                                    : '',
+                                                style: getPrimarySemiBoldStyle(
+                                                  color: context.resources.color
+                                                      .colorWhite,
+                                                  fontSize: 24,
+                                                ),
+                                              ),
+                                              Text(
+                                                profileViewModel.getProfileBody[
+                                                            "user"] !=
+                                                        null
+                                                    ? '!'
+                                                    : '',
+                                                style: getPrimaryBoldStyle(
+                                                  color:
+                                                      const Color(0xffFFC500),
+                                                  fontSize: 24,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
+                                      InkWell(
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .push(_createRoute(
+                                            const NotificationsScreen(),
+                                          ));
+                                        },
+                                        child: SvgPicture.asset(
+                                            'assets/img/white-bell.svg'),
+                                      ),
+                                      // Container(
+                                      //   width:
+                                      //       context.appValues.appSizePercent.w10p5,
+                                      //   height:
+                                      //       context.appValues.appSizePercent.h5p1,
+                                      //   decoration: BoxDecoration(
+                                      //     borderRadius: BorderRadius.circular(50),
+                                      //     image: DecorationImage(
+                                      //       fit: BoxFit.cover,
+                                      //       image: NetworkImage(
+                                      //         profileViewModel.getProfileBody[
+                                      //                         'user'] !=
+                                      //                     null &&
+                                      //                 profileViewModel
+                                      //                             .getProfileBody[
+                                      //                         'user']['avatar'] !=
+                                      //                     null
+                                      //             ? '${context.resources.image.networkImagePath2}${profileViewModel.getProfileBody['user']['avatar']}'
+                                      //             : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                      //       ),
+                                      //     ),
+                                      //   ),
+                                      // ),
                                     ],
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      Navigator.of(context).push(_createRoute(
-                                        const NotificationsScreen(),
-                                      ));
-                                    },
-                                    child: SvgPicture.asset(
-                                        'assets/img/yellowbell.svg'),
-                                  ),
-                                  // Container(
-                                  //   width:
-                                  //       context.appValues.appSizePercent.w10p5,
-                                  //   height:
-                                  //       context.appValues.appSizePercent.h5p1,
-                                  //   decoration: BoxDecoration(
-                                  //     borderRadius: BorderRadius.circular(50),
-                                  //     image: DecorationImage(
-                                  //       fit: BoxFit.cover,
-                                  //       image: NetworkImage(
-                                  //         profileViewModel.getProfileBody[
-                                  //                         'user'] !=
-                                  //                     null &&
-                                  //                 profileViewModel
-                                  //                             .getProfileBody[
-                                  //                         'user']['avatar'] !=
-                                  //                     null
-                                  //             ? '${context.resources.image.networkImagePath2}${profileViewModel.getProfileBody['user']['avatar']}'
-                                  //             : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                  //       ),
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: context.appValues.appPadding.p20,
-                                  vertical: context.appValues.appPadding.p15,
-                                ),
-                                child: TextFormField(
-                                  controller: searchController,
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor: const Color(0xffEAEAFF),
-                                    prefixIcon: const Icon(
-                                      Icons.search,
-                                      color: Color(0xFF6E6BE8),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          context.appValues.appPadding.p20,
+                                      vertical:
+                                          context.appValues.appPadding.p15,
                                     ),
-                                    hintText: "I’m done with...",
-                                    hintStyle: getPrimaryRegularStyle(
-                                      color: const Color(0xFF6E6BE8),
-                                      fontSize: 14,
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12),
-                                      borderSide: const BorderSide(
-                                        color: Color(0xFF6E6BE8),
+                                    child: TextFormField(
+                                      controller: searchController,
+                                      decoration: InputDecoration(
+                                        filled: true,
+                                        fillColor: const Color(0xffEAEAFF),
+                                        prefixIcon: const Icon(
+                                          Icons.search,
+                                          color: Color(0xFF6E6BE8),
+                                        ),
+                                        hintText: "I’m done with...",
+                                        hintStyle: getPrimaryRegularStyle(
+                                          color: const Color(0xFF6E6BE8),
+                                          fontSize: 14,
+                                        ),
+                                        border: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          borderSide: BorderSide.none,
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          borderSide: const BorderSide(
+                                            color: Color(0xFF6E6BE8),
+                                          ),
+                                        ),
                                       ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                            ],
+                            ),
                           ),
-                        ),
+                        ],
                       ),
                     ],
                   ),
-                ],
-              ),
-              searchController.text.isEmpty
-                  ? DraggableScrollableSheet(
-                      initialChildSize: 0.75,
-                      minChildSize: 0.75,
-                      maxChildSize: 1,
-                      builder: (BuildContext context,
-                          ScrollController scrollController) {
-                        return Container(
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(30),
-                              topRight: Radius.circular(30),
-                            ),
-                            color: Color(0xffFEFEFE),
-                          ),
-                          child: ListView.builder(
-                              controller: scrollController,
-                              itemCount: 1,
-                              padding: EdgeInsets.zero,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Column(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                        context.appValues.appPadding.p20,
-                                        context.appValues.appPadding.p20,
-                                        context.appValues.appPadding.p20,
-                                        context.appValues.appPadding.p10,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            // servicesViewModel.chosenParent
-                                            //     ? translate(
-                                            //         'home_screen.servicesCategories')
-                                            //     :
-                                            translate('home_screen.categories'),
-                                            style: getPrimarySemiBoldStyle(
-                                              fontSize: 16,
-                                              color: context
-                                                  .resources.color.btnColorBlue,
-                                            ),
-                                          ),
-                                          // InkWell(
-                                          //   onTap: () {},
-                                          //   child: Row(
-                                          //     children: [
-                                          //       Text(
-                                          //         translate(
-                                          //             'home_screen.seeAll'),
-                                          //         style: getPrimaryBoldStyle(
-                                          //           fontSize: 12,
-                                          //           color:
-                                          //               const Color(0xff4100E3),
-                                          //         ),
-                                          //       ),
-                                          //       const Gap(5),
-                                          //       const Icon(
-                                          //         Icons.arrow_forward_ios_sharp,
-                                          //         color: Color(0xff4100E3),
-                                          //         size: 12,
-                                          //       ),
-                                          //     ],
-                                          //   ),
-                                          // ),
-                                          // servicesViewModel.chosenParent
-                                          //     ? InkWell(
-                                          //         child: Text(
-                                          //           translate(
-                                          //               'home_screen.seeAll'),
-                                          //           style: getPrimaryBoldStyle(
-                                          //             fontSize: 18,
-                                          //             color: const Color(
-                                          //                 0xff9E9BB8),
-                                          //           ),
-                                          //         ),
-                                          //         onTap: () {
-                                          //           Navigator.of(context)
-                                          //               .push(_createRoute(
-                                          //             CategoriesScreen(
-                                          //                 categoriesViewModel:
-                                          //                     categoriesViewModel,
-                                          //                 initialTabIndex: 0,
-                                          //                 serviceViewModel:
-                                          //                     servicesViewModel),
-                                          //           ));
-                                          //         },
-                                          //       )
-                                          //     : Container(),
-                                        ],
-                                      ),
-                                    ),
-                                    InkWell(
-                                      onTap: () async {
-                                        String? role = await AppPreferences()
-                                            .get(
-                                                key: userRoleKey,
-                                                isModel: false);
-                                        // Simulate network fetch or database query
-                                        await Future.delayed(
-                                            const Duration(seconds: 2));
-                                        // Update the list of items and refresh the UI
-                                        Navigator.of(context)
-                                            .push(_createRoute(BottomBar(
-                                          userRole: role,
-                                          currentTab: 1,
-                                        )));
-                                      },
-                                      child: ParentCategoriesWidget(
-                                          servicesViewModel: servicesViewModel),
-                                    ),
-                                    // servicesViewModel.chosenParent
-                                    //     ? CategoriesWidget(
-                                    //         servicesViewModel:
-                                    //             servicesViewModel)
-                                    //     : ParentCategoriesWidget(
-                                    //         servicesViewModel:
-                                    //             servicesViewModel),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal:
+                  searchController.text.isEmpty
+                      ? DraggableScrollableSheet(
+                          initialChildSize: 0.75,
+                          minChildSize: 0.75,
+                          maxChildSize: 1,
+                          builder: (BuildContext context,
+                              ScrollController scrollController) {
+                            return Container(
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30),
+                                ),
+                                color: Color(0xffFEFEFE),
+                              ),
+                              child: ListView.builder(
+                                  controller: scrollController,
+                                  itemCount: 1,
+                                  padding: EdgeInsets.zero,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
                                             context.appValues.appPadding.p20,
-                                      ),
-                                      child: const Divider(
-                                        color: Color(0xffD4D6DD),
-                                        height: 1,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.fromLTRB(
-                                        context.appValues.appPadding.p20,
-                                        context.appValues.appPadding.p20,
-                                        context.appValues.appPadding.p20,
-                                        context.appValues.appPadding.p20,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            // servicesViewModel.searchBody["search_services"] != null &&
-                                            //     servicesViewModel.searchBody["search_services"] != ''
-                                            //     ? servicesViewModel.searchBody["search_services"]
-                                            //     :
-                                            translate(
-                                                'home_screen.featuredServices'),
-                                            style: getPrimarySemiBoldStyle(
-                                              fontSize: 16,
-                                              color: context
-                                                  .resources.color.btnColorBlue,
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              Navigator.of(context)
-                                                  .push(_createRoute(
-                                                BottomBar(
-                                                  userRole:
-                                                      Constants.customerRoleId,
-                                                  currentTab: 1,
-                                                ),
-                                              ));
-                                            },
-                                            child: Row(
-                                              children: [
-                                                Text(
-                                                  translate(
-                                                      'home_screen.seeAll'),
-                                                  style:
-                                                      getPrimarySemiBoldStyle(
-                                                    fontSize: 12,
-                                                    color:
-                                                        const Color(0xff4100E3),
-                                                  ),
-                                                ),
-                                                const Gap(5),
-                                                const Icon(
-                                                  Icons.arrow_forward_ios_sharp,
-                                                  color: Color(0xff4100E3),
-                                                  size: 12,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal:
                                             context.appValues.appPadding.p20,
-                                      ),
-                                      child: Column(
-                                        children: [
-                                          Stack(
+                                            context.appValues.appPadding.p20,
+                                            context.appValues.appPadding.p10,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              CarouselSlider(
-                                                options: CarouselOptions(
-                                                  height: 200,
-                                                  autoPlay: true,
-                                                  enlargeCenterPage: true,
-                                                  viewportFraction: 1.0,
-                                                  autoPlayAnimationDuration:
-                                                      const Duration(
-                                                          milliseconds: 700),
-                                                  onPageChanged:
-                                                      (index, reason) {
-                                                    setState(() {
-                                                      _current = index;
-                                                    });
-                                                  },
+                                              Text(
+                                                // servicesViewModel.chosenParent
+                                                //     ? translate(
+                                                //         'home_screen.servicesCategories')
+                                                //     :
+                                                translate(
+                                                    'home_screen.categories'),
+                                                style: getPrimarySemiBoldStyle(
+                                                  fontSize: 16,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
                                                 ),
-                                                items: featuredServices
-                                                    .map((service) {
-                                                  // pull out translation in the current lang:
-                                                  final trans =
-                                                      (service['translations']
+                                              ),
+                                              // InkWell(
+                                              //   onTap: () {},
+                                              //   child: Row(
+                                              //     children: [
+                                              //       Text(
+                                              //         translate(
+                                              //             'home_screen.seeAll'),
+                                              //         style: getPrimaryBoldStyle(
+                                              //           fontSize: 12,
+                                              //           color:
+                                              //               const Color(0xff4100E3),
+                                              //         ),
+                                              //       ),
+                                              //       const Gap(5),
+                                              //       const Icon(
+                                              //         Icons.arrow_forward_ios_sharp,
+                                              //         color: Color(0xff4100E3),
+                                              //         size: 12,
+                                              //       ),
+                                              //     ],
+                                              //   ),
+                                              // ),
+                                              // servicesViewModel.chosenParent
+                                              //     ? InkWell(
+                                              //         child: Text(
+                                              //           translate(
+                                              //               'home_screen.seeAll'),
+                                              //           style: getPrimaryBoldStyle(
+                                              //             fontSize: 18,
+                                              //             color: const Color(
+                                              //                 0xff9E9BB8),
+                                              //           ),
+                                              //         ),
+                                              //         onTap: () {
+                                              //           Navigator.of(context)
+                                              //               .push(_createRoute(
+                                              //             CategoriesScreen(
+                                              //                 categoriesViewModel:
+                                              //                     categoriesViewModel,
+                                              //                 initialTabIndex: 0,
+                                              //                 serviceViewModel:
+                                              //                     servicesViewModel),
+                                              //           ));
+                                              //         },
+                                              //       )
+                                              //     : Container(),
+                                            ],
+                                          ),
+                                        ),
+                                        InkWell(
+                                          onTap: () async {
+                                            String? role =
+                                                await AppPreferences().get(
+                                                    key: userRoleKey,
+                                                    isModel: false);
+                                            // Simulate network fetch or database query
+                                            await Future.delayed(
+                                                const Duration(seconds: 2));
+                                            // Update the list of items and refresh the UI
+                                            Navigator.of(context)
+                                                .push(_createRoute(BottomBar(
+                                              userRole: role,
+                                              currentTab: 1,
+                                            )));
+                                          },
+                                          child: ParentCategoriesWidget(
+                                              servicesViewModel:
+                                                  servicesViewModel),
+                                        ),
+                                        // servicesViewModel.chosenParent
+                                        //     ? CategoriesWidget(
+                                        //         servicesViewModel:
+                                        //             servicesViewModel)
+                                        //     : ParentCategoriesWidget(
+                                        //         servicesViewModel:
+                                        //             servicesViewModel),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: context
+                                                .appValues.appPadding.p20,
+                                          ),
+                                          child: const Divider(
+                                            color: Color(0xffD4D6DD),
+                                            height: 1,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                            context.appValues.appPadding.p20,
+                                            context.appValues.appPadding.p20,
+                                            context.appValues.appPadding.p20,
+                                            context.appValues.appPadding.p20,
+                                          ),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                // servicesViewModel.searchBody["search_services"] != null &&
+                                                //     servicesViewModel.searchBody["search_services"] != ''
+                                                //     ? servicesViewModel.searchBody["search_services"]
+                                                //     :
+                                                translate(
+                                                    'home_screen.featuredServices'),
+                                                style: getPrimarySemiBoldStyle(
+                                                  fontSize: 16,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
+                                                ),
+                                              ),
+                                              InkWell(
+                                                onTap: () {
+                                                  Navigator.of(context)
+                                                      .push(_createRoute(
+                                                    BottomBar(
+                                                      userRole: Constants
+                                                          .customerRoleId,
+                                                      currentTab: 1,
+                                                    ),
+                                                  ));
+                                                },
+                                                child: Row(
+                                                  children: [
+                                                    Text(
+                                                      translate(
+                                                          'home_screen.seeAll'),
+                                                      style:
+                                                          getPrimarySemiBoldStyle(
+                                                        fontSize: 12,
+                                                        color: const Color(
+                                                            0xff4100E3),
+                                                      ),
+                                                    ),
+                                                    const Gap(5),
+                                                    const Icon(
+                                                      Icons
+                                                          .arrow_forward_ios_sharp,
+                                                      color: Color(0xff4100E3),
+                                                      size: 12,
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: context
+                                                .appValues.appPadding.p20,
+                                          ),
+                                          child: Column(
+                                            children: [
+                                              Stack(
+                                                children: [
+                                                  CarouselSlider(
+                                                    options: CarouselOptions(
+                                                      height: 200,
+                                                      autoPlay: true,
+                                                      enlargeCenterPage: true,
+                                                      viewportFraction: 1.0,
+                                                      autoPlayAnimationDuration:
+                                                          const Duration(
+                                                              milliseconds:
+                                                                  700),
+                                                      onPageChanged:
+                                                          (index, reason) {
+                                                        setState(() {
+                                                          _current = index;
+                                                        });
+                                                      },
+                                                    ),
+                                                    items: featuredServices
+                                                        .map((service) {
+                                                      // pull out translation in the current lang:
+                                                      final trans = (service[
+                                                                  'translations']
                                                               as List)
                                                           .cast<
                                                               Map<String,
@@ -896,362 +911,382 @@ class _HomePageState extends State<HomePage> {
                                                                         String,
                                                                         dynamic>,
                                                           );
-                                                  final imageUrl = service[
-                                                              'image'] !=
-                                                          null
-                                                      ? '${context.resources.image.networkImagePath2}${service['image']}'
-                                                      : 'https://via.placeholder.com/800x400';
+                                                      final imageUrl = service[
+                                                                  'image'] !=
+                                                              null
+                                                          ? '${context.resources.image.networkImagePath2}${service['image']}'
+                                                          : 'https://via.placeholder.com/800x400';
 
-                                                  return Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20),
-                                                      image: DecorationImage(
-                                                        fit: BoxFit.cover,
-                                                        image: NetworkImage(
-                                                            imageUrl),
-                                                      ),
-                                                    ),
-                                                    child: Stack(
-                                                      children: [
-                                                        Positioned(
-                                                          bottom: 0,
-                                                          child: Padding(
-                                                            padding: EdgeInsets
-                                                                .symmetric(
-                                                              horizontal: context
-                                                                  .appValues
-                                                                  .appPadding
-                                                                  .p0,
-                                                            ),
-                                                            child: Container(
-                                                              width: context
-                                                                  .appValues
-                                                                  .appSizePercent
-                                                                  .w90,
-                                                              height: 200,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                // color: Colors
-                                                                //     .black
-                                                                //     .withOpacity(
-                                                                //         0.9),
-                                                                gradient:
-                                                                    LinearGradient(
-                                                                  begin: Alignment
-                                                                      .bottomCenter,
-                                                                  end: Alignment
-                                                                      .topCenter,
-                                                                  colors: [
-                                                                    // Colors.black
-                                                                    //     .withOpacity(
-                                                                    //         0.3),
-                                                                    Colors.black
-                                                                        .withOpacity(
-                                                                            0.2),
-                                                                    Colors.black
-                                                                        .withOpacity(
-                                                                            0.1),
-                                                                  ],
-                                                                ),
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            20),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        Align(
-                                                          alignment: Alignment
-                                                              .bottomLeft,
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsets.only(
-                                                              left: context
-                                                                  .appValues
-                                                                  .appPadding
-                                                                  .p10,
-                                                              bottom: context
-                                                                  .appValues
-                                                                  .appPadding
-                                                                  .p35,
-                                                            ),
-                                                            child: Text(
-                                                              trans['title'] ??
-                                                                  '',
-                                                              style:
-                                                                  getPrimarySemiBoldStyle(
-                                                                fontSize: 20,
-                                                                color: context
-                                                                    .resources
-                                                                    .color
-                                                                    .colorWhite,
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  );
-                                                }).toList(),
-                                              ),
-                                              Positioned(
-                                                bottom: 10,
-                                                left: 0,
-                                                right: 0,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: imgList
-                                                      .asMap()
-                                                      .entries
-                                                      .map((entry) {
-                                                    return GestureDetector(
-                                                      onTap: () => _controller
-                                                          .animateToPage(
-                                                              entry.key),
-                                                      child: Container(
-                                                        width: 5.0,
-                                                        height: 5.0,
-                                                        margin: const EdgeInsets
-                                                            .symmetric(
-                                                            vertical: 8.0,
-                                                            horizontal: 4.0),
+                                                      return Container(
                                                         decoration:
                                                             BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color: _current ==
-                                                                  entry.key
-                                                              ? const Color(
-                                                                  0xffFFC500)
-                                                              : const Color(
-                                                                  0xff180B3C),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(20),
+                                                          image:
+                                                              DecorationImage(
+                                                            fit: BoxFit.cover,
+                                                            image: NetworkImage(
+                                                                imageUrl),
+                                                          ),
+                                                        ),
+                                                        child: Stack(
+                                                          children: [
+                                                            Positioned(
+                                                              bottom: 0,
+                                                              child: Padding(
+                                                                padding: EdgeInsets
+                                                                    .symmetric(
+                                                                  horizontal: context
+                                                                      .appValues
+                                                                      .appPadding
+                                                                      .p0,
+                                                                ),
+                                                                child:
+                                                                    Container(
+                                                                  width: context
+                                                                      .appValues
+                                                                      .appSizePercent
+                                                                      .w90,
+                                                                  height: 200,
+                                                                  decoration:
+                                                                      BoxDecoration(
+                                                                    // color: Colors
+                                                                    //     .black
+                                                                    //     .withOpacity(
+                                                                    //         0.9),
+                                                                    gradient:
+                                                                        LinearGradient(
+                                                                      begin: Alignment
+                                                                          .bottomCenter,
+                                                                      end: Alignment
+                                                                          .topCenter,
+                                                                      colors: [
+                                                                        // Colors.black
+                                                                        //     .withOpacity(
+                                                                        //         0.3),
+                                                                        Colors
+                                                                            .black
+                                                                            .withOpacity(0.2),
+                                                                        Colors
+                                                                            .black
+                                                                            .withOpacity(0.1),
+                                                                      ],
+                                                                    ),
+                                                                    borderRadius:
+                                                                        BorderRadius.circular(
+                                                                            20),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Align(
+                                                              alignment: Alignment
+                                                                  .bottomLeft,
+                                                              child: Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .only(
+                                                                  left: context
+                                                                      .appValues
+                                                                      .appPadding
+                                                                      .p10,
+                                                                  bottom: context
+                                                                      .appValues
+                                                                      .appPadding
+                                                                      .p35,
+                                                                ),
+                                                                child: Text(
+                                                                  trans['title'] ??
+                                                                      '',
+                                                                  style:
+                                                                      getPrimarySemiBoldStyle(
+                                                                    fontSize:
+                                                                        20,
+                                                                    color: context
+                                                                        .resources
+                                                                        .color
+                                                                        .colorWhite,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      );
+                                                    }).toList(),
+                                                  ),
+                                                  Positioned(
+                                                    bottom: 10,
+                                                    left: 0,
+                                                    right: 0,
+                                                    child: Row(
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                      children: imgList
+                                                          .asMap()
+                                                          .entries
+                                                          .map((entry) {
+                                                        return GestureDetector(
+                                                          onTap: () =>
+                                                              _controller
+                                                                  .animateToPage(
+                                                                      entry
+                                                                          .key),
+                                                          child: Container(
+                                                            width: 5.0,
+                                                            height: 5.0,
+                                                            margin:
+                                                                const EdgeInsets
+                                                                    .symmetric(
+                                                                    vertical:
+                                                                        8.0,
+                                                                    horizontal:
+                                                                        4.0),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: _current ==
+                                                                      entry.key
+                                                                  ? const Color(
+                                                                      0xffFFC500)
+                                                                  : const Color(
+                                                                      0xff180B3C),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }).toList(),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              const Gap(10),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: context
+                                                      .appValues.appPadding.p20,
+                                                ),
+                                                child: const Divider(
+                                                  color: Color(0xffD4D6DD),
+                                                  height: 40,
+                                                ),
+                                              ),
+                                              Container(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                color: Colors.white,
+                                                child: Column(
+                                                  children: [
+                                                    Center(
+                                                      child: Text(
+                                                        translate(
+                                                            'home_screen.availability'),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                        style:
+                                                            getPrimaryRegularStyle(
+                                                          fontSize: 14,
+                                                          color: const Color(
+                                                              0xff71727A),
                                                         ),
                                                       ),
-                                                    );
-                                                  }).toList(),
+                                                    ),
+                                                    const Gap(15),
+                                                    InkWell(
+                                                      onTap: () {
+                                                        jobsViewModel
+                                                            .launchWhatsApp();
+                                                      },
+                                                      child: Container(
+                                                        width: 127,
+                                                        height: 44,
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                          horizontal: context
+                                                              .appValues
+                                                              .appPadding
+                                                              .p0,
+                                                          vertical: context
+                                                              .appValues
+                                                              .appPadding
+                                                              .p0,
+                                                        ),
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: const Color(
+                                                              0xff25D366),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(12),
+                                                        ),
+                                                        child: Center(
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SvgPicture.asset(
+                                                                  'assets/img/wp.svg'),
+                                                              const Gap(5),
+                                                              Text(
+                                                                'CONTACT US',
+                                                                textAlign:
+                                                                    TextAlign
+                                                                        .center,
+                                                                style:
+                                                                    getPrimarySemiBoldStyle(
+                                                                  color: context
+                                                                      .resources
+                                                                      .color
+                                                                      .colorWhite,
+                                                                  fontSize: 12,
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                              const Gap(10),
+                                              Container(
+                                                width: context.appValues
+                                                    .appSizePercent.w50,
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                color: Colors.white,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    IconButton(
+                                                      icon: const FaIcon(
+                                                          FontAwesomeIcons
+                                                              .facebook),
+                                                      color: const Color(
+                                                          0xff8F9098),
+                                                      onPressed: () {
+                                                        // Handle Facebook tap
+                                                      },
+                                                    ),
+                                                    IconButton(
+                                                      icon: const FaIcon(
+                                                          FontAwesomeIcons
+                                                              .instagram),
+                                                      color: const Color(
+                                                          0xff8F9098),
+                                                      onPressed: () {
+                                                        // Handle Instagram tap
+                                                      },
+                                                    ),
+                                                    IconButton(
+                                                      icon: const FaIcon(
+                                                          FontAwesomeIcons
+                                                              .xTwitter),
+                                                      color: const Color(
+                                                          0xff8F9098),
+                                                      // X (Twitter)
+                                                      onPressed: () {
+                                                        // Handle X (Twitter) tap
+                                                      },
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
                                           ),
-                                          const Gap(10),
-                                          Padding(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: context
-                                                  .appValues.appPadding.p20,
-                                            ),
-                                            child: const Divider(
-                                              color: Color(0xffD4D6DD),
-                                              height: 40,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.all(8.0),
-                                            color: Colors.white,
-                                            child: Column(
-                                              children: [
-                                                Center(
-                                                  child: Text(
-                                                    translate(
-                                                        'home_screen.availability'),
-                                                    textAlign: TextAlign.center,
-                                                    style:
-                                                        getPrimaryRegularStyle(
-                                                      fontSize: 14,
-                                                      color: const Color(
-                                                          0xff71727A),
-                                                    ),
-                                                  ),
-                                                ),
-                                                const Gap(15),
-                                                InkWell(
-                                                  onTap: () {
-                                                    jobsViewModel
-                                                        .launchWhatsApp();
-                                                  },
-                                                  child: Container(
-                                                    width: 127,
-                                                    height: 44,
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                      horizontal: context
-                                                          .appValues
-                                                          .appPadding
-                                                          .p0,
-                                                      vertical: context
-                                                          .appValues
-                                                          .appPadding
-                                                          .p0,
-                                                    ),
-                                                    decoration: BoxDecoration(
-                                                      color: const Color(
-                                                          0xff25D366),
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                    ),
-                                                    child: Center(
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          SvgPicture.asset(
-                                                              'assets/img/wp.svg'),
-                                                          const Gap(5),
-                                                          Text(
-                                                            'CONTACT US',
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style:
-                                                                getPrimarySemiBoldStyle(
-                                                              color: context
-                                                                  .resources
-                                                                  .color
-                                                                  .colorWhite,
-                                                              fontSize: 12,
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          const Gap(10),
-                                          Container(
-                                            width: context
-                                                .appValues.appSizePercent.w50,
-                                            padding: const EdgeInsets.all(8.0),
-                                            color: Colors.white,
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                IconButton(
-                                                  icon: const FaIcon(
-                                                      FontAwesomeIcons
-                                                          .facebook),
-                                                  color:
-                                                      const Color(0xff8F9098),
-                                                  onPressed: () {
-                                                    // Handle Facebook tap
-                                                  },
-                                                ),
-                                                IconButton(
-                                                  icon: const FaIcon(
-                                                      FontAwesomeIcons
-                                                          .instagram),
-                                                  color:
-                                                      const Color(0xff8F9098),
-                                                  onPressed: () {
-                                                    // Handle Instagram tap
-                                                  },
-                                                ),
-                                                IconButton(
-                                                  icon: const FaIcon(
-                                                      FontAwesomeIcons
-                                                          .xTwitter),
-                                                  color:
-                                                      const Color(0xff8F9098),
-                                                  // X (Twitter)
-                                                  onPressed: () {
-                                                    // Handle X (Twitter) tap
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                );
-                              }),
-                        );
-                      })
-                  : DraggableScrollableSheet(
-                      initialChildSize: 0.70,
-                      minChildSize: 0.70,
-                      maxChildSize: 1,
-                      builder: (BuildContext context,
-                          ScrollController scrollController) {
-                        return Container(
-                            decoration: const BoxDecoration(
-                              borderRadius: BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30),
-                              ),
-                              color: Color(0xffFEFEFE),
-                            ),
-                            child: ListView.builder(
-                              controller: scrollController,
-                              itemCount: filteredServices.length,
-                              itemBuilder: (context, index) {
-                                var service = filteredServices[index];
+                                        ),
+                                      ],
+                                    );
+                                  }),
+                            );
+                          })
+                      : DraggableScrollableSheet(
+                          initialChildSize: 0.70,
+                          minChildSize: 0.70,
+                          maxChildSize: 1,
+                          builder: (BuildContext context,
+                              ScrollController scrollController) {
+                            return Container(
+                                decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(30),
+                                    topRight: Radius.circular(30),
+                                  ),
+                                  color: Color(0xffFEFEFE),
+                                ),
+                                child: ListView.builder(
+                                  controller: scrollController,
+                                  itemCount: filteredServices.length,
+                                  itemBuilder: (context, index) {
+                                    var service = filteredServices[index];
 
-                                // Find the translation where language_code == lang
-                                // var lang = 'ar-SA'; // Replace this with the actual language code you're using
-                                var translation =
-                                    service['translations'].firstWhere(
-                                  (t) => t['languages_code'] == lang,
-                                  orElse: () => null,
-                                );
+                                    // Find the translation where language_code == lang
+                                    // var lang = 'ar-SA'; // Replace this with the actual language code you're using
+                                    var translation =
+                                        service['translations'].firstWhere(
+                                      (t) => t['languages_code'] == lang,
+                                      orElse: () => null,
+                                    );
 
-                                // If no translation is found, fallback to default
-                                if (translation == null) {
-                                  translation = {
-                                    'title': service["xtitle"] ?? '',
-                                    'description': service["xdescription"] ?? ''
-                                  };
-                                }
-                                debugPrint('translation si $translation');
+                                    // If no translation is found, fallback to default
+                                    if (translation == null) {
+                                      translation = {
+                                        'title': service["xtitle"] ?? '',
+                                        'description':
+                                            service["xdescription"] ?? ''
+                                      };
+                                    }
+                                    debugPrint('translation si $translation');
 
-                                return Consumer2<JobsViewModel,
-                                    ProfileViewModel>(
-                                  builder: (context, jobsViewModel,
-                                      profileViewModel, _) {
-                                    return CategoriesScreenCards(
-                                      category: service["category"],
-                                      title: translation != null
-                                          ? translation["title"]
-                                          : '',
-                                      cost: 0,
-                                      // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
-                                      image: service["image"] != null
-                                          ? '${context.resources.image.networkImagePath2}${service["image"]}'
-                                          : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                      onTap: () {
-                                        _handleServiceSelection(service,
-                                            jobsViewModel, profileViewModel);
+                                    return Consumer2<JobsViewModel,
+                                        ProfileViewModel>(
+                                      builder: (context, jobsViewModel,
+                                          profileViewModel, _) {
+                                        return CategoriesScreenCards(
+                                          category: service["category"],
+                                          title: translation != null
+                                              ? translation["title"]
+                                              : '',
+                                          cost: 0,
+                                          // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
+                                          image: service["image"] != null
+                                              ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                              : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                          onTap: () {
+                                            _handleServiceSelection(
+                                                service,
+                                                jobsViewModel,
+                                                profileViewModel);
+                                          },
+                                        );
                                       },
                                     );
                                   },
-                                );
-                              },
-                            )
+                                )
 
-                            // child: ListView.builder(
-                            //   controller: scrollController,
-                            //   itemCount: filteredServices.length,
-                            //   itemBuilder: (BuildContext context, int index) {
-                            //     var service = filteredServices[index];
-                            //     return ListTile(
-                            //       title: Text(service.title),
-                            //       subtitle: Text(service!=null && service.description !=null ?service.description:''),
-                            //     );
-                            //   },
-                            // ),
-                            );
-                      },
-                    ),
-            ],
+                                // child: ListView.builder(
+                                //   controller: scrollController,
+                                //   itemCount: filteredServices.length,
+                                //   itemBuilder: (BuildContext context, int index) {
+                                //     var service = filteredServices[index];
+                                //     return ListTile(
+                                //       title: Text(service.title),
+                                //       subtitle: Text(service!=null && service.description !=null ?service.description:''),
+                                //     );
+                                //   },
+                                // ),
+                                );
+                          },
+                        ),
+                ],
+              ),
+            ),
           ),
         ),
       );

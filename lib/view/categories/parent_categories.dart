@@ -54,10 +54,10 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2, // Number of items in each row
+                  crossAxisCount: 3, // Number of items in each row
                   crossAxisSpacing: 20, // Spacing between items horizontally
-                  mainAxisSpacing: 4, // Spacing between items vertically
-                  childAspectRatio: 1.5, // Aspect ratio of each grid item
+                  mainAxisSpacing: 0, // Spacing between items vertically
+                  childAspectRatio: 0.7, // Aspect ratio of each grid item
                 ),
                 itemCount: categoriesViewModel.parentCategoriesList.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -150,7 +150,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
           Text(
             services?["title"] ?? '',
             textAlign: TextAlign.center,
-            maxLines: 1,
+            maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: getPrimaryMediumStyle(
               fontSize: 12,
