@@ -143,7 +143,7 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
         ));
       },
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           imageContainer,
           const SizedBox(height: 10),

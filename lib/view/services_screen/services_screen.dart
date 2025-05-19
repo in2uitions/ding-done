@@ -204,7 +204,7 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
         // categoriesViewModel.sortCategories(services?["title"]);
       },
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           // Colored container with icon.
           Container(
