@@ -3,6 +3,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/job_details_supplier/job_details_supplier.dart';
+import 'package:dingdone/view/notifications_screen/notifications_screen.dart';
 import 'package:dingdone/view/widgets/home_page_supplier/job_in_progress.dart';
 import 'package:dingdone/view/widgets/home_page_supplier/job_requests.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -569,8 +570,15 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                     //             : 'Available for hire')
                                     //   ],
                                     // ),
-                                    SvgPicture.asset(
-                                        'assets/img/white-bell.svg'),
+                                    InkWell(
+                                      onTap: () {
+                                        Navigator.of(context).push(_createRoute(
+                                          const NotificationsScreen(),
+                                        ));
+                                      },
+                                      child: SvgPicture.asset(
+                                          'assets/img/white-bell.svg'),
+                                    ),
                                   ],
                                 ),
                               ),

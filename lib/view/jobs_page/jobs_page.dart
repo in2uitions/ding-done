@@ -5,6 +5,7 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/notifications_screen/notifications_screen.dart';
 import 'package:dingdone/view/widgets/jobs/jobs_cards.dart';
 import 'package:dingdone/view/widgets/tabs/tabs_jobs.dart';
+import 'package:dingdone/view/widgets/tabs/tabs_jobs_supplier.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:flutter/material.dart';
@@ -324,7 +325,7 @@ class _JobsPageState extends State<JobsPage> {
                                     ? SizedBox(
                                         height:
                                             MediaQuery.of(context).size.height,
-                                        child: TabsJobs(
+                                        child: TabsJobsSupplier(
                                           tabtitle: [
                                             translate('jobs.bookedJobs'),
                                             translate('jobs.activeJobs'),

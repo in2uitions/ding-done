@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 
-class TabsJobs extends StatefulWidget {
-  TabsJobs({
+class TabsJobsSupplier extends StatefulWidget {
+  TabsJobsSupplier({
     Key? key,
     required this.tabtitle,
     required this.tabContent,
@@ -17,10 +17,10 @@ class TabsJobs extends StatefulWidget {
   final List<int> jobCounts;
 
   @override
-  _TabsJobsState createState() => _TabsJobsState();
+  _TabsJobsSupplierState createState() => _TabsJobsSupplierState();
 }
 
-class _TabsJobsState extends State<TabsJobs>
+class _TabsJobsSupplierState extends State<TabsJobsSupplier>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 
@@ -46,9 +46,9 @@ class _TabsJobsState extends State<TabsJobs>
             borderRadius: BorderRadius.circular(10),
           ),
           child: TabBar(
-            tabAlignment: TabAlignment.start,
+            // tabAlignment: TabAlignment.start,
             controller: _tabController,
-            isScrollable: true,
+            isScrollable: false,
             labelPadding:
                 const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
             indicatorSize: TabBarIndicatorSize.tab,

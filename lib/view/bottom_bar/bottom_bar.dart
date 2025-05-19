@@ -26,7 +26,12 @@ class BottomBar extends StatefulWidget {
 
   var currentTab;
   var initialServicesTabIndex;
-  BottomBar({super.key, required this.userRole, required this.currentTab, this.initialServicesTabIndex,});
+  BottomBar({
+    super.key,
+    required this.userRole,
+    required this.currentTab,
+    this.initialServicesTabIndex,
+  });
 
   @override
   _BottomBarState createState() => _BottomBarState();
@@ -62,9 +67,12 @@ class _BottomBarState extends State<BottomBar>
             ? const HomePageSupplier()
             : const HomePage()
         : widget.currentTab == 1
-            ? widget.initialServicesTabIndex!=null?
-    ServicesScreen(initialTabIndex: widget.initialServicesTabIndex):
-    const ServicesScreen(initialTabIndex: 0,)
+            ? widget.initialServicesTabIndex != null
+                ? ServicesScreen(
+                    initialTabIndex: widget.initialServicesTabIndex)
+                : const ServicesScreen(
+                    initialTabIndex: 0,
+                  )
             : Container();
 
     _controller = AnimationController(
@@ -266,93 +274,102 @@ class _BottomBarState extends State<BottomBar>
                           ),
                         );
                       }),
-                      Consumer<JobsViewModel>(
-                          builder: (context, jobsViewModel, _) {
-                        return MaterialButton(
-                          minWidth: 40,
-                          onPressed: () {
-                            setState(() {
-                              currentScreen = widget.initialServicesTabIndex!=null?
-                              ServicesScreen(initialTabIndex: widget.initialServicesTabIndex):
-                              const ServicesScreen(initialTabIndex: 0,);
-                              widget.currentTab = 1;
-                            });
-                          },
-                          child: Container(
-                            // width: context.appValues.appSizePercent.w12,
-                            child: Stack(
-                              children: [
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: <Widget>[
-                                    SvgPicture.asset(
-                                      widget.currentTab == 1
-                                          ? 'assets/img/serviceselected.svg'
-                                          : 'assets/img/servicesunselected.svg',
-                                      fit: BoxFit.contain,
-                                      height:
-                                          context.appValues.appSizePercent.h3,
-                                      // color: currentTab == 1
-                                      //     ? const Color(0xff6A39E5)
-                                      //     : const Color(0xff9d9d9d),
-                                    ),
-                                    SizedBox(
-                                        height: context.appValues.appSize.s5),
-                                    Text(
-                                      translate('updateJob.services'),
-                                      style: widget.currentTab == 1
-                                          ? getPrimarySemiBoldStyle(
-                                              fontSize: 10,
-                                              color: const Color(0xff180B3C),
-                                            )
-                                          : getPrimaryRegularStyle(
-                                              fontSize: 10,
-                                              color: const Color(0xff71727A),
-                                            ),
-                                    ),
-                                  ],
-                                ),
-                                // Notification bubble
-                                widget.userRole == Constants.supplierRoleId
-                                    ? jobsViewModel.supplierBookedJobs.length >
-                                            0
-                                        ? Container(
-                                            child: Positioned(
-                                              right: 0,
-                                              bottom: 37,
-                                              child: Container(
-                                                padding:
-                                                    const EdgeInsets.all(4),
-                                                decoration: const BoxDecoration(
-                                                  color: Colors
-                                                      .red, // Choose your preferred background color
-                                                  shape: BoxShape.circle,
-                                                ),
-                                                child: Text(
-                                                  '${jobsViewModel.supplierBookedJobs.length}',
-                                                  style: const TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12,
-                                                    fontWeight: FontWeight.bold,
+                      if (widget.userRole != Constants.supplierRoleId)
+                        Consumer<JobsViewModel>(
+                            builder: (context, jobsViewModel, _) {
+                          return MaterialButton(
+                            minWidth: 40,
+                            onPressed: () {
+                              setState(() {
+                                currentScreen =
+                                    widget.initialServicesTabIndex != null
+                                        ? ServicesScreen(
+                                            initialTabIndex:
+                                                widget.initialServicesTabIndex)
+                                        : const ServicesScreen(
+                                            initialTabIndex: 0,
+                                          );
+                                widget.currentTab = 1;
+                              });
+                            },
+                            child: Container(
+                              // width: context.appValues.appSizePercent.w12,
+                              child: Stack(
+                                children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      SvgPicture.asset(
+                                        widget.currentTab == 1
+                                            ? 'assets/img/serviceselected.svg'
+                                            : 'assets/img/servicesunselected.svg',
+                                        fit: BoxFit.contain,
+                                        height:
+                                            context.appValues.appSizePercent.h3,
+                                        // color: currentTab == 1
+                                        //     ? const Color(0xff6A39E5)
+                                        //     : const Color(0xff9d9d9d),
+                                      ),
+                                      SizedBox(
+                                          height: context.appValues.appSize.s5),
+                                      Text(
+                                        translate('updateJob.services'),
+                                        style: widget.currentTab == 1
+                                            ? getPrimarySemiBoldStyle(
+                                                fontSize: 10,
+                                                color: const Color(0xff180B3C),
+                                              )
+                                            : getPrimaryRegularStyle(
+                                                fontSize: 10,
+                                                color: const Color(0xff71727A),
+                                              ),
+                                      ),
+                                    ],
+                                  ),
+                                  // Notification bubble
+                                  widget.userRole == Constants.supplierRoleId
+                                      ? jobsViewModel
+                                                  .supplierBookedJobs.length >
+                                              0
+                                          ? Container(
+                                              child: Positioned(
+                                                right: 0,
+                                                bottom: 37,
+                                                child: Container(
+                                                  padding:
+                                                      const EdgeInsets.all(4),
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                    color: Colors
+                                                        .red, // Choose your preferred background color
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  child: Text(
+                                                    '${jobsViewModel.supplierBookedJobs.length}',
+                                                    style: const TextStyle(
+                                                      color: Colors.white,
+                                                      fontSize: 12,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                          )
-                                        : Container()
-                                    : jobsViewModel.getcustomerJobs
-                                                .where(
-                                                    (e) => e.status == 'booked')
-                                                .toList()
-                                                .length >
-                                            0
-                                        ? Container()
-                                        : Container()
-                              ],
+                                            )
+                                          : Container()
+                                      : jobsViewModel.getcustomerJobs
+                                                  .where((e) =>
+                                                      e.status == 'booked')
+                                                  .toList()
+                                                  .length >
+                                              0
+                                          ? Container()
+                                          : Container()
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }),
+                          );
+                        }),
 
                       //   ],
                       // ),

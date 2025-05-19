@@ -2,6 +2,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/login/login.dart';
+import 'package:dingdone/view/settings_screen/settings_screen.dart';
 import 'package:dingdone/view/widgets/profile_page_supplier/location_supplier_profile.dart';
 import 'package:dingdone/view/widgets/profile_page_supplier/services_offered_supplier.dart';
 import 'package:dingdone/view/widgets/stars/stars.dart';
@@ -66,7 +67,14 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                                   color: Colors.white,
                                 ),
                               ),
-                              SvgPicture.asset('assets/img/settings.svg'),
+                              InkWell(
+                                  onTap: () {
+                                    Navigator.of(context).push(_createRoute(
+                                      const SettingsScreen(),
+                                    ));
+                                  },
+                                  child: SvgPicture.asset(
+                                      'assets/img/settings.svg')),
                             ],
                           ),
                         ),
