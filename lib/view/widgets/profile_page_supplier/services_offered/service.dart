@@ -42,6 +42,19 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
     }
   }
 
+  /// Same logic you had before — finds the matching translation by _lang
+  String _getTranslation(List<dynamic> translations) {
+    final match = translations.firstWhere(
+          (t) =>
+      t['languages_code'] == lang &&
+          (t['title'] ?? '')
+              .toString()
+              .isNotEmpty,
+      orElse: () => translations.first,
+    );
+    return (match['title'] ?? '').toString();
+  }
+
   Future<void> _getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
     setState(() {});
@@ -55,12 +68,12 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
     setState(() {
       // Check if supplier_services is not null and is a list
       var supplierServices =
-          widget.profileViewModel.getProfileBody["supplier_services"];
+      widget.profileViewModel.getProfileBody["supplier_services"];
       if (supplierServices is List) {
         // Map and cast service IDs to int
         selectedServices = supplierServices
             .map((service) =>
-                service["services_id"]?['id'] as int) // Explicitly cast to int
+        service["services_id"]?['id'] as int) // Explicitly cast to int
             .where((id) => id != null) // Ensure no null values are added
             .toList();
       } else {
@@ -78,123 +91,106 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
   @override
   Widget build(BuildContext context) {
     return Consumer2<JobsViewModel, CategoriesViewModel>(
-      builder: (context, jobsViewModel, categoriesViewModel, _) {
+      builder: (context, jobsVM, categoriesVM, _) {
         if (isLoading) {
-          return Center(
-              child: CircularProgressIndicator()); // Loading indicator
+          return const Center(child: CircularProgressIndicator());
         }
+
+        final parents     = categoriesVM.parentCategoriesList ?? [];
+        final subCats     = categoriesVM.categoriesList       ?? [];
+        final allServices = categoriesVM.servicesList         ?? [];
 
         return Padding(
           padding: EdgeInsets.all(context.appValues.appPadding.p10),
-          child: ListView.builder(
+          child: ListView(
             physics: const NeverScrollableScrollPhysics(),
-            padding: EdgeInsets.zero,
             shrinkWrap: true,
-            itemCount: categoriesViewModel.categoriesList.length,
-            itemBuilder: (BuildContext context, int categoryIndex) {
-              var category = categoriesViewModel.categoriesList[categoryIndex];
-              debugPrint('lang $lang');
-              if (lang == null) {
-                lang = 'en-US';
-              }
-
-              // Get the category's translated name based on the current language
-              var categoryTranslation = (category['translations'].firstWhere(
-                      (translation) => translation['languages_code'] == lang,
-                      orElse: () {
-                return category['translations'].isNotEmpty
-                    ? category['translations']
-                    : {'title': 'Default Title'};
-              }))['title']
-                  .toString();
-              debugPrint('hehehhe $categoryTranslation');
-
-              // Find services that belong to this category
-              var servicesInCategory =
-                  categoriesViewModel.servicesList.where((service) {
-                var categoryTranslation = service['category']['translations']
-                    .firstWhere(
-                        (translation) => translation['languages_code'] == lang,
-                        orElse: () => null);
-
-                return categoryTranslation != null &&
-                    categoryTranslation['categories_id'] == category['id'];
-              }).toList();
-
-              if (servicesInCategory.isEmpty) {
-                return const SizedBox
-                    .shrink(); // No services to show for this category
-              }
-
-              return Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    width: 1,
-                    color: const Color(0xffEDF1F7),
-                  ),
-                ),
-                child: ExpansionTile(
-                  title: Text(
-                    categoryTranslation,
+            children: [
+              for (final parent in parents) ...[
+                // Top-level parent title
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12.0),
+                  child: Text(
+                    _getTranslation(parent['translations'] as List<dynamic>),
                     style: getPrimaryBoldStyle(
-                      fontSize: 15,
+                      fontSize: 18,
                       color: const Color(0xff1F1F39),
                     ),
                   ),
-                  children: [
-                    for (int innerIndex = 0;
-                        innerIndex < servicesInCategory.length;
-                        innerIndex++)
-                      servicesInCategory[innerIndex]["status"] == 'published'
-                          ? CheckboxListTile(
-                              value: selectedServices.contains(
-                                  servicesInCategory[innerIndex]["id"]),
-                              activeColor: context.resources.color.btnColorBlue,
-                              onChanged: (bool? value) async {
-                                if (value != null) {
-                                  setState(() {
-                                    int serviceId =
-                                        servicesInCategory[innerIndex]["id"];
-                                    // int supplierId = widget.profileViewModel.getProfileBody["id"];
+                ),
 
-                                    if (value) {
-                                      selectedServices
-                                          .add(serviceId); // Add to local state
-                                      // widget.servicesViewModel.addService(categoryIndex, innerIndex, serviceId, supplierId);
-                                    } else {
-                                      selectedServices.remove(
-                                          serviceId); // Remove from local state
-                                      // widget.servicesViewModel.removeService(categoryIndex, innerIndex, serviceId, supplierId);
-                                    }
-                                  });
-                                  debugPrint(
-                                      'selected Services $selectedServices');
+                // Sub-categories under this parent
+                for (final cat in subCats.where(
+                      (c) => (c['class']['id'] as int) == (parent['id'] as int),
+                )) ...[
+                  Builder(builder: (_) {
+                    // Compute services in this sub-category:
+                    final servicesInCategory = allServices.where((svc) {
+                      final catTransList =
+                      svc['category']['translations'] as List<dynamic>;
+                      final translation = catTransList.firstWhere(
+                            (tr) => tr['languages_code'] == lang,
+                        orElse: () => catTransList.first,
+                      );
+                      return (translation['categories_id'] as int) ==
+                          (cat['id'] as int) &&
+                          svc['status'] == 'published';
+                    }).toList();
+
+                    if (servicesInCategory.isEmpty) {
+                      return const SizedBox.shrink();
+                    }
+
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 8.0),
+                      // decoration: BoxDecoration(
+                      //   border:
+                      //   Border.all(width: 0, color: const Color(0xffEDF1F7)),
+                      // ),
+                      child: ExpansionTile(
+                        title: Text(
+                          _getTranslation(cat['translations'] as List<dynamic>),
+                          style: getPrimaryRegularStyle(
+                            fontSize: 15,
+                            color: const Color(0xff1F1F39),
+                          ),
+                        ),
+                        children: [
+                          for (final svc in servicesInCategory)
+                            CheckboxListTile(
+                              value: selectedServices.contains(svc['id']),
+                              activeColor:
+                              context.resources.color.btnColorBlue,
+                              onChanged: (bool? checked) {
+                                if (checked == null) return;
+                                setState(() {
+                                  final id = svc['id'] as int;
+                                  if (checked) {
+                                    selectedServices.add(id);
+                                  } else {
+                                    selectedServices.remove(id);
+                                  }
                                   widget.profileViewModel
                                       .setSelectedServices(selectedServices);
-                                }
+                                });
                               },
                               title: Text(
-                                servicesInCategory[innerIndex]["translations"]
-                                    .firstWhere(
-                                      (translation) =>
-                                          translation["languages_code"] == lang,
-                                      orElse: () =>
-                                          servicesInCategory[innerIndex]
-                                              ["translations"][0],
-                                    )["title"]
-                                    .toString(),
+                                _getTranslation(
+                                    svc['translations'] as List<dynamic>),
                                 style: getPrimaryRegularStyle(
                                   fontSize: 15,
                                   color:
-                                      context.resources.color.secondColorBlue,
+                                  context.resources.color.secondColorBlue,
                                 ),
                               ),
-                            )
-                          : Container(),
-                  ],
-                ),
-              );
-            },
+                            ),
+                        ],
+                      ),
+                    );
+                  }),
+                ],
+              ],
+            ],
           ),
         );
       },

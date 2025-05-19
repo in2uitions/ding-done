@@ -63,10 +63,11 @@ class _CustomMultipleSelectionCheckBoxListState
   Widget build(BuildContext context) {
     return Consumer2<ServicesViewModel, CategoriesViewModel>(
       builder: (context, servicesVM, categoriesVM, _) {
-        final parents = categoriesVM.categoriesList ?? [];
-        final allServices = categoriesVM.servicesList ?? [];
+        final topParents   = categoriesVM.parentCategoriesList ?? [];
+        final subParents   = categoriesVM.categoriesList       ?? [];
+        final allServices  = categoriesVM.servicesList         ?? [];
 
-        if (parents.isEmpty) {
+        if (topParents.isEmpty) {
           return const Center(child: CircularProgressIndicator());
         }
 
@@ -75,32 +76,48 @@ class _CustomMultipleSelectionCheckBoxListState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // One ExpansionTile per parent category
-              for (final parentCat in parents) ...[
-                ExpansionTile(
-                  title: Text(
-                    _getTranslation(
-                        parentCat['translations'] as List<dynamic>),
-                    style: getPrimaryRegularStyle(
-                      fontSize: 15,
+              // 1) For each top‐level parent category
+              for (final top in topParents) ...[
+                // Show its title
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Text(
+                    _getTranslation(top['translations'] as List<dynamic>),
+                    style: getPrimaryBoldStyle(
+                      fontSize: 16,
                       color: context.resources.color.btnColorBlue,
                     ),
                   ),
-                  children: [
-                    // filter services whose category.translations[].categories_id == parentCat['id']
-                    for (final svc in allServices.where((svc) {
-                      final catTrans =
-                      svc['category']['translations'] as List<dynamic>;
-                      final t = catTrans.firstWhere(
-                            (t) => t['languages_code'] == _lang,
-                        orElse: () => catTrans.first,
-                      );
-                      return (t['categories_id'] as int) ==
-                          (parentCat['id'] as int);
-                    }))
-                      _buildServiceRow(context, svc),
-                  ],
                 ),
+
+                // 2) Under that, show only the "parents" whose `class` equals top.id
+                for (final parentCat in subParents.where((p) =>
+                (p['class']['id'] as int) == (top['id'] as int))) ...[
+                  ExpansionTile(
+                    title: Text(
+                      _getTranslation(parentCat['translations'] as List<dynamic>),
+                      style: getPrimaryRegularStyle(
+                        fontSize: 15,
+                        color: context.resources.color.secondColorBlue,
+                      ),
+                    ),
+                    children: [
+                      // 3) And for each of those, list exactly the same services
+                      //    you were already filtering by parentCat.id
+                      for (final svc in allServices.where((svc) {
+                        final catTrans =
+                        svc['category']['translations'] as List<dynamic>;
+                        final t = catTrans.firstWhere(
+                              (t) => t['languages_code'] == _lang,
+                          orElse: () => catTrans.first,
+                        );
+                        return (t['categories_id'] as int) ==
+                            (parentCat['id'] as int);
+                      }))
+                        _buildServiceRow(context, svc),
+                    ],
+                  ),
+                ],
               ],
 
               if (widget.errorText != null)
