@@ -296,6 +296,9 @@ class _ServicesScreenState extends State<ServicesScreen>
   TextEditingController searchController = TextEditingController();
   List<dynamic> filteredServices = [];
   String? lang;
+  final ScrollController _tabBarScrollController = ScrollController();
+
+  final List<GlobalKey> _tabKeys = [];
 
   @override
   void initState() {
@@ -306,26 +309,35 @@ class _ServicesScreenState extends State<ServicesScreen>
     final servicesViewModel =
         Provider.of<ServicesViewModel>(context, listen: false);
 
-    // Determine the initial tab index based on the search filter
-    // final maintenanceFilter = servicesViewModel.searchBody['search_services'];
-    //
-    // int initialIndex = 0;
-    // if (maintenanceFilter != null &&
-    //     maintenanceFilter.toString().isNotEmpty &&
-    //     maintenanceFilter.toString() == 'PRO Services') {
-    //   initialIndex = 1;
-    // }
-    //
-    // _tabController =
-    //     TabController(length: 2, vsync: this, initialIndex: initialIndex);
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
     final parentCats = Provider.of<CategoriesViewModel>(context, listen: false)
         .parentCategoriesList;
+    _tabKeys.clear();
+    _tabKeys.addAll(List.generate(parentCats.length, (_) => GlobalKey()));
+
     _tabController = TabController(
       length: parentCats.length,
       vsync: this,
-      initialIndex: widget.initialTabIndex, // cast num → int
+      initialIndex: widget.initialTabIndex,
     );
+
+// Scroll after first build
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _scrollToTab(widget.initialTabIndex);
+      });
+    });
+// Optional: scroll on manual tab change
+    _tabController.addListener(() {
+      if (_tabController.indexIsChanging) {
+        _scrollToTab(_tabController.index);
+      }
+    });
+
+    // _tabController = TabController(
+    //   length: parentCats.length,
+    //   vsync: this,
+    //   initialIndex: widget.initialTabIndex, // cast num → int
+    // );
     setState(() {});
     // });
     var categoriesViewModel =
@@ -333,6 +345,7 @@ class _ServicesScreenState extends State<ServicesScreen>
     searchController.addListener(_filterServices);
     // Initially display all services
     filteredServices = categoriesViewModel.servicesList2;
+
   }
 
   Future<void> getLanguage() async {
@@ -396,6 +409,38 @@ class _ServicesScreenState extends State<ServicesScreen>
   void dispose() {
     _tabController.dispose();
     super.dispose();
+  }
+  void _scrollToTab(int index) {
+    if (_tabKeys.length <= index) return;
+
+    final keyContext = _tabKeys[index].currentContext;
+    if (keyContext == null) return;
+
+    final RenderBox renderBox = keyContext.findRenderObject() as RenderBox;
+    final position = renderBox.localToGlobal(Offset.zero, ancestor: context.findRenderObject());
+    final size = renderBox.size;
+
+    final screenWidth = MediaQuery.of(context).size.width;
+
+    final double calculatedOffset =
+        _tabBarScrollController.offset +
+            position.dx +
+            (size.width / 2)
+            -
+            (screenWidth / 2)
+    ;
+
+    final double maxScroll = _tabBarScrollController.position.maxScrollExtent;
+    final double minScroll = _tabBarScrollController.position.minScrollExtent;
+
+    // Clamp the target scroll to avoid going beyond the scrollable range
+    final double targetScrollOffset = calculatedOffset.clamp(minScroll, maxScroll);
+
+    _tabBarScrollController.animateTo(
+      targetScrollOffset,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
   }
 
   @override
@@ -486,32 +531,43 @@ class _ServicesScreenState extends State<ServicesScreen>
                                   color: const Color(0xffEAEAFF),
                                   borderRadius: BorderRadius.circular(10),
                                 ),
-                                child: TabBar(
-                                  controller: _tabController,
-                                  tabAlignment: TabAlignment.center,
-                                  isScrollable: true,
-                                  indicatorSize: TabBarIndicatorSize.tab,
-                                  // Add padding to the indicator for a little breathing room.
-                                  indicatorPadding: const EdgeInsets.symmetric(
-                                    horizontal: 0,
-                                    vertical: 1,
-                                  ),
-                                  indicator: BoxDecoration(
-                                    color: const Color(0xff4100E3),
-                                    borderRadius: BorderRadius.circular(10),
-                                  ),
+                                child: SingleChildScrollView(
+                                  controller: _tabBarScrollController,
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: [
+                                      TabBar(
+                                        controller: _tabController,
+                                        tabAlignment: TabAlignment.center,
+                                        isScrollable: true,
+                                        indicatorSize: TabBarIndicatorSize.tab,                                    // Add padding to the indicator for a little breathing room.
+                                        indicatorPadding: const EdgeInsets.symmetric(
+                                          horizontal: 0,
+                                          vertical: 1,
+                                        ),
+                                        indicator: BoxDecoration(
+                                          color: const Color(0xff4100E3),
+                                          borderRadius: BorderRadius.circular(10),
+                                        ),
 
-                                  labelColor: Colors.white,
-                                  dividerColor: Colors.transparent,
-                                  unselectedLabelColor: const Color(0xff4100E3),
-                                  tabs: parentCats.map<Widget>((cat) {
-                                    final tr = (cat['translations'] as List)
-                                        .firstWhere(
-                                      (t) => t['languages_code'] == lang,
-                                      orElse: () => cat['translations'][0],
-                                    );
-                                    return Tab(text: tr['title']);
-                                  }).toList(),
+                                        labelColor: Colors.white,
+                                        dividerColor: Colors.transparent,
+                                        unselectedLabelColor: const Color(0xff4100E3),
+                                        tabs:  List.generate(parentCats.length, (index) {
+                                          final cat = parentCats[index];
+                                          final tr = (cat['translations'] as List).firstWhere(
+                                                (t) => t['languages_code'] == lang,
+                                            orElse: () => cat['translations'][0],
+                                          );
+                                          return Container(
+                                            key: _tabKeys[index],
+                                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                                            child: Tab(text: tr['title']),
+                                          );
+                                        }).toList(),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             // The TabBarView for the two categories grids.
