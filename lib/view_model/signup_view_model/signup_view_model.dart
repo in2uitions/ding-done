@@ -27,6 +27,7 @@ class SignUpViewModel with ChangeNotifier {
   bool _isDataWritten = false;
 
   String _userRole = '';
+  String _errorMessage = '';
 
   SignUpViewModel() {
     roles();
@@ -41,6 +42,7 @@ class SignUpViewModel with ChangeNotifier {
       UserModel? response =
           await _signUpRepository.postUserCredentials(signUpBody);
       _apiRegisterResponse = ApiResponse<UserModel>.completed(response);
+      debugPrint('signing up $_apiRegisterResponse');
       // ResultConfirmEmail? res = await _signUpRepository.postEmailConfimation({
       //   'email': signUpBody['email'],
       // });
@@ -53,6 +55,7 @@ class SignUpViewModel with ChangeNotifier {
       return true;
     } catch (error) {
       _apiRegisterResponse = ApiResponse<UserModel>.error(error.toString());
+      _errorMessage=error.toString();
       return false;
     }
     // debugPrint('sign up body ${signUpBody}');
@@ -645,8 +648,10 @@ class SignUpViewModel with ChangeNotifier {
 
   // get isEmailSent => _apiConfirmResponse.status == Status.COMPLETED;
   get getRoleApiResponse => _apiRoleResponse;
+  get getapiRegisterResponse => _apiRegisterResponse;
 
   get getSignUpBody => signUpBody;
 
   get isDataWritten => _isDataWritten;
+  get errorMessage => _errorMessage;
 }

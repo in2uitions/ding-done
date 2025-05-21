@@ -70,11 +70,16 @@ class SignUpRepository {
     try {
       dynamic response =
           await _apiUserRegister.postResponse(data: body, sendToken: false);
+      if(response["data"]!=null){
+        final jsonData = UserModel.fromJson(response['data']);
+        debugPrint('data in post user credentials ${jsonData}');
+        return jsonData;
 
-      final jsonData = UserModel.fromJson(response['data']);
-      debugPrint('data in post user credentials ${jsonData}');
+      }else{
+        return response["errors"];
+      }
 
-      return jsonData;
+
     } catch (error) {
       debugPrint('error in post user credentials ${error}');
       rethrow;

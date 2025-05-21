@@ -213,17 +213,21 @@ class _UserAgreementState extends State<UserAgreement> {
                             if (await signupViewModel.validate(
                                     index: widget.index) &&
                                 check!) {
-                              await signupViewModel.signup();
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    _buildPopupDialog(
-                                        context, 'Sign Up Successfull'),
-                              );
-                              new Future.delayed(
-                                  const Duration(seconds: 0),
-                                  () => Navigator.of(context)
-                                      .push(_createRoute(LoginScreen())));
+                              if(await signupViewModel.signup()==true){
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      _buildPopupDialog(
+                                          context, 'Sign Up Successfull'),
+                                );
+                              }else{
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      _buildPopupDialog(
+                                          context, 'Sign Up Failed \n ${signupViewModel.errorMessage}'),
+                                );
+                              }
                             } else {
                               showDialog(
                                 context: context,
@@ -313,6 +317,22 @@ Widget _buildPopupDialog(BuildContext context, String message) {
         //   padding: EdgeInsets.only(top: context.appValues.appPadding.p20),
         //   child: SvgPicture.asset('assets/img/cleaning.svg'),
         // ),
+        Center(
+          child:InkWell(onTap: (){
+            Navigator.of(context)
+                .push(_createRoute(LoginScreen()));
+          }, child: Text(
+            'OK',
+            textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            style: getPrimaryRegularStyle(
+              fontSize: 20,
+              color: const Color(0xff180D38),
+            ),
+          ),
+          ),
+        ),
       ],
     ),
   );
