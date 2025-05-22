@@ -321,7 +321,7 @@ class ProfileViewModel extends DisposableViewModel {
       // Add the new address to the existing list
 
       dynamic response = await _homeRepository.patchPassword(
-          id: userId, body: {"password": profileBody["new_password"]});
+          id: userId, body: {"status":"active","password": profileBody["new_password"]});
       debugPrint('response $response');
       // _apiUserResponse = ApiResponse<UserModel>.completed(response);
 
