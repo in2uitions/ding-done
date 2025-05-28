@@ -829,39 +829,39 @@ class _HomePageState extends State<HomePage> {
                                                       .btnColorBlue,
                                                 ),
                                               ),
-                                              InkWell(
-                                                onTap: () {
-                                                  Navigator.of(context)
-                                                      .push(_createRoute(
-                                                    BottomBar(
-                                                      userRole: Constants
-                                                          .customerRoleId,
-                                                      currentTab: 1,
-                                                    ),
-                                                  ));
-                                                },
-                                                child: Row(
-                                                  children: [
-                                                    Text(
-                                                      translate(
-                                                          'home_screen.seeAll'),
-                                                      style:
-                                                          getPrimarySemiBoldStyle(
-                                                        fontSize: 12,
-                                                        color: const Color(
-                                                            0xff4100E3),
-                                                      ),
-                                                    ),
-                                                    const Gap(5),
-                                                    const Icon(
-                                                      Icons
-                                                          .arrow_forward_ios_sharp,
-                                                      color: Color(0xff4100E3),
-                                                      size: 12,
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                              // InkWell(
+                                              //   onTap: () {
+                                              //     Navigator.of(context)
+                                              //         .push(_createRoute(
+                                              //       BottomBar(
+                                              //         userRole: Constants
+                                              //             .customerRoleId,
+                                              //         currentTab: 1,
+                                              //       ),
+                                              //     ));
+                                              //   },
+                                              //   child: Row(
+                                              //     children: [
+                                              //       Text(
+                                              //         translate(
+                                              //             'home_screen.seeAll'),
+                                              //         style:
+                                              //             getPrimarySemiBoldStyle(
+                                              //           fontSize: 12,
+                                              //           color: const Color(
+                                              //               0xff4100E3),
+                                              //         ),
+                                              //       ),
+                                              //       const Gap(5),
+                                              //       const Icon(
+                                              //         Icons
+                                              //             .arrow_forward_ios_sharp,
+                                              //         color: Color(0xff4100E3),
+                                              //         size: 12,
+                                              //       ),
+                                              //     ],
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                         ),

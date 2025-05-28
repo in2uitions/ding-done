@@ -224,6 +224,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.symmetric(
@@ -247,7 +249,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(
-                                              context.appValues.appPadding.p10,
+                                              context.appValues.appPadding.p0,
                                               0,
                                               context.appValues.appPadding.p0,
                                               0,

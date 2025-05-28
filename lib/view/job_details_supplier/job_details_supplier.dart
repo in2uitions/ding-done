@@ -1157,7 +1157,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) =>
-                              simpleAlert(context, 'Success', 'Job finished'));
+                              simpleAlert(context, 'Success', 'Job Done'));
                     } else {
                       showDialog(
                           context: context,
@@ -1305,7 +1305,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) =>
-                              simpleAlert(context, 'Success', 'Job finished'));
+                              simpleAlert(context, 'Success', 'Job Done'));
                     } else {
                       showDialog(
                           context: context,
@@ -1323,7 +1323,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     //         context: context,
                     //         builder: (BuildContext context) =>
                     //             simpleAlert(
-                    //                 context,'Success' ,'Job finished')));
+                    //                 context,'Success' ,'Job Done')));
                   },
                   style: ElevatedButton.styleFrom(
                     elevation: 0.0,
