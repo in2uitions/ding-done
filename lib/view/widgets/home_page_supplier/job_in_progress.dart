@@ -66,16 +66,8 @@ class _JobInProgressState extends State<JobInProgress> {
               child: Container(
                 decoration: BoxDecoration(
                   color: context.resources.color.colorWhite,
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xff000000).withOpacity(0.1),
-                      spreadRadius: 1,
-                      blurRadius: 5,
-                      offset: const Offset(0, 3),
-                    ),
-                  ],
                   borderRadius: const BorderRadius.all(
-                    Radius.circular(10),
+                    Radius.circular(24),
                   ),
                 ),
                 child: Column(
@@ -87,12 +79,24 @@ class _JobInProgressState extends State<JobInProgress> {
                             EdgeInsets.all(context.appValues.appPadding.p20),
                         child: Row(
                           children: [
-                            SvgPicture.network(
-                              '${context.resources.image.networkImagePath}/${jobsViewModel.supplierInProgressJobs[index].service["category"]["image"]}.svg',
-                              // 'assets/img/plumbing-blue.svg',
-                              width:
-                                  32, // Set the desired width of the SVG image
-                              height: 31,
+                            // SvgPicture.network(
+                            //   '${context.resources.image.networkImagePath}/${jobsViewModel.supplierInProgressJobs[index].service["category"]["image"]}.svg',
+                            //   // 'assets/img/plumbing-blue.svg',
+                            //   width: 32,
+                            //   height: 31,
+                            // ),
+
+                            Container(
+                              width: 76,
+                              height: 76,
+                              decoration: BoxDecoration(
+                                color: const Color(0xffEAEAFF),
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                              child: SvgPicture.network(
+                                '${context.resources.image.networkImagePath}/${jobsViewModel.supplierInProgressJobs[index].service["category"]["image"]}.svg',
+                                fit: BoxFit.cover,
+                              ),
                             ),
                             // SvgPicture.asset('assets/img/plumbing-blue.svg'),
                             SizedBox(
@@ -102,28 +106,28 @@ class _JobInProgressState extends State<JobInProgress> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: context.appValues.appSizePercent.w65,
+                                  width: context.appValues.appSizePercent.w55,
                                   child: Text(
                                     categories != null
                                         ? '${categories["title"]}'
                                         : '',
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: getPrimaryBoldStyle(
-                                      fontSize: 16,
-                                      color: const Color(0xff9E9AB7),
+                                    style: getPrimaryMediumStyle(
+                                      fontSize: 14,
+                                      color: const Color(0xff180B3C),
                                     ),
                                   ),
                                 ),
                                 SizedBox(
-                                  width: context.appValues.appSizePercent.w65,
+                                  width: context.appValues.appSizePercent.w55,
                                   child: Text(
                                     '${services != null ? services["title"] : ''}',
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
-                                    style: getPrimaryRegularStyle(
-                                      fontSize: 18,
-                                      color: const Color(0xff190C39),
+                                    style: getPrimarySemiBoldStyle(
+                                      fontSize: 10,
+                                      color: const Color(0xff6E6BE8),
                                     ),
                                   ),
                                 ),
@@ -132,103 +136,81 @@ class _JobInProgressState extends State<JobInProgress> {
                           ],
                         ),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Working day',
-                                style: getPrimaryBoldStyle(
-                                  fontSize: 12,
-                                  color: const Color(0xff1F1F39),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                      'assets/img/calendarhpsupp.svg'),
-                                  const Gap(7),
-                                  Text(
-                                    DateFormat('d MMMM yyyy').format(
-                                        DateTime.parse(jobsViewModel
-                                            .supplierInProgressJobs[index]
-                                            .start_date
-                                            .toString())),
-
-                                    // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
-                                    style: getPrimaryRegularStyle(
-                                      fontSize: 14,
-                                      color: const Color(0xff38385E),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Start time',
-                                style: getPrimaryBoldStyle(
-                                  fontSize: 12,
-                                  color: const Color(0xff1F1F39),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                      'assets/img/clockhpsupp.svg'),
-                                  const Gap(7),
-                                  Text(
-                                    DateFormat('HH:mm').format(DateTime.parse(
-                                        jobsViewModel
-                                            .supplierInProgressJobs[index]
-                                            .start_date
-                                            .toString())),
-
-                                    // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
-                                    style: getPrimaryRegularStyle(
-                                      fontSize: 14,
-                                      color: const Color(0xff38385E),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(
                           context.appValues.appPadding.p20,
+                          context.appValues.appPadding.p0,
                           context.appValues.appPadding.p20,
-                          context.appValues.appPadding.p20,
-                          context.appValues.appPadding.p10,
+                          context.appValues.appPadding.p15,
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              translate('home_screen.totalPrice'),
-                              style: getPrimaryBoldStyle(
-                                fontSize: 12,
-                                color: const Color(0xff38385E),
-                              ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Working day',
+                                  style: getPrimaryBoldStyle(
+                                    fontSize: 12,
+                                    color: const Color(0xff180B3C),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/img/calendarhpsupp.svg'),
+                                    const Gap(7),
+                                    Text(
+                                      DateFormat('d MMMM yyyy').format(
+                                          DateTime.parse(jobsViewModel
+                                              .supplierInProgressJobs[index]
+                                              .start_date
+                                              .toString())),
+
+                                      // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 14,
+                                        color: const Color(0xff180B3C),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
-                            Text(
-                              '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] : ''}'
-                              ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["currency"] : ''}'
-                              ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_type"] : ''}',
-                              style: getPrimaryRegularStyle(
-                                fontSize: 14,
-                                color: const Color(0xff78789D),
-                              ),
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Start time',
+                                  style: getPrimaryBoldStyle(
+                                    fontSize: 12,
+                                    color: const Color(0xff180B3C),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(
+                                        'assets/img/clockhpsupp.svg'),
+                                    const Gap(7),
+                                    Text(
+                                      DateFormat('HH:mm').format(DateTime.parse(
+                                          jobsViewModel
+                                              .supplierInProgressJobs[index]
+                                              .start_date
+                                              .toString())),
+
+                                      // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 14,
+                                        color: const Color(0xff180B3C),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -241,44 +223,38 @@ class _JobInProgressState extends State<JobInProgress> {
                           context.appValues.appPadding.p20,
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            // Container(
-                            //   width: context.appValues.appSizePercent.w38,
-                            //   // width: 155,
-                            //   height: context.appValues.appSizePercent.h065,
-                            //   // height: 51,
-                            //   decoration: BoxDecoration(
-                            //     border: Border.all(
-                            //       color: const Color(0xff58537A),
-                            //       width: 2,
-                            //     ),
-                            //     borderRadius: BorderRadius.circular(12),
-                            //   ),
-                            //   child: ElevatedButton(
-                            //     onPressed: () {
-                            //       // jobsViewModel.cancelJob(jobsViewModel.supplierInProgressJobs[index].id);
-                            //     },
-                            //     style: ElevatedButton.styleFrom(
-                            //       elevation: 0,
-                            //       shape: RoundedRectangleBorder(
-                            //         borderRadius: BorderRadius.circular(12.0),
-                            //         side: const BorderSide(
-                            //           color: Colors.transparent,
-                            //         ),
-                            //       ),
-                            //       backgroundColor:
-                            //           context.resources.color.colorWhite,
-                            //     ),
-                            //     child: Text(
-                            //       translate('button.stopCancel'),
-                            //       style: getPrimaryRegularStyle(
-                            //         fontSize: 16,
-                            //         color: const Color(0xff9E9AB7),
-                            //       ),
-                            //     ),
-                            //   ),
-                            // ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                context.appValues.appPadding.p0,
+                                context.appValues.appPadding.p0,
+                                context.appValues.appPadding.p0,
+                                context.appValues.appPadding.p0,
+                              ),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    translate('home_screen.totalPrice'),
+                                    style: getPrimarySemiBoldStyle(
+                                      fontSize: 12,
+                                      color: const Color(0xff180B3C),
+                                    ),
+                                  ),
+                                  Text(
+                                    '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] : ''}'
+                                    ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["currency"] : ''}'
+                                    ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_type"] : ''}',
+                                    style: getPrimarySemiBoldStyle(
+                                      fontSize: 12,
+                                      color: const Color(0xff4100E3),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
                             Container(
                               width: context.appValues.appSizePercent.w38,
                               // width: 155,
@@ -299,16 +275,13 @@ class _JobInProgressState extends State<JobInProgress> {
                                   elevation: 0,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0),
-                                    side: const BorderSide(
-                                      color: Color(0xff4100E3),
-                                    ),
                                   ),
                                   backgroundColor: const Color(0xff4100E3),
                                 ),
                                 child: Text(
                                   translate('button.complete'),
-                                  style: getPrimaryRegularStyle(
-                                    fontSize: 14,
+                                  style: getPrimarySemiBoldStyle(
+                                    fontSize: 12,
                                     color: context.resources.color.colorWhite,
                                   ),
                                 ),

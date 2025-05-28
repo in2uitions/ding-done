@@ -40,50 +40,20 @@ class _JobRequestsState extends State<JobRequests> {
           width: 343,
           // height: 87,
           decoration: BoxDecoration(
-            color: context.resources.color.colorWhite,
+            color: const Color(0xffEAEAFF).withOpacity(0.4),
             borderRadius: BorderRadius.circular(12),
-            boxShadow: [
-              BoxShadow(
-                color: const Color(0xff000000).withOpacity(0.1),
-                spreadRadius: 1,
-                blurRadius: 5,
-                offset: const Offset(0, 3), // changes position of shadow
-              ),
-            ],
           ),
           child: Padding(
             padding: EdgeInsets.fromLTRB(
-              context.appValues.appPadding.p0,
-              context.appValues.appPadding.p0,
-              context.appValues.appPadding.p0,
-              context.appValues.appPadding.p0,
+              context.appValues.appPadding.p20,
+              context.appValues.appPadding.p15,
+              context.appValues.appPadding.p20,
+              context.appValues.appPadding.p15,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  // width: context.appValues.appSizePercent.w10,
-                  width: 159,
-                  // width: 109,
-                  // height: context.appValues.appSizePercent.h10,
-                  height: 185,
-                  // height: 118,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage(
-                        widget.image,
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(12),
-                        topLeft: Radius.circular(12),
-                        bottomRight: Radius.circular(50)),
-                    // color: Colors.red,
-                  ),
-                ),
-                const Gap(10),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,109 +61,137 @@ class _JobRequestsState extends State<JobRequests> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Container(
+                          width: 76,
+                          height: 76,
+                          decoration: BoxDecoration(
+                            color: const Color(0xffEAEAFF),
+                            image: DecorationImage(
+                              image: NetworkImage(
+                                widget.image,
+                              ),
+                              fit: BoxFit.cover,
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                        ),
+                        const Gap(10),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(
-                              width: context.appValues.appSizePercent.w40,
+                              width: 200,
                               child: Text(
                                 widget.title,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                style: getPrimaryBoldStyle(
-                                  fontSize: 18,
+                                style: getPrimaryMediumStyle(
+                                  fontSize: 14,
                                   color: const Color(0xff180C38),
                                 ),
                               ),
                             ),
-                            SizedBox(height: context.appValues.appSize.s2),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 200,
+                                  child: Text(
+                                    widget.severity_level != null
+                                        ? widget.severity_level
+                                                    .toString()
+                                                    .toLowerCase() ==
+                                                'major'
+                                            ? 'Urgent'
+                                            : 'Normal'
+                                        : '',
+                                    style: getPrimarySemiBoldStyle(
+                                      fontSize: 10,
+                                      color: const Color(0xff6E6BE8),
+                                      // color: widget.severity_level != null
+                                      //     ? widget.severity_level
+                                      //                 .toString()
+                                      //                 .toLowerCase() ==
+                                      //             'major'
+                                      //         ? Colors.red
+                                      //         : Colors.green
+                                      //     : Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ],
                         ),
+                        const Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            size: 12,
+                            color: Color(0xff6E6BE8),
+                          ),
+                        ),
                       ],
+                    ),
+                    const Gap(20),
+                    SizedBox(
+                      width: 303,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/img/calendarjobs.svg',
+                              ),
+                              const Gap(5),
+                              Text(
+                                DateFormat('d MMMM yyyy').format(
+                                    DateTime.parse(widget.date.toString())),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 12,
+                                  color: const Color(0xff180B3C),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(
+                                'assets/img/timejobs.svg',
+                              ),
+                              const Gap(5),
+                              Text(
+                                DateFormat('HH:mm').format(
+                                    DateTime.parse(widget.date.toString())),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 12,
+                                  color: const Color(0xff180B3C),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     const Gap(10),
-                    Column(
-                      children: [
-                        SizedBox(
-                          width: context.appValues.appSizePercent.w40,
-                          child: Text(
-                            'Working Day',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: getPrimaryBoldStyle(
-                              fontSize: 14,
-                              color: const Color(0xff1F1F39),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: context.appValues.appSizePercent.w40,
-                          child: Text(
-                            DateFormat('d MMMM yyyy, HH:mm')
-                                .format(DateTime.parse(widget.date.toString())),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: getPrimaryRegularStyle(
-                              fontSize: 12,
-                              color: const Color(0xff38385E),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const Gap(10),
-                    Column(
-                      children: [
-                        SizedBox(
-                          width: context.appValues.appSizePercent.w40,
-                          child: Text(
-                            'Location',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: getPrimaryBoldStyle(
-                              fontSize: 14,
-                              color: const Color(0xff1F1F39),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: context.appValues.appSizePercent.w40,
-                          child: Text(
-                            widget.location,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: getPrimaryRegularStyle(
-                              fontSize: 12,
-                              color: const Color(0xff38385E),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
                     Row(
                       children: [
-                        SizedBox(
-                          width: context.appValues.appSizePercent.w40,
-                          child: Text(
-                            widget.severity_level != null
-                                ? widget.severity_level
-                                            .toString()
-                                            .toLowerCase() ==
-                                        'major'
-                                    ? 'Urgent'
-                                    : 'Normal'
-                                : '',
-                            style: getPrimaryRegularStyle(
-                                fontSize: 15,
-                                color: widget.severity_level != null
-                                    ? widget.severity_level
-                                                .toString()
-                                                .toLowerCase() ==
-                                            'major'
-                                        ? Colors.red
-                                        : Colors.green
-                                    : Colors.white),
+                        SvgPicture.asset(
+                          'assets/img/locationjobs.svg',
+                        ),
+                        const Gap(5),
+                        Text(
+                          widget.location,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: getPrimaryRegularStyle(
+                            fontSize: 12,
+                            color: const Color(0xff180B3C),
                           ),
                         ),
                       ],
