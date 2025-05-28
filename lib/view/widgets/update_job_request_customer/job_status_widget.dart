@@ -38,17 +38,17 @@ class _JobStatusWidgetState extends State<JobStatusWidget> {
                 ),
                 child: Text(
                   translate('updateJob.jobStatus'),
-                  style: getPrimaryBoldStyle(
-                    fontSize: 20,
-                    color: const Color(0xff38385E),
+                  style: getPrimaryRegularStyle(
+                    fontSize: 14,
+                    color: const Color(0xff180B3C),
                   ),
                 ),
               ),
               Text(
                 '${widget.status}',
                 style: getPrimaryRegularStyle(
-                  fontSize: 18,
-                  color: const Color(0xff78789D),
+                  fontSize: 14,
+                  color: const Color(0xff71727A),
                 ),
               ),
             ],

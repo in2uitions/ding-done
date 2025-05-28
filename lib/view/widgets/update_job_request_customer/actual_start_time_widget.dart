@@ -62,7 +62,7 @@ class _ActualStartTimeWidgetState extends State<ActualStartTimeWidget> {
                     child: Text(
                       translate('updateJob.actualStartTime'),
                       style: getPrimaryRegularStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: const Color(0xff180B3C),
                       ),
                     ),
@@ -72,7 +72,7 @@ class _ActualStartTimeWidgetState extends State<ActualStartTimeWidget> {
                     child: Text(
                       _formatDate(widget.actual_start_date),
                       style: getPrimaryRegularStyle(
-                        fontSize: 16,
+                        fontSize: 14,
                         color: const Color(0xff71727A),
                       ),
                     ),

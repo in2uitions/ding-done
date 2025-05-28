@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:gap/gap.dart';
 
 class CustomIncrementField extends StatefulWidget {
   const CustomIncrementField({
@@ -92,31 +93,29 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
     return Column(
       children: [
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Stack(
-              children: [
-                Positioned(
-                  left: 9,
-                  bottom: 9.5,
-                  child: Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(50),
-                      color: Color(0xffF4F3FD),
-                    ),
-                  ),
+            TextButton(
+              onPressed: _decrement,
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xffEAEAFF).withOpacity(0.35),
+                minimumSize: const Size(32, 32),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                shape: const CircleBorder(),
+                padding: EdgeInsets.zero,
+              ),
+              child: Text(
+                '–',
+                style: getPrimaryRegularStyle(
+                  color: const Color(0xff6E6BE8).withOpacity(0.35),
+                  fontSize: 20,
                 ),
-                IconButton(
-                  icon: const Icon(Icons.remove),
-                  onPressed: _decrement,
-                  color: const Color(0xffB4B4B4),
-                ),
-              ],
+              ),
             ),
-            Expanded(
+            const Gap(12),
+            SizedBox(
+              width: 32,
               child: TextFormField(
-                cursorColor: const Color(0xffB4B4B4),
                 controller: _customController,
                 textAlign: TextAlign.center,
                 keyboardType: widget.keyboardType,
@@ -124,59 +123,32 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
                   color: const Color(0xff78789D),
                   fontSize: 15,
                 ),
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   isDense: true,
-                  errorText: widget.errorText,
-                  border: InputBorder.none, // Removed the border here
-                  hintText: widget.hintText,
-                  hintStyle: getPrimaryRegularStyle(
-                    fontSize: 15,
-                    color: const Color(0xffB4B4B4),
-                  ),
-                  helperText: widget.helperText,
+                  border: InputBorder.none,
+                  contentPadding: EdgeInsets.zero,
                 ),
-                onChanged: (value) {
-                  int? newValue = int.tryParse(value);
-                  if (newValue != null && newValue >= 0 && newValue <= 99) {
-                    setState(() {
-                      currentValue = newValue;
-                    });
-                    widget.viewModel(index: widget.index, value: value);
-                    if (widget.onChanged != null) {
-                      widget.onChanged!(value);
-                    }
-                  } else {
-                    _customController.text = currentValue.toString();
-                  }
-                },
               ),
             ),
-            Stack(
-              children: [Positioned(
-                left: 9,
-                bottom: 9.5,
-                child: Container(
-                  width: 30,
-                  height: 30,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50),
-                    color: Color(0xffF4F3FD),
-                  ),
+            const SizedBox(width: 12),
+            TextButton(
+              onPressed: _increment,
+              style: TextButton.styleFrom(
+                backgroundColor: const Color(0xffEAEAFF),
+                minimumSize: const Size(32, 32),
+                tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                shape: const CircleBorder(),
+                padding: EdgeInsets.zero,
+              ),
+              child: Text(
+                '+',
+                style: getPrimaryRegularStyle(
+                  color: const Color(0xff4100E3),
+                  fontSize: 20,
                 ),
               ),
-                IconButton(
-                  icon: const Icon(Icons.add),
-                  onPressed: _increment,
-                  color: const Color(0xffB4B4B4),
-                ),
-              ],
             ),
           ],
-        ),
-        const Divider(
-          color: Color(0xffEAEAFF),
-          thickness: 2,
-          height: 5,
         ),
       ],
     );

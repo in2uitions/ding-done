@@ -45,9 +45,9 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                 ),
                 child: Text(
                   translate('jobDetails.review'),
-                  style: getPrimaryBoldStyle(
-                    fontSize: 18,
-                    color: const Color(0xff38385E),
+                  style: getPrimaryRegularStyle(
+                    fontSize: 14,
+                    color: const Color(0xff180B3C),
                   ),
                 ),
               ),

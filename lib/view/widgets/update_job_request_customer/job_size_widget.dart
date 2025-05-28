@@ -51,9 +51,9 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: EdgeInsets.only(
@@ -64,7 +64,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                   child: Text(
                     translate('updateJob.jobSize'),
                     style: getPrimaryRegularStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: const Color(0xff180B3C),
                     ),
                   ),
@@ -75,7 +75,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                         ? Text(
                             '${widget.completed_units}',
                             style: getPrimaryRegularStyle(
-                              fontSize: 20,
+                              fontSize: 14,
                               color: const Color(0xff71727A),
                             ),
                           )
@@ -94,7 +94,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     : Text(
                         '${widget.completed_units}',
                         style: getPrimaryRegularStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           color: const Color(0xff71727A),
                         ),
                       ),
@@ -115,9 +115,9 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
               context.appValues.appPadding.p0,
               context.appValues.appPadding.p10,
             ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Padding(
                   padding: EdgeInsets.only(

@@ -27,6 +27,8 @@ class AppPadding {
   final double p3 = 3.0;
   final double p4 = 4.0;
   final double p5 = 5.0;
+  final double p6 = 6.0;
+  final double p7 = 7.0;
   final double p8 = 8.0;
   final double p10 = 10.0;
   final double p12 = 12.0;

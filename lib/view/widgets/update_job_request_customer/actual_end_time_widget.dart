@@ -39,7 +39,7 @@ class _ActualEndTimeWidgetState extends State<ActualEndTimeWidget> {
                 Text(
                   translate('updateJob.finishTime'),
                   style: getPrimaryRegularStyle(
-                    fontSize: 16,
+                    fontSize: 14,
                     color: const Color(0xff180B3C),
                   ),
                 ),
@@ -53,7 +53,7 @@ class _ActualEndTimeWidgetState extends State<ActualEndTimeWidget> {
                                 .toLocal())
                         : '',
                     style: getPrimaryRegularStyle(
-                      fontSize: 16,
+                      fontSize: 14,
                       color: const Color(0xff71727A),
                     ),
                   ),

@@ -46,9 +46,9 @@ class _RatingStarsWidgetState extends State<RatingStarsWidget> {
                 ),
                 child: Text(
                   translate('jobDetails.rating'),
-                  style: getPrimaryBoldStyle(
-                    fontSize: 18,
-                    color: const Color(0xff38385E),
+                  style: getPrimaryRegularStyle(
+                    fontSize: 14,
+                    color: const Color(0xff180B3C),
                   ),
                 ),
               ),
