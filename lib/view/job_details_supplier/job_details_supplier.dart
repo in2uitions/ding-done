@@ -66,7 +66,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
     if (matchingRate != null) {
       // Check the job type and return the appropriate rate
       if (widget.data.job_type == 'inspection') {
-        return matchingRate['inspection_rate'] ?? 'No rate available';
+        return matchingRate['inspection_rate'].toString() ?? 'No rate available';
       } else {
         return '${matchingRate["country"]["currency"]}';
       }
