@@ -5,9 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
+
+import '../../view_model/profile_view_model/profile_view_model.dart';
+import '../widgets/inbox_page/notification_widget.dart';
 
 class NotificationsScreen extends StatefulWidget {
-  const NotificationsScreen({super.key});
+  var profileViewModel;
+
+  NotificationsScreen({super.key,required this.profileViewModel});
 
   @override
   State<NotificationsScreen> createState() => _NotificationsScreenState();
@@ -16,6 +22,7 @@ class NotificationsScreen extends StatefulWidget {
 class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
+    debugPrint('wdehfw ${widget.profileViewModel.notifications}');
     return Scaffold(
       body: Stack(
         children: [
@@ -73,63 +80,105 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               ),
             ),
           ),
+
           DraggableScrollableSheet(
             initialChildSize: 0.85,
             minChildSize: 0.85,
             maxChildSize: 1,
             builder: (BuildContext context, ScrollController scrollController) {
-              return Container(
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(30),
-                    topRight: Radius.circular(30),
-                  ),
-                  color: Color(0xffFEFEFE),
-                ),
-                child: ListView.builder(
-                  controller: scrollController,
-                  itemCount: 1,
-                  padding: EdgeInsets.zero,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Column(
-                      children: [
-                        const Gap(30),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            context.appValues.appPadding.p20,
-                            context.appValues.appPadding.p0,
-                            context.appValues.appPadding.p20,
-                            context.appValues.appPadding.p10,
+              return FutureBuilder(
+                  future: Provider.of<ProfileViewModel>(
+                      context, listen: false)
+                      .getNotifications(),
+                  builder: (context, AsyncSnapshot data) {
+                    if (data.hasData) {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
                           ),
-                          child: Column(
-                            children: [
-                              const Gap(150),
-                              SvgPicture.asset('assets/img/notif.svg'),
-                              const Gap(20),
-                              Text(
-                                'No Notifications',
-                                style: getPrimarySemiBoldStyle(
-                                  color: const Color(0xff180B3C),
-                                  fontSize: 24,
-                                ),
-                              ),
-                              const Gap(5),
-                              Text(
-                                "We’ll notify you when there’s\nsomething new",
-                                textAlign: TextAlign.center,
-                                style: getPrimaryRegularStyle(
-                                  color: const Color(0xff71727A),
-                                  fontSize: 14,
-                                ),
-                              ),
-                            ],
+                          color: Color(0xffFEFEFE),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 15.0),
+                          child: ListView.builder(
+                            controller: scrollController,
+                            itemCount: widget.profileViewModel.notifications.length,
+                            padding: EdgeInsets.zero,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Column(
+                                children: [
+                                  NotificationWidget(
+                                    title: '${data.data[index]['subject']}',
+                                    message: '${data.data[index]['body']}',
+                                    time: '',
+                                    onTap: () {},
+                                  ),
+                                ],
+                              );
+                            },
                           ),
                         ),
-                      ],
-                    );
-                  },
-                ),
-              );
+                      );
+                    }
+                    else {
+                      return Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(30),
+                            topRight: Radius.circular(30),
+                          ),
+                          color: Color(0xffFEFEFE),
+                        ),
+                        child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: 1,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: [
+                                const Gap(30),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(
+                                    context.appValues.appPadding.p20,
+                                    context.appValues.appPadding.p0,
+                                    context.appValues.appPadding.p20,
+                                    context.appValues.appPadding.p10,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      const Gap(150),
+                                      SvgPicture.asset('assets/img/notif.svg'),
+                                      const Gap(20),
+                                      Text(
+                                        'No Notifications',
+                                        style: getPrimarySemiBoldStyle(
+                                          color: const Color(0xff180B3C),
+                                          fontSize: 24,
+                                        ),
+                                      ),
+                                      const Gap(5),
+                                      Text(
+                                        "We’ll notify you when there’s\nsomething new",
+                                        textAlign: TextAlign.center,
+                                        style: getPrimaryRegularStyle(
+                                          color: const Color(0xff71727A),
+                                          fontSize: 14,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      );
+                    }
+                  });
+
+
             },
           ),
         ],

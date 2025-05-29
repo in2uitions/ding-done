@@ -74,7 +74,7 @@ class NotificationWidget extends StatelessWidget {
                           title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: getPrimaryBoldStyle(
+                          style: getSecondaryBoldStyle(
                             fontSize: 14,
                             color: const Color(0xff1F1F39),
                           ),

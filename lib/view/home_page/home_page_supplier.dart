@@ -19,6 +19,7 @@ import 'package:provider/provider.dart';
 import '../../res/app_prefs.dart';
 import '../../view_model/categories_view_model/categories_view_model.dart';
 import '../bottom_bar/bottom_bar.dart';
+import '../widgets/pulsing_dot/pulsing_dot.dart';
 import '../widgets/restart/restart_widget.dart';
 
 class HomePageSupplier extends StatefulWidget {
@@ -570,14 +571,25 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                     //             : 'Available for hire')
                                     //   ],
                                     // ),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).push(_createRoute(
-                                          const NotificationsScreen(),
-                                        ));
-                                      },
-                                      child: SvgPicture.asset(
-                                          'assets/img/white-bell.svg'),
+                                    Stack(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            profileViewModel.setNotificationsData(false);
+                                            Navigator.of(context).push(_createRoute(
+                                               NotificationsScreen(profileViewModel: profileViewModel,),
+                                            ));
+                                          },
+                                          child: SvgPicture.asset(
+                                              'assets/img/white-bell.svg'),
+                                        ),
+                                        if (profileViewModel.hasNotifications)
+                                          Positioned(
+                                            right: 0,
+                                            top: 0,
+                                            child: PulsingDot(),
+                                          ),
+                                      ],
                                     ),
                                   ],
                                 ),

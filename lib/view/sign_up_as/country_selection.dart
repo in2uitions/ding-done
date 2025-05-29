@@ -79,8 +79,7 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: CustomDropDown(
                                 value:
-                                    signupViewModel.getSignUpBody["country"] ??
-                                        '',
+                                    signupViewModel.getSignUpBody["country"],
                                 index: 'country',
                                 viewModel: signupViewModel.setInputValues,
                                 hintText: translate('formHints.country'),
@@ -94,8 +93,15 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
                                 keyboardType: TextInputType.text,
                                 list: signupViewModel.getCountries,
                                 onChange: (value) {
+                                  var selectedCountry =signupViewModel.getCountries.firstWhere(
+                                        (country) => country['code'] == value,
+                                    orElse: () => '',
+                                  )["iso_a2"];
+                                  debugPrint('country is $selectedCountry');
                                   signupViewModel.setInputValues(
                                       index: 'country', value: value);
+                                  signupViewModel.setInputValues(
+                                      index: 'phone_code', value: selectedCountry.toString().toUpperCase());
                                 },
                               ),
                             );

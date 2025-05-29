@@ -511,8 +511,13 @@ class _BookAServiceState extends State<BookAService> {
   @override
   void initState() {
     super.initState();
-  }
+    getPayment();
 
+  }
+getPayment() async{
+  await Provider.of<PaymentViewModel>(context, listen: false)
+      .getPaymentMethodsTap();
+}
   @override
   Widget build(BuildContext context) {
     return Consumer4<ProfileViewModel,

@@ -28,7 +28,20 @@ class ProfilePageSupplier extends StatefulWidget {
 
 class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
   bool _isLoading = false;
+  Future<void> _handleRefresh() async {
+    try {
 
+      await Provider.of<ProfileViewModel>(context, listen: false).readJson();
+
+    } catch (error) {
+      // Handle the error, e.g., by displaying a snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to refresh: $error'),
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -157,129 +170,132 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                 maxChildSize: 1,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
+                  return RefreshIndicator(
+                    onRefresh: _handleRefresh,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                        color: Color(0xffFEFEFE),
                       ),
-                      color: Color(0xffFEFEFE),
-                    ),
-                    child: ListView(
-                      controller: scrollController,
-                      padding: EdgeInsets.zero,
-                      children: [
-                        const Gap(30),
-                        // Supplier location widget
-                        const LoacationSupplierProfile(),
-                        const Gap(20),
-                        // Services offered widget (supplier specific)
-                        ServicesOfferedSupplierProfile(
-                          profileViewModel: profileViewModel,
-                          data: widget.data,
-                          list: widget.list,
-                        ),
-                        const Gap(30),
-                        SizedBox(
-                          height: context.appValues.appSizePercent.h6,
-                          width: context.appValues.appSizePercent.w100,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(
-                                width: context.appValues.appSizePercent.w90,
-                                height: context.appValues.appSizePercent.h100,
-                                child: ElevatedButton(
-                                  onPressed: () async {
-                                    setState(() {
-                                      _isLoading = true;
-                                    });
-                                    if (await profileViewModel
-                                            .patchProfileServices() ==
-                                        true) {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              simpleAlert(
-                                                context,
-                                                translate('button.success'),
-                                              ));
-                                    } else {
-                                      showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) =>
-                                              simpleAlert(
-                                                context,
-                                                translate('button.failure'),
-                                              ));
-                                    }
-                                    setState(() {
-                                      _isLoading = false;
-                                    });
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: const Color(0xff4100E3),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15),
+                      child: ListView(
+                        controller: scrollController,
+                        padding: EdgeInsets.zero,
+                        children: [
+                          const Gap(30),
+                          // Supplier location widget
+                          const LoacationSupplierProfile(),
+                          const Gap(20),
+                          // Services offered widget (supplier specific)
+                          ServicesOfferedSupplierProfile(
+                            profileViewModel: profileViewModel,
+                            data: widget.data,
+                            list: widget.list,
+                          ),
+                          const Gap(30),
+                          SizedBox(
+                            height: context.appValues.appSizePercent.h6,
+                            width: context.appValues.appSizePercent.w100,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: context.appValues.appSizePercent.w90,
+                                  height: context.appValues.appSizePercent.h100,
+                                  child: ElevatedButton(
+                                    onPressed: () async {
+                                      setState(() {
+                                        _isLoading = true;
+                                      });
+                                      if (await profileViewModel
+                                              .patchProfileServices() ==
+                                          true) {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                simpleAlert(
+                                                  context,
+                                                  translate('button.success'),
+                                                ));
+                                      } else {
+                                        showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                simpleAlert(
+                                                  context,
+                                                  translate('button.failure'),
+                                                ));
+                                      }
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
+                                    },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: const Color(0xff4100E3),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(15),
+                                      ),
                                     ),
-                                  ),
-                                  child: _isLoading
-                                      ? const CircularProgressIndicator()
-                                      : Text(
-                                          'Save',
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 16,
-                                            color: Colors.white,
+                                    child: _isLoading
+                                        ? const CircularProgressIndicator()
+                                        : Text(
+                                            'Save',
+                                            style: getPrimaryBoldStyle(
+                                              fontSize: 16,
+                                              color: Colors.white,
+                                            ),
                                           ),
-                                        ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        // Logout button
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: context.appValues.appPadding.p20,
-                            vertical: context.appValues.appPadding.p15,
-                          ),
-                          child: InkWell(
-                            child: Container(
-                              height: 44,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(12),
-                                color: Colors.white,
-                                border: Border.all(
-                                  color: const Color(0xff4100E3),
-                                  width: 1.5,
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset('assets/img/logout-new.svg'),
-                                  const Gap(10),
-                                  Text(
-                                    translate('drawer.logout'),
-                                    style: getPrimaryRegularStyle(
-                                      fontSize: 20,
-                                      color: const Color(0xff4100E3),
-                                    ),
                                   ),
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
-                            onTap: () {
-                              AppPreferences().clear();
-                              AppProviders.disposeAllDisposableProviders(
-                                  context);
-                              Navigator.of(context)
-                                  .push(_createRoute(const LoginScreen()));
-                            },
                           ),
-                        ),
-                        const Gap(30),
-                      ],
+                          // Logout button
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: context.appValues.appPadding.p20,
+                              vertical: context.appValues.appPadding.p15,
+                            ),
+                            child: InkWell(
+                              child: Container(
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Colors.white,
+                                  border: Border.all(
+                                    color: const Color(0xff4100E3),
+                                    width: 1.5,
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset('assets/img/logout-new.svg'),
+                                    const Gap(10),
+                                    Text(
+                                      translate('drawer.logout'),
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 20,
+                                        color: const Color(0xff4100E3),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              onTap: () {
+                                AppPreferences().clear();
+                                AppProviders.disposeAllDisposableProviders(
+                                    context);
+                                Navigator.of(context)
+                                    .push(_createRoute(const LoginScreen()));
+                              },
+                            ),
+                          ),
+                          const Gap(30),
+                        ],
+                      ),
                     ),
                   );
                 },

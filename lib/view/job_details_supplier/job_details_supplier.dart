@@ -422,8 +422,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                   ),
                                   Text(
                                     _getFormattedDuration(
-                                        widget.data.actual_start_date,
-                                        widget.data.finish_date),
+                                        widget.data.actual_start_date??DateTime.now().toString(),
+                                        widget.data.finish_date??DateTime.now().toString()),
                                     style: getPrimaryRegularStyle(
                                       fontSize: 14,
                                       color: const Color(0xff71727A),
@@ -572,9 +572,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                           context.appValues.appPadding.p0,
                                     ),
                                     child: Text(
-                                      widget.data.total_amount != null
-                                          ? '${widget.data.total_amount} ${widget.data.service["country_rates"] != null && widget.data.service["country_rates"].isNotEmpty ? _getServiceRate() : ''}'
-                                          : '',
+                                      widget.data.total_amount != null && widget.data.total_amount.toString()!=''
+                                          ? '${widget.data.total_amount} ${widget.data.service["country_rates"] != null && widget.data.service["country_rates"].isNotEmpty ?  widget.data.service["country_rates"][0]["country"]["currency"] : ''}'
+                                          : '${widget.data.service["country_rates"] != null ? widget.data.number_of_units != null ? ( widget.data.service["country_rates"][0]["unit_rate"] *  widget.data.number_of_units) : ( widget.data.service["country_rates"][0]["unit_rate"] * widget.data.service["country_rates"][0]["minimum_order"]) : ''} ${ widget.data.service["country_rates"] != null ?  widget.data.service["country_rates"][0]["country"]["currency"] : ''}',
                                       style: getPrimarySemiBoldStyle(
                                         color: const Color(0xff4100E3),
                                         fontSize: 16,
@@ -897,6 +897,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                             setState(() {
                                               _isLoading = true;
                                             });
+                                            final rootContext = context;
                                             widget.fromWhere == 'request'
                                                 ? await jobsViewModel.acceptJob(
                                                             widget.data) ==
@@ -921,11 +922,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                 : widget.fromWhere ==
                                                         translate('jobs.active')
                                                     ? showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext context) =>
-                                                            showFinalData(
-                                                                context,
-                                                                jobsViewModel))
+                                              context: rootContext,
+                                              builder: (_) => showFinalData(rootContext, jobsViewModel),
+                                            )
                                                     : widget.fromWhere ==
                                                             'booked'
                                                         ? await jobsViewModel.startJob(widget.data.id) ==
@@ -1154,11 +1153,18 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     if (await jobsViewModel
                             .finishJobAndCollectPayment(widget.data.id) ==
                         true) {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              simpleAlert(context, 'Success', 'Job Done'));
+                      Navigator.of(context).pop(); // close current dialog
+
+                      Future.delayed(const Duration(milliseconds: 100), () {
+                        showDialog(
+                          context: context, // <- this must be the original parentContext
+                          builder: (BuildContext _) =>
+                              simpleAlert(context, 'Success', 'Job Done'), // use parentContext
+                        );
+                      });
                     } else {
+                      debugPrint('job is not  done ');
+
                       showDialog(
                           context: context,
                           builder: (BuildContext context) => simpleAlert(

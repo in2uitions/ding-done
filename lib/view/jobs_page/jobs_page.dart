@@ -16,7 +16,11 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/app_prefs.dart';
+import '../../view_model/categories_view_model/categories_view_model.dart';
+import '../../view_model/profile_view_model/profile_view_model.dart';
+import '../../view_model/services_view_model/services_view_model.dart';
 import '../bottom_bar/bottom_bar.dart';
+import '../widgets/pulsing_dot/pulsing_dot.dart';
 import '../widgets/update_job_request_customer/rating_stars_widget.dart';
 import '../widgets/update_job_request_customer/review_widget.dart';
 
@@ -46,7 +50,20 @@ class _JobsPageState extends State<JobsPage> {
   }
 
   AudioPlayer _audioPlayer = AudioPlayer();
+  Future<void> _handleRefresh() async {
+    try {
 
+      await Provider.of<JobsViewModel>(context, listen: false).readJson();
+
+    } catch (error) {
+      // Handle the error, e.g., by displaying a snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to refresh: $error'),
+        ),
+      );
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -71,19 +88,21 @@ class _JobsPageState extends State<JobsPage> {
 
     await _audioPlayer.play(AssetSource(soundPath));
   }
-
-// Function to show the review dialog
   void _showReviewDialog(
       BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
     playSound();
     showDialog(
       context: context,
+      barrierDismissible: false, // Prevents closing by tapping outside
       builder: (BuildContext context) {
-        return review(context, job,
-            jobsViewModel); // This is the review widget you provided
+        return WillPopScope(
+          onWillPop: () async => false, // Prevents back button closing
+          child: review(context, job, jobsViewModel),
+        );
       },
     );
   }
+
 
   Widget review(
       BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
@@ -227,14 +246,29 @@ class _JobsPageState extends State<JobsPage> {
                                         fontSize: 16,
                                       ),
                                     ),
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.of(context).push(_createRoute(
-                                          const NotificationsScreen(),
-                                        ));
-                                      },
-                                      child: SvgPicture.asset(
-                                          'assets/img/bellwhite.svg'),
+                                    Consumer<ProfileViewModel>(
+                                        builder: (context, profileViewModel, _) {
+                                        return Stack(
+                                          children: [
+                                            InkWell(
+                                              onTap: () {
+                                                profileViewModel.setNotificationsData(false);
+                                                Navigator.of(context).push(_createRoute(
+                                                   NotificationsScreen(profileViewModel: profileViewModel,),
+                                                ));
+                                              },
+                                              child: SvgPicture.asset(
+                                                  'assets/img/bellwhite.svg'),
+                                            ),
+                                            if (profileViewModel.hasNotifications)
+                                              Positioned(
+                                                right: 0,
+                                                top: 0,
+                                                child: PulsingDot(),
+                                              ),
+                                          ],
+                                        );
+                                      }
                                     ),
                                   ],
                                 ),
@@ -298,126 +332,129 @@ class _JobsPageState extends State<JobsPage> {
               maxChildSize: 1,
               builder:
                   (BuildContext context, ScrollController scrollController) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(30),
-                      topRight: Radius.circular(30),
+                return RefreshIndicator(
+                  onRefresh: _handleRefresh,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                      color: Color(0xffFEFEFE),
                     ),
-                    color: Color(0xffFEFEFE),
-                  ),
-                  child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: 1,
-                      padding: EdgeInsets.zero,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            const Gap(30),
-                            Consumer<JobsViewModel>(
-                              builder: (context, jobsViewModel, _) {
-                                List<int> jobCounts =
-                                    getJobCounts(jobsViewModel);
-                                debugPrint('job counts  is $jobCounts');
+                    child: ListView.builder(
+                        controller: scrollController,
+                        itemCount: 1,
+                        padding: EdgeInsets.zero,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Column(
+                            children: [
+                              const Gap(30),
+                              Consumer<JobsViewModel>(
+                                builder: (context, jobsViewModel, _) {
+                                  List<int> jobCounts =
+                                      getJobCounts(jobsViewModel);
+                                  debugPrint('job counts  is $jobCounts');
 
-                                return widget.userRole ==
-                                        Constants.supplierRoleId
-                                    ? SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        child: TabsJobsSupplier(
-                                          tabtitle: [
-                                            translate('jobs.bookedJobs'),
-                                            translate('jobs.activeJobs'),
-                                            translate('jobs.completedJobs'),
-                                          ],
-                                          tabContent: [
-                                            JobsCards(
-                                              active: "bookedJobs",
-                                              userRole: widget.userRole,
-                                              jobsViewModel: jobsViewModel,
-                                              lang: widget.lang,
-                                              scrollController:
-                                                  scrollController,
-                                            ),
-                                            JobsCards(
-                                              active: "activeJobs",
-                                              userRole: widget.userRole,
-                                              jobsViewModel: jobsViewModel,
-                                              lang: widget.lang,
-                                              scrollController:
-                                                  scrollController,
-                                            ),
-                                            JobsCards(
-                                              active: "completedJobs",
-                                              userRole: widget.userRole,
-                                              jobsViewModel: jobsViewModel,
-                                              lang: widget.lang,
-                                              scrollController:
-                                                  scrollController,
-                                            ),
-                                          ], // Ensure this is List<Widget>
-                                          jobCounts: jobCounts,
-                                          initialActiveTab: _active,
-                                          initialIndex: widget.initialIndex,
-                                        ),
-                                      )
-                                    : SizedBox(
-                                        height:
-                                            MediaQuery.of(context).size.height,
-                                        child: TabsJobs(
-                                          tabtitle: [
-                                            translate('jobs.requestedJobs'),
-                                            translate('jobs.confirmedJobs'),
-                                            translate('jobs.activeJobs'),
-                                            translate('jobs.completedJobs'),
-                                          ],
-                                          tabContent: [
-                                            JobsCards(
-                                              active: "requestedJobs",
-                                              userRole: widget.userRole,
-                                              jobsViewModel: jobsViewModel,
-                                              lang: widget.lang,
-                                              scrollController:
-                                                  scrollController,
-                                            ),
-                                            JobsCards(
-                                              active: "bookedJobs",
-                                              userRole: widget.userRole,
-                                              jobsViewModel: jobsViewModel,
-                                              lang: widget.lang,
-                                              scrollController:
-                                                  scrollController,
-                                            ),
-                                            JobsCards(
-                                              active: "activeJobs",
-                                              userRole: widget.userRole,
-                                              jobsViewModel: jobsViewModel,
-                                              lang: widget.lang,
-                                              scrollController:
-                                                  scrollController,
-                                            ),
-                                            JobsCards(
-                                              active: "completedJobs",
-                                              userRole: widget.userRole,
-                                              jobsViewModel: jobsViewModel,
-                                              lang: widget.lang,
-                                              scrollController:
-                                                  scrollController,
-                                            ),
-                                          ],
-                                          jobCounts: jobCounts,
-                                          initialActiveTab: _active,
-                                          initialIndex: widget.initialIndex,
-                                          // Pass the active tab here
-                                          // content: buildHeader(context),
-                                        ),
-                                      );
-                              },
-                            ),
-                          ],
-                        );
-                      }),
+                                  return widget.userRole ==
+                                          Constants.supplierRoleId
+                                      ? SizedBox(
+                                          height:
+                                              MediaQuery.of(context).size.height,
+                                          child: TabsJobsSupplier(
+                                            tabtitle: [
+                                              translate('jobs.bookedJobs'),
+                                              translate('jobs.activeJobs'),
+                                              translate('jobs.completedJobs'),
+                                            ],
+                                            tabContent: [
+                                              JobsCards(
+                                                active: "bookedJobs",
+                                                userRole: widget.userRole,
+                                                jobsViewModel: jobsViewModel,
+                                                lang: widget.lang,
+                                                scrollController:
+                                                    scrollController,
+                                              ),
+                                              JobsCards(
+                                                active: "activeJobs",
+                                                userRole: widget.userRole,
+                                                jobsViewModel: jobsViewModel,
+                                                lang: widget.lang,
+                                                scrollController:
+                                                    scrollController,
+                                              ),
+                                              JobsCards(
+                                                active: "completedJobs",
+                                                userRole: widget.userRole,
+                                                jobsViewModel: jobsViewModel,
+                                                lang: widget.lang,
+                                                scrollController:
+                                                    scrollController,
+                                              ),
+                                            ], // Ensure this is List<Widget>
+                                            jobCounts: jobCounts,
+                                            initialActiveTab: _active,
+                                            initialIndex: widget.initialIndex,
+                                          ),
+                                        )
+                                      : SizedBox(
+                                          height:
+                                              MediaQuery.of(context).size.height,
+                                          child: TabsJobs(
+                                            tabtitle: [
+                                              translate('jobs.requestedJobs'),
+                                              translate('jobs.confirmedJobs'),
+                                              translate('jobs.activeJobs'),
+                                              translate('jobs.completedJobs'),
+                                            ],
+                                            tabContent: [
+                                              JobsCards(
+                                                active: "requestedJobs",
+                                                userRole: widget.userRole,
+                                                jobsViewModel: jobsViewModel,
+                                                lang: widget.lang,
+                                                scrollController:
+                                                    scrollController,
+                                              ),
+                                              JobsCards(
+                                                active: "bookedJobs",
+                                                userRole: widget.userRole,
+                                                jobsViewModel: jobsViewModel,
+                                                lang: widget.lang,
+                                                scrollController:
+                                                    scrollController,
+                                              ),
+                                              JobsCards(
+                                                active: "activeJobs",
+                                                userRole: widget.userRole,
+                                                jobsViewModel: jobsViewModel,
+                                                lang: widget.lang,
+                                                scrollController:
+                                                    scrollController,
+                                              ),
+                                              JobsCards(
+                                                active: "completedJobs",
+                                                userRole: widget.userRole,
+                                                jobsViewModel: jobsViewModel,
+                                                lang: widget.lang,
+                                                scrollController:
+                                                    scrollController,
+                                              ),
+                                            ],
+                                            jobCounts: jobCounts,
+                                            initialActiveTab: _active,
+                                            initialIndex: widget.initialIndex,
+                                            // Pass the active tab here
+                                            // content: buildHeader(context),
+                                          ),
+                                        );
+                                },
+                              ),
+                            ],
+                          );
+                        }),
+                  ),
                 );
               }),
         ],

@@ -65,6 +65,7 @@ class _CustomPhoneFieldControllerState
   var phone = '';
   @override
   Widget build(BuildContext context) {
+    debugPrint('phone code ${widget.phone_code}');
     return IntlPhoneField(
       initialValue: widget.phone_number != null ? widget.phone_number : '',
       initialCountryCode: widget.phone_code != null ? widget.phone_code : 'AE',
@@ -85,6 +86,8 @@ class _CustomPhoneFieldControllerState
         widget.viewModel(index: widget.index, value: fullPhoneNumber);
         widget.viewModel(index: 'phone_number', value: phone);
         widget.viewModel(index: 'phone_code', value: number.countryISOCode);
+        debugPrint('phone code on change  ${number.countryISOCode}');
+
         debugPrint('country code ${number.countryISOCode}');
       },
       onCountryChanged: (country) {

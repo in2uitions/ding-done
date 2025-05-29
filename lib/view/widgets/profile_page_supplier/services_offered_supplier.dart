@@ -63,10 +63,10 @@ class _ServicesOfferedSupplierProfileState
             children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(
+                  context.appValues.appPadding.p10,
                   context.appValues.appPadding.p20,
                   context.appValues.appPadding.p20,
-                  context.appValues.appPadding.p20,
-                  context.appValues.appPadding.p5,
+                  context.appValues.appPadding.p0,
                 ),
                 child: Row(
                   children: [
@@ -74,8 +74,8 @@ class _ServicesOfferedSupplierProfileState
                     // const Gap(10),
                     Text(
                       translate('profile.servicesOffered'),
-                      style: getPrimaryRegularStyle(
-                        fontSize: 16,
+                      style: getPrimaryBoldStyle(
+                        fontSize: 20,
                         color: const Color(0xff180C38),
                       ),
                     ),
@@ -87,7 +87,7 @@ class _ServicesOfferedSupplierProfileState
               //   thickness: 2,
               //   color: Color(0xffEDF1F7),
               // ),
-              // const Gap(30),
+              const Gap(20),
               ServiceOfferedWidget(
                 profileViewModel: widget.profileViewModel,
                 servicesViewModel: servicesViewModel,

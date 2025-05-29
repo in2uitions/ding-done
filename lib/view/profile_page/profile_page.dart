@@ -19,6 +19,20 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  Future<void> _handleRefresh() async {
+    try {
+
+      await Provider.of<ProfileViewModel>(context, listen: false).readJson();
+
+    } catch (error) {
+      // Handle the error, e.g., by displaying a snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to refresh: $error'),
+        ),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -132,51 +146,54 @@ class _ProfilePageState extends State<ProfilePage> {
                 maxChildSize: 1,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
+                  return RefreshIndicator(
+                    onRefresh: _handleRefresh,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                        color: Color(0xffFEFEFE),
                       ),
-                      color: Color(0xffFEFEFE),
-                    ),
-                    child: ListView.builder(
-                        controller: scrollController,
-                        itemCount: 1,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Gap(30),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: context.appValues.appPadding.p20,
-                                  // vertical: context.appValues.appPadding.p30,
-                                ),
-                                child: Text(
-                                  'Manage Account',
-                                  style: getPrimaryMediumStyle(
-                                    fontSize: 14,
-                                    color: const Color(0xff180B3C),
+                      child: ListView.builder(
+                          controller: scrollController,
+                          itemCount: 1,
+                          padding: EdgeInsets.zero,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Gap(30),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: context.appValues.appPadding.p20,
+                                    // vertical: context.appValues.appPadding.p30,
+                                  ),
+                                  child: Text(
+                                    'Manage Account',
+                                    style: getPrimaryMediumStyle(
+                                      fontSize: 14,
+                                      color: const Color(0xff180B3C),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              const Gap(10),
-                              ProfileComponent(
-                                // payment_method: data.data,
-                                role: profileViewModel.getProfileBody["user"] !=
-                                        null
-                                    ? profileViewModel.getProfileBody["user"]
-                                        ["role"]
-                                    : '',
-                              ),
-                              const Gap(40),
-                              const ProfileSeconComponent(),
-                            ],
-                          );
-                        }),
+                                const Gap(10),
+                                ProfileComponent(
+                                  // payment_method: data.data,
+                                  role: profileViewModel.getProfileBody["user"] !=
+                                          null
+                                      ? profileViewModel.getProfileBody["user"]
+                                          ["role"]
+                                      : '',
+                                ),
+                                const Gap(40),
+                                const ProfileSeconComponent(),
+                              ],
+                            );
+                          }),
+                    ),
                   );
                 }),
           ],

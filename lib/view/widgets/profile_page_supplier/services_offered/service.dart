@@ -101,10 +101,11 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
         final allServices = categoriesVM.servicesList         ?? [];
 
         return Padding(
-          padding: EdgeInsets.all(context.appValues.appPadding.p10),
-          child: ListView(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
+          padding: EdgeInsets.only(left:context.appValues.appPadding.p10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            // physics: const NeverScrollableScrollPhysics(),
+            // shrinkWrap: true,
             children: [
               for (final parent in parents) ...[
                 // Top-level parent title

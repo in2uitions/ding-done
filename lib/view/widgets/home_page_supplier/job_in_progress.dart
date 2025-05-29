@@ -265,11 +265,17 @@ class _JobInProgressState extends State<JobInProgress> {
                               ),
                               child: ElevatedButton(
                                 onPressed: () {
-                                  debugPrint(
-                                      '${jobsViewModel.supplierInProgressJobs[index].id}');
-                                  jobsViewModel.finishJobAndCollectPayment(
-                                      jobsViewModel
-                                          .supplierInProgressJobs[index].id);
+                                  showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          showFinalData(
+                                              context,
+                                              jobsViewModel,jobsViewModel.supplierInProgressJobs[index]));
+                                  // debugPrint(
+                                  //     '${jobsViewModel.supplierInProgressJobs[index].id}');
+                                  // jobsViewModel.finishJobAndCollectPayment(
+                                  //     jobsViewModel
+                                  //         .supplierInProgressJobs[index].id);
                                 },
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0,
@@ -296,4 +302,338 @@ class _JobInProgressState extends State<JobInProgress> {
           });
     });
   }
+  Widget showFinalData(BuildContext context, JobsViewModel jobsViewModel,var data ) {
+    return jobsViewModel.jobUpdated
+        ? AlertDialog(
+      backgroundColor: Colors.white,
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding:
+            EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  child: SvgPicture.asset('assets/img/x.svg'),
+                  onTap: () {
+                    Navigator.pop(context);
+
+                  },
+                ),
+              ],
+            ),
+          ),
+          // message == 'Success'
+          //     ?
+          // SvgPicture.asset('assets/img/service-popup-image.svg')
+          //     : SvgPicture.asset('assets/img/failure.svg'),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Completed Units: ${jobsViewModel.updatedBody["completed_units"] ?? data.completed_units}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Current number of units: ${jobsViewModel.updatedBody["number_of_units"] ?? data.number_of_units}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Extra Fees: ${jobsViewModel.updatedBody["extra_fees"] ?? data.extra_fees}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Extra Fees Reason: ${jobsViewModel.updatedBody["extra_fees_reason"] ?? data.extra_fees_reason}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s20),
+          ElevatedButton(
+            onPressed: () async {
+              debugPrint('data in finish ${data.customer['id']}');
+              // if(await jobsViewModel.payFees(widget.data.id,widget.data.customer['id']) == true) {
+              if (await jobsViewModel
+                  .finishJobAndCollectPayment(data.id) ==
+                  true) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        simpleAlert(context, 'Success', 'Job Done'));
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => simpleAlert(
+                        context,
+                        'Failure',
+                        'Something went wrong while finishing job \n${jobsViewModel.errorMessage}'));
+              }
+              // }else {
+              //   showDialog(
+              //       context: context,
+              //       builder: (BuildContext context) => simpleAlert(
+              //           context,
+              //           'Failure',
+              //           'Something went wrong while paying job\n${jobsViewModel.errorMessage}'));
+              // }
+            },
+            style: ElevatedButton.styleFrom(
+              elevation: 0.0,
+              shadowColor: Colors.transparent,
+              backgroundColor: Color(0xff4100E3),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              fixedSize: Size(
+                context.appValues.appSizePercent.w30,
+                context.appValues.appSizePercent.h5,
+              ),
+            ),
+            child: Text(
+              'Finish',
+              style: getPrimaryRegularStyle(
+                fontSize: 15,
+                color: Colors.white,
+              ),
+            ),
+          ),
+
+          SizedBox(height: context.appValues.appSize.s20),
+        ],
+      ),
+    )
+        : AlertDialog(
+      backgroundColor: Colors.white,
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding:
+            EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  child: SvgPicture.asset('assets/img/x.svg'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+          // message == 'Success'
+          //     ?
+          // SvgPicture.asset('assets/img/service-popup-image.svg')
+          //     : SvgPicture.asset('assets/img/failure.svg'),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Make sure to update data before finishing',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: Colors.red,
+              ),
+            ),
+          ),
+          const Gap(7),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Completed Units: $data.completed_units ?? ''}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                // color: context.resources.color.btnColorBlue,
+                color: Color(0xff4100E3),
+              ),
+            ),
+          ),
+          const Gap(7),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Current number of units: ${data.number_of_units ?? ''}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: Color(0xff4100E3),
+              ),
+            ),
+          ),
+          const Gap(7),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Extra Fees: ${data.extra_fees ?? ''}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: Color(0xff4100E3),
+              ),
+            ),
+          ),
+          const Gap(7),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Extra Fees Reason: ${data.extra_fees_reason ?? ''}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: Color(0xff4100E3),
+              ),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s20),
+          ElevatedButton(
+            onPressed: () async {
+              if (await jobsViewModel
+                  .finishJobAndCollectPayment(data.id) ==
+                  true) {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        simpleAlert(context, 'Success', 'Job Done'));
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => simpleAlert(
+                        context,
+                        'Failure \n${jobsViewModel.errorMessage}',
+                        'Something went wrong'));
+              }
+
+              // await jobsViewModel.finishJob(widget.data.id);
+              // Navigator.pop(context);
+              //
+              // new Future.delayed(const Duration(seconds: 0), () =>
+              //     showDialog(
+              //         context: context,
+              //         builder: (BuildContext context) =>
+              //             simpleAlert(
+              //                 context,'Success' ,'Job Done')));
+            },
+            style: ElevatedButton.styleFrom(
+              elevation: 0.0,
+              shadowColor: Colors.transparent,
+              backgroundColor: Color(0xff4100E3),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              fixedSize: Size(
+                context.appValues.appSizePercent.w30,
+                context.appValues.appSizePercent.h5,
+              ),
+            ),
+            child: Text(
+              'Finish Job',
+              style: getPrimaryRegularStyle(
+                fontSize: 15,
+                color: Colors.white,
+              ),
+            ),
+          ),
+
+          SizedBox(height: context.appValues.appSize.s20),
+        ],
+      ),
+    );
+  }
+  Widget simpleAlert(BuildContext context, String message, String message2) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  child: SvgPicture.asset('assets/img/x.svg'),
+                  onTap: () {
+                    Navigator.pop(context);
+                    Future.delayed(const Duration(seconds: 0),
+                            () => Navigator.of(context).pop());
+                  },
+                ),
+              ],
+            ),
+          ),
+          message == 'Success'
+              ? SvgPicture.asset('assets/img/service-popup-image.svg')
+              : SvgPicture.asset('assets/img/failure.svg'),
+          SizedBox(height: context.appValues.appSize.s40),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              message2,
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s20),
+        ],
+      ),
+    );
+  }
+
 }

@@ -22,6 +22,7 @@ import '../../res/constants.dart';
 import '../book_a_service/book_a_service.dart';
 import '../bottom_bar/bottom_bar.dart';
 import '../widgets/categories_screen/categories_screen_cards.dart';
+import '../widgets/pulsing_dot/pulsing_dot.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -588,15 +589,26 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ],
                                       ),
-                                      InkWell(
-                                        onTap: () {
-                                          Navigator.of(context)
-                                              .push(_createRoute(
-                                            const NotificationsScreen(),
-                                          ));
-                                        },
-                                        child: SvgPicture.asset(
-                                            'assets/img/white-bell.svg'),
+                                      Stack(
+                                        children: [
+                                          InkWell(
+                                            onTap: () async{
+                                              profileViewModel.setNotificationsData(false);
+                                              Navigator.of(context)
+                                                  .push(_createRoute(
+                                                 NotificationsScreen(profileViewModel:profileViewModel),
+                                              ));
+                                            },
+                                            child: SvgPicture.asset(
+                                                'assets/img/white-bell.svg'),
+                                          ),
+                                          if (profileViewModel.hasNotifications)
+                                            Positioned(
+                                              right: 0,
+                                              top: 0,
+                                              child: PulsingDot(),
+                                            ),
+                                        ],
                                       ),
                                       // Container(
                                       //   width:

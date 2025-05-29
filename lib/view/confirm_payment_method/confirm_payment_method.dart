@@ -46,7 +46,20 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
   String sdkErrorDescription = "";
   late final WebViewController _controller;
   bool sdkLoading = false;
+  Future<void> _handleRefresh() async {
+    try {
 
+      await Provider.of<PaymentViewModel>(context, listen: false).getPaymentMethodsTap();
+
+    } catch (error) {
+      // Handle the error, e.g., by displaying a snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to refresh: $error'),
+        ),
+      );
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -429,104 +442,107 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                 minChildSize: 0.85,
                 maxChildSize: 1,
                 builder: (context, scrollController) {
-                  return Container(
-                    decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
+                  return RefreshIndicator(
+                    onRefresh: _handleRefresh,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
+                        color: Color(0xffFEFEFE),
                       ),
-                      color: Color(0xffFEFEFE),
-                    ),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child: ListView(
-                            controller: scrollController,
-                            padding: EdgeInsets.zero,
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child: ListView(
+                              controller: scrollController,
+                              padding: EdgeInsets.zero,
+                              children: [
+                                const Gap(20),
+                                const CardInfo1(),
+                                const Gap(20),
+                                PaymentMethodButtons(
+                                  payment_method: widget.payment_method,
+                                  jobsViewModel: jobsVM,
+                                  fromWhere: 'confirm_payment',
+                                  role: widget.role,
+                                ),
+                                const Gap(10),
+                              ],
+                            ),
+                          ),
+                          Column(
                             children: [
-                              const Gap(20),
-                              const CardInfo1(),
-                              const Gap(20),
-                              PaymentMethodButtons(
-                                payment_method: widget.payment_method,
-                                jobsViewModel: jobsVM,
-                                fromWhere: 'confirm_payment',
-                                role: widget.role,
+                              const Divider(
+                                color: Color(0xffD4D6DD),
+                                thickness: 1,
                               ),
                               const Gap(10),
-                            ],
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            const Divider(
-                              color: Color(0xffD4D6DD),
-                              thickness: 1,
-                            ),
-                            const Gap(10),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: context.appValues.appPadding.p20,
-                                vertical: context.appValues.appPadding.p10,
-                              ),
-                              child: Container(
-                                height: context.appValues.appSizePercent.h6,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: const Color(0xff4100E3),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: context.appValues.appPadding.p20,
+                                  vertical: context.appValues.appPadding.p10,
                                 ),
-                                child: InkWell(
-                                  onTap: () async {
-                                    await payVM.setLoading(true);
-                                    dynamic methods =
-                                        await payVM.getPaymentMethodsTap();
-                                    var exists = payVM.paymentList.any((c) =>
-                                        c['card_number'] ==
-                                        payVM.getPaymentBody['card_number']);
-                                    if (!exists) {
-                                      await payVM.createPaymentMethodTap();
-                                      await startSDK();
-                                    } else {
-                                      showDialog(
-                                        context: context,
-                                        builder: (_) => simpleAlert(
-                                          context,
-                                          translate('button.failure'),
-                                          'Card Number is already chosen',
-                                        ),
-                                      );
-                                    }
-                                    await payVM.setLoading(false);
-                                  },
-                                  child: Center(
-                                    child: payVM.isLoading
-                                        ? const CircularProgressIndicator(
-                                            color: Colors.white)
-                                        : Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              const Icon(Icons.add,
-                                                  color: Colors.white,
-                                                  size: 18),
-                                              const Gap(5),
-                                              Text(
-                                                translate(
-                                                    'paymentMethod.addPaymentMethod'),
-                                                style: getPrimaryBoldStyle(
-                                                  fontSize: 14,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                            ],
+                                child: Container(
+                                  height: context.appValues.appSizePercent.h6,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(12),
+                                    color: const Color(0xff4100E3),
+                                  ),
+                                  child: InkWell(
+                                    onTap: () async {
+                                      await payVM.setLoading(true);
+                                      dynamic methods =
+                                          await payVM.getPaymentMethodsTap();
+                                      var exists = payVM.paymentList.any((c) =>
+                                          c['card_number'] ==
+                                          payVM.getPaymentBody['card_number']);
+                                      if (!exists) {
+                                        await payVM.createPaymentMethodTap();
+                                        await startSDK();
+                                      } else {
+                                        showDialog(
+                                          context: context,
+                                          builder: (_) => simpleAlert(
+                                            context,
+                                            translate('button.failure'),
+                                            'Card Number is already chosen',
                                           ),
+                                        );
+                                      }
+                                      await payVM.setLoading(false);
+                                    },
+                                    child: Center(
+                                      child: payVM.isLoading
+                                          ? const CircularProgressIndicator(
+                                              color: Colors.white)
+                                          : Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                const Icon(Icons.add,
+                                                    color: Colors.white,
+                                                    size: 18),
+                                                const Gap(5),
+                                                Text(
+                                                  translate(
+                                                      'paymentMethod.addPaymentMethod'),
+                                                  style: getPrimaryBoldStyle(
+                                                    fontSize: 14,
+                                                    color: Colors.white,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                        // const SafeArea(child: SizedBox()),
-                      ],
+                            ],
+                          ),
+                          // const SafeArea(child: SizedBox()),
+                        ],
+                      ),
                     ),
                   );
                 },
