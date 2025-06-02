@@ -75,7 +75,7 @@ class _JobsCardsState extends State<JobsCards> {
           controller: widget.scrollController,
           padding: EdgeInsets.zero,
           shrinkWrap: true,
-          itemCount: data.length,
+          itemCount: data!=null? data.length:0,
           // physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (BuildContext context, int index) {
             Map<String, dynamic>? services;
@@ -201,10 +201,10 @@ class _JobsCardsState extends State<JobsCards> {
                                   SizedBox(
                                     width: context.appValues.appSizePercent.w63,
                                     child: Text(
-                                      widget.userRole ==
+                                      services!=null? widget.userRole ==
                                               Constants.supplierRoleId
                                           ? '${services?['title']}'
-                                          : '${services!["title"]}',
+                                          :'${services!["title"]}':'',
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: getPrimaryMediumStyle(
@@ -578,7 +578,7 @@ class _JobsCardsState extends State<JobsCards> {
                                   //             ''
                                   //     ? '${data[index].supplier_total} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
                                   //     :
-                                  '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
+                            data[index].service!=null?'${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}':'',
                                   style: getPrimarySemiBoldStyle(
                                     fontSize: 14,
                                     color: const Color(0xff180B3C),

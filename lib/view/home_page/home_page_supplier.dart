@@ -594,7 +594,22 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                   ],
                                 ),
                               ),
-                              const JobInProgress(),
+                              jobsViewModel.supplierInProgressJobs.isNotEmpty?Container():Gap(20),
+                              jobsViewModel.supplierInProgressJobs.isNotEmpty?
+                              SizedBox(
+                                height: context.appValues.appSizePercent.h35,
+                                child: SingleChildScrollView(
+                                    child:
+                                    const JobInProgress()
+                                ),
+                              ):
+                              Center(child: Text(
+                                'No jobs in progress',
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 16,
+                                  color: Color(0xffEAEAFF),
+                                ),
+                              ),),
                               const Gap(15),
                             ],
                           ),
@@ -616,7 +631,8 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
               //   ],
               // ),
               DraggableScrollableSheet(
-                  initialChildSize: 0.43,
+                  initialChildSize:jobsViewModel
+                      .supplierInProgressJobs.isNotEmpty? 0.43:0.75,
                   minChildSize: 0.43,
                   maxChildSize: 1,
                   builder: (BuildContext context,

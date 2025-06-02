@@ -974,7 +974,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                     ),
                   );
                 } else {
-                  return Container();
+                  return CircularProgressIndicator();
                 }
               }),
         ],

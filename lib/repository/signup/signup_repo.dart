@@ -66,17 +66,19 @@ class SignUpRepository {
   //   }
   // }
 
-  Future<UserModel?> postUserCredentials(dynamic body) async {
+  Future<dynamic?> postUserCredentials(dynamic body) async {
     try {
       dynamic response =
           await _apiUserRegister.postResponse(data: body, sendToken: false);
       if(response["data"]!=null){
+
         final jsonData = UserModel.fromJson(response['data']);
         debugPrint('data in post user credentials ${jsonData}');
         return jsonData;
 
       }else{
-        return response["errors"];
+        debugPrint('response in error $response');
+        return response;
       }
 
 

@@ -131,7 +131,7 @@ class _JobsPageState extends State<JobsPage> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              job.service['translations'][0]['title'],
+              job.service!=null?job.service['translations'][0]['title']:'',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -465,9 +465,9 @@ class _JobsPageState extends State<JobsPage> {
   List<int> getJobCounts(JobsViewModel jobsViewModel) {
     List<int> a = Constants.supplierRoleId == widget.userRole
         ? [
-            jobsViewModel.supplierBookedJobs.length,
-            jobsViewModel.supplierInProgressJobs.length,
-            jobsViewModel.supplierCompletedJobs.length,
+            jobsViewModel.supplierBookedJobs!=null?jobsViewModel.supplierBookedJobs.length:0,
+            jobsViewModel.supplierInProgressJobs!=null?jobsViewModel.supplierInProgressJobs.length:0,
+            jobsViewModel.supplierCompletedJobs!=null?jobsViewModel.supplierCompletedJobs.length:0,
           ]
         : [
             jobsViewModel.getcustomerJobs

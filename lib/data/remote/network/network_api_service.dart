@@ -257,6 +257,10 @@ class NetworkApiService extends BaseApiService {
         //
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
+        case 503:
+        //
+        dynamic responseJson = jsonDecode(response.body);
+        return responseJson;
       case 400:
         throw BadRequestException(response.toString());
       case 401:

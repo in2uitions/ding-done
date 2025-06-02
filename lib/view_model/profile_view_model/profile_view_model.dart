@@ -306,9 +306,10 @@ class ProfileViewModel extends DisposableViewModel {
         "description": body["description"] != null
             ? body["description"]
             : profileBody["user"]["description"],
-        "status": body["status"] != null
-            ? body["status"]
-            : profileBody["user"]["status"],
+        // "status": body["status"] != null
+        //     ? body["status"]
+        //     : profileBody["user"]["status"],
+        "status":"avtive"
       };
 
       // Add the new address to the existing list

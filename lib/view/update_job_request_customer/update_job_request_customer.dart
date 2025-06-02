@@ -516,7 +516,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           ),
                                           Text(
                                             widget.data.total_amount != null
-                                                ? '${widget.data.total_amount} ${widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"]["currency"] : ''}'
+                                                ? '${widget.data.total_amount} ${widget.data.service!=null?widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"]["currency"] : '':''}'
                                                 : '${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"]["curreny"]} ${widget.data.service["country_rates"][0]["unit_type"] != null ? widget.data.service["country_rates"][0]["unit_type"]["code"] : ''}',
                                             style: getPrimarySemiBoldStyle(
                                               color: const Color(0xff4100E3),

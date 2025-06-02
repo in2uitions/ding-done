@@ -39,10 +39,18 @@ class SignUpViewModel with ChangeNotifier {
   Future<bool> signup() async {
     //Todo sign up save user
     try {
-      UserModel? response =
+      dynamic response =
           await _signUpRepository.postUserCredentials(signUpBody);
+      debugPrint('1 ${response}');
+      if(response is Map){
+        debugPrint('2 ${response}');
+
+        _errorMessage=response['reason'];
+        return false;
+      }
       _apiRegisterResponse = ApiResponse<UserModel>.completed(response);
       debugPrint('signing up $_apiRegisterResponse');
+
       // ResultConfirmEmail? res = await _signUpRepository.postEmailConfimation({
       //   'email': signUpBody['email'],
       // });

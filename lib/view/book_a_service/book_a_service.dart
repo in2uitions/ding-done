@@ -40,7 +40,7 @@ class BookAService extends StatefulWidget {
 class _BookAServiceState extends State<BookAService> {
   bool isLumpsum = false;
   var _matchingRate;
-
+  bool isLoading = false;
   String _getServiceRate(ProfileViewModel profileViewModel,
       JobsViewModel jobsViewModel) {
     // Extract the currency from job address
@@ -1138,7 +1138,10 @@ getPayment() async{
                                             height: context
                                                 .appValues.appSizePercent.h100,
                                             child: ElevatedButton(
-                                              onPressed: () async {
+                                              onPressed: isLoading ? null :  () async {
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
                                                 if (await jobsViewModel
                                                     .requestService() ==
                                                     true) {
@@ -1174,6 +1177,9 @@ getPayment() async{
                                                     );
                                                   }
                                                 }
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
                                               },
                                               style: ElevatedButton.styleFrom(
                                                 backgroundColor:
@@ -1183,7 +1189,16 @@ getPayment() async{
                                                   BorderRadius.circular(12),
                                                 ),
                                               ),
-                                              child: Text(
+                                              child: isLoading
+                                                  ? SizedBox(
+                                                width: 20,
+                                                height: 20,
+                                                child: CircularProgressIndicator(
+                                                  color: Colors.white,
+                                                  strokeWidth: 2,
+                                                ),
+                                              )
+                                                  :Text(
                                                 translate(
                                                     'bookService.requestService'),
                                                 style: getPrimarySemiBoldStyle(

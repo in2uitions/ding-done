@@ -168,7 +168,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       _buildPopupDialog(
-                                          context, 'Sign Up Failed \n ${signupViewModel.errorMessage}'),
+                                          context, 'Sign Up Failed \n${signupViewModel.errorMessage}'),
                                 );
                               }
 
