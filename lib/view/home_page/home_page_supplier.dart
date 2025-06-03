@@ -581,14 +581,18 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                             ));
                                           },
                                           child: SvgPicture.asset(
-                                              'assets/img/white-bell.svg'),
-                                        ),
-                                        if (profileViewModel.hasNotifications)
-                                          Positioned(
-                                            right: 0,
-                                            top: 0,
-                                            child: PulsingDot(),
+                                            profileViewModel.hasNotifications
+                                                ? 'assets/img/notification.svg'
+                                                : 'assets/img/white-bell.svg',
+                                            color: profileViewModel.hasNotifications ? const Color(0xffFFC500) : null,
                                           ),
+                                        ),
+                                        // if (profileViewModel.hasNotifications)
+                                        //   Positioned(
+                                        //     right: 0,
+                                        //     top: 0,
+                                        //     child: PulsingDot(),
+                                        //   ),
                                       ],
                                     ),
                                   ],
@@ -876,7 +880,7 @@ Widget _buildPopupDialog(BuildContext context) {
             ],
           ),
         ),
-        SvgPicture.asset('assets/img/service-popup-image.svg'),
+        SvgPicture.asset('assets/img/booking-confirmation-icon.svg'),
         SizedBox(height: context.appValues.appSize.s40),
         Padding(
           padding: EdgeInsets.symmetric(

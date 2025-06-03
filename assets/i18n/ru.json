@@ -124,7 +124,9 @@
     "inbox": "Входящие"
   },
   "notifications": {
-    "notifications": "уведомления"
+    "notifications": "уведомления",
+    "clearAll": "Очистить все"
+
   },
   "profile": {
     "help": "Помощь",

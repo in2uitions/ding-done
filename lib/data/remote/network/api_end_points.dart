@@ -46,5 +46,8 @@ class ApiEndPoints {
   // final String apiSendReset = '/email/reset-test';
   final String apiSendReset = '/email/reset-email';
   final String notifications = '/i18/notifications';
+  final String deleteNotification = '/notifications/delete-one';
+  final String deleteNotifications = '/notifications/delete-all';
+
   final String sendSMS = '/authentication/send-sms';
 }

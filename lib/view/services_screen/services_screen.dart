@@ -218,8 +218,8 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
               child: service["image"] != null
                   ? SvgPicture.network(
                       '${context.resources.image.networkImagePath2}/${service["image"]}',
-                      width: 40,
-                      height: 40,
+                      width: 55,
+                      height: 55,
                     )
                   : Container(
                       width: context.appValues.appSizePercent.w20,

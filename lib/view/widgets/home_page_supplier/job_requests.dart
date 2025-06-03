@@ -96,29 +96,56 @@ class _JobRequestsState extends State<JobRequests> {
                               children: [
                                 SizedBox(
                                   width: 200,
-                                  child: Text(
-                                    widget.severity_level != null
-                                        ? widget.severity_level
-                                                    .toString()
-                                                    .toLowerCase() ==
-                                                'major'
-                                            ? 'Urgent'
-                                            : 'Normal'
-                                        : '',
-                                    style: getPrimarySemiBoldStyle(
-                                      fontSize: 10,
-                                      color: const Color(0xff6E6BE8),
-                                      // color: widget.severity_level != null
-                                      //     ? widget.severity_level
-                                      //                 .toString()
-                                      //                 .toLowerCase() ==
-                                      //             'major'
-                                      //         ? Colors.red
-                                      //         : Colors.green
-                                      //     : Colors.white,
-                                    ),
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        widget.severity_level != null
+                                            ? widget.severity_level
+                                                        .toString()
+                                                        .toLowerCase() ==
+                                                    'major'
+                                                ? 'Urgent'
+                                                : 'Scheduled'
+                                            : '',
+                                        style: getPrimarySemiBoldStyle(
+                                          fontSize: 10,
+                                          color: widget.severity_level
+                                              .toString()
+                                              .toLowerCase() ==
+                                              'major'?Colors.red:const Color(0xff6E6BE8),
+                                          // color: widget.severity_level != null
+                                          //     ? widget.severity_level
+                                          //                 .toString()
+                                          //                 .toLowerCase() ==
+                                          //             'major'
+                                          //         ? Colors.red
+                                          //         : Colors.green
+                                          //     : Colors.white,
+                                        ),
+                                      ),
+                                      widget.severity_level
+                                          .toString()
+                                          .toLowerCase() ==
+                                          'major'?Text(
+                                        widget.severity_level != null
+                                            ? widget.severity_level
+                                            .toString()
+                                            .toLowerCase() ==
+                                            'major'
+                                            ? ' (in less than 4 hours)'
+                                            : ''
+                                            : '',
+                                        style: getPrimarySemiBoldStyle(
+                                          fontSize: 10,
+                                          color:const Color(0xff6E6BE8),
+
+                                        ),
+                                      ):Container(),
+                                    ],
                                   ),
-                                ),
+
+                                  ),
+
                               ],
                             ),
                           ],

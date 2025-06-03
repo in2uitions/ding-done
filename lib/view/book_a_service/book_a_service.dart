@@ -696,9 +696,14 @@ getPayment() async{
                                               height: 76,
                                               decoration: BoxDecoration(
                                                 color: const Color(0xffEAEAFF),
+                                                image: DecorationImage(
+                                                  image: NetworkImage(widget.image),
+                                                  fit: BoxFit.cover,
+                                                ),
                                                 borderRadius:
                                                 BorderRadius.circular(16),
                                               ),
+
                                             ),
                                             const Gap(20),
                                             Column(
@@ -750,7 +755,7 @@ getPayment() async{
                                         ),
                                         const Gap(15),
                                         Text(
-                                          '${subCatTrans!['description']}',
+                                          subCatTrans!['description']!=null?'${subCatTrans!['description']}':'',
                                           style: getPrimaryRegularStyle(
                                             fontSize: 12,
                                             //

@@ -124,7 +124,9 @@
     "inbox": "Εισερχόμενα"
   },
   "notifications": {
-    "notifications": "ειδοποιήσεις"
+    "notifications": "ειδοποιήσεις",
+    "clearAll": "Εκκαθάριση όλων"
+
   },
   "profile": {
     "help": "Βοήθεια",

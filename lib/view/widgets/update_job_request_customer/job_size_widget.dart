@@ -35,6 +35,13 @@ class JobSizeWidget extends StatefulWidget {
 
 class _JobSizeWidgetState extends State<JobSizeWidget> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    debugPrint('completed unit s${widget.completed_units}');
+    debugPrint('number_of_units unit s${widget.number_of_units}');
+  }
+  @override
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -83,7 +90,8 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             padding: const EdgeInsets.only(right: 20.0),
                             child: Consumer<JobsViewModel>(
                                 builder: (context, jobsViewModel, _) {
-                              return CustomIncrementField(
+                              return
+                                CustomIncrementField(
                                 index: 'completed_units',
                                 value: '${widget.completed_units}',
                                 // hintText: 'Job Type',

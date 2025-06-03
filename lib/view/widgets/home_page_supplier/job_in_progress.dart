@@ -395,14 +395,12 @@ class _JobInProgressState extends State<JobInProgress> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) =>
-                        simpleAlert(context, 'Success', 'Job Done'));
+                        _buildPopupDialogSuccess(context));
               } else {
                 showDialog(
                     context: context,
-                    builder: (BuildContext context) => simpleAlert(
-                        context,
-                        'Failure',
-                        'Something went wrong while finishing job \n${jobsViewModel.errorMessage}'));
+                    builder: (BuildContext context) => _buildPopupDialogFailure(
+                        context));
               }
               // }else {
               //   showDialog(
@@ -543,25 +541,14 @@ class _JobInProgressState extends State<JobInProgress> {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) =>
-                        simpleAlert(context, 'Success', 'Job Done'));
+                        _buildPopupDialogSuccess(context));
               } else {
                 showDialog(
                     context: context,
-                    builder: (BuildContext context) => simpleAlert(
-                        context,
-                        'Failure \n${jobsViewModel.errorMessage}',
-                        'Something went wrong'));
+                    builder: (BuildContext context) => _buildPopupDialogFailure(
+                        context));
               }
 
-              // await jobsViewModel.finishJob(widget.data.id);
-              // Navigator.pop(context);
-              //
-              // new Future.delayed(const Duration(seconds: 0), () =>
-              //     showDialog(
-              //         context: context,
-              //         builder: (BuildContext context) =>
-              //             simpleAlert(
-              //                 context,'Success' ,'Job Done')));
             },
             style: ElevatedButton.styleFrom(
               elevation: 0.0,
@@ -589,9 +576,8 @@ class _JobInProgressState extends State<JobInProgress> {
       ),
     );
   }
-  Widget simpleAlert(BuildContext context, String message, String message2) {
+  Widget _buildPopupDialogSuccess(BuildContext context) {
     return AlertDialog(
-      backgroundColor: Colors.white,
       elevation: 15,
       content: Column(
         mainAxisSize: MainAxisSize.min,
@@ -606,34 +592,140 @@ class _JobInProgressState extends State<JobInProgress> {
                   child: SvgPicture.asset('assets/img/x.svg'),
                   onTap: () {
                     Navigator.pop(context);
-                    Future.delayed(const Duration(seconds: 0),
-                            () => Navigator.of(context).pop());
                   },
                 ),
               ],
             ),
           ),
-          message == 'Success'
-              ? SvgPicture.asset('assets/img/service-popup-image.svg')
-              : SvgPicture.asset('assets/img/failure.svg'),
+          SvgPicture.asset('assets/img/booking-confirmation-icon.svg'),
           SizedBox(height: context.appValues.appSize.s40),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              message2,
+              translate('button.success'),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: context.resources.color.btnColorBlue,
-              ),
+                  fontSize: 17, color: context.resources.color.btnColorBlue),
             ),
           ),
           SizedBox(height: context.appValues.appSize.s20),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              translate('jobDetails.jobAccepted'),
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 15,
+                color: context.resources.color.secondColorBlue,
+              ),
+            ),
+          ),
         ],
       ),
     );
   }
+  Widget _buildPopupDialogFailure(BuildContext context) {
+    return AlertDialog(
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  child: SvgPicture.asset('assets/img/x.svg'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+          SvgPicture.asset('assets/img/failure.svg'),
+          SizedBox(height: context.appValues.appSize.s40),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              translate('button.failure'),
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                  fontSize: 17, color: context.resources.color.btnColorBlue),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s20),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              translate('button.somethingWentWrong'),
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 15,
+                color: context.resources.color.secondColorBlue,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Widget simpleAlert(BuildContext context, String message, String message2) {
+  //   return AlertDialog(
+  //     backgroundColor: Colors.white,
+  //     elevation: 15,
+  //     content: Column(
+  //       mainAxisSize: MainAxisSize.min,
+  //       // crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: <Widget>[
+  //         Padding(
+  //           padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.end,
+  //             children: [
+  //               InkWell(
+  //                 child: SvgPicture.asset('assets/img/x.svg'),
+  //                 onTap: () {
+  //                   Navigator.pop(context);
+  //                   Future.delayed(const Duration(seconds: 0),
+  //                           () => Navigator.of(context).pop());
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         message == 'Success'
+  //             ? SvgPicture.asset('assets/img/service-popup-image.svg')
+  //             : SvgPicture.asset('assets/img/failure.svg'),
+  //         SizedBox(height: context.appValues.appSize.s40),
+  //         Padding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: context.appValues.appPadding.p32,
+  //           ),
+  //           child: Text(
+  //             message2,
+  //             textAlign: TextAlign.center,
+  //             style: getPrimaryRegularStyle(
+  //               fontSize: 17,
+  //               color: context.resources.color.btnColorBlue,
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(height: context.appValues.appSize.s20),
+  //       ],
+  //     ),
+  //   );
+  // }
 
 }

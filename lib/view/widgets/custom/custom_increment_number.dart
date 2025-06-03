@@ -46,16 +46,18 @@ class CustomIncrementField extends StatefulWidget {
 class _CustomIncrementFieldState extends State<CustomIncrementField> {
   final GlobalKey<FormFieldState<String>> globalKey =
       GlobalKey<FormFieldState<String>>();
-  int currentValue = 0;
+  int currentValue = 1;
   final TextEditingController _customController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
     debugPrint('value is ${widget.value}');
-    currentValue = widget.value != null && widget.value != ''
+
+    currentValue = widget.value != null && widget.value != '' && widget.value != '0'
         ? int.parse(widget.value.toString())
-        : 0;
+        : 1;
+    widget.viewModel(index: widget.index, value: widget.value);
     _customController.text = currentValue.toString();
     _customController.addListener(() {
       widget.viewModel(index: widget.index, value: _customController.text);
@@ -76,7 +78,7 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
   }
 
   void _decrement() {
-    if (currentValue > 0) {
+    if (currentValue > 1) {
       setState(() {
         currentValue--;
         _customController.text = currentValue.toString();

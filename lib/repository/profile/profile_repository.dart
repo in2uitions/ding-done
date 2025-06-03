@@ -20,6 +20,10 @@ class ProfileRepository {
       NetworkApiService(url: ApiEndPoints().customerChangeLocation);
   final BaseApiService _userApi =
       NetworkApiService(url: ApiEndPoints().userData);
+  final BaseApiService _apiDeleteNotification =
+      NetworkApiService(url: ApiEndPoints().deleteNotification);
+  final BaseApiService _apiDeleteNotifications =
+      NetworkApiService(url: ApiEndPoints().deleteNotifications);
   final BaseApiService _apiNotifications =
       NetworkApiService(url: ApiEndPoints().notifications);
 
@@ -191,6 +195,31 @@ class ProfileRepository {
 
       // final jsonData = UserModel.fromJson(response['data']);
       debugPrint('jsondata repo ${response}');
+
+      return response["data"];
+    } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> deleteNotificationById({required int id,}) async {
+    try {
+      dynamic response;
+      response = await _apiDeleteNotification.postResponse(
+          data: {"id":id});
+      debugPrint('delete one notification ${response}');
+
+      return response["data"];
+    } catch (error) {
+      rethrow;
+    }
+  }
+  Future<dynamic> deleteNotifications() async {
+    try {
+      dynamic response;
+      response = await _apiDeleteNotifications.postResponse(data: {}
+          );
+      debugPrint('delete one notification ${response}');
 
       return response["data"];
     } catch (error) {

@@ -31,7 +31,7 @@ class _AddressWidgetState extends State<AddressWidget> {
             Padding(
               padding: EdgeInsets.fromLTRB(
                 context.appValues.appPadding.p0,
-                context.appValues.appPadding.p10,
+                context.appValues.appPadding.p0,
                 context.appValues.appPadding.p0,
                 context.appValues.appPadding.p0,
               ),

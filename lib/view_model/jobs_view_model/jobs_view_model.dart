@@ -669,10 +669,12 @@ class JobsViewModel with ChangeNotifier {
   }
 
   void setUpdatedJob({required String index, dynamic value}) {
+    debugPrint('_updatedBody $_updatedBody $value');
     if ((index == 'tap_payments_card' || index == 'payment_method') &&
         userRole == Constants.supplierRoleId) {
     } else {
       _updatedBody[index] = value;
+      debugPrint('_updatedBody $_updatedBody $value');
     }
     _jobUpdated = false;
     debugPrint('hhhh $index $value');

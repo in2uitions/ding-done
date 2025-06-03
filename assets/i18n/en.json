@@ -121,7 +121,8 @@
     "inbox": "Inbox"
   },
   "notifications": {
-    "notifications": "Notifications"
+    "notifications": "Notifications",
+    "clearAll": "Clear All"
   },
   "profile": {
     "help": "Help",

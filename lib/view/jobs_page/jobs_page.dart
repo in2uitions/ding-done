@@ -161,8 +161,8 @@ class _JobsPageState extends State<JobsPage> {
                   } else {
                     showDialog(
                         context: context,
-                        builder: (BuildContext context) => simpleAlert(context,
-                            '${translate('button.failure')} \n${jobsViewModel.errorMessage}'));
+                        builder: (BuildContext context) => _buildPopupDialogFailure(context,
+                            '${jobsViewModel.errorMessage}'));
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -248,24 +248,28 @@ class _JobsPageState extends State<JobsPage> {
                                     ),
                                     Consumer<ProfileViewModel>(
                                         builder: (context, profileViewModel, _) {
-                                        return Stack(
+                                        return  Stack(
                                           children: [
                                             InkWell(
                                               onTap: () {
                                                 profileViewModel.setNotificationsData(false);
                                                 Navigator.of(context).push(_createRoute(
-                                                   NotificationsScreen(profileViewModel: profileViewModel,),
+                                                  NotificationsScreen(profileViewModel: profileViewModel,),
                                                 ));
                                               },
                                               child: SvgPicture.asset(
-                                                  'assets/img/bellwhite.svg'),
-                                            ),
-                                            if (profileViewModel.hasNotifications)
-                                              Positioned(
-                                                right: 0,
-                                                top: 0,
-                                                child: PulsingDot(),
+                                                profileViewModel.hasNotifications
+                                                    ? 'assets/img/notification.svg'
+                                                    : 'assets/img/white-bell.svg',
+                                                color: profileViewModel.hasNotifications ? const Color(0xffFFC500) : null,
                                               ),
+                                            ),
+                                            // if (profileViewModel.hasNotifications)
+                                            //   Positioned(
+                                            //     right: 0,
+                                            //     top: 0,
+                                            //     child: PulsingDot(),
+                                            //   ),
                                           ],
                                         );
                                       }
@@ -537,6 +541,58 @@ class _JobsPageState extends State<JobsPage> {
       },
     );
   }
+}
+Widget _buildPopupDialogFailure(BuildContext context,String message) {
+  return AlertDialog(
+    elevation: 15,
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                child: SvgPicture.asset('assets/img/x.svg'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
+        SvgPicture.asset('assets/img/failure.svg'),
+        SizedBox(height: context.appValues.appSize.s40),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p32,
+          ),
+          child: Text(
+            translate('button.failure'),
+            textAlign: TextAlign.center,
+            style: getPrimaryRegularStyle(
+                fontSize: 17, color: context.resources.color.btnColorBlue),
+          ),
+        ),
+        SizedBox(height: context.appValues.appSize.s20),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p32,
+          ),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: getPrimaryRegularStyle(
+              fontSize: 15,
+              color: context.resources.color.secondColorBlue,
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
 }
 
 Route _createRoute(dynamic classname) {

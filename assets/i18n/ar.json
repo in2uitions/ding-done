@@ -124,7 +124,9 @@
     "inbox": "البريد الوارد"
   },
   "notifications": {
-    "notifications": "إشعارات"
+    "notifications": "إشعارات",
+    "clearAll": "مسح الكل"
+
   },
   "profile": {
     "help": "المساعدة",

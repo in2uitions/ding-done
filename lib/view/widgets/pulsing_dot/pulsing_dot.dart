@@ -19,7 +19,7 @@ class PulsingDotState extends State<PulsingDot>
       vsync: this,
     )..repeat(reverse: true);
 
-    _animation = Tween<double>(begin: 0.8, end: 1.4).animate(
+    _animation = Tween<double>(begin: 0.8, end: 1.2).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
   }
@@ -32,7 +32,7 @@ class PulsingDotState extends State<PulsingDot>
         width: 7,
         height: 7,
         decoration: BoxDecoration(
-          color: Colors.red,
+          color: Color(0xffFFC500),
           shape: BoxShape.circle,
         ),
       ),

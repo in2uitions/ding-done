@@ -107,6 +107,7 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                       ),
                     ),
                     const Gap(10),
+                    widget.image != null && widget.image.isNotEmpty?
                     Padding(
                       padding: EdgeInsets.only(
                         top: context.appValues.appPadding.p0,
@@ -124,8 +125,8 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                             topLeft: Radius.circular(16),
                           ),
                         ),
-                        child: widget.image != null && widget.image.isNotEmpty
-                            ? Stack(
+                        child:
+                             Stack(
                                 alignment: Alignment.center,
                                 children: [
                                   PageView.builder(
@@ -183,23 +184,10 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                                     ),
                                 ],
                               )
-                            : Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(20),
-                                  // borderRadius: const BorderRadius.only(
-                                  //   bottomLeft: Radius.circular(20),
-                                  //   topLeft: Radius.circular(20),
-                                  // ),
-                                  image: const DecorationImage(
-                                    image: NetworkImage(
-                                      'https://cdn.pixabay.com/photo/2012/11/28/10/32/welding-67640_1280.jpg?width=500',
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
+
                       ),
-                    ),
+                    ):
+                    Container(),
                   ],
                 ),
               ),

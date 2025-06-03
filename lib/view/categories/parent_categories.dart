@@ -115,8 +115,8 @@ class _ParentCategoriesWidgetState extends State<ParentCategoriesWidget> {
           : Center(
               child: SvgPicture.network(
                 '${context.resources.image.networkImagePath2}/${category["image"]}.svg',
-                height: 40,
-                width: 40,
+                height: 55,
+                width: 55,
               ),
             ),
     );

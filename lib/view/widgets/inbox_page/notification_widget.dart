@@ -2,18 +2,22 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-
 class NotificationWidget extends StatelessWidget {
-  NotificationWidget({
+  final String title, message, time;
+  final VoidCallback onTap;
+  final Widget? trailing;
+
+   NotificationWidget({
     super.key,
     required this.title,
     required this.message,
     required this.time,
     required this.onTap,
+    this.trailing,
   });
 
-  String title, message, time;
-  dynamic onTap;
+  // String title, message, time;
+  // dynamic onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +102,7 @@ class NotificationWidget extends StatelessWidget {
                   ],
                 ),
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
                       time,
@@ -107,6 +111,12 @@ class NotificationWidget extends StatelessWidget {
                         color: const Color(0xff78789D),
                       ),
                     ),
+                    if (trailing != null) ...[
+                      const Gap(8),
+                      trailing!,
+                    ],
+                  ],
+                ),
                     // const Gap(7),
                     // Container(
                     //   width: 25,
@@ -129,8 +139,7 @@ class NotificationWidget extends StatelessWidget {
                     //     ),
                     //   ),
                     // ),
-                  ],
-                ),
+
               ],
             ),
           ),

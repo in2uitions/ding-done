@@ -13,7 +13,7 @@ import '../widgets/inbox_page/notification_widget.dart';
 class NotificationsScreen extends StatefulWidget {
   var profileViewModel;
 
-  NotificationsScreen({super.key,required this.profileViewModel});
+  NotificationsScreen({super.key, required this.profileViewModel});
 
   @override
   State<NotificationsScreen> createState() => _NotificationsScreenState();
@@ -80,18 +80,16 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               ),
             ),
           ),
-
           DraggableScrollableSheet(
             initialChildSize: 0.85,
             minChildSize: 0.85,
             maxChildSize: 1,
             builder: (BuildContext context, ScrollController scrollController) {
               return FutureBuilder(
-                  future: Provider.of<ProfileViewModel>(
-                      context, listen: false)
+                  future: Provider.of<ProfileViewModel>(context, listen: false)
                       .getNotifications(),
                   builder: (context, AsyncSnapshot data) {
-                    if (data.hasData) {
+                    if (data.hasData && data.data.isNotEmpty) {
                       return Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -100,29 +98,66 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           ),
                           color: Color(0xffFEFEFE),
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.only(top: 15.0),
-                          child: ListView.builder(
-                            controller: scrollController,
-                            itemCount: widget.profileViewModel.notifications.length,
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Column(
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  NotificationWidget(
-                                    title: '${data.data[index]['subject']}',
-                                    message: '${data.data[index]['body']}',
-                                    time: '',
-                                    onTap: () {},
+                                  Container(),
+
+                                  TextButton(
+                                    onPressed: () async {
+                                      await widget.profileViewModel
+                                          .clearAllNotifications();
+                                      setState(() {});
+                                    },
+                                    child: Text(
+                                      translate('notifications.clearAll'),
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 14,
+                                        color: Color(0xffFFC500),
+                                      ),
+                                    ),
                                   ),
                                 ],
-                              );
-                            },
-                          ),
+                              ),
+                            ),
+                            Expanded(
+                              child: ListView.builder(
+                                controller: scrollController,
+                                itemCount: widget
+                                    .profileViewModel.notifications.length,
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (BuildContext context, int index) {
+                                  final notification = data.data[index];
+                                  return NotificationWidget(
+                                    title: '${notification['subject']}',
+                                    message: '${notification['body']}',
+                                    time: '',
+                                    onTap: () {},
+                                    trailing: InkWell(
+                                      onTap: () async {
+                                        await widget.profileViewModel.deleteNotificationById(notification['id']);
+                                        setState(() {}); // Refresh the list
+                                      },
+                                      child: SvgPicture.asset(
+                                        'assets/img/bin.svg',
+                                        width: 20,
+                                        height: 20,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
                         ),
                       );
-                    }
-                    else {
+                    } else {
                       return Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -177,8 +212,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       );
                     }
                   });
-
-
             },
           ),
         ],
