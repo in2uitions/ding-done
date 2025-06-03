@@ -38,7 +38,7 @@ class ProfileViewModel extends DisposableViewModel {
     dynamic notifications =
     await getNotifications();
     if (notifications != null) {
-      if (notifications.isNotEmpty) {
+      if (notifications.isNotEmpty && notifications!=[]) {
         _hasNotifications = true;
       } else {  _hasNotifications = false;}
     } else {

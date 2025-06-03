@@ -589,25 +589,29 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                         ],
                                       ),
+
                                       Stack(
                                         children: [
                                           InkWell(
-                                            onTap: () async{
+                                            onTap: () {
                                               profileViewModel.setNotificationsData(false);
-                                              Navigator.of(context)
-                                                  .push(_createRoute(
-                                                 NotificationsScreen(profileViewModel:profileViewModel),
+                                              Navigator.of(context).push(_createRoute(
+                                                NotificationsScreen(profileViewModel: profileViewModel,),
                                               ));
                                             },
                                             child: SvgPicture.asset(
-                                                'assets/img/white-bell.svg'),
-                                          ),
-                                          if (profileViewModel.hasNotifications)
-                                            Positioned(
-                                              right: 0,
-                                              top: 0,
-                                              child: PulsingDot(),
+                                              profileViewModel.hasNotifications
+                                                  ? 'assets/img/notification.svg'
+                                                  : 'assets/img/white-bell.svg',
+                                              color: profileViewModel.hasNotifications ? const Color(0xffFFC500) : null,
                                             ),
+                                          ),
+                                          // if (profileViewModel.hasNotifications)
+                                          //   Positioned(
+                                          //     right: 0,
+                                          //     top: 0,
+                                          //     child: PulsingDot(),
+                                          //   ),
                                         ],
                                       ),
                                       // Container(

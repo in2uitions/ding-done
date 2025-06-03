@@ -211,33 +211,32 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                       ),
                                     ),
                                   ),
-                                ],
-                              ),
-                            ),
-                            const Gap(20),
-                            widget.fromWhere == translate('jobs.completed') ||
-                                    widget.fromWhere == translate('jobs.active')
-                                ? Padding(
+                                  const Gap(20),
+
+                                  widget.fromWhere == translate('jobs.completed') ||
+                                      widget.fromWhere == translate('jobs.active')
+                                      ? Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
-                                            context.appValues.appPadding.p20),
+                                        context.appValues.appPadding.p0),
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      CrossAxisAlignment.start,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.start,
+                                      MainAxisAlignment.start,
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: context
                                                   .appValues.appPadding.p0,
                                               vertical: context
-                                                  .appValues.appPadding.p10),
+                                                  .appValues.appPadding.p0),
                                           child: Text(
                                             translate(
                                                 'bookService.jobDescription'),
+
                                             style: getPrimaryRegularStyle(
-                                              fontSize: 16,
+                                              fontSize: 14,
                                               color: const Color(0xff180C38),
                                             ),
                                           ),
@@ -245,7 +244,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                         Padding(
                                           padding: EdgeInsets.symmetric(
                                             horizontal:
-                                                context.appValues.appPadding.p0,
+                                            context.appValues.appPadding.p0,
                                           ),
                                           child: Padding(
                                             padding: EdgeInsets.fromLTRB(
@@ -261,10 +260,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     .data
                                                     .service['translations']) {
                                                   if (translation[
-                                                          'languages_code'] ==
+                                                  'languages_code'] ==
                                                       widget.lang) {
                                                     description = translation[
-                                                        'description'];
+                                                    'description'];
                                                     break; // Exit loop once the match is found
                                                   }
                                                 }
@@ -276,7 +275,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                   // Fallback text if no matching translation is found
                                                   style: getPrimaryRegularStyle(
                                                     color:
-                                                        const Color(0xff71727A),
+                                                    const Color(0xff71727A),
                                                     fontSize: 14,
                                                   ),
                                                 );
@@ -287,7 +286,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                       ],
                                     ),
                                   )
-                                : Container(),
+                                      : Container(),
+                                ],
+                              ),
+                            ),
+
                             // widget.fromWhere!=translate('jobs.active')?
                             JobDescriptionWidget(
                               description: widget.data.job_description,
@@ -517,7 +520,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           Text(
                                             widget.data.total_amount != null
                                                 ? '${widget.data.total_amount} ${widget.data.service!=null?widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"]["currency"] : '':''}'
-                                                : '${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"]["curreny"]} ${widget.data.service["country_rates"][0]["unit_type"] != null ? widget.data.service["country_rates"][0]["unit_type"]["code"] : ''}',
+                                                : '${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"]["curreny"] ?? ''} ${widget.data.service["country_rates"][0]["unit_type"] != null ? widget.data.service["country_rates"][0]["unit_type"]["code"] : ''}',
                                             style: getPrimarySemiBoldStyle(
                                               color: const Color(0xff4100E3),
                                               fontSize: 16,

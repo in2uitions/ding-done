@@ -261,7 +261,7 @@ class _JobsPageState extends State<JobsPage> {
                                                 profileViewModel.hasNotifications
                                                     ? 'assets/img/notification.svg'
                                                     : 'assets/img/white-bell.svg',
-                                                color: profileViewModel.hasNotifications ? const Color(0xffFFC500) : null,
+                                                color: profileViewModel.hasNotifications ?const Color(0xffFFC500) : null,
                                               ),
                                             ),
                                             // if (profileViewModel.hasNotifications)
