@@ -42,20 +42,25 @@ class _CategoriescardState extends State<Categoriescard> {
           child: Row(
             children: [
               Container(
-                // width: context.appValues.appSizePercent.w35,
                 width: 76,
                 height: context.appValues.appSizePercent.h100,
                 decoration: BoxDecoration(
                   color: const Color(0xffEAEAFF),
-                  image: DecorationImage(
-                    image: NetworkImage(widget.image),
-                    fit: BoxFit.cover,
-                  ),
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(16),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(12), // match image corner radius if needed
+                    child: Image.network(
+                      widget.image,
+                      width: 55, // your desired image width
+                      height: 55, // your desired image height
+                      fit: BoxFit.contain, // makes the image fit without cropping
+                    ),
                   ),
                 ),
               ),
+
               const Gap(30),
               Flexible(
                 child: Column(

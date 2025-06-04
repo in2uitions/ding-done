@@ -728,7 +728,7 @@ class _HomePageState extends State<HomePage> {
                                                 //         'home_screen.servicesCategories')
                                                 //     :
                                                 translate(
-                                                    'home_screen.categories'),
+                                                    'updateJob.services'),
                                                 style: getPrimarySemiBoldStyle(
                                                   fontSize: 16,
                                                   color: context.resources.color
