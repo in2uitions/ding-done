@@ -163,12 +163,14 @@ class _JobsCardsState extends State<JobsCards> {
                                           context.appValues.appSizePercent.w18,
                                       height:
                                           context.appValues.appSizePercent.h9,
-                                      decoration: const BoxDecoration(
+                                      decoration:  BoxDecoration(
                                         borderRadius: BorderRadius.all(
-                                          Radius.circular(100),
+                                          Radius.circular(10),
                                         ),
                                         image: DecorationImage(
                                           image: NetworkImage(
+                                            data[index].service['image']!=null?
+                                            '${context.resources.image.networkImagePath2}/${data[index].service['image']}.svg':
                                             'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
                                           ),
                                           fit: BoxFit.cover,
@@ -616,7 +618,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                               .toString()
                                                               .toLowerCase() ==
                                                           'major'
-                                                      ? const Color(0xff4100E3)
+                                                      ? Colors.red
                                                       : Colors.green
                                                   : Colors.white),
                                         ),

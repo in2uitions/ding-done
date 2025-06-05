@@ -92,11 +92,19 @@ class _JobInProgressState extends State<JobInProgress> {
                               decoration: BoxDecoration(
                                 color: const Color(0xffEAEAFF),
                                 borderRadius: BorderRadius.circular(16),
+
+                                  image: DecorationImage(
+                                    image: NetworkImage(
+                                      '${context.resources.image.networkImagePath2}/${jobsViewModel.supplierInProgressJobs[index].service['image']}.svg',
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
+
                               ),
-                              child: SvgPicture.network(
-                                '${context.resources.image.networkImagePath}/${jobsViewModel.supplierInProgressJobs[index].service["category"]["image"]}.svg',
-                                fit: BoxFit.cover,
-                              ),
+                              // child: SvgPicture.network(
+                              //   '${context.resources.image.networkImagePath2}/${jobsViewModel.supplierInProgressJobs[index].service['image']}.svg',
+                              //   fit: BoxFit.cover,
+                              // ),
                             ),
                             // SvgPicture.asset('assets/img/plumbing-blue.svg'),
                             SizedBox(
@@ -388,28 +396,19 @@ class _JobInProgressState extends State<JobInProgress> {
           ElevatedButton(
             onPressed: () async {
               debugPrint('data in finish ${data.customer['id']}');
-              // if(await jobsViewModel.payFees(widget.data.id,widget.data.customer['id']) == true) {
-              if (await jobsViewModel
-                  .finishJobAndCollectPayment(data.id) ==
-                  true) {
+              if (await jobsViewModel.finishJobAndCollectPayment(data.id) == true) {
+                Navigator.pop(context); // ❗Close showFinalData dialog first
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        _buildPopupDialogSuccess(context));
+                  context: context,
+                  builder: (BuildContext context) => _buildPopupDialogSuccess(context),
+                );
               } else {
+                Navigator.pop(context); // ❗Close showFinalData dialog first
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) => _buildPopupDialogFailure(
-                        context));
+                  context: context,
+                  builder: (BuildContext context) => _buildPopupDialogFailure(context),
+                );
               }
-              // }else {
-              //   showDialog(
-              //       context: context,
-              //       builder: (BuildContext context) => simpleAlert(
-              //           context,
-              //           'Failure',
-              //           'Something went wrong while paying job\n${jobsViewModel.errorMessage}'));
-              // }
             },
             style: ElevatedButton.styleFrom(
               elevation: 0.0,
@@ -535,20 +534,19 @@ class _JobInProgressState extends State<JobInProgress> {
           SizedBox(height: context.appValues.appSize.s20),
           ElevatedButton(
             onPressed: () async {
-              if (await jobsViewModel
-                  .finishJobAndCollectPayment(data.id) ==
-                  true) {
+              if (await jobsViewModel.finishJobAndCollectPayment(data.id) == true) {
+                Navigator.pop(context); // ❗Close showFinalData dialog first
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        _buildPopupDialogSuccess(context));
+                  context: context,
+                  builder: (BuildContext context) => _buildPopupDialogSuccess(context),
+                );
               } else {
+                Navigator.pop(context); // ❗Close showFinalData dialog first
                 showDialog(
-                    context: context,
-                    builder: (BuildContext context) => _buildPopupDialogFailure(
-                        context));
+                  context: context,
+                  builder: (BuildContext context) => _buildPopupDialogFailure(context),
+                );
               }
-
             },
             style: ElevatedButton.styleFrom(
               elevation: 0.0,

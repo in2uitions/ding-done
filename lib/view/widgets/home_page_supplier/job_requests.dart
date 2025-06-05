@@ -109,10 +109,12 @@ class _JobRequestsState extends State<JobRequests> {
                                             : '',
                                         style: getPrimarySemiBoldStyle(
                                           fontSize: 10,
-                                          color: widget.severity_level
+                                          color: widget.severity_level != null?
+                                          widget.severity_level
                                               .toString()
                                               .toLowerCase() ==
-                                              'major'?Colors.red:const Color(0xff6E6BE8),
+                                              'major'?Colors.red:Colors.green:
+                                          const Color(0xff6E6BE8),
                                           // color: widget.severity_level != null
                                           //     ? widget.severity_level
                                           //                 .toString()

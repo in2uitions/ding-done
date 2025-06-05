@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 
+import '../full_screen_image/full_screen_image.dart';
+
 class JobDescriptionWidget extends StatefulWidget {
   var description;
   var image;
@@ -117,7 +119,7 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                       child: Container(
                         // width: context.appValues.appSizePercent.w100,
                         // height: context.appValues.appSizePercent.h20,
-                        width: 72,
+                        width:2000,
                         height: 72,
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.only(
@@ -126,64 +128,52 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                           ),
                         ),
                         child:
-                             Stack(
-                                alignment: Alignment.center,
-                                children: [
-                                  PageView.builder(
-                                    controller: _pageController,
-                                    itemCount: widget.image.length,
-                                    onPageChanged: _onPageChanged,
-                                    itemBuilder: (context, index) {
-                                      return Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(16),
-                                          // borderRadius: const BorderRadius.only(
-                                          //   bottomLeft: Radius.circular(20),
-                                          //   topLeft: Radius.circular(20),
-                                          // ),
-                                          image: DecorationImage(
-                                            image: NetworkImage(
-                                              '${context.resources.image.networkImagePath2}/${widget.image[index]['directus_files_id']['id']}?width=500',
-                                            ),
-                                            fit: BoxFit.cover,
+                        Stack(
+                          alignment: Alignment.center,
+                          children: [
+                            SizedBox(
+                              height: 200, // Adjust as needed
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: widget.image.length,
+                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                itemBuilder: (context, index) {
+                                  final imageUrls = widget.image.map<String>((img) =>
+                                  '${context.resources.image.networkImagePath2}/${img['directus_files_id']['id']}?width=1000',
+                                  ).toList();
+
+                                  return GestureDetector(
+                                    onTap: () {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (_) => FullScreenImageViewer(
+                                            imageUrls: imageUrls,
+                                            initialIndex: index,
                                           ),
                                         ),
                                       );
                                     },
-                                  ),
-                                  if (_currentIndex > 0)
-                                    Positioned(
-                                      left: 10,
-                                      child: IconButton(
-                                        icon: const Icon(Icons.arrow_back,
-                                            color: Colors.white),
-                                        onPressed: () {
-                                          _pageController.previousPage(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            curve: Curves.easeInOut,
-                                          );
-                                        },
+                                    child: Container(
+                                      margin: const EdgeInsets.only(right: 12),
+                                      width: 75,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(16),
+                                        image: DecorationImage(
+                                          image: NetworkImage(imageUrls[index]),
+                                          fit: BoxFit.cover,
+                                        ),
                                       ),
                                     ),
-                                  if (_currentIndex < widget.image.length - 1)
-                                    Positioned(
-                                      right: 10,
-                                      child: IconButton(
-                                        icon: const Icon(Icons.arrow_forward,
-                                            color: Colors.white),
-                                        onPressed: () {
-                                          _pageController.nextPage(
-                                            duration: const Duration(
-                                                milliseconds: 300),
-                                            curve: Curves.easeInOut,
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                ],
-                              )
+                                  );
+                                },
+                              ),
+                            ),
+
+                            // Optional: you can keep or remove arrows for custom scrolling
+                          ],
+                        )
+
 
                       ),
                     ):
