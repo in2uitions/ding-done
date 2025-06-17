@@ -175,8 +175,8 @@ class _JobRequestsState extends State<JobRequests> {
                               ),
                               const Gap(5),
                               Text(
-                                DateFormat('d MMMM yyyy').format(
-                                    DateTime.parse(widget.date.toString())),
+                                widget.date.toString()!='null'?DateFormat('d MMMM yyyy').format(
+                                    DateTime.parse(widget.date.toString())):'',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: getPrimaryRegularStyle(
@@ -193,8 +193,8 @@ class _JobRequestsState extends State<JobRequests> {
                               ),
                               const Gap(5),
                               Text(
-                                DateFormat('HH:mm').format(
-                                    DateTime.parse(widget.date.toString())),
+                                  widget.date.toString()!='null'?DateFormat('HH:mm').format(
+                                    DateTime.parse(widget.date.toString())):'',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: getPrimaryRegularStyle(

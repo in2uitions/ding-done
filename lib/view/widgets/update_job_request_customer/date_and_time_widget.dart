@@ -46,8 +46,9 @@ class _DateAndTimeWidgetState extends State<DateAndTimeWidget> {
             ),
             // const DatePickerWidget(),
             Text(
-              DateFormat('d MMMM yyyy, HH:mm')
-                  .format(DateTime.parse(widget.dateTime.toString())),
+                widget.dateTime.toString()!='null'?
+                DateFormat('d MMMM yyyy, HH:mm')
+                  .format(DateTime.parse(widget.dateTime.toString())):'',
               // '${widget.dateTime}',
               style: getPrimaryRegularStyle(
                 fontSize: 14,

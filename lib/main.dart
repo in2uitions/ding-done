@@ -1,9 +1,12 @@
 import 'dart:async';
 
 import 'package:dingdone/res/app_prefs.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
+import 'package:dingdone/view/job_details_supplier/job_details_supplier.dart';
 import 'package:dingdone/view/on_boarding/on_boarding.dart';
+import 'package:dingdone/view/update_job_request_customer/update_job_request_customer.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -90,24 +93,71 @@ class _MyAppState extends State<MyApp> {
 
       final role = await AppPreferences().get(key: userRoleKey, isModel: false);
       Uri uri = Uri.parse(link);
+      debugPrint('uri parsed ${Uri.parse(link)}');
 
       if (uri.path.contains('confirm_payment_method')) {
         navigatorKey.currentState?.push(
           MaterialPageRoute(
-            builder: (_) => Consumer2<ProfileViewModel, PaymentViewModel>(
-              builder: (context, profileViewModel, paymentViewModel, _) {
-                return ConfirmPaymentMethod(
-                  payment_method:
+            builder: (_) =>
+                Consumer2<ProfileViewModel, PaymentViewModel>(
+                  builder: (context, profileViewModel, paymentViewModel, _) {
+                    return ConfirmPaymentMethod(
+                      payment_method:
                       paymentViewModel.getPaymentBody['tap_payments_card'],
-                  paymentViewModel: paymentViewModel,
-                  profileViewModel: profileViewModel,
-                  role: role,
-                );
-              },
-            ),
+                      paymentViewModel: paymentViewModel,
+                      profileViewModel: profileViewModel,
+                      role: role,
+                    );
+                  },
+                ),
           ),
         );
-      } else {
+      } else
+        if (uri.path.contains('job')) {
+          final jobsViewModel=Provider.of<JobsViewModel>(context, listen: false);
+          final jobId = link.split('/').last;
+          debugPrint('job id $jobId');
+
+          final job = jobsViewModel.findJobById(jobId);
+          final role = await AppPreferences().get(
+
+              key: userRole, isModel: false);
+          debugPrint('role  $role');
+
+          final lang = await AppPreferences().get(
+              key: language, isModel: false);
+
+
+          if (role == Constants.supplierRoleId) {
+            debugPrint('supplierrrrrr');
+            navigatorKey.currentState?.push(
+              MaterialPageRoute(
+                builder: (_) =>
+                    JobDetailsSupplier(
+                      data: job,
+                      fromWhere: 'notifications',
+                      title: job.toString(),
+                      lang: lang,
+                    ),
+              ),
+            );
+          } else {
+            debugPrint('customerrrr');
+
+            navigatorKey.currentState?.push(
+                MaterialPageRoute(
+                    builder: (_) =>
+                        UpdateJobRequestCustomer(
+                          data: job,
+                          title: job.toString(),
+                          fromWhere: 'notifications',
+                          lang: lang,
+                        )));
+          }
+        }
+
+      else
+       {
         navigatorKey.currentState?.push(
           _createRoute(BottomBar(userRole: role, currentTab: 0,)),
         );

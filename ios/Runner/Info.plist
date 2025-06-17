@@ -25,6 +25,10 @@
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>UIBackgroundModes</key>
+    <array>
+        <string>remote-notification</string>
+    </array>
 	<key>GIDClientID</key>
     <string>69249651926-ilrs70v68uss27839ks8065h818cjlua.apps.googleusercontent.com</string>
     <key>CFBundleURLTypes</key>

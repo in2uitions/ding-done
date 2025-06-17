@@ -104,6 +104,22 @@ class JobsViewModel with ChangeNotifier {
     return true;
   }
 
+  Future<JobsModel?> findJobById(dynamic id) async {
+    try {
+      debugPrint('returning job $id');
+      debugPrint('returning job ${ _jobsList?.firstWhere(
+            (job) => job.id == id,
+      )}');
+      return _jobsList?.firstWhere(
+            (job) => job.id == id,
+        orElse: () => JobsModel(),
+      );
+    } catch (error) {
+      debugPrint('Error returning job ${error}');
+    }
+    return  JobsModel();
+  }
+
   bool validate() {
     jobsAddressError = {};
     String? streetMessage = '';
