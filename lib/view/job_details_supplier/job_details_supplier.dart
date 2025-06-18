@@ -54,25 +54,30 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
   }
 
   String _getServiceRate() {
-    // Extract the currency from job address
-    String currency = widget.data.job_address["country"];
+    try {
+      // Extract the currency from job address
+      String currency = widget.data.job_address["country"];
 
-    // Find the rate from country_rates where currency matches
-    var matchingRate = widget.data.service["country_rates"].firstWhere(
-      (rate) => rate["country"]['code'] == currency,
-      orElse: () => null, // If no match is found, return null
-    );
+      // Find the rate from country_rates where currency matches
+      var matchingRate = widget.data.service["country_rates"].firstWhere(
+            (rate) => rate["country"]['code'] == currency,
+        orElse: () => null, // If no match is found, return null
+      );
 
-    if (matchingRate != null) {
-      // Check the job type and return the appropriate rate
-      if (widget.data.job_type == 'inspection') {
-        return matchingRate['inspection_rate'].toString() ??
-            'No rate available';
+      if (matchingRate != null) {
+        // Check the job type and return the appropriate rate
+        if (widget.data.job_type == 'inspection') {
+          return matchingRate['inspection_rate'].toString() ??
+              'No rate available';
+        } else {
+          return '${matchingRate["country"]["currency"]}';
+        }
       } else {
-        return '${matchingRate["country"]["currency"]}';
+        return 'Rate not found'; // Fallback if no matching currency is found
       }
-    } else {
+    }catch(error){
       return 'Rate not found'; // Fallback if no matching currency is found
+
     }
   }
 

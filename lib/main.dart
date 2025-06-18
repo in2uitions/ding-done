@@ -70,6 +70,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     // getCredentials();
+
     checkUserIsLogged();
     getLanguage();
     WidgetsFlutterBinding.ensureInitialized();
@@ -78,6 +79,7 @@ class _MyAppState extends State<MyApp> {
     // configurePayment();
     // setupSDKSession();
     initialDeepLink();
+
   }
 
   @override
@@ -85,87 +87,89 @@ class _MyAppState extends State<MyApp> {
     _sub.cancel();
     super.dispose();
   }
-
-// Use the global navigator key for navigation
   Future<void> initialDeepLink() async {
-    _sub = linkStream.listen((String? link) async {
-      if (link == null) return;
+    debugPrint('init deep link');
 
-      final role = await AppPreferences().get(key: userRoleKey, isModel: false);
-      Uri uri = Uri.parse(link);
-      debugPrint('uri parsed ${Uri.parse(link)}');
+    // 1. Get the initial link on cold start
+    // final initialLink = await getInitialLink();
+    // if (initialLink != null) {
+    //   handleIncomingLink(initialLink);
+    // }
 
-      if (uri.path.contains('confirm_payment_method')) {
-        navigatorKey.currentState?.push(
-          MaterialPageRoute(
-            builder: (_) =>
-                Consumer2<ProfileViewModel, PaymentViewModel>(
-                  builder: (context, profileViewModel, paymentViewModel, _) {
-                    return ConfirmPaymentMethod(
-                      payment_method:
-                      paymentViewModel.getPaymentBody['tap_payments_card'],
-                      paymentViewModel: paymentViewModel,
-                      profileViewModel: profileViewModel,
-                      role: role,
-                    );
-                  },
-                ),
-          ),
-        );
-      } else
-        if (uri.path.contains('job')) {
-          final jobsViewModel=Provider.of<JobsViewModel>(context, listen: false);
-          final jobId = link.split('/').last;
-          debugPrint('job id $jobId');
-
-          final job = jobsViewModel.findJobById(jobId);
-          final role = await AppPreferences().get(
-
-              key: userRole, isModel: false);
-          debugPrint('role  $role');
-
-          final lang = await AppPreferences().get(
-              key: language, isModel: false);
-
-
-          if (role == Constants.supplierRoleId) {
-            debugPrint('supplierrrrrr');
-            navigatorKey.currentState?.push(
-              MaterialPageRoute(
-                builder: (_) =>
-                    JobDetailsSupplier(
-                      data: job,
-                      fromWhere: 'notifications',
-                      title: job.toString(),
-                      lang: lang,
-                    ),
-              ),
-            );
-          } else {
-            debugPrint('customerrrr');
-
-            navigatorKey.currentState?.push(
-                MaterialPageRoute(
-                    builder: (_) =>
-                        UpdateJobRequestCustomer(
-                          data: job,
-                          title: job.toString(),
-                          fromWhere: 'notifications',
-                          lang: lang,
-                        )));
-          }
-        }
-
-      else
-       {
-        navigatorKey.currentState?.push(
-          _createRoute(BottomBar(userRole: role, currentTab: 0,)),
-        );
+    // 2. Listen for new links while app is running
+    _sub = linkStream.listen((String? link) {
+      debugPrint('listening to external link $link');
+      if (link != null) {
+        handleIncomingLink(link);
       }
     });
   }
 
+  void handleIncomingLink(String link) async {
+    final role = await AppPreferences().get(key: userRoleKey, isModel: false);
+    Uri uri = Uri.parse(link);
+    debugPrint('uri parsed $uri');
+    debugPrint('uri path ${uri.path}');
+    try {
+      if (uri.toString().contains('confirm_payment_method')) {
+
+        navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) =>
+            Consumer2<ProfileViewModel, PaymentViewModel>(
+              builder: (context, profileViewModel, paymentViewModel, _) {
+                return ConfirmPaymentMethod(
+                  payment_method: paymentViewModel
+                      .getPaymentBody['tap_payments_card'],
+                  paymentViewModel: paymentViewModel,
+                  profileViewModel: profileViewModel,
+                  role: role,
+                );
+              },
+            ),
+        ));
+      } else if (uri.toString().contains('job')) {
+        final jobsViewModel = Provider.of<JobsViewModel>(
+            navigatorKey.currentContext!, listen: false);
+        final jobId = uri.pathSegments.last;
+        final job =await jobsViewModel.findJobById(jobId);
+        final lang = await AppPreferences().get(key: language, isModel: false);
+        debugPrint('role of the user is ${role}');
+        debugPrint('jobb id is ${jobId}');
+        debugPrint('supplier role ${Constants.supplierRoleId}');
+        debugPrint('customer role ${Constants.customerRoleId}');
+        debugPrint('job is ${job?.id}');
+        if(job!=null && job.service!=null)
+        if (role == Constants.supplierRoleId) {
+          navigatorKey.currentState?.push(MaterialPageRoute(
+            builder: (_) =>
+                UpdateJobRequestCustomer(
+                  data: job,
+                  fromWhere: 'notifications',
+                  title: job?.service["translations"][0]["title"].toString(),
+                  lang: lang,
+                ),
+          ));
+        } else {
+          navigatorKey.currentState?.push(MaterialPageRoute(
+            builder: (_) =>
+                UpdateJobRequestCustomer(
+                  data: job,
+                  title: job?.service["translations"][0]["title"].toString(),
+                  fromWhere: 'notifications',
+                  lang: lang,
+                ),
+          ));
+        }
+      } else {
+        navigatorKey.currentState?.push(
+            _createRoute(BottomBar(userRole: role, currentTab: 0)));
+      }
+    }catch(error){
+      debugPrint('something went wrong $error');
+    }
+  }
+
   void checkUserIsLogged() async {
+    debugPrint('check user is logged ');
     // final prefs = await SharedPreferences.getInstance();
     // final role = prefs.getString(userRoleKey);
     final role = await AppPreferences().get(key: userRoleKey, isModel: false);
@@ -206,10 +210,28 @@ class _MyAppState extends State<MyApp> {
 
   Future<void> initPlatformState() async {
     if (!mounted) return;
+
     OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
     OneSignal.Debug.setAlertLevel(OSLogLevel.none);
-    OneSignal.initialize("357d957a-ed36-4ab5-a29e-cfbe93536a64");
-    OneSignal.Notifications.requestPermission(true);
+
+    // Make sure initialize is awaited
+     OneSignal.initialize("357d957a-ed36-4ab5-a29e-cfbe93536a64");
+
+    // ✅ Request permissions AFTER initialization
+    await OneSignal.Notifications.requestPermission(true);
+
+    // ✅ NOW add the click listener
+    OneSignal.Notifications.addClickListener((event) {
+      final data = event.notification.additionalData;
+      final launchUrl = data?['launch_url'] ?? event.notification.launchUrl;
+
+      debugPrint('🔔 Notification clicked with URL: $launchUrl');
+
+      // if (launchUrl != null) {
+      //   handleIncomingLink(launchUrl);
+      // }
+    });
+
     WidgetsFlutterBinding.ensureInitialized();
     const stripePublishableKey =
         "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";

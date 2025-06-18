@@ -107,11 +107,20 @@ class JobsViewModel with ChangeNotifier {
   Future<JobsModel?> findJobById(dynamic id) async {
     try {
       debugPrint('returning job $id');
-      debugPrint('returning job ${ _jobsList?.firstWhere(
-            (job) => job.id == id,
+      await getJobs();
+      debugPrint('returning job $_jobsList');
+
+      debugPrint('Looking for job id: $id');
+      for (var job in _jobsList ?? []) {
+        debugPrint('Available job id: ${job.id}');
+      }
+
+      debugPrint('returning job ${_jobsList?.firstWhere(
+            (job) => job.id.toString() == id.toString(),
+        orElse: () => JobsModel(),
       )}');
       return _jobsList?.firstWhere(
-            (job) => job.id == id,
+            (job) => job.id.toString() == id.toString(),
         orElse: () => JobsModel(),
       );
     } catch (error) {

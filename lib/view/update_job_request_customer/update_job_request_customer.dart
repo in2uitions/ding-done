@@ -384,7 +384,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                         translate('jobs.booked') &&
                                     widget.fromWhere !=
                                         translate('jobs.completed') &&
-                                    widget.fromWhere != translate('jobs.active')
+                                    widget.fromWhere != translate('jobs.active')&&
+                                    widget.fromWhere != 'notifications'
                                 ? JobTypeWidget(
                                     job_type: widget.data.job_type["code"],
                                     tab: widget.fromWhere,
@@ -398,7 +399,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                         translate('jobs.booked') &&
                                     widget.fromWhere !=
                                         translate('jobs.completed') &&
-                                    widget.fromWhere != translate('jobs.active')
+                                    widget.fromWhere != translate('jobs.active')&&
+                                    widget.fromWhere != 'notifications'
                                 ? JobCategorieAndServiceWidget(
                                     category: widget.data.service["category"]
                                         ["title"],
@@ -411,7 +413,9 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     widget.fromWhere !=
                                         translate('jobs.active') &&
                                     widget.fromWhere !=
-                                        translate('jobs.completed')
+                                        translate('jobs.completed') &&
+                                    widget.fromWhere !=
+                                       'notifications'
                                 ? ServiceRateAndCurrnecyWidget(
                                     currency: widget.data.job_address["country"]
                                         ["currency"],
@@ -431,7 +435,9 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     widget.fromWhere !=
                                         translate('jobs.active') &&
                                     widget.fromWhere !=
-                                        translate('jobs.completed')
+                                        translate('jobs.completed') &&
+                                    widget.fromWhere !=
+                                        'notifications'
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(
                                       vertical:
@@ -457,6 +463,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
 
                             widget.fromWhere !=
                                         translate('jobs.requestedJobs') &&
+                            widget.fromWhere !=
+                                        'notifications' &&
                                     widget.fromWhere !=
                                         translate('jobs.completed')
                                 ? CurrentSupplierWidget(
@@ -467,6 +475,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
 
                             widget.fromWhere !=
                                         translate('jobs.requestedJobs') &&
+                            widget.fromWhere !=
+                                        'notifications' &&
                                     widget.fromWhere != translate('jobs.booked')
                                 ? JobSizeWidget(
                                     completed_units:
@@ -483,6 +493,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
 
                             widget.fromWhere !=
                                         translate('jobs.requestedJobs') &&
+                            widget.fromWhere !=
+                                        'notifications' &&
                                     widget.fromWhere != translate('jobs.booked')
                                 ? ActualStartTimeWidget(
                                     actual_start_date:
@@ -569,6 +581,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     widget.fromWhere !=
                                                 translate(
                                                     'jobs.requestedJobs') &&
+                                    widget.fromWhere !=
+                                                'notifications' &&
                                             widget.fromWhere !=
                                                 translate('jobs.active') &&
                                             widget.fromWhere !=
@@ -679,7 +693,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     widget.fromWhere !=
                                                 translate('jobs.active') &&
                                             widget.fromWhere !=
-                                                translate('jobs.completed')
+                                                translate('jobs.completed') && widget.fromWhere!='notifications'
                                         ? Consumer2<JobsViewModel,
                                                 PaymentViewModel>(
                                             builder: (context, jobsViewModel,
@@ -1355,23 +1369,27 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
 
   String _getServiceRate() {
     // Extract the currency from job address
-    String currency = widget.data.job_address["country"]["currency"];
+    try {
+      String currency = widget.data.job_address["country"]["currency"];
 
-    // Find the rate from country_rates where currency matches
-    var matchingRate = widget.data.service["country_rates"].firstWhere(
-      (rate) => rate["country"]['currency'] == currency,
-      orElse: () => null, // If no match is found, return null
-    );
+      // Find the rate from country_rates where currency matches
+      var matchingRate = widget.data.service["country_rates"].firstWhere(
+            (rate) => rate["country"]['currency'] == currency,
+        orElse: () => null, // If no match is found, return null
+      );
 
-    if (matchingRate != null) {
-      // Check the job type and return the appropriate rate
-      if (widget.data.job_type == 'inspection') {
-        return matchingRate['inspection_rate'] ?? 'No rate available';
+      if (matchingRate != null) {
+        // Check the job type and return the appropriate rate
+        if (widget.data.job_type == 'inspection') {
+          return matchingRate['inspection_rate'] ?? 'No rate available';
+        } else {
+          return '${matchingRate['unit_rate']} ${matchingRate['unit_type']['code']}';
+        }
       } else {
-        return '${matchingRate['unit_rate']} ${matchingRate['unit_type']['code']}';
+        return 'Rate not found'; // Fallback if no matching currency is found
       }
-    } else {
-      return 'Rate not found'; // Fallback if no matching currency is found
+    }catch(error){
+      return 'Rate not found';
     }
   }
 
