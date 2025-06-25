@@ -346,14 +346,7 @@ class _EditAccountState extends State<EditAccount> {
                                             0,
                                             0),
                                         child:
-                                            // CustomPhoneFeild(
-                                            //   index: 'phone_number',
-                                            //   viewModel: profileViewModel.setInputValues,
-                                            //   hintText: translate('formHints.phone_number'),
-                                            //   errorText: '',
-                                            //   value: profileViewModel.getProfileBody["user"]
-                                            //       ["phone_number"],
-                                            // ),
+
                                             CustomPhoneFieldController(
                                           value: profileViewModel
                                               .getProfileBody["user"]["phone"],
@@ -587,8 +580,9 @@ Widget simpleAlert(BuildContext context, String message) {
             ],
           ),
         ),
-        message == 'Success'
-            ? SvgPicture.asset('assets/img/service-popup-image.svg')
+        message == translate(
+            'button.success')
+            ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
             : SvgPicture.asset('assets/img/failure.svg'),
         SizedBox(height: context.appValues.appSize.s40),
         Padding(

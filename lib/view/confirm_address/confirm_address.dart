@@ -187,8 +187,25 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                                                 jobsViewModel.getjobsBody)==true){
                                               jobsViewModel.setSaved(true);
                                               // jobsViewModel.saved=true;
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) =>
+                                                      simpleAlert(
+                                                        context,
+                                                        translate('button.success'),
+                                                      ));
+                                            }else{
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) =>
+                                                      simpleAlert(
+                                                        context,
+                                                        translate('button.failure'),
+                                                      ));
                                             }
                                           }
+                                          jobsViewModel.clearJobsBody();
+
                                           isLoading=false;
                                         }
 
@@ -226,7 +243,51 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
     });
   }
 }
+Widget simpleAlert(BuildContext context, String message) {
+  return AlertDialog(
+    backgroundColor: Colors.white,
+    elevation: 15,
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                child: SvgPicture.asset('assets/img/x.svg'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
+        message == translate('button.success')
 
+        // service-popup-image.svg
+            ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+            : SvgPicture.asset('assets/img/failure.svg'),
+        SizedBox(height: context.appValues.appSize.s40),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p32,
+          ),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: getPrimaryRegularStyle(
+              fontSize: 17,
+              color: context.resources.color.btnColorBlue,
+            ),
+          ),
+        ),
+        SizedBox(height: context.appValues.appSize.s20),
+      ],
+    ),
+  );
+}
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => classname,

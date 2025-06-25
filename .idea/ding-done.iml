@@ -389,6 +389,9 @@
       <excludeFolder url="file://$MODULE_DIR$/windows/flutter/ephemeral/.plugin_symlinks/firebase_auth/example/.dart_tool" />
       <excludeFolder url="file://$MODULE_DIR$/windows/flutter/ephemeral/.plugin_symlinks/firebase_auth/example/.pub" />
       <excludeFolder url="file://$MODULE_DIR$/windows/flutter/ephemeral/.plugin_symlinks/firebase_auth/example/build" />
+      <excludeFolder url="file://$MODULE_DIR$/android/.dart_tool" />
+      <excludeFolder url="file://$MODULE_DIR$/android/.pub" />
+      <excludeFolder url="file://$MODULE_DIR$/android/build" />
     </content>
     <orderEntry type="jdk" jdkName="Android API 33, extension level 3 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

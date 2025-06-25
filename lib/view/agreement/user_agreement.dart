@@ -218,7 +218,7 @@ class _UserAgreementState extends State<UserAgreement> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       _buildPopupDialog(
-                                          context, 'Sign Up Successfull'),
+                                          context, translate('button.success')),
                                 );
                               }else{
                                 showDialog(
@@ -303,7 +303,10 @@ Widget _buildPopupDialog(BuildContext context, String message) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SvgPicture.asset('assets/img/x.svg'),
+                message == translate(
+                    'button.success')
+                    ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+                    : SvgPicture.asset('assets/img/failure.svg'),
               ],
             ),
           ),

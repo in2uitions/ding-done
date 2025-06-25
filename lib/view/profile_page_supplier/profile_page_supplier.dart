@@ -286,6 +286,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                               ),
                               onTap: () {
                                 AppPreferences().clear();
+                                profileViewModel.clear();
                                 AppProviders.disposeAllDisposableProviders(
                                     context);
                                 Navigator.of(context)
@@ -330,8 +331,10 @@ Widget simpleAlert(BuildContext context, String message) {
             ],
           ),
         ),
-        message == 'Success'
-            ? SvgPicture.asset('assets/img/service-popup-image.svg')
+        message == translate('button.success')
+
+        // service-popup-image.svg
+            ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
             : SvgPicture.asset('assets/img/failure.svg'),
         SizedBox(height: context.appValues.appSize.s40),
         Padding(

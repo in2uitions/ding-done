@@ -573,7 +573,7 @@ Widget simpleAlert(BuildContext context, String title, String message) {
         ),
         const Gap(20),
         title == 'Success'
-            ? SvgPicture.asset('assets/img/service-popup-image.svg')
+            ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
             : SvgPicture.asset('assets/img/failure.svg'),
         const Gap(20),
         Text(

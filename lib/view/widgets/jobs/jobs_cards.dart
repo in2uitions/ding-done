@@ -691,7 +691,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                   elevation: 0,
                                                   // shadowColor: Colors.black,
                                                   backgroundColor:
-                                                      const Color(0xff6F6BE8),
+                                                  const Color(0xff4100E3),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(10),

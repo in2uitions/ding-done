@@ -7,6 +7,7 @@ import 'package:dingdone/view_model/dispose_view_model/dispose_view_model.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../res/app_validation.dart';
+import '../../res/constants.dart';
 import '../../res/strings/english_strings.dart';
 
 class ProfileViewModel extends DisposableViewModel {
@@ -161,7 +162,7 @@ class ProfileViewModel extends DisposableViewModel {
   Future<bool?> patchProfileData(dynamic body) async {
     try {
       final String userId = await getUserId();
-
+      final role = await AppPreferences().get(key: userRoleKey, isModel: false);
       // make a mutable copy of your existing addresses
       final List<Map<String, dynamic>> existingAddresses =
       List<Map<String, dynamic>>.from(profileBody["address"] as List);
@@ -169,9 +170,8 @@ class ProfileViewModel extends DisposableViewModel {
       debugPrint('body in patch profile data: $body');
       final addressId = body['id'];
 
-      // build a map of the incoming address fields
       final Map<String, dynamic> addressMap = {
-        if (addressId != null) 'id': addressId,        // preserve id if present
+        if (addressId != null) 'id': addressId,
         "street_name": body["address"],
         "street_number": body["street_number"],
         "building_number": body["building_number"],
@@ -188,28 +188,40 @@ class ProfileViewModel extends DisposableViewModel {
       debugPrint('constructed addressMap: $addressMap');
 
       Map<String, dynamic> updatedCurrent;
-      if (addressId != null) {
-        // try to find an existing entry with the same id
-        final idx = existingAddresses.indexWhere((a) => a['id'] == addressId);
-        if (idx != -1) {
-          // overwrite only that entry
-          existingAddresses[idx] = {
-            ...existingAddresses[idx],
-            ...addressMap,
-          };
-          updatedCurrent = existingAddresses[idx];
-          debugPrint('updated address at index $idx');
+
+      final bool isSupplier = role== Constants.supplierRoleId;
+
+      if (isSupplier) {
+        // Supplier: always replace the address list with the new address
+        if (existingAddresses.isNotEmpty) {
+          addressMap['id'] = existingAddresses.first['id']; // preserve the first id
+        }
+        updatedCurrent = addressMap;
+        existingAddresses
+          ..clear()
+          ..add(addressMap);
+        debugPrint('Supplier role: replaced address list with new address');
+      } else {
+        // Non-supplier logic: update existing or add new
+        if (addressId != null) {
+          final idx = existingAddresses.indexWhere((a) => a['id'] == addressId);
+          if (idx != -1) {
+            existingAddresses[idx] = {
+              ...existingAddresses[idx],
+              ...addressMap,
+            };
+            updatedCurrent = existingAddresses[idx];
+            debugPrint('updated address at index $idx');
+          } else {
+            existingAddresses.add(addressMap);
+            updatedCurrent = addressMap;
+            debugPrint('id not found, added as new');
+          }
         } else {
-          // id provided but not found → treat as new
           existingAddresses.add(addressMap);
           updatedCurrent = addressMap;
-          debugPrint('id not found, added as new');
+          debugPrint('added new address');
         }
-      } else {
-        // no id → always add new
-        existingAddresses.add(addressMap);
-        updatedCurrent = addressMap;
-        debugPrint('added new address');
       }
 
       final ProfileModel? response = await _homeRepository.patchProfile(
@@ -233,6 +245,7 @@ class ProfileViewModel extends DisposableViewModel {
       return false;
     }
   }
+
 
   void deleteAddress(int index) async {
     List<Map<String, dynamic>> updatedAddresses =
@@ -334,7 +347,7 @@ class ProfileViewModel extends DisposableViewModel {
         // "status": body["status"] != null
         //     ? body["status"]
         //     : profileBody["user"]["status"],
-        "status":"avtive"
+        // "status":"Active"
       };
 
       // Add the new address to the existing list
@@ -404,6 +417,11 @@ class ProfileViewModel extends DisposableViewModel {
     verifyPassword['confirm_new_password'] = mustmatch;
     notifyListeners();
     return false;
+  }
+  void clear() {
+    profileBody = {};
+
+    notifyListeners();
   }
 
   void setInputValues({required String index, dynamic value}) {

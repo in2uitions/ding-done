@@ -13,6 +13,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_model/jobs_view_model/jobs_view_model.dart';
+import '../../../view_model/profile_view_model/profile_view_model.dart';
 import '../../agreement/user_agreement.dart';
 import '../restart/restart_widget.dart';
 
@@ -236,69 +237,74 @@ class _ProfileSeconComponentState extends State<ProfileSeconComponent> {
           //     color: Color(0xffEAEAFF),
           //   ),
           // ),
-          InkWell(
-            child: Container(
-              width: context.appValues.appSizePercent.w100,
-              height: 44,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(
-                  width: 1.5,
-                  color: const Color(0xff4100E3),
-                ),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SvgPicture.asset(
-                    'assets/img/logout-new.svg',
-                  ),
-                  const Gap(10),
-                  Text(
-                    translate('profile.logOut'),
-                    style: getPrimarySemiBoldStyle(
-                      fontSize: 12,
+          Consumer<ProfileViewModel>(
+              builder: (context, profileViewModel, _) {
+              return InkWell(
+                child: Container(
+                  width: context.appValues.appSizePercent.w100,
+                  height: 44,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      width: 1.5,
                       color: const Color(0xff4100E3),
                     ),
                   ),
-                ],
-              ),
-            ),
-            onTap: () async {
-              String? lang =
-                  await AppPreferences().get(key: language, isModel: false);
-              AppPreferences().clear();
-              AppProviders.disposeAllDisposableProviders(context);
-              Navigator.of(context).push(_createRoute(const LoginScreen()));
-              await AppPreferences()
-                  .save(key: language, value: lang, isModel: false);
-              if (lang == null) {
-                lang = "en";
-                await AppPreferences()
-                    .save(key: language, value: "en", isModel: false);
-                await AppPreferences()
-                    .save(key: dblang, value: 'en-US', isModel: false);
-              }
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        'assets/img/logout-new.svg',
+                      ),
+                      const Gap(10),
+                      Text(
+                        translate('profile.logOut'),
+                        style: getPrimarySemiBoldStyle(
+                          fontSize: 12,
+                          color: const Color(0xff4100E3),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                onTap: () async {
+                  String? lang =
+                      await AppPreferences().get(key: language, isModel: false);
+                  AppPreferences().clear();
+                  profileViewModel.clear();
+                  AppProviders.disposeAllDisposableProviders(context);
+                  Navigator.of(context).push(_createRoute(const LoginScreen()));
+                  await AppPreferences()
+                      .save(key: language, value: lang, isModel: false);
+                  if (lang == null) {
+                    lang = "en";
+                    await AppPreferences()
+                        .save(key: language, value: "en", isModel: false);
+                    await AppPreferences()
+                        .save(key: dblang, value: 'en-US', isModel: false);
+                  }
 
-              if (lang == 'en') {
-                await AppPreferences()
-                    .save(key: dblang, value: 'en-US', isModel: false);
-              }
-              if (lang == 'ar') {
-                await AppPreferences()
-                    .save(key: dblang, value: 'ar-SA', isModel: false);
-              }
-              if (lang == 'ru') {
-                await AppPreferences()
-                    .save(key: dblang, value: 'ru-RU', isModel: false);
-              }
-              if (lang == 'el') {
-                await AppPreferences()
-                    .save(key: dblang, value: 'el-GR', isModel: false);
-              }
-            },
+                  if (lang == 'en') {
+                    await AppPreferences()
+                        .save(key: dblang, value: 'en-US', isModel: false);
+                  }
+                  if (lang == 'ar') {
+                    await AppPreferences()
+                        .save(key: dblang, value: 'ar-SA', isModel: false);
+                  }
+                  if (lang == 'ru') {
+                    await AppPreferences()
+                        .save(key: dblang, value: 'ru-RU', isModel: false);
+                  }
+                  if (lang == 'el') {
+                    await AppPreferences()
+                        .save(key: dblang, value: 'el-GR', isModel: false);
+                  }
+                },
+              );
+            }
           ),
         ],
       ),

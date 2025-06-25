@@ -1059,11 +1059,11 @@ class _SignUpNewState extends State<SignUpNew> {
                                   _currentStep++;
                                 });
                               } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Please fill in all required fields')),
-                                );
+                                // ScaffoldMessenger.of(context).showSnackBar(
+                                //   const SnackBar(
+                                //       content: Text(
+                                //           'Please fill in all required fields')),
+                                // );
                               }
                             } else {
                               // Last page: final validation and complete signup.

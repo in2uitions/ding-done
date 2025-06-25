@@ -388,17 +388,20 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                   ),
                   child: UploadOneImage(
                     callback: (picked, save) async {
-                      if (picked != null) {
+                      if (picked != null && picked.isNotEmpty) {
                         setState(() {
                           idImage = {
                             'type': 'file',
-                            'image': File(picked[0].path),
+                            'image': picked[0],
                           };
                         });
                       }
-                      if (save != null) {
+
+                      if (save != null && save.isNotEmpty) {
                         signupViewModel.setInputValues(
-                            index: 'id_image', value: save[0]["image"]);
+                          index: 'id_image',
+                          value: save[0]["image"],
+                        );
                       }
                     },
                     isImage: true,

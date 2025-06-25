@@ -1,5 +1,6 @@
 // ignore_for_file: must_be_immutable
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
@@ -20,7 +21,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
-
 class BottomBar extends StatefulWidget {
   var userRole;
 
@@ -83,6 +83,7 @@ class _BottomBarState extends State<BottomBar>
     _pulseAnimation = Tween<double>(begin: 0.8, end: 1.2).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
+
   }
 
   getNotifications() async {

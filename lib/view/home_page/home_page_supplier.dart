@@ -598,8 +598,8 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                   ],
                                 ),
                               ),
-                              jobsViewModel.supplierInProgressJobs.isNotEmpty?Container():Gap(20),
-                              jobsViewModel.supplierInProgressJobs.isNotEmpty?
+                              jobsViewModel.supplierInProgressJobs.isNotEmpty && jobsViewModel.supplierOpenJobs.toString()!='null'?Container():Gap(20),
+                              jobsViewModel.supplierInProgressJobs.isNotEmpty && jobsViewModel.supplierOpenJobs.toString()!='null'?
                               SizedBox(
                                 height: context.appValues.appSizePercent.h35,
                                 child: SingleChildScrollView(
@@ -636,12 +636,13 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
               // ),
               DraggableScrollableSheet(
                   initialChildSize:jobsViewModel
-                      .supplierInProgressJobs.isNotEmpty? 0.43:0.75,
+                      .supplierInProgressJobs.isNotEmpty && jobsViewModel.supplierOpenJobs.toString()!='null'? 0.43:0.75,
                   minChildSize: 0.43,
                   maxChildSize: 1,
                   builder: (BuildContext context,
                       ScrollController scrollController) {
-                    return Container(
+                    return  jobsViewModel.supplierOpenJobs.toString()!='null' && jobsViewModel.supplierOpenJobs.isNotEmpty ?
+                    Container(
                       decoration: const BoxDecoration(
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
@@ -677,7 +678,8 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                     ],
                                   ),
                                 ),
-                                Consumer2<JobsViewModel, PaymentViewModel>(
+
+                            Consumer2<JobsViewModel, PaymentViewModel>(
                                     builder: (context, jobsViewModel,
                                         paymentViewModel, _) {
                                   return ListView.builder(
@@ -767,7 +769,62 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                               ],
                             );
                           }),
-                    );
+                    ):Container(
+                      decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
+                      ),
+                      color: Color(0xffFEFEFE),
+                    ),child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            context.appValues.appPadding.p20,
+                            context.appValues.appPadding.p50,
+                            context.appValues.appPadding.p20,
+                            context.appValues.appPadding.p20,
+                          ),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                translate(
+                                    'home_screen.jobRequestsAroundMe'),
+                                style: getPrimaryBoldStyle(
+                                  fontSize: 16,
+                                  color: const Color(0xff180C38),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(
+                            context.appValues.appPadding.p20,
+                            context.appValues.appPadding.p0,
+                            context.appValues.appPadding.p20,
+                            context.appValues.appPadding.p20,
+                          ),
+                          child: Row(
+                            mainAxisAlignment:
+                            MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'No jobs around you',
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 16,
+                                  color:  Color(0xffFFC500)
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),);
                   }),
             ],
           ),

@@ -171,11 +171,13 @@ class _JobInProgressState extends State<JobInProgress> {
                                         'assets/img/calendarhpsupp.svg'),
                                     const Gap(7),
                                     Text(
-                                      DateFormat('d MMMM yyyy').format(
+                                      jobsViewModel
+                                          .supplierInProgressJobs[index]
+                                          .start_date.toString()!='null'?DateFormat('d MMMM yyyy').format(
                                           DateTime.parse(jobsViewModel
                                               .supplierInProgressJobs[index]
                                               .start_date
-                                              .toString())),
+                                              .toString())):'',
 
                                       // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
                                       style: getPrimaryRegularStyle(
@@ -204,11 +206,14 @@ class _JobInProgressState extends State<JobInProgress> {
                                         'assets/img/clockhpsupp.svg'),
                                     const Gap(7),
                                     Text(
-                                      DateFormat('HH:mm').format(DateTime.parse(
+                                        jobsViewModel
+                                            .supplierInProgressJobs[index]
+                                            .start_date
+                                            .toString()!='null'? DateFormat('HH:mm').format(DateTime.parse(
                                           jobsViewModel
                                               .supplierInProgressJobs[index]
                                               .start_date
-                                              .toString())),
+                                              .toString())):'',
 
                                       // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
                                       style: getPrimaryRegularStyle(

@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
@@ -23,6 +24,8 @@ import '../book_a_service/book_a_service.dart';
 import '../bottom_bar/bottom_bar.dart';
 import '../widgets/categories_screen/categories_screen_cards.dart';
 import '../widgets/pulsing_dot/pulsing_dot.dart';
+import '../widgets/update_job_request_customer/rating_stars_widget.dart';
+import '../widgets/update_job_request_customer/review_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -38,11 +41,14 @@ class _HomePageState extends State<HomePage> {
   TextEditingController searchController = TextEditingController();
   List<dynamic> filteredServices = [];
   List<dynamic> featuredServices = [];
+  AudioPlayer _audioPlayer = AudioPlayer();
 
   @override
   void initState() {
     super.initState();
     getLanguage();
+    _getCustomerJobs();
+
     Provider.of<CategoriesViewModel>(context, listen: false)
         .getCategoriesAndServices();
     // Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(
@@ -58,6 +64,188 @@ class _HomePageState extends State<HomePage> {
     searchController.removeListener(_filterServices);
     searchController.dispose();
     super.dispose();
+  }
+
+  Future<void> _getCustomerJobs() async {
+    await Provider.of<JobsViewModel>(context, listen: false).getCustomerJobs();
+      var jobsViewModel = Provider.of<JobsViewModel>(context, listen: false);
+      debugPrint('completed jobs in bottom bafr ${jobsViewModel.getcustomerJobs}');
+
+      dynamic completedJobs = jobsViewModel.getcustomerJobs
+          .where((e) => e.status == 'completed' && e.rating_stars == null)
+          .toList();
+      for(var i in jobsViewModel.getcustomerJobs){
+        debugPrint('completed jobs ${i.status} ${i.rating_stars}');
+
+      }
+      debugPrint('completed jobs $completedJobs');
+      if (completedJobs.isNotEmpty)
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          _showReviewDialog(context, completedJobs[0], jobsViewModel);
+        });
+
+  }
+  Future<void> playSound() async {
+    String soundPath =
+        "DingDone Hybrid.wav"; // Update with the actual path to your .wav file
+
+    await _audioPlayer.play(AssetSource(soundPath));
+  }
+  void _showReviewDialog(
+      BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
+    playSound();
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevents closing by tapping outside
+      builder: (BuildContext context) {
+        return WillPopScope(
+          onWillPop: () async => false, // Prevents back button closing
+          child: review(context, job, jobsViewModel),
+        );
+      },
+    );
+  }
+
+
+  Widget review(
+      BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              translate('updateJob.rateJob'),
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              job.service!=null?job.service['translations'][0]['title']:'',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s10),
+          RatingStarsWidget(
+            stars: job.rating_stars != null ? job.rating_stars : 0,
+            userRole: Constants.customerRoleId,
+          ),
+          ReviewWidget(
+            review: job.rating_comment ?? '',
+          ),
+          SizedBox(height: context.appValues.appSize.s10),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Builder(builder: (context) {
+              return ElevatedButton(
+                onPressed: () async {
+                  if (await jobsViewModel.rateJob(job.id) == true) {
+                    Navigator.of(context).pop();
+                    Future.delayed(const Duration(seconds: 0));
+                  } else {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) => _buildPopupDialogFailure(context,
+                            '${jobsViewModel.errorMessage}'));
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  elevation: 0.0,
+                  shadowColor: Colors.transparent,
+                  backgroundColor: const Color(0xffFFD105),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  fixedSize: Size(
+                    context.appValues.appSizePercent.w30,
+                    context.appValues.appSizePercent.h5,
+                  ),
+                ),
+                child: Text(
+                  translate('button.ok'),
+                  style: getPrimaryRegularStyle(
+                    fontSize: 15,
+                    color: context.resources.color.btnColorBlue,
+                  ),
+                ),
+              );
+            }),
+          ),
+          SizedBox(height: context.appValues.appSize.s20),
+        ],
+      ),
+    );
+  }
+  Widget _buildPopupDialogFailure(BuildContext context,String message) {
+    return AlertDialog(
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  child: SvgPicture.asset('assets/img/x.svg'),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+          SvgPicture.asset('assets/img/failure.svg'),
+          SizedBox(height: context.appValues.appSize.s40),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              translate('button.failure'),
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                  fontSize: 17, color: context.resources.color.btnColorBlue),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s20),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 15,
+                color: context.resources.color.secondColorBlue,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void _filterServices() {

@@ -240,8 +240,8 @@ class UploadOneImageState extends State<UploadOneImage> {
 
                   await _cropImage();
                   if (_croppedFile != null) {
-                    uploadFiles([XFile(_croppedFile!.path)].toList());
-                    widget.callback([File(_croppedFile!.path)].toList(), null);
+                    final saved = await uploadFiles([XFile(_croppedFile!.path)]);
+                    widget.callback([File(_croppedFile!.path)], saved);
                   }
                 },
               ),
@@ -263,27 +263,22 @@ class UploadOneImageState extends State<UploadOneImage> {
                   );
 
                   if (result != null) {
-                    List<PlatformFile> files = result.files;
-                    Directory tempDir = await getTemporaryDirectory();
-                    List<XFile> picked =
-                        files.map((file) => XFile(file!.path!)).toList();
+                    List<XFile> picked = result.files.map((file) => XFile(file!.path!)).toList();
                     if (picked.length == 1 &&
-                        !lookupMimeType(picked[0]!.path!)
-                            .toString()
-                            .startsWith('video')) {
+                        !lookupMimeType(picked[0]!.path!).toString().startsWith('video')) {
                       setState(() {
                         _pickedFile = picked[0];
                       });
 
                       await _cropImage();
-                      uploadFiles([XFile(_croppedFile!.path)].toList());
-                      widget.callback(
-                          [File(_croppedFile!.path)].toList(), null);
+                      final saved = await uploadFiles([XFile(_croppedFile!.path)]);
+                      widget.callback([File(_croppedFile!.path)], saved);
                     } else {
-                      uploadFiles(picked);
-                      widget.callback(picked, null);
+                      final saved = await uploadFiles(picked);
+                      widget.callback(picked.map((e) => File(e.path)).toList(), saved);
                     }
-                  } else {}
+                  }
+
                 },
               ),
             ],

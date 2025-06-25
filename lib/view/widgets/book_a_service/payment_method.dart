@@ -120,7 +120,10 @@ class _PaymentMethodState extends State<PaymentMethod> {
                           .indexWhere((c) => c['id'].toString() == _selectedId)
                       : -1;
                   final selectedCard = (idx >= 0) ? cards[idx] : cards[0];
-
+                  widget.jobsViewModel.setInputValues(
+                    index: 'tap_payments_card',
+                    value: selectedCard['id'],
+                  );
                   // build a single ButtonConfirmPaymentMethod
                   return Padding(
                     padding: EdgeInsets.symmetric(
