@@ -6,9 +6,13 @@ import 'package:dingdone/data/remote/response/ApiResponse.dart';
 import 'package:dingdone/models/user_model.dart';
 import 'package:dingdone/res/app_validation.dart';
 import 'package:dingdone/res/strings/english_strings.dart';
+import 'package:provider/provider.dart';
+
+import '../categories_view_model/categories_view_model.dart';
 
 class SignUpViewModel with ChangeNotifier {
   final SignUpRepository _signUpRepository = SignUpRepository();
+  List<dynamic>? _companies = List.empty();
 
   // final ProfileRepository _homeRepository = ProfileRepository();
   ApiResponse<DropDownModelMain> _apiRoleResponse = ApiResponse.loading();
@@ -46,6 +50,8 @@ class SignUpViewModel with ChangeNotifier {
         debugPrint('2 ${response}');
 
         _errorMessage=response['reason'];
+        signUpBody={};
+        notifyListeners();
         return false;
       }
       _apiRegisterResponse = ApiResponse<UserModel>.completed(response);
@@ -60,10 +66,14 @@ class SignUpViewModel with ChangeNotifier {
       //         '${_apiRegisterResponse.data?.first_name} ${_apiRegisterResponse.data?.last_name}',
       //     userId: '${_apiRegisterResponse.data?.id}');
       // await saveProfileData();
+      signUpBody={};
+      notifyListeners();
       return true;
     } catch (error) {
       _apiRegisterResponse = ApiResponse<UserModel>.error(error.toString());
       _errorMessage=error.toString();
+      signUpBody={};
+
       return false;
     }
     // debugPrint('sign up body ${signUpBody}');
@@ -76,7 +86,7 @@ class SignUpViewModel with ChangeNotifier {
   }
 
 
-  bool validate({required int index}) {
+  Future<bool> validate({required int index}) async {
     signUpErrors = {};
     String? firstnameMessage = '';
     String? lastnameMessage = '';
@@ -115,14 +125,46 @@ class SignUpViewModel with ChangeNotifier {
         //     index: 'Date of birth');
         debugPrint('selected option is ${signUpBody['selectedOption']}');
 
-        QIDMessage = signUpBody['selectedOption'] =='individual'?
-        AppValidation().isNotEmpty(
+        final selectedOption = signUpBody['selectedOption'];
+        final companyId = signUpBody['company'];
+        debugPrint('selected option $selectedOption 1');
+// Check if the selected option is 'individual'
+        if (selectedOption == 'individual') {
+          QIDMessage = AppValidation().isNotEmpty(
             value: signUpBody['id_image'] ?? '',
-            index: 'QID'):
-        signUpBody['selectedOption'] =='company'?
-        AppValidation().isNotEmpty(
-            value: signUpBody['company'] ?? '',
-            index: 'company'):'Please select a profile type';
+            index: 'QID',
+          );
+        }
+// Check if the selected option is 'company'
+        else if (selectedOption == 'company') {
+          debugPrint('comapny 1');
+          if (companyId == null || companyId.isEmpty) {
+            debugPrint('comapny 2');
+
+            QIDMessage = AppValidation().isNotEmpty(
+              value: companyId ?? '',
+              index: 'company',
+            );
+          } else {
+            debugPrint('comapny 3');
+
+            var companies=await _getCompanies();
+            final isValidCompany = companies!.any((company) => company['id'] == companyId);
+
+            if (!isValidCompany) {
+              debugPrint('This is not a valid company');
+              QIDMessage = 'This is not a valid company';
+            } else {
+              debugPrint('comapny 4');
+
+              QIDMessage = null; // Valid company
+            }
+          }
+        }
+// No valid option selected
+        else {
+          QIDMessage = 'Please select a profile type';
+        }
         debugPrint('QIDMessage ${QIDMessage} ${signUpBody['selectedOption']}');
         if (firstnameMessage == null && lastnameMessage == null
             // && dobMessage == null
@@ -302,14 +344,55 @@ class SignUpViewModel with ChangeNotifier {
         latitudeMessage = AppValidation().isNotEmpty(
             value: signUpBody['latitude'] ?? '',
             index: 'Latitude');
-        QIDMessage = signUpBody['selectedOption'] =='individual'?
-        AppValidation().isNotEmpty(
+        // QIDMessage = signUpBody['selectedOption'] =='individual'?
+        // AppValidation().isNotEmpty(
+        //     value: signUpBody['id_image'] ?? '',
+        //     index: 'QID'):
+        // signUpBody['selectedOption'] =='company'?
+        // AppValidation().isNotEmpty(
+        //     value: signUpBody['company'] ?? '',
+        //     index: 'company'):'Please select a profile type';
+
+        final selectedOption = signUpBody['selectedOption'];
+        final companyId = signUpBody['company'];
+        debugPrint('selected option $selectedOption 1');
+// Check if the selected option is 'individual'
+        if (selectedOption == 'individual') {
+          QIDMessage = AppValidation().isNotEmpty(
             value: signUpBody['id_image'] ?? '',
-            index: 'QID'):
-        signUpBody['selectedOption'] =='company'?
-        AppValidation().isNotEmpty(
-            value: signUpBody['company'] ?? '',
-            index: 'company'):'Please select a profile type';
+            index: 'QID',
+          );
+        }
+// Check if the selected option is 'company'
+        else if (selectedOption == 'company') {
+          debugPrint('comapny 1');
+          if (companyId == null || companyId.isEmpty) {
+            debugPrint('comapny 2');
+
+            QIDMessage = AppValidation().isNotEmpty(
+              value: companyId ?? '',
+              index: 'company',
+            );
+          } else {
+            debugPrint('comapny 3');
+
+            var companies=await _getCompanies();
+            final isValidCompany = companies!.any((company) => company['id'] == companyId);
+
+            if (!isValidCompany) {
+              debugPrint('This is not a valid company');
+              QIDMessage = 'This is not a valid company';
+            } else {
+              debugPrint('comapny 4');
+
+              QIDMessage = null; // Valid company
+            }
+          }
+        }
+// No valid option selected
+        else {
+          QIDMessage = 'Please select a profile type';
+        }
         debugPrint('signupbody avatar ${ signUpBody["avatar"]}');
         if (
             firstnameMessage == null &&
@@ -597,7 +680,24 @@ class SignUpViewModel with ChangeNotifier {
     notifyListeners();
     return false;
   }
+  Future<List<dynamic>?> _getCompanies() async {
+    try {
+      debugPrint('Getting companies');
 
+      dynamic response = await _signUpRepository.getCompanies();
+      debugPrint('response getting companies $response');
+
+      _companies = response["data"];
+
+
+      notifyListeners();
+      return _companies;
+    } catch (error) {
+      debugPrint('Error fetching companies ${error}');
+    }
+    notifyListeners();
+    return _companies;
+  }
   void setInputValues({required String index,required dynamic value}) {
     signUpBody[index] = value;
     debugPrint('signup body $signUpBody');
@@ -659,6 +759,7 @@ class SignUpViewModel with ChangeNotifier {
   get getapiRegisterResponse => _apiRegisterResponse;
 
   get getSignUpBody => signUpBody;
+  get companies => _companies;
 
   get isDataWritten => _isDataWritten;
   get errorMessage => _errorMessage;

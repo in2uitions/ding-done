@@ -19,6 +19,9 @@ class SignUpRepository {
   final BaseApiService _userUpdate =
       NetworkApiService(url: ApiEndPoints().userUpdate);
 
+  final BaseApiService _apiCompanies =
+  NetworkApiService(url: ApiEndPoints().getCompanies);
+
   Future<DropDownModelMain?> getRoles() async {
     try {
       dynamic response = await _apiRoleGet.getResponse();
@@ -50,7 +53,18 @@ class SignUpRepository {
       rethrow;
     }
   }
+  Future<dynamic> getCompanies() async {
+    try {
+      dynamic response =
+      await _apiCompanies.getResponse(sendToken: false);
+      // debugPrint('response in get categories and serices $response');
+      return response;
+    } catch (error) {
+      debugPrint('error in get companies $error');
 
+      rethrow;
+    }
+  }
   // Future<String> getUserRoleFromId(String id) async {
   //   try {
   //     String roleName = id;

@@ -11,6 +11,7 @@ class ApiEndPoints {
   final String getCategories = '/items/categories?fields=*.*.*.*';
   final String getCountries = '/items/countries';
   final String getCategoriesAndServices = '/suppliers/categories';
+  final String getCompanies = '/items/companies';
   final String getServices = '/items/services?fields=*.*.*.*';
   final String getJobs = '/items/jobs?fields=*.*.*';
   final String supplierProfile = '/items/supplier_info';

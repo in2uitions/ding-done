@@ -574,7 +574,10 @@ class _ServicesScreenState extends State<ServicesScreen>
                                             final cat = parentCats[index];
                                             final tr = (cat['translations'] as List).firstWhere(
                                                   (t) => t['languages_code'] == lang,
-                                              orElse: () => cat['translations'][0],
+                                              orElse: () => (cat['translations'] as List).firstWhere(
+                                                    (t) => t['languages_code'] == 'en-US',
+                                                orElse: () => cat['translations'][0],
+                                              ),
                                             );
                                             return Container(
                                               key: _tabKeys[index],

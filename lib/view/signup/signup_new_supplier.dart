@@ -1137,9 +1137,9 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             if (_currentStep < pages.length - 1) {
-                              if (signupViewModel.validate(
+                              if (await signupViewModel.validate(
                                   index: _currentStep)) {
                                 setState(() {
                                   _currentStep++;
@@ -1152,7 +1152,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                                 );
                               }
                             } else {
-                              if (signupViewModel.validate(
+                              if (await signupViewModel.validate(
                                   index: _currentStep)) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(

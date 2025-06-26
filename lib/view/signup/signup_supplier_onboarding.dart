@@ -73,9 +73,9 @@ class _SignUpSupplierOnBoardingScreenState
           ),
           child: InkWell(
             borderRadius: defaultSkipButtonBorderRadius,
-            onTap: () {
+            onTap: () async {
               FocusManager.instance.primaryFocus?.unfocus();
-              if (signupViewModel.validate(index: index) && setIndex != null) {
+              if (await signupViewModel.validate(index: index) && setIndex != null) {
                 index = index + 1;
                 setIndex(index);
               }
@@ -111,8 +111,8 @@ class _SignUpSupplierOnBoardingScreenState
           ),
           child: InkWell(
             borderRadius: defaultProceedButtonBorderRadius,
-            onTap: () {
-              if (signupViewModel.validate(index: index)) {
+            onTap: () async {
+              if (await signupViewModel.validate(index: index)) {
                 Navigator.of(context)
                     .push(_createRoute(SupplierAgreement(index: index)));
               } else {

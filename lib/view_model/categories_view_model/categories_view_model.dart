@@ -89,6 +89,7 @@ class CategoriesViewModel with ChangeNotifier {
           .toList();
 
       _servicesList2 = _servicesList;
+      // await _getCompanies();
 
       notifyListeners();
       return _categoriesList;
@@ -98,6 +99,8 @@ class CategoriesViewModel with ChangeNotifier {
     notifyListeners();
     return _categoriesList;
   }
+
+
 
   Future<void> sortCategories(dynamic serv) async {
     try {

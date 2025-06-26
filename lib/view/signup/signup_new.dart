@@ -1050,10 +1050,10 @@ class _SignUpNewState extends State<SignUpNew> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             // Validate current page before navigating.
                             if (_currentStep < _totalSteps - 1) {
-                              if (signupViewModel.validate(
+                              if (await signupViewModel.validate(
                                   index: _currentStep)) {
                                 setState(() {
                                   _currentStep++;
@@ -1067,7 +1067,7 @@ class _SignUpNewState extends State<SignUpNew> {
                               }
                             } else {
                               // Last page: final validation and complete signup.
-                              if (signupViewModel.validate(
+                              if (await signupViewModel.validate(
                                   index: _currentStep)) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
