@@ -54,7 +54,8 @@ class _CustomMultipleSelectionCheckBoxListState
           (t) =>
       t['languages_code'] == _lang &&
           (t['title'] ?? '').toString().isNotEmpty,
-      orElse: () => translations.first,
+      orElse: () => translations.firstWhere(
+              (t) => t['languages_code'] == 'en-US' ) ,
     );
     return (match['title'] ?? '').toString();
   }
@@ -109,7 +110,8 @@ class _CustomMultipleSelectionCheckBoxListState
                         svc['category']['translations'] as List<dynamic>;
                         final t = catTrans.firstWhere(
                               (t) => t['languages_code'] == _lang,
-                          orElse: () => catTrans.first,
+                           orElse: () => (catTrans as List).firstWhere(
+                              (t) => t['languages_code'] == 'en-US' ) ,
                         );
                         return (t['categories_id'] as int) ==
                             (parentCat['id'] as int);

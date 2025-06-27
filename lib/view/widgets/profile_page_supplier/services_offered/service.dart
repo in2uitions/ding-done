@@ -50,7 +50,9 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
           (t['title'] ?? '')
               .toString()
               .isNotEmpty,
-      orElse: () => translations.first,
+      orElse: () => translations.firstWhere(
+              (t) => t['languages_code'] == 'en-US' ) ,
+
     );
     return (match['title'] ?? '').toString();
   }

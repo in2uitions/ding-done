@@ -335,11 +335,11 @@ class _MyaddressBookState extends State<MyaddressBook> {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      final jobsVM =
-                          Provider.of<JobsViewModel>(context, listen: false);
+                      // final jobsVM =
+                      //     Provider.of<JobsViewModel>(context, listen: false);
 
-                      jobsVM
-                          .clearJobsBody(); // implement this in your ViewModel
+                      // jobsVM
+                      //     .clearJobsBody(); // implement this in your ViewModel
                       Navigator.of(context).push(
                         _createRoute(ConfirmAddress()),
                       );

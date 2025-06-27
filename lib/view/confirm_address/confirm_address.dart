@@ -204,7 +204,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                                                       ));
                                             }
                                           }
-                                          jobsViewModel.clearJobsBody();
+                                          // jobsViewModel.clearJobsBody();
 
                                           isLoading=false;
                                         }

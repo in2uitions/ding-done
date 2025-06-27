@@ -657,12 +657,12 @@ class JobsViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void clearJobsBody() {
-    jobsBody={};
-
-
-    notifyListeners();
-  }
+  // void clearJobsBody() {
+  //   jobsBody={};
+  //
+  //
+  //   notifyListeners();
+  // }
   void setInputValuesWithoutNotify({required String index, dynamic value}) {
     jobsBody[index] = value;
     debugPrint('jobsBody $jobsBody');

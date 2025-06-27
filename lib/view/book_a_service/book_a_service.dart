@@ -1348,12 +1348,7 @@ Widget _buildPopupDialogNo(BuildContext context, String message) {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              InkWell(
-                child: SvgPicture.asset('assets/img/x.svg'),
-                onTap: () {
-                  Navigator.pop(context);
-                },
-              ),
+              SvgPicture.asset('assets/img/failure.svg'),
             ],
           ),
         ),
