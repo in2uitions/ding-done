@@ -214,7 +214,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                               ),
                             ),
                             Text(
-                              widget.data.status,
+                              widget.data.status=='inprogress'?'in progress':widget.data.status,
                               // Fallback text if no matching translation is found
                               style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff4100E3),
@@ -1073,7 +1073,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
               children: [
                 InkWell(
                   child: SvgPicture.asset('assets/img/x.svg'),
-                  onTap: () {
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await Future.delayed(const Duration(seconds: 0));
                     Navigator.pop(context);
                   },
                 ),
@@ -1125,7 +1127,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
               children: [
                 InkWell(
                   child: SvgPicture.asset('assets/img/x.svg'),
-                  onTap: () {
+                  onTap: () async {
+                    Navigator.pop(context);
+                    await Future.delayed(const Duration(seconds: 0));
                     Navigator.pop(context);
                   },
                 ),

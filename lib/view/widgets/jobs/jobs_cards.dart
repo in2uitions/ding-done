@@ -99,7 +99,8 @@ class _JobsCardsState extends State<JobsCards> {
                           .getCustomerPayments(data[index].customer["id"])
                       : debugPrint(
                           'i am a customer ${data[index].customer["id"]}');
-
+                  debugPrint(
+                      'statuuuus ${data[index].status}');
                   widget.userRole == Constants.supplierRoleId
                       ? Navigator.of(context)
                           .push(_createRoute(JobDetailsSupplier(
@@ -574,6 +575,10 @@ class _JobsCardsState extends State<JobsCards> {
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
+                                    data[index].total_amount != null && data[index].total_amount.toString()!=''
+                                        ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ?  data[index].service["country_rates"][0]["country"]["currency"] : ''}'
+                                        : '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] *  data[index].number_of_units) : ( data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${ data[index].service["country_rates"] != null ?  data[index].service["country_rates"][0]["country"]["currency"] : ''}',
+
                                     // '',
                                     // data[index].supplier_total != null &&
                                     //         data[index]
@@ -582,7 +587,7 @@ class _JobsCardsState extends State<JobsCards> {
                                     //             ''
                                     //     ? '${data[index].supplier_total} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
                                     //     :
-                              data[index].service!=null?'${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}':'',
+                              // data[index].service!=null?'${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}':'',
                                     style: getPrimarySemiBoldStyle(
                                       fontSize: 14,
                                       color: const Color(0xff180B3C),

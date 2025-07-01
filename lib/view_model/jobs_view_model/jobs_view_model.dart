@@ -630,26 +630,32 @@ class JobsViewModel with ChangeNotifier {
     debugPrint('hhhh $index $value');
     if (index == 'date') {
       final inputFormat = DateFormat('dd-MM-yyyy');
-      // Parse the input date string
       selectedDate = inputFormat.parse(value);
-      // selectedDate = DateTime.parse(value);
-    } // Your selected date
+    }
 
     if (index == 'time') {
-      // Extract the time part from the TimeOfDay string
-      RegExp regExp = RegExp(r'TimeOfDay\((\d+):(\d+)\)');
-      Match? match = regExp.firstMatch(value);
-
-      if (match != null) {
-        // Parse the hours and minutes
-        int hours = int.parse(match.group(1)!);
-        int minutes = int.parse(match.group(2)!);
-        selectedTime = TimeOfDay(hour: hours, minute: minutes);
-        print('Selected time: $selectedTime'); // Your selected time
-      } else {
+      try {
+        DateTime parsedTime = DateFormat.jm().parse(value);
+        selectedTime = TimeOfDay(hour: parsedTime.hour, minute: parsedTime.minute);
+      } catch (e) {
         print('Invalid time format: $value');
       }
     }
+
+    // After setting date or time, combine both into start_date if possible
+    if (selectedDate != null && selectedTime != null) {
+      final combinedDateTime = DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
+
+      // Update the start_date in jobsBody
+      jobsBody['start_date'] = combinedDateTime.toString();
+    }
+
     if (index == 'cancellation_reason') {
       _selectedReason = value;
     }
@@ -669,25 +675,32 @@ class JobsViewModel with ChangeNotifier {
     debugPrint('hhhh $index $value');
     if (index == 'date') {
       final inputFormat = DateFormat('dd-MM-yyyy');
-      // Parse the input date string
       selectedDate = inputFormat.parse(value);
-      // selectedDate = DateTime.parse(value);
-    } // Your selected date
+    }
 
     if (index == 'time') {
-      // Extract the time part from the TimeOfDay string
-      RegExp regExp = RegExp(r'TimeOfDay\((\d+):(\d+)\)');
-      Match? match = regExp.firstMatch(value);
-      if (match != null) {
-        // Parse the hours and minutes
-        int hours = int.parse(match.group(1)!);
-        int minutes = int.parse(match.group(2)!);
-        selectedTime = TimeOfDay(hour: hours, minute: minutes);
-        print('Selected time: $selectedTime'); // Your selected time
-      } else {
+      try {
+        DateTime parsedTime = DateFormat.jm().parse(value);
+        selectedTime = TimeOfDay(hour: parsedTime.hour, minute: parsedTime.minute);
+      } catch (e) {
         print('Invalid time format: $value');
       }
     }
+
+    // After setting date or time, combine both into start_date if possible
+    if (selectedDate != null && selectedTime != null) {
+      final combinedDateTime = DateTime(
+        selectedDate.year,
+        selectedDate.month,
+        selectedDate.day,
+        selectedTime.hour,
+        selectedTime.minute,
+      );
+
+      // Update the start_date in jobsBody
+      jobsBody['start_date'] = combinedDateTime.toString();
+    }
+
     if (index == 'cancellation_reason') {
       _selectedReason = value;
     }

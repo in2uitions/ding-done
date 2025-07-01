@@ -776,54 +776,61 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                         topRight: Radius.circular(30),
                       ),
                       color: Color(0xffFEFEFE),
-                    ),child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            context.appValues.appPadding.p20,
-                            context.appValues.appPadding.p50,
-                            context.appValues.appPadding.p20,
-                            context.appValues.appPadding.p20,
-                          ),
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                translate(
-                                    'home_screen.jobRequestsAroundMe'),
-                                style: getPrimaryBoldStyle(
-                                  fontSize: 16,
-                                  color: const Color(0xff180C38),
-                                ),
+                    ),child:  ListView.builder(
+                        controller: scrollController,
+                        itemCount: 1,
+                        itemBuilder: (BuildContext context, int index) {
+
+                          return Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                context.appValues.appPadding.p20,
+                                context.appValues.appPadding.p0,
+                                context.appValues.appPadding.p20,
+                                context.appValues.appPadding.p20,
                               ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(
-                            context.appValues.appPadding.p20,
-                            context.appValues.appPadding.p0,
-                            context.appValues.appPadding.p20,
-                            context.appValues.appPadding.p20,
-                          ),
-                          child: Row(
-                            mainAxisAlignment:
-                            MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'No jobs around you',
-                                style: getPrimaryRegularStyle(
-                                  fontSize: 16,
-                                  color:  Color(0xffFFC500)
-                                ),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    translate(
+                                        'home_screen.jobRequestsAroundMe'),
+                                    style: getPrimaryBoldStyle(
+                                      fontSize: 16,
+                                      color: const Color(0xff180C38),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
-                      ],
+                            ),
+                            Padding(
+                              padding: EdgeInsets.fromLTRB(
+                                context.appValues.appPadding.p20,
+                                context.appValues.appPadding.p0,
+                                context.appValues.appPadding.p20,
+                                context.appValues.appPadding.p20,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'No jobs around you',
+                                    style: getPrimaryRegularStyle(
+                                      fontSize: 16,
+                                      color:  Color(0xffFFC500)
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      }
                     ),);
                   }),
             ],

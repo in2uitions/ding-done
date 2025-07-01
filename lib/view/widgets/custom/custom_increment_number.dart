@@ -65,7 +65,7 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
   }
 
   void _increment() {
-    if (currentValue < 99) {
+    if (currentValue < 99999) {
       setState(() {
         currentValue++;
         _customController.text = currentValue.toString();

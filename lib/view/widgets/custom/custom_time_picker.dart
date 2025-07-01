@@ -31,6 +31,12 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
     // If a value is provided, you could parse it to get a TimeOfDay.
     // For simplicity, if no value is provided, we default to the current time.
     _selectedTime = TimeOfDay.now();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.viewModel(
+        index: widget.index,
+        value: _selectedTime.format(context), // Send as string, like "5:47 PM"
+      );
+    });
   }
 
   Future<void> _selectTime(BuildContext context) async {

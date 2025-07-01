@@ -342,58 +342,79 @@ class _BookAServiceState extends State<BookAService> {
                       final addr = addresses[i];
                       final isSelected = i == selectedIndex;
 
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: context.appValues.appPadding.p12,
-                          horizontal: context.appValues.appPadding.p20,
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            setState(() => selectedIndex = i);
-                          },
-                          child: Row(
-                            children: [
-                              Icon(
-                                isSelected
-                                    ? Icons.circle_rounded
-                                    : Icons.circle_outlined,
-                                color: isSelected
-                                    ? const Color(0xff4100E3)
-                                    : const Color(0xffC5C6CC),
-                                size: 16,
-                              ),
-                              const Gap(10),
-                              SvgPicture.asset(
-                                'assets/img/locationbookservice.svg',
-                                width: 20,
-                                height: 20,
-                              ),
-                              const Gap(10),
-                              Expanded(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      translate('bookService.location'),
-                                      style: getPrimaryRegularStyle(
-                                        fontSize: 16,
-                                        color: context.resources.color
-                                            .btnColorBlue,
-                                      ),
+                      return Consumer<JobsViewModel>(
+                          builder: (ctx, jobsVM, _) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: context.appValues.appPadding.p12,
+                              horizontal: context.appValues.appPadding.p20,
+                            ),
+                            child: InkWell(
+                              onTap: () {
+                                setState(() => selectedIndex = i);
+                                jobsVM.setInputValues(
+                                    index: 'job_address', value: addr);
+                                jobsVM.setInputValues(
+                                  index: 'address',
+                                  value:
+                                  '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}',
+                                );
+                                jobsVM.setInputValues(
+                                    index: 'latitude',
+                                    value: addr['latitude']);
+                                jobsVM.setInputValues(
+                                    index: 'longitude',
+                                    value: addr['longitude']);
+                                jobsVM.setInputValues(
+                                    index: 'payment_method',
+                                    value: 'Card');
+                              },
+                              child: Row(
+                                children: [
+                                  Icon(
+                                    isSelected
+                                        ? Icons.circle_rounded
+                                        : Icons.circle_outlined,
+                                    color: isSelected
+                                        ? const Color(0xff4100E3)
+                                        : const Color(0xffC5C6CC),
+                                    size: 16,
+                                  ),
+                                  const Gap(10),
+                                  SvgPicture.asset(
+                                    'assets/img/locationbookservice.svg',
+                                    width: 20,
+                                    height: 20,
+                                  ),
+                                  const Gap(10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          translate('bookService.location'),
+                                          style: getPrimaryRegularStyle(
+                                            fontSize: 16,
+                                            color: context.resources.color
+                                                .btnColorBlue,
+                                          ),
+                                        ),
+                                        Text(
+                                          '${addr["address_label"]}',
+                                          // '${addr["street_number"]} ${addr["building_number"]}, Apt ${addr["apartment_number"]}, Floor ${addr["floor"]}',
+                                          style: getPrimaryRegularStyle(
+                                            fontSize: 12,
+                                            color: const Color(0xff71727A),
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                    Text(
-                                      '${addr["street_number"]} ${addr["building_number"]}, Apt ${addr["apartment_number"]}, Floor ${addr["floor"]}',
-                                      style: getPrimaryRegularStyle(
-                                        fontSize: 12,
-                                        color: const Color(0xff71727A),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
-                        ),
+                            ),
+                          );
+                        }
                       );
                     }),
 
@@ -915,11 +936,14 @@ getPayment() async{
                                                             ),
                                                           ),
                                                           Text(
+                                                            // '${profileViewModel
+                                                            //     .getProfileBody['current_address']["street_number"]} ${profileViewModel
+                                                            //     .getProfileBody['current_address']["building_number"]}, ${profileViewModel
+                                                            //     .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
+                                                            //     .getProfileBody['current_address']["floor"]}',
                                                             '${profileViewModel
-                                                                .getProfileBody['current_address']["street_number"]} ${profileViewModel
-                                                                .getProfileBody['current_address']["building_number"]}, ${profileViewModel
-                                                                .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
-                                                                .getProfileBody['current_address']["floor"]}',
+                                                                .getProfileBody['current_address']["address_label"]}',
+
                                                             style:
                                                             getPrimaryRegularStyle(
                                                               fontSize: 12,
