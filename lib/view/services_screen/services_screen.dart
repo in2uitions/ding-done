@@ -193,6 +193,7 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
             .setParentCategory('${parentServices?["title"]}');
         debugPrint('search filter ${services?["title"]}');
         debugPrint('index $index');
+
         Navigator.of(context).push(_createRoute(
           CategoriesScreen(
             categoriesViewModel:
@@ -410,6 +411,7 @@ class _ServicesScreenState extends State<ServicesScreen>
         index: 'longitude',
         value: profileViewModel.getProfileBody['current_address']['longitude']);
     jobsViewModel.setInputValues(index: 'payment_method', value: 'Card');
+    jobsViewModel.setInputValues(index: 'number_of_units',value:service['country_rates'][0]['minimum_order'].toString() );
 
     Navigator.of(context).push(_createRoute(BookAService(
       service: service,

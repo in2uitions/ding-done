@@ -215,11 +215,16 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             children: [
                               SvgPicture.asset('assets/img/categoriesIcon.svg'),
                               const Gap(4),
-                              Text(
-                                _parentCategoryTitle,
-                                style: getPrimaryRegularStyle(
-                                  color: const Color(0xff180D38),
-                                  fontSize: 12,
+                              InkWell(
+                                onTap: (){
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(
+                                  _parentCategoryTitle,
+                                  style: getPrimaryRegularStyle(
+                                    color: const Color(0xff180D38),
+                                    fontSize: 12,
+                                  ),
                                 ),
                               ),
                               const Gap(4),
@@ -306,6 +311,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       jobsVM.setInputValues(
                                           index: 'payment_method',
                                           value: 'Card');
+                                      jobsVM.setInputValues(index: 'number_of_units',value:service['country_rates'][0]['minimum_order'].toString() );
+
                                       Navigator.of(context).push(
                                         PageRouteBuilder(
                                           pageBuilder: (c, a1, a2) =>

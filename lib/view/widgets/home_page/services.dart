@@ -201,6 +201,8 @@ class _ServicesWidgetState extends State<ServicesWidget> {
                 value: profileViewModel.getProfileBody['current_address']['longitude']);
             jobsViewModel.setInputValues(
                 index: 'payment_method', value: 'Card');
+            jobsViewModel.setInputValues(index: 'number_of_units',value:service.country_rates[0]['minimum_order'].toString() );
+
 
             Navigator.of(context).push(_createRoute(BookAService(
               service: service,

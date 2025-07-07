@@ -68,7 +68,7 @@ class _CustomIncrementFieldRequestState
 
   void _increment() {
     if (widget.editable != null && widget.editable!) {
-      if (currentValue < 99) {
+      if (currentValue < 99999) {
         setState(() {
           currentValue++;
           _customController.text = currentValue.toString();

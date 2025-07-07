@@ -166,7 +166,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           ),
                                         ),
                                         Text(
-                                          widget.data.status,
+                                  widget.data.status=='inprogress'?'in progress':widget.data.status,
                                           style: getPrimarySemiBoldStyle(
                                             color: const Color(0xff4100E3),
                                             fontSize: 10,

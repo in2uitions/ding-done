@@ -1445,7 +1445,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     fixedSize: Size(
-                      context.appValues.appSizePercent.w30,
+                      context.appValues.appSizePercent.w40,
                       context.appValues.appSizePercent.h5,
                     ),
                   ),
