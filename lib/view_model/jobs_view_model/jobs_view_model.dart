@@ -4,6 +4,7 @@ import 'package:dingdone/models/jobs_model.dart';
 import 'package:dingdone/repository/jobs/jobs_repository.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/constants.dart';
+import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/data/remote/response/ApiResponse.dart';
 import 'package:intl/intl.dart';
@@ -401,20 +402,26 @@ class JobsViewModel with ChangeNotifier {
     }
   }
 
-  Future<bool?> acceptJob(dynamic data) async {
+  Future<bool?> acceptJob(dynamic data,dynamic supplierLatitude,dynamic supplierLongitude) async {
     try {
       debugPrint('Estimated time to reach currentPosition: ${data} minutes');
       try {
         Position currentPosition = await Geolocator.getCurrentPosition();
         // debugPrint('Estimated customer address: ${data.customer["address"]} minutes');
         debugPrint('currentPosition: ${currentPosition.toString()}');
+        debugPrint('supplierLatitude: ${supplierLatitude.toString()}');
+        debugPrint('supplierLongitude: ${supplierLongitude.toString()}');
         debugPrint(
             'job position: ${data.job_address["latitude"]} ${data.job_address["longitude"]} minutes');
-
+          // ProfileViewModel profileViewModel=ProfileViewModel();
+          // var supplierLatitude=profileViewModel.getProfileBody["address"]['latitude'];
+          // var supplierLongitude=profileViewModel.getProfileBody["address"]['longitude'];
+        // debugPrint(
+        //     'supplierLatitude: ${supplierLatitude} supplierLongitude: ${supplierLongitude} ');
         // Calculate the distance and duration to the customer's location
         double distance = await Geolocator.distanceBetween(
-          currentPosition.latitude,
-          currentPosition.longitude,
+          supplierLatitude,
+          supplierLongitude,
           data.job_address["latitude"],
           data.job_address["longitude"],
         );
@@ -443,9 +450,13 @@ class JobsViewModel with ChangeNotifier {
         }
       } catch (error) {
         debugPrint('Error calculating distance: $error');
+        return false;
+
       }
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
+      return false;
+
     }
     notifyListeners();
     return true;

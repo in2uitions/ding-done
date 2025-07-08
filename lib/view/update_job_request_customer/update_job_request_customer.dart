@@ -139,6 +139,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                       padding: EdgeInsets.zero,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
+
                           children: [
                             const Gap(30),
                             Padding(
@@ -287,6 +288,59 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     ),
                                   )
                                       : Container(),
+                                  const Gap(20),
+
+                                  widget.fromWhere == translate('jobs.completed')
+                                      ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: context.appValues.appPadding.p0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.start,
+
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                              context.appValues.appPadding.p0,
+                                              vertical:
+                                              context.appValues.appPadding.p0),
+                                          child: Text(
+                                            translate('signUp.supplier'),
+                                            style: getPrimaryRegularStyle(
+                                              fontSize: 14,
+                                              color: const Color(0xff180B3C),
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                            context.appValues.appPadding.p0,
+                                          ),
+                                          child: Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                              context.appValues.appPadding.p0,
+                                              0,
+                                              context.appValues.appPadding.p0,
+                                              0,
+                                            ),
+                                            child:
+                                            Text(
+                                              '${ widget.data.supplier['first_name']} ${widget.data.supplier['last_name']}' ??
+                                                  '', // Fallback text if no matching translation is found
+                                              style: getPrimaryRegularStyle(
+                                                fontSize: 14,
+                                                color: const Color(0xff71727A),
+                                              ),
+                                            ),
+
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                      : Container(),
                                 ],
                               ),
                             ),
@@ -297,6 +351,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                               image: widget.data.uploaded_media,
                             ),
                             // :Container(),
+
+
                             widget.fromWhere != translate('jobs.active') &&
                                     widget.fromWhere !=
                                         translate('jobs.completed')
@@ -488,6 +544,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                         widget.data.extra_fees_reason ?? '',
                                     userRole: Constants.customerRoleId,
                                     fromWhere: widget.fromWhere,
+                                    minimum_order:widget.data.service['country_rates'][0]['minimum_order']!=0 && widget.data.service['country_rates'][0]['minimum_order']!=null ?int.parse(widget.data.service['country_rates'][0]['minimum_order'].toString()) : 1,
                                   )
                                 : Container(),
 

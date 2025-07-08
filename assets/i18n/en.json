@@ -196,6 +196,8 @@
     "currentSupplier": "Current Supplier",
     "jobSize": "Job Size (Number of units)",
     "currentNumberOfUnits": "Current Number of Units",
+    "estimatedNumberOfUnits": "Estimated Number of Units",
+    "actualNumberOfUnits": "Actual Number of Units",
     "extraFees": "Extra Fees",
     "extraFeesReason": "Extra Fees Reason",
     "actualStartTime": "Actual Start Time",

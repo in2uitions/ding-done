@@ -15,6 +15,7 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class JobsCards extends StatefulWidget {
   var active;
@@ -77,13 +78,14 @@ class _JobsCardsState extends State<JobsCards> {
             controller: widget.scrollController,
             padding: EdgeInsets.zero,
             shrinkWrap: true,
-            itemCount: data!=null? data.length:0,
+            itemCount: data != null ? data.length : 0,
             // physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (BuildContext context, int index) {
               Map<String, dynamic>? services;
-              for (Map<String, dynamic> translation in data[index].service != null
-                  ? data[index].service["translations"]
-                  : []) {
+              for (Map<String, dynamic> translation
+                  in data[index].service != null
+                      ? data[index].service["translations"]
+                      : []) {
                 if (translation["languages_code"] == widget.lang) {
                   services = translation;
                   break; // Break the loop once the translation is found
@@ -99,8 +101,7 @@ class _JobsCardsState extends State<JobsCards> {
                           .getCustomerPayments(data[index].customer["id"])
                       : debugPrint(
                           'i am a customer ${data[index].customer["id"]}');
-                  debugPrint(
-                      'statuuuus ${data[index].status}');
+                  debugPrint('statuuuus ${data[index].status}');
                   widget.userRole == Constants.supplierRoleId
                       ? Navigator.of(context)
                           .push(_createRoute(JobDetailsSupplier(
@@ -162,19 +163,20 @@ class _JobsCardsState extends State<JobsCards> {
                                     alignment: Alignment.topCenter,
                                     child: InkWell(
                                       child: Container(
-                                        width:
-                                            context.appValues.appSizePercent.w18,
+                                        width: context
+                                            .appValues.appSizePercent.w18,
                                         height:
                                             context.appValues.appSizePercent.h9,
-                                        decoration:  BoxDecoration(
+                                        decoration: BoxDecoration(
                                           borderRadius: BorderRadius.all(
                                             Radius.circular(10),
                                           ),
                                           image: DecorationImage(
                                             image: NetworkImage(
-                                              data[index].service['image']!=null?
-                                              '${context.resources.image.networkImagePath2}/${data[index].service['image']}.svg':
-                                              'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                              data[index].service['image'] !=
+                                                      null
+                                                  ? '${context.resources.image.networkImagePath2}/${data[index].service['image']}.svg'
+                                                  : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
                                             ),
                                             fit: BoxFit.cover,
                                           ),
@@ -204,12 +206,15 @@ class _JobsCardsState extends State<JobsCards> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     SizedBox(
-                                      width: context.appValues.appSizePercent.w63,
+                                      width:
+                                          context.appValues.appSizePercent.w63,
                                       child: Text(
-                                        services!=null? widget.userRole ==
-                                                Constants.supplierRoleId
-                                            ? '${services?['title']}'
-                                            :'${services!["title"]}':'',
+                                        services != null
+                                            ? widget.userRole ==
+                                                    Constants.supplierRoleId
+                                                ? '${services?['title']}'
+                                                : '${services!["title"]}'
+                                            : '',
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: getPrimaryMediumStyle(
@@ -219,18 +224,21 @@ class _JobsCardsState extends State<JobsCards> {
                                       ),
                                     ),
                                     SizedBox(
-                                      width: context.appValues.appSizePercent.w63,
+                                      width:
+                                          context.appValues.appSizePercent.w63,
                                       child: Text(
-                                        widget.active == 'requestedJobs'?
-                                            'CIRCULATING':
-                                        widget.userRole ==
-                                                Constants.supplierRoleId
-                                            ? data[index].customer != null
-                                                ? '${data[index].customer["first_name"]} ${data[index].customer["last_name"]}'.toUpperCase()
-                                                : ''
-                                            : data[index].supplier != null
-                                                ? '${data[index].supplier["first_name"]} ${data[index].supplier["last_name"]}'.toUpperCase()
-                                                : '',
+                                        widget.active == 'requestedJobs'
+                                            ? 'CIRCULATING'
+                                            : widget.userRole ==
+                                                    Constants.supplierRoleId
+                                                ? data[index].customer != null
+                                                    ? '${data[index].customer["first_name"]} ${data[index].customer["last_name"]}'
+                                                        .toUpperCase()
+                                                    : ''
+                                                : data[index].supplier != null
+                                                    ? '${data[index].supplier["first_name"]} ${data[index].supplier["last_name"]}'
+                                                        .toUpperCase()
+                                                    : '',
                                         // : data[index].supplier != null
                                         //     ? '${data[index].customer["first_name"]} ${data[index].customer["last_name"]}'
                                         //     : '',
@@ -255,12 +263,10 @@ class _JobsCardsState extends State<JobsCards> {
                               child: widget.userRole ==
                                           Constants.supplierRoleId ||
                                       widget.active == 'requestedJobs' ||
-                                      widget.active == 'completedJobs'
-                                  || widget.active == 'bookedJobs'
+                                      widget.active == 'completedJobs' ||
+                                      widget.active == 'bookedJobs'
                                   ? widget.active == 'activeJobs'
-
-                                      ?
-                              Row(
+                                      ? Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
@@ -273,7 +279,8 @@ class _JobsCardsState extends State<JobsCards> {
                                                 Text(
                                                   data[index].actual_start_date !=
                                                           null
-                                                      ? DateFormat('d MMMM yyyy')
+                                                      ? DateFormat(
+                                                              'd MMMM yyyy')
                                                           .format(DateTime.parse(
                                                                   data[index]
                                                                           .actual_start_date +
@@ -308,8 +315,8 @@ class _JobsCardsState extends State<JobsCards> {
                                                       : '',
                                                   style: getPrimaryRegularStyle(
                                                     fontSize: 12,
-                                                    color: context.resources.color
-                                                        .btnColorBlue,
+                                                    color: context.resources
+                                                        .color.btnColorBlue,
                                                   ),
                                                 ),
                                               ],
@@ -328,16 +335,18 @@ class _JobsCardsState extends State<JobsCards> {
                                                 const Gap(5),
                                                 Text(
                                                   data[index].start_date != null
-                                                      ? DateFormat('d MMMM yyyy')
-                                                          .format(DateTime.parse(
-                                                                  data[index]
+                                                      ? DateFormat(
+                                                              'd MMMM yyyy')
+                                                          .format(DateTime
+                                                                  .parse(data[
+                                                                          index]
                                                                       .start_date)
                                                               .toLocal())
                                                       : '',
                                                   style: getPrimaryRegularStyle(
                                                     fontSize: 12,
-                                                    color: context.resources.color
-                                                        .btnColorBlue,
+                                                    color: context.resources
+                                                        .color.btnColorBlue,
                                                   ),
                                                 ),
                                               ],
@@ -351,15 +360,16 @@ class _JobsCardsState extends State<JobsCards> {
                                                 Text(
                                                   data[index].start_date != null
                                                       ? DateFormat('HH:mm')
-                                                          .format(DateTime.parse(
-                                                                  data[index]
+                                                          .format(DateTime
+                                                                  .parse(data[
+                                                                          index]
                                                                       .start_date)
                                                               .toLocal())
                                                       : '',
                                                   style: getPrimaryRegularStyle(
                                                     fontSize: 12,
-                                                    color: context.resources.color
-                                                        .btnColorBlue,
+                                                    color: context.resources
+                                                        .color.btnColorBlue,
                                                   ),
                                                 ),
                                               ],
@@ -379,7 +389,8 @@ class _JobsCardsState extends State<JobsCards> {
                                                 Text(
                                                   data[index].actual_start_date !=
                                                           null
-                                                      ? DateFormat('d MMMM yyyy')
+                                                      ? DateFormat(
+                                                              'd MMMM yyyy')
                                                           .format(DateTime.parse(
                                                                   data[index]
                                                                           .actual_start_date +
@@ -423,14 +434,15 @@ class _JobsCardsState extends State<JobsCards> {
                                       : Container(),
                             ),
                             widget.active == 'completedJobs' &&
-                                widget.userRole ==
-                                    Constants.customerRoleId?
-                            Gap(7):Container(),
+                                    widget.userRole == Constants.customerRoleId
+                                ? Gap(7)
+                                : Container(),
                             Padding(
                               padding: EdgeInsets.only(
                                   right: context.appValues.appPadding.p8),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   // widget.active == 'completedJobs' &&
                                   //         widget.userRole ==
@@ -448,10 +460,13 @@ class _JobsCardsState extends State<JobsCards> {
                                           widget.userRole ==
                                               Constants.customerRoleId
                                       ? Padding(
-                                        padding: const EdgeInsets.only(left: 0.0),
-                                        child: Text(
-                                            data[index].actual_start_date != null
-                                                ? DateFormat('d MMMM yyyy, HH:mm')
+                                          padding:
+                                              const EdgeInsets.only(left: 0.0),
+                                          child: Text(
+                                            data[index].actual_start_date !=
+                                                    null
+                                                ? DateFormat(
+                                                        'd MMMM yyyy, HH:mm')
                                                     .format(DateTime.parse(data[
                                                                     index]
                                                                 .actual_start_date +
@@ -465,7 +480,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                   .resources.color.btnColorBlue,
                                             ),
                                           ),
-                                      )
+                                        )
                                       : Container(),
                                 ],
                               ),
@@ -475,28 +490,99 @@ class _JobsCardsState extends State<JobsCards> {
                             //         widget.active == 'requestedJobs'
                             //     ?
                             Padding(
-                                    padding: EdgeInsets.only(
-                                        right: context.appValues.appPadding.p8),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        // Text(
-                                        //   translate('updateJob.address'),
-                                        //   style: getPrimaryRegularStyle(
-                                        //       fontSize: 18,
-                                        //       color: context.resources.color
-                                        //           .secondColorBlue),
-                                        // ),
-                                        // const Gap(30),
-                                        Expanded(
-                                          child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                    'assets/img/locationjobs.svg'),
-                                                Text(
+                              padding: EdgeInsets.only(
+                                  right: context.appValues.appPadding.p8),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  // Text(
+                                  //   translate('updateJob.address'),
+                                  //   style: getPrimaryRegularStyle(
+                                  //       fontSize: 18,
+                                  //       color: context.resources.color
+                                  //           .secondColorBlue),
+                                  // ),
+                                  // const Gap(30),
+                                  Expanded(
+                                    child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: InkWell(
+                                          onTap: () {
+                                            final jobAddress =
+                                                data[index].job_address;
+                                            if (jobAddress != null &&
+                                                jobAddress['latitude'] !=
+                                                    null &&
+                                                jobAddress['longitude'] !=
+                                                    null) {
+                                              final latitude =
+                                                  jobAddress['latitude'];
+                                              final longitude =
+                                                  jobAddress['longitude'];
+
+                                              showModalBottomSheet(
+                                                context: context,
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.vertical(
+                                                          top: Radius.circular(
+                                                              16)),
+                                                ),
+                                                builder:
+                                                    (BuildContext context) {
+                                                  return Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            16.0),
+                                                    child: Wrap(
+                                                      children: [
+                                                        ListTile(
+                                                          leading: const Icon(
+                                                              Icons.map),
+                                                          title: const Text(
+                                                              'Open with Google Maps'),
+                                                          onTap: () async {
+                                                            final googleMapsUrl =
+                                                                'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+                                                            final uri = Uri.parse(
+                                                                googleMapsUrl);
+                                                            if (await canLaunchUrl(
+                                                                uri)) {
+                                                              await launchUrl(
+                                                                  uri,
+                                                                  mode: LaunchMode
+                                                                      .externalApplication);
+                                                            } else {
+                                                              ScaffoldMessenger
+                                                                      .of(context)
+                                                                  .showSnackBar(
+                                                                const SnackBar(
+                                                                    content: Text(
+                                                                        'Could not open Google Maps')),
+                                                              );
+                                                            }
+
+                                                            Navigator.pop(
+                                                                context); // Close the bottom sheet
+                                                          },
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            }
+                                          },
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                  'assets/img/locationjobs.svg'),
+                                              const SizedBox(width: 4),
+                                              Flexible(
+                                                child: Text(
                                                   data[index].job_address !=
                                                               null &&
                                                           data[index]
@@ -507,29 +593,29 @@ class _JobsCardsState extends State<JobsCards> {
                                                       : '',
                                                   style: getPrimaryRegularStyle(
                                                     fontSize: 12,
-                                                    color: context.resources.color
-                                                        .btnColorBlue,
+                                                    color: context.resources
+                                                        .color.btnColorBlue,
                                                   ),
-                                                  overflow: TextOverflow
-                                                      .visible, // Ensure the text wraps to the next line
-                                                  softWrap:
-                                                      true, // Enable soft wrapping
+                                                  overflow:
+                                                      TextOverflow.visible,
+                                                  softWrap: true,
                                                 ),
-                                              ],
-                                            ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
+                                        )),
                                   ),
-                                // : Container(),
+                                ],
+                              ),
+                            ),
+                            // : Container(),
                             const Gap(15),
                             widget.userRole == Constants.supplierRoleId
                                 ? widget.active == 'bookedJobs'
                                     ? Padding(
                                         padding: EdgeInsets.only(
-                                            right:
-                                                context.appValues.appPadding.p8),
+                                            right: context
+                                                .appValues.appPadding.p8),
                                         child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -538,7 +624,8 @@ class _JobsCardsState extends State<JobsCards> {
                                                 '${(data[index].supplier_to_job_distance != null ? (data[index].supplier_to_job_distance / 1000).toStringAsFixed(3) : "0")} km',
                                                 style: getPrimaryBoldStyle(
                                                   fontSize: 14,
-                                                  color: const Color(0xff78789D),
+                                                  color:
+                                                      const Color(0xff78789D),
                                                 ),
                                               ),
                                             ]),
@@ -550,8 +637,8 @@ class _JobsCardsState extends State<JobsCards> {
                                 ? widget.active == 'bookedJobs'
                                     ? Padding(
                                         padding: EdgeInsets.only(
-                                            right:
-                                                context.appValues.appPadding.p8),
+                                            right: context
+                                                .appValues.appPadding.p8),
                                         child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -560,7 +647,8 @@ class _JobsCardsState extends State<JobsCards> {
                                                 '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
                                                 style: getPrimaryBoldStyle(
                                                   fontSize: 14,
-                                                  color: const Color(0xff78789D),
+                                                  color:
+                                                      const Color(0xff78789D),
                                                 ),
                                               ),
                                             ]),
@@ -572,12 +660,17 @@ class _JobsCardsState extends State<JobsCards> {
                               padding: EdgeInsets.only(
                                   right: context.appValues.appPadding.p8),
                               child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    data[index].total_amount != null && data[index].total_amount.toString()!=''
-                                        ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ?  data[index].service["country_rates"][0]["country"]["currency"] : ''}'
-                                        : '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] *  data[index].number_of_units) : ( data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${ data[index].service["country_rates"] != null ?  data[index].service["country_rates"][0]["country"]["currency"] : ''}',
+                                    data[index].total_amount != null &&
+                                            data[index]
+                                                    .total_amount
+                                                    .toString() !=
+                                                ''
+                                        ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
+                                        : '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
 
                                     // '',
                                     // data[index].supplier_total != null &&
@@ -587,7 +680,7 @@ class _JobsCardsState extends State<JobsCards> {
                                     //             ''
                                     //     ? '${data[index].supplier_total} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
                                     //     :
-                              // data[index].service!=null?'${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}':'',
+                                    // data[index].service!=null?'${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}':'',
                                     style: getPrimarySemiBoldStyle(
                                       fontSize: 14,
                                       color: const Color(0xff180B3C),
@@ -667,7 +760,8 @@ class _JobsCardsState extends State<JobsCards> {
                                             fixedSize: Size(
                                               context
                                                   .appValues.appSizePercent.w40,
-                                              context.appValues.appSizePercent.h6,
+                                              context
+                                                  .appValues.appSizePercent.h6,
                                             ),
                                           ),
                                           child: Text(
@@ -696,10 +790,11 @@ class _JobsCardsState extends State<JobsCards> {
                                                   elevation: 0,
                                                   // shadowColor: Colors.black,
                                                   backgroundColor:
-                                                  const Color(0xff4100E3),
+                                                      const Color(0xff4100E3),
                                                   shape: RoundedRectangleBorder(
                                                     borderRadius:
-                                                        BorderRadius.circular(10),
+                                                        BorderRadius.circular(
+                                                            10),
                                                   ),
                                                   fixedSize: Size(
                                                     context.appValues
@@ -716,8 +811,8 @@ class _JobsCardsState extends State<JobsCards> {
                                                           'button.startJob'),
                                                   style: getPrimaryBoldStyle(
                                                     fontSize: 14,
-                                                    color: context.resources.color
-                                                        .colorWhite,
+                                                    color: context.resources
+                                                        .color.colorWhite,
                                                   ),
                                                 ),
                                               )
@@ -846,8 +941,8 @@ class _JobsCardsState extends State<JobsCards> {
                       Future.delayed(const Duration(seconds: 0));
                       showDialog(
                           context: context,
-                          builder: (BuildContext context) => _buildPopupDialogSuccess(
-                              context,''));
+                          builder: (BuildContext context) =>
+                              _buildPopupDialogSuccess(context, ''));
                     } else {
                       Navigator.pop(context);
 
@@ -855,9 +950,7 @@ class _JobsCardsState extends State<JobsCards> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) =>
-                              _buildPopupDialogFailure(
-                                  context,
-
+                              _buildPopupDialogFailure(context,
                                   translate('button.somethingWentWrong')));
                     }
                   } else {
@@ -894,9 +987,7 @@ class _JobsCardsState extends State<JobsCards> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
-                                _buildPopupDialogSuccess(
-                                    context,
-
+                                _buildPopupDialogSuccess(context,
                                     translate('button.jobCanceledMsg')));
                       } else {
                         Navigator.pop(context);
@@ -905,9 +996,7 @@ class _JobsCardsState extends State<JobsCards> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
-                                _buildPopupDialogFailure(
-                                    context,
-
+                                _buildPopupDialogFailure(context,
                                     translate('button.somethingWentWrong')));
                       }
                     } else {
@@ -930,9 +1019,7 @@ class _JobsCardsState extends State<JobsCards> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
-                                _buildPopupDialogFailure(
-                                    context,
-
+                                _buildPopupDialogFailure(context,
                                     translate('button.somethingWentWrong')));
                       }
                     }
@@ -1012,7 +1099,7 @@ class _JobsCardsState extends State<JobsCards> {
 //   );
 // }
 
-Widget _buildPopupDialogFailure(BuildContext context,String message) {
+Widget _buildPopupDialogFailure(BuildContext context, String message) {
   return AlertDialog(
     elevation: 15,
     content: Column(
@@ -1065,7 +1152,7 @@ Widget _buildPopupDialogFailure(BuildContext context,String message) {
   );
 }
 
-Widget _buildPopupDialogSuccess(BuildContext context,String message) {
+Widget _buildPopupDialogSuccess(BuildContext context, String message) {
   return AlertDialog(
     elevation: 15,
     content: Column(

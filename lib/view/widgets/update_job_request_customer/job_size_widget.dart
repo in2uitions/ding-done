@@ -18,10 +18,12 @@ class JobSizeWidget extends StatefulWidget {
   var extra_fees_reason;
   var userRole;
   var fromWhere;
+  var minimum_order;
 
   JobSizeWidget({
     super.key,
     required this.completed_units,
+    required this.minimum_order,
     required this.number_of_units,
     required this.extra_fees,
     required this.extra_fees_reason,
@@ -69,7 +71,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     right: context.appValues.appPadding.p10,
                   ),
                   child: Text(
-                    translate('updateJob.jobSize'),
+                    translate('updateJob.actualNumberOfUnits'),
                     style: getPrimaryRegularStyle(
                       fontSize: 14,
                       color: const Color(0xff180B3C),
@@ -96,6 +98,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                                 value: '${widget.completed_units}',
                                 // hintText: 'Job Type',
                                 viewModel: jobsViewModel.setUpdatedJob,
+                                  minimumOrder:int.parse(widget.minimum_order.toString()),
                               );
                             }),
                           )
@@ -134,7 +137,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     right: context.appValues.appPadding.p10,
                   ),
                   child: Text(
-                    translate('updateJob.currentNumberOfUnits'),
+                    translate('updateJob.estimatedNumberOfUnits'),
                     style: getPrimaryRegularStyle(
                       fontSize: 14,
                       color: const Color(0xff180B3C),
@@ -160,6 +163,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                                 value: '${widget.number_of_units}',
                                 // hintText: 'Job Type',
                                 viewModel: jobsViewModel.setUpdatedJob,
+                                minimumOrder: int.parse(widget.number_of_units.toString()),
                               );
                             }),
                           )

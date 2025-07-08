@@ -363,7 +363,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              'Current number of units: ${jobsViewModel.updatedBody["number_of_units"] ?? data.number_of_units}',
+              '${translate('updateJob.estimatedNumberOfUnits')}: ${jobsViewModel.updatedBody["number_of_units"] ?? data.number_of_units}',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -500,7 +500,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              'Current number of units: ${data.number_of_units ?? ''}',
+              '${translate('updateJob.estimatedNumberOfUnits')}: ${data.number_of_units ?? ''}',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,

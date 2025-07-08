@@ -200,6 +200,8 @@
     "currentSupplier": "Τρέχων Προμηθευτής",
     "jobSize": "Μέγεθος Εργασίας (Αριθμός μονάδων)",
     "currentNumberOfUnits": "Τρέχων Αριθμός Μονάδων",
+    "estimatedNumberOfUnits": "εκτιμώμενος αριθμός μονάδων",
+    "actualNumberOfUnits": "πραγματικός αριθμός μονάδων",
     "extraFees": "Επιπλέον Κρατήσεις",
     "extraFeesReason": "Αιτία Επιπλέον Κρατήσεων",
     "actualStartTime": "Πραγματική Ώρα Έναρξης",

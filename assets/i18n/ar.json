@@ -200,6 +200,8 @@
     "currentSupplier": "المورد الحالي",
     "jobSize": "حجم الوظيفة (عدد الوحدات)",
     "currentNumberOfUnits": "عدد الوحدات الحالي",
+    "estimatedNumberOfUnits": "العدد المقدر للوحدات",
+    "actualNumberOfUnits": "العدد الفعلي للوحدات",
     "extraFees": "رسوم إضافية",
     "extraFeesReason": "سبب الرسوم الإضافية",
     "actualStartTime": "وقت البدء الفعلي",

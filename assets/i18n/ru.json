@@ -200,6 +200,8 @@
     "currentSupplier": "Текущий поставщик",
     "jobSize": "Размер задания (количество единиц)",
     "currentNumberOfUnits": "Текущее количество единиц",
+    "estimatedNumberOfUnits": "расчетное количество единиц",
+    "actualNumberOfUnits": "фактическое количество единиц",
     "extraFees": "Дополнительные сборы",
     "extraFeesReason": "Причина дополнительных сборов",
     "actualStartTime": "Фактическое время начала",

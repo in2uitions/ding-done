@@ -9,6 +9,7 @@ class CustomIncrementField extends StatefulWidget {
     this.hintText,
     this.value,
     required this.index,
+    required this.minimumOrder,
     this.arrayIndex = 0,
     this.tag = '',
     required this.viewModel,
@@ -38,6 +39,8 @@ class CustomIncrementField extends StatefulWidget {
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onTap;
   final TextInputType keyboardType;
+
+  final dynamic minimumOrder;
 
   @override
   _CustomIncrementFieldState createState() => _CustomIncrementFieldState();
@@ -78,7 +81,7 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
   }
 
   void _decrement() {
-    if (currentValue > 1) {
+    if (currentValue > widget.minimumOrder) {
       setState(() {
         currentValue--;
         _customController.text = currentValue.toString();

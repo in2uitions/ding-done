@@ -108,19 +108,25 @@ class ProfileViewModel extends DisposableViewModel {
   Future<bool>? patchProfileServices() async {
     try {
       debugPrint('patching Selected services $_selectedServices');
-      dynamic response = await _homeRepository.patchProfileServices(
-        profileBody["id"],
-        {
-          "supplier_services": _selectedServices?.map((serviceId) {
-            return {"services_id": serviceId};
-          }).toList(),
-        },
-      );
-      debugPrint('response ${response}');
-      // profileBody=response;
-      notifyListeners();
+      if(_selectedServices!.isNotEmpty){
+        dynamic response = await _homeRepository.patchProfileServices(
+          profileBody["id"],
+          {
+            "supplier_services": _selectedServices?.map((serviceId) {
+              return {"services_id": serviceId};
+            }).toList(),
+          },
+        );
+        debugPrint('response ${response}');
+        // profileBody=response;
+        notifyListeners();
 
-      return true;
+        return true;
+      }else{
+        return false;
+
+      }
+
     } catch (error) {
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
       notifyListeners();

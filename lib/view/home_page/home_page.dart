@@ -22,6 +22,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import '../../res/constants.dart';
 import '../book_a_service/book_a_service.dart';
 import '../bottom_bar/bottom_bar.dart';
+import '../my_address_book/my_address_book.dart';
 import '../widgets/categories_screen/categories_screen_cards.dart';
 import '../widgets/pulsing_dot/pulsing_dot.dart';
 import '../widgets/update_job_request_customer/rating_stars_widget.dart';
@@ -151,44 +152,81 @@ class _HomePageState extends State<HomePage> {
             review: job.rating_comment ?? '',
           ),
           SizedBox(height: context.appValues.appSize.s10),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Builder(builder: (context) {
-              return ElevatedButton(
-                onPressed: () async {
-                  if (await jobsViewModel.rateJob(job.id) == true) {
-                    Navigator.of(context).pop();
-                    Future.delayed(const Duration(seconds: 0));
-                  } else {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) => _buildPopupDialogFailure(context,
-                            '${jobsViewModel.errorMessage}'));
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  elevation: 0.0,
-                  shadowColor: Colors.transparent,
-                  backgroundColor: const Color(0xffFFD105),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  fixedSize: Size(
-                    context.appValues.appSizePercent.w30,
-                    context.appValues.appSizePercent.h5,
-                  ),
+          Row(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p8,
                 ),
-                child: Text(
-                  translate('button.ok'),
-                  style: getPrimaryRegularStyle(
-                    fontSize: 15,
-                    color: context.resources.color.btnColorBlue,
-                  ),
+                child: Builder(builder: (context) {
+                  return ElevatedButton(
+                    onPressed: () async {
+                      if (await jobsViewModel.rateJob(job.id) == true) {
+                        Navigator.of(context).pop();
+                        Future.delayed(const Duration(seconds: 0));
+                      } else {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => _buildPopupDialogFailure(context,
+                                'Please make sure to rate the job'));
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      shadowColor: Colors.transparent,
+                      backgroundColor: const Color(0xffFFD105),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      fixedSize: Size(
+                        context.appValues.appSizePercent.w30,
+                        context.appValues.appSizePercent.h5,
+                      ),
+                    ),
+                    child: Text(
+                      translate('button.ok'),
+                      style: getPrimaryRegularStyle(
+                        fontSize: 15,
+                        color: context.resources.color.btnColorBlue,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.appValues.appPadding.p8,
                 ),
-              );
-            }),
+                child: Builder(builder: (context) {
+                  return ElevatedButton(
+                    onPressed: () async {
+
+                        Navigator.of(context).pop();
+
+                    },
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0.0,
+                      shadowColor: Colors.transparent,
+                      backgroundColor: const Color(0xff4100E3),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      fixedSize: Size(
+                        context.appValues.appSizePercent.w30,
+                        context.appValues.appSizePercent.h5,
+                      ),
+                    ),
+                    child: Text(
+                      translate('button.cancel'),
+                      style: getPrimaryRegularStyle(
+                        fontSize: 15,
+                        color: Colors.white,
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ],
           ),
           SizedBox(height: context.appValues.appSize.s20),
         ],
@@ -827,6 +865,76 @@ class _HomePageState extends State<HomePage> {
                                       // ),
                                     ],
                                   ),
+                                  InkWell(
+                                    onTap: () {
+                                      // Navigator.of(context).push(
+                                      //   _createRoute(ConfirmAddress()),
+                                      // );
+                                      _onActionSheetPress(context);
+                                    },
+                                    child:  Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                        context.appValues.appPadding.p7,
+                                        vertical:
+                                        context.appValues.appPadding.p5,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            children: [
+                                              // Location SVG icon
+                                              SvgPicture.asset(
+                                                'assets/img/locationbookservice.svg',
+                                                width: 20,
+                                                height: 20,
+                                                color: const Color(0xffFFC500),
+                                              ),
+                                              const Gap(10),
+                                              // Column with a title and the current location or hint
+                                              Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
+                                                children: [
+
+                                                  Text(
+                                                    // '${profileViewModel
+                                                    //     .getProfileBody['current_address']["street_number"]} ${profileViewModel
+                                                    //     .getProfileBody['current_address']["building_number"]}, ${profileViewModel
+                                                    //     .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
+                                                    //     .getProfileBody['current_address']["floor"]}',
+                                                    profileViewModel
+                                                        .getProfileBody!=null &&  profileViewModel
+                                                        .getProfileBody['current_address']!=null?'${profileViewModel
+                                                        .getProfileBody['current_address']["address_label"]}':'',
+
+                                                    style:
+                                                    getPrimaryBoldStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          // Trailing arrow icon
+                                          const Icon(
+                                            Icons
+                                                .arrow_drop_down,
+                                            size: 20,
+                                            color: const Color(0xffFFC500),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal:
@@ -872,8 +980,10 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
+
                         ],
                       ),
+
                     ],
                   ),
                   searchController.text.isEmpty
@@ -1542,58 +1652,260 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // void _onActionSheetPress(BuildContext context) {
+  //   showDemoActionSheet(
+  //     context: context,
+  //     child: CupertinoActionSheet(
+  //       title: const Text('Title'),
+  //       message: const Text('Message'),
+  //       actions: <Widget>[
+  //         CupertinoActionSheetAction(
+  //           child: Text(translate('language.name.en-US')),
+  //           onPressed: () async {
+  //             await AppPreferences()
+  //                 .save(key: language, value: 'en', isModel: false);
+  //             Navigator.pop(context, 'en');
+  //             RestartWidget.restartApp(context);
+  //           },
+  //         ),
+  //         CupertinoActionSheetAction(
+  //           child: Text(translate('language.name.ar-SA')),
+  //           onPressed: () async {
+  //             await AppPreferences()
+  //                 .save(key: language, value: 'ar', isModel: false);
+  //             Navigator.pop(context, 'ar');
+  //             RestartWidget.restartApp(context);
+  //           },
+  //         ),
+  //         CupertinoActionSheetAction(
+  //           child: Text(translate('language.name.el-GR')),
+  //           onPressed: () async {
+  //             await AppPreferences()
+  //                 .save(key: language, value: 'el', isModel: false);
+  //             Navigator.pop(context, 'el');
+  //             RestartWidget.restartApp(context);
+  //           },
+  //         ),
+  //         CupertinoActionSheetAction(
+  //           child: Text(translate('language.name.ru-RU')),
+  //           onPressed: () async {
+  //             await AppPreferences()
+  //                 .save(key: language, value: 'ru', isModel: false);
+  //             Navigator.pop(context, 'ru');
+  //             RestartWidget.restartApp(context);
+  //           },
+  //         ),
+  //       ],
+  //       cancelButton: CupertinoActionSheetAction(
+  //         child: const Text('Cancel'),
+  //         onPressed: () {
+  //           Navigator.pop(context, 'Cancel');
+  //         },
+  //       ),
+  //     ),
+  //   );
+  // }
   void _onActionSheetPress(BuildContext context) {
-    showDemoActionSheet(
+    final addresses = (Provider
+        .of<ProfileViewModel>(context, listen: false)
+        .getProfileBody['address'] as List<dynamic>)
+        .cast<Map<String, dynamic>>();
+
+    int selectedIndex = addresses.indexWhere((addr) =>
+    addr['id'] == Provider
+        .of<ProfileViewModel>(context, listen: false)
+        .getProfileBody['current_address']['id']);
+
+    showModalBottomSheet(
       context: context,
-      child: CupertinoActionSheet(
-        title: const Text('Title'),
-        message: const Text('Message'),
-        actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text(translate('language.name.en-US')),
-            onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'en', isModel: false);
-              Navigator.pop(context, 'en');
-              RestartWidget.restartApp(context);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(translate('language.name.ar-SA')),
-            onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'ar', isModel: false);
-              Navigator.pop(context, 'ar');
-              RestartWidget.restartApp(context);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(translate('language.name.el-GR')),
-            onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'el', isModel: false);
-              Navigator.pop(context, 'el');
-              RestartWidget.restartApp(context);
-            },
-          ),
-          CupertinoActionSheetAction(
-            child: Text(translate('language.name.ru-RU')),
-            onPressed: () async {
-              await AppPreferences()
-                  .save(key: language, value: 'ru', isModel: false);
-              Navigator.pop(context, 'ru');
-              RestartWidget.restartApp(context);
-            },
-          ),
-        ],
-        cancelButton: CupertinoActionSheetAction(
-          child: const Text('Cancel'),
-          onPressed: () {
-            Navigator.pop(context, 'Cancel');
-          },
+      backgroundColor: Colors.white,
+      isScrollControlled: true, // important!
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(32),
+          topRight: Radius.circular(32),
         ),
       ),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) {
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.85,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Gap(15),
+
+                      // --- List of addresses
+                      ...List.generate(addresses.length, (i) {
+                        final addr = addresses[i];
+                        final isSelected = i == selectedIndex;
+
+                        return Consumer<JobsViewModel>(
+                          builder: (ctx, jobsVM, _) {
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: context.appValues.appPadding.p12,
+                                horizontal: context.appValues.appPadding.p20,
+                              ),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() => selectedIndex = i);
+                                  jobsVM.setInputValues(index: 'job_address', value: addr);
+                                  jobsVM.setInputValues(index: 'address', value:
+                                  '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
+                                  jobsVM.setInputValues(index: 'latitude', value: addr['latitude']);
+                                  jobsVM.setInputValues(index: 'longitude', value: addr['longitude']);
+                                  jobsVM.setInputValues(index: 'payment_method', value: 'Card');
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      isSelected
+                                          ? Icons.circle_rounded
+                                          : Icons.circle_outlined,
+                                      color: isSelected ? const Color(0xff4100E3) : const Color(0xffC5C6CC),
+                                      size: 16,
+                                    ),
+                                    const Gap(10),
+                                    SvgPicture.asset(
+                                      'assets/img/locationbookservice.svg',
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                    const Gap(10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            translate('bookService.location'),
+                                            style: getPrimaryRegularStyle(
+                                              fontSize: 16,
+                                              color: context.resources.color.btnColorBlue,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${addr["address_label"]}',
+                                            style: getPrimaryRegularStyle(
+                                              fontSize: 12,
+                                              color: const Color(0xff71727A),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }),
+
+                      const Gap(5),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p20,
+                        ),
+                        child: const Divider(color: Color(0xffD4D6DD)),
+                      ),
+
+                      // --- Bottom Buttons
+                      Consumer2<JobsViewModel, ProfileViewModel>(
+                        builder: (ctx, jobsVM, profVM, _) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: context.appValues.appPadding.p12,
+                              horizontal: context.appValues.appPadding.p20,
+                            ),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      var addr = profVM.getProfileBody['current_address'];
+                                      jobsVM.setInputValues(index: 'job_address', value: addr);
+                                      jobsVM.setInputValues(index: 'address', value:
+                                      '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
+                                      jobsVM.setInputValues(index: 'latitude', value: addr['latitude']);
+                                      jobsVM.setInputValues(index: 'longitude', value: addr['longitude']);
+                                      jobsVM.setInputValues(index: 'payment_method', value: 'Card');
+
+                                      Navigator.of(context).push(
+                                        _createRoute(const MyaddressBook()),
+                                      );
+                                    },
+                                    child: Container(
+                                      height: 44,
+                                      decoration: BoxDecoration(
+                                        color: context.resources.color.colorWhite,
+                                        borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                        border: Border.all(
+                                          color: const Color(0xff4100E3),
+                                          width: 1.5,
+                                        ),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Add / Edit Methods",
+                                          style: getPrimarySemiBoldStyle(
+                                            fontSize: 12,
+                                            color: const Color(0xff4100E3),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                const Gap(15),
+                                Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      Provider.of<ProfileViewModel>(context, listen: false)
+                                          .setCurrentAddress(addresses[selectedIndex]);
+                                      Navigator.pop(ctx);
+                                    },
+                                    child: Container(
+                                      height: 44,
+                                      decoration: const BoxDecoration(
+                                        color: Color(0xff4100E3),
+                                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                                      ),
+                                      child: Center(
+                                        child: Text(
+                                          "Select",
+                                          style: getPrimarySemiBoldStyle(
+                                            fontSize: 12,
+                                            color: Colors.white,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
     );
+
   }
 
   Route _createRoute(Widget child) {

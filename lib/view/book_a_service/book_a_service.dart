@@ -159,112 +159,107 @@ class _BookAServiceState extends State<BookAService> {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
+      isScrollControlled: true, // important!
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(32),
           topRight: Radius.circular(32),
         ),
       ),
-      builder: (ctx) =>
-          StatefulBuilder(
-            builder: (ctx, setState) {
-              return SafeArea(
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    const Gap(15),
+      builder: (ctx) => StatefulBuilder(
+        builder: (ctx, setState) {
+          return SafeArea(
+            child: Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.85,
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Gap(15),
 
-                    // --- Loop over every address
-                    ...List.generate(addresses.length, (i) {
-                      final addr = addresses[i];
-                      final isSelected = i == selectedIndex;
+                      // --- List of addresses
+                      ...List.generate(addresses.length, (i) {
+                        final addr = addresses[i];
+                        final isSelected = i == selectedIndex;
 
-                      return Consumer<JobsViewModel>(
+                        return Consumer<JobsViewModel>(
                           builder: (ctx, jobsVM, _) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: context.appValues.appPadding.p12,
-                              horizontal: context.appValues.appPadding.p20,
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                setState(() => selectedIndex = i);
-                                jobsVM.setInputValues(
-                                    index: 'job_address', value: addr);
-                                jobsVM.setInputValues(
-                                  index: 'address',
-                                  value:
-                                  '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}',
-                                );
-                                jobsVM.setInputValues(
-                                    index: 'latitude',
-                                    value: addr['latitude']);
-                                jobsVM.setInputValues(
-                                    index: 'longitude',
-                                    value: addr['longitude']);
-                                jobsVM.setInputValues(
-                                    index: 'payment_method',
-                                    value: 'Card');
-                              },
-                              child: Row(
-                                children: [
-                                  Icon(
-                                    isSelected
-                                        ? Icons.circle_rounded
-                                        : Icons.circle_outlined,
-                                    color: isSelected
-                                        ? const Color(0xff4100E3)
-                                        : const Color(0xffC5C6CC),
-                                    size: 16,
-                                  ),
-                                  const Gap(10),
-                                  SvgPicture.asset(
-                                    'assets/img/locationbookservice.svg',
-                                    width: 20,
-                                    height: 20,
-                                  ),
-                                  const Gap(10),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          translate('bookService.location'),
-                                          style: getPrimaryRegularStyle(
-                                            fontSize: 16,
-                                            color: context.resources.color
-                                                .btnColorBlue,
-                                          ),
-                                        ),
-                                        Text(
-                                          '${addr["address_label"]}',
-                                          // '${addr["street_number"]} ${addr["building_number"]}, Apt ${addr["apartment_number"]}, Floor ${addr["floor"]}',
-                                          style: getPrimaryRegularStyle(
-                                            fontSize: 12,
-                                            color: const Color(0xff71727A),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                            return Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: context.appValues.appPadding.p12,
+                                horizontal: context.appValues.appPadding.p20,
                               ),
-                            ),
-                          );
-                        }
-                      );
-                    }),
+                              child: InkWell(
+                                onTap: () {
+                                  setState(() => selectedIndex = i);
+                                  jobsVM.setInputValues(index: 'job_address', value: addr);
+                                  jobsVM.setInputValues(index: 'address', value:
+                                  '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
+                                  jobsVM.setInputValues(index: 'latitude', value: addr['latitude']);
+                                  jobsVM.setInputValues(index: 'longitude', value: addr['longitude']);
+                                  jobsVM.setInputValues(index: 'payment_method', value: 'Card');
+                                },
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      isSelected
+                                          ? Icons.circle_rounded
+                                          : Icons.circle_outlined,
+                                      color: isSelected ? const Color(0xff4100E3) : const Color(0xffC5C6CC),
+                                      size: 16,
+                                    ),
+                                    const Gap(10),
+                                    SvgPicture.asset(
+                                      'assets/img/locationbookservice.svg',
+                                      width: 20,
+                                      height: 20,
+                                    ),
+                                    const Gap(10),
+                                    Expanded(
+                                      child: Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            translate('bookService.location'),
+                                            style: getPrimaryRegularStyle(
+                                              fontSize: 16,
+                                              color: context.resources.color.btnColorBlue,
+                                            ),
+                                          ),
+                                          Text(
+                                            '${addr["address_label"]}',
+                                            style: getPrimaryRegularStyle(
+                                              fontSize: 12,
+                                              color: const Color(0xff71727A),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }),
 
-                    const Gap(5),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: context.appValues.appPadding.p20,
+                      const Gap(5),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.appValues.appPadding.p20,
+                        ),
+                        child: const Divider(color: Color(0xffD4D6DD)),
                       ),
-                      child: const Divider(color: Color(0xffD4D6DD)),
-                    ),
 
-                    // --- Bottom buttons (unchanged)
-                    Consumer2<JobsViewModel, ProfileViewModel>(
+                      // --- Bottom Buttons
+                      Consumer2<JobsViewModel, ProfileViewModel>(
                         builder: (ctx, jobsVM, profVM, _) {
                           return Padding(
                             padding: EdgeInsets.symmetric(
@@ -276,35 +271,23 @@ class _BookAServiceState extends State<BookAService> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      var addr =
-                                      profVM.getProfileBody['current_address'];
-                                      jobsVM.setInputValues(
-                                          index: 'job_address', value: addr);
-                                      jobsVM.setInputValues(
-                                        index: 'address',
-                                        value:
-                                        '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}',
-                                      );
-                                      jobsVM.setInputValues(
-                                          index: 'latitude',
-                                          value: addr['latitude']);
-                                      jobsVM.setInputValues(
-                                          index: 'longitude',
-                                          value: addr['longitude']);
-                                      jobsVM.setInputValues(
-                                          index: 'payment_method',
-                                          value: 'Card');
+                                      var addr = profVM.getProfileBody['current_address'];
+                                      jobsVM.setInputValues(index: 'job_address', value: addr);
+                                      jobsVM.setInputValues(index: 'address', value:
+                                      '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
+                                      jobsVM.setInputValues(index: 'latitude', value: addr['latitude']);
+                                      jobsVM.setInputValues(index: 'longitude', value: addr['longitude']);
+                                      jobsVM.setInputValues(index: 'payment_method', value: 'Card');
+
                                       Navigator.of(context).push(
-                                          _createRoute(const MyaddressBook()));
+                                        _createRoute(const MyaddressBook()),
+                                      );
                                     },
                                     child: Container(
                                       height: 44,
                                       decoration: BoxDecoration(
-                                        color: context.resources.color
-                                            .colorWhite,
-                                        borderRadius:
-                                        const BorderRadius.all(
-                                            Radius.circular(12)),
+                                        color: context.resources.color.colorWhite,
+                                        borderRadius: const BorderRadius.all(Radius.circular(12)),
                                         border: Border.all(
                                           color: const Color(0xff4100E3),
                                           width: 1.5,
@@ -326,20 +309,15 @@ class _BookAServiceState extends State<BookAService> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      // 1) Update your ProfileViewModel
-                                      Provider.of<ProfileViewModel>(
-                                          context, listen: false)
-                                          .setCurrentAddress(
-                                          addresses[selectedIndex]);
-                                      // 2) Close the sheet
+                                      Provider.of<ProfileViewModel>(context, listen: false)
+                                          .setCurrentAddress(addresses[selectedIndex]);
                                       Navigator.pop(ctx);
                                     },
                                     child: Container(
                                       height: 44,
                                       decoration: const BoxDecoration(
                                         color: Color(0xff4100E3),
-                                        borderRadius:
-                                        BorderRadius.all(Radius.circular(12)),
+                                        borderRadius: BorderRadius.all(Radius.circular(12)),
                                       ),
                                       child: Center(
                                         child: Text(
@@ -356,14 +334,18 @@ class _BookAServiceState extends State<BookAService> {
                               ],
                             ),
                           );
-                        }
-                    ),
-                  ],
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-              );
-            },
-          ),
+              ),
+            ),
+          );
+        },
+      ),
     );
+
   }
 
   @override
@@ -891,7 +873,7 @@ getPayment() async{
                                       MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          translate('updateJob.jobSize'),
+                                          translate('updateJob.actualNumberOfUnits'),
                                           style: getPrimaryRegularStyle(
                                             fontSize: 14,
                                             color: context

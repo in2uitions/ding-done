@@ -43,82 +43,152 @@ class _AddressWidgetState extends State<AddressWidget> {
                 ),
               ),
             ),
-            SizedBox(
-              width: context.appValues.appSizePercent.w100,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Text(
-                      '${widget.address['city'] != null ? widget.address['city'] : ''}, ${widget.address['street_number'] != null ? widget.address['street_number'] : ''}, ${widget.address['zone'] != null ? widget.address['zone'] : ''}',
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: getPrimaryRegularStyle(
-                        fontSize: 14,
-                        color: const Color(0xff71727A),
+            InkWell(
+              onTap: (){
+                final jobAddress =
+                    widget.address;
+                if (jobAddress != null &&
+                    jobAddress['latitude'] !=
+                        null &&
+                    jobAddress['longitude'] !=
+                        null) {
+                  final latitude =
+                  jobAddress['latitude'];
+                  final longitude =
+                  jobAddress['longitude'];
+
+                  showModalBottomSheet(
+                    context: context,
+                    shape:
+                    const RoundedRectangleBorder(
+                      borderRadius:
+                      BorderRadius.vertical(
+                          top: Radius.circular(
+                              16)),
+                    ),
+                    builder:
+                        (BuildContext context) {
+                      return Padding(
+                        padding:
+                        const EdgeInsets.all(
+                            16.0),
+                        child: Wrap(
+                          children: [
+                            ListTile(
+                              leading: const Icon(
+                                  Icons.map),
+                              title: const Text(
+                                  'Open with Google Maps'),
+                              onTap: () async {
+                                final googleMapsUrl =
+                                    'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+                                final uri = Uri.parse(
+                                    googleMapsUrl);
+                                if (await canLaunchUrl(
+                                    uri)) {
+                                  await launchUrl(
+                                      uri,
+                                      mode: LaunchMode
+                                          .externalApplication);
+                                } else {
+                                  ScaffoldMessenger
+                                      .of(context)
+                                      .showSnackBar(
+                                    const SnackBar(
+                                        content: Text(
+                                            'Could not open Google Maps')),
+                                  );
+                                }
+
+                                Navigator.pop(
+                                    context); // Close the bottom sheet
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                  }
+              },
+              child: SizedBox(
+                width: context.appValues.appSizePercent.w100,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        '${widget.address['city'] != null ? widget.address['city'] : ''}, ${widget.address['street_number'] != null ? widget.address['street_number'] : ''}, ${widget.address['zone'] != null ? widget.address['zone'] : ''}',
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: getPrimaryRegularStyle(
+                          fontSize: 14,
+                          color: const Color(0xff71727A),
+                        ),
                       ),
                     ),
-                  ),
-                  // IconButton(
-                  //   icon: Icon(
-                  //     Icons.location_on,
-                  //     color: const Color(0xff71727A),
-                  //     size: 50,
-                  //   ),
-                  //   onPressed: () {
-                  //     Navigator.push(
-                  //       context,
-                  //       MaterialPageRoute(
-                  //         builder: (context) {
-                  //           return
-                  //               //   MapLocationPicker(
-                  //               //   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
-                  //               //   popOnNextButtonTaped: true,
-                  //               //   currentLatLng: LatLng(
-                  //               //       widget.address['latitude'],widget.address['longitude']
-                  //               //   ),
-                  //               //
-                  //               // );
-                  //               Scaffold(
-                  //             backgroundColor: const Color(0xffFFFFFF),
-                  //             appBar: AppBar(
-                  //               title: Text(translate('map.map')),
-                  //             ),
-                  //             body: GoogleMap(
-                  //               onMapCreated: null,
-                  //               initialCameraPosition: CameraPosition(
-                  //                 zoom: 16.0,
-                  //                 target: LatLng(widget.address['latitude'],
-                  //                     widget.address['longitude']),
-                  //               ),
-                  //               mapType: MapType.normal,
-                  //               markers: <Marker>{
-                  //                 Marker(
-                  //                   markerId: const MarkerId('marker'),
-                  //                   infoWindow: InfoWindow(
-                  //                     title:
-                  //                         '${translate('jobDetails.job')} 🚖',
-                  //                     onTap: () => _showOptionsDialog(
-                  //                         context,
-                  //                         widget.address['latitude'],
-                  //                         widget.address['longitude']),
-                  //                   ),
-                  //                   position: LatLng(
-                  //                     widget.address['latitude'],
-                  //                     widget.address['longitude'],
-                  //                   ),
-                  //                 ),
-                  //               },
-                  //               onCameraMove: null,
-                  //               myLocationButtonEnabled: false,
-                  //             ),
-                  //           );
-                  //         },
-                  //       ),
-                  //     );
-                  //   },
-                  // ),
-                ],
+                    // IconButton(
+                    //   icon: Icon(
+                    //     Icons.location_on,
+                    //     color: const Color(0xff71727A),
+                    //     size: 50,
+                    //   ),
+                    //   onPressed: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) {
+                    //           return
+                    //               //   MapLocationPicker(
+                    //               //   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                    //               //   popOnNextButtonTaped: true,
+                    //               //   currentLatLng: LatLng(
+                    //               //       widget.address['latitude'],widget.address['longitude']
+                    //               //   ),
+                    //               //
+                    //               // );
+                    //               Scaffold(
+                    //             backgroundColor: const Color(0xffFFFFFF),
+                    //             appBar: AppBar(
+                    //               title: Text(translate('map.map')),
+                    //             ),
+                    //             body: GoogleMap(
+                    //               onMapCreated: null,
+                    //               initialCameraPosition: CameraPosition(
+                    //                 zoom: 16.0,
+                    //                 target: LatLng(widget.address['latitude'],
+                    //                     widget.address['longitude']),
+                    //               ),
+                    //               mapType: MapType.normal,
+                    //               markers: <Marker>{
+                    //                 Marker(
+                    //                   markerId: const MarkerId('marker'),
+                    //                   infoWindow: InfoWindow(
+                    //                     title:
+                    //                         '${translate('jobDetails.job')} 🚖',
+                    //                     onTap: () => _showOptionsDialog(
+                    //                         context,
+                    //                         widget.address['latitude'],
+                    //                         widget.address['longitude']),
+                    //                   ),
+                    //                   position: LatLng(
+                    //                     widget.address['latitude'],
+                    //                     widget.address['longitude'],
+                    //                   ),
+                    //                 ),
+                    //               },
+                    //               onCameraMove: null,
+                    //               myLocationButtonEnabled: false,
+                    //             ),
+                    //           );
+                    //         },
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                  ],
+                ),
               ),
             ),
           ],

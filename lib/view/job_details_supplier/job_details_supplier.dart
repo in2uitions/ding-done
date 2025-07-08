@@ -83,7 +83,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('job type ${widget.data.job_type}');
+    debugPrint('job country_rates ${ widget.data.service['country_rates'][0]['minimum_order']}');
 
     return Scaffold(
       // backgroundColor: const Color(0xffF0F3F8),
@@ -389,6 +389,57 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                           image: widget.data.uploaded_media,
                           description: widget.data.job_description),
                       // const Gap(20),
+                      // const Gap(20),
+                      widget.fromWhere == translate('jobs.completed')
+                          ? Padding(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: context.appValues.appPadding.p20),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal:
+                                  context.appValues.appPadding.p0,
+                                  vertical:
+                                  context.appValues.appPadding.p0),
+                              child: Text(
+                              translate('bookService.customerName'),
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 14,
+                                  color: const Color(0xff180B3C),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(
+                                horizontal:
+                                context.appValues.appPadding.p0,
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                  context.appValues.appPadding.p0,
+                                  0,
+                                  context.appValues.appPadding.p0,
+                                  0,
+                                ),
+                                child:
+                                     Text(
+                                     '${ widget.data.customer['first_name']} ${widget.data.customer['last_name']}' ??
+                                          '', // Fallback text if no matching translation is found
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 14,
+                                        color: const Color(0xff71727A),
+                                      ),
+                                    ),
+
+                              ),
+                            ),
+                          ],
+                        ),
+                      )
+                          : Container(),
+
                       AddressWidget(address: widget.data.job_address),
 
                       widget.fromWhere != 'request' &&
@@ -522,8 +573,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       widget.fromWhere != 'request' &&
                               widget.fromWhere != translate('jobs.booked')
                           ? JobSizeWidget(
-                              completed_units:
-                                  widget.data.completed_units!=0 && widget.data.completed_units!=null?widget.data.completed_units : 1,
+                        minimum_order:widget.data.service['country_rates'][0]['minimum_order']!=0 && widget.data.service['country_rates'][0]['minimum_order']!=null ?int.parse(widget.data.service['country_rates'][0]['minimum_order'].toString()) : 1,
+                              completed_units:widget.data.completed_units!=0 && widget.data.completed_units!=null?widget.data.completed_units:
+                                  widget.data.service['country_rates'][0]['minimum_order']!=0 && widget.data.service['country_rates'][0]['minimum_order']!=null ?int.parse(widget.data.service['country_rates'][0]['minimum_order'].toString()) : 1,
                               number_of_units:
                                   widget.data.number_of_units ?? 1,
                               extra_fees: widget.data.extra_fees ?? '',
@@ -790,9 +842,11 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                               setState(() {
                                                 _isLoading = true;
                                               });
+                                              var supplierLatitude=profileViewModel.getProfileBody['current_address']['latitude'];
+                                              var supplierLongitude=profileViewModel.getProfileBody['current_address']['longitude'];
                                               widget.fromWhere == 'request'
                                                   ? await jobsViewModel.acceptJob(
-                                                              widget.data) ==
+                                                              widget.data,supplierLatitude,supplierLongitude) ==
                                                           true
                                                       ? showDialog(
                                                           context: context,
@@ -886,108 +940,114 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                       : Container();
                                 }),
                                 widget.fromWhere != translate('jobs.completed')
-                                    ? SizedBox(
-                                        width: context
-                                            .appValues.appSizePercent.w35,
-                                        height:
-                                            context.appValues.appSizePercent.h6,
-                                        child: ElevatedButton(
-                                          onPressed: () async {
-                                            setState(() {
-                                              _isLoading = true;
-                                            });
-                                            final rootContext = context;
-                                            widget.fromWhere == 'request'
-                                                ? await jobsViewModel.acceptJob(
-                                                            widget.data) ==
-                                                        true
-                                                    ? showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext context) =>
-                                                            _buildPopupDialogSuccess(
-                                                                context,
-                                                                translate(
-                                                                    'jobDetails.jobAccepted')
-                                                               ))
-                                                    : showDialog(
-                                                        context: context,
-                                                        builder: (BuildContext context) =>
-                                                            _buildPopupDialogFailure(
-                                                                context,
-                                                                translate(
+                                    ?  Consumer<ProfileViewModel>(
+                                    builder: (context, profileViewModel, _) {
+                                        return SizedBox(
+                                            width: context
+                                                .appValues.appSizePercent.w35,
+                                            height:
+                                                context.appValues.appSizePercent.h6,
+                                            child: ElevatedButton(
+                                              onPressed: () async {
+                                                setState(() {
+                                                  _isLoading = true;
+                                                });
+                                                var supplierLatitude=profileViewModel.getProfileBody['current_address']['latitude'];
+                                                var supplierLongitude=profileViewModel.getProfileBody['current_address']['longitude'];
+                                                final rootContext = context;
+                                                widget.fromWhere == 'request'
+                                                    ? await jobsViewModel.acceptJob(
+                                                                widget.data,supplierLatitude,supplierLongitude) ==
+                                                            true
+                                                        ? showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext context) =>
+                                                                _buildPopupDialogSuccess(
+                                                                    context,
+                                                                    translate(
+                                                                        'jobDetails.jobAccepted')
+                                                                   ))
+                                                        : showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext context) =>
+                                                                _buildPopupDialogFailure(
+                                                                    context,
+                                                                    translate(
 
-                                                                ' ${jobsViewModel.errorMessage}')))
-                                                : widget.fromWhere ==
-                                                        translate('jobs.active')
-                                                    ? showDialog(
-                                              context: rootContext,
-                                              builder: (_) => showFinalData(rootContext, jobsViewModel),
-                                            )
+                                                                    ' ${jobsViewModel.errorMessage}')))
                                                     : widget.fromWhere ==
-                                                            'booked'
-                                                        ? await jobsViewModel.startJob(widget.data.id) ==
-                                                                true
-                                                            ? showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder: (BuildContext context) =>
-                                                                    _buildPopupDialogSuccess(context,translate('jobDetails.jobStarted')))
-                                                            : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context, '${jobsViewModel.errorMessage}'))
-                                                        : widget.fromWhere == translate('jobs.completed')
-                                                            ? await jobsViewModel.downloadInvoice(widget.data.id) != null
-                                                                ? await Navigator.push(
-                                                                    context,
-                                                                    MaterialPageRoute(
-                                                                        builder: (context) => Scaffold(
-                                                                            appBar: AppBar(
-                                                                              title: const Text('Invoice'),
-                                                                            ),
-                                                                            body: SfPdfViewer.memory(jobsViewModel.file))))
-                                                                : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context,'${jobsViewModel.errorMessage}'))
-                                                            : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context,'${jobsViewModel.errorMessage}'));
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          },
-                                          style: ElevatedButton.styleFrom(
-                                            elevation: 0,
-                                            backgroundColor:
-                                                const Color(0xff4100E3),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(12),
-                                            ),
-                                          ),
-                                          child: _isLoading
-                                              ? const CircularProgressIndicator()
-                                              : Text(
-                                                  widget.fromWhere == 'request'
-                                                      ? translate(
-                                                          'button.accept')
-                                                      : widget.fromWhere ==
-                                                              translate(
-                                                                  'jobs.active')
-                                                          ? translate(
-                                                              'button.finish')
-                                                          : widget.fromWhere ==
-                                                                  'booked'
-                                                              ? translate(
-                                                                  'button.start')
-                                                              : widget.fromWhere ==
-                                                                      translate(
-                                                                          'jobs.completed')
-                                                                  ? translate(
-                                                                      'button.invoice')
-                                                                  : '',
-                                                  style:
-                                                      getPrimarySemiBoldStyle(
-                                                    fontSize: 12,
-                                                    color: context.resources
-                                                        .color.colorWhite,
-                                                  ),
+                                                            translate('jobs.active')
+                                                        ? showDialog(
+                                                  context: rootContext,
+                                                  builder: (_) => showFinalData(rootContext, jobsViewModel),
+                                                )
+                                                        : widget.fromWhere ==
+                                                                'booked'
+                                                            ? await jobsViewModel.startJob(widget.data.id) ==
+                                                                    true
+                                                                ? showDialog(
+                                                                    context:
+                                                                        context,
+                                                                    builder: (BuildContext context) =>
+                                                                        _buildPopupDialogSuccess(context,translate('jobDetails.jobStarted')))
+                                                                : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context, '${jobsViewModel.errorMessage}'))
+                                                            : widget.fromWhere == translate('jobs.completed')
+                                                                ? await jobsViewModel.downloadInvoice(widget.data.id) != null
+                                                                    ? await Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (context) => Scaffold(
+                                                                                appBar: AppBar(
+                                                                                  title: const Text('Invoice'),
+                                                                                ),
+                                                                                body: SfPdfViewer.memory(jobsViewModel.file))))
+                                                                    : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context,'${jobsViewModel.errorMessage}'))
+                                                                : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context,'${jobsViewModel.errorMessage}'));
+                                                setState(() {
+                                                  _isLoading = false;
+                                                });
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 0,
+                                                backgroundColor:
+                                                    const Color(0xff4100E3),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
                                                 ),
-                                        ),
-                                      )
+                                              ),
+                                              child: _isLoading
+                                                  ? const CircularProgressIndicator()
+                                                  : Text(
+                                                      widget.fromWhere == 'request'
+                                                          ? translate(
+                                                              'button.accept')
+                                                          : widget.fromWhere ==
+                                                                  translate(
+                                                                      'jobs.active')
+                                                              ? translate(
+                                                                  'button.finish')
+                                                              : widget.fromWhere ==
+                                                                      'booked'
+                                                                  ? translate(
+                                                                      'button.start')
+                                                                  : widget.fromWhere ==
+                                                                          translate(
+                                                                              'jobs.completed')
+                                                                      ? translate(
+                                                                          'button.invoice')
+                                                                      : '',
+                                                      style:
+                                                          getPrimarySemiBoldStyle(
+                                                        fontSize: 12,
+                                                        color: context.resources
+                                                            .color.colorWhite,
+                                                      ),
+                                                    ),
+                                            ),
+                                          );
+                                      }
+                                    )
                                     : Container(),
                               ],
                             ));
@@ -1203,7 +1263,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     horizontal: context.appValues.appPadding.p32,
                   ),
                   child: Text(
-                    'Completed Units: ${jobsViewModel.updatedBody["completed_units"] ?? widget.data.completed_units}',
+                    '${translate('updateJob.actualNumberOfUnits')}: ${jobsViewModel.updatedBody["completed_units"] ?? widget.data.completed_units}',
                     textAlign: TextAlign.center,
                     style: getPrimaryRegularStyle(
                       fontSize: 17,
@@ -1217,7 +1277,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     horizontal: context.appValues.appPadding.p32,
                   ),
                   child: Text(
-                    'Current number of units: ${jobsViewModel.updatedBody["number_of_units"] ?? widget.data.number_of_units}',
+                    '${translate('updateJob.estimatedNumberOfUnits')}: ${jobsViewModel.updatedBody["number_of_units"] ?? widget.data.number_of_units}',
                     textAlign: TextAlign.center,
                     style: getPrimaryRegularStyle(
                       fontSize: 17,
@@ -1372,7 +1432,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     horizontal: context.appValues.appPadding.p32,
                   ),
                   child: Text(
-                    'Current number of units: ${widget.data.number_of_units ?? ''}',
+                    '${translate('updateJob.estimatedNumberOfUnits')}: ${widget.data.number_of_units ?? ''}',
                     textAlign: TextAlign.center,
                     style: getPrimaryRegularStyle(
                       fontSize: 17,
