@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:dingdone/models/login_model.dart';
 import 'package:dingdone/models/user_model.dart';
@@ -15,6 +17,8 @@ import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 class LoginViewModel with ChangeNotifier {
   final LoginRepository _loginRepository = LoginRepository();
@@ -27,16 +31,122 @@ class LoginViewModel with ChangeNotifier {
   String? _userEmail = "";
   String? _userPass = "";
   String? _language="";
+  final _wsUrl = 'ws://cms.dingdone.app:8055/websocket';
 
   // String? _language = "en-US";
+  WebSocketChannel? _wsChannel;
+  WebSocket?       _rawSocket;
+  Timer?           _keepAliveTimer;
 
   LoginViewModel() {
     readJson();
+    initWebSocket();
   }
   Future<void> readJson() async {
     // AppPreferences().clear();
   }
+  Future<void> initWebSocket() async {
+    _keepAliveTimer?.cancel();
+    await _closeSockets();
 
+    debugPrint('🛠 Connecting to $_wsUrl …');
+    try {
+      _rawSocket = await WebSocket.connect(_wsUrl);
+      debugPrint('✅ Raw socket open');
+
+      _wsChannel = IOWebSocketChannel(_rawSocket!);
+
+      // JSON‐ping fallback
+      _keepAliveTimer = Timer.periodic(const Duration(seconds:20), (_) {
+        _wsChannel?.sink.add(jsonEncode({'type':'ping'}));
+      });
+
+      _wsChannel!.stream.listen(
+        _onRawMessage,
+        onError: (_,__) => _scheduleReconnect(),
+        onDone:       _scheduleReconnect,
+      );
+
+      final token = 'qAI925x_p9KGEerRRd5vfCP4L5kuw34C';
+      // final token = await getRawToken();
+      debugPrint('token in auth $token');
+      if (token != null) {
+        debugPrint('📤 Sending auth');
+        _wsChannel!.sink.add(jsonEncode({
+          'type':'auth',
+          'access_token':token,
+        }));
+      }
+    } catch (e) {
+      debugPrint('🚨 Socket connect failed: $e');
+      _scheduleReconnect();
+    }
+  }
+  void _onRawMessage(dynamic raw) {
+    debugPrint('📥 RAW: $raw');
+    final msg  = jsonDecode(raw as String) as Map<String,dynamic>;
+    final type = msg['type'];
+
+    switch(type) {
+      case 'auth':
+        if (msg['status']=='error') {
+          debugPrint('🚨 Error authenticating');
+          refreshAccessToken();
+          // _subscribeToAllStages();
+        }
+        if (msg['status']!='error') {
+          debugPrint('✅ AUTH SUCCESS');
+          _subscribe();
+          // _subscribeToAllStages();
+        }
+        break;
+
+      case 'ping':
+        _wsChannel?.sink.add(jsonEncode({'type':'pong'}));
+        break;
+
+      case 'subscription':
+      case 'update':
+        final data = (msg['data'] ?? msg['payload']) as List<dynamic>;
+        // _applyAdventureUpdate(data);
+        break;
+
+      default:
+
+        // _updateStatuses();
+        debugPrint('⚠️ Unhandled message: $msg');
+    }
+  }
+  Future<void> _subscribe() async {
+    debugPrint('subscribing to web socket ');
+    // 1) grab your saved team
+    // 2) send a filtered subscribe so you only get events for your team+stage
+    _wsChannel?.sink.add(jsonEncode({
+      'type': 'subscribe',
+      'collection': 'jobs',
+      'query': {
+        'fields': ['*'],
+        'filter': {
+          // 'team':  {'_eq': myTeamId},
+          // 'stage': {'_eq': _stage['id']}
+        }
+      }
+    }));
+    // debugPrint('📤 Subscribed to team=$myTeamId, stage=${_stage['id']}');
+  }
+  Future<void> _closeSockets() async {
+    try {
+      await _wsChannel?.sink.close();
+      await _rawSocket?.close();
+    } catch (_) {}
+  }
+  void _scheduleReconnect() {
+    _keepAliveTimer?.cancel();
+    Future.delayed(const Duration(seconds: 5), () {
+      debugPrint('🔄 Reconnecting WebSocket…');
+      initWebSocket();
+    });
+  }
   Future<void> checkAndRefreshToken() async {
     if (await isTokenExpired) {
       bool refreshSuccess = await refreshAccessToken();
