@@ -21,9 +21,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   Future<void> _handleRefresh() async {
     try {
-
       await Provider.of<ProfileViewModel>(context, listen: false).readJson();
-
     } catch (error) {
       // Handle the error, e.g., by displaying a snackbar
       ScaffoldMessenger.of(context).showSnackBar(
@@ -33,6 +31,7 @@ class _ProfilePageState extends State<ProfilePage> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -168,7 +167,8 @@ class _ProfilePageState extends State<ProfilePage> {
                                 const Gap(30),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
-                                    horizontal: context.appValues.appPadding.p20,
+                                    horizontal:
+                                        context.appValues.appPadding.p20,
                                     // vertical: context.appValues.appPadding.p30,
                                   ),
                                   child: Text(
@@ -182,14 +182,60 @@ class _ProfilePageState extends State<ProfilePage> {
                                 const Gap(10),
                                 ProfileComponent(
                                   // payment_method: data.data,
-                                  role: profileViewModel.getProfileBody["user"] !=
+                                  role: profileViewModel
+                                              .getProfileBody["user"] !=
                                           null
                                       ? profileViewModel.getProfileBody["user"]
                                           ["role"]
                                       : '',
                                 ),
+                                const Gap(30),
+
+                                InkWell(
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                        top: context.appValues.appPadding.p5,
+                                        left: context.appValues.appPadding.p15,
+                                        right:
+                                        context.appValues.appPadding.p15),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                              'assets/img/bin.svg',
+                                              // width: 16,
+                                              // height: 16,
+                                            ),
+                                            const Gap(10),
+                                            Text(
+                                              translate('drawer.deleteAccount'),
+                                              style: getPrimaryRegularStyle(
+                                                fontSize: 14,
+                                                color: context.resources.color
+                                                    .btnColorBlue,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        const Icon(
+                                          Icons.arrow_forward_ios_sharp,
+                                          color: Color(0xff8F9098),
+                                          size: 12,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    _confirmAndDelete();
+                                  },
+                                ),
                                 const Gap(40),
+
                                 const ProfileSeconComponent(),
+
                               ],
                             );
                           }),
@@ -201,6 +247,80 @@ class _ProfilePageState extends State<ProfilePage> {
       }),
     );
   }
+  Future<void> _confirmAndDelete() async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => AlertDialog(
+        backgroundColor: Colors.white,
+        elevation: 15,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    child: SvgPicture.asset('assets/img/x.svg'),
+                    onTap: () async {
+                      Navigator.pop(context);
+
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SvgPicture.asset('assets/img/remove-card-confirmation-icon.svg'),
+            SizedBox(height: context.appValues.appSize.s40),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.appValues.appPadding.p0,
+              ),
+              child: Text(
+                // translate('bookService.serviceRequestConfirmed'),
+                translate('drawer.delete?'),
+                textAlign: TextAlign.center,
+                style: getPrimaryMediumStyle(
+                  fontSize: 14,
+                  color: context.resources.color.btnColorBlue,
+                ),
+              ),
+            ),
+            const Gap(20),
+            InkWell(
+              onTap: () {
+                Navigator.pop(context, true);
+              },
+              child: Container(
+                width: context.appValues.appSizePercent.w100,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: const Color(0xff4100E3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    // translate('confirmAddress.delete'),
+                    "Yes, I’m Done With It",
+                    style: getPrimarySemiBoldStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // const Gap(20),
+          ],
+        ),
+      ),
+    );
+
+  }
+
 }
 
 Route _createRoute(dynamic classname) {

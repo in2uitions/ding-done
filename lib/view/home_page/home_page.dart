@@ -865,80 +865,12 @@ class _HomePageState extends State<HomePage> {
                                       // ),
                                     ],
                                   ),
-                                  InkWell(
-                                    onTap: () {
-                                      // Navigator.of(context).push(
-                                      //   _createRoute(ConfirmAddress()),
-                                      // );
-                                      _onActionSheetPress(context);
-                                    },
-                                    child:  Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                        context.appValues.appPadding.p7,
-                                        vertical:
-                                        context.appValues.appPadding.p5,
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                        children: [
-                                          Row(
-                                            crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                            children: [
-                                              // Location SVG icon
-                                              SvgPicture.asset(
-                                                'assets/img/locationbookservice.svg',
-                                                width: 20,
-                                                height: 20,
-                                                color: const Color(0xffFFC500),
-                                              ),
-                                              const Gap(10),
-                                              // Column with a title and the current location or hint
-                                              Column(
-                                                crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .start,
-                                                children: [
 
-                                                  Text(
-                                                    // '${profileViewModel
-                                                    //     .getProfileBody['current_address']["street_number"]} ${profileViewModel
-                                                    //     .getProfileBody['current_address']["building_number"]}, ${profileViewModel
-                                                    //     .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
-                                                    //     .getProfileBody['current_address']["floor"]}',
-                                                    profileViewModel
-                                                        .getProfileBody!=null &&  profileViewModel
-                                                        .getProfileBody['current_address']!=null?'${profileViewModel
-                                                        .getProfileBody['current_address']["address_label"]}':'',
-
-                                                    style:
-                                                    getPrimaryBoldStyle(
-                                                      fontSize: 16,
-                                                      color: Colors.white,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                          // Trailing arrow icon
-                                          const Icon(
-                                            Icons
-                                                .arrow_drop_down,
-                                            size: 20,
-                                            color: const Color(0xffFFC500),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
 
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal:
-                                          context.appValues.appPadding.p20,
+                                          context.appValues.appPadding.p7,
                                       vertical:
                                           context.appValues.appPadding.p15,
                                     ),
@@ -973,6 +905,75 @@ class _HomePageState extends State<HomePage> {
                                             color: Color(0xFF6E6BE8),
                                           ),
                                         ),
+                                      ),
+                                    ),
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      // Navigator.of(context).push(
+                                      //   _createRoute(ConfirmAddress()),
+                                      // );
+                                      _onActionSheetPress(context);
+                                    },
+                                    child:  Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                        context.appValues.appPadding.p7,
+                                        vertical:
+                                        context.appValues.appPadding.p5,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.start,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                            children: [
+                                              // Location SVG icon
+                                              SvgPicture.asset(
+                                                'assets/img/location_white.svg',
+                                                width: 20,
+                                                height: 20,
+                                                // color: const Color(0xffFFC500),
+                                              ),
+                                              const Gap(10),
+                                              // Column with a title and the current location or hint
+                                              Column(
+                                                crossAxisAlignment:
+                                                CrossAxisAlignment
+                                                    .start,
+                                                children: [
+
+                                                  Text(
+                                                    // '${profileViewModel
+                                                    //     .getProfileBody['current_address']["street_number"]} ${profileViewModel
+                                                    //     .getProfileBody['current_address']["building_number"]}, ${profileViewModel
+                                                    //     .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
+                                                    //     .getProfileBody['current_address']["floor"]}',
+                                                    profileViewModel
+                                                        .getProfileBody!=null &&  profileViewModel
+                                                        .getProfileBody['current_address']!=null?'${profileViewModel
+                                                        .getProfileBody['current_address']["address_label"]}':'',
+
+                                                    style:
+                                                    getPrimaryRegularStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          // Trailing arrow icon
+                                          const Icon(
+                                            Icons
+                                                .keyboard_arrow_down_sharp,
+                                            size: 20,
+                                            color: const Color(0xffFFC500),
+                                          ),
+                                        ],
                                       ),
                                     ),
                                   ),

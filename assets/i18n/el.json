@@ -211,7 +211,7 @@
     "yourTotalAmountIs": "Το συνολικό ποσό σας είναι",
     "payUsingCard": "Πληρώστε χρησιμοποιώντας την κάρτα σας",
     "makeSureYouPayedByCash": "Βεβαιωθείτε ότι πληρώσατε μετρητοίς",
-    "rateJob": "Αξιολογήστε αυτήν την εργασία"
+    "rateJob": "Η δουλειά σου έγινε! Αξιολογήστε τον πάροχο υπηρεσιών σας."
   },
   "drawer": {
     "faqs": "Συχνές Ερωτήσεις",
@@ -222,7 +222,9 @@
     "support": "υποστήριξη",
     "aboutDingDone": "σχετικά με το DingDone",
     "chooseLanguage": "επιλέξτε γλώσσα",
-    "deleteAccount": "διαγραφή λογαριασμού"
+    "deleteAccount": "διαγραφή λογαριασμού",
+    "delete?": "Είστε βέβαιοι ότι θέλετε να διαγράψετε αυτόν τον λογαριασμό;"
+
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "USERS AGREEMENT",

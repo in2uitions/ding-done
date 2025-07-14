@@ -211,7 +211,7 @@
     "yourTotalAmountIs": "Ваша общая сумма составляет",
     "payUsingCard": "Оплатить с использованием вашей карты",
     "makeSureYouPayedByCash": "Убедитесь, что вы оплатили наличными",
-    "rateJob": "Оценить это задание"
+    "rateJob": "Ваша работа завершена! Пожалуйста, оцените своего поставщика услуг."
   },
   "drawer": {
     "faqs": "Часто задаваемые вопросы",
@@ -222,7 +222,9 @@
     "support": "поддерживать",
     "aboutDingDone": "о DingDone",
     "chooseLanguage": "выбрать язык",
-    "deleteAccount": "удалить аккаунт"
+    "deleteAccount": "удалить аккаунт",
+    "delete?": "Вы уверены, что хотите удалить эту учетную запись?"
+
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "USERS AGREEMENT",

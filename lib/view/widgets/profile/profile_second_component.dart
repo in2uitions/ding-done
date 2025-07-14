@@ -237,6 +237,7 @@ class _ProfileSeconComponentState extends State<ProfileSeconComponent> {
           //     color: Color(0xffEAEAFF),
           //   ),
           // ),
+
           Consumer<ProfileViewModel>(
               builder: (context, profileViewModel, _) {
               return InkWell(
@@ -306,6 +307,7 @@ class _ProfileSeconComponentState extends State<ProfileSeconComponent> {
               );
             }
           ),
+
         ],
       ),
       // ),

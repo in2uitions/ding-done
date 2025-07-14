@@ -211,7 +211,7 @@
     "yourTotalAmountIs": "مجموع المبلغ الخاص بك هو",
     "payUsingCard": "الدفع باستخدام بطاقتك ",
     "makeSureYouPayedByCash": "تأكد من دفعك نقدًا",
-    "rateJob": "قيم هذه الوظيفة"
+    "rateJob": "لقد انتهت مهمتك! يرجى تقييم مزود الخدمة الخاص بك."
   },
   "drawer": {
     "faqs": "الأسئلة الشائعة",
@@ -222,7 +222,9 @@
     "support": "المساعدة",
     "aboutDingDone": "عن DingDone",
     "chooseLanguage": "اختر اللغة",
-    "deleteAccount": "حذف الحساب"
+    "deleteAccount": "حذف الحساب",
+    "delete?": "هل أنت متأكد أنك تريد حذف هذا الحساب؟"
+
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "اتفاقية المستخدم",

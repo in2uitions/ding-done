@@ -207,7 +207,7 @@
     "yourTotalAmountIs": "Your Total amount is",
     "payUsingCard": "Pay using your card ",
     "makeSureYouPayedByCash": "Make sure that you have payed by cash",
-    "rateJob": "Rate this job"
+    "rateJob": "Your job is Done! Please rate your Service Provider."
   },
   "drawer": {
     "faqs": "FAQs",
@@ -218,7 +218,8 @@
     "support": "Support",
     "aboutDingDone": "About DingDone",
     "chooseLanguage": "Choose Language",
-    "deleteAccount": "Delete Account"
+    "deleteAccount": "Delete Account",
+    "delete?": "Are you sure you want to delete this account?"
   },
   "termsAndConditionsCustomer": {
     "userAgreement": "USERS AGREEMENT",
