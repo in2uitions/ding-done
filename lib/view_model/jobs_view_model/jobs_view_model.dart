@@ -1,3 +1,5 @@
+import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:dingdone/models/jobs_model.dart';
@@ -12,6 +14,8 @@ import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../res/app_validation.dart';
 import '../../res/strings/english_strings.dart';
@@ -51,10 +55,17 @@ class JobsViewModel with ChangeNotifier {
 
   dynamic _file;
   Map<String?, String?> jobsAddressError = {};
+  final _wsUrl = 'wss://cms.dingdone.app/websocket?access_token=TQOqIMMMKEdfHAk5TeA-dSna0TgINW55';
 
+  // String? _language = "en-US";
+  WebSocketChannel? _wsChannel;
+  WebSocket?       _rawSocket;
+  Timer?           _keepAliveTimer;
   JobsViewModel() {
     debugPrint('hehehehe');
+    initWebSocket();
     readJson();
+
   }
 
   Future<void> readJson() async {
@@ -81,6 +92,143 @@ class JobsViewModel with ChangeNotifier {
     } catch (err) {
       return;
     }
+  }
+  Future<void> initWebSocket() async {
+    _keepAliveTimer?.cancel();
+    await _closeSockets();
+
+    debugPrint('🛠 Connecting to $_wsUrl …');
+    try {
+      _rawSocket = await WebSocket.connect(_wsUrl);
+      debugPrint('✅ Raw socket open');
+
+      _wsChannel = IOWebSocketChannel(_rawSocket!);
+
+      // JSON‐ping fallback
+      _keepAliveTimer = Timer.periodic(const Duration(seconds:20), (_) {
+        _wsChannel?.sink.add(jsonEncode({'type':'post'}));
+      });
+
+      _wsChannel!.stream.listen(
+        _onRawMessage,
+        onError: (_,__) => _scheduleReconnect(),
+        onDone:       _scheduleReconnect,
+      );
+
+      final token = 'TQOqIMMMKEdfHAk5TeA-dSna0TgINW55';
+      // // final token = await getRawToken();
+      // debugPrint('token in auth $token');
+      if (token != null) {
+        debugPrint('📤 Sending auth');
+        // _wsChannel!.sink.add(jsonEncode({
+        //   'type':'auth',
+        //   'access_token':token,
+        // }));
+        final authMsg = {
+          "type": "get",
+          "collection": "jobs",
+        };
+        _wsChannel!.sink.add(jsonEncode(authMsg));
+      }
+      _subscribe();
+    } catch (e) {
+      debugPrint('🚨 Socket connect failed: $e');
+      _scheduleReconnect();
+    }
+  }
+  void _onRawMessage(dynamic raw) {
+    debugPrint('📥 RAW: $raw');
+    final msg  = jsonDecode(raw as String) as Map<String,dynamic>;
+    final type = msg['type'];
+
+    switch(type.toString().toLowerCase()) {
+      case 'auth':
+        if (msg['status']=='error') {
+          debugPrint('🚨 Error authenticating');
+          // refreshAccessToken();
+          // _subscribeToAllStages();
+        }
+        if (msg['status']!='error') {
+          debugPrint('✅ AUTH SUCCESS');
+          _subscribe();
+          // _subscribeToAllStages();
+        }
+        break;
+
+      case 'ping':
+        _wsChannel?.sink.add(jsonEncode({'type':'pong'}));
+        break;
+
+      case 'post':
+        _subscribe();
+
+      case 'subscription':
+      case 'update':
+        final data = (msg['data'] ?? msg['payload']) as List<dynamic>;
+        debugPrint('✅ UPDATING $data');
+        _applyUpdate(data);
+        break;
+
+      default:
+
+      // _updateStatuses();
+        debugPrint('⚠️ Unhandled message: $msg');
+    }
+  }
+  Future<void> _subscribe() async {
+    debugPrint('subscribing to web socket ');
+    // 1) grab your saved team
+    // 2) send a filtered subscribe so you only get events for your team+stage
+    _wsChannel?.sink.add(jsonEncode({
+      'type': 'subscribe',
+      'collection': 'jobs',
+      'query': {
+        'fields': ['*'],
+        'filter': {
+          // 'team':  {'_eq': myTeamId},
+          // 'stage': {'_eq': _stage['id']}
+        }
+      }
+    }));
+    // debugPrint('📤 Subscribed to team=$myTeamId, stage=${_stage['id']}');
+  }
+  Future<void> _closeSockets() async {
+    try {
+      await _wsChannel?.sink.close();
+      await _rawSocket?.close();
+    } catch (_) {}
+  }
+  void _scheduleReconnect() {
+    _keepAliveTimer?.cancel();
+    Future.delayed(const Duration(seconds: 5), () {
+      debugPrint('🔄 Reconnecting WebSocket…');
+      initWebSocket();
+    });
+  }
+
+
+  Future<void> _applyUpdate(List<dynamic> updates) async {
+    try {
+      debugPrint('updating jobs $updates');
+      debugPrint('updating jobs length ${updates.length}');
+      await getJobs();
+
+
+      if (Constants.supplierRoleId == _role) {
+        debugPrint('supplier gettiong jobs ');
+        await getSupplierCompletedJobs();
+        await getSupplierInProgressJobs();
+        await getSupplierBookedJobs();
+        await getSupplierOpenJobs();
+      } else {
+        debugPrint('customer gettiong jobs ');
+
+        await getCustomerJobs();
+      }
+    }catch(error){
+      debugPrint('error updating job $error');
+    }
+    notifyListeners();
   }
 
   Future<dynamic> getUpdatedJobsBody() async {
