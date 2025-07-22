@@ -49,6 +49,7 @@ class ApiEndPoints {
   final String notifications = '/i18/notifications';
   final String deleteNotification = '/notifications/delete-one';
   final String deleteNotifications = '/notifications/delete-all';
+  final String deleteProfile = '/authentication/deleteme';
 
   final String sendSMS = '/authentication/send-sms';
 }

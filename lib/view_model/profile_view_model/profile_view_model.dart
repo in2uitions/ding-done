@@ -104,6 +104,18 @@ class ProfileViewModel extends DisposableViewModel {
       notifyListeners();
     }
   }
+  Future<dynamic> deleteProfile() async {
+    try {
+      dynamic response = await _homeRepository
+          .deleteProfile();
+      debugPrint('response deleting profile $response');
+    return response;
+    } catch (error) {
+      debugPrint('error deleting profile $error');
+      return {'status':'not_ok'};
+
+    }
+  }
 
   Future<bool>? patchProfileServices() async {
     try {

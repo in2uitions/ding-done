@@ -229,7 +229,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     ),
                                   ),
                                   onTap: () {
-                                    _confirmAndDelete();
+                                    _confirmAndDelete(profileViewModel);
                                   },
                                 ),
                                 const Gap(40),
@@ -247,7 +247,7 @@ class _ProfilePageState extends State<ProfilePage> {
       }),
     );
   }
-  Future<void> _confirmAndDelete() async {
+  Future<void> _confirmAndDelete(ProfileViewModel profileViewModel) async {
     final confirmed = await showDialog<bool>(
       context: context,
       barrierDismissible: false,
@@ -291,8 +291,19 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const Gap(20),
             InkWell(
-              onTap: () {
+              onTap: () async {
                 Navigator.pop(context, true);
+
+                dynamic value=await profileViewModel.deleteProfile();
+                if(value["status"].toString().toLowerCase()=='ok'){
+                  showDialog(
+                      context: context,
+                      builder:
+                          (BuildContext context) =>
+                          simpleAlert(context, translate('button.success')));
+                }else{
+                  showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure')));
+                }
               },
               child: Container(
                 width: context.appValues.appSizePercent.w100,
@@ -320,6 +331,67 @@ class _ProfilePageState extends State<ProfilePage> {
     );
 
   }
+  Widget simpleAlert(BuildContext context, String message) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  child: SvgPicture.asset('assets/img/x.svg'),
+                  onTap: () {
+                    Navigator.pop(context);
+
+                  },
+                ),
+              ],
+            ),
+          ),
+          message == translate('button.success')
+              ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+              : SvgPicture.asset('assets/img/failure.svg'),
+          SizedBox(height: context.appValues.appSize.s40),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),  message == translate('button.success')?
+          SizedBox(height: context.appValues.appSize.s20):Container(),
+          message == translate('button.success')?Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Request Sent',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ):Container(),
+          SizedBox(height: context.appValues.appSize.s20),
+        ],
+      ),
+    );
+  }
+
 
 }
 

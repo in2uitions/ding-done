@@ -26,6 +26,8 @@ class ProfileRepository {
       NetworkApiService(url: ApiEndPoints().deleteNotifications);
   final BaseApiService _apiNotifications =
       NetworkApiService(url: ApiEndPoints().notifications);
+  final BaseApiService _apiDeleteProfile =
+      NetworkApiService(url: ApiEndPoints().deleteProfile);
 
   Future<ProfileModel?> getProfileBody() async {
     try {
@@ -88,6 +90,21 @@ class ProfileRepository {
       final jsonData = ProfileModel.fromJson(response['data']);
       return jsonData;
     } catch (error) {
+      rethrow;
+    }
+  }
+
+  Future<dynamic> deleteProfile() async {
+    try {
+
+
+      dynamic response = await _apiDeleteProfile.postResponse(data: {});
+      debugPrint('response deleting profile repo $response');
+
+      // final jsonData = ProfileModel.fromJson(response['data']);
+      return response;
+    } catch (error) {
+      debugPrint('error deleting profile repo $error');
       rethrow;
     }
   }

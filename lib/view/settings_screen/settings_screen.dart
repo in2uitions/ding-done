@@ -11,6 +11,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
 import '../../view_model/jobs_view_model/jobs_view_model.dart';
+import '../../view_model/profile_view_model/profile_view_model.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -228,6 +229,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   );
                                 },
                               ),
+                              const Gap(30),
+                              Consumer<ProfileViewModel>(builder: (context, profileViewModel, _) {
+                                  return _buildGeneralItem(
+                                    icon: 'assets/img/bin.svg',
+                                    label:translate('drawer.deleteAccount'),
+                                    onTap: () {
+                                      _confirmAndDelete(profileViewModel);
+                                    },
+                                  );
+                                }
+                              ),
                               const Gap(40),
                             ],
                           ),
@@ -239,6 +251,151 @@ class _SettingsScreenState extends State<SettingsScreen> {
               );
             }
           ),
+        ],
+      ),
+    );
+  }
+  Future<void> _confirmAndDelete(ProfileViewModel profileViewModel) async {
+    final confirmed = await showDialog<bool>(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) => AlertDialog(
+        backgroundColor: Colors.white,
+        elevation: 15,
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          // crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Padding(
+              padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    child: SvgPicture.asset('assets/img/x.svg'),
+                    onTap: () async {
+                      Navigator.pop(context);
+
+                    },
+                  ),
+                ],
+              ),
+            ),
+            SvgPicture.asset('assets/img/remove-card-confirmation-icon.svg'),
+            SizedBox(height: context.appValues.appSize.s40),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.appValues.appPadding.p0,
+              ),
+              child: Text(
+                // translate('bookService.serviceRequestConfirmed'),
+                translate('drawer.delete?'),
+                textAlign: TextAlign.center,
+                style: getPrimaryMediumStyle(
+                  fontSize: 14,
+                  color: context.resources.color.btnColorBlue,
+                ),
+              ),
+            ),
+            const Gap(20),
+            InkWell(
+              onTap: () async {
+                Navigator.pop(context, true);
+
+                dynamic value=await profileViewModel.deleteProfile();
+                if(value["status"].toString().toLowerCase()=='ok'){
+                  showDialog(
+                      context: context,
+                      builder:
+                          (BuildContext context) =>
+                          simpleAlert(context, translate('button.success')));
+                }else{
+                  showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure')));
+                }
+              },
+              child: Container(
+                width: context.appValues.appSizePercent.w100,
+                height: 44,
+                decoration: BoxDecoration(
+                  color: const Color(0xff4100E3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    // translate('confirmAddress.delete'),
+                    "Yes, I’m Done With It",
+                    style: getPrimarySemiBoldStyle(
+                      fontSize: 12,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            // const Gap(20),
+          ],
+        ),
+      ),
+    );
+
+  }
+  Widget simpleAlert(BuildContext context, String message) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  child: SvgPicture.asset('assets/img/x.svg'),
+                  onTap: () {
+                    Navigator.pop(context);
+
+                  },
+                ),
+              ],
+            ),
+          ),
+          message == translate('button.success')
+              ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+              : SvgPicture.asset('assets/img/failure.svg'),
+          SizedBox(height: context.appValues.appSize.s40),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          message == translate('button.success')?
+          SizedBox(height: context.appValues.appSize.s20):Container(),
+          message == translate('button.success')?Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Request Sent',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ):Container(),
+          SizedBox(height: context.appValues.appSize.s20),
         ],
       ),
     );

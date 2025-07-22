@@ -78,7 +78,7 @@ class JobsModel {
 
   int? id;
   dynamic status;
-  String? address;
+  dynamic address;
   double? longitude;
   double? latitude;
   String? start_date;
@@ -96,7 +96,8 @@ class JobsModel {
   String? actual_start_date;
   String? actual_end_date;
   dynamic job_address;
-  Map<String, dynamic>? customer;
+  dynamic customer;
+  // Map<String, dynamic>? customer;
   dynamic supplier;
   dynamic service;
   Map<String, dynamic>? country_rates;

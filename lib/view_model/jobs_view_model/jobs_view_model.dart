@@ -23,12 +23,12 @@ import '../../res/strings/english_strings.dart';
 class JobsViewModel with ChangeNotifier {
   final JobsRepository _jobsRepository = JobsRepository();
   ApiResponse<JobsModel> _jobsResponse = ApiResponse.loading();
-  List<JobsModel>? _jobsList = List.empty();
-  List<JobsModel>? _customerjobsList = List.empty();
-  List<JobsModel>? _supplierCompletedJobs = List.empty();
-  List<JobsModel>? _supplierInProgressJobs = List.empty();
-  List<JobsModel>? _supplierBookedJobs = List.empty();
-  List<JobsModel>? _supplierOpenJobs = List.empty();
+  List<JobsModel>? _jobsList = [];
+  List<JobsModel>? _customerjobsList = [];
+  List<JobsModel>? _supplierCompletedJobs = [];
+  List<JobsModel>? _supplierInProgressJobs = [];
+  List<JobsModel>? _supplierBookedJobs = [];
+  List<JobsModel>? _supplierOpenJobs = [];
   List<JobsModel>? _customerPay = List.empty();
   ApiResponse<JobsModelMain> _apiJobsResponse = ApiResponse.loading();
   ApiResponse<JobsModelMain> _apiCustomerJobsResponse = ApiResponse.loading();
@@ -55,17 +55,18 @@ class JobsViewModel with ChangeNotifier {
 
   dynamic _file;
   Map<String?, String?> jobsAddressError = {};
-  final _wsUrl = 'wss://cms.dingdone.app/websocket?access_token=TQOqIMMMKEdfHAk5TeA-dSna0TgINW55';
+  final _wsUrl =
+      'wss://cms.dingdone.app/websocket?access_token=TQOqIMMMKEdfHAk5TeA-dSna0TgINW55';
 
   // String? _language = "en-US";
   WebSocketChannel? _wsChannel;
-  WebSocket?       _rawSocket;
-  Timer?           _keepAliveTimer;
+  WebSocket? _rawSocket;
+  Timer? _keepAliveTimer;
+
   JobsViewModel() {
     debugPrint('hehehehe');
     initWebSocket();
     readJson();
-
   }
 
   Future<void> readJson() async {
@@ -93,6 +94,7 @@ class JobsViewModel with ChangeNotifier {
       return;
     }
   }
+
   Future<void> initWebSocket() async {
     _keepAliveTimer?.cancel();
     await _closeSockets();
@@ -105,14 +107,14 @@ class JobsViewModel with ChangeNotifier {
       _wsChannel = IOWebSocketChannel(_rawSocket!);
 
       // JSON‐ping fallback
-      _keepAliveTimer = Timer.periodic(const Duration(seconds:20), (_) {
-        _wsChannel?.sink.add(jsonEncode({'type':'post'}));
+      _keepAliveTimer = Timer.periodic(const Duration(seconds: 20), (_) {
+        _wsChannel?.sink.add(jsonEncode({'type': 'post'}));
       });
 
       _wsChannel!.stream.listen(
         _onRawMessage,
-        onError: (_,__) => _scheduleReconnect(),
-        onDone:       _scheduleReconnect,
+        onError: (_, __) => _scheduleReconnect(),
+        onDone: _scheduleReconnect,
       );
 
       final token = 'TQOqIMMMKEdfHAk5TeA-dSna0TgINW55';
@@ -136,19 +138,20 @@ class JobsViewModel with ChangeNotifier {
       _scheduleReconnect();
     }
   }
+
   void _onRawMessage(dynamic raw) {
     debugPrint('📥 RAW: $raw');
-    final msg  = jsonDecode(raw as String) as Map<String,dynamic>;
+    final msg = jsonDecode(raw as String) as Map<String, dynamic>;
     final type = msg['type'];
 
-    switch(type.toString().toLowerCase()) {
+    switch (type.toString().toLowerCase()) {
       case 'auth':
-        if (msg['status']=='error') {
+        if (msg['status'] == 'error') {
           debugPrint('🚨 Error authenticating');
           // refreshAccessToken();
           // _subscribeToAllStages();
         }
-        if (msg['status']!='error') {
+        if (msg['status'] != 'error') {
           debugPrint('✅ AUTH SUCCESS');
           _subscribe();
           // _subscribeToAllStages();
@@ -156,7 +159,7 @@ class JobsViewModel with ChangeNotifier {
         break;
 
       case 'ping':
-        _wsChannel?.sink.add(jsonEncode({'type':'pong'}));
+        _wsChannel?.sink.add(jsonEncode({'type': 'pong'}));
         break;
 
       case 'post':
@@ -170,11 +173,11 @@ class JobsViewModel with ChangeNotifier {
         break;
 
       default:
-
-      // _updateStatuses();
+        // _updateStatuses();
         debugPrint('⚠️ Unhandled message: $msg');
     }
   }
+
   Future<void> _subscribe() async {
     debugPrint('subscribing to web socket ');
     // 1) grab your saved team
@@ -192,12 +195,14 @@ class JobsViewModel with ChangeNotifier {
     }));
     // debugPrint('📤 Subscribed to team=$myTeamId, stage=${_stage['id']}');
   }
+
   Future<void> _closeSockets() async {
     try {
       await _wsChannel?.sink.close();
       await _rawSocket?.close();
     } catch (_) {}
   }
+
   void _scheduleReconnect() {
     _keepAliveTimer?.cancel();
     Future.delayed(const Duration(seconds: 5), () {
@@ -211,23 +216,67 @@ class JobsViewModel with ChangeNotifier {
     try {
       debugPrint('updating jobs $updates');
       debugPrint('updating jobs length ${updates.length}');
-      await getJobs();
 
+      for (var updatedJob in updates) {
+        // ✅ Decode if it's a JSON string
+        if (updatedJob is String) {
+          try {
+            updatedJob = jsonDecode(updatedJob);
+          } catch (e) {
+            debugPrint('Invalid JSON string in updates: $updatedJob');
+            continue;
+          }
+        }
 
-      if (Constants.supplierRoleId == _role) {
-        debugPrint('supplier gettiong jobs ');
-        await getSupplierCompletedJobs();
-        await getSupplierInProgressJobs();
-        await getSupplierBookedJobs();
-        await getSupplierOpenJobs();
-      } else {
-        debugPrint('customer gettiong jobs ');
+        // ✅ Ensure it's a map
+        if (updatedJob is! Map<String, dynamic>) {
+          debugPrint('Skipping non-map update: $updatedJob');
+          continue;
+        }
 
-        await getCustomerJobs();
+        final jobStatus = updatedJob['status'];
+        switch (jobStatus) {
+          case 'circulating':
+            if (Constants.supplierRoleId == _role) {
+              await getSupplierOpenJobs();
+            } else {
+              await getCustomerJobs();
+            }
+            break;
+          case 'booked':
+            if (Constants.supplierRoleId == _role) {
+              await getSupplierOpenJobs();
+              await getSupplierBookedJobs();
+            } else {
+              await getCustomerJobs();
+            }
+            break;
+          case 'inprogress':
+            if (Constants.supplierRoleId == _role) {
+              await getSupplierBookedJobs();
+              await getSupplierInProgressJobs();
+            } else {
+              await getCustomerJobs();
+            }
+
+            break;
+          case 'completed':
+            if (Constants.supplierRoleId == _role) {
+              await getSupplierInProgressJobs();
+              await getSupplierCompletedJobs();
+            } else {
+              await getCustomerJobs();
+            }
+            break;
+          default:
+            debugPrint('Unknown job status: $jobStatus');
+        }
       }
-    }catch(error){
+    } catch (error, stack) {
       debugPrint('error updating job $error');
+      debugPrint('$stack');
     }
+
     notifyListeners();
   }
 
@@ -265,17 +314,17 @@ class JobsViewModel with ChangeNotifier {
       }
 
       debugPrint('returning job ${_jobsList?.firstWhere(
-            (job) => job.id.toString() == id.toString(),
+        (job) => job.id.toString() == id.toString(),
         orElse: () => JobsModel(),
       )}');
       return _jobsList?.firstWhere(
-            (job) => job.id.toString() == id.toString(),
+        (job) => job.id.toString() == id.toString(),
         orElse: () => JobsModel(),
       );
     } catch (error) {
       debugPrint('Error returning job ${error}');
     }
-    return  JobsModel();
+    return JobsModel();
   }
 
   bool validate() {
@@ -291,18 +340,13 @@ class JobsViewModel with ChangeNotifier {
     String? latitudeMessage = '';
 
     streetMessage = AppValidation().isNotEmpty(
-        value:
-            jobsBody[EnglishStrings().formKeys['street_number']!] ?? '',
+        value: jobsBody[EnglishStrings().formKeys['street_number']!] ?? '',
         index: 'Street Number');
     buildingMessage = AppValidation().isNotEmpty(
-        value:
-        jobsBody[EnglishStrings().formKeys['building_number']!] ??
-                '',
+        value: jobsBody[EnglishStrings().formKeys['building_number']!] ?? '',
         index: 'Building Number');
     apartmentMessage = AppValidation().isNotEmpty(
-        value:
-        jobsBody[EnglishStrings().formKeys['apartment_number']!] ??
-                '',
+        value: jobsBody[EnglishStrings().formKeys['apartment_number']!] ?? '',
         index: 'Apartment Number');
     cityMessage = AppValidation().isNotEmpty(
         value: jobsBody[EnglishStrings().formKeys['city']!] ?? '',
@@ -317,10 +361,10 @@ class JobsViewModel with ChangeNotifier {
         value: jobsBody[EnglishStrings().formKeys['floor']!] ?? '',
         index: 'Floor');
 
-    longitudeMessage = AppValidation().isNotEmpty(
-        value: jobsBody['longitude'] ?? '', index: 'Longitude');
-    latitudeMessage = AppValidation().isNotEmpty(
-        value: jobsBody['latitude'] ?? '', index: 'Latitude');
+    longitudeMessage = AppValidation()
+        .isNotEmpty(value: jobsBody['longitude'] ?? '', index: 'Longitude');
+    latitudeMessage = AppValidation()
+        .isNotEmpty(value: jobsBody['latitude'] ?? '', index: 'Latitude');
 
     if (streetMessage == null &&
         buildingMessage == null &&
@@ -365,7 +409,8 @@ class JobsViewModel with ChangeNotifier {
         return startDateB.compareTo(startDateA); // Sorts in ascending order
       });
       debugPrint('customer jobs list ${_customerjobsList}');
-      debugPrint('customer jobs list  media 1 ${_customerjobsList![1].uploaded_media}');
+      debugPrint(
+          'customer jobs list  media 1 ${_customerjobsList![1].uploaded_media}');
       notifyListeners();
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
@@ -465,9 +510,9 @@ class JobsViewModel with ChangeNotifier {
     return true;
   }
 
-  Future<bool?> payFees(int id,dynamic customer_id) async {
+  Future<bool?> payFees(int id, dynamic customer_id) async {
     try {
-      dynamic response = await _jobsRepository.payJob(id,customer_id);
+      dynamic response = await _jobsRepository.payJob(id, customer_id);
       // _apiCustomerPayResponse = ApiResponse.completed(response);
       // _customerPay = _apiCustomerPayResponse.data?.jobs;
       debugPrint('Response of paying fees ${response["status"]}');
@@ -550,7 +595,8 @@ class JobsViewModel with ChangeNotifier {
     }
   }
 
-  Future<bool?> acceptJob(dynamic data,dynamic supplierLatitude,dynamic supplierLongitude) async {
+  Future<bool?> acceptJob(
+      dynamic data, dynamic supplierLatitude, dynamic supplierLongitude) async {
     try {
       debugPrint('Estimated time to reach currentPosition: ${data} minutes');
       try {
@@ -561,9 +607,9 @@ class JobsViewModel with ChangeNotifier {
         debugPrint('supplierLongitude: ${supplierLongitude.toString()}');
         debugPrint(
             'job position: ${data.job_address["latitude"]} ${data.job_address["longitude"]} minutes');
-          // ProfileViewModel profileViewModel=ProfileViewModel();
-          // var supplierLatitude=profileViewModel.getProfileBody["address"]['latitude'];
-          // var supplierLongitude=profileViewModel.getProfileBody["address"]['longitude'];
+        // ProfileViewModel profileViewModel=ProfileViewModel();
+        // var supplierLatitude=profileViewModel.getProfileBody["address"]['latitude'];
+        // var supplierLongitude=profileViewModel.getProfileBody["address"]['longitude'];
         // debugPrint(
         //     'supplierLatitude: ${supplierLatitude} supplierLongitude: ${supplierLongitude} ');
         // Calculate the distance and duration to the customer's location
@@ -599,12 +645,10 @@ class JobsViewModel with ChangeNotifier {
       } catch (error) {
         debugPrint('Error calculating distance: $error');
         return false;
-
       }
     } catch (error) {
       debugPrint('Error fetching jobs ${error}');
       return false;
-
     }
     notifyListeners();
     return true;
@@ -645,7 +689,6 @@ class JobsViewModel with ChangeNotifier {
 
     return true;
   }
-
 
   Future<dynamic>? downloadInvoice(int id) async {
     try {
@@ -758,10 +801,10 @@ class JobsViewModel with ChangeNotifier {
 
       // Check if the combinedDateTime is between now and two hours from now
       if (
-      // combinedDateTime.isAfter(currentDateTime) &&
-      combinedDateTime.isBefore(twoHoursFromNow)) {
+          // combinedDateTime.isAfter(currentDateTime) &&
+          combinedDateTime.isBefore(twoHoursFromNow)) {
         jobsBody['severity_level'] = 'major';
-      }else{
+      } else {
         jobsBody['severity_level'] = 'minor';
       }
 
@@ -781,9 +824,8 @@ class JobsViewModel with ChangeNotifier {
     }
   }
 
-
   void setInputValues({required String index, dynamic value}) {
-    _addressSaved=false;
+    _addressSaved = false;
     jobsBody[index] = value;
     debugPrint('jobsBody $jobsBody');
     debugPrint('hhhh $index $value');
@@ -795,7 +837,8 @@ class JobsViewModel with ChangeNotifier {
     if (index == 'time') {
       try {
         DateTime parsedTime = DateFormat.jm().parse(value);
-        selectedTime = TimeOfDay(hour: parsedTime.hour, minute: parsedTime.minute);
+        selectedTime =
+            TimeOfDay(hour: parsedTime.hour, minute: parsedTime.minute);
       } catch (e) {
         print('Invalid time format: $value');
       }
@@ -840,7 +883,8 @@ class JobsViewModel with ChangeNotifier {
     if (index == 'time') {
       try {
         DateTime parsedTime = DateFormat.jm().parse(value);
-        selectedTime = TimeOfDay(hour: parsedTime.hour, minute: parsedTime.minute);
+        selectedTime =
+            TimeOfDay(hour: parsedTime.hour, minute: parsedTime.minute);
       } catch (e) {
         print('Invalid time format: $value');
       }
@@ -879,7 +923,7 @@ class JobsViewModel with ChangeNotifier {
   }
 
   void setSaved(bool value) {
-   _addressSaved=value;
+    _addressSaved = value;
     notifyListeners();
   }
 
@@ -891,7 +935,6 @@ class JobsViewModel with ChangeNotifier {
     }
     _jobUpdated = false;
     debugPrint('hhhh $index $value');
-
   }
 
   // void launchWhatsApp() async {
@@ -912,8 +955,10 @@ class JobsViewModel with ChangeNotifier {
   // }
   void launchWhatsApp() async {
     String phoneNumber = '97451112825'; // Remove the '+' sign
-    String message = 'Hello, I would like to inquire about online consultation.';
-    String whatsappUrl = 'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
+    String message =
+        'Hello, I would like to inquire about online consultation.';
+    String whatsappUrl =
+        'whatsapp://send?phone=$phoneNumber&text=${Uri.encodeQueryComponent(message)}';
 
     if (await canLaunch(whatsappUrl)) {
       await launch(whatsappUrl);
@@ -955,5 +1000,6 @@ class JobsViewModel with ChangeNotifier {
   get showCustomTextArea => _showCustomTextArea;
 
   get file => _file;
+
   get saved => _addressSaved;
 }
