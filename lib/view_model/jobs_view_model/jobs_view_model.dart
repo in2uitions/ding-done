@@ -233,44 +233,45 @@ class JobsViewModel with ChangeNotifier {
           debugPrint('Skipping non-map update: $updatedJob');
           continue;
         }
+        await readJson();
 
         final jobStatus = updatedJob['status'];
-        switch (jobStatus) {
-          case 'circulating':
-            if (Constants.supplierRoleId == _role) {
-              await getSupplierOpenJobs();
-            } else {
-              await getCustomerJobs();
-            }
-            break;
-          case 'booked':
-            if (Constants.supplierRoleId == _role) {
-              await getSupplierOpenJobs();
-              await getSupplierBookedJobs();
-            } else {
-              await getCustomerJobs();
-            }
-            break;
-          case 'inprogress':
-            if (Constants.supplierRoleId == _role) {
-              await getSupplierBookedJobs();
-              await getSupplierInProgressJobs();
-            } else {
-              await getCustomerJobs();
-            }
-
-            break;
-          case 'completed':
-            if (Constants.supplierRoleId == _role) {
-              await getSupplierInProgressJobs();
-              await getSupplierCompletedJobs();
-            } else {
-              await getCustomerJobs();
-            }
-            break;
-          default:
-            debugPrint('Unknown job status: $jobStatus');
-        }
+        // switch (jobStatus) {
+        //   case 'circulating':
+        //     if (Constants.supplierRoleId == _role) {
+        //       await getSupplierOpenJobs();
+        //     } else {
+        //       await getCustomerJobs();
+        //     }
+        //     break;
+        //   case 'booked':
+        //     if (Constants.supplierRoleId == _role) {
+        //       await getSupplierOpenJobs();
+        //       await getSupplierBookedJobs();
+        //     } else {
+        //       await getCustomerJobs();
+        //     }
+        //     break;
+        //   case 'inprogress':
+        //     if (Constants.supplierRoleId == _role) {
+        //       await getSupplierBookedJobs();
+        //       await getSupplierInProgressJobs();
+        //     } else {
+        //       await getCustomerJobs();
+        //     }
+        //
+        //     break;
+        //   case 'completed':
+        //     if (Constants.supplierRoleId == _role) {
+        //       await getSupplierInProgressJobs();
+        //       await getSupplierCompletedJobs();
+        //     } else {
+        //       await getCustomerJobs();
+        //     }
+        //     break;
+        //   default:
+        //     debugPrint('Unknown job status: $jobStatus');
+        // }
       }
     } catch (error, stack) {
       debugPrint('error updating job $error');
