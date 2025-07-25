@@ -589,7 +589,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                                   .job_address
                                                                   .toString() !=
                                                               ''
-                                                      ? '${data[index].job_address['city'] ?? ''}, ${data[index].job_address['state'] ?? ''}, ${data[index].job_address['street_number'] ?? ''}'
+                                                      ?Constants.supplierRoleId == widget.userRole?
+                                                  '${data[index].job_address['city'] ?? ''}, ${data[index].job_address['state'] ?? ''}, ${data[index].job_address['street_number'] ?? ''}'
+                                                    :'${data[index].job_address['address_label'] ?? ''}'
                                                       : '',
                                                   style: getPrimaryRegularStyle(
                                                     fontSize: 12,

@@ -564,6 +564,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                         widget.data.actual_start_date,
                                     actual_end_date: widget.data.finish_date)
                                 : Container(),
+                            widget.fromWhere == translate('jobs.completed')
+                                ? RatingStarsWidget(
+                              stars: widget.data.rating_stars ?? 0.0,
+                              userRole: Constants.supplierRoleId,
+                            )
+                                : Container(),
                             widget.fromWhere == translate('jobs.active') ||
                                     widget.fromWhere ==
                                         translate('jobs.completed')

@@ -1316,10 +1316,10 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                   onPressed: () async {
                     debugPrint('data in finish ${widget.data.customer['id']}');
                     // if(await jobsViewModel.payFees(widget.data.id,widget.data.customer['id']) == true) {
+                    Navigator.of(context, rootNavigator: true).pop();
                     if (await jobsViewModel
                             .finishJobAndCollectPayment(widget.data.id) ==
                         true) {
-                      Navigator.of(context).pop(); // close current dialog
 
                       Future.delayed(const Duration(milliseconds: 100), () {
                         showDialog(

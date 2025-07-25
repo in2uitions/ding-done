@@ -343,7 +343,7 @@ class _ServicesScreenState extends State<ServicesScreen>
     // });
     var categoriesViewModel =
         Provider.of<CategoriesViewModel>(context, listen: false);
-    searchController.addListener(_filterServices);
+    // searchController.addListener(_filterServices);
     // Initially display all services
     filteredServices = categoriesViewModel.servicesList2;
 
@@ -355,15 +355,17 @@ class _ServicesScreenState extends State<ServicesScreen>
     setState(() {});
   }
 
-  void _filterServices() {
-    String searchText = searchController.text.toLowerCase();
+  Future<void> _filterServices(String searchText) async {
+
+    // String searchText = searchController.text.toLowerCase();
+    String _searchText = searchText.toLowerCase();
     var categoriesViewModel =
-        Provider.of<CategoriesViewModel>(context, listen: false);
-    categoriesViewModel.searchData(index: 'search_services', value: searchText);
+    Provider.of<CategoriesViewModel>(context, listen: false);
+    await categoriesViewModel.searchData(index: 'search_services', value: _searchText);
     debugPrint('categories search result ${categoriesViewModel.servicesList2}');
 
     setState(() {
-      if (searchText.isEmpty) {
+      if (_searchText.isEmpty) {
         // Display all services if search text is empty
         filteredServices = categoriesViewModel.servicesList2;
       } else {
@@ -487,6 +489,9 @@ class _ServicesScreenState extends State<ServicesScreen>
                 ),
                 child: TextFormField(
                   controller: searchController,
+                  onChanged: (value) {
+                    _filterServices(value);
+                  },
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: const Color(0xffEAEAFF),

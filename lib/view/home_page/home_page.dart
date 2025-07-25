@@ -55,14 +55,14 @@ class _HomePageState extends State<HomePage> {
     // Provider.of<CategoriesViewModel>(context, listen: false).sortCategories(
     var categoriesViewModel =
         Provider.of<CategoriesViewModel>(context, listen: false);
-    searchController.addListener(_filterServices);
+    // searchController.addListener(_filterServices);
     // Initially display all services
     filteredServices = categoriesViewModel.servicesList2;
   }
 
   @override
   void dispose() {
-    searchController.removeListener(_filterServices);
+    // searchController.removeListener(_filterServices);
     searchController.dispose();
     super.dispose();
   }
@@ -286,15 +286,17 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  void _filterServices() {
-    String searchText = searchController.text.toLowerCase();
+  Future<void> _filterServices(String searchText) async {
+
+    // String searchText = searchController.text.toLowerCase();
+    String _searchText = searchText.toLowerCase();
     var categoriesViewModel =
         Provider.of<CategoriesViewModel>(context, listen: false);
-    categoriesViewModel.searchData(index: 'search_services', value: searchText);
+    await categoriesViewModel.searchData(index: 'search_services', value: _searchText);
     debugPrint('categories search result ${categoriesViewModel.servicesList2}');
 
     setState(() {
-      if (searchText.isEmpty) {
+      if (_searchText.isEmpty) {
         // Display all services if search text is empty
         filteredServices = categoriesViewModel.servicesList2;
       } else {
@@ -876,6 +878,9 @@ class _HomePageState extends State<HomePage> {
                                     ),
                                     child: TextFormField(
                                       controller: searchController,
+                                      onChanged: (value) {
+                                        _filterServices(value);
+                                      },
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: const Color(0xffEAEAFF),
