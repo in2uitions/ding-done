@@ -1471,9 +1471,11 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                 SizedBox(height: context.appValues.appSize.s20),
                 ElevatedButton(
                   onPressed: () async {
+                    Navigator.of(context, rootNavigator: true).pop();
                     if (await jobsViewModel
                             .finishJobAndCollectPayment(widget.data.id) ==
                         true) {
+
                       showDialog(
                           context: context,
                           builder: (BuildContext context) =>
