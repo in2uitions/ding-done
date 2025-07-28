@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:dingdone/data/remote/response/ApiResponse.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -73,13 +74,16 @@ class JobsViewModel with ChangeNotifier {
     await getRole();
     // await getJobs();
     // debugPrint('supplier gettiong jobs ');
-
+    ProfileViewModel p=ProfileViewModel();
+    await p
+        .getNotifications();
     if (Constants.supplierRoleId == _role) {
       debugPrint('supplier gettiong jobs ');
       await getSupplierCompletedJobs();
       await getSupplierInProgressJobs();
       await getSupplierBookedJobs();
       await getSupplierOpenJobs();
+
     } else {
       debugPrint('customer gettiong jobs ');
 
