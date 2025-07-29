@@ -335,11 +335,21 @@ class _MyaddressBookState extends State<MyaddressBook> {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
-                      // final jobsVM =
-                      //     Provider.of<JobsViewModel>(context, listen: false);
+                      final jobsVM =
+                          Provider.of<JobsViewModel>(context, listen: false);
 
-                      // jobsVM
-                      //     .clearJobsBody(); // implement this in your ViewModel
+                      jobsVM.deleteInputValues(index: 'id');
+                      jobsVM.deleteInputValues(index: 'street_number');
+                      jobsVM.deleteInputValues(index: 'building_number');
+                      jobsVM.deleteInputValues(index: 'floor');
+                      jobsVM.deleteInputValues(index: 'apartment_number');
+                      jobsVM.deleteInputValues(index: 'city');
+                      jobsVM.deleteInputValues(index: 'zone');
+                      jobsVM.deleteInputValues(index: 'address_label');
+                      jobsVM.deleteInputValues(index: 'latitude');
+                      jobsVM.deleteInputValues(index: 'longitude');
+
+
                       Navigator.of(context).push(
                         _createRoute(ConfirmAddress()),
                       );

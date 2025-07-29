@@ -98,7 +98,18 @@ class JobsViewModel with ChangeNotifier {
       return;
     }
   }
-
+  Future<void> clearJobsBody() async {
+    try {
+      jobsBody={};
+      notifyListeners();
+    } catch (err) {
+      return;
+    }
+  }
+  void deleteInputValues({required String index}) {
+    jobsBody.remove(index);
+    notifyListeners();
+  }
   Future<void> initWebSocket() async {
     _keepAliveTimer?.cancel();
     await _closeSockets();

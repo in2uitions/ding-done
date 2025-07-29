@@ -1,5 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:io';
+
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
@@ -23,8 +25,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:printing/printing.dart';
 
 class UpdateJobRequestCustomer extends StatefulWidget {
   var data;
@@ -672,18 +677,38 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                               'jobs.completed')
                                                       ? await jobsViewModel.downloadInvoice(widget.data.id) !=
                                                               null
-                                                          ? await Navigator
-                                                              .push(
-                                                                  context,
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          Scaffold(
-                                                                              appBar:
-                                                                                  AppBar(
-                                                                                title: const Text('Invoice'),
-                                                                              ),
-                                                                              body: SfPdfViewer.memory(jobsViewModel
-                                                                                  .file))))
+                                                          ? await Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) => Scaffold(
+                                                        appBar: AppBar(
+                                                          title: const Text('Invoice'),
+                                                          actions: [
+                                                            IconButton(
+                                                              icon: const Icon(Icons.print),
+                                                              onPressed: () async {
+                                                                await Printing.layoutPdf(
+                                                                  onLayout: (_) async => jobsViewModel.file,
+                                                                );
+                                                              },
+                                                            ),
+                                                            IconButton(
+                                                              icon: const Icon(Icons.share),
+                                                              onPressed: () async {
+                                                                final directory = await getTemporaryDirectory();
+                                                                final filePath = '${directory.path}/invoice.pdf';
+                                                                final file = File(filePath);
+                                                                await file.writeAsBytes(jobsViewModel.file);
+
+                                                                Share.shareXFiles([XFile(filePath)], text: 'Here is your invoice.');
+                                                              },
+                                                            ),
+                                                          ],
+                                                        ),
+                                                        body: SfPdfViewer.memory(jobsViewModel.file),
+                                                      ),
+                                                    ),
+                                                  )
                                                           : showDialog(
                                                               context: context,
                                                               builder: (BuildContext context) =>

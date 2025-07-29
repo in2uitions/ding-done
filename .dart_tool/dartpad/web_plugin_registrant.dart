@@ -25,6 +25,8 @@ import 'package:location_web/location_web.dart';
 import 'package:open_file_web/open_file_web.dart';
 import 'package:package_info_plus/src/package_info_plus_web.dart';
 import 'package:pointer_interceptor_web/pointer_interceptor_web.dart';
+import 'package:printing/printing_web.dart';
+import 'package:share_plus/src/share_plus_web.dart';
 import 'package:shared_preferences_web/shared_preferences_web.dart';
 import 'package:syncfusion_pdfviewer_web/pdfviewer_web.dart';
 import 'package:uni_links_web2/uni_links_web.dart';
@@ -53,6 +55,8 @@ void registerPlugins([final Registrar? pluginRegistrar]) {
   OpenFilePlugin.registerWith(registrar);
   PackageInfoPlusWebPlugin.registerWith(registrar);
   PointerInterceptorWeb.registerWith(registrar);
+  PrintingPlugin.registerWith(registrar);
+  SharePlusWebPlugin.registerWith(registrar);
   SharedPreferencesPlugin.registerWith(registrar);
   SyncfusionFlutterPdfViewerPlugin.registerWith(registrar);
   UniLinksPlugin.registerWith(registrar);

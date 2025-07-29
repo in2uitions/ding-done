@@ -58,6 +58,8 @@ class _JobInProgressState extends State<JobInProgress> {
                 break; // Break the loop once the translation is found
               }
             }
+            debugPrint('amount ${jobsViewModel.supplierInProgressJobs[index].total_amount}');
+
             return Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: context.appValues.appPadding.p20,
@@ -257,9 +259,17 @@ class _JobInProgressState extends State<JobInProgress> {
                                     ),
                                   ),
                                   Text(
-                                    '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] : ''}'
-                                    ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["currency"] : ''}'
-                                    ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_type"] : ''}',
+                                    jobsViewModel.supplierInProgressJobs[index].total_amount != null &&
+                                        jobsViewModel.supplierInProgressJobs[index]
+                                            .total_amount
+                                            .toString() !=
+                                            ''
+                                        ? '${jobsViewModel.supplierInProgressJobs[index].total_amount} ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null && jobsViewModel.supplierInProgressJobs[index].service["country_rates"].isNotEmpty ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["currency"] : ''}'
+                                        : '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].number_of_units != null ? (jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] * jobsViewModel.supplierInProgressJobs[index].number_of_units) : (jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] * jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["minimum_order"]) : ''} ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["currency"] : ''}',
+
+                                    // '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] : ''}'
+                                    // ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["currency"] : ''}'
+                                    // ' ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_type"] : ''}',
                                     style: getPrimarySemiBoldStyle(
                                       fontSize: 12,
                                       color: const Color(0xff4100E3),

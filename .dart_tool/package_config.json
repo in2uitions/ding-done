@@ -74,6 +74,18 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "barcode",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/barcode-2.2.9",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "bidi",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/bidi-2.0.13",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "boolean_selector",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/boolean_selector-2.1.1",
       "packageUri": "lib/",
@@ -1058,6 +1070,18 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "pdf",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/pdf-3.11.3",
+      "packageUri": "lib/",
+      "languageVersion": "2.19"
+    },
+    {
+      "name": "pdf_widget_wrapper",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/pdf_widget_wrapper-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "permission_handler",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/permission_handler-10.4.5",
       "packageUri": "lib/",
@@ -1142,6 +1166,12 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "printing",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/printing-5.14.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "proj4dart",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/proj4dart-2.1.0",
       "packageUri": "lib/",
@@ -1154,10 +1184,28 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "qr",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/qr-3.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
       "name": "sanitize_html",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/sanitize_html-2.1.0",
       "packageUri": "lib/",
       "languageVersion": "2.12"
+    },
+    {
+      "name": "share_plus",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/share_plus-11.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.4"
+    },
+    {
+      "name": "share_plus_platform_interface",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/share_plus_platform_interface-6.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
     },
     {
       "name": "shared_preferences",
@@ -1604,7 +1652,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-07-28T07:01:52.381958Z",
+  "generated": "2025-07-29T07:49:32.830129Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Volumes/KINGSTON/flutter",
