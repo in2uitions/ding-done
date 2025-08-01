@@ -575,16 +575,22 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                       children: [
                                         InkWell(
                                           onTap: () {
-                                            profileViewModel.setNotificationsData(false);
-                                            Navigator.of(context).push(_createRoute(
-                                               NotificationsScreen(profileViewModel: profileViewModel,),
-                                            ));
+
+                                            Navigator.of(context).push(
+                                              _createRoute(
+                                                NotificationsScreen(jobsViewModel: jobsViewModel),
+                                              ),
+                                            ).then((_) {
+                                              setState(() {}); // Triggers rebuild after pop
+                                            });
+
+
                                           },
                                           child: SvgPicture.asset(
-                                            profileViewModel.hasNotifications
+                                            jobsViewModel.hasNotifications
                                                 ? 'assets/img/notification.svg'
                                                 : 'assets/img/white-bell.svg',
-                                            color: profileViewModel.hasNotifications  ?const Color(0xffFFC500) : null,
+                                            color: jobsViewModel.hasNotifications  ?const Color(0xffFFC500) : null,
                                           ),
                                         ),
                                         // if (profileViewModel.hasNotifications)

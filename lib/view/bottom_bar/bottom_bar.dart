@@ -88,7 +88,7 @@ class _BottomBarState extends State<BottomBar>
 
   getNotifications() async {
     dynamic notifications =
-        await Provider.of<ProfileViewModel>(context, listen: false)
+        await Provider.of<JobsViewModel>(context, listen: false)
             .getNotifications();
     if (notifications != null) {
       if (notifications.isNotEmpty) {

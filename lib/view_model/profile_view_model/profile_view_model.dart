@@ -17,15 +17,14 @@ class ProfileViewModel extends DisposableViewModel {
   Map<String, dynamic> profileBody = {};
   Map<String?, String?> verifyPassword = {};
   List<dynamic>? _selectedServices = List.empty();
-  List<dynamic>? _notifications = List.empty();
   String? lang;
+
   Map<String?, String?> profileErrors = {};
-  bool _hasNotifications = true;
 
   Future<void> readJson() async {
     await getProfiledata();
     await getLanguage();
-    await apigetNotifications();
+    // await apigetNotifications();
     notifyListeners();
   }
 
@@ -35,24 +34,7 @@ class ProfileViewModel extends DisposableViewModel {
       lang = 'en-US';
     }
   }
-  apigetNotifications() async {
-    dynamic notifications =
-    await getNotifications();
-    if (notifications != null) {
-      if (notifications.isNotEmpty && notifications!=[]) {
-        _hasNotifications = true;
-      } else {  _hasNotifications = false;}
-    } else {
-      _hasNotifications = false;
-    }
-    notifyListeners();
-    debugPrint('has notifications $_hasNotifications');
-    return notifications;
-  }
-  setNotificationsData(bool value){
-    _hasNotifications=value;
-    notifyListeners();
-  }
+
   get errorMsg => null;
 
   Future<dynamic> getProfiledata() async {
@@ -72,24 +54,6 @@ class ProfileViewModel extends DisposableViewModel {
     }
   }
 
-  Future<dynamic> getNotifications() async {
-    //Todo sign up save user
-    try {
-      await getLanguage();
-      dynamic response = await _homeRepository.getNotifications(lang);
-      // _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
-      // profileBody = _apiProfileResponse.data?.toJson() ?? {};
-      debugPrint('notifications ${response}');
-      _notifications = response;
-      notifyListeners();
-
-      return response;
-    } catch (error) {
-      debugPrint('error getting notifications $error');
-      // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
-      notifyListeners();
-    }
-  }
 
   Future<void> patchProfileState(dynamic state) async {
     try {
@@ -701,8 +665,6 @@ class ProfileViewModel extends DisposableViewModel {
 
   get getProfileBody => profileBody;
   get selectedServices => _selectedServices;
-  get notifications => _notifications;
-  get hasNotifications => _hasNotifications;
 
   @override
   void disposeValues() {

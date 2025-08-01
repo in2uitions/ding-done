@@ -145,7 +145,7 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(height: context.appValues.appSize.s10),
           RatingStarsWidget(
-            stars: job.rating_stars != null ? job.rating_stars : 0,
+            stars: jobsViewModel.updatedBody!=null && jobsViewModel.updatedBody["rating_stars"]!=null?jobsViewModel.updatedBody["rating_stars"]:0,
             userRole: Constants.customerRoleId,
           ),
           ReviewWidget(
@@ -821,17 +821,20 @@ class _HomePageState extends State<HomePage> {
                                       Stack(
                                         children: [
                                           InkWell(
-                                            onTap: () {
-                                              profileViewModel.setNotificationsData(false);
-                                              Navigator.of(context).push(_createRoute(
-                                                NotificationsScreen(profileViewModel: profileViewModel,),
-                                              ));
+                                            onTap: ()  {
+                                              Navigator.of(context).push(
+                                                _createRoute(
+                                                  NotificationsScreen(jobsViewModel: jobsViewModel),
+                                                ),
+                                              ).then((_) {
+                                                setState(() {}); // Triggers rebuild after pop
+                                              });
                                             },
                                             child: SvgPicture.asset(
-                                              profileViewModel.hasNotifications
+                                              jobsViewModel.hasNotifications
                                                   ? 'assets/img/notification.svg'
                                                   : 'assets/img/white-bell.svg',
-                                              color: profileViewModel.hasNotifications ? const Color(0xffFFC500) : null,
+                                              color: jobsViewModel.hasNotifications ? const Color(0xffFFC500) : null,
                                             ),
                                           ),
                                           // if (profileViewModel.hasNotifications)

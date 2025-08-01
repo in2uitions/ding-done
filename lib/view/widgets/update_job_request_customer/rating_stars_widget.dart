@@ -4,6 +4,9 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/stars/stars.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
+import 'package:provider/provider.dart';
+
+import '../../../view_model/jobs_view_model/jobs_view_model.dart';
 
 class RatingStarsWidget extends StatefulWidget {
   var stars;
@@ -18,6 +21,8 @@ class RatingStarsWidget extends StatefulWidget {
 class _RatingStarsWidgetState extends State<RatingStarsWidget> {
   @override
   Widget build(BuildContext context) {
+    final jobsViewModel = Provider.of<JobsViewModel>(context);
+    final rating = jobsViewModel.updatedBody["rating_stars"] ?? 0;
     return Padding(
       padding: EdgeInsets.symmetric(
           horizontal: context.appValues.appPadding.p20,
@@ -54,7 +59,7 @@ class _RatingStarsWidgetState extends State<RatingStarsWidget> {
               ),
               widget.userRole == Constants.customerRoleId
                   ? Stars(
-                      rating: double.parse(widget.stars.toString()),
+                      rating: double.parse(rating.toString()),
                     )
                   : SizedBox(
                       height: 20,

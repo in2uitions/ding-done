@@ -18,11 +18,14 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import '../../repository/profile/profile_repository.dart';
 import '../../res/app_validation.dart';
 import '../../res/strings/english_strings.dart';
 
 class JobsViewModel with ChangeNotifier {
   final JobsRepository _jobsRepository = JobsRepository();
+  ProfileRepository _homeRepository = ProfileRepository();
+
   ApiResponse<JobsModel> _jobsResponse = ApiResponse.loading();
   List<JobsModel>? _jobsList = [];
   List<JobsModel>? _customerjobsList = [];
@@ -53,7 +56,9 @@ class JobsViewModel with ChangeNotifier {
   String _selectedReason = '';
   bool _showCustomTextArea = false;
   bool _addressSaved = false;
-
+  List<dynamic>? _notifications = List.empty();
+  String? lang;
+  bool _hasNotifications = true;
   dynamic _file;
   Map<String?, String?> jobsAddressError = {};
   final _wsUrl =
@@ -74,9 +79,6 @@ class JobsViewModel with ChangeNotifier {
     await getRole();
     // await getJobs();
     // debugPrint('supplier gettiong jobs ');
-    ProfileViewModel p=ProfileViewModel();
-    await p
-        .getNotifications();
     if (Constants.supplierRoleId == _role) {
       debugPrint('supplier gettiong jobs ');
       await getSupplierCompletedJobs();
@@ -88,6 +90,50 @@ class JobsViewModel with ChangeNotifier {
       debugPrint('customer gettiong jobs ');
 
       await getCustomerJobs();
+    }
+  }
+
+
+  getLanguage() async {
+    lang = await AppPreferences().get(key: dblang, isModel: false);
+    if (lang == null) {
+      lang = 'en-US';
+    }
+  }
+  apigetNotifications() async {
+    dynamic notifications =
+    await getNotifications();
+    if (notifications != null) {
+      if (notifications.isNotEmpty && notifications!=[]) {
+        _hasNotifications = true;
+      } else {  _hasNotifications = false;}
+    } else {
+      _hasNotifications = false;
+    }
+    notifyListeners();
+    debugPrint('has notifications $_hasNotifications');
+    return notifications;
+  }
+  setNotificationsData(bool value){
+    _hasNotifications=value;
+    notifyListeners();
+  }
+  Future<dynamic> getNotifications() async {
+    //Todo sign up save user
+    try {
+      await getLanguage();
+      dynamic response = await _homeRepository.getNotifications(lang);
+      // _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
+      // profileBody = _apiProfileResponse.data?.toJson() ?? {};
+      debugPrint('notifications ${response}');
+      _notifications = response;
+      notifyListeners();
+
+      return response;
+    } catch (error) {
+      debugPrint('error getting notifications $error');
+      // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
+      notifyListeners();
     }
   }
 
@@ -249,8 +295,10 @@ class JobsViewModel with ChangeNotifier {
           continue;
         }
         await readJson();
+        await apigetNotifications();
 
-        final jobStatus = updatedJob['status'];
+
+        // final jobStatus = updatedJob['status'];
         // switch (jobStatus) {
         //   case 'circulating':
         //     if (Constants.supplierRoleId == _role) {
@@ -932,6 +980,8 @@ class JobsViewModel with ChangeNotifier {
     } else {
       _updatedBody[index] = value;
       debugPrint('_updatedBody $_updatedBody $value');
+      notifyListeners();
+
     }
     _jobUpdated = false;
     debugPrint('hhhh $index $value');
@@ -1015,6 +1065,8 @@ class JobsViewModel with ChangeNotifier {
 
   get showCustomTextArea => _showCustomTextArea;
 
+  get notifications => _notifications;
+  get hasNotifications => _hasNotifications;
   get file => _file;
 
   get saved => _addressSaved;

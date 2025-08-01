@@ -1,6 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/settings_screen/settings_screen.dart';
+import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_translate/flutter_translate.dart';
@@ -11,9 +12,9 @@ import '../../view_model/profile_view_model/profile_view_model.dart';
 import '../widgets/inbox_page/notification_widget.dart';
 
 class NotificationsScreen extends StatefulWidget {
-  var profileViewModel;
+  var jobsViewModel;
 
-  NotificationsScreen({super.key, required this.profileViewModel});
+  NotificationsScreen({super.key, required this.jobsViewModel});
 
   @override
   State<NotificationsScreen> createState() => _NotificationsScreenState();
@@ -22,7 +23,7 @@ class NotificationsScreen extends StatefulWidget {
 class _NotificationsScreenState extends State<NotificationsScreen> {
   @override
   Widget build(BuildContext context) {
-    debugPrint('wdehfw ${widget.profileViewModel.notifications}');
+    debugPrint('wdehfw ${widget.jobsViewModel.notifications}');
     return Scaffold(
       body: Stack(
         children: [
@@ -45,7 +46,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            await widget.jobsViewModel.setNotificationsData(false);
                             Navigator.pop(context);
                           },
                           icon: const Icon(
@@ -86,7 +88,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             maxChildSize: 1,
             builder: (BuildContext context, ScrollController scrollController) {
               return FutureBuilder(
-                  future: Provider.of<ProfileViewModel>(context, listen: false)
+                  future: Provider.of<JobsViewModel>(context, listen: false)
                       .getNotifications(),
                   builder: (context, AsyncSnapshot data) {
                     if (data.hasData && data.data.isNotEmpty) {
@@ -111,7 +113,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
 
                                   TextButton(
                                     onPressed: () async {
-                                      await widget.profileViewModel
+                                      await widget.jobsViewModel
                                           .clearAllNotifications();
                                       setState(() {});
                                     },
@@ -130,7 +132,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                               child: ListView.builder(
                                 controller: scrollController,
                                 itemCount: widget
-                                    .profileViewModel.notifications.length,
+                                    .jobsViewModel.notifications.length,
                                 padding: EdgeInsets.zero,
                                 itemBuilder: (BuildContext context, int index) {
                                   final notification = data.data[index];
@@ -141,7 +143,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                     onTap: () {},
                                     trailing: InkWell(
                                       onTap: () async {
-                                        await widget.profileViewModel.deleteNotificationById(notification['id']);
+                                        await widget.jobsViewModel.deleteNotificationById(notification['id']);
                                         setState(() {}); // Refresh the list
                                       },
                                       child: SvgPicture.asset(
