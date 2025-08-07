@@ -1256,6 +1256,24 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "sign_in_with_apple",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/sign_in_with_apple-7.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "sign_in_with_apple_platform_interface",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/sign_in_with_apple_platform_interface-2.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
+      "name": "sign_in_with_apple_web",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/sign_in_with_apple_web-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.3"
+    },
+    {
       "name": "signature",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/signature-5.5.0",
       "packageUri": "lib/",
@@ -1652,7 +1670,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-08-01T08:20:13.009802Z",
+  "generated": "2025-08-07T11:27:33.290443Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Volumes/KINGSTON/flutter",

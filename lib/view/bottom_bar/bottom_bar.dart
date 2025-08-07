@@ -358,13 +358,15 @@ class _BottomBarState extends State<BottomBar>
                                               ),
                                             )
                                           : Container()
-                                      : jobsViewModel.getcustomerJobs
+                                      : jobsViewModel.getcustomerJobs!=null?
+                                  jobsViewModel.getcustomerJobs
                                                   .where((e) =>
                                                       e.status == 'booked')
                                                   .toList()
                                                   .length >
                                               0
                                           ? Container()
+                                          : Container()
                                           : Container()
                                 ],
                               ),
