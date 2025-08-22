@@ -4,6 +4,7 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/categories_screen/categories_screen_cards.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -11,6 +12,7 @@ import '../../view_model/categories_view_model/categories_view_model.dart';
 import '../../view_model/jobs_view_model/jobs_view_model.dart';
 import '../../view_model/profile_view_model/profile_view_model.dart';
 import '../book_a_service/book_a_service.dart';
+import '../my_address_book/my_address_book.dart';
 
 class CategoriesScreen extends StatefulWidget {
   final CategoriesViewModel categoriesViewModel;
@@ -216,7 +218,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                               SvgPicture.asset('assets/img/categoriesIcon.svg'),
                               const Gap(4),
                               InkWell(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.of(context).pop();
                                 },
                                 child: Text(
@@ -289,40 +291,62 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                     cost: cost,
                                     image: img ??
                                         'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                    onTap: () {
+                                    onTap: () async {
+                                      debugPrint(
+                                          'handling categories selection');
                                       jobsVM.setInputValues(
                                           index: 'service',
                                           value: service['id']);
-                                      final addr = profVM
+                                      final addr = await profVM
                                           .getProfileBody['current_address'];
-                                      jobsVM.setInputValues(
-                                          index: 'job_address', value: addr);
-                                      jobsVM.setInputValues(
-                                        index: 'address',
-                                        value:
-                                            '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}',
-                                      );
-                                      jobsVM.setInputValues(
-                                          index: 'latitude',
-                                          value: addr['latitude']);
-                                      jobsVM.setInputValues(
-                                          index: 'longitude',
-                                          value: addr['longitude']);
-                                      jobsVM.setInputValues(
-                                          index: 'payment_method',
-                                          value: 'Card');
-                                      jobsVM.setInputValues(index: 'number_of_units',value:service['country_rates'][0]['minimum_order'].toString() );
+                                      debugPrint('addrsss $addr');
+                                      debugPrint(
+                                          'addrsss $addr (${addr.runtimeType})');
 
-                                      Navigator.of(context).push(
-                                        PageRouteBuilder(
-                                          pageBuilder: (c, a1, a2) =>
-                                              BookAService(
-                                            service: service,
-                                            lang: lang,
-                                            image: img,
+                                      if (profVM.getProfileBody[
+                                              'current_address'] !=
+                                          null) {
+                                        jobsVM.setInputValues(
+                                            index: 'job_address', value: addr);
+                                        jobsVM.setInputValues(
+                                          index: 'address',
+                                          value:
+                                              '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}',
+                                        );
+                                        jobsVM.setInputValues(
+                                            index: 'latitude',
+                                            value: addr['latitude']);
+                                        jobsVM.setInputValues(
+                                            index: 'longitude',
+                                            value: addr['longitude']);
+                                        jobsVM.setInputValues(
+                                            index: 'payment_method',
+                                            value: 'Card');
+                                        jobsVM.setInputValues(
+                                            index: 'number_of_units',
+                                            value: service['country_rates'][0]
+                                                    ['minimum_order']
+                                                .toString());
+                                        Navigator.of(context).push(
+                                          PageRouteBuilder(
+                                            pageBuilder: (c, a1, a2) =>
+                                                BookAService(
+                                              service: service,
+                                              lang: lang,
+                                              image: img,
+                                            ),
                                           ),
-                                        ),
-                                      );
+                                        );
+                                      } else {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) =>
+                                              _buildPopupDialogNo(
+                                                  context,
+                                                  translate(
+                                                      'button.pleaseProvideAtLeastOneAddress')),
+                                        );
+                                      }
                                     },
                                   );
                                 },
@@ -339,6 +363,101 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildPopupDialogNo(BuildContext context, String message) {
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  SvgPicture.asset('assets/img/x.svg'),
+                ],
+              ),
+            ),
+          ),
+          SvgPicture.asset('assets/img/failure.svg'),
+          SizedBox(height: context.appValues.appSize.s40),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              message,
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s20),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: ElevatedButton(
+              onPressed: () async {
+                Navigator.pop(context);
+                await Future.delayed(const Duration(milliseconds: 1));
+                Navigator.of(context).push(
+                  _createRoute(const MyaddressBook()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                elevation: 0.0,
+                shadowColor: Colors.transparent,
+                backgroundColor: const Color(0xffFFD105),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                fixedSize: Size(
+                  context.appValues.appSizePercent.w30,
+                  context.appValues.appSizePercent.h5,
+                ),
+              ),
+              child: Text(
+                translate('button.ok'),
+                style: getPrimaryRegularStyle(
+                  fontSize: 15,
+                  color: context.resources.color.btnColorBlue,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Route _createRoute(dynamic classname) {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => classname,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        const begin = Offset(1.0, 0.0);
+        const end = Offset.zero;
+        const curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
     );
   }
 }

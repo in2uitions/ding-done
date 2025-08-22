@@ -1188,14 +1188,20 @@ Widget _buildPopupDialogNo(BuildContext context, String message) {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              SvgPicture.asset('assets/img/failure.svg'),
-            ],
+          child: InkWell(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SvgPicture.asset('assets/img/x.svg'),
+              ],
+            ),
           ),
         ),
-        SvgPicture.asset('assets/img/x.svg'),
+        SvgPicture.asset('assets/img/failure.svg'),
+
         SizedBox(height: context.appValues.appSize.s40),
         Padding(
           padding: EdgeInsets.symmetric(

@@ -1,5 +1,6 @@
 import 'package:dingdone/view/categories_screen/categories_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -396,32 +397,36 @@ class _ServicesScreenState extends State<ServicesScreen>
       lang = 'en-US';
     }
     jobsViewModel.setInputValues(index: 'service', value: service["id"]);
-    jobsViewModel.setInputValues(
-      index: 'job_address',
-      value: profileViewModel.getProfileBody['current_address'],
-    );
+      jobsViewModel.setInputValues(
+        index: 'job_address',
+        value: profileViewModel.getProfileBody['current_address'],
+      );
 
-    jobsViewModel.setInputValues(
-      index: 'address',
-      value:
-          '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
-    );
-    jobsViewModel.setInputValues(
-        index: 'latitude',
-        value: profileViewModel.getProfileBody['current_address']['latitude']);
-    jobsViewModel.setInputValues(
-        index: 'longitude',
-        value: profileViewModel.getProfileBody['current_address']['longitude']);
-    jobsViewModel.setInputValues(index: 'payment_method', value: 'Card');
-    jobsViewModel.setInputValues(index: 'number_of_units',value:service['country_rates'][0]['minimum_order'].toString() );
+      jobsViewModel.setInputValues(
+        index: 'address',
+        value:
+        '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
+      );
+      jobsViewModel.setInputValues(
+          index: 'latitude',
+          value: profileViewModel.getProfileBody['current_address']['latitude']);
+      jobsViewModel.setInputValues(
+          index: 'longitude',
+          value: profileViewModel.getProfileBody['current_address']['longitude']);
+      jobsViewModel.setInputValues(index: 'payment_method', value: 'Card');
+      jobsViewModel.setInputValues(index: 'number_of_units',value:service['country_rates'][0]['minimum_order'].toString() );
 
-    Navigator.of(context).push(_createRoute(BookAService(
-      service: service,
-      lang: lang,
-      image: service["image"] != null
-          ? '${context.resources.image.networkImagePath2}${service["image"]}'
-          : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
-    )));
+
+      Navigator.of(context).push(_createRoute(BookAService(
+        service: service,
+        lang: lang,
+        image: service["image"] != null
+            ? '${context.resources.image.networkImagePath2}${service["image"]}'
+            : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
+      )));
+
+
+
   }
 
   @override

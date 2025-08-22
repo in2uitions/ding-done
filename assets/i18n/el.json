@@ -40,6 +40,7 @@
     "success": "Επιτυχία",
     "somethingWentWrong": "Κάτι πήγε στραβά",
     "pleaseProvidePaymentCard": "Δώστε κάρτα πληρωμής",
+    "pleaseProvideAtLeastOneAddress": "Καταχωρίστε τουλάχιστον μία διεύθυνση",
     "failure": "Αποτυχία",
     "jobCanceledMsg": "Η εργασία ακυρώθηκε αλλά θα πρέπει να πληρώσετε πρόστιμο",
     "tryAgainLater": "Παρακαλώ προσπαθήστε ξανά αργότερα",
