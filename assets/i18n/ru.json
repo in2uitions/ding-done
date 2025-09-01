@@ -52,7 +52,9 @@
     "ok": "Ок",
     "stopCancel": "Остановить / Отменить",
     "next": "Далее",
-    "letsStart": "Начинать"
+    "letsStart": "Начинать",
+    "pleaseLogin": "Пожалуйста, не забудьте войти в систему, чтобы получить доступ к этой функции"
+
   },
   "settings": {
     "settings": "Настройки",
@@ -481,7 +483,8 @@
     "connectWithApple": "Подключиться через Apple",
     "connectWithGoogle": "Подключиться через Google",
     "swipe": "Проведите пальцем вправо, чтобы вернуться назад",
-    "signInToYourAccount": "Войдите в свою учетную запись"
+    "signInToYourAccount": "Войдите в свою учетную запись",
+    "skip": "пропускать"
   },
   "resetPassword_screen": {
     "resetPassword": "Сбросить пароль",

@@ -311,6 +311,7 @@ class _ServicesScreenState extends State<ServicesScreen>
     final servicesViewModel =
         Provider.of<ServicesViewModel>(context, listen: false);
 
+
     final parentCats = Provider.of<CategoriesViewModel>(context, listen: false)
         .parentCategoriesList;
     _tabKeys.clear();
@@ -475,6 +476,11 @@ class _ServicesScreenState extends State<ServicesScreen>
     final screenSize = MediaQuery.of(context).size;
     final catsVM = Provider.of<CategoriesViewModel>(context);
     final parentCats = catsVM.parentCategoriesList;
+    if (_tabKeys.length != parentCats.length) {
+      _tabKeys
+        ..clear()
+        ..addAll(List.generate(parentCats.length, (_) => GlobalKey()));
+    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,

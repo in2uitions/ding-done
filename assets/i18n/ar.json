@@ -62,7 +62,9 @@
     "helpAndSupport": "المساعدة والدعم",
     "contactUs": "اتصل بنا",
     "appSettings": "إعدادات التطبيق",
-    "general": "عام"
+    "general": "عام",
+    "pleaseLogin": "يرجى التأكد من تسجيل الدخول للوصول إلى هذه الميزة"
+
   },
   "bottom_bar": {
     "home": "الصفحة الرئيسية",
@@ -480,7 +482,8 @@
     "connectWithApple": "الاتصال مع Apple",
     "connectWithGoogle": "الاتصال مع Google",
     "swipe": "اسحب لليمين للعودة",
-    "signInToYourAccount": "تسجيل الدخول إلى حسابك"
+    "signInToYourAccount": "تسجيل الدخول إلى حسابك",
+    "skip": "تخطى"
   },
   "resetPassword_screen": {
     "resetPassword": "إعادة تعيين كلمة المرور",

@@ -49,7 +49,8 @@
     "ok": "Ok",
     "stopCancel": "Stop / Cancel",
     "next": "Next",
-    "letsStart": "Start"
+    "letsStart": "Start",
+    "pleaseLogin": "Please make sure to login to access this feature"
   },
   "settings": {
     "settings": "Settings",
@@ -475,7 +476,8 @@
     "connectWithApple": "Connect with Apple",
     "connectWithGoogle": "Connect with Google",
     "swipe": "Swipe right to go back",
-    "signInToYourAccount": "Sign in to your account"
+    "signInToYourAccount": "Sign in to your account",
+    "skip": "Skip"
   },
   "resetPassword_screen": {
     "resetPassword": "Reset Password",

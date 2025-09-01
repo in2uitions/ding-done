@@ -52,7 +52,9 @@
     "ok": "Εντάξει",
     "stopCancel": "Διακοπή / Ακύρωση",
     "next": "Επόμενο",
-    "letsStart": "Αρχή"
+    "letsStart": "Αρχή",
+    "pleaseLogin": "Βεβαιωθείτε ότι έχετε συνδεθεί για να αποκτήσετε πρόσβαση σε αυτήν τη δυνατότητα"
+
   },
   "settings": {
     "settings": "Ρυθμίσεις",
@@ -481,7 +483,9 @@
     "connectWithApple": "Σύνδεση με Apple",
     "connectWithGoogle": "Σύνδεση με Google",
     "swipe": "Σύρετε προς τα δεξιά για να επιστρέψετε",
-    "signInToYourAccount": "Συνδεθείτε στον λογαριασμό σας"
+    "signInToYourAccount": "Συνδεθείτε στον λογαριασμό σας",
+    "skip": "παραλείπω"
+
   },
   "resetPassword_screen": {
     "resetPassword": "Επαναφορά Κωδικού",

@@ -1,6 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/view/login/login.dart';
 import 'package:dingdone/view/widgets/categories_screen/categories_screen_cards.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -302,6 +303,12 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       debugPrint('addrsss $addr');
                                       debugPrint(
                                           'addrsss $addr (${addr.runtimeType})');
+                                      final token =await
+                                      AppPreferences().get(key: userTokenKey, isModel: false);
+                                      debugPrint('token is $token');
+                                      final user =await
+                                      AppPreferences().get(key: userNameKey, isModel: false);
+                                      debugPrint('user is $user');
 
                                       if (profVM.getProfileBody[
                                               'current_address'] !=
@@ -337,16 +344,29 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                             ),
                                           ),
                                         );
-                                      } else {
+                                      } else if(user==null) {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) =>
-                                              _buildPopupDialogNo(
+                                              _buildPopupDialogLogin(
                                                   context,
                                                   translate(
-                                                      'button.pleaseProvideAtLeastOneAddress')),
+                                                      'button.pleaseLogin')),
                                         );
                                       }
+
+                                      else
+                                      {
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) =>
+                                                _buildPopupDialogNo(
+                                                    context,
+                                                    translate(
+                                                        'button.pleaseProvideAtLeastOneAddress')),
+                                          );
+                                        }
+
                                     },
                                   );
                                 },
@@ -441,6 +461,81 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
       ),
     );
   }
+Widget _buildPopupDialogLogin(BuildContext context, String message) {
+  return AlertDialog(
+    backgroundColor: Colors.white,
+    elevation: 15,
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                SvgPicture.asset('assets/img/x.svg'),
+              ],
+            ),
+          ),
+        ),
+        SvgPicture.asset('assets/img/failure.svg'),
+        SizedBox(height: context.appValues.appSize.s40),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p32,
+          ),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: getPrimaryRegularStyle(
+              fontSize: 17,
+              color: context.resources.color.btnColorBlue,
+            ),
+          ),
+        ),
+        SizedBox(height: context.appValues.appSize.s20),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p32,
+          ),
+          child: ElevatedButton(
+            onPressed: () async {
+              Navigator.pop(context);
+              await Future.delayed(const Duration(milliseconds: 1));
+              Navigator.of(context).push(
+                _createRoute(const LoginScreen()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              elevation: 0.0,
+              shadowColor: Colors.transparent,
+              backgroundColor: const Color(0xffFFD105),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              fixedSize: Size(
+                context.appValues.appSizePercent.w30,
+                context.appValues.appSizePercent.h5,
+              ),
+            ),
+            child: Text(
+              translate('button.ok'),
+              style: getPrimaryRegularStyle(
+                fontSize: 15,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
 
   Route _createRoute(dynamic classname) {
     return PageRouteBuilder(
