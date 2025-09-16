@@ -33,6 +33,7 @@ class CategoriesGridWidget extends StatefulWidget {
 class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
   final bool _isLoading = false;
   String? lang;
+  String? user;
 
   @override
   void initState() {
@@ -42,6 +43,8 @@ class _CategoriesGridWidgetState extends State<CategoriesGridWidget> {
 
   Future<void> getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
+    user =await
+    AppPreferences().get(key: userNameKey, isModel: false);
     setState(() {});
   }
 
@@ -298,6 +301,7 @@ class _ServicesScreenState extends State<ServicesScreen>
   TextEditingController searchController = TextEditingController();
   List<dynamic> filteredServices = [];
   String? lang;
+  String? user;
   final ScrollController _tabBarScrollController = ScrollController();
 
   final List<GlobalKey> _tabKeys = [];
@@ -353,6 +357,9 @@ class _ServicesScreenState extends State<ServicesScreen>
 
   Future<void> getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
+    user =await
+    AppPreferences().get(key: userNameKey, isModel: false);
+    debugPrint('user is $user');
     setState(() {});
     setState(() {});
   }
@@ -481,11 +488,14 @@ class _ServicesScreenState extends State<ServicesScreen>
         ..clear()
         ..addAll(List.generate(parentCats.length, (_) => GlobalKey()));
     }
+
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Colors.white,
       body: Stack(
         children: [
+
           Container(
             width: screenSize.width,
             height: screenSize.height * 1.5,
@@ -493,44 +503,66 @@ class _ServicesScreenState extends State<ServicesScreen>
               color: Color(0xff4100E3),
             ),
             child: SafeArea(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.appValues.appPadding.p20,
-                  vertical: context.appValues.appPadding.p15,
-                ),
-                child: TextFormField(
-                  controller: searchController,
-                  onChanged: (value) {
-                    _filterServices(value);
-                  },
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: const Color(0xffEAEAFF),
-                    prefixIcon: const Icon(
-                      Icons.search,
-                      color: Color(0xFF6E6BE8),
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+
+                children: [
+                  if(user==null)
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.appValues.appPadding.p20,
+                        // vertical: context.appValues.appPadding.p15,
+                      ),
+                      child: InkWell(
+                        onTap: () => Navigator.pop(context),
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_sharp,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
                     ),
-                    hintText: "I’m done with...",
-                    hintStyle: getPrimaryRegularStyle(
-                      color: const Color(0xFF6E6BE8),
-                      fontSize: 14,
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.appValues.appPadding.p20,
+                      vertical: context.appValues.appPadding.p15,
                     ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide.none,
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(
-                        color: Color(0xFF6E6BE8),
+                    child: TextFormField(
+                      controller: searchController,
+                      onChanged: (value) {
+                        _filterServices(value);
+                      },
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color(0xffEAEAFF),
+                        prefixIcon: const Icon(
+                          Icons.search,
+                          color: Color(0xFF6E6BE8),
+                        ),
+                        hintText: "I’m done with...",
+                        hintStyle: getPrimaryRegularStyle(
+                          color: const Color(0xFF6E6BE8),
+                          fontSize: 14,
+                        ),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide.none,
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(
+                            color: Color(0xFF6E6BE8),
+                          ),
+                        ),
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
             ),
           ),
@@ -671,7 +703,9 @@ class _ServicesScreenState extends State<ServicesScreen>
                                   };
                                 }
                                 debugPrint('translation si $translation');
-
+                                final rate = service['country_rates'][0];
+                                final cost =
+                                    '${rate['unit_rate']} ${rate['country']['currency']}';
                                 return Consumer2<JobsViewModel, ProfileViewModel>(
                                   builder: (context, jobsViewModel,
                                       profileViewModel, _) {
@@ -680,7 +714,7 @@ class _ServicesScreenState extends State<ServicesScreen>
                                       title: translation != null
                                           ? translation["title"]
                                           : '',
-                                      cost: 0,
+                                      cost: cost,
                                       // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
                                       image: service["image"] != null
                                           ? '${context.resources.image.networkImagePath2}${service["image"]}'

@@ -1566,7 +1566,9 @@ class _HomePageState extends State<HomePage> {
                                       };
                                     }
                                     debugPrint('translation si $translation');
-
+                                    final rate = service['country_rates'][0];
+                                    final cost =
+                                        '${rate['unit_rate']} ${rate['country']['currency']}';
                                     return Consumer2<JobsViewModel,
                                         ProfileViewModel>(
                                       builder: (context, jobsViewModel,
@@ -1576,7 +1578,7 @@ class _HomePageState extends State<HomePage> {
                                           title: translation != null
                                               ? translation["title"]
                                               : '',
-                                          cost: 0,
+                                          cost: cost,
                                           // '${service["country_rates"][0]["unit_rate"]} ${service["country_rates"][0]["country"]["curreny"]}',
                                           image: service["image"] != null
                                               ? '${context.resources.image.networkImagePath2}${service["image"]}'

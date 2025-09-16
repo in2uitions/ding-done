@@ -78,17 +78,28 @@ class LoginRepository {
       // // await sdk.auth.forgottenPassword.request(usreml);
       // dynamic response=_apiSendReset.postResponse(data: body);
       // debugPrint('Request Sent ${response}');
-
+      String apiCredentials = base64Encode(utf8.encode(
+          "${Constants.MJ_APIKEY_PUBLIC}:${Constants.MJ_APIKEY_PRIVATE}"));
+      var rndnumber = "";
+      var rnd = new Random();
+      for (var i = 0; i < 4; i++) {
+        rndnumber = rndnumber + rnd.nextInt(9).toString();
+      }
+      await AppPreferences()
+          .save(key: otpNumber, value: rndnumber, isModel: false);
       http.Response res = await http
-          .post(Uri.parse("https://cms.dingdone.app/email/reset-data"), body: {
-        'email': body['email'].toString(),
+          .post(Uri.parse("https://cms.dingdone.app/authentication/send-email"), body: {
+      "to": body['email'].toString(),
+      "subject": "OTP",
+      "body": "please use ${rndnumber} as otp"
+
       }).catchError((value) async {
         debugPrint('error is ${value.body}');
 
         throw ('Error message ${value.body}');
       });
       debugPrint('res.body is ${res.body}');
-      sendResetEmail1(jsonDecode(res.body));
+      // sendResetEmail1(jsonDecode(res.body));
       debugPrint('Request Sent');
       return res.body;
     } catch (e) {
@@ -115,7 +126,10 @@ class LoginRepository {
         'text': '$rndnumber is you one time password (OTP) for Ding Done app. Do not share this passcode with anyone. If you have not raised this request, please ignore.',
       'sender': 'Optica'
       },sendToken: false);
+      debugPrint('response sending otp is ${response}');
 
+      await AppPreferences()
+          .save(key: userIdTochangePassword, value: response["user"]["id"], isModel: false);
       // http.Response res = await http.post(
       //     Uri.parse("https://cms.dingdone.app/registerUser/sendOTP"),
       //     body: {
