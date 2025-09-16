@@ -250,6 +250,34 @@ class _JobsCardsState extends State<JobsCards> {
                                         ),
                                       ),
                                     ),
+                                    widget.userRole == Constants.supplierRoleId &&
+                                        (widget.active == 'bookedJobs' || widget.active == 'activeJobs')
+                                        ? Padding(
+                                      padding: EdgeInsets.only(
+                                          right: context.appValues.appPadding.p8),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () {
+                                              final phone = data[index].customer["phone_number"];
+                                              if (phone != null && phone.isNotEmpty) {
+                                                _makePhoneCall(phone);
+                                              }
+                                            },
+                                            child: Text(
+                                              '${data[index].customer["phone_number"] ?? 'No Phone number'}',
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 12,
+                                                color: const Color(0xff78789D),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                        : Container()
+
                                   ],
                                 ),
                               ],
@@ -692,6 +720,7 @@ class _JobsCardsState extends State<JobsCards> {
                               ),
                             ),
                             const Gap(5),
+
                             widget.active == 'requestedJobs'
                                 ? Padding(
                                     padding: EdgeInsets.only(
@@ -1153,6 +1182,15 @@ Widget _buildPopupDialogFailure(BuildContext context, String message) {
     ),
   );
 }
+Future<void> _makePhoneCall(String phoneNumber) async {
+  final Uri launchUri = Uri.parse("tel://<$phoneNumber>");
+  if (await canLaunchUrl(launchUri)) {
+    await launchUrl(launchUri);
+  } else {
+    throw 'Could not launch $phoneNumber';
+  }
+}
+
 
 Widget _buildPopupDialogSuccess(BuildContext context, String message) {
   return AlertDialog(
