@@ -98,6 +98,9 @@ class LoginRepository {
 
         throw ('Error message ${value.body}');
       });
+      final body1 = jsonDecode(res.body) as Map<String, dynamic>;
+      await AppPreferences()
+          .save(key: userIdTochangePassword, value: body1["user"]["id"], isModel: false);
       debugPrint('res.body is ${res.body}');
       // sendResetEmail1(jsonDecode(res.body));
       debugPrint('Request Sent');

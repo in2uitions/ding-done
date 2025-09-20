@@ -357,8 +357,11 @@ class ProfileViewModel extends DisposableViewModel {
           .get(key: userIdTochangePassword, isModel: false);
       // Create a new address
       Map<String, dynamic> newUser = {};
+      debugPrint('user id ${userId}');
 
       // Add the new address to the existing list
+      debugPrint('new password in patch ${profileBody}');
+      debugPrint('user id ${userId}');
 
       dynamic response = await _homeRepository.patchPassword(
           id: userId, body: {"status":"active","password": profileBody["new_password"]});
@@ -368,7 +371,7 @@ class ProfileViewModel extends DisposableViewModel {
       notifyListeners();
       return true;
     } catch (error) {
-      debugPrint('error is $error');
+      debugPrint('error is  patching password $error');
       notifyListeners();
       return false;
     }

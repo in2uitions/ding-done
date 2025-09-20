@@ -160,6 +160,15 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                                   AppPreferences().remove(key: otpNumber);
                                   AppPreferences()
                                       .remove(key: userIdTochangePassword);
+                                }else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        _buildPopupDialog(
+                                            context,
+                                            translate(
+                                                'button.somethingWentWrong')),
+                                  );
                                 }
                               } else {
                                 showDialog(

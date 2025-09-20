@@ -1183,7 +1183,7 @@ Widget _buildPopupDialogFailure(BuildContext context, String message) {
   );
 }
 Future<void> _makePhoneCall(String phoneNumber) async {
-  final Uri launchUri = Uri.parse("tel://<$phoneNumber>");
+  final Uri launchUri = Uri.parse("tel://$phoneNumber");
   if (await canLaunchUrl(launchUri)) {
     await launchUrl(launchUri);
   } else {
