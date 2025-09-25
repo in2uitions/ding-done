@@ -67,8 +67,9 @@ class _CustomPhoneFieldControllerState
   Widget build(BuildContext context) {
     debugPrint('phone code ${widget.phone_code}');
     return IntlPhoneField(
+      textInputAction: TextInputAction.done,
       initialValue: widget.phone_number != null ? widget.phone_number : '',
-      initialCountryCode: widget.phone_code != null ? widget.phone_code : 'AE',
+      initialCountryCode: widget.phone_code != null ? widget.phone_code : 'QA',
       dropdownTextStyle: getPrimaryRegularStyle(
         fontSize: 14,
       ),
@@ -89,6 +90,13 @@ class _CustomPhoneFieldControllerState
         debugPrint('phone code on change  ${number.countryISOCode}');
 
         debugPrint('country code ${number.countryISOCode}');
+      },
+      onSubmitted: (value) {
+        // Trigger your callback when user presses Done
+        FocusScope.of(context).unfocus(); // 👈 dismisses the keyboard
+        if (widget.onFieldSubmitted != null) {
+          widget.onFieldSubmitted!(value);
+        }
       },
       onCountryChanged: (country) {
         final fullPhoneNumber = '+${country.dialCode}${phone}';

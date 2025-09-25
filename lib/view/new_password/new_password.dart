@@ -271,34 +271,76 @@ Widget _buildPopupDialog(BuildContext context, String message) {
 Widget _buildPopupDialogChangedPassword(BuildContext context, String message) {
   return AlertDialog(
     backgroundColor: Colors.white,
+    elevation: 15,
     content: Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Align(
-          alignment: Alignment.topRight,
-          child: TextButton(
-            onPressed: () {
-              Navigator.of(context).push(_createRoute(LoginScreen()));
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                SvgPicture.asset('assets/img/x.svg'),
-              ],
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                child: SvgPicture.asset('assets/img/x.svg'),
+                onTap: () {
+                  Navigator.of(context).push(_createRoute(LoginScreen()));
+                },
+              ),
+            ],
+          ),
+        ),
+        message == translate('forgotPassword.passwordChanged')
+            ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+            : SvgPicture.asset('assets/img/failure.svg'),
+        SizedBox(height: context.appValues.appSize.s40),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p32,
+          ),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: getPrimaryRegularStyle(
+              fontSize: 17,
+              color: context.resources.color.btnColorBlue,
             ),
           ),
         ),
-        Text(
-          message,
-          style: getPrimaryRegularStyle(
-              color: const Color(0xff3D3D3D), fontSize: 15),
-        ),
-        // Padding(
-        //   padding: EdgeInsets.only(top: context.appValues.appPadding.p20),
-        //   child: SvgPicture.asset('assets/img/cleaning.svg'),
-        // ),
+        SizedBox(height: context.appValues.appSize.s20),
       ],
     ),
   );
+  // AlertDialog(
+  //   backgroundColor: Colors.white,
+  //   content: Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     crossAxisAlignment: CrossAxisAlignment.center,
+  //     children: [
+  //       Align(
+  //         alignment: Alignment.topRight,
+  //         child: TextButton(
+  //           onPressed: () {
+  //             Navigator.of(context).push(_createRoute(LoginScreen()));
+  //           },
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.end,
+  //             children: [
+  //               SvgPicture.asset('assets/img/x.svg'),
+  //             ],
+  //           ),
+  //         ),
+  //       ),
+  //       Text(
+  //         message,
+  //         style: getPrimaryRegularStyle(
+  //             color: const Color(0xff3D3D3D), fontSize: 15),
+  //       ),
+  //       // Padding(
+  //       //   padding: EdgeInsets.only(top: context.appValues.appPadding.p20),
+  //       //   child: SvgPicture.asset('assets/img/cleaning.svg'),
+  //       // ),
+  //     ],
+  //   ),
+  // );
 }

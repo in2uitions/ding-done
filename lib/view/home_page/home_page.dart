@@ -1797,14 +1797,15 @@ class _HomePageState extends State<HomePage> {
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            translate('bookService.location'),
+                                            '${addr["address_label"]}',
+                                            // translate('bookService.location'),
                                             style: getPrimaryRegularStyle(
                                               fontSize: 16,
                                               color: context.resources.color.btnColorBlue,
                                             ),
                                           ),
                                           Text(
-                                            '${addr["address_label"]}',
+                                            '${addr["street_name"]}',
                                             style: getPrimaryRegularStyle(
                                               fontSize: 12,
                                               color: const Color(0xff71727A),

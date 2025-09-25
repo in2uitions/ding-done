@@ -45,45 +45,49 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
   void initState() {
     super.initState();
     _searchController = TextEditingController()..addListener(_filterServices);
-    _loadLanguage();
+    _loadLanguage(); // will handle filtering after lang is loaded
+  }
 
-    // *** NEW: build the SAME filtered list you used in the grid ***
+  Future<void> _loadLanguage() async {
+    final stored = await AppPreferences().get(key: dblang, isModel: false);
+    debugPrint('language $stored');
+    if (stored != null) lang = stored;
+
+    // *** run filtering after lang is set ***
     final allCats = widget.categoriesViewModel.categoriesList!;
     final parentTitle =
-        widget.serviceViewModel.parentCategory?.toString().toLowerCase();
+    widget.serviceViewModel.parentCategory?.toString().toLowerCase();
+    debugPrint('parentTitle is $parentTitle');
+
     final filteredCats = allCats.where((service) {
-      // find that service['class'] translation in `lang`
       final transList = (service['class']['translations'] as List);
       final t = transList.firstWhere(
-        (t) => t['languages_code'] == lang,
+            (t) => t['languages_code'] == lang,
         orElse: () => null,
       );
       if (t == null) return false;
       return t['title'].toString().toLowerCase().contains(parentTitle!);
     }).toList();
 
-    // pick the tapped one
-    selectedCategory = filteredCats[widget.initialTabIndex];
+    debugPrint('filteredCats is $filteredCats');
 
-    // now filter your services by that category.id
-    _allCategoryServices =
-        widget.categoriesViewModel.servicesList!.where((service) {
-      // you could also just compare service['category']['id'], if you have it on the model
-      final catTransList = service['category']['translations'] as List;
-      final firstTrans = catTransList.first;
-      return firstTrans['categories_id'].toString() ==
-          selectedCategory['id'].toString();
-    }).toList();
+    if (filteredCats.isNotEmpty && widget.initialTabIndex < filteredCats.length) {
+      selectedCategory = filteredCats[widget.initialTabIndex];
 
-    // start with the full service list shown
-    filteredServices = List.from(_allCategoryServices);
+      _allCategoryServices =
+          widget.categoriesViewModel.servicesList!.where((service) {
+            final catTransList = service['category']['translations'] as List;
+            final firstTrans = catTransList.first;
+            return firstTrans['categories_id'].toString() ==
+                selectedCategory['id'].toString();
+          }).toList();
+
+      filteredServices = List.from(_allCategoryServices);
+    }
+
+    setState(() {}); // rebuild UI with correct lang
   }
 
-  Future<void> _loadLanguage() async {
-    final stored = await AppPreferences().get(key: dblang, isModel: false);
-    if (stored != null) lang = stored;
-    setState(() {});
-  }
 
   void _filterServices() {
     final q = _searchController.text.trim().toLowerCase();

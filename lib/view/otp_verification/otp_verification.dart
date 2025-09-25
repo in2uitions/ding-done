@@ -10,7 +10,9 @@ import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 
 class OTPVerificationScreen extends StatefulWidget {
-  const OTPVerificationScreen({super.key});
+  var selectedMethod;
+
+   OTPVerificationScreen({super.key, required this.selectedMethod});
 
   @override
   State<OTPVerificationScreen> createState() => _OTPVerificationScreenState();
@@ -64,7 +66,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
               ),
               const Gap(15),
               Text(
-                translate('forgotPassword.verificationMsg'),
+                widget.selectedMethod=='sms'?translate('forgotPassword.verificationMsg'):translate('forgotPassword.verificationEmail'),
                 style: getPrimaryRegularStyle(
                   color: const Color(0xff78789D),
                   fontSize: 15,

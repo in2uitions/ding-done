@@ -91,7 +91,7 @@ class LoginRepository {
           .post(Uri.parse("https://cms.dingdone.app/authentication/send-email"), body: {
       "to": body['email'].toString(),
       "subject": "OTP",
-      "body": "please use ${rndnumber} as otp"
+      "body": "${rndnumber} is you one time password\n(OTP) for Ding Done app. Do not\nshare this passcode with anyone.\nIf you have not raised this request,\nplease ignore."
 
       }).catchError((value) async {
         debugPrint('error is ${value.body}');

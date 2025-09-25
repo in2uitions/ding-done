@@ -21,14 +21,15 @@ class SignUpAsScreen extends StatefulWidget {
 }
 
 class _SignUpAsScreenState extends State<SignUpAsScreen> {
+  bool _isCustomerLoading = false;
+  bool _isSupplierLoading = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: const Color(0xffF0F3F8),
       backgroundColor: const Color(0xffFEFEFE),
       body: SafeArea(
-        child:
-            Consumer<SignUpViewModel>(builder: (context, signupViewModel, _) {
+        child: Consumer<SignUpViewModel>(builder: (context, signupViewModel, _) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -44,7 +45,6 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: InkWell(
-                      // child: SvgPicture.asset('assets/img/back.svg'),
                       child: Icon(
                         Icons.arrow_back_ios_new_sharp,
                         color: context.resources.color.colorBlack[50],
@@ -64,7 +64,6 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      // translate('signUp.areYouA'),
                       'Get started as a',
                       style: getPrimaryBoldStyle(
                         color: context.resources.color.btnColorBlue,
@@ -72,22 +71,28 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                       ),
                     ),
                     const Gap(10),
+
+                    /// CUSTOMER BUTTON
                     Padding(
                       padding: EdgeInsets.all(context.appValues.appPadding.p20),
                       child: InkWell(
-                        onTap: () {
+                        onTap: _isCustomerLoading
+                            ? null
+                            : () async {
+                          setState(() => _isCustomerLoading = true);
+
                           signupViewModel.setInputValues(
                             index: 'role',
                             value: Constants.customerRoleId,
                           );
-                          Navigator.of(context).push(_createRoute(
-                            // SignUpOnBoardingScreen(
-                            //   initialIndex: 0,
-                            // ),
-                            const SignUpNew(),
-                          ));
-                          // Navigator.of(context)
-                          //     .push(_createRoute(UserAgreement(index: 0)));
+
+                          await Navigator.of(context).push(
+                            _createRoute(const SignUpNew()),
+                          );
+
+                          if (mounted) {
+                            setState(() => _isCustomerLoading = false);
+                          }
                         },
                         child: Container(
                           width: context.appValues.appSizePercent.w80,
@@ -97,17 +102,31 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                             borderRadius: BorderRadius.circular(15),
                           ),
                           child: Center(
-                            child: Text(
+                            child: _isCustomerLoading
+                                ? const SizedBox(
+                              width: 22,
+                              height: 22,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              ),
+                            )
+                                : Text(
                               translate('signUp.customer'),
                               style: getPrimaryBoldStyle(
                                 fontSize: 14,
-                                color: context.resources.color.colorWhite,
+                                color:
+                                context.resources.color.colorWhite,
                               ),
                             ),
                           ),
                         ),
                       ),
                     ),
+
+                    /// SUPPLIER BUTTON
                     Consumer<CategoriesViewModel>(
                       builder: (context, categoriesViewModel, _) {
                         return Padding(
@@ -118,26 +137,26 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                             context.appValues.appPadding.p20,
                           ),
                           child: InkWell(
-                            onTap: () async {
+                            onTap: _isSupplierLoading
+                                ? null
+                                : () async {
+                              setState(() => _isSupplierLoading = true);
+
                               signupViewModel.setInputValues(
                                 index: 'role',
                                 value: Constants.supplierRoleId,
                               );
+
                               await categoriesViewModel
                                   .getCategoriesAndServices();
-                              Navigator.of(context).push(
-                                _createRoute(
-                                  // SignUpSupplierOnBoardingScreen(
-                                  //   initialIndex: 0,
-                                  // ),
-                                  SignUpNewSupplier(),
-                                ),
-                              );
-                              // Navigator.of(context).push(
-                              //   _createRoute(SupplierAgreement(index: 0,
 
-                              //   )),
-                              // );
+                              await Navigator.of(context).push(
+                                _createRoute(SignUpNewSupplier()),
+                              );
+
+                              if (mounted) {
+                                setState(() => _isSupplierLoading = false);
+                              }
                             },
                             child: Container(
                               width: context.appValues.appSizePercent.w80,
@@ -147,11 +166,24 @@ class _SignUpAsScreenState extends State<SignUpAsScreen> {
                                 borderRadius: BorderRadius.circular(15),
                               ),
                               child: Center(
-                                child: Text(
+                                child: _isSupplierLoading
+                                    ? const SizedBox(
+                                  width: 22,
+                                  height: 22,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                    valueColor:
+                                    AlwaysStoppedAnimation<Color>(
+                                      Color(0xff4100E3), // blue spinner
+                                    ),
+                                  ),
+                                )
+                                    : Text(
                                   translate('signUp.supplier'),
                                   style: getPrimaryBoldStyle(
                                     fontSize: 14,
-                                    color: context.resources.color.btnColorBlue,
+                                    color: context.resources.color
+                                        .btnColorBlue,
                                   ),
                                 ),
                               ),

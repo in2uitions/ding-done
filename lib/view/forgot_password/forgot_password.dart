@@ -148,7 +148,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       }
 
                       Navigator.of(context).push(
-                        _createRoute(const OTPVerificationScreen()),
+                        _createRoute( OTPVerificationScreen(selectedMethod:selectedMethod)),
                       );
 
                       setState(() {

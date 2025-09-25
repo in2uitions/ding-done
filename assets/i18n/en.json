@@ -548,6 +548,7 @@
     "msg": "Please enter your email below and we\nwill send you the OTP code",
     "verification": "Verification",
     "verificationMsg": "We sent the OTP code to your mobile,\nplease check it and enter below",
+    "verificationEmail": "We sent the OTP code to your email,\nplease check it and enter below",
     "verify": "Verify",
     "createNewPassword": "Create New Password",
     "createNewPasswordMsg": "And now, you can create the new\npassword and confirm it",
