@@ -58,6 +58,10 @@ class _HomePageState extends State<HomePage> {
     // searchController.addListener(_filterServices);
     // Initially display all services
     filteredServices = categoriesViewModel.servicesList2;
+
+    setState(() {
+
+    });
   }
 
   @override
@@ -289,19 +293,18 @@ class _HomePageState extends State<HomePage> {
   Future<void> _filterServices(String searchText) async {
 
     // String searchText = searchController.text.toLowerCase();
-    String _searchText = searchText.toLowerCase();
+    String searchText0 = searchText.toLowerCase();
     var categoriesViewModel =
         Provider.of<CategoriesViewModel>(context, listen: false);
-    await categoriesViewModel.searchData(index: 'search_services', value: _searchText);
+    await categoriesViewModel.searchData(index: 'search_services', value: searchText0);
     debugPrint('categories search result ${categoriesViewModel.servicesList2}');
-
     setState(() {
-      if (_searchText.isEmpty) {
+      // if (_searchText.isEmpty) {
         // Display all services if search text is empty
         filteredServices = categoriesViewModel.servicesList2;
-      } else {
-        filteredServices = categoriesViewModel.servicesList2;
-      }
+      // } else {
+      //   filteredServices = categoriesViewModel.servicesList2;
+      // }
     });
   }
 
@@ -882,7 +885,7 @@ class _HomePageState extends State<HomePage> {
                                     child: TextFormField(
                                       controller: searchController,
                                       onChanged: (value) {
-                                        _filterServices(value);
+                                        _filterServices(searchController.text);
                                       },
                                       decoration: InputDecoration(
                                         filled: true,

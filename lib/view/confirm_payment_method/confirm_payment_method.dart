@@ -74,11 +74,13 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
             ? "com.in2uitions.dingdone"
             : "com.in2uitions.dingdone",
         productionSecretKey: Platform.isAndroid
-            ? "sk_live_y1TzabNF6M5pCW3mGPwDVr4L"
-            : "sk_live_y1TzabNF6M5pCW3mGPwDVr4L",
-        sandBoxSecretKey: Platform.isAndroid
-            ? "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn"
-            : "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn",
+            ? "sk_live_9Bm4nIQScOXlGrAZtMveEgLz"
+            : "sk_live_9Bm4nIQScOXlGrAZtMveEgLz",
+            // : "sk_live_y1TzabNF6M5pCW3mGPwDVr4L",
+        sandBoxSecretKey:"",
+        // Platform.isAndroid
+        //     ? "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn"
+        //     : "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn",
         lang: "en",
       );
     } catch (error) {
@@ -140,9 +142,9 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
           "AMERICAN_EXPRESS",
           "GOOGLE_PAY",
         ],
-        sdkMode: SDKMode.Sandbox,
+        sdkMode: SDKMode.Production,
         appearanceMode: SDKAppearanceMode.fullscreen,
-        googlePayWalletMode: GooglePayWalletMode.ENVIRONMENT_TEST,
+        googlePayWalletMode: GooglePayWalletMode.ENVIRONMENT_PRODUCTION,
       );
     } catch (error) {
       debugPrint('error setting up sdk $error');

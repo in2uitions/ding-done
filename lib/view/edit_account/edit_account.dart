@@ -127,7 +127,7 @@ class _EditAccountState extends State<EditAccount> {
                       ),
                       child: ListView.builder(
                           // controller: scrollController,
-                          physics: const NeverScrollableScrollPhysics(),
+                          // physics: const NeverScrollableScrollPhysics(),
                           itemCount: 1,
                           itemBuilder: (BuildContext context, int index) {
                             return Column(
@@ -478,7 +478,7 @@ class _EditAccountState extends State<EditAccount> {
                                     ),
                                   ),
                                 ),
-                                const Gap(20),
+                                const Gap(200),
                               ],
                             );
                           }),
