@@ -117,7 +117,9 @@
     "unexpectedEmergency": "Unexpected Emergency",
     "illnessOrHealthIssues": "Illness or Health Issues",
     "other": "Other",
-    "cost": "Cost"
+    "cost": "Cost",
+    "workingTime": "Working Time",
+    "workingDay": "Working Day"
   },
   "inbox": {
     "inbox": "Inbox"

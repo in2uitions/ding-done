@@ -121,7 +121,10 @@
     "unexpectedEmergency": "Απρόβλεπτη Έκτακτη Κατάσταση",
     "illnessOrHealthIssues": "Ασθένεια ή Υγειονομικά Θέματα",
     "other": "Άλλο",
-    "cost": "κόστος"
+    "cost": "κόστος",
+    "workingTime": "Χρόνος Εργασίας",
+    "workingDay": "Εργάσιμη μέρα"
+
   },
   "inbox": {
     "inbox": "Εισερχόμενα"

@@ -1,6 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 
 class Categoriescard extends StatefulWidget {
@@ -77,7 +78,7 @@ class _CategoriescardState extends State<Categoriescard> {
                       ),
                     ),
                     Text(
-                      'COST: ${widget.cost}',
+                      ' ${translate('jobs.cost')}: ${widget.cost}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: getPrimarySemiBoldStyle(

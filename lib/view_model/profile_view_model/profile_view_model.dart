@@ -271,30 +271,7 @@ class ProfileViewModel extends DisposableViewModel {
     }
   }
 
-  Future<void> deleteNotificationById(dynamic id) async {
-    try {
-      ProfileModel? response = await _homeRepository.deleteNotificationById(
-          id:id,
-         );
-      debugPrint('deletingNotification ${response}');
 
-      notifyListeners();
-    } catch (error) {
-      debugPrint('error in deletingNotification current address data  $error');
-      notifyListeners();
-    }
-  }
-  Future<void> clearAllNotifications() async {
-    try {
-      ProfileModel? response = await _homeRepository.deleteNotifications();
-      debugPrint('deletingNotifications ${response}');
-
-      notifyListeners();
-    } catch (error) {
-      debugPrint('error in deletingNotifications current address data  $error');
-      notifyListeners();
-    }
-  }
 
   Future<bool?> patchUserData(dynamic body) async {
     try {

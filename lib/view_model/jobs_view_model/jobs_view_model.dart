@@ -18,6 +18,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import '../../models/profile_model.dart';
 import '../../repository/profile/profile_repository.dart';
 import '../../res/app_validation.dart';
 import '../../res/strings/english_strings.dart';
@@ -136,7 +137,30 @@ class JobsViewModel with ChangeNotifier {
       notifyListeners();
     }
   }
+  Future<void> deleteNotificationById(dynamic id) async {
+    try {
+      ProfileModel? response = await _homeRepository.deleteNotificationById(
+        id:id,
+      );
+      debugPrint('deletingNotification ${response}');
 
+      notifyListeners();
+    } catch (error) {
+      debugPrint('error in deletingNotification current address data  $error');
+      notifyListeners();
+    }
+  }
+  Future<void> clearAllNotifications() async {
+    try {
+      ProfileModel? response = await _homeRepository.deleteNotifications();
+      debugPrint('deletingNotifications ${response}');
+
+      notifyListeners();
+    } catch (error) {
+      debugPrint('error in deletingNotifications current address data  $error');
+      notifyListeners();
+    }
+  }
   Future<void> getRole() async {
     try {
       _role = await AppPreferences().get(key: userRoleKey, isModel: false);

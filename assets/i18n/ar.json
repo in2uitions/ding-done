@@ -121,7 +121,9 @@
     "unexpectedEmergency": "حالة طارئة غير متوقعة",
     "illnessOrHealthIssues": "المرض أو مشكلات الصحة",
     "other": "أخرى",
-    "cost": "التكلفة"
+    "cost": "التكلفة",
+    "workingTime": "وقت العمل",
+    "workingDay": "يوم العمل"
   },
   "inbox": {
     "inbox": "البريد الوارد"

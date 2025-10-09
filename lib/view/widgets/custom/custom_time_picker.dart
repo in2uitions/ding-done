@@ -2,6 +2,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 
 class CustomTimePicker extends StatefulWidget {
@@ -81,7 +82,7 @@ class _CustomTimePickerState extends State<CustomTimePicker> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Working Time',
+                      translate('jobs.workingTime'),
                       style: getPrimaryRegularStyle(
                         color: const Color(0xff180B3C),
                         fontSize: 14,

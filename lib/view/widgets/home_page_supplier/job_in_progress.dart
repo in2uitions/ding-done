@@ -161,7 +161,8 @@ class _JobInProgressState extends State<JobInProgress> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Working day',
+                                  translate('jobs.workingDay'),
+
                                   style: getPrimaryBoldStyle(
                                     fontSize: 12,
                                     color: const Color(0xff180B3C),

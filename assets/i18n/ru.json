@@ -121,7 +121,10 @@
     "unexpectedEmergency": "Неожиданный экстренный случай",
     "illnessOrHealthIssues": "Болезнь или проблемы со здоровьем",
     "other": "Другое",
-    "cost": "расходы"
+    "cost": "расходы",
+    "workingTime": "Рабочее время",
+    "workingDay": "Рабочий день"
+
   },
   "inbox": {
     "inbox": "Входящие"

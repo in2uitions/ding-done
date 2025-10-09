@@ -116,6 +116,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:dingdone/res/app_context_extension.dart';
@@ -211,7 +212,8 @@ class _CustomDatePicker2 extends State<CustomDatePicker2> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Working Day',
+                    translate('jobs.workingDay'),
+
                     style: getPrimaryRegularStyle(
                       color: const Color(0xff180B3C),
                       fontSize: 14,

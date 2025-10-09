@@ -251,7 +251,7 @@ class _JobsCardsState extends State<JobsCards> {
                                       ),
                                     ),
                                     widget.userRole == Constants.supplierRoleId &&
-                                        (widget.active == 'bookedJobs' || widget.active == 'activeJobs')
+                                        (widget.active == 'bookedJobs' || widget.active == 'activeJobs' || widget.active == 'completedJobs')
                                         ? Padding(
                                       padding: EdgeInsets.only(
                                           right: context.appValues.appPadding.p8),

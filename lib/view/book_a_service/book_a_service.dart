@@ -852,13 +852,13 @@ getPayment() async{
                                                       .secondColorBlue,
                                                   fontSize: 14),
                                             ),
-                                            Text(
-                                              '/${_getType(profileViewModel)}',
-                                              style: getPrimaryRegularStyle(
-                                                  color: context.resources.color
-                                                      .secondColorBlue,
-                                                  fontSize: 10),
-                                            ),
+                                            // Text(
+                                            //   '/${_getType(profileViewModel)}',
+                                            //   style: getPrimaryRegularStyle(
+                                            //       color: context.resources.color
+                                            //           .secondColorBlue,
+                                            //       fontSize: 10),
+                                            // ),
                                           ],
                                         ),
                                       )),

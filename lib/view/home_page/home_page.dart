@@ -1405,21 +1405,21 @@ class _HomePageState extends State<HomePage> {
                                                 color: Colors.white,
                                                 child: Column(
                                                   children: [
-                                                    Center(
-                                                      child: Text(
-                                                        translate(
-                                                            'home_screen.availability'),
-                                                        textAlign:
-                                                            TextAlign.center,
-                                                        style:
-                                                            getPrimaryRegularStyle(
-                                                          fontSize: 14,
-                                                          color: const Color(
-                                                              0xff71727A),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    const Gap(15),
+                                                    // Center(
+                                                    //   child: Text(
+                                                    //     translate(
+                                                    //         'home_screen.availability'),
+                                                    //     textAlign:
+                                                    //         TextAlign.center,
+                                                    //     style:
+                                                    //         getPrimaryRegularStyle(
+                                                    //       fontSize: 14,
+                                                    //       color: const Color(
+                                                    //           0xff71727A),
+                                                    //     ),
+                                                    //   ),
+                                                    // ),
+                                                    // const Gap(15),
                                                     InkWell(
                                                       onTap: () {
                                                         jobsViewModel
