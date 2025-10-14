@@ -139,22 +139,32 @@ class _MyAppState extends State<MyApp> {
         debugPrint('job is ${job?.id}');
         if(job!=null && job.service!=null)
         if (role == Constants.supplierRoleId) {
+          debugPrint('i am a supplier');
+
           navigatorKey.currentState?.push(MaterialPageRoute(
             builder: (_) =>
-                UpdateJobRequestCustomer(
+                JobDetailsSupplier(
                   data: job,
-                  fromWhere: 'notifications',
+                  fromWhere: job.status=='circulating'?'request'
+              :job.status=='booked'?translate('jobs.booked')
+                      :job.status=='inprogress'?translate('jobs.active')
+                      :job.status=='completed'?translate('jobs.completed'):'notifications',
                   title: job?.service["translations"][0]["title"].toString(),
                   lang: lang,
                 ),
           ));
         } else {
+          debugPrint('i am a customer');
+
           navigatorKey.currentState?.push(MaterialPageRoute(
             builder: (_) =>
                 UpdateJobRequestCustomer(
                   data: job,
-                  title: job?.service["translations"][0]["title"].toString(),
-                  fromWhere: 'notifications',
+                  title: job.service["translations"][0]["title"].toString(),
+                  fromWhere: job.status=='circulating'?'request'
+                      :job.status=='booked'?translate('jobs.booked')
+                      :job.status=='inprogress'?translate('jobs.active')
+                      :job.status=='completed'?translate('jobs.completed'):'notifications',
                   lang: lang,
                 ),
           ));

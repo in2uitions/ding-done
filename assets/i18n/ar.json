@@ -84,7 +84,9 @@
     "jobRequestsAroundMe": "طلبات الوظائف حولي",
     "serviceRequestConfirmed": "تم تأكيد طلب الخدمة",
     "serviceRequestConfirmedMsg": "نحن نبحث عن أفضل تطابق الآن وستتلقى تحديثًا عند التأكيد",
-    "availability": "نحن دائما سعداء للمساعدة! اتصل بنا بخصوص أي أسئلة أو استفسارات.ً"
+    "availability": "نحن دائما سعداء للمساعدة! اتصل بنا بخصوص أي أسئلة أو استفسارات.ً",
+    "hintSearch": "شايل هم..."
+
   },
   "jobDetails": {
     "job": "الوظيفة",

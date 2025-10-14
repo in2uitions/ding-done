@@ -234,7 +234,7 @@ class _BookAServiceState extends State<BookAService> {
                                             ),
                                           ),
                                           Text(
-                                            '${addr["street_name"]}',
+                                            '${addr["street_name"]??addr["street_number"]}',
                                             style: getPrimaryRegularStyle(
                                               fontSize: 12,
                                               color: const Color(0xff71727A),

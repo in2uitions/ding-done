@@ -635,8 +635,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                     ),
                                     child: Text(
                                       widget.data.total_amount != null && widget.data.total_amount.toString()!=''
-                                          ? '${widget.data.total_amount} ${widget.data.service["country_rates"] != null && widget.data.service["country_rates"].isNotEmpty ?  widget.data.service["country_rates"][0]["country"]["currency"] : ''}'
-                                          : '${widget.data.service["country_rates"] != null ? widget.data.number_of_units != null ? ( widget.data.service["country_rates"][0]["unit_rate"] *  widget.data.number_of_units) : ( widget.data.service["country_rates"][0]["unit_rate"] * widget.data.service["country_rates"][0]["minimum_order"]) : ''} ${ widget.data.service["country_rates"] != null ?  widget.data.service["country_rates"][0]["country"]["currency"] : ''}',
+                                          ? '${widget.data.total_amount} ${widget.data.service["country_rates"] != null && widget.data.service["country_rates"].isNotEmpty ?  widget.data.service["country_rates"][0]["country"] is String?widget.data.service["country_rates"][0]["country"]:widget.data.service["country_rates"][0]["country"]["currency"] : ''}'
+                                          : '${widget.data.service["country_rates"] != null ? widget.data.number_of_units != null ? ( widget.data.service["country_rates"][0]["unit_rate"] *  widget.data.number_of_units) : ( widget.data.service["country_rates"][0]["unit_rate"] * widget.data.service["country_rates"][0]["minimum_order"]) : ''} ${ widget.data.service["country_rates"] != null ?  widget.data.service["country_rates"][0]["country"] is String?widget.data.service["country_rates"][0]["country"]:widget.data.service["country_rates"][0]["country"]["currency"] : ''}',
                                       style: getPrimarySemiBoldStyle(
                                         color: const Color(0xff4100E3),
                                         fontSize: 16,

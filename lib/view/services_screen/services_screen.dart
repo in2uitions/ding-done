@@ -540,7 +540,7 @@ class _ServicesScreenState extends State<ServicesScreen>
                           Icons.search,
                           color: Color(0xFF6E6BE8),
                         ),
-                        hintText: "I’m done with...",
+                        hintText: translate('home_screen.hintSearch'),
                         hintStyle: getPrimaryRegularStyle(
                           color: const Color(0xFF6E6BE8),
                           fontSize: 14,

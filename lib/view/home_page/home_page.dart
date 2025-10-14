@@ -894,7 +894,7 @@ class _HomePageState extends State<HomePage> {
                                           Icons.search,
                                           color: Color(0xFF6E6BE8),
                                         ),
-                                        hintText: "I’m done with...",
+                                        hintText: translate('home_screen.hintSearch'),
                                         hintStyle: getPrimaryRegularStyle(
                                           color: const Color(0xFF6E6BE8),
                                           fontSize: 14,
@@ -1808,7 +1808,7 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                           Text(
-                                            '${addr["street_name"]}',
+                                            '${addr["street_name"]??addr["street_number"]}',
                                             style: getPrimaryRegularStyle(
                                               fontSize: 12,
                                               color: const Color(0xff71727A),
