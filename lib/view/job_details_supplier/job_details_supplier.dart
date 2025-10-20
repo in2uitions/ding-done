@@ -1370,7 +1370,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                     debugPrint('data in finish ${widget.data.customer['id']}');
                     // if(await jobsViewModel.payFees(widget.data.id,widget.data.customer['id']) == true) {
                     Navigator.of(context, rootNavigator: true).pop();
-                    if (await jobsViewModel
+                    if (await jobsViewModel.updateJob(
+                        widget.data.id) ==
+                        true && await jobsViewModel
                             .finishJobAndCollectPayment(widget.data.id) ==
                         true) {
 
@@ -1525,7 +1527,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                 ElevatedButton(
                   onPressed: () async {
                     Navigator.of(context, rootNavigator: true).pop();
-                    if (await jobsViewModel
+                    if (await jobsViewModel.updateJob(
+                        widget.data.id) ==
+                        true && await jobsViewModel
                             .finishJobAndCollectPayment(widget.data.id) ==
                         true) {
 

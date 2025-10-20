@@ -126,7 +126,7 @@ class NetworkApiService extends BaseApiService {
       response = await http.post(Uri.parse(finalUrl),
           headers: headers,
           body: jsonEncode(data));
-      debugPrint('response ${response.body}');
+      debugPrint('response network ${response.body}');
 
       responseJson = returnResponse(response);
     } catch (error) {
@@ -258,6 +258,14 @@ class NetworkApiService extends BaseApiService {
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;
         case 503:
+        //
+        dynamic responseJson = jsonDecode(response.body);
+        return responseJson;
+        case 505:
+        //
+        dynamic responseJson = jsonDecode(response.body);
+        return responseJson;
+        case 300:
         //
         dynamic responseJson = jsonDecode(response.body);
         return responseJson;

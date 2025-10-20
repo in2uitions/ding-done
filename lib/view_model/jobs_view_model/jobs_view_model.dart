@@ -633,12 +633,22 @@ class JobsViewModel with ChangeNotifier {
         notifyListeners();
         return true;
       } else {
-        _errorMessage = response["reason"] ?? response["error"];
+        _errorMessage = response["reason"] ?? response["error"]??response["message"]??'';
         notifyListeners();
         return false;
       }
     } catch (error) {
-      debugPrint('Error finishing job and paying fees ${error}');
+      debugPrint('Error finishing job and paying fees $error');
+
+      if (error is Map<String, dynamic> && error.containsKey('message')) {
+        _errorMessage = error['message'].toString();
+      } else if (error is Exception) {
+        _errorMessage = error.toString();
+      } else {
+        _errorMessage = 'An unexpected error occurred: $error';
+      }
+
+      notifyListeners();
       return false;
     }
     notifyListeners();
