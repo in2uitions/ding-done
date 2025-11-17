@@ -46,7 +46,6 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/google_sign_in-6.2.2" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/firebase_auth_web-5.15.0" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/geocoding_android-3.3.1" />
-      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/onesignal_flutter-5.3.3" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/url_launcher_linux-3.2.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/image_cropper-5.0.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/open_file_ios-1.0.3" />
@@ -108,6 +107,7 @@
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/open_file-3.5.10" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/sign_in_with_apple-7.0.1" />
       <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/sign_in_with_apple_web-3.0.0" />
+      <root url="file://$USER_HOME$/.pub-cache/hosted/pub.dev/onesignal_flutter-5.3.4" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

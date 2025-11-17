@@ -957,7 +957,7 @@
     },
     {
       "name": "onesignal_flutter",
-      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/onesignal_flutter-5.3.3",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/onesignal_flutter-5.3.4",
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -1670,7 +1670,7 @@
       "languageVersion": "3.5"
     }
   ],
-  "generated": "2025-10-17T11:49:41.960672Z",
+  "generated": "2025-11-17T14:30:38.100167Z",
   "generator": "pub",
   "generatorVersion": "3.5.4",
   "flutterRoot": "file:///Volumes/KINGSTON/flutter",
