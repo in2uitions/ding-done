@@ -19,6 +19,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../res/constants.dart';
 import '../book_a_service/book_a_service.dart';
 import '../bottom_bar/bottom_bar.dart';
@@ -59,9 +60,7 @@ class _HomePageState extends State<HomePage> {
     // Initially display all services
     filteredServices = categoriesViewModel.servicesList2;
 
-    setState(() {
-
-    });
+    setState(() {});
   }
 
   @override
@@ -73,29 +72,30 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> _getCustomerJobs() async {
     await Provider.of<JobsViewModel>(context, listen: false).getCustomerJobs();
-      var jobsViewModel = Provider.of<JobsViewModel>(context, listen: false);
-      debugPrint('completed jobs in bottom bafr ${jobsViewModel.getcustomerJobs}');
+    var jobsViewModel = Provider.of<JobsViewModel>(context, listen: false);
+    debugPrint(
+        'completed jobs in bottom bafr ${jobsViewModel.getcustomerJobs}');
 
-      dynamic completedJobs = jobsViewModel.getcustomerJobs
-          .where((e) => e.status == 'completed' && e.rating_stars == null)
-          .toList();
-      for(var i in jobsViewModel.getcustomerJobs){
-        debugPrint('completed jobs ${i.status} ${i.rating_stars}');
-
-      }
-      debugPrint('completed jobs $completedJobs');
-      if (completedJobs.isNotEmpty)
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          _showReviewDialog(context, completedJobs[0], jobsViewModel);
-        });
-
+    dynamic completedJobs = jobsViewModel.getcustomerJobs
+        .where((e) => e.status == 'completed' && e.rating_stars == null)
+        .toList();
+    for (var i in jobsViewModel.getcustomerJobs) {
+      debugPrint('completed jobs ${i.status} ${i.rating_stars}');
+    }
+    debugPrint('completed jobs $completedJobs');
+    if (completedJobs.isNotEmpty)
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showReviewDialog(context, completedJobs[0], jobsViewModel);
+      });
   }
+
   Future<void> playSound() async {
     String soundPath =
         "DingDone Hybrid.wav"; // Update with the actual path to your .wav file
 
     await _audioPlayer.play(AssetSource(soundPath));
   }
+
   void _showReviewDialog(
       BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
     playSound();
@@ -110,7 +110,6 @@ class _HomePageState extends State<HomePage> {
       },
     );
   }
-
 
   Widget review(
       BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
@@ -139,7 +138,9 @@ class _HomePageState extends State<HomePage> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              job.service!=null?job.service['translations'][0]['title']:'',
+              job.service != null
+                  ? job.service['translations'][0]['title']
+                  : '',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -149,7 +150,10 @@ class _HomePageState extends State<HomePage> {
           ),
           SizedBox(height: context.appValues.appSize.s10),
           RatingStarsWidget(
-            stars: jobsViewModel.updatedBody!=null && jobsViewModel.updatedBody["rating_stars"]!=null?jobsViewModel.updatedBody["rating_stars"]:0,
+            stars: jobsViewModel.updatedBody != null &&
+                    jobsViewModel.updatedBody["rating_stars"] != null
+                ? jobsViewModel.updatedBody["rating_stars"]
+                : 0,
             userRole: Constants.customerRoleId,
           ),
           ReviewWidget(
@@ -171,8 +175,9 @@ class _HomePageState extends State<HomePage> {
                       } else {
                         showDialog(
                             context: context,
-                            builder: (BuildContext context) => _buildPopupDialogFailure(context,
-                                'Please make sure to rate the job'));
+                            builder: (BuildContext context) =>
+                                _buildPopupDialogFailure(context,
+                                    'Please make sure to rate the job'));
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -204,9 +209,7 @@ class _HomePageState extends State<HomePage> {
                 child: Builder(builder: (context) {
                   return ElevatedButton(
                     onPressed: () async {
-
-                        Navigator.of(context).pop();
-
+                      Navigator.of(context).pop();
                     },
                     style: ElevatedButton.styleFrom(
                       elevation: 0.0,
@@ -237,7 +240,8 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  Widget _buildPopupDialogFailure(BuildContext context,String message) {
+
+  Widget _buildPopupDialogFailure(BuildContext context, String message) {
     return AlertDialog(
       elevation: 15,
       content: Column(
@@ -291,17 +295,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   Future<void> _filterServices(String searchText) async {
-
     // String searchText = searchController.text.toLowerCase();
     String searchText0 = searchText.toLowerCase();
     var categoriesViewModel =
         Provider.of<CategoriesViewModel>(context, listen: false);
-    await categoriesViewModel.searchData(index: 'search_services', value: searchText0);
+    await categoriesViewModel.searchData(
+        index: 'search_services', value: searchText0);
     debugPrint('categories search result ${categoriesViewModel.servicesList2}');
     setState(() {
       // if (_searchText.isEmpty) {
-        // Display all services if search text is empty
-        filteredServices = categoriesViewModel.servicesList2;
+      // Display all services if search text is empty
+      filteredServices = categoriesViewModel.servicesList2;
       // } else {
       //   filteredServices = categoriesViewModel.servicesList2;
       // }
@@ -824,20 +828,28 @@ class _HomePageState extends State<HomePage> {
                                       Stack(
                                         children: [
                                           InkWell(
-                                            onTap: ()  {
-                                              Navigator.of(context).push(
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(
                                                 _createRoute(
-                                                  NotificationsScreen(jobsViewModel: jobsViewModel),
+                                                  NotificationsScreen(
+                                                      jobsViewModel:
+                                                          jobsViewModel),
                                                 ),
-                                              ).then((_) {
-                                                setState(() {}); // Triggers rebuild after pop
+                                              )
+                                                  .then((_) {
+                                                setState(
+                                                    () {}); // Triggers rebuild after pop
                                               });
                                             },
                                             child: SvgPicture.asset(
                                               jobsViewModel.hasNotifications
                                                   ? 'assets/img/notification.svg'
                                                   : 'assets/img/white-bell.svg',
-                                              color: jobsViewModel.hasNotifications ? const Color(0xffFFC500) : null,
+                                              color:
+                                                  jobsViewModel.hasNotifications
+                                                      ? const Color(0xffFFC500)
+                                                      : null,
                                             ),
                                           ),
                                           // if (profileViewModel.hasNotifications)
@@ -873,8 +885,6 @@ class _HomePageState extends State<HomePage> {
                                       // ),
                                     ],
                                   ),
-
-
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal:
@@ -894,7 +904,8 @@ class _HomePageState extends State<HomePage> {
                                           Icons.search,
                                           color: Color(0xFF6E6BE8),
                                         ),
-                                        hintText: translate('home_screen.hintSearch'),
+                                        hintText:
+                                            translate('home_screen.hintSearch'),
                                         hintStyle: getPrimaryRegularStyle(
                                           color: const Color(0xFF6E6BE8),
                                           fontSize: 14,
@@ -926,20 +937,20 @@ class _HomePageState extends State<HomePage> {
                                       // );
                                       _onActionSheetPress(context);
                                     },
-                                    child:  Padding(
+                                    child: Padding(
                                       padding: EdgeInsets.symmetric(
                                         horizontal:
-                                        context.appValues.appPadding.p7,
+                                            context.appValues.appPadding.p7,
                                         vertical:
-                                        context.appValues.appPadding.p5,
+                                            context.appValues.appPadding.p5,
                                       ),
                                       child: Row(
                                         mainAxisAlignment:
-                                        MainAxisAlignment.start,
+                                            MainAxisAlignment.start,
                                         children: [
                                           Row(
                                             crossAxisAlignment:
-                                            CrossAxisAlignment.center,
+                                                CrossAxisAlignment.center,
                                             children: [
                                               // Location SVG icon
                                               SvgPicture.asset(
@@ -952,23 +963,25 @@ class _HomePageState extends State<HomePage> {
                                               // Column with a title and the current location or hint
                                               Column(
                                                 crossAxisAlignment:
-                                                CrossAxisAlignment
-                                                    .start,
+                                                    CrossAxisAlignment.start,
                                                 children: [
-
                                                   Text(
                                                     // '${profileViewModel
                                                     //     .getProfileBody['current_address']["street_number"]} ${profileViewModel
                                                     //     .getProfileBody['current_address']["building_number"]}, ${profileViewModel
                                                     //     .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
                                                     //     .getProfileBody['current_address']["floor"]}',
-                                                    profileViewModel
-                                                        .getProfileBody!=null &&  profileViewModel
-                                                        .getProfileBody['current_address']!=null?'${profileViewModel
-                                                        .getProfileBody['current_address']["address_label"]}':'',
+                                                    profileViewModel.getProfileBody !=
+                                                                null &&
+                                                            profileViewModel
+                                                                        .getProfileBody[
+                                                                    'current_address'] !=
+                                                                null
+                                                        ? '${profileViewModel.getProfileBody['current_address']["address_label"]}'
+                                                        : '',
 
                                                     style:
-                                                    getPrimaryRegularStyle(
+                                                        getPrimaryRegularStyle(
                                                       fontSize: 16,
                                                       color: Colors.white,
                                                     ),
@@ -979,8 +992,7 @@ class _HomePageState extends State<HomePage> {
                                           ),
                                           // Trailing arrow icon
                                           const Icon(
-                                            Icons
-                                                .keyboard_arrow_down_sharp,
+                                            Icons.keyboard_arrow_down_sharp,
                                             size: 20,
                                             color: const Color(0xffFFC500),
                                           ),
@@ -992,10 +1004,8 @@ class _HomePageState extends State<HomePage> {
                               ),
                             ),
                           ),
-
                         ],
                       ),
-
                     ],
                   ),
                   searchController.text.isEmpty
@@ -1037,8 +1047,7 @@ class _HomePageState extends State<HomePage> {
                                                 //     ? translate(
                                                 //         'home_screen.servicesCategories')
                                                 //     :
-                                                translate(
-                                                    'updateJob.services'),
+                                                translate('updateJob.services'),
                                                 style: getPrimarySemiBoldStyle(
                                                   fontSize: 16,
                                                   color: context.resources.color
@@ -1496,8 +1505,16 @@ class _HomePageState extends State<HomePage> {
                                                               .facebook),
                                                       color: const Color(
                                                           0xff8F9098),
-                                                      onPressed: () {
+                                                      onPressed: () async {
                                                         // Handle Facebook tap
+                                                        if (await canLaunch(
+                                                            'https://www.facebook.com/share/15McEbBKK95/?mibextid=wwXIfr')) {
+                                                          await launch(
+                                                              'https://www.facebook.com/share/15McEbBKK95/?mibextid=wwXIfr');
+                                                        } else {
+                                                          debugPrint(
+                                                              'Could not launch facebook.');
+                                                        }
                                                       },
                                                     ),
                                                     IconButton(
@@ -1506,8 +1523,16 @@ class _HomePageState extends State<HomePage> {
                                                               .instagram),
                                                       color: const Color(
                                                           0xff8F9098),
-                                                      onPressed: () {
+                                                      onPressed: () async {
                                                         // Handle Instagram tap
+                                                        if (await canLaunch(
+                                                            'https://www.instagram.com/itsdingdone?igsh=aHR2ZnRzemZheG94&utm_source=qr')) {
+                                                          await launch(
+                                                              'https://www.instagram.com/itsdingdone?igsh=aHR2ZnRzemZheG94&utm_source=qr');
+                                                        } else {
+                                                          debugPrint(
+                                                              'Could not launch facebook.');
+                                                        }
                                                       },
                                                     ),
                                                     IconButton(
@@ -1517,8 +1542,16 @@ class _HomePageState extends State<HomePage> {
                                                       color: const Color(
                                                           0xff8F9098),
                                                       // X (Twitter)
-                                                      onPressed: () {
+                                                      onPressed: () async {
                                                         // Handle X (Twitter) tap
+                                                        if (await canLaunch(
+                                                        'https://x.com/itsdingdone?s=11 ')) {
+                                                        await launch(
+                                                        'https://x.com/itsdingdone?s=11 ');
+                                                        } else {
+                                                        debugPrint(
+                                                        'Could not launch facebook.');
+                                                        }
                                                       },
                                                     ),
                                                   ],
@@ -1645,7 +1678,9 @@ class _HomePageState extends State<HomePage> {
         index: 'longitude',
         value: profileViewModel.getProfileBody['current_address']['longitude']);
     jobsViewModel.setInputValues(index: 'payment_method', value: 'Card');
-    jobsViewModel.setInputValues(index: 'number_of_units',value:service['country_rates'][0]['minimum_order'].toString() );
+    jobsViewModel.setInputValues(
+        index: 'number_of_units',
+        value: service['country_rates'][0]['minimum_order'].toString());
 
     Navigator.of(context).push(_createRoute(BookAService(
       service: service,
@@ -1720,20 +1755,20 @@ class _HomePageState extends State<HomePage> {
   //   );
   // }
   void _onActionSheetPress(BuildContext context) {
-    final addresses = (Provider
-        .of<ProfileViewModel>(context, listen: false)
-        .getProfileBody['address'] as List<dynamic>)
+    final addresses = (Provider.of<ProfileViewModel>(context, listen: false)
+            .getProfileBody['address'] as List<dynamic>)
         .cast<Map<String, dynamic>>();
 
     int selectedIndex = addresses.indexWhere((addr) =>
-    addr['id'] == Provider
-        .of<ProfileViewModel>(context, listen: false)
-        .getProfileBody['current_address']['id']);
+        addr['id'] ==
+        Provider.of<ProfileViewModel>(context, listen: false)
+            .getProfileBody['current_address']['id']);
 
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.white,
-      isScrollControlled: true, // important!
+      isScrollControlled: true,
+      // important!
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(32),
@@ -1772,12 +1807,20 @@ class _HomePageState extends State<HomePage> {
                               child: InkWell(
                                 onTap: () {
                                   setState(() => selectedIndex = i);
-                                  jobsVM.setInputValues(index: 'job_address', value: addr);
-                                  jobsVM.setInputValues(index: 'address', value:
-                                  '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
-                                  jobsVM.setInputValues(index: 'latitude', value: addr['latitude']);
-                                  jobsVM.setInputValues(index: 'longitude', value: addr['longitude']);
-                                  jobsVM.setInputValues(index: 'payment_method', value: 'Card');
+                                  jobsVM.setInputValues(
+                                      index: 'job_address', value: addr);
+                                  jobsVM.setInputValues(
+                                      index: 'address',
+                                      value:
+                                          '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
+                                  jobsVM.setInputValues(
+                                      index: 'latitude',
+                                      value: addr['latitude']);
+                                  jobsVM.setInputValues(
+                                      index: 'longitude',
+                                      value: addr['longitude']);
+                                  jobsVM.setInputValues(
+                                      index: 'payment_method', value: 'Card');
                                 },
                                 child: Row(
                                   children: [
@@ -1785,7 +1828,9 @@ class _HomePageState extends State<HomePage> {
                                       isSelected
                                           ? Icons.circle_rounded
                                           : Icons.circle_outlined,
-                                      color: isSelected ? const Color(0xff4100E3) : const Color(0xffC5C6CC),
+                                      color: isSelected
+                                          ? const Color(0xff4100E3)
+                                          : const Color(0xffC5C6CC),
                                       size: 16,
                                     ),
                                     const Gap(10),
@@ -1797,18 +1842,20 @@ class _HomePageState extends State<HomePage> {
                                     const Gap(10),
                                     Expanded(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             '${addr["address_label"]}',
                                             // translate('bookService.location'),
                                             style: getPrimaryRegularStyle(
                                               fontSize: 16,
-                                              color: context.resources.color.btnColorBlue,
+                                              color: context
+                                                  .resources.color.btnColorBlue,
                                             ),
                                           ),
                                           Text(
-                                            '${addr["street_name"]??addr["street_number"]}',
+                                            '${addr["street_name"] ?? addr["street_number"]}',
                                             style: getPrimaryRegularStyle(
                                               fontSize: 12,
                                               color: const Color(0xff71727A),
@@ -1846,13 +1893,23 @@ class _HomePageState extends State<HomePage> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      var addr = profVM.getProfileBody['current_address'];
-                                      jobsVM.setInputValues(index: 'job_address', value: addr);
-                                      jobsVM.setInputValues(index: 'address', value:
-                                      '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
-                                      jobsVM.setInputValues(index: 'latitude', value: addr['latitude']);
-                                      jobsVM.setInputValues(index: 'longitude', value: addr['longitude']);
-                                      jobsVM.setInputValues(index: 'payment_method', value: 'Card');
+                                      var addr = profVM
+                                          .getProfileBody['current_address'];
+                                      jobsVM.setInputValues(
+                                          index: 'job_address', value: addr);
+                                      jobsVM.setInputValues(
+                                          index: 'address',
+                                          value:
+                                              '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
+                                      jobsVM.setInputValues(
+                                          index: 'latitude',
+                                          value: addr['latitude']);
+                                      jobsVM.setInputValues(
+                                          index: 'longitude',
+                                          value: addr['longitude']);
+                                      jobsVM.setInputValues(
+                                          index: 'payment_method',
+                                          value: 'Card');
 
                                       Navigator.of(context).push(
                                         _createRoute(const MyaddressBook()),
@@ -1861,8 +1918,10 @@ class _HomePageState extends State<HomePage> {
                                     child: Container(
                                       height: 44,
                                       decoration: BoxDecoration(
-                                        color: context.resources.color.colorWhite,
-                                        borderRadius: const BorderRadius.all(Radius.circular(12)),
+                                        color:
+                                            context.resources.color.colorWhite,
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(12)),
                                         border: Border.all(
                                           color: const Color(0xff4100E3),
                                           width: 1.5,
@@ -1884,15 +1943,18 @@ class _HomePageState extends State<HomePage> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      Provider.of<ProfileViewModel>(context, listen: false)
-                                          .setCurrentAddress(addresses[selectedIndex]);
+                                      Provider.of<ProfileViewModel>(context,
+                                              listen: false)
+                                          .setCurrentAddress(
+                                              addresses[selectedIndex]);
                                       Navigator.pop(ctx);
                                     },
                                     child: Container(
                                       height: 44,
                                       decoration: const BoxDecoration(
                                         color: Color(0xff4100E3),
-                                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(12)),
                                       ),
                                       child: Center(
                                         child: Text(
@@ -1920,7 +1982,6 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
-
   }
 
   Route _createRoute(Widget child) {
