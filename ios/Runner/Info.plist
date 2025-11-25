@@ -65,6 +65,21 @@
     <array>
       <string>tel</string>
     </array>
+    <key>FacebookAppID</key>
+    <string>1872490080307627</string>
+
+    <key>FacebookClientToken</key>
+    <string>a19404ef227db3be80b72d2215e7291c</string>
+
+    <key>FacebookDisplayName</key>
+    <string>Your App Name</string>
+
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fbauth2</string>
+        <string>fbshareextension</string>
+    </array>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play videos while in the app</string>
 	<key>NSCameraUsageDescription</key>
