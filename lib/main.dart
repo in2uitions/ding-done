@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:app_tracking_transparency/app_tracking_transparency.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
@@ -16,6 +18,9 @@ import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
+import 'package:facebook_app_events/facebook_app_events.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -65,6 +70,7 @@ class _MyAppState extends State<MyApp> {
   late StreamSubscription _sub;
   late String _routePath;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final FacebookAppEvents facebookAppEvents = FacebookAppEvents();
 
   @override
   void initState() {
@@ -73,13 +79,16 @@ class _MyAppState extends State<MyApp> {
 
     checkUserIsLogged();
     getLanguage();
+
     WidgetsFlutterBinding.ensureInitialized();
     // Future.delayed(const Duration(seconds: 3), () => checkUserIsLogged());
     initPlatformState();
     // configurePayment();
     // setupSDKSession();
     initialDeepLink();
-
+    // WidgetsBinding.instance.addPostFrameCallback((_) {
+    //   _requestTrackingAuthorization();
+    // });
   }
 
   @override
@@ -103,6 +112,37 @@ class _MyAppState extends State<MyApp> {
         handleIncomingLink(link);
       }
     });
+  }
+  Future<void> _requestTrackingAuthorization() async {
+    if (Platform.isIOS) {
+      final TrackingStatus status =
+      await AppTrackingTransparency.requestTrackingAuthorization();
+
+      switch (status) {
+        case TrackingStatus.notDetermined:
+        // The user has not yet made a choice.
+          break;
+        case TrackingStatus.restricted:
+        // Tracking is restricted.
+          break;
+        case TrackingStatus.denied:
+        // The user has denied tracking permission.
+          break;
+        case TrackingStatus.authorized:
+        // The user has granted tracking permission.
+          facebookAppEvents.setAutoLogAppEventsEnabled(true);
+          facebookAppEvents.setAdvertiserTracking(enabled: true, collectId: true);
+          break;
+        case TrackingStatus.notSupported:
+        // Tracking is not supported on this device (e.g., older iOS versions).
+          facebookAppEvents.setAutoLogAppEventsEnabled(true); // Enable logging anyway
+          facebookAppEvents.setAdvertiserTracking(enabled: true, collectId: true);
+          break;
+      }
+    } else {
+      // On Android, you don't need to request ATT permission
+      facebookAppEvents.setAutoLogAppEventsEnabled(true);
+    }
   }
 
   void handleIncomingLink(String link) async {
@@ -241,8 +281,22 @@ class _MyAppState extends State<MyApp> {
       //   handleIncomingLink(launchUrl);
       // }
     });
+    // _requestTrackingAuthorization();
+    await Firebase.initializeApp();
+    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    analytics.setAnalyticsCollectionEnabled(true);
+    FirebaseAnalyticsObserver(analytics: analytics);
+    String user =await AppPreferences().get(key: userNameKey, isModel: false);
+    await analytics.setUserId(id: user);
+    debugPrint('user name key in main is $user');
+    await analytics.logEvent(
+      name: 'user_name',
+      parameters: <String, Object>{
+        'string': user,
 
-    WidgetsFlutterBinding.ensureInitialized();
+      },
+    );
+    // WidgetsFlutterBinding.ensureInitialized();
     const stripePublishableKey =
         "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
     Stripe.publishableKey = stripePublishableKey;
