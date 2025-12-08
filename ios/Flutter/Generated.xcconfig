@@ -2,13 +2,14 @@
 FLUTTER_ROOT=/Users/souheiljabbour/Documents/GitHub/flutter
 FLUTTER_APPLICATION_PATH=/Volumes/KINGSTON/ding-done
 COCOAPODS_PARALLEL_CODE_SIGN=true
-FLUTTER_TARGET=lib/main.dart
+FLUTTER_TARGET=/Volumes/KINGSTON/ding-done/lib/main.dart
 FLUTTER_BUILD_DIR=build
-FLUTTER_BUILD_NAME=1.0.45
-FLUTTER_BUILD_NUMBER=137
+FLUTTER_BUILD_NAME=1.0.47
+FLUTTER_BUILD_NUMBER=140
 EXCLUDED_ARCHS[sdk=iphonesimulator*]=i386 arm64
 EXCLUDED_ARCHS[sdk=iphoneos*]=armv7
+DART_DEFINES=Zmx1dHRlci5pbnNwZWN0b3Iuc3RydWN0dXJlZEVycm9ycz10cnVl
 DART_OBFUSCATION=false
 TRACK_WIDGET_CREATION=true
 TREE_SHAKE_ICONS=false
-PACKAGE_CONFIG=.dart_tool/package_config.json
+PACKAGE_CONFIG=/Volumes/KINGSTON/ding-done/.dart_tool/package_config.json

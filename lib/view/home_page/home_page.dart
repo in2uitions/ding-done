@@ -1247,106 +1247,129 @@ class _HomePageState extends State<HomePage> {
                                                                         dynamic>,
                                                           );
                                                       final imageUrl = service[
-                                                                  'image'] !=
+                                                                  'featured_image'] !=
                                                               null
-                                                          ? '${context.resources.image.networkImagePath2}${service['image']}'
+                                                          ? '${context.resources.image.networkImagePath2}${service['featured_image']}'
                                                           : 'https://via.placeholder.com/800x400';
 
-                                                      return Container(
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(20),
-                                                          image:
-                                                              DecorationImage(
-                                                            fit: BoxFit.cover,
-                                                            image: NetworkImage(
-                                                                imageUrl),
+                                                      return  GestureDetector(
+                                                        onTap: () async {
+                                                          if(service["external_link"]==null){
+                                                            Navigator.of(context).push(_createRoute(BookAService(
+                                                              service: service,
+                                                              lang: lang,
+                                                              image: service["image"] != null
+                                                                  ? '${context.resources.image.networkImagePath2}${service["image"]}'
+                                                                  : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
+                                                            )));
+                                                          }else{
+                                                            if (await canLaunch(
+                                                                service["external_link"])) {
+                                                          await launch(
+                                                              service["external_link"]);
+                                                          } else {
+                                                          debugPrint(
+                                                          'Could not launch facebook.');
+                                                          }
+                                                          }
+
+                                                        },
+                                                        child: Container(
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(20),
+                                                            image:
+                                                                DecorationImage(
+                                                              fit: BoxFit.cover,
+                                                              image: NetworkImage(
+                                                                  imageUrl),
+                                                            ),
                                                           ),
-                                                        ),
-                                                        child: Stack(
-                                                          children: [
-                                                            Positioned(
-                                                              bottom: 0,
-                                                              child: Padding(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                  horizontal: context
-                                                                      .appValues
-                                                                      .appPadding
-                                                                      .p0,
-                                                                ),
-                                                                child:
-                                                                    Container(
-                                                                  width: context
-                                                                      .appValues
-                                                                      .appSizePercent
-                                                                      .w90,
-                                                                  height: 200,
-                                                                  decoration:
-                                                                      BoxDecoration(
-                                                                    // color: Colors
-                                                                    //     .black
-                                                                    //     .withOpacity(
-                                                                    //         0.9),
-                                                                    gradient:
-                                                                        LinearGradient(
-                                                                      begin: Alignment
-                                                                          .bottomCenter,
-                                                                      end: Alignment
-                                                                          .topCenter,
-                                                                      colors: [
-                                                                        // Colors.black
-                                                                        //     .withOpacity(
-                                                                        //         0.3),
-                                                                        Colors
-                                                                            .black
-                                                                            .withOpacity(0.2),
-                                                                        Colors
-                                                                            .black
-                                                                            .withOpacity(0.1),
-                                                                      ],
+                                                          child: Stack(
+                                                            children: [
+                                                              Positioned(
+                                                                bottom: 0,
+                                                                child: Padding(
+                                                                  padding: EdgeInsets
+                                                                      .symmetric(
+                                                                    horizontal: context
+                                                                        .appValues
+                                                                        .appPadding
+                                                                        .p0,
+                                                                  ),
+                                                                  child:
+                                                                      Container(
+                                                                    width: context
+                                                                        .appValues
+                                                                        .appSizePercent
+                                                                        .w90,
+                                                                    height: 200,
+                                                                    decoration:
+                                                                        BoxDecoration(
+                                                                      // color: Colors
+                                                                      //     .black
+                                                                      //     .withOpacity(
+                                                                      //         0.9),
+                                                                      gradient:
+                                                                          LinearGradient(
+                                                                        begin: Alignment
+                                                                            .bottomCenter,
+                                                                        end: Alignment
+                                                                            .topCenter,
+                                                                        colors: [
+                                                                          // Colors.black
+                                                                          //     .withOpacity(
+                                                                          //         0.3),
+                                                                          Colors
+                                                                              .black
+                                                                              .withOpacity(0.2),
+                                                                          Colors
+                                                                              .black
+                                                                              .withOpacity(0.1),
+                                                                        ],
+                                                                      ),
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              20),
                                                                     ),
-                                                                    borderRadius:
-                                                                        BorderRadius.circular(
-                                                                            20),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                            Align(
-                                                              alignment: Alignment
-                                                                  .bottomLeft,
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsets
-                                                                        .only(
-                                                                  left: context
-                                                                      .appValues
-                                                                      .appPadding
-                                                                      .p10,
-                                                                  bottom: context
-                                                                      .appValues
-                                                                      .appPadding
-                                                                      .p35,
-                                                                ),
-                                                                child: Text(
-                                                                  trans['title'] ??
-                                                                      '',
-                                                                  style:
-                                                                      getPrimarySemiBoldStyle(
-                                                                    fontSize:
-                                                                        20,
-                                                                    color: context
-                                                                        .resources
-                                                                        .color
-                                                                        .colorWhite,
+                                                              Align(
+                                                                alignment: Alignment
+                                                                    .bottomLeft,
+                                                                child: Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .only(
+                                                                    left: context
+                                                                        .appValues
+                                                                        .appPadding
+                                                                        .p10,
+                                                                    bottom: context
+                                                                        .appValues
+                                                                        .appPadding
+                                                                        .p35,
+                                                                  ),
+                                                                  child: Text(
+                                                                    trans['title'] ??
+                                                                        '',
+                                                                    style:
+                                                                        getPrimarySemiBoldStyle(
+                                                                      fontSize:
+                                                                          20,
+                                                                      color: context
+                                                                          .resources
+                                                                          .color
+                                                                          .colorWhite,
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                            ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         ),
                                                       );
                                                     }).toList(),
