@@ -1251,7 +1251,6 @@ class _HomePageState extends State<HomePage> {
                                                               null
                                                           ? '${context.resources.image.networkImagePath2}${service['featured_image']}'
                                                           : 'https://via.placeholder.com/800x400';
-
                                                       return  GestureDetector(
                                                         onTap: () async {
                                                           if(service["external_link"]==null){
@@ -1337,6 +1336,7 @@ class _HomePageState extends State<HomePage> {
                                                                   ),
                                                                 ),
                                                               ),
+                                                              service['show_featured_services_title']==true?
                                                               Align(
                                                                 alignment: Alignment
                                                                     .bottomLeft,
@@ -1367,7 +1367,7 @@ class _HomePageState extends State<HomePage> {
                                                                     ),
                                                                   ),
                                                                 ),
-                                                              ),
+                                                              ):Container(),
                                                             ],
                                                           ),
                                                         ),
