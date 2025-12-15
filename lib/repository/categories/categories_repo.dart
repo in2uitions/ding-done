@@ -9,6 +9,8 @@ class CategoriesRepo {
       NetworkApiService(url: ApiEndPoints().getCategories);
   final BaseApiService _apiCategoriesAndServices =
       NetworkApiService(url: ApiEndPoints().getCategoriesAndServices);
+  final BaseApiService _apiGetItDone =
+      NetworkApiService(url: ApiEndPoints().getItDone);
 
   Future<DropDownModelMain?> getAllCategories() async {
     try {
@@ -28,6 +30,18 @@ class CategoriesRepo {
       return response;
     } catch (error) {
       debugPrint('error in get categories and serices $error');
+
+      rethrow;
+    }
+  }
+  Future<dynamic> getItDone() async {
+    try {
+      dynamic response =
+          await _apiGetItDone.getResponse(sendToken: false);
+      // debugPrint('response in get categories and serices $response');
+      return response;
+    } catch (error) {
+      debugPrint('error in get get it done $error');
 
       rethrow;
     }

@@ -14,6 +14,7 @@ class CategoriesViewModel with ChangeNotifier {
   List<dynamic>? _categoriesList = List.empty();
   List<dynamic>? _servicesList = List.empty();
   List<dynamic>? _servicesList2 = List.empty();
+  List<dynamic>? _getItDoneData = List.empty();
   List<dynamic>? _categoriesList2 = List.empty();
   List<dynamic>? _parentCategoriesList = List.empty();
   ApiResponse<DropDownModelMain> _apiCategoriesResponse = ApiResponse.loading();
@@ -90,6 +91,9 @@ class CategoriesViewModel with ChangeNotifier {
 
       _servicesList2 = _servicesList;
       // await _getCompanies();
+      dynamic response2 = await _categoriesRepository.getItDone();
+      debugPrint('get it done data ${response2["data"]}');
+      _getItDoneData=response2["data"];
 
       notifyListeners();
       return _categoriesList;
@@ -274,4 +278,5 @@ class CategoriesViewModel with ChangeNotifier {
   get categoriesList => _categoriesList;
   get categoriesList2 => _categoriesList2;
   get parentCategoriesList => _parentCategoriesList;
+  get getItDoneData => _getItDoneData;
 }

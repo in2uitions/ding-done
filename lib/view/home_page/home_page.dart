@@ -23,6 +23,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../../res/constants.dart';
 import '../book_a_service/book_a_service.dart';
 import '../bottom_bar/bottom_bar.dart';
+import '../categories_screen/categories_screen.dart';
 import '../my_address_book/my_address_book.dart';
 import '../widgets/categories_screen/categories_screen_cards.dart';
 import '../widgets/pulsing_dot/pulsing_dot.dart';
@@ -360,9 +361,7 @@ class _HomePageState extends State<HomePage> {
             JobsViewModel>(
         builder: (context, profileViewModel, servicesViewModel,
             categoriesViewModel, jobsViewModel, _) {
-      featuredServices = categoriesViewModel.servicesList2
-          .where((s) => s['is_featured'].toString() == 'true')
-          .toList();
+      featuredServices = categoriesViewModel.getItDoneData.toList();
       return Scaffold(
         key: _scaffoldKey,
         backgroundColor: const Color(0xffFEFEFE),
@@ -1157,7 +1156,7 @@ class _HomePageState extends State<HomePage> {
                                                 //     ? servicesViewModel.searchBody["search_services"]
                                                 //     :
                                                 translate(
-                                                    'home_screen.featuredServices'),
+                                                    'home_screen.getItDone'),
                                                 style: getPrimarySemiBoldStyle(
                                                   fontSize: 16,
                                                   color: context.resources.color
@@ -1215,75 +1214,163 @@ class _HomePageState extends State<HomePage> {
                                                       autoPlay: true,
                                                       enlargeCenterPage: true,
                                                       viewportFraction: 1.0,
-                                                      autoPlayAnimationDuration:
-                                                          const Duration(
-                                                              milliseconds:
-                                                                  700),
-                                                      onPageChanged:
-                                                          (index, reason) {
+                                                      autoPlayAnimationDuration: const Duration(milliseconds: 700),
+                                                      onPageChanged: (index, reason) {
                                                         setState(() {
                                                           _current = index;
                                                         });
                                                       },
                                                     ),
-                                                    items: featuredServices
-                                                        .map((service) {
-                                                      // pull out translation in the current lang:
-                                                      final trans = (service[
-                                                                  'translations']
-                                                              as List)
-                                                          .cast<
-                                                              Map<String,
-                                                                  dynamic>>()
-                                                          .firstWhere(
-                                                            (t) =>
-                                                                t['languages_code'] ==
-                                                                lang,
-                                                            orElse: () =>
-                                                                service['translations']
-                                                                        [0]
-                                                                    as Map<
-                                                                        String,
-                                                                        dynamic>,
-                                                          );
-                                                      final imageUrl = service[
-                                                                  'featured_image'] !=
-                                                              null
-                                                          ? '${context.resources.image.networkImagePath2}${service['featured_image']}'
-                                                          : 'https://via.placeholder.com/800x400';
-                                                      return  GestureDetector(
+                                                    items: featuredServices.map((service) {
+                                                      dynamic trans;
+                                                      dynamic imageUrl;
+
+                                                      if (service != null) {
+                                                        imageUrl = service['featured_image'] != null
+                                                            ? '${context.resources.image.networkImagePath2}${service['featured_image']['filename_disk']}'
+                                                            : 'https://via.placeholder.com/800x400';
+                                                      }
+
+                                                      return GestureDetector(
                                                         onTap: () async {
-                                                          if(service["external_link"]==null){
-                                                            Navigator.of(context).push(_createRoute(BookAService(
-                                                              service: service,
-                                                              lang: lang,
-                                                              image: service["image"] != null
-                                                                  ? '${context.resources.image.networkImagePath2}${service["image"]}'
-                                                                  : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
-                                                            )));
-                                                          }else{
-                                                            if (await canLaunch(
-                                                                service["external_link"])) {
-                                                          await launch(
-                                                              service["external_link"]);
-                                                          } else {
-                                                          debugPrint(
-                                                          'Could not launch facebook.');
-                                                          }
+                                                          final parentCategory = service["parent_category"];
+                                                          final subCategory = service["sub_category"];
+                                                          final serviceId = service["service"];
+                                                          final externalLink = service["external_link"];
+
+                                                          // 1️⃣ If parent_category exists → Go to BottomBar
+                                                          if (parentCategory != null) {
+
+                                                            // Safely extract translations
+                                                            List translations = parentCategory['translations'] as List? ?? [];
+                                                            trans = translations.isNotEmpty
+                                                                ? translations.firstWhere(
+                                                                  (t) => t['languages_code'] == lang,
+                                                              orElse: () => translations.first,
+                                                            )
+                                                                : {"title": ""};
+
+                                                            // Find the REAL index inside parentCategoriesList
+                                                            final categoriesViewModel =
+                                                            Provider.of<CategoriesViewModel>(context, listen: false);
+
+                                                            int realIndex = categoriesViewModel.parentCategoriesList.indexWhere(
+                                                                  (item) => item["id"] == parentCategory["id"],
+                                                            );
+
+                                                            if (realIndex == -1) realIndex = 0; // fallback to prevent crashes
+
+                                                            // Apply your filters EXACTLY like before
+                                                            servicesViewModel.setParentCategoryExistence(true);
+                                                            servicesViewModel.filterData(
+                                                                index: 'search_services', value: trans["title"]);
+                                                            servicesViewModel.setInputValues(
+                                                                index: 'search_services', value: trans["title"]);
+                                                            servicesViewModel.setParentCategory(trans["title"]);
+                                                            categoriesViewModel.sortCategories(trans["title"]);
+
+                                                            Navigator.of(context).push(
+                                                              _createRoute(
+                                                                BottomBar(
+                                                                  userRole: Constants.customerRoleId,
+                                                                  currentTab: 1,
+                                                                  initialServicesTabIndex: realIndex,
+                                                                ),
+                                                              ),
+                                                            );
+
+                                                            return;
                                                           }
 
+                                                          // 2️⃣ If sub_category exists → Go to CategoriesScreen
+                                                          if (subCategory != null) {
+
+                                                            // Safely extract translations
+                                                            List translations = subCategory['translations'] as List? ?? [];
+                                                            trans = translations.isNotEmpty
+                                                                ? translations.firstWhere(
+                                                                  (t) => t['languages_code'] == lang,
+                                                              orElse: () => translations.first,
+                                                            )
+                                                                : {"title": ""};
+
+                                                            // Access CategoriesViewModel
+                                                            final categoriesViewModel =
+                                                            Provider.of<CategoriesViewModel>(context, listen: false);
+
+                                                            // Find REAL index of this subcategory inside categoriesList
+                                                            int realIndex = categoriesViewModel.categoriesList.indexWhere(
+                                                                  (item) => item["id"] == subCategory["id"],
+                                                            );
+
+                                                            if (realIndex == -1) realIndex = 0; // fallback safe
+
+                                                            // Apply your internal filters
+                                                            servicesViewModel.filterData(
+                                                              index: 'search_services',
+                                                              value: trans["title"],
+                                                            );
+                                                            servicesViewModel
+                                                                .setParentCategory(trans["title"]);
+
+                                                            Navigator.of(context).push(
+                                                              _createRoute(
+                                                                CategoriesScreen(
+                                                                  categoriesViewModel: categoriesViewModel,
+                                                                  initialTabIndex: realIndex,
+                                                                  serviceViewModel: servicesViewModel,
+                                                                ),
+                                                              ),
+                                                            );
+
+                                                            return;
+                                                          }
+
+
+                                                          // 3️⃣ If service exists → Go to BookAService
+                                                          if (serviceId != null) {
+                                                            trans = (serviceId['translations'] as List)
+                                                                .cast<Map<String, dynamic>>()
+                                                                .firstWhere(
+                                                                  (t) => t['languages_code'] == lang,
+                                                              orElse: () => serviceId['translations'][0],
+                                                            );
+                                                            debugPrint('service id $serviceId');
+                                                            debugPrint('lang service id $lang');
+                                                            debugPrint('image service id ${serviceId["image"]}');
+                                                            debugPrint('translations service id ${serviceId["translations"][0]['languages_code']}');
+                                                            Navigator.of(context).push(
+                                                              _createRoute(
+                                                                BookAService(
+                                                                  service: serviceId,
+                                                                  lang: lang,
+                                                                  image: serviceId["image"] != null
+                                                                      ? '${context.resources.image.networkImagePath2}${serviceId["image"]["filename_disk"]}'
+                                                                      : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
+                                                                ),
+                                                              ),
+                                                            );
+                                                            return;
+                                                          }
+
+                                                          // 4️⃣ If external link exists → Launch URL
+                                                          if (externalLink != null && externalLink.isNotEmpty) {
+                                                            if (await canLaunch(externalLink)) {
+                                                              await launch(externalLink);
+                                                            } else {
+                                                              debugPrint('Could not launch external link.');
+                                                            }
+                                                            return;
+                                                          }
+
+                                                          debugPrint("No valid navigation action found.");
                                                         },
                                                         child: Container(
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(20),
-                                                            image:
-                                                                DecorationImage(
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(20),
+                                                            image: DecorationImage(
                                                               fit: BoxFit.cover,
-                                                              image: NetworkImage(
-                                                                  imageUrl),
+                                                              image: NetworkImage(imageUrl),
                                                             ),
                                                           ),
                                                           child: Stack(
@@ -1291,83 +1378,45 @@ class _HomePageState extends State<HomePage> {
                                                               Positioned(
                                                                 bottom: 0,
                                                                 child: Padding(
-                                                                  padding: EdgeInsets
-                                                                      .symmetric(
-                                                                    horizontal: context
-                                                                        .appValues
-                                                                        .appPadding
-                                                                        .p0,
+                                                                  padding: EdgeInsets.symmetric(
+                                                                    horizontal: context.appValues.appPadding.p0,
                                                                   ),
-                                                                  child:
-                                                                      Container(
-                                                                    width: context
-                                                                        .appValues
-                                                                        .appSizePercent
-                                                                        .w90,
+                                                                  child: Container(
+                                                                    width: context.appValues.appSizePercent.w90,
                                                                     height: 200,
-                                                                    decoration:
-                                                                        BoxDecoration(
-                                                                      // color: Colors
-                                                                      //     .black
-                                                                      //     .withOpacity(
-                                                                      //         0.9),
-                                                                      gradient:
-                                                                          LinearGradient(
-                                                                        begin: Alignment
-                                                                            .bottomCenter,
-                                                                        end: Alignment
-                                                                            .topCenter,
+                                                                    decoration: BoxDecoration(
+                                                                      gradient: LinearGradient(
+                                                                        begin: Alignment.bottomCenter,
+                                                                        end: Alignment.topCenter,
                                                                         colors: [
-                                                                          // Colors.black
-                                                                          //     .withOpacity(
-                                                                          //         0.3),
-                                                                          Colors
-                                                                              .black
-                                                                              .withOpacity(0.2),
-                                                                          Colors
-                                                                              .black
-                                                                              .withOpacity(0.1),
+                                                                          Colors.black.withOpacity(0.2),
+                                                                          Colors.black.withOpacity(0.1),
                                                                         ],
                                                                       ),
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              20),
+                                                                      borderRadius: BorderRadius.circular(20),
                                                                     ),
                                                                   ),
                                                                 ),
                                                               ),
-                                                              service['show_featured_services_title']==true?
-                                                              Align(
-                                                                alignment: Alignment
-                                                                    .bottomLeft,
+
+                                                              service['show_featured_services_title'] == true
+                                                                  ? Align(
+                                                                alignment: Alignment.bottomLeft,
                                                                 child: Padding(
-                                                                  padding:
-                                                                      EdgeInsets
-                                                                          .only(
-                                                                    left: context
-                                                                        .appValues
-                                                                        .appPadding
-                                                                        .p10,
-                                                                    bottom: context
-                                                                        .appValues
-                                                                        .appPadding
-                                                                        .p35,
+                                                                  padding: EdgeInsets.only(
+                                                                    left: context.appValues.appPadding.p10,
+                                                                    bottom: context.appValues.appPadding.p35,
                                                                   ),
                                                                   child: Text(
-                                                                    trans['title'] ??
-                                                                        '',
-                                                                    style:
-                                                                        getPrimarySemiBoldStyle(
-                                                                      fontSize:
-                                                                          20,
-                                                                      color: context
-                                                                          .resources
-                                                                          .color
-                                                                          .colorWhite,
+                                                                    trans['title'] ?? '',
+                                                                    style: getPrimarySemiBoldStyle(
+                                                                      fontSize: 20,
+                                                                      color: context.resources.color.colorWhite,
                                                                     ),
                                                                   ),
                                                                 ),
-                                                              ):Container(),
+                                                              )
+                                                                  : Container(),
                                                             ],
                                                           ),
                                                         ),

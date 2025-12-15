@@ -503,10 +503,18 @@ getPayment() async{
                               Map<String, dynamic>? subCatTrans;
                               for (var t
                               in widget.service["translations"] as List) {
-                                if (t["languages_code"] == widget.lang) {
-                                  subCatTrans = t;
-                                  break;
+                                if(t["languages_code"] is Map<String,dynamic>){
+                                  if (t["languages_code"]["code"] == widget.lang) {
+                                    subCatTrans = t;
+                                    break;
+                                  }
+                                }else{
+                                  if (t["languages_code"] == widget.lang) {
+                                    subCatTrans = t;
+                                    break;
+                                  }
                                 }
+
                               }
 
                               // 2) (Optional) Grab the **parent** category translation too:

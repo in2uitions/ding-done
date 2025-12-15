@@ -10,6 +10,7 @@ class ApiEndPoints {
   final String files = '/files';
   final String getCategories = '/items/categories?fields=*.*.*.*';
   final String getCountries = '/items/countries';
+  final String getItDone = '/items/get_it_done?fields=*.*.*.*.*';
   final String getCategoriesAndServices = '/suppliers/categories';
   final String getCompanies = '/items/companies';
   final String getServices = '/items/services?fields=*.*.*.*';
