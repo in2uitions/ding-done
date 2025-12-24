@@ -43,6 +43,7 @@ class ProfileViewModel extends DisposableViewModel {
       ProfileModel? response = await _homeRepository.getProfileBody();
       _apiProfileResponse = ApiResponse<ProfileModel>.completed(response);
       profileBody = _apiProfileResponse.data?.toJson() ?? {};
+      debugPrint('getting profile data ${profileBody["status"]}');
       // debugPrint('PROFILEREE ${profileBody}');
 
       notifyListeners();

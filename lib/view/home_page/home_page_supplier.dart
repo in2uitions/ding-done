@@ -33,6 +33,7 @@ String? lang;
 
 class _HomePageSupplierState extends State<HomePageSupplier> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  bool _verificationDialogShown = false;
 
   @override
   void initState() {
@@ -82,6 +83,20 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
 
     return Consumer2<CategoriesViewModel, ProfileViewModel>(
         builder: (context, categoriesViewModel, profileViewModel, _) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            final status = profileViewModel.getProfileBody['status'];
+            final firstName =
+                profileViewModel.getProfileBody['user']?['first_name'] ?? '';
+
+            if (
+            !_verificationDialogShown &&
+                status != 'published' &&
+                firstName.isNotEmpty
+            ) {
+              _verificationDialogShown = true;
+              showAccountNotVerifiedDialog(context, firstName);
+            }
+          });
       return Scaffold(
         key: _scaffoldKey,
         backgroundColor: const Color(0xffFEFEFE),
@@ -856,7 +871,67 @@ void showDemoActionSheet(
     if (value != null) changeLocale(context, value);
   });
 }
-
+void showAccountNotVerifiedDialog(
+    BuildContext context,
+    String firstName,
+    ) {
+  showDialog(
+    context: context,
+    barrierDismissible: false, // user must tap OK
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SvgPicture.asset(
+              'assets/img/failure.svg',
+              height: 80,
+            ),
+            const Gap(20),
+            Text(
+              'Hello $firstName,',
+              textAlign: TextAlign.center,
+              style: getPrimaryBoldStyle(
+                fontSize: 18,
+                color: const Color(0xff4100E3),
+              ),
+            ),
+            const Gap(10),
+            Text(
+              'Your account is currently under review and has not been verified yet.\n\n'
+                  'Please be patient — we will notify you by email as soon as your account is approved.',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 15,
+                color: const Color(0xff180D38),
+              ),
+            ),
+            const Gap(20),
+            ElevatedButton(
+              onPressed: () => Navigator.pop(context),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xff4100E3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+              ),
+              child: Text(
+                translate('button.ok'),
+                style: getPrimaryBoldStyle(
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ],
+        ),
+      );
+    },
+  );
+}
 void _onActionSheetPress(BuildContext context) {
   showDemoActionSheet(
     context: context,
