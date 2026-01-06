@@ -2,10 +2,10 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -67,7 +67,7 @@ class _MyaddressBookState extends State<MyaddressBook> {
                     ),
                     const Gap(10),
                     Text(
-                      translate('drawer.myAddressBook'),
+                      'drawer.myAddressBook'.tr(),
                       style: getPrimaryBoldStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -273,8 +273,8 @@ class _MyaddressBookState extends State<MyaddressBook> {
                                                 Text(
                                                   address['address_label']
                                                           as String? ??
-                                                      translate(
-                                                          'bookService.location'),
+
+                                                          'bookService.location'.tr(),
                                                   style: getPrimaryBoldStyle(
                                                     fontSize: 16,
                                                     color: context.resources.color
@@ -361,7 +361,7 @@ class _MyaddressBookState extends State<MyaddressBook> {
                       ),
                     ),
                     child: Text(
-                      translate('confirmAddress.addNewAddress'),
+                     'confirmAddress.addNewAddress'.tr(),
                       style: getPrimarySemiBoldStyle(
                         fontSize: 12,
                         color: Colors.white,

@@ -8,9 +8,9 @@ import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/custom/custom_phone_field_controller.dart';
 import 'package:dingdone/view/widgets/image_component/upload_one_image.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -218,7 +218,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.first_name'),
+                'formHints.first_name'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -229,7 +229,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.signUpBody['first_name'] ?? '',
                 index: 'first_name',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.first_name'),
+                hintText: 'formHints.first_name'.tr(),
                 validator: (val) => signupViewModel.signUpErrors[
                     context.resources.strings.formKeys['first_name']!],
                 errorText: signupViewModel.signUpErrors[
@@ -247,7 +247,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.last_name'),
+                'formHints.last_name'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -258,7 +258,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.signUpBody['last_name'] ?? '',
                 index: 'last_name',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.last_name'),
+                hintText: 'formHints.last_name'.tr(),
                 validator: (val) => signupViewModel.signUpErrors[
                     context.resources.strings.formKeys['last_name']!],
                 errorText: signupViewModel.signUpErrors[
@@ -276,7 +276,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.dob'),
+                'formHints.dob'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -287,7 +287,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.signUpBody['dob'] ?? '',
                 index: 'dob',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.dob'),
+                hintText: 'formHints.dob'.tr(),
               ),
             ],
           ),
@@ -324,7 +324,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.phone_number'),
+              'formHints.phone_number'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -351,7 +351,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.email'),
+                'formHints.email'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -362,7 +362,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.signUpBody['email'] ?? '',
                 index: 'email',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.email'),
+                hintText: 'formHints.email'.tr(),
                 validator: (val) => signupViewModel
                     .signUpErrors[context.resources.strings.formKeys['email']!],
                 errorText: signupViewModel
@@ -378,23 +378,23 @@ class _SignUpNewState extends State<SignUpNew> {
     Widget buildPasswordRequirements(String password) {
       final requirements = [
         {
-          'label': translate('passRequirments.req1'),
+          'label': 'passRequirments.req1'.tr(),
           'valid': password.length >= 8,
         },
         {
-          'label': translate('passRequirments.req2'),
+          'label': 'passRequirments.req2'.tr(),
           'valid': RegExp(r'[A-Z]').hasMatch(password),
         },
         {
-          'label': translate('passRequirments.req3'),
+          'label': 'passRequirments.req3'.tr(),
           'valid': RegExp(r'[a-z]').hasMatch(password),
         },
         {
-          'label': translate('passRequirments.req4'),
+          'label': 'passRequirments.req4'.tr(),
           'valid': RegExp(r'[!@#\$%^&*(),.?":{}|<>]').hasMatch(password),
         },
         {
-          'label': translate('passRequirments.req5'),
+          'label': 'passRequirments.req5'.tr(),
           'valid': RegExp(r'\d').hasMatch(password),
         },
       ];
@@ -464,7 +464,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.password'),
+                'formHints.password'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -475,7 +475,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.signUpBody['password'] ?? '',
                 index: 'password',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.password'),
+                hintText: 'formHints.password'.tr(),
                 validator: (val) => signupViewModel.signUpErrors[
                     context.resources.strings.formKeys['password']!],
                 errorText: signupViewModel.signUpErrors[
@@ -525,7 +525,7 @@ class _SignUpNewState extends State<SignUpNew> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                translate('formHints.location'),
+               'formHints.location'.tr(),
                 style: getPrimarySemiBoldStyle(
                   fontSize: 12,
                   color: context.resources.color.btnColorBlue,
@@ -533,7 +533,7 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
               InkWell(
                 child: Text(
-                  translate('signUp.chooseLocation'),
+                  'signUp.chooseLocation'.tr(),
                   style: getPrimaryRegularStyle(
                     fontSize: 12,
                     color: context.resources.color.btnColorBlue,
@@ -642,7 +642,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.street_number'),
+                'formHints.street_number'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -653,7 +653,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.getSignUpBody['street_number'] ?? '',
                 index: 'street_number',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.street'),
+                hintText: 'formHints.street'.tr(),
                 validator: (val) => signupViewModel.signUpErrors[
                     context.resources.strings.formKeys['street_number']!],
                 errorText: signupViewModel.signUpErrors[
@@ -670,7 +670,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.building_number'),
+                'formHints.building_number'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -681,7 +681,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.getSignUpBody['building_number'] ?? '',
                 index: 'building_number',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.building'),
+                hintText: 'formHints.building'.tr(),
                 validator: (val) => signupViewModel.signUpErrors[
                     context.resources.strings.formKeys['building_number']!],
                 errorText: signupViewModel.signUpErrors[
@@ -698,7 +698,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.floor'),
+              'formHints.floor'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -709,7 +709,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.getSignUpBody['floor'] ?? '',
                 index: 'floor',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.floor'),
+                hintText: 'formHints.floor'.tr(),
                 validator: (val) => signupViewModel
                     .signUpErrors[context.resources.strings.formKeys['floor']!],
                 errorText: signupViewModel
@@ -726,7 +726,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.apartment_number'),
+               'formHints.apartment_number'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -737,7 +737,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.getSignUpBody['apartment_number'] ?? '',
                 index: 'apartment_number',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.apartment'),
+                hintText: 'formHints.apartment'.tr(),
                 validator: (val) => signupViewModel.signUpErrors[
                     context.resources.strings.formKeys['apartment_number']!],
                 errorText: signupViewModel.signUpErrors[
@@ -754,7 +754,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.city'),
+                'formHints.city'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -765,7 +765,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 index: 'city',
                 value: signupViewModel.getSignUpBody['city'] ?? '',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.city'),
+                hintText: 'formHints.city'.tr(),
                 validator: (val) => signupViewModel
                     .signUpErrors[context.resources.strings.formKeys['city']!],
                 errorText: signupViewModel
@@ -782,7 +782,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.zone'),
+                'formHints.zone'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -793,7 +793,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.getSignUpBody['zone'] ?? '',
                 index: 'zone',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.zone'),
+                hintText:'formHints.zone'.tr(),
                 validator: (val) => signupViewModel
                     .signUpErrors[context.resources.strings.formKeys['zone']!],
                 errorText: signupViewModel
@@ -810,7 +810,7 @@ class _SignUpNewState extends State<SignUpNew> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('formHints.address_label'),
+                'formHints.address_label'.tr(),
                 style: getPrimarySemiBoldStyle(
                   color: const Color(0xff180C38),
                   fontSize: 12,
@@ -821,7 +821,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 value: signupViewModel.signUpBody["address_label"] ?? '',
                 index: 'address_label',
                 viewModel: signupViewModel.setInputValues,
-                hintText: translate('formHints.address_label'),
+                hintText: 'formHints.address_label'.tr(),
                 validator: (val) => signupViewModel.signUpErrors[
                     context.resources.strings.formKeys['address_label']!],
                 errorText: signupViewModel.signUpErrors[

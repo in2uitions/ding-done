@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class BookingSystem extends StatefulWidget {
   const BookingSystem({super.key});
@@ -18,7 +18,7 @@ class _BookingSystemState extends State<BookingSystem> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.bookingSystem'),
+            'termsAndConditionsCustomer.bookingSystem'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -30,70 +30,70 @@ class _BookingSystemState extends State<BookingSystem> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem1'),
+                    'termsAndConditionsCustomer.bookingSystem1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem2'),
+                   'termsAndConditionsCustomer.bookingSystem2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem3'),
+                   'termsAndConditionsCustomer.bookingSystem3'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem4'),
+                    'termsAndConditionsCustomer.bookingSystem4'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem5'),
+                    'termsAndConditionsCustomer.bookingSystem5'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem6'),
+                    'termsAndConditionsCustomer.bookingSystem6'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem7'),
+                    'termsAndConditionsCustomer.bookingSystem7'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem8'),
+                   'termsAndConditionsCustomer.bookingSystem8'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem9'),
+                    'termsAndConditionsCustomer.bookingSystem9'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.bookingSystem10'),
+                    'termsAndConditionsCustomer.bookingSystem10'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

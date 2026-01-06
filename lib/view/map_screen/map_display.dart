@@ -1,44 +1,51 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart'; // Ensure you import latlong2 package
-import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
-import 'package:provider/provider.dart';
-import 'package:dingdone/res/app_context_extension.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:dingdone/res/app_context_extension.dart';
 
 class MapDisplay extends StatefulWidget {
   final double longitude;
   final double latitude;
-  dynamic body;
+  final dynamic body;
+  final ValueChanged<LatLng>? onPicked; // 🔥 replacement
 
-  MapDisplay({required this.longitude, required this.latitude, required this.body});
+  const MapDisplay({
+    super.key,
+    required this.longitude,
+    required this.latitude,
+    required this.body,
+    this.onPicked,
+  });
 
   @override
   State<MapDisplay> createState() => _MapDisplayState();
 }
 
 class _MapDisplayState extends State<MapDisplay> {
-  late double lon;
-  late double lat;
+  late LatLng selectedLocation;
 
   @override
   void initState() {
     super.initState();
-    lon = widget.longitude.isFinite ? widget.longitude : 25.3;
-    lat = widget.latitude.isFinite ? widget.latitude : 51.52;
-    debugPrint('Initial coordinates: lat=$lat, lon=$lon');
+    selectedLocation = _safeLatLng(widget.latitude, widget.longitude);
   }
 
   @override
-  void didUpdateWidget(MapDisplay oldWidget) {
+  void didUpdateWidget(covariant MapDisplay oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.longitude != oldWidget.longitude || widget.latitude != oldWidget.latitude) {
+    if (widget.latitude != oldWidget.latitude ||
+        widget.longitude != oldWidget.longitude) {
       setState(() {
-        lat = widget.latitude.isFinite ? widget.latitude : 51.52;
-        lon = widget.longitude.isFinite ? widget.longitude : 25.3;
-        debugPrint('Updated coordinates: lat=$lat, lon=$lon');
+        selectedLocation =
+            _safeLatLng(widget.latitude, widget.longitude);
       });
     }
+  }
+
+  LatLng _safeLatLng(double lat, double lon) {
+    final safeLat = lat.isFinite ? lat : 51.52;
+    final safeLon = lon.isFinite ? lon : 25.3;
+    return LatLng(safeLat, safeLon);
   }
 
   @override
@@ -50,23 +57,52 @@ class _MapDisplayState extends State<MapDisplay> {
         color: context.resources.color.colorWhite,
         borderRadius: const BorderRadius.all(Radius.circular(20)),
       ),
-      child: AbsorbPointer(
-        absorbing: true,
-        child: FlutterLocationPicker(
-          initPosition: LatLong(lat, lon),
-          showSearchBar: false,
-          showSelectLocationButton: false,
-          showZoomController: false,
-          showLocationController: false,
-          trackMyPosition: false,
-          selectLocationButtonLeadingIcon: const Icon(Icons.check),
-          initZoom: 7,
-          minZoomLevel: 5,
-          maxZoomLevel: 16,
-          onError: (e) => debugPrint('Error: $e'),
-          onPicked: (pickedData) {
-            debugPrint('Location picked: $pickedData');
-          },
+      child: ClipRRect(
+        borderRadius: const BorderRadius.all(Radius.circular(20)),
+        child: FlutterMap(
+          options: MapOptions(
+            initialCenter: selectedLocation,
+            initialZoom: 7,
+            minZoom: 5,
+            maxZoom: 16,
+
+            // 🔁 SAME as onPicked
+            onTap: (tapPosition, latLng) {
+              setState(() {
+                selectedLocation = latLng;
+              });
+
+              if (widget.onPicked != null) {
+                widget.onPicked!(latLng);
+              }
+            },
+
+            // 🔒 Same effect as AbsorbPointer when needed
+            interactionOptions: const InteractionOptions(
+              flags: InteractiveFlag.all,
+            ),
+          ),
+          children: [
+            TileLayer(
+              urlTemplate:
+              'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+              userAgentPackageName: 'com.in2uitions.dingdone',
+            ),
+            MarkerLayer(
+              markers: [
+                Marker(
+                  point: selectedLocation,
+                  width: 40,
+                  height: 40,
+                  child: const Icon(
+                    Icons.location_pin,
+                    size: 40,
+                    color: Colors.red,
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

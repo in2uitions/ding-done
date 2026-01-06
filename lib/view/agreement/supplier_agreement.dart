@@ -21,8 +21,9 @@ import 'package:dingdone/view/widgets/agreements/supplier_agreement/use_of_platf
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
+import 'dart:ui' as ui;
 
 class SupplierAgreement extends StatefulWidget {
   var index;
@@ -46,7 +47,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
               widget.index==null?
               SafeArea(
                 child: Directionality(
-                  textDirection: TextDirection.ltr,
+                  textDirection: ui.TextDirection.ltr,
                   child: Padding(
                     padding:
                     EdgeInsets.all(context.appValues.appPadding.p20),
@@ -66,7 +67,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  translate('termsAndConditionsSupplier.supplierAgreement'),
+                  'termsAndConditionsSupplier.supplierAgreement'.tr(),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.secondColorBlue,
                       fontSize: 24),
@@ -76,7 +77,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  translate('termsAndConditionsSupplier.termsAndConditions'),
+                  'termsAndConditionsSupplier.termsAndConditions'.tr(),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.btnColorBlue,
                       fontSize: 20),
@@ -137,7 +138,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
                         //
                       },
                       title: Text(
-                        translate('termsAndConditionsCustomer.agree'),
+                       'termsAndConditionsCustomer.agree'.tr(),
                         style: getPrimaryRegularStyle(fontSize: 15),
                       ),
                     ):Container(),
@@ -197,7 +198,7 @@ class _SupplierAgreementState extends State<SupplierAgreement> {
                                 context.resources.color.colorYellow,
                           ),
                           child: Text(
-                            translate('login_screen.signUp'),
+                            'login_screen.signUp'.tr(),
                             style: getPrimaryRegularStyle(
                               fontSize: 15,
                               color: context.resources.color.btnColorBlue,

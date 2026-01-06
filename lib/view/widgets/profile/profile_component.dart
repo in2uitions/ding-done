@@ -5,9 +5,9 @@ import 'package:dingdone/view/edit_account/edit_account.dart';
 import 'package:dingdone/view/my_address_book/my_address_book.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -49,7 +49,7 @@ class _ProfileComponentState extends State<ProfileComponent> {
                     ),
                     const Gap(10),
                     Text(
-                      translate('profile.myProfile'),
+                      'profile.myProfile'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 14,
                         color: context.resources.color.btnColorBlue,
@@ -89,7 +89,7 @@ class _ProfileComponentState extends State<ProfileComponent> {
                       ),
                       const Gap(10),
                       Text(
-                        translate('drawer.myAddressBook'),
+                        'drawer.myAddressBook'.tr(),
                         style: getPrimaryRegularStyle(
                           fontSize: 14,
                           color: context.resources.color.btnColorBlue,
@@ -130,7 +130,7 @@ class _ProfileComponentState extends State<ProfileComponent> {
                       ),
                       const Gap(10),
                       Text(
-                        translate('profile.paymentMethods'),
+                       'profile.paymentMethods'.tr(),
                         style: getPrimaryRegularStyle(
                           fontSize: 14,
                           color: context.resources.color.btnColorBlue,

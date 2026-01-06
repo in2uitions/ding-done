@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class AboutProfile extends StatefulWidget {
   const AboutProfile({super.key});
@@ -31,7 +31,7 @@ class _AboutProfileState extends State<AboutProfile> {
                 left: context.appValues.appPadding.p15,
                 right: context.appValues.appPadding.p15),
             child: Text(
-              translate('formHints.about'),
+             'formHints.about'.tr(),
               style: getPrimaryRegularStyle(
                   fontSize: 17, color: context.resources.color.btnColorBlue),
             ),

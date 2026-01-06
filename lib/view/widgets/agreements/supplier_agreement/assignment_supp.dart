@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class AssignmentSupplier extends StatefulWidget {
   const AssignmentSupplier({super.key});
@@ -18,7 +18,7 @@ class _AssignmentSupplierState extends State<AssignmentSupplier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.assignment'),
+         'termsAndConditionsSupplier.assignment'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -30,7 +30,7 @@ class _AssignmentSupplierState extends State<AssignmentSupplier> {
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsSupplier.assignment1'),
+                'termsAndConditionsSupplier.assignment1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

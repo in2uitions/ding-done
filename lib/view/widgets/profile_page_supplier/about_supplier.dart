@@ -1,8 +1,8 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_area_white.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class AboutSupplier extends StatefulWidget {
   var profileViewModel;
@@ -59,7 +59,7 @@ class _AboutSupplierState extends State<AboutSupplier> {
                       color: Color(0xff58537B),
                     ),
                     Text(
-                      translate('formHints.about'),
+                     'formHints.about'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 20,
                         color: const Color(0xff180C38),

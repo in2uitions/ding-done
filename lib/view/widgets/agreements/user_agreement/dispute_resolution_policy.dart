@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class DisputeResolutionPolicy extends StatefulWidget {
   const DisputeResolutionPolicy({super.key});
@@ -19,7 +19,7 @@ class _DisputeResolutionPolicyState extends State<DisputeResolutionPolicy> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.distributionResolutionPolicy'),
+           'termsAndConditionsCustomer.distributionResolutionPolicy'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -31,28 +31,28 @@ class _DisputeResolutionPolicyState extends State<DisputeResolutionPolicy> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.distributionResolutionPolicy1'),
+                    'termsAndConditionsCustomer.distributionResolutionPolicy1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.distributionResolutionPolicy2'),
+                    'termsAndConditionsCustomer.distributionResolutionPolicy2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.distributionResolutionPolicy3'),
+                   'termsAndConditionsCustomer.distributionResolutionPolicy3'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.distributionResolutionPolicy4'),
+                   'termsAndConditionsCustomer.distributionResolutionPolicy4'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

@@ -21,9 +21,9 @@ import 'package:dingdone/view/widgets/update_job_request_customer/review_widget.
 import 'package:dingdone/view/widgets/update_job_request_customer/service_rate_and_currency.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
@@ -106,7 +106,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     top: 3,
                                   ),
                                   child: Text(
-                                    '${translate('jobDetails.jobDetails')}',
+                                    '${'jobDetails.jobDetails'.tr()}',
                                     style: getPrimarySemiBoldStyle(
                                       color: context.resources.color.colorWhite,
                                       fontSize: 16,
@@ -164,7 +164,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          translate('updateJob.jobStatus'),
+                                          'updateJob.jobStatus'.tr(),
                                           style: getPrimaryRegularStyle(
                                             fontSize: 14,
                                             color: context
@@ -189,7 +189,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                         vertical:
                                             context.appValues.appPadding.p10),
                                     child: Text(
-                                      translate('bookService.jobTitle'),
+                                      'bookService.jobTitle'.tr(),
                                       style: getPrimaryRegularStyle(
                                         fontSize: 14,
                                         color: const Color(0xff180C38),
@@ -219,8 +219,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   ),
                                   const Gap(20),
 
-                                  widget.fromWhere == translate('jobs.completed') ||
-                                      widget.fromWhere == translate('jobs.active')
+                                  widget.fromWhere == 'jobs.completed'.tr() ||
+                                      widget.fromWhere == 'jobs.active'.tr()
                                       ? Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
@@ -238,8 +238,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                               vertical: context
                                                   .appValues.appPadding.p0),
                                           child: Text(
-                                            translate(
-                                                'bookService.jobDescription'),
+
+                                                'bookService.jobDescription'.tr(),
 
                                             style: getPrimaryRegularStyle(
                                               fontSize: 14,
@@ -295,7 +295,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                       : Container(),
                                   const Gap(20),
 
-                                  widget.fromWhere == translate('jobs.completed')
+                                  widget.fromWhere =='jobs.completed'.tr()
                                       ? Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: context.appValues.appPadding.p0),
@@ -311,7 +311,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                               vertical:
                                               context.appValues.appPadding.p0),
                                           child: Text(
-                                            translate('signUp.supplier'),
+                                            'signUp.supplier'.tr(),
                                             style: getPrimaryRegularStyle(
                                               fontSize: 14,
                                               color: const Color(0xff180B3C),
@@ -358,13 +358,13 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             // :Container(),
 
 
-                            widget.fromWhere != translate('jobs.active') &&
+                            widget.fromWhere != 'jobs.active'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.completed')
+                                        'jobs.completed'.tr()
                                 ? AddressWidget(
                                     address: widget.data.job_address)
                                 : Container(),
-                            widget.fromWhere == translate('jobs.booked')
+                            widget.fromWhere ==  'jobs.booked'.tr()
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal:
@@ -389,7 +389,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                               context.appValues.appPadding.p0,
                                             ),
                                             child: Text(
-                                              translate('jobs.estimatedTime'),
+                                              'jobs.estimatedTime'.tr(),
                                               style: getPrimaryRegularStyle(
                                                 fontSize: 14,
                                                 color: const Color(0xff180C38),
@@ -406,7 +406,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                             child: Row(
                                               children: [
                                                 Text(
-                                                  '${widget.data.supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
+                                                  '${widget.data.supplier_to_job_time ?? 0} ${'jobs.minutes'.tr()}',
                                                   style: getPrimaryRegularStyle(
                                                     fontSize: 14,
                                                     color:
@@ -421,11 +421,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     ),
                                   )
                                 : Container(),
-                            widget.fromWhere != translate('jobs.booked') &&
+                            widget.fromWhere != 'jobs.booked'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.active') &&
+                                       'jobs.active'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.completed')
+                                        'jobs.completed'.tr()
                                 ? DateAndTimeWidget(
                                     dateTime: widget.data.start_date)
                                 : Container(),
@@ -440,12 +440,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             //       )
                             //     : Container(),
                             widget.fromWhere !=
-                                        translate('jobs.requestedJobs') &&
+                                        'jobs.requestedJobs' &&
                                     widget.fromWhere !=
-                                        translate('jobs.booked') &&
+                                       'jobs.booked'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.completed') &&
-                                    widget.fromWhere != translate('jobs.active')&&
+                                        'jobs.completed'.tr() &&
+                                    widget.fromWhere !='jobs.active'.tr() &&
                                     widget.fromWhere != 'notifications'
                                 ? JobTypeWidget(
                                     job_type: widget.data.job_type["code"],
@@ -455,12 +455,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 : Container(),
 
                             widget.fromWhere !=
-                                        translate('jobs.requestedJobs') &&
+                                        'jobs.requestedJobs'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.booked') &&
+                                        'jobs.booked'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.completed') &&
-                                    widget.fromWhere != translate('jobs.active')&&
+                                        'jobs.completed'.tr() &&
+                                    widget.fromWhere != 'jobs.active'.tr() &&
                                     widget.fromWhere != 'notifications'
                                 ? JobCategorieAndServiceWidget(
                                     category: widget.data.service["category"]
@@ -470,11 +470,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 : Container(),
 
                             widget.fromWhere !=
-                                        translate('jobs.requestedJobs') &&
+                                       'jobs.requestedJobs'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.active') &&
+                                       'jobs.active'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.completed') &&
+                                       'jobs.completed'.tr() &&
                                     widget.fromWhere !=
                                        'notifications'
                                 ? ServiceRateAndCurrnecyWidget(
@@ -490,13 +490,13 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 : Container(),
 
                             widget.fromWhere !=
-                                        translate('jobs.requestedJobs') &&
+                                        'jobs.requestedJobs'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.booked') &&
+                                        'jobs.booked'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.active') &&
+                                        'jobs.active'.tr() &&
                                     widget.fromWhere !=
-                                        translate('jobs.completed') &&
+                                        'jobs.completed'.tr() &&
                                     widget.fromWhere !=
                                         'notifications'
                                 ? Padding(
@@ -523,11 +523,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 : Container(),
 
                             widget.fromWhere !=
-                                        translate('jobs.requestedJobs') &&
+                                       'jobs.requestedJobs'.tr() &&
                             widget.fromWhere !=
                                         'notifications' &&
                                     widget.fromWhere !=
-                                        translate('jobs.completed')
+                                       'jobs.completed'.tr()
                                 ? CurrentSupplierWidget(
                                     user: widget.data.supplier != null
                                         ? '${widget.data.supplier["first_name"]} ${widget.data.supplier["last_name"]}'
@@ -535,10 +535,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 : Container(),
 
                             widget.fromWhere !=
-                                        translate('jobs.requestedJobs') &&
+                                        'jobs.requestedJobs'.tr() &&
                             widget.fromWhere !=
                                         'notifications' &&
-                                    widget.fromWhere != translate('jobs.booked')
+                                    widget.fromWhere != 'jobs.booked'.tr()
                                 ? JobSizeWidget(
                                     completed_units:
                                         widget.data.completed_units ?? '',
@@ -554,30 +554,30 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 : Container(),
 
                             widget.fromWhere !=
-                                        translate('jobs.requestedJobs') &&
+                                        'jobs.requestedJobs'.tr() &&
                             widget.fromWhere !=
                                         'notifications' &&
-                                    widget.fromWhere != translate('jobs.booked')
+                                    widget.fromWhere != 'jobs.booked'.tr()
                                 ? ActualStartTimeWidget(
                                     actual_start_date:
                                         widget.data.actual_start_date,
                                     actual_end_date: widget.data.finish_date)
                                 : Container(),
-                            widget.fromWhere == translate('jobs.completed')
+                            widget.fromWhere == 'jobs.completed'.tr()
                                 ? ActualEndTimeWidget(
                                     actual_start_date:
                                         widget.data.actual_start_date,
                                     actual_end_date: widget.data.finish_date)
                                 : Container(),
-                            widget.fromWhere == translate('jobs.completed')
+                            widget.fromWhere == 'jobs.completed'.tr()
                                 ? RatingStarsWidget(
                               stars: widget.data.rating_stars ?? 0.0,
                               userRole: Constants.supplierRoleId,
                             )
                                 : Container(),
-                            widget.fromWhere == translate('jobs.active') ||
+                            widget.fromWhere == 'jobs.active'.tr() ||
                                     widget.fromWhere ==
-                                        translate('jobs.completed')
+                                        'jobs.completed'.tr()
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
@@ -591,7 +591,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                             MainAxisAlignment.start,
                                         children: [
                                           Text(
-                                            translate('home_screen.totalPrice'),
+                                            'home_screen.totalPrice'.tr(),
                                             style: getPrimaryRegularStyle(
                                               fontSize: 14,
                                               color: const Color(0xff180C38),
@@ -647,14 +647,14 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     // widget.fromWhere!='completed'?
 
                                     widget.fromWhere !=
-                                                translate(
-                                                    'jobs.requestedJobs') &&
+
+                                                    'jobs.requestedJobs'.tr() &&
                                     widget.fromWhere !=
                                                 'notifications' &&
                                             widget.fromWhere !=
-                                                translate('jobs.active') &&
+                                               'jobs.active'.tr() &&
                                             widget.fromWhere !=
-                                                translate('jobs.booked')
+                                                'jobs.booked'.tr()
                                         ? Padding(
                                             padding: EdgeInsets.symmetric(
                                                 vertical: context
@@ -673,8 +673,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     _isLoading2 = true;
                                                   });
                                                   widget.fromWhere ==
-                                                          translate(
-                                                              'jobs.completed')
+
+                                                              'jobs.completed'.tr()
                                                       ? await jobsViewModel.downloadInvoice(widget.data.id) !=
                                                               null
                                                           ? await Navigator.push(
@@ -714,16 +714,16 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                               builder: (BuildContext context) =>
                                                                   simpleAlert(
                                                                       context,
-                                                                      translate(
-                                                                          'button.failure')))
+
+                                                                          'button.failure'.tr()))
                                                       : await jobsViewModel.updateJob(widget.data.id) ==
                                                               true
                                                           ? showDialog(
                                                               context: context,
                                                               builder:
                                                                   (BuildContext context) =>
-                                                                      simpleAlert(context, translate('button.success')))
-                                                          : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure')));
+                                                                      simpleAlert(context, 'button.success'.tr()))
+                                                          : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, 'button.failure'.tr()));
                                                   setState(() {
                                                     _isLoading2 = false;
                                                   });
@@ -741,13 +741,13 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                   ),
                                                 ),
                                                 child: widget.fromWhere ==
-                                                        translate(
-                                                            'jobs.completed')
+
+                                                            'jobs.completed'.tr()
                                                     ? _isLoading2
                                                         ? const CircularProgressIndicator()
                                                         : Text(
-                                                            translate(
-                                                                'button.invoice'),
+
+                                                                'button.invoice'.tr(),
                                                             style:
                                                                 getPrimarySemiBoldStyle(
                                                               fontSize: 12,
@@ -760,8 +760,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     : _isLoading2
                                                         ? const CircularProgressIndicator()
                                                         : Text(
-                                                            translate(
-                                                                'button.update'),
+
+                                                                'button.update'.tr(),
                                                             style:
                                                                 getPrimarySemiBoldStyle(
                                                               fontSize: 12,
@@ -779,9 +779,9 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     //     :
                                     // Container(),
                                     widget.fromWhere !=
-                                                translate('jobs.active') &&
+                                               'jobs.active'.tr() &&
                                             widget.fromWhere !=
-                                                translate('jobs.completed') && widget.fromWhere!='notifications'
+                                                'jobs.completed'.tr() && widget.fromWhere!='notifications'
                                         ? Consumer2<JobsViewModel,
                                                 PaymentViewModel>(
                                             builder: (context, jobsViewModel,
@@ -808,8 +808,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     widget.fromWhere ==
                                                                 'booked' ||
                                                             widget.fromWhere ==
-                                                                translate(
-                                                                    'jobs.requestedJobs')
+
+                                                                    'jobs.requestedJobs'.tr()
                                                         ? showDialog(
                                                             context: context,
                                                             builder: (BuildContext
@@ -835,8 +835,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                         //                     ))
                                                         //         : ''
                                                         : widget.fromWhere ==
-                                                                translate(
-                                                                    'jobs.active')
+
+                                                                    'jobs.active'.tr()
                                                             ?
                                                             // widget.data.payment_card!=null?
                                                             // showDialog(
@@ -882,13 +882,13 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     ),
                                                   ),
                                                   child: widget.fromWhere ==
-                                                          translate(
-                                                              'jobs.active')
+
+                                                              'jobs.active'.tr()
                                                       ? _isLoading
                                                           ? const CircularProgressIndicator()
                                                           : Text(
-                                                              translate(
-                                                                  'button.finish'),
+
+                                                                  'button.finish'.tr(),
                                                               style:
                                                                   getPrimaryRegularStyle(
                                                                 fontSize: 16,
@@ -897,20 +897,20 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                               ),
                                                             )
                                                       : widget.fromWhere ==
-                                                              translate(
-                                                                  'jobs.completed')
+
+                                                                  'jobs.completed'.tr()
                                                           ? _isLoading
                                                               ? const CircularProgressIndicator()
                                                               : Text(
                                                                   widget.data.is_paid !=
                                                                           null
-                                                                      ? (widget.fromWhere == translate('jobs.completed') &&
+                                                                      ? (widget.fromWhere =='jobs.completed'.tr() &&
                                                                               !widget
                                                                                   .data.is_paid)
-                                                                          ? translate(
-                                                                              'button.payFees')
-                                                                          : translate(
-                                                                              'button.paid')
+                                                                          ?
+                                                                              'button.payFees'.tr()
+                                                                          :
+                                                                              'button.paid'.tr()
                                                                       : '',
                                                                   style:
                                                                       getPrimaryRegularStyle(
@@ -921,8 +921,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                                   ),
                                                                 )
                                                           : Text(
-                                                              translate(
-                                                                  'button.cancel'),
+
+                                                                  'button.cancel'.tr(),
                                                               style:
                                                                   getPrimarySemiBoldStyle(
                                                                 fontSize: 12,
@@ -958,15 +958,15 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
       int job_id, String tab) {
     String message = '';
     if (tab == 'booked') {
-      message = translate('updateJob.provideReasonToCancel');
-    } else if (tab == translate('jobs.active')) {
-      message = translate('updateJob.provideReasonToCancelNote');
+      message = 'updateJob.provideReasonToCancel'.tr();
+    } else if (tab == 'jobs.active'.tr()) {
+      message = 'updateJob.provideReasonToCancelNote'.tr();
     }
     List<String> reasons = [
-      translate('jobs.changeOfPlans'),
-      translate('jobs.unexpectedEmergency'),
-      translate('jobs.illnessOrHealthIssues'),
-      translate('jobs.other')
+     'jobs.changeOfPlans'.tr(),
+      'jobs.unexpectedEmergency'.tr(),
+      'jobs.illnessOrHealthIssues'.tr(),
+      'jobs.other'.tr(),
     ];
 
     return AlertDialog(
@@ -1101,7 +1101,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                 child: ElevatedButton(
                   onPressed: () async {
                     if (tab == 'booked' ||
-                        tab == translate('jobs.requestedJobs')) {
+                        tab == 'jobs.requestedJobs'.tr()) {
                       if (tab == 'booked') {
                         if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
                             true) {
@@ -1111,7 +1111,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) => simpleAlert(
-                                  context, translate('button.success')));
+                                  context, 'button.success'.tr()));
                         } else {
                           Navigator.pop(context);
 
@@ -1119,10 +1119,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) => simpleAlert(
-                                  context, translate('button.failure')));
+                                  context, 'button.failure'.tr()));
                         }
                       } else {
-                        if (tab == translate('jobs.requestedJobs')) {
+                        if (tab == 'jobs.requestedJobs'.tr()) {
                           if (await jobsViewModel.cancelJobNoPenalty(job_id) ==
                               true) {
                             Navigator.pop(context);
@@ -1131,7 +1131,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => simpleAlert(
-                                    context, translate('button.success')));
+                                    context,'button.success'.tr()));
                           } else {
                             Navigator.pop(context);
 
@@ -1139,12 +1139,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => simpleAlert(
-                                    context, translate('button.failure')));
+                                    context, 'button.failure'.tr()));
                           }
                         }
                       }
                     } else {
-                      if (tab == translate('jobs.active')) {
+                      if (tab == 'jobs.active'.tr()) {
                         if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
                             true) {
                           Navigator.pop(context);
@@ -1153,7 +1153,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) => simpleAlert(
-                                  context, translate('button.success')));
+                                  context, 'button.success'.tr()));
                         } else {
                           Navigator.pop(context);
 
@@ -1161,7 +1161,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) => simpleAlert(
-                                  context, translate('button.failure')));
+                                  context,'button.failure'.tr()));
                         }
                       }
                     }
@@ -1179,7 +1179,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     ),
                   ),
                   child: Text(
-                    translate('button.submit'),
+                   'button.submit'.tr(),
                     style: getPrimarySemiBoldStyle(
                       fontSize: 12,
                       color: context.resources.color.colorWhite,
@@ -1218,7 +1218,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
               ],
             ),
           ),
-          message == translate('button.success')
+          message == 'button.success'.tr()
               ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
               : SvgPicture.asset('assets/img/failure.svg'),
           SizedBox(height: context.appValues.appSize.s40),
@@ -1394,7 +1394,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              translate('updateJob.rateJob'),
+              'updateJob.rateJob'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -1425,7 +1425,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                   showDialog(
                       context: context,
                       builder: (BuildContext context) => simpleAlert(context,
-                          '${translate('button.failure')} \n${jobsViewModel.errorMessage}'));
+                          '${'button.failure'.tr()} \n${jobsViewModel.errorMessage}'));
                 }
               },
               style: ElevatedButton.styleFrom(
@@ -1441,7 +1441,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                 ),
               ),
               child: Text(
-                translate('button.ok'),
+                'button.ok'.tr(),
                 style: getPrimaryRegularStyle(
                   fontSize: 15,
                   color: context.resources.color.btnColorBlue,

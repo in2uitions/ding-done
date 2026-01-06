@@ -6,10 +6,10 @@ import 'package:dingdone/view/widgets/confirm_payment_method/payment_method_butt
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
 import 'package:provider/provider.dart';
@@ -279,7 +279,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
             context: context,
             builder: (BuildContext context) => simpleAlert(
                 context,
-                translate('button.failure'),
+                'button.failure'.tr(),
                 '${result['errors'] != null ? result['errors'][0]['description'] : result['error']}'));
       }
       await widget.paymentViewModel.setLoading(false);
@@ -428,7 +428,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                         ),
                         const Gap(10),
                         Text(
-                          translate('profile.paymentMethods'),
+                          'profile.paymentMethods'.tr(),
                           style: getPrimarySemiBoldStyle(
                             color: context.resources.color.colorWhite,
                             fontSize: 16,
@@ -508,7 +508,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                           context: context,
                                           builder: (_) => simpleAlert(
                                             context,
-                                            translate('button.failure'),
+                                            'button.failure'.tr(),
                                             'Card Number is already chosen',
                                           ),
                                         );
@@ -527,8 +527,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                                     size: 18),
                                                 const Gap(5),
                                                 Text(
-                                                  translate(
-                                                      'paymentMethod.addPaymentMethod'),
+
+                                                      'paymentMethod.addPaymentMethod'.tr(),
                                                   style: getPrimaryBoldStyle(
                                                     fontSize: 14,
                                                     color: Colors.white,

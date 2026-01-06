@@ -3,9 +3,9 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/login/login.dart';
 import 'package:dingdone/view/widgets/categories_screen/categories_screen_cards.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -346,14 +346,14 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                           context: context,
                                           builder: (context) => _buildPopupDialogLogin(
                                               context,
-                                              translate('button.pleaseLogin')),
+                                             'button.pleaseLogin'.tr()),
                                         );
                                       } else {
                                         showDialog(
                                           context: context,
                                           builder: (context) => _buildPopupDialogNo(
                                               context,
-                                              translate('button.pleaseProvideAtLeastOneAddress')),
+                                              'button.pleaseProvideAtLeastOneAddress'.tr()),
                                         );
                                       }
                                     },
@@ -423,7 +423,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               ),
               child: Text(
-                translate('button.ok'),
+                'button.ok'.tr(),
                 style: getPrimaryRegularStyle(
                   fontSize: 15,
                   color: context.resources.color.btnColorBlue,
@@ -487,7 +487,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                 ),
               ),
               child: Text(
-                translate('button.ok'),
+               'button.ok'.tr(),
                 style: getPrimaryRegularStyle(
                   fontSize: 15,
                   color: context.resources.color.btnColorBlue,

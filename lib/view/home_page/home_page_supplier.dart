@@ -9,10 +9,10 @@ import 'package:dingdone/view/widgets/home_page_supplier/job_requests.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -512,7 +512,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                         //   },
                                         // ),
                                         Text(
-                                          translate('home_screen.Hi'),
+                                          'home_screen.Hi'.tr(),
                                           style: getPrimaryBoldStyle(
                                             color: const Color(0xffFFC500),
                                             fontSize: 32,
@@ -689,8 +689,8 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        translate(
-                                            'home_screen.jobRequestsAroundMe'),
+
+                                            'home_screen.jobRequestsAroundMe'.tr(),
                                         style: getPrimaryBoldStyle(
                                           fontSize: 16,
                                           color: const Color(0xff180C38),
@@ -817,8 +817,8 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    translate(
-                                        'home_screen.jobRequestsAroundMe'),
+
+                                        'home_screen.jobRequestsAroundMe'.tr(),
                                     style: getPrimaryBoldStyle(
                                       fontSize: 16,
                                       color: const Color(0xff180C38),
@@ -868,7 +868,8 @@ void showDemoActionSheet(
     context: context,
     builder: (BuildContext context) => child,
   ).then((String? value) {
-    if (value != null) changeLocale(context, value);
+    if (value != null) context.setLocale(Locale(value));
+
   });
 }
 void showAccountNotVerifiedDialog(
@@ -920,7 +921,7 @@ void showAccountNotVerifiedDialog(
                 ),
               ),
               child: Text(
-                translate('button.ok'),
+                'button.ok'.tr(),
                 style: getPrimaryBoldStyle(
                   color: Colors.white,
                 ),
@@ -940,7 +941,7 @@ void _onActionSheetPress(BuildContext context) {
       message: const Text('Message'),
       actions: <Widget>[
         CupertinoActionSheetAction(
-          child: Text(translate('language.name.en-US')),
+          child: Text('language.name.en-US'.tr()),
           onPressed: () async {
             await AppPreferences()
                 .save(key: language, value: 'en', isModel: false);
@@ -949,7 +950,7 @@ void _onActionSheetPress(BuildContext context) {
           },
         ),
         CupertinoActionSheetAction(
-          child: Text(translate('language.name.ar-SA')),
+          child: Text('language.name.ar-SA'.tr()),
           onPressed: () async {
             await AppPreferences()
                 .save(key: language, value: 'ar', isModel: false);
@@ -958,7 +959,7 @@ void _onActionSheetPress(BuildContext context) {
           },
         ),
         CupertinoActionSheetAction(
-          child: Text(translate('language.name.el-GR')),
+          child: Text('language.name.el-GR'.tr()),
           onPressed: () async {
             await AppPreferences()
                 .save(key: language, value: 'el', isModel: false);
@@ -967,7 +968,7 @@ void _onActionSheetPress(BuildContext context) {
           },
         ),
         CupertinoActionSheetAction(
-          child: Text(translate('language.name.ru-RU')),
+          child: Text('language.name.ru-RU'.tr()),
           onPressed: () async {
             await AppPreferences()
                 .save(key: language, value: 'ru', isModel: false);
@@ -1032,7 +1033,7 @@ Widget _buildPopupDialog(BuildContext context) {
             horizontal: context.appValues.appPadding.p32,
           ),
           child: Text(
-            translate('home_screen.serviceRequestConfirmed'),
+            'home_screen.serviceRequestConfirmed'.tr(),
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
                 fontSize: 17, color: context.resources.color.btnColorBlue),
@@ -1044,7 +1045,7 @@ Widget _buildPopupDialog(BuildContext context) {
             horizontal: context.appValues.appPadding.p32,
           ),
           child: Text(
-            translate('home_screen.serviceRequestConfirmedMsg'),
+           'home_screen.serviceRequestConfirmedMsg'.tr(),
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
               fontSize: 15,

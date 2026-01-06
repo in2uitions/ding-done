@@ -5,9 +5,9 @@ import 'package:dingdone/view/settings_screen/settings_screen.dart';
 import 'package:dingdone/view/widgets/profile/profile_component.dart';
 import 'package:dingdone/view/widgets/profile/profile_second_component.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              translate('profile.account'),
+                              'profile.account'.tr(),
                               style: getPrimarySemiBoldStyle(
                                 fontSize: 16,
                                 color: Colors.white,
@@ -211,7 +211,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                             ),
                                             const Gap(10),
                                             Text(
-                                              translate('drawer.deleteAccount'),
+                                              'drawer.deleteAccount'.tr(),
                                               style: getPrimaryRegularStyle(
                                                 fontSize: 14,
                                                 color: context.resources.color
@@ -281,7 +281,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               child: Text(
                 // translate('bookService.serviceRequestConfirmed'),
-                translate('drawer.delete?'),
+                'drawer.delete?'.tr(),
                 textAlign: TextAlign.center,
                 style: getPrimaryMediumStyle(
                   fontSize: 14,
@@ -300,9 +300,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       context: context,
                       builder:
                           (BuildContext context) =>
-                          simpleAlert(context, translate('button.success')));
+                          simpleAlert(context, 'button.success'.tr()));
                 }else{
-                  showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure')));
+                  showDialog(context: context, builder: (BuildContext context) => simpleAlert(context,'button.failure'.tr()));
                 }
               },
               child: Container(
@@ -354,7 +354,7 @@ class _ProfilePageState extends State<ProfilePage> {
               ],
             ),
           ),
-          message == translate('button.success')
+          message == 'button.success'.tr()
               ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
               : SvgPicture.asset('assets/img/failure.svg'),
           SizedBox(height: context.appValues.appSize.s40),
@@ -370,9 +370,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 color: context.resources.color.btnColorBlue,
               ),
             ),
-          ),  message == translate('button.success')?
+          ),  message == 'button.success'.tr()?
           SizedBox(height: context.appValues.appSize.s20):Container(),
-          message == translate('button.success')?Padding(
+          message == 'button.success'.tr()?Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p32,
             ),

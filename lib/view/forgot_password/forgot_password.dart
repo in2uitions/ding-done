@@ -3,9 +3,9 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/otp_verification/otp_verification.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +52,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    translate('forgotPassword.title'),
+                    'forgotPassword.title'.tr(),
                     style: getPrimaryBoldStyle(
                       color: const Color(0xff1F126B),
                       fontSize: 30,
@@ -61,7 +61,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 ),
                 const Gap(20),
                 Text(
-                  translate('forgotPassword.msg'),
+                  'forgotPassword.msg'.tr(),
                   style: getPrimaryRegularStyle(
                     color: const Color(0xff78789D),
                     fontSize: 15,
@@ -85,7 +85,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       },
                     ),
                     Text(
-                      translate('formHints.email'),
+                      'formHints.email'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 17,
                         color: const Color(0xff1F1F39),
@@ -103,7 +103,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       },
                     ),
                     Text(
-                      translate('formHints.sms'),
+                      'formHints.sms'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 17,
                         color: const Color(0xff1F1F39),
@@ -164,7 +164,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           strokeWidth: 1.5,
                         ))
                         : Text(
-                      translate('button.sendMyCode'),
+                      'button.sendMyCode'.tr(),
                       style: getPrimaryBoldStyle(
                         color: context.resources.color.colorWhite,
                         fontSize: 20,
@@ -202,7 +202,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              translate('formHints.email'),
+              'formHints.email'.tr(),
               style: getPrimaryRegularStyle(
                 fontSize: 17,
                 color: const Color(0xff1F1F39),
@@ -211,7 +211,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             const Gap(10),
             CustomTextField(
               index: 'reset-email',
-              hintText: translate('formHints.email'),
+              hintText: 'formHints.email'.tr(),
               keyboardType: TextInputType.emailAddress,
               viewModel: loginViewModel.setInputValues,
             ),
@@ -243,7 +243,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              translate('formHints.phone'),
+              'formHints.phone'.tr(),
               style: getPrimaryRegularStyle(
                 fontSize: 17,
                 color: const Color(0xff1F1F39),
@@ -259,7 +259,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       .resources.strings.formKeys['phone_number']!],
                   errorText: signupViewModel.signUpErrors[context
                       .resources.strings.formKeys['phone_number']!],
-                  hintText: translate('formHints.phone'),
+                  hintText: 'formHints.phone'.tr(),
 
                 );
               }

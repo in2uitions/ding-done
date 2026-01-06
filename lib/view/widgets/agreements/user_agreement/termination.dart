@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class Termination extends StatefulWidget {
   const Termination({super.key});
@@ -18,7 +18,7 @@ class _TerminationState extends State<Termination> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.termination'),
+           'termsAndConditionsCustomer.termination'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -30,7 +30,7 @@ class _TerminationState extends State<Termination> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.termination1'),
+                    'termsAndConditionsCustomer.termination1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
@@ -43,21 +43,21 @@ class _TerminationState extends State<Termination> {
                     child: Column(
                       children: [
                         Text(
-                          translate('termsAndConditionsCustomer.termination11'),
+                          'termsAndConditionsCustomer.termination11'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.termination12'),
+                         'termsAndConditionsCustomer.termination12'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.termination13'),
+                          'termsAndConditionsCustomer.termination13'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
@@ -67,7 +67,7 @@ class _TerminationState extends State<Termination> {
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.termination2'),
+                   'termsAndConditionsCustomer.termination2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

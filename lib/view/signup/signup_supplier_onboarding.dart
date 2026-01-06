@@ -14,9 +14,9 @@ import 'package:dingdone/view/widgets/image_component/upload_one_image.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:onboarding/onboarding.dart';
@@ -82,7 +82,7 @@ class _SignUpSupplierOnBoardingScreenState
             },
             child: Center(
               child: Text(
-                translate('button.next'),
+                'button.next'.tr(),
                 style: getPrimaryBoldStyle(
                   fontSize: 14,
                   color: context.resources.color.colorWhite,
@@ -125,7 +125,7 @@ class _SignUpSupplierOnBoardingScreenState
             },
             child: Center(
               child: Text(
-                translate('button.complete'),
+                'button.complete'.tr(),
                 style: getPrimaryBoldStyle(
                   fontSize: 14,
                   color: context.resources.color.colorWhite,
@@ -277,7 +277,7 @@ class _SignUpSupplierOnBoardingScreenState
               ),
             ),
             title: Text(
-              translate('login_screen.swipe'),
+              'login_screen.swipe'.tr(),
               style: getPrimaryBoldStyle(
                 fontSize: 13,
                 color: const Color(0xff180C38),
@@ -303,7 +303,7 @@ class _SignUpSupplierOnBoardingScreenState
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
-                            translate('profile.personalInformation'),
+                           'profile.personalInformation'.tr(),
                             style: getPrimarySemiBoldStyle(
                               color: const Color(0xff180C38),
                               fontSize: 22,
@@ -317,7 +317,7 @@ class _SignUpSupplierOnBoardingScreenState
                           value: signupViewModel.signUpBody["first_name"] ?? '',
                           index: 'first_name',
                           viewModel: signupViewModel.setInputValues,
-                          hintText: translate('formHints.first_name'),
+                          hintText: 'formHints.first_name'.tr(),
                           validator: (val) => signupViewModel.signUpErrors[
                               context
                                   .resources.strings.formKeys['first_name']!],
@@ -332,7 +332,7 @@ class _SignUpSupplierOnBoardingScreenState
                           value: signupViewModel.signUpBody["last_name"] ?? '',
                           index: 'last_name',
                           viewModel: signupViewModel.setInputValues,
-                          hintText: translate('formHints.last_name'),
+                          hintText: 'formHints.last_name'.tr(),
                           validator: (val) => signupViewModel.signUpErrors[
                               context.resources.strings.formKeys['last_name']!],
                           errorText: signupViewModel.signUpErrors[
@@ -346,7 +346,7 @@ class _SignUpSupplierOnBoardingScreenState
                             value: signupViewModel.signUpBody["dob"] ?? '',
                             index: 'dob',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.dob'),
+                            hintText: 'formHints.dob'.tr(),
                           )),
                       if (signupViewModel.signUpErrors[
                               context.resources.strings.formKeys['dob']] !=
@@ -366,7 +366,7 @@ class _SignUpSupplierOnBoardingScreenState
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
-                            translate('signUp.profileType'),
+                            'signUp.profileType'.tr(),
                             style: getPrimarySemiBoldStyle(
                               color: const Color(0xff180C38),
                               fontSize: 22,
@@ -395,7 +395,7 @@ class _SignUpSupplierOnBoardingScreenState
                                   },
                                 ),
                                 Text(
-                                  translate('signUp.individual'),
+                                  'signUp.individual'.tr(),
                                   style: getPrimaryRegularStyle(
                                     color: const Color(0xff180C38),
                                     fontSize: 14,
@@ -415,7 +415,7 @@ class _SignUpSupplierOnBoardingScreenState
                                   },
                                 ),
                                 Text(
-                                  translate('signUp.company'),
+                                  'signUp.company'.tr(),
                                   style: getPrimaryRegularStyle(
                                     color: const Color(0xff180C38),
                                     fontSize: 14,
@@ -438,7 +438,7 @@ class _SignUpSupplierOnBoardingScreenState
                                         '',
                                 index: 'company',
                                 viewModel: signupViewModel.setInputValues,
-                                hintText: translate('signUp.companyId'),
+                                hintText:'signUp.companyId'.tr(),
                                 // validator: (val) =>
                                 //     signupViewModel.signUpErrors[context
                                 //         .resources
@@ -487,7 +487,7 @@ class _SignUpSupplierOnBoardingScreenState
                                 },
                                 isImage: true,
                                 widget: Text(
-                                  translate('signUp.identificationCard'),
+                                  'signUp.identificationCard'.tr(),
                                   style: getPrimarySemiBoldStyle(
                                     fontSize: 14,
                                     color: const Color(0xff4657a6),
@@ -588,7 +588,7 @@ class _SignUpSupplierOnBoardingScreenState
                           child: SizedBox(
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
-                              translate('profile.contactInformation'),
+                              'profile.contactInformation'.tr(),
                               style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
                                 fontSize: 22,
@@ -627,7 +627,7 @@ class _SignUpSupplierOnBoardingScreenState
                             value: signupViewModel.signUpBody['email'] ?? '',
                             index: 'email',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.email'),
+                            hintText:'formHints.email'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['email']!],
                             errorText: signupViewModel.signUpErrors[
@@ -655,7 +655,7 @@ class _SignUpSupplierOnBoardingScreenState
                           child: SizedBox(
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
-                              translate('signUp.securityInformation'),
+                              'signUp.securityInformation'.tr(),
                               style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
                                 fontSize: 22,
@@ -668,7 +668,7 @@ class _SignUpSupplierOnBoardingScreenState
                             value: signupViewModel.signUpBody['password'] ?? '',
                             index: 'password',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.password'),
+                            hintText: 'formHints.password'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context
                                     .resources.strings.formKeys['password']!],
@@ -684,7 +684,7 @@ class _SignUpSupplierOnBoardingScreenState
                           vertical: 0.0,
                         ),
                         child: Text(
-                          translate('signUp.requirments'),
+                          'signUp.requirments'.tr(),
                           style: const TextStyle(
                             fontSize: 12,
                             color: Color(0xff4657a6),
@@ -711,7 +711,7 @@ class _SignUpSupplierOnBoardingScreenState
                           child: SizedBox(
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
-                              translate('signUp.addressInformation'),
+                             'signUp.addressInformation'.tr(),
                               style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
                                 fontSize: 22,
@@ -726,7 +726,7 @@ class _SignUpSupplierOnBoardingScreenState
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              translate('formHints.location'),
+                              'formHints.location'.tr(),
                               style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
                                 fontSize: 18,
@@ -884,7 +884,7 @@ class _SignUpSupplierOnBoardingScreenState
                                 '',
                             index: 'street_number',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.street'),
+                            hintText: 'formHints.street'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['street_number']!],
@@ -900,7 +900,7 @@ class _SignUpSupplierOnBoardingScreenState
                                 '',
                             index: 'building_number',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.building'),
+                            hintText: 'formHints.building'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['building_number']!],
@@ -922,7 +922,7 @@ class _SignUpSupplierOnBoardingScreenState
                             value: signupViewModel.getSignUpBody['floor'] ?? '',
                             index: 'floor',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.floor'),
+                            hintText: 'formHints.floor'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['floor']!],
                             errorText: signupViewModel.signUpErrors[
@@ -944,7 +944,7 @@ class _SignUpSupplierOnBoardingScreenState
                                 '',
                             index: 'apartment_number',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.apartment'),
+                            hintText: 'formHints.apartment'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['apartment_number']!],
@@ -967,7 +967,7 @@ class _SignUpSupplierOnBoardingScreenState
                             value: signupViewModel.signUpBody["city"] ?? '',
                             index: 'city',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.city'),
+                            hintText:'formHints.city'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['city']!],
                             errorText: signupViewModel.signUpErrors[
@@ -987,7 +987,7 @@ class _SignUpSupplierOnBoardingScreenState
                             value: signupViewModel.signUpBody["zone"] ?? '',
                             index: 'zone',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.zone'),
+                            hintText: 'formHints.zone'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['zone']!],
                             errorText: signupViewModel.signUpErrors[
@@ -1002,7 +1002,7 @@ class _SignUpSupplierOnBoardingScreenState
                                     '',
                             index: 'address_label',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.address_label'),
+                            hintText: 'formHints.address_label'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['address_label']!],
@@ -1091,7 +1091,7 @@ class _SignUpSupplierOnBoardingScreenState
                           child: SizedBox(
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
-                              translate('signUp.selectYourSkills'),
+                              'signUp.selectYourSkills'.tr(),
                               style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
                                 fontSize: 22,
@@ -1159,7 +1159,7 @@ class _SignUpSupplierOnBoardingScreenState
                           child: SizedBox(
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
-                              translate('signUp.completeProfile'),
+                              'signUp.completeProfile'.tr(),
                               style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff180C38),
                                 fontSize: 22,
@@ -1201,7 +1201,7 @@ class _SignUpSupplierOnBoardingScreenState
                           },
                           isImage: true,
                           widget: Text(
-                            translate('signUp.uploadProfilePhoto'),
+                            'signUp.uploadProfilePhoto'.tr(),
                             style: getPrimarySemiBoldStyle(
                               fontSize: 14,
                               color: const Color(0xff4657a6),

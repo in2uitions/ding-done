@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class JobCategorieAndServiceWidget extends StatefulWidget {
   var category;
@@ -49,7 +49,7 @@ class _JobCategorieAndServiceWidgetState
                       horizontal: context.appValues.appPadding.p10,
                     ),
                     child: Text(
-                      translate('updateJob.jobCategories'),
+                      'updateJob.jobCategories'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 14,
                         color: const Color(0xff180B3C),
@@ -117,7 +117,7 @@ class _JobCategorieAndServiceWidgetState
                       horizontal: context.appValues.appPadding.p10,
                     ),
                     child: Text(
-                      translate('updateJob.services'),
+                      'updateJob.services'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 14,
                         color: const Color(0xff180B3C),

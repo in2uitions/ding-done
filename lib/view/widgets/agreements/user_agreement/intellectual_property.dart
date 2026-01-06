@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class IntellectualProperty extends StatefulWidget {
   const IntellectualProperty({super.key});
@@ -18,7 +18,7 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.intellectualProperty'),
+            'termsAndConditionsCustomer.intellectualProperty'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -30,14 +30,14 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.intellectualProperty1'),
+                   'termsAndConditionsCustomer.intellectualProperty1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.intellectualProperty2'),
+                    'termsAndConditionsCustomer.intellectualProperty2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
@@ -50,21 +50,21 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
                     child: Column(
                       children: [
                         Text(
-                          translate('termsAndConditionsCustomer.intellectualProperty21'),
+                          'termsAndConditionsCustomer.intellectualProperty21'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.intellectualProperty22'),
+                         'termsAndConditionsCustomer.intellectualProperty22'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.intellectualProperty23'),
+                          'termsAndConditionsCustomer.intellectualProperty23'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
@@ -74,7 +74,7 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.intellectualProperty3'),
+                    'termsAndConditionsCustomer.intellectualProperty3'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
@@ -89,21 +89,21 @@ class _IntellectualPropertyState extends State<IntellectualProperty> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          translate('termsAndConditionsCustomer.intellectualProperty31'),
+                         'termsAndConditionsCustomer.intellectualProperty31'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.intellectualProperty32'),
+                         'termsAndConditionsCustomer.intellectualProperty32'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.intellectualProperty33'),
+                         'termsAndConditionsCustomer.intellectualProperty33'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),

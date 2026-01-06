@@ -4,9 +4,9 @@ import 'package:dingdone/view/widgets/confirm_address/add_new_address_widget.dar
 import 'package:dingdone/view/widgets/confirm_address/addresses_buttons.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -113,7 +113,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                         ),
                         const Gap(10),
                         Text(
-                          translate('confirmAddress.confirmAddress'),
+                          'confirmAddress.confirmAddress'.tr(),
                           style: getPrimarySemiBoldStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -154,7 +154,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                                     vertical: context.appValues.appPadding.p10,
                                   ),
                                   child: Text(
-                                    translate('profile.addresses'),
+                                   'profile.addresses'.tr(),
                                     style: getPrimaryRegularStyle(
                                       fontSize: 12,
                                       color: const Color(0xff2F3036),
@@ -192,7 +192,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                                                   builder: (BuildContext context) =>
                                                       simpleAlert(
                                                         context,
-                                                        translate('button.success'),
+                                                        'button.success'.tr(),
                                                       ));
                                             }else{
                                               showDialog(
@@ -200,7 +200,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                                                   builder: (BuildContext context) =>
                                                       simpleAlert(
                                                         context,
-                                                        translate('button.failure'),
+                                                        'button.failure'.tr(),
                                                       ));
                                             }
                                           }
@@ -214,13 +214,13 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
                                         child: isLoading?
                                         CircularProgressIndicator():
                                         jobsViewModel.saved?Text(
-                                          translate('button.saved'),
+                                          'button.saved'.tr(),
                                           style: getPrimaryBoldStyle(
                                             fontSize: 12,
                                             color: Colors.white,
                                           ),
                                         ):Text(
-                                          translate('button.save'),
+                                          'button.save'.tr(),
                                           style: getPrimaryBoldStyle(
                                             fontSize: 12,
                                             color: Colors.white,
@@ -264,7 +264,7 @@ Widget simpleAlert(BuildContext context, String message) {
             ],
           ),
         ),
-        message == translate('button.success')
+        message == 'button.success'.tr()
 
         // service-popup-image.svg
             ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')

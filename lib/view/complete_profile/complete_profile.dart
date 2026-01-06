@@ -12,9 +12,9 @@ import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/image_component/upload_one_image.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
@@ -120,7 +120,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             },
             child: Center(
               child: Text(
-                translate('button.next'),
+                'button.next'.tr(),
                 style: getPrimaryBoldStyle(
                   fontSize: 14,
                   color: context.resources.color.colorWhite,
@@ -163,7 +163,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             },
             child: Center(
               child: Text(
-                translate('button.complete'),
+                'button.complete'.tr(),
                 style: getPrimaryBoldStyle(
                   fontSize: 14,
                   color: context.resources.color.colorWhite,
@@ -234,7 +234,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
     return MaterialApp(
       color: const Color(0xffFEFEFE),
       debugShowCheckedModeBanner: false,
-      title: translate('login_screen.signUp'),
+      title: 'login_screen.signUp'.tr(),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xffFEFEFE),
@@ -254,7 +254,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
             ),
           ),
           title: Text(
-            translate('login_screen.swipe'),
+            'login_screen.swipe'.tr(),
 
             style: getPrimaryBoldStyle(
               fontSize: 13,
@@ -282,7 +282,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
-                            translate('profile.personalInformation'),
+                           'profile.personalInformation'.tr(),
                             style: getPrimaryBoldStyle(
                               color: const Color(0xff180C38),
                               fontSize: 28,
@@ -297,7 +297,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           profileViewModel.profileBody["user"]['first_name']: profileViewModel.profileBody['first_name']?? '',
                           index: 'first_name',
                           viewModel: profileViewModel.setInputValues,
-                          hintText: translate('formHints.first_name'),
+                          hintText: 'formHints.first_name'.tr(),
                           validator: (val) => profileViewModel.profileErrors[
                           context
                               .resources.strings.formKeys['first_name']!],
@@ -313,7 +313,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           profileViewModel.profileBody["user"]['last_name']:profileViewModel.profileBody['last_name'] ?? '',
                           index: 'last_name',
                           viewModel: profileViewModel.setInputValues,
-                          hintText: translate('formHints.last_name'),
+                          hintText: 'formHints.last_name'.tr(),
                           validator: (val) => profileViewModel.profileErrors[
                           context.resources.strings.formKeys['last_name']!],
                           errorText: profileViewModel.profileErrors[
@@ -332,7 +332,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           profileViewModel.profileBody['dob']?? '',
                           index: 'dob',
                           viewModel: profileViewModel.setInputValues,
-                          hintText: translate('formHints.dob'),
+                          hintText: 'formHints.dob'.tr(),
                         ),
                       ),
                     ],
@@ -355,7 +355,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           child: SizedBox(
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
-                              translate('profile.contactInformation'),
+                              'profile.contactInformation'.tr(),
                               style: getPrimaryBoldStyle(
                                 color: const Color(0xff180C38),
                                 fontSize: 28,
@@ -386,7 +386,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             profileViewModel.profileBody['email']?? '',
                             index: 'email',
                             viewModel: profileViewModel.setInputValues,
-                            hintText: translate('formHints.email'),
+                            hintText: 'formHints.email'.tr(),
                             validator: (val) => profileViewModel.profileErrors[
                             context.resources.strings.formKeys['email']!],
                             errorText: profileViewModel.profileErrors[
@@ -414,7 +414,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
-                            translate('signUp.addressInformation'),
+                            'signUp.addressInformation'.tr(),
                             style: getPrimaryBoldStyle(
                               color: const Color(0xff180C38),
                               fontSize: 28,
@@ -430,7 +430,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              translate('formHints.location'),
+                              'formHints.location'.tr(),
                               style: getPrimaryRegularStyle(
                                 fontSize: 15,
                                 color: context.resources.color.secondColorBlue,
@@ -707,7 +707,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 '',
                             index: 'street_number',
                             viewModel: profileViewModel.setInputValues,
-                            hintText: translate('formHints.street'),
+                            hintText:'formHints.street'.tr(),
                             validator: (val) => profileViewModel.profileErrors[
                             context.resources.strings
                                 .formKeys['street_number']!],
@@ -723,7 +723,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 '',
                             index: 'building_number',
                             viewModel: profileViewModel.setInputValues,
-                            hintText: translate('formHints.building'),
+                            hintText: 'formHints.building'.tr(),
                             validator: (val) => profileViewModel.profileErrors[
                             context.resources.strings
                                 .formKeys['building_number']!],
@@ -739,7 +739,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             value: profileViewModel.profileBody['floor'] ?? '',
                             index: 'floor',
                             viewModel: profileViewModel.setInputValues,
-                            hintText: translate('formHints.floor'),
+                            hintText: 'formHints.floor'.tr(),
                             validator: (val) => profileViewModel.profileErrors[
                             context.resources.strings.formKeys['floor']!],
                             errorText: profileViewModel.profileErrors[
@@ -754,7 +754,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                 '',
                             index: 'apartment_number',
                             viewModel: profileViewModel.setInputValues,
-                            hintText: translate('formHints.apartment'),
+                            hintText: 'formHints.apartment'.tr(),
                             validator: (val) => profileViewModel.profileErrors[
                             context.resources.strings
                                 .formKeys['apartment_number']!],
@@ -770,7 +770,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             index: 'city',
                             value: profileViewModel.profileBody['city'] ?? '',
                             viewModel: profileViewModel.setInputValues,
-                            hintText: translate('formHints.city'),
+                            hintText: 'formHints.city'.tr(),
                             validator: (val) => profileViewModel.profileErrors[
                             context.resources.strings.formKeys['city']!],
                             errorText: profileViewModel.profileErrors[
@@ -783,7 +783,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             value: profileViewModel.profileBody['zone'] ?? '',
                             index: 'zone',
                             viewModel: profileViewModel.setInputValues,
-                            hintText: translate('formHints.zone'),
+                            hintText: 'formHints.zone'.tr(),
                             validator: (val) => profileViewModel.profileErrors[
                             context.resources.strings.formKeys['zone']!],
                             errorText: profileViewModel.profileErrors[
@@ -796,7 +796,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                             value: profileViewModel.profileBody["address_label"] ?? '',
                             index: 'address_label',
                             viewModel: profileViewModel.setInputValues,
-                            hintText: translate('formHints.address_label'),
+                            hintText: 'formHints.address_label'.tr(),
                             validator: (val) => profileViewModel.profileErrors[
                             context.resources.strings.formKeys['address_label']!],
                             errorText: profileViewModel.profileErrors[
@@ -809,7 +809,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           value: profileViewModel.profileBody["country"] ?? '',
                           index: 'country',
                           viewModel: profileViewModel.setInputValues,
-                          hintText: translate('formHints.country'),
+                          hintText: 'formHints.country'.tr(),
                           validator: (val) => profileViewModel.profileErrors[
                               context.resources.strings.formKeys['country']!],
                           errorText: profileViewModel.profileErrors[
@@ -843,7 +843,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
-                            translate('signUp.completeProfile'),
+                            'signUp.completeProfile'.tr(),
                             style: getPrimaryBoldStyle(
                               color: const Color(0xff180C38),
                               fontSize: 28,
@@ -887,7 +887,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                           },
                           isImage: true,
                           widget: Text(
-                            translate('signUp.uploadProfilePhoto'),
+                            'signUp.uploadProfilePhoto'.tr(),
                             style: getPrimaryBoldStyle(
                               fontSize: 21,
                               color: Colors.white,

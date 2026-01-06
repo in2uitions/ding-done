@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class Privacy extends StatefulWidget {
   const Privacy({super.key});
@@ -18,7 +18,7 @@ class _PrivacyState extends State<Privacy> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.privacy'),
+            'termsAndConditionsCustomer.privacy'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -30,21 +30,21 @@ class _PrivacyState extends State<Privacy> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.privacy1'),
+                    'termsAndConditionsCustomer.privacy1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.privacy2'),
+                    'termsAndConditionsCustomer.privacy2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.privacy3'),
+                    'termsAndConditionsCustomer.privacy3'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

@@ -14,13 +14,16 @@ import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'dart:ui' as ui;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
+
+import 'package:provider/provider.dart';
 import '../my_address_book/my_address_book.dart';
 
 class BookAService extends StatefulWidget {
@@ -139,7 +142,8 @@ class _BookAServiceState extends State<BookAService> {
     showCupertinoModalPopup<String>(
         context: context,
         builder: (BuildContext context) => child).then((String? value) {
-      if (value != null) changeLocale(context, value);
+      if (value != null)  context.setLocale(Locale(value));
+
     });
   }
 
@@ -373,17 +377,33 @@ getPayment() async{
           for (Map<String, dynamic> translation in widget
               .service["translations"]) {
             debugPrint('transss ${translation}');
-            if (translation["languages_code"] == widget.lang) {
-              services = translation;
-              break; // Break the loop once the translation is found
+            if(translation["languages_code"] is Map<String,dynamic>){
+              if (translation["languages_code"]["code"] == widget.lang) {
+                services = translation;
+                break; // Break the loop once the translation is found
+              }
+            }else{
+              if (translation["languages_code"] == widget.lang) {
+                services = translation;
+                break; // Break the loop once the translation is found
+              }
             }
+
           }
           for (Map<String, dynamic> translations in widget.service["category"]
           ["translations"]) {
-            if (translations["languages_code"] == widget.lang) {
-              categories = translations;
-              break; // Break the loop once the translation is found
+            if(translations["languages_code"] is Map<String,dynamic>){
+              if (translations["languages_code"]["code"] == widget.lang) {
+                categories = translations;
+                break; // Break the loop once the translation is found
+              }
+            }else{
+              if (translations["languages_code"] == widget.lang) {
+                categories = translations;
+                break; // Break the loop once the translation is found
+              }
             }
+
           }
 
           return Scaffold(
@@ -428,7 +448,7 @@ getPayment() async{
                                     ),
                                     const Gap(5),
                                     Text(
-                                      translate('bookService.bookService'),
+                                      'bookService.bookService'.tr(),
                                       style: getPrimarySemiBoldStyle(
                                         color: context.resources.color
                                             .colorWhite,
@@ -521,10 +541,21 @@ getPayment() async{
                               Map<String, dynamic>? parentCatTrans;
                               for (var t in widget.service["category"]
                               ["translations"] as List) {
-                                if (t["languages_code"] == widget.lang) {
-                                  parentCatTrans = t;
-                                  break;
+
+                                if(t["languages_code"] is Map<String,dynamic>){
+                                  if (t["languages_code"]["code"]== widget.lang) {
+                                    debugPrint('not else $t');
+
+                                    parentCatTrans = t;
+                                    break;
+                                  }
+                                }else{
+                                  if (t["languages_code"]== widget.lang) {
+                                    parentCatTrans = t;
+                                    break;
+                                  }
                                 }
+
                               }
 
                               return Column(
@@ -631,8 +662,7 @@ getPayment() async{
                                             context.appValues.appPadding.p10,
                                           ),
                                           child: Text(
-                                            translate(
-                                                'bookService.jobDescription'),
+                                            'bookService.jobDescription'.tr(),
                                             style: getPrimaryMediumStyle(
                                               fontSize: 16,
                                               color: context
@@ -642,8 +672,7 @@ getPayment() async{
                                         ),
                                         CustomTextArea(
                                           index: 'job_description',
-                                          hintText: translate(
-                                              'bookService.jobDescription'),
+                                          hintText: 'bookService.jobDescription'.tr(),
                                           viewModel: jobsViewModel
                                               .setInputValues,
                                           keyboardType: TextInputType.text,
@@ -751,9 +780,7 @@ getPayment() async{
                                                         CrossAxisAlignment
                                                             .start,
                                                         children: [
-                                                          Text(
-                                                            translate(
-                                                                'bookService.location'),
+                                                          Text( 'bookService.location'.tr(),
                                                             style:
                                                             getPrimaryRegularStyle(
                                                               fontSize: 16,
@@ -836,7 +863,7 @@ getPayment() async{
                                     child: Row(
                                       children: [
                                         Text(
-                                          translate('bookService.unitPrice'),
+                                          'bookService.unitPrice'.tr(),
                                           style: getPrimaryRegularStyle(
                                             fontSize: 14,
                                             color: context
@@ -882,7 +909,7 @@ getPayment() async{
                                       MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          translate('updateJob.actualNumberOfUnits'),
+                                          'updateJob.actualNumberOfUnits'.tr(),
                                           style: getPrimaryRegularStyle(
                                             fontSize: 14,
                                             color: context
@@ -934,7 +961,7 @@ getPayment() async{
                                     child: Row(
                                       children: [
                                         Text(
-                                          translate('home_screen.totalPrice'),
+                                          'home_screen.totalPrice'.tr(),
                                           style: getPrimaryRegularStyle(
                                             fontSize: 14,
                                             color: context
@@ -1018,9 +1045,7 @@ getPayment() async{
                                                       builder: (BuildContext
                                                       context) =>
                                                           _buildPopupDialogNo(
-                                                              context,
-                                                              translate(
-                                                                  'button.pleaseProvidePaymentCard')),
+                                                              context, 'button.pleaseProvidePaymentCard'.tr()),
                                                     );
                                                   } else {
                                                     showDialog(
@@ -1028,9 +1053,7 @@ getPayment() async{
                                                       builder: (BuildContext
                                                       context) =>
                                                           _buildPopupDialogNo(
-                                                              context,
-                                                              translate(
-                                                                  'button.somethingWentWrong')),
+                                                              context,'button.somethingWentWrong'.tr()),
                                                     );
                                                   }
                                                 }
@@ -1055,9 +1078,7 @@ getPayment() async{
                                                   strokeWidth: 2,
                                                 ),
                                               )
-                                                  :Text(
-                                                translate(
-                                                    'bookService.requestService'),
+                                                  :Text( 'bookService.requestService'.tr(),
                                                 style: getPrimarySemiBoldStyle(
                                                   fontSize: 12,
                                                   color: context
@@ -1096,9 +1117,7 @@ getPayment() async{
                                                   SvgPicture.asset(
                                                     'assets/img/support-icon.svg',
                                                   ),
-                                                  Text(
-                                                    translate(
-                                                        'bookService.chat'),
+                                                  Text( 'bookService.chat'.tr(),
                                                     style: getPrimarySemiBoldStyle(
                                                       fontSize: 12,
                                                       color:
@@ -1159,7 +1178,7 @@ Widget _buildPopupDialog(BuildContext context) {
             horizontal: context.appValues.appPadding.p32,
           ),
           child: Text(
-            translate('bookService.serviceRequestConfirmed'),
+            'bookService.serviceRequestConfirmed'.tr(),
             textAlign: TextAlign.center,
             style: getPrimarySemiBoldStyle(
               fontSize: 16,
@@ -1173,7 +1192,7 @@ Widget _buildPopupDialog(BuildContext context) {
             horizontal: context.appValues.appPadding.p20,
           ),
           child: Text(
-            translate('bookService.serviceRequestConfirmedMsg'),
+            'bookService.serviceRequestConfirmedMsg'.tr(),
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
               fontSize: 12,
@@ -1231,7 +1250,7 @@ Widget _buildPopupDialogNo(BuildContext context, String message) {
             horizontal: context.appValues.appPadding.p32,
           ),
           child: Text(
-            translate('button.tryAgainLater'),
+            'button.tryAgainLater'.tr(),
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
               fontSize: 15,

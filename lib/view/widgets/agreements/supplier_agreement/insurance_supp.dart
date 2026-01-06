@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class InsuranceSupplier extends StatefulWidget {
   const InsuranceSupplier({super.key});
@@ -18,7 +18,7 @@ class _InsuranceSupplierState extends State<InsuranceSupplier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.insurance'),
+          'termsAndConditionsSupplier.insurance'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -30,7 +30,7 @@ class _InsuranceSupplierState extends State<InsuranceSupplier> {
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsSupplier.insurance1'),
+                'termsAndConditionsSupplier.insurance1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

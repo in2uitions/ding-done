@@ -8,9 +8,9 @@ import 'package:dingdone/view/widgets/tabs/tabs_jobs.dart';
 import 'package:dingdone/view/widgets/tabs/tabs_jobs_supplier.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -118,7 +118,7 @@ class _JobsPageState extends State<JobsPage> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              translate('updateJob.rateJob'),
+             'updateJob.rateJob'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -178,7 +178,7 @@ class _JobsPageState extends State<JobsPage> {
                   ),
                 ),
                 child: Text(
-                  translate('button.ok'),
+                  'button.ok'.tr(),
                   style: getPrimaryRegularStyle(
                     fontSize: 15,
                     color: context.resources.color.btnColorBlue,
@@ -239,7 +239,7 @@ class _JobsPageState extends State<JobsPage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      translate('bottom_bar.jobs'),
+                                      'bottom_bar.jobs'.tr(),
                                       style: getPrimarySemiBoldStyle(
                                         color:
                                             context.resources.color.colorWhite,
@@ -370,9 +370,9 @@ class _JobsPageState extends State<JobsPage> {
                                               MediaQuery.of(context).size.height,
                                           child: TabsJobsSupplier(
                                             tabtitle: [
-                                              translate('jobs.bookedJobs'),
-                                              translate('jobs.activeJobs'),
-                                              translate('jobs.completedJobs'),
+                                              'jobs.bookedJobs'.tr(),
+                                             'jobs.activeJobs'.tr(),
+                                             'jobs.completedJobs'.tr(),
                                             ],
                                             tabContent: [
                                               JobsCards(
@@ -410,10 +410,10 @@ class _JobsPageState extends State<JobsPage> {
                                               MediaQuery.of(context).size.height,
                                           child: TabsJobs(
                                             tabtitle: [
-                                              translate('jobs.requestedJobs'),
-                                              translate('jobs.confirmedJobs'),
-                                              translate('jobs.activeJobs'),
-                                              translate('jobs.completedJobs'),
+                                             'jobs.requestedJobs'.tr(),
+                                              'jobs.confirmedJobs'.tr(),
+                                             'jobs.activeJobs'.tr(),
+                                              'jobs.completedJobs'.tr(),
                                             ],
                                             tabContent: [
                                               JobsCards(
@@ -533,7 +533,7 @@ class _JobsPageState extends State<JobsPage> {
                 horizontal: context.appValues.appPadding.p20,
               ),
               child: Text(
-                translate('bottom_bar.jobs'),
+                'bottom_bar.jobs'.tr(),
                 style: getPrimaryRegularStyle(
                   color: context.resources.color.btnColorBlue,
                   fontSize: 32,
@@ -574,7 +574,7 @@ Widget _buildPopupDialogFailure(BuildContext context,String message) {
             horizontal: context.appValues.appPadding.p32,
           ),
           child: Text(
-            translate('button.failure'),
+            'button.failure'.tr(),
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
                 fontSize: 17, color: context.resources.color.btnColorBlue),

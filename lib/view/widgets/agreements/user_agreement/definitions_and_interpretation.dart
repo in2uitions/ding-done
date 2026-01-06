@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class DefinitionAndInterpretation extends StatefulWidget {
   const DefinitionAndInterpretation({super.key});
@@ -20,7 +20,7 @@ class _DefinitionAndInterpretationState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsCustomer.definitionAndIntegration'),
+          'termsAndConditionsCustomer.definitionAndIntegration'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -32,7 +32,7 @@ class _DefinitionAndInterpretationState
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsCustomer.defAndInt1'),
+                'termsAndConditionsCustomer.defAndInt1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 17),
               ),
@@ -44,42 +44,42 @@ class _DefinitionAndInterpretationState
                 child: Column(
                   children: [
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt11'),
+                     'termsAndConditionsCustomer.defAndInt11'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt12'),
+                      'termsAndConditionsCustomer.defAndInt12'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt13'),
+                      'termsAndConditionsCustomer.defAndInt13'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt14'),
+                      'termsAndConditionsCustomer.defAndInt14'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt15'),
+                      'termsAndConditionsCustomer.defAndInt15'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt16'),
+                     'termsAndConditionsCustomer.defAndInt16'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
@@ -89,7 +89,7 @@ class _DefinitionAndInterpretationState
                 ),
               ),
               Text(
-                translate('termsAndConditionsCustomer.defAndInt2'),
+                'termsAndConditionsCustomer.defAndInt2'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 17),
               ),
@@ -101,84 +101,84 @@ class _DefinitionAndInterpretationState
                 child: Column(
                   children: [
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt21'),
+                     'termsAndConditionsCustomer.defAndInt21'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt22'),
+                      'termsAndConditionsCustomer.defAndInt22'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt23'),
+                      'termsAndConditionsCustomer.defAndInt23'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt24'),
+                      'termsAndConditionsCustomer.defAndInt24'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt25'),
+                      'termsAndConditionsCustomer.defAndInt25'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt26'),
+                      'termsAndConditionsCustomer.defAndInt26'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt27'),
+                      'termsAndConditionsCustomer.defAndInt27'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt28'),
+                     'termsAndConditionsCustomer.defAndInt28'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt29'),
+                     'termsAndConditionsCustomer.defAndInt29'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt210'),
+                      'termsAndConditionsCustomer.defAndInt210'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt211'),
+                      'termsAndConditionsCustomer.defAndInt211'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.defAndInt212'),
+                      'termsAndConditionsCustomer.defAndInt212'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),

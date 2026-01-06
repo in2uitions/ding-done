@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class PriceAndEstimates extends StatefulWidget {
   const PriceAndEstimates({super.key});
@@ -18,7 +18,7 @@ class _PriceAndEstimatesState extends State<PriceAndEstimates> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.pricesAndEstimates'),
+            'termsAndConditionsCustomer.pricesAndEstimates'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -30,21 +30,21 @@ class _PriceAndEstimatesState extends State<PriceAndEstimates> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.pricesAndEstimates1'),
+                    'termsAndConditionsCustomer.pricesAndEstimates1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.pricesAndEstimates2'),
+                    'termsAndConditionsCustomer.pricesAndEstimates2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.pricesAndEstimates3'),
+                    'termsAndConditionsCustomer.pricesAndEstimates3'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

@@ -1,9 +1,9 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -161,7 +161,7 @@ class _JobInProgressState extends State<JobInProgress> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  translate('jobs.workingDay'),
+                                 'jobs.workingDay'.tr(),
 
                                   style: getPrimaryBoldStyle(
                                     fontSize: 12,
@@ -253,7 +253,7 @@ class _JobInProgressState extends State<JobInProgress> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    translate('home_screen.totalPrice'),
+                                    'home_screen.totalPrice'.tr(),
                                     style: getPrimarySemiBoldStyle(
                                       fontSize: 12,
                                       color: const Color(0xff180B3C),
@@ -309,7 +309,7 @@ class _JobInProgressState extends State<JobInProgress> {
                                   backgroundColor: const Color(0xff4100E3),
                                 ),
                                 child: Text(
-                                  translate('button.complete'),
+                                  'button.complete'.tr(),
                                   style: getPrimarySemiBoldStyle(
                                     fontSize: 12,
                                     color: context.resources.color.colorWhite,
@@ -374,7 +374,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              '${translate('updateJob.estimatedNumberOfUnits')}: ${jobsViewModel.updatedBody["number_of_units"] ?? data.number_of_units}',
+              '${'updateJob.estimatedNumberOfUnits'.tr()}: ${jobsViewModel.updatedBody["number_of_units"] ?? data.number_of_units}',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -511,7 +511,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              '${translate('updateJob.estimatedNumberOfUnits')}: ${data.number_of_units ?? ''}',
+              '${'updateJob.estimatedNumberOfUnits'.tr()}: ${data.number_of_units ?? ''}',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -618,7 +618,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              translate('button.success'),
+              'button.success'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                   fontSize: 17, color: context.resources.color.btnColorBlue),
@@ -630,7 +630,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              translate('jobDetails.jobAccepted'),
+              'jobDetails.jobAccepted'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 15,
@@ -670,7 +670,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              translate('button.failure'),
+              'button.failure'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                   fontSize: 17, color: context.resources.color.btnColorBlue),
@@ -682,7 +682,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              translate('button.somethingWentWrong'),
+              'button.somethingWentWrong'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 15,

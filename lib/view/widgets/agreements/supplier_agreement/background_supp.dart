@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class BackgroundSupplier extends StatefulWidget {
   const BackgroundSupplier({super.key});
@@ -18,7 +18,7 @@ class _BackgroundSupplierState extends State<BackgroundSupplier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.background'),
+          'termsAndConditionsSupplier.background'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -30,37 +30,37 @@ class _BackgroundSupplierState extends State<BackgroundSupplier> {
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsSupplier.background1'),
+                'termsAndConditionsSupplier.background1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.background2'),
+                'termsAndConditionsSupplier.background2'.tr(),
               style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.background11'),
+                'termsAndConditionsSupplier.background11'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.background12'),
+                'termsAndConditionsSupplier.background12'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.background13'),
+                'termsAndConditionsSupplier.background13'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.background14'),
+                'termsAndConditionsSupplier.background14'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

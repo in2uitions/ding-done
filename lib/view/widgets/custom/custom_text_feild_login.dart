@@ -1,8 +1,8 @@
 import 'package:dingdone/res/app_validation.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class CustomTextFieldLogin extends StatefulWidget {
   const CustomTextFieldLogin({
@@ -74,7 +74,7 @@ class _CustomTextFieldLoginState extends State<CustomTextFieldLogin> {
       controller: _customController,
       textAlignVertical: TextAlignVertical.center,
       obscureText: widget.hintText == "Password" ? obscureText : false,
-      validator: widget.hintText == translate('paymentMethod.cardNumber')
+      validator: widget.hintText == 'paymentMethod.cardNumber'.tr()
           ? AppValidation().cardNumberValidator
           : widget.validator,
       keyboardType: widget.keyboardType,

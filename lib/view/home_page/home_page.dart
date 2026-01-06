@@ -11,10 +11,10 @@ import 'package:dingdone/view_model/categories_view_model/categories_view_model.
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
@@ -126,7 +126,7 @@ class _HomePageState extends State<HomePage> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              translate('updateJob.rateJob'),
+             'updateJob.rateJob'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -194,7 +194,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     child: Text(
-                      translate('button.ok'),
+                      'button.ok'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 15,
                         color: context.resources.color.btnColorBlue,
@@ -225,7 +225,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ),
                     child: Text(
-                      translate('button.cancel'),
+                      'button.cancel'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 15,
                         color: Colors.white,
@@ -270,7 +270,7 @@ class _HomePageState extends State<HomePage> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              translate('button.failure'),
+              'button.failure'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                   fontSize: 17, color: context.resources.color.btnColorBlue),
@@ -787,7 +787,7 @@ class _HomePageState extends State<HomePage> {
                                                 profileViewModel.getProfileBody[
                                                             "user"] !=
                                                         null
-                                                    ? '${translate('home_screen.Hi')} '
+                                                    ? '${'home_screen.Hi'.tr()} '
                                                     : '',
                                                 style: getPrimarySemiBoldStyle(
                                                   color:
@@ -904,7 +904,7 @@ class _HomePageState extends State<HomePage> {
                                           color: Color(0xFF6E6BE8),
                                         ),
                                         hintText:
-                                            translate('home_screen.hintSearch'),
+                                            'home_screen.hintSearch'.tr(),
                                         hintStyle: getPrimaryRegularStyle(
                                           color: const Color(0xFF6E6BE8),
                                           fontSize: 14,
@@ -1046,7 +1046,7 @@ class _HomePageState extends State<HomePage> {
                                                 //     ? translate(
                                                 //         'home_screen.servicesCategories')
                                                 //     :
-                                                translate('updateJob.services'),
+                                                'updateJob.services'.tr(),
                                                 style: getPrimarySemiBoldStyle(
                                                   fontSize: 16,
                                                   color: context.resources.color
@@ -1155,8 +1155,8 @@ class _HomePageState extends State<HomePage> {
                                                 //     servicesViewModel.searchBody["search_services"] != ''
                                                 //     ? servicesViewModel.searchBody["search_services"]
                                                 //     :
-                                                translate(
-                                                    'home_screen.getItDone'),
+
+                                                    'home_screen.getItDone'.tr(),
                                                 style: getPrimarySemiBoldStyle(
                                                   fontSize: 16,
                                                   color: context.resources.color
@@ -1335,6 +1335,27 @@ class _HomePageState extends State<HomePage> {
                                                                   (t) => t['languages_code'] == lang,
                                                               orElse: () => serviceId['translations'][0],
                                                             );
+                                                            jobsViewModel.setInputValues(index: 'service', value: service["id"]);
+                                                            jobsViewModel.setInputValues(
+                                                              index: 'job_address',
+                                                              value: profileViewModel.getProfileBody['current_address'],
+                                                            );
+
+                                                            jobsViewModel.setInputValues(
+                                                              index: 'address',
+                                                              value:
+                                                              '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
+                                                            );
+                                                            jobsViewModel.setInputValues(
+                                                                index: 'latitude',
+                                                                value: profileViewModel.getProfileBody['current_address']['latitude']);
+                                                            jobsViewModel.setInputValues(
+                                                                index: 'longitude',
+                                                                value: profileViewModel.getProfileBody['current_address']['longitude']);
+                                                            jobsViewModel.setInputValues(index: 'payment_method', value: 'Card');
+                                                            // jobsViewModel.setInputValues(index: 'number_of_units',value:service['country_rates'][0]['minimum_order'].toString() );
+                                                            servicesViewModel
+                                                                .setParentCategory(trans["title"]);
                                                             debugPrint('service id $serviceId');
                                                             debugPrint('lang service id $lang');
                                                             debugPrint('image service id ${serviceId["image"]}');
@@ -1769,7 +1790,8 @@ class _HomePageState extends State<HomePage> {
       context: context,
       builder: (BuildContext context) => child,
     ).then((String? value) {
-      if (value != null) changeLocale(context, value);
+      if (value != null)   context.setLocale(Locale(value));
+
     });
   }
 

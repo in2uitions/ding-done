@@ -15,10 +15,10 @@ import 'package:dingdone/view_model/categories_view_model/categories_view_model.
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             InkWell(
                                 child: Text(
-                                  translate('login_screen.skip'),
+                                  'login_screen.skip'.tr(),
                                   style: getPrimarySemiBoldStyle(
                                     fontSize: 16,
                                     color: Colors.white,
@@ -212,8 +212,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     return Column(
                                       children: [
                                         Text(
-                                          translate(
-                                              'login_screen.signInToYourAccount'),
+                                              'login_screen.signInToYourAccount'.tr(),
                                           style: getPrimarySemiBoldStyle(
                                             fontSize: 16,
                                             color: const Color(0xff180B3C),
@@ -228,7 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           // hintText: context
                                           //     .resources.strings.formHints['email_address']!,
                                           hintText:
-                                              translate('formHints.email'),
+                                              'formHints.email'.tr(),
                                           validator: (val) =>
                                               loginViewModel.loginErrors[context
                                                   .resources
@@ -250,7 +249,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           // hintText: context
                                           //     .resources.strings.formHints['password']!,
                                           hintText:
-                                              translate('formHints.password'),
+                                             'formHints.password'.tr(),
                                           errorText: loginViewModel.loginErrors[
                                               context.resources.strings
                                                   .formKeys['password']!],
@@ -283,8 +282,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     .appSizePercent.w45,
                                                 child: CheckboxListTile(
                                                   title: Text(
-                                                    translate(
-                                                        'login_screen.rememberMe'),
+
+                                                        'login_screen.rememberMe'.tr(),
                                                     style:
                                                         getPrimaryRegularStyle(
                                                       fontSize: 12,
@@ -328,8 +327,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                               alignment: Alignment.centerRight,
                                               child: InkWell(
                                                 child: Text(
-                                                  translate(
-                                                      'login_screen.forgotPassword'),
+
+                                                      'login_screen.forgotPassword'.tr(),
                                                   style: getPrimaryRegularStyle(
                                                     color:
                                                         const Color(0xff4100E3),
@@ -406,8 +405,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       strokeWidth: 1.5,
                                                     ))
                                                 : Text(
-                                                    translate(
-                                                        'login_screen.signIn'),
+                                                        'login_screen.signIn'.tr(),
                                                     style:
                                                         getPrimaryRegularStyle(
                                                       color: context.resources
@@ -425,7 +423,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
-                                        translate('login_screen.signUnMessage'),
+                                        'login_screen.signUnMessage'.tr(),
                                         style: getPrimaryRegularStyle(
                                           color: const Color(0xff71727A),
                                           fontSize: 12,
@@ -434,7 +432,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       const Gap(5),
                                       InkWell(
                                         child: Text(
-                                          translate('login_screen.signUpNow'),
+                                          'login_screen.signUpNow'.tr(),
                                           style: getPrimaryBoldStyle(
                                             color: const Color(0xff4100E3),
                                             fontSize: 12,
@@ -676,8 +674,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         width: context.appValues
                                                             .appSize.s10),
                                                     Text(
-                                                      translate(
-                                                          'login_screen.connectWithGoogle'),
+
+                                                          'login_screen.connectWithGoogle'.tr(),
                                                       style:
                                                           getPrimaryRegularStyle(
                                                         color: context.resources
@@ -899,8 +897,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         width: context.appValues
                                                             .appSize.s10),
                                                     Text(
-                                                      translate(
-                                                          'login_screen.connectWithApple'),
+                                                          'login_screen.connectWithApple'.tr(),
                                                       style:
                                                           getPrimaryRegularStyle(
                                                         color: context.resources
@@ -935,7 +932,8 @@ class _LoginScreenState extends State<LoginScreen> {
     showCupertinoModalPopup<String>(
         context: context,
         builder: (BuildContext context) => child).then((String? value) {
-      if (value != null) changeLocale(context, value);
+      if (value != null)   context.setLocale(Locale(value));
+
     });
   }
 
@@ -958,25 +956,25 @@ class _LoginScreenState extends State<LoginScreen> {
             const Gap(15),
             _languageTile(
               ctx,
-              label: translate('language.name.en-US'),
+              label: 'language.name.en-US'.tr(),
               value: 'en',
               dblangValue: 'en-US',
             ),
             _languageTile(
               ctx,
-              label: translate('language.name.ar-SA'),
+              label: 'language.name.ar-SA'.tr(),
               value: 'ar',
               dblangValue: 'ar-SA',
             ),
             _languageTile(
               ctx,
-              label: translate('language.name.el-GR'),
+              label: 'language.name.el-GR'.tr(),
               value: 'el',
               dblangValue: 'el-GR',
             ),
             _languageTile(
               ctx,
-              label: translate('language.name.ru-RU'),
+              label: 'language.name.ru-RU'.tr(),
               value: 'ru',
               dblangValue: 'ru-RU',
             ),
@@ -1008,7 +1006,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   child: Center(
                     child: Text(
-                      translate('button.cancel'),
+                      'button.cancel'.tr(),
                       textAlign: TextAlign.center,
                       style: getPrimarySemiBoldStyle(
                         fontSize: 12,

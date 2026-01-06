@@ -114,9 +114,9 @@
 //   }
 // }
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:dingdone/res/app_context_extension.dart';
@@ -212,7 +212,7 @@ class _CustomDatePicker2 extends State<CustomDatePicker2> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    translate('jobs.workingDay'),
+                    'jobs.workingDay'.tr(),
 
                     style: getPrimaryRegularStyle(
                       color: const Color(0xff180B3C),

@@ -4,8 +4,8 @@ import 'package:dingdone/view/widgets/book_a_service/job_type/job_type_buttons.d
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 class JobTypeWidget extends StatefulWidget {
@@ -52,14 +52,14 @@ class _JobTypeWidgetState extends State<JobTypeWidget> {
                   right: context.appValues.appPadding.p10,
                 ),
                 child: Text(
-                  translate('bookService.jobType'),
+                  'bookService.jobType'.tr(),
                   style: getPrimaryRegularStyle(
                     fontSize: 14,
                     color: const Color(0xff180B3C),
                   ),
                 ),
               ),
-              widget.tab == translate('jobs.completed') ||
+              widget.tab == 'jobs.completed'.tr() ||
                       widget.tab == 'booked'
                   ? Text(
                       '${widget.job_type}',

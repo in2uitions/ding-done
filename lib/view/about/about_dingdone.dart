@@ -1,9 +1,12 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+
+import 'dart:ui' as ui;
+import 'package:provider/provider.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:provider/provider.dart';
 
@@ -46,7 +49,7 @@ class _AboutState extends State<About> {
             children: [
               SafeArea(
                 child: Directionality(
-                  textDirection: TextDirection.ltr,
+                  textDirection: ui.TextDirection.ltr,
                   child: Padding(
                     padding: EdgeInsets.all(context.appValues.appPadding.p20),
                     child: Row(
@@ -65,7 +68,7 @@ class _AboutState extends State<About> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  translate('formHints.about'),
+                 'formHints.about'.tr(),
 
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.secondColorBlue,

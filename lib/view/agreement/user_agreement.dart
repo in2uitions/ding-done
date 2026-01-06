@@ -22,8 +22,9 @@ import 'package:dingdone/view/widgets/agreements/user_agreement/warranties_and_r
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'dart:ui' as ui;
 
 class UserAgreement extends StatefulWidget {
   var index;
@@ -48,7 +49,7 @@ class _UserAgreementState extends State<UserAgreement> {
              widget.index==null?
              SafeArea(
                 child: Directionality(
-                  textDirection: TextDirection.ltr,
+                  textDirection: ui.TextDirection.ltr,
                   child: Padding(
                     padding:
                     EdgeInsets.all(context.appValues.appPadding.p20),
@@ -68,7 +69,7 @@ class _UserAgreementState extends State<UserAgreement> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  translate('termsAndConditionsCustomer.userAgreement'),
+                  'termsAndConditionsCustomer.userAgreement'.tr(),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.secondColorBlue,
                       fontSize: 24),
@@ -78,7 +79,7 @@ class _UserAgreementState extends State<UserAgreement> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  translate('termsAndConditionsCustomer.termsAndConditions'),
+                  'termsAndConditionsCustomer.termsAndConditions'.tr(),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.btnColorBlue,
                       fontSize: 20),
@@ -94,35 +95,35 @@ class _UserAgreementState extends State<UserAgreement> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      translate('termsAndConditionsCustomer.background'),
+                      'termsAndConditionsCustomer.background'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.secondColorBlue,
                           fontSize: 18),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.background1'),
+                      'termsAndConditionsCustomer.background1'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
-                      translate('termsAndConditionsCustomer.background2'),
+                      'termsAndConditionsCustomer.background2'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
-                      translate('termsAndConditionsCustomer.background3'),
+                      'termsAndConditionsCustomer.background3'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
-                      translate('termsAndConditionsCustomer.background4'),
+                      'termsAndConditionsCustomer.background4'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
@@ -139,7 +140,7 @@ class _UserAgreementState extends State<UserAgreement> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                    translate('termsAndConditionsCustomer.partiesAgree'),
+                    'termsAndConditionsCustomer.partiesAgree'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 20),
@@ -194,7 +195,7 @@ class _UserAgreementState extends State<UserAgreement> {
                         //
                       },
                       title: Text(
-                        translate('termsAndConditionsCustomer.agree'),
+                        'termsAndConditionsCustomer.agree'.tr(),
                         style: getPrimaryRegularStyle(fontSize: 15),
                       ),
                     ):Container(),
@@ -218,7 +219,7 @@ class _UserAgreementState extends State<UserAgreement> {
                                   context: context,
                                   builder: (BuildContext context) =>
                                       _buildPopupDialog(
-                                          context, translate('button.success')),
+                                          context, 'button.success'.tr()),
                                 );
                               }else{
                                 showDialog(
@@ -249,7 +250,7 @@ class _UserAgreementState extends State<UserAgreement> {
                                 context.resources.color.colorYellow,
                           ),
                           child: Text(
-                            translate('login_screen.signUp'),
+                            'login_screen.signUp'.tr(),
                             style: getPrimaryRegularStyle(
                               fontSize: 15,
                               color: context.resources.color.btnColorBlue,
@@ -303,8 +304,8 @@ Widget _buildPopupDialog(BuildContext context, String message) {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                message == translate(
-                    'button.success')
+                message ==
+                    'button.success'.tr()
                     ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
                     : SvgPicture.asset('assets/img/failure.svg'),
               ],

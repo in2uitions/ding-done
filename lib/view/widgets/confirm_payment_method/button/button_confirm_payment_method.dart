@@ -1,9 +1,9 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -61,7 +61,8 @@ class _ButtonConfirmPaymentMethodState
     showCupertinoModalPopup<String>(
         context: context,
         builder: (BuildContext context) => child).then((String? value) {
-      if (value != null) changeLocale(context, value);
+      if (value != null) context.setLocale(Locale.fromSubtags(languageCode: value));
+
     });
   }
 

@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class FeesSupp extends StatefulWidget {
   const FeesSupp({super.key});
@@ -18,7 +18,7 @@ class _FeesSuppState extends State<FeesSupp> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.fees'),
+          'termsAndConditionsSupplier.fees'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -30,43 +30,43 @@ class _FeesSuppState extends State<FeesSupp> {
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsSupplier.fees1'),
+                'termsAndConditionsSupplier.fees1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.fees2'),
+                'termsAndConditionsSupplier.fees2'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.fees3'),
+                'termsAndConditionsSupplier.fees3'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.fees4'),
+                'termsAndConditionsSupplier.fees4'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.fees5'),
+                'termsAndConditionsSupplier.fees5'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.fees6'),
+                'termsAndConditionsSupplier.fees6'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.fees7'),
+                'termsAndConditionsSupplier.fees7'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

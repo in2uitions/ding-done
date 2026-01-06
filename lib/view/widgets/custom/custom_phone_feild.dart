@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 
 class CustomPhoneFeild extends StatefulWidget {
@@ -58,7 +58,7 @@ class _CustomPhoneFeildState extends State<CustomPhoneFeild> {
       controller: _customController,
       decoration: InputDecoration(
         errorText: widget.errorText,
-        hintText: translate('formHints.phone_number'),
+        hintText:'formHints.phone_number'.tr(),
         enabledBorder: const UnderlineInputBorder(
           borderSide: BorderSide(
             color: Color(0xffEAEAFF),

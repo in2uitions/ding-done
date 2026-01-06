@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class RelationShipOfPartiesSupplier extends StatefulWidget {
   const RelationShipOfPartiesSupplier({super.key});
@@ -20,7 +20,7 @@ class _RelationShipOfPartiesSupplierState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.relationshipOfParties'),
+         'termsAndConditionsSupplier.relationshipOfParties'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -32,31 +32,31 @@ class _RelationShipOfPartiesSupplierState
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsSupplier.relationshipOfParties1'),
+                'termsAndConditionsSupplier.relationshipOfParties1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.relationshipOfParties2'),
+                'termsAndConditionsSupplier.relationshipOfParties2'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.relationshipOfParties3'),
+                'termsAndConditionsSupplier.relationshipOfParties3'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.relationshipOfParties4'),
+                'termsAndConditionsSupplier.relationshipOfParties4'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.relationshipOfParties5'),
+                'termsAndConditionsSupplier.relationshipOfParties5'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

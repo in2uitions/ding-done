@@ -24,7 +24,8 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'dart:ui' as ui;
 import 'package:provider/provider.dart';
 
 import '../bottom_bar/bottom_bar.dart';
@@ -52,7 +53,7 @@ class _UserAgreementSigninState extends State<UserAgreementSignin> {
              widget.index==null?
              SafeArea(
                 child: Directionality(
-                  textDirection: TextDirection.ltr,
+                  textDirection: ui.TextDirection.ltr,
                   child: Padding(
                     padding:
                     EdgeInsets.all(context.appValues.appPadding.p20),
@@ -72,7 +73,7 @@ class _UserAgreementSigninState extends State<UserAgreementSignin> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  translate('termsAndConditionsCustomer.userAgreement'),
+                  'termsAndConditionsCustomer.userAgreement'.tr(),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.secondColorBlue,
                       fontSize: 24),
@@ -82,7 +83,7 @@ class _UserAgreementSigninState extends State<UserAgreementSignin> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  translate('termsAndConditionsCustomer.termsAndConditions'),
+                  'termsAndConditionsCustomer.termsAndConditions'.tr(),
                   style: getPrimaryRegularStyle(
                       color: context.resources.color.btnColorBlue,
                       fontSize: 20),
@@ -98,35 +99,35 @@ class _UserAgreementSigninState extends State<UserAgreementSignin> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      translate('termsAndConditionsCustomer.background'),
+                      'termsAndConditionsCustomer.background'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.secondColorBlue,
                           fontSize: 18),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.background1'),
+                      'termsAndConditionsCustomer.background1'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
-                      translate('termsAndConditionsCustomer.background2'),
+                      'termsAndConditionsCustomer.background2'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
-                      translate('termsAndConditionsCustomer.background3'),
+                      'termsAndConditionsCustomer.background3'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s20),
                     Text(
-                      translate('termsAndConditionsCustomer.background4'),
+                      'termsAndConditionsCustomer.background4'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
@@ -143,7 +144,7 @@ class _UserAgreementSigninState extends State<UserAgreementSignin> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                    translate('termsAndConditionsCustomer.partiesAgree'),
+                    'termsAndConditionsCustomer.partiesAgree'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 20),
@@ -198,7 +199,7 @@ class _UserAgreementSigninState extends State<UserAgreementSignin> {
                         //
                       },
                       title: Text(
-                        translate('termsAndConditionsCustomer.agree'),
+                        'termsAndConditionsCustomer.agree'.tr(),
                         style: getPrimaryRegularStyle(fontSize: 15),
                       ),
                     ):Container(),
@@ -250,7 +251,7 @@ class _UserAgreementSigninState extends State<UserAgreementSignin> {
                                 context.resources.color.colorYellow,
                           ),
                           child: Text(
-                            translate('button.complete'),
+                            'button.complete'.tr(),
                             style: getPrimaryRegularStyle(
                               fontSize: 15,
                               color: context.resources.color.btnColorBlue,

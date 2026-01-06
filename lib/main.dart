@@ -18,6 +18,7 @@ import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:facebook_app_events/facebook_app_events.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -26,69 +27,61 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-
 import 'package:uni_links2/uni_links.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
   final prefs = await SharedPreferences.getInstance();
-  var delegate = await LocalizationDelegate.create(
-      fallbackLocale: 'en', supportedLocales: ['en', 'ar', 'el', 'ru']);
+
   runApp(
     RestartWidget(
-      child: LocalizedApp(
-        delegate,
-        MyApp(prefs: prefs),
+      child: EasyLocalization(
+        supportedLocales: const [
+          Locale('en'),
+          Locale('ar'),
+          Locale('el'),
+          Locale('ru'),
+        ],
+        fallbackLocale: const Locale('en'),
+        path: 'assets/i18n',
+        child: MyApp(prefs: prefs),
       ),
     ),
   );
 }
 
 class MyApp extends StatefulWidget {
-  var prefs;
-
-  MyApp({super.key, this.prefs});
+  final SharedPreferences prefs;
+  const MyApp({super.key, required this.prefs});
 
   @override
   State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-  String? email;
-  String? password;
-  String? userIdK;
   String? userRole;
   String? _userId;
   bool _doLogin = false;
+
   late StreamSubscription _sub;
-  late String _routePath;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final FacebookAppEvents facebookAppEvents = FacebookAppEvents();
 
   @override
   void initState() {
     super.initState();
-    // getCredentials();
-
     checkUserIsLogged();
     getLanguage();
-
-    WidgetsFlutterBinding.ensureInitialized();
-    // Future.delayed(const Duration(seconds: 3), () => checkUserIsLogged());
     initPlatformState();
-    // configurePayment();
-    // setupSDKSession();
     initialDeepLink();
-    // WidgetsBinding.instance.addPostFrameCallback((_) {
-    //   _requestTrackingAuthorization();
-    // });
   }
 
   @override
@@ -96,162 +89,64 @@ class _MyAppState extends State<MyApp> {
     _sub.cancel();
     super.dispose();
   }
+
   Future<void> initialDeepLink() async {
-    debugPrint('init deep link');
-
-    // 1. Get the initial link on cold start
-    // final initialLink = await getInitialLink();
-    // if (initialLink != null) {
-    //   handleIncomingLink(initialLink);
-    // }
-
-    // 2. Listen for new links while app is running
     _sub = linkStream.listen((String? link) {
-      debugPrint('listening to external link $link');
       if (link != null) {
         handleIncomingLink(link);
       }
     });
   }
-  Future<void> _requestTrackingAuthorization() async {
-    if (Platform.isIOS) {
-      final TrackingStatus status =
-      await AppTrackingTransparency.requestTrackingAuthorization();
-
-      switch (status) {
-        case TrackingStatus.notDetermined:
-        // The user has not yet made a choice.
-          break;
-        case TrackingStatus.restricted:
-        // Tracking is restricted.
-          break;
-        case TrackingStatus.denied:
-        // The user has denied tracking permission.
-          break;
-        case TrackingStatus.authorized:
-        // The user has granted tracking permission.
-          facebookAppEvents.setAutoLogAppEventsEnabled(true);
-          facebookAppEvents.setAdvertiserTracking(enabled: true, collectId: true);
-          break;
-        case TrackingStatus.notSupported:
-        // Tracking is not supported on this device (e.g., older iOS versions).
-          facebookAppEvents.setAutoLogAppEventsEnabled(true); // Enable logging anyway
-          facebookAppEvents.setAdvertiserTracking(enabled: true, collectId: true);
-          break;
-      }
-    } else {
-      // On Android, you don't need to request ATT permission
-      facebookAppEvents.setAutoLogAppEventsEnabled(true);
-    }
-  }
 
   void handleIncomingLink(String link) async {
     final role = await AppPreferences().get(key: userRoleKey, isModel: false);
     Uri uri = Uri.parse(link);
-    debugPrint('uri parsed $uri');
-    debugPrint('uri path ${uri.path}');
+
     try {
       if (uri.toString().contains('confirm_payment_method')) {
-
-        navigatorKey.currentState?.push(MaterialPageRoute(builder: (_) =>
-            Consumer2<ProfileViewModel, PaymentViewModel>(
+        navigatorKey.currentState?.push(
+          MaterialPageRoute(
+            builder: (_) => Consumer2<ProfileViewModel, PaymentViewModel>(
               builder: (context, profileViewModel, paymentViewModel, _) {
                 return ConfirmPaymentMethod(
-                  payment_method: paymentViewModel
-                      .getPaymentBody['tap_payments_card'],
+                  payment_method:
+                  paymentViewModel.getPaymentBody['tap_payments_card'],
                   paymentViewModel: paymentViewModel,
                   profileViewModel: profileViewModel,
                   role: role,
                 );
               },
             ),
-        ));
-      } else if (uri.toString().contains('job')) {
-        final jobsViewModel = Provider.of<JobsViewModel>(
-            navigatorKey.currentContext!, listen: false);
-        final jobId = uri.pathSegments.last;
-        final job =await jobsViewModel.findJobById(jobId);
-        final lang = await AppPreferences().get(key: language, isModel: false);
-        debugPrint('role of the user is ${role}');
-        debugPrint('jobb id is ${jobId}');
-        debugPrint('supplier role ${Constants.supplierRoleId}');
-        debugPrint('customer role ${Constants.customerRoleId}');
-        debugPrint('job is ${job?.id}');
-        if(job!=null && job.service!=null)
-        if (role == Constants.supplierRoleId) {
-          debugPrint('i am a supplier');
-
-          navigatorKey.currentState?.push(MaterialPageRoute(
-            builder: (_) =>
-                JobDetailsSupplier(
-                  data: job,
-                  fromWhere: job.status=='circulating'?'request'
-              :job.status=='booked'?translate('jobs.booked')
-                      :job.status=='inprogress'?translate('jobs.active')
-                      :job.status=='completed'?translate('jobs.completed'):'notifications',
-                  title: job?.service["translations"][0]["title"].toString(),
-                  lang: lang,
-                ),
-          ));
-        } else {
-          debugPrint('i am a customer');
-
-          navigatorKey.currentState?.push(MaterialPageRoute(
-            builder: (_) =>
-                UpdateJobRequestCustomer(
-                  data: job,
-                  title: job.service["translations"][0]["title"].toString(),
-                  fromWhere: job.status=='circulating'?'request'
-                      :job.status=='booked'?translate('jobs.booked')
-                      :job.status=='inprogress'?translate('jobs.active')
-                      :job.status=='completed'?translate('jobs.completed'):'notifications',
-                  lang: lang,
-                ),
-          ));
-        }
+          ),
+        );
       } else {
         navigatorKey.currentState?.push(
-            _createRoute(BottomBar(userRole: role, currentTab: 0)));
+          _createRoute(BottomBar(userRole: role, currentTab: 0)),
+        );
       }
-    }catch(error){
-      debugPrint('something went wrong $error');
+    } catch (e) {
+      debugPrint('Deep link error: $e');
     }
   }
 
   void checkUserIsLogged() async {
-    debugPrint('check user is logged ');
-    // final prefs = await SharedPreferences.getInstance();
-    // final role = prefs.getString(userRoleKey);
     final role = await AppPreferences().get(key: userRoleKey, isModel: false);
-    // final userId = prefs.getString(userIdKey);
     final userId = await AppPreferences().get(key: userIdKey, isModel: false);
 
-    // if ((prefs.getBool(SHARED_LOGGED) != null) &&
-    //     prefs.getBool(SHARED_LOGGED)!) {
     setState(() {
-      // _doLogin = true;
       userRole = role;
       _userId = userId;
-      if (userRole != null) {
-        _doLogin = true;
-      }
+      _doLogin = role != null;
     });
-    // }
   }
 
-  Route _createRoute(dynamic classname) {
+  Route _createRoute(dynamic page) {
     return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => classname,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        const begin = Offset(1.0, 0.0);
-        const end = Offset.zero;
-        const curve = Curves.ease;
-
-        var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-
+      pageBuilder: (_, animation, __) => page,
+      transitionsBuilder: (_, animation, __, child) {
         return SlideTransition(
-          position: animation.drive(tween),
+          position:
+          Tween(begin: const Offset(1, 0), end: Offset.zero).animate(animation),
           child: child,
         );
       },
@@ -259,185 +154,73 @@ class _MyAppState extends State<MyApp> {
   }
 
   Future<void> initPlatformState() async {
-    if (!mounted) return;
+    await Firebase.initializeApp();
+    await dotenv.load(fileName: "assets/.env");
 
-    OneSignal.Debug.setLogLevel(OSLogLevel.verbose);
-    OneSignal.Debug.setAlertLevel(OSLogLevel.none);
+    Stripe.publishableKey =
+    "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
 
-    // Make sure initialize is awaited
-     OneSignal.initialize("357d957a-ed36-4ab5-a29e-cfbe93536a64");
-
-    // ✅ Request permissions AFTER initialization
+    OneSignal.initialize("357d957a-ed36-4ab5-a29e-cfbe93536a64");
     await OneSignal.Notifications.requestPermission(true);
 
-    // ✅ NOW add the click listener
-    OneSignal.Notifications.addClickListener((event) {
-      final data = event.notification.additionalData;
-      final launchUrl = data?['launch_url'] ?? event.notification.launchUrl;
-
-      debugPrint('🔔 Notification clicked with URL: $launchUrl');
-
-      // if (launchUrl != null) {
-      //   handleIncomingLink(launchUrl);
-      // }
-    });
-    // _requestTrackingAuthorization();
-    await Firebase.initializeApp();
-    FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-    analytics.setAnalyticsCollectionEnabled(true);
-    FirebaseAnalyticsObserver(analytics: analytics);
-    String user =await AppPreferences().get(key: userNameKey, isModel: false);
-    await analytics.setUserId(id: user);
-    debugPrint('user name key in main is $user');
-    await analytics.logEvent(
-      name: 'user_name',
-      parameters: <String, Object>{
-        'string': user,
-
-      },
-    );
-    // WidgetsFlutterBinding.ensureInitialized();
-    const stripePublishableKey =
-        "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
-    Stripe.publishableKey = stripePublishableKey;
-    await dotenv.load(fileName: "assets/.env");
-    PermissionStatus cameraPermission = await Permission.camera.request();
-    debugPrint('status $cameraPermission');
     if (defaultTargetPlatform == TargetPlatform.android) {
       AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
     }
-  }
 
-  Locale localLang = const Locale('en');
+    await Permission.camera.request();
+  }
 
   void getLanguage() async {
     String? lang = await AppPreferences().get(key: language, isModel: false);
-    // debugPrint('language to usse22 $lang');
-    if (lang == null) {
-      lang = "en";
-      await AppPreferences().save(key: language, value: "en", isModel: false);
-      await AppPreferences().save(key: dblang, value: 'en-US', isModel: false);
-    }
+    lang ??= 'en';
 
-    setState(() {
-      localLang = Locale(lang!);
-    });
-    if (lang == 'en') {
-      await AppPreferences().save(key: dblang, value: 'en-US', isModel: false);
-    }
-    if (lang == 'ar') {
-      await AppPreferences().save(key: dblang, value: 'ar-SA', isModel: false);
-    }
-    if (lang == 'ru') {
-      await AppPreferences().save(key: dblang, value: 'ru-RU', isModel: false);
-    }
-    if (lang == 'el') {
-      await AppPreferences().save(key: dblang, value: 'el-GR', isModel: false);
-    }
+    await context.setLocale(Locale(lang));
+    await AppPreferences().save(
+        key: dblang,
+        value: lang == 'ar'
+            ? 'ar-SA'
+            : lang == 'ru'
+            ? 'ru-RU'
+            : lang == 'el'
+            ? 'el-GR'
+            : 'en-US',
+        isModel: false);
   }
 
   @override
   Widget build(BuildContext context) {
-    var localizationDelegate = LocalizedApp.of(context).delegate;
-    return LocalizationProvider(
-      state: LocalizationProvider.of(context).state,
-      child: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<OnBoardingViewModel>(
-              create: (BuildContext context) => OnBoardingViewModel()),
-          ChangeNotifierProvider<LoginViewModel>(
-              create: (BuildContext context) => LoginViewModel()),
-          ChangeNotifierProvider<SignUpViewModel>(
-              create: (BuildContext context) => SignUpViewModel()),
-          ChangeNotifierProvider<CategoriesViewModel>(
-              create: (BuildContext context) => CategoriesViewModel()),
-          ChangeNotifierProvider<ServicesViewModel>(
-              create: (BuildContext context) => ServicesViewModel()),
-          ChangeNotifierProvider<ProfileViewModel>(
-              create: (BuildContext context) => ProfileViewModel()),
-          ChangeNotifierProvider<JobsViewModel>(
-              create: (BuildContext context) => JobsViewModel()),
-          ChangeNotifierProvider<PaymentViewModel>(
-              create: (BuildContext context) => PaymentViewModel(
-                  Provider.of<ProfileViewModel>(context, listen: false))),
-        ],
-        child: MaterialApp(
-          navigatorKey: navigatorKey,
-          localizationsDelegates: [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            localizationDelegate
-          ],
-          supportedLocales: localizationDelegate.supportedLocales,
-          locale: localLang,
-          debugShowCheckedModeBanner: false,
-          home: _doLogin
-              ? BottomBar(userRole: userRole, currentTab: 0,)
-              : const OnBoardingScreen(),
-          // home: LoginScreen(),
-        ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<OnBoardingViewModel>(
+            create: (BuildContext context) => OnBoardingViewModel()),
+        ChangeNotifierProvider<LoginViewModel>(
+            create: (BuildContext context) => LoginViewModel()),
+        ChangeNotifierProvider<SignUpViewModel>(
+            create: (BuildContext context) => SignUpViewModel()),
+        ChangeNotifierProvider<CategoriesViewModel>(
+            create: (BuildContext context) => CategoriesViewModel()),
+        ChangeNotifierProvider<ServicesViewModel>(
+            create: (BuildContext context) => ServicesViewModel()),
+        ChangeNotifierProvider<ProfileViewModel>(
+            create: (BuildContext context) => ProfileViewModel()),
+        ChangeNotifierProvider<JobsViewModel>(
+            create: (BuildContext context) => JobsViewModel()),
+        ChangeNotifierProvider<PaymentViewModel>(
+            create: (BuildContext context) => PaymentViewModel(
+                Provider.of<ProfileViewModel>(context, listen: false))),
+      ],
+      child: MaterialApp(
+        navigatorKey: navigatorKey,
+        debugShowCheckedModeBanner: false,
+
+        locale: context.locale,
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
+
+        home: _doLogin
+            ? BottomBar(userRole: userRole, currentTab: 0)
+            : const OnBoardingScreen(),
       ),
     );
   }
 }
-
-// import 'package:flutter/material.dart';
-
-// void main() {
-//   runApp(MyApp());
-// }
-
-// class MyApp extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return MaterialApp(
-//       home: MyListView(),
-//     );
-//   }
-// }
-
-// class MyListView extends StatefulWidget {
-//   @override
-//   _MyListViewState createState() => _MyListViewState();
-// }
-
-// class _MyListViewState extends State<MyListView> {
-//   int selectedIndex = -1;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Selectable List (Single Selection)'),
-//       ),
-//       body: ListView.builder(
-//         scrollDirection: Axis.horizontal,
-//         itemCount: 10,
-//         itemBuilder: (context, index) {
-//           bool isSelected = index == selectedIndex;
-
-//           return InkWell(
-//             onTap: () {
-//               setState(() {
-//                 if (isSelected) {
-//                   selectedIndex = -1; // Deselect the item
-//                 } else {
-//                   selectedIndex = index; // Select the item
-//                 }
-//               });
-//             },
-//             child: Container(
-//               width: 150.0,
-//               margin: EdgeInsets.only(right: 10.0),
-//               color: isSelected ? Colors.blue : Colors.grey,
-//               child: Center(
-//                 child: Text('Item $index'),
-//               ),
-//             ),
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }

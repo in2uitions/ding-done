@@ -9,7 +9,6 @@ import 'package:dingdone/models/on_boarding_model.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/view/widgets/on_boarding/walk_through_page_item.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';

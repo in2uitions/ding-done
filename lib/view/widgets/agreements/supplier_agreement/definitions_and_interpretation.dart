@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class DefinitionsSupplier extends StatefulWidget {
   const DefinitionsSupplier({super.key});
@@ -18,7 +18,7 @@ class _DefinitionsSupplierState extends State<DefinitionsSupplier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.definitionAndIntegration'),
+          'termsAndConditionsSupplier.definitionAndIntegration'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -31,7 +31,7 @@ class _DefinitionsSupplierState extends State<DefinitionsSupplier> {
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsSupplier.defAndInt21'),
+               'termsAndConditionsSupplier.defAndInt21'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
@@ -43,35 +43,35 @@ class _DefinitionsSupplierState extends State<DefinitionsSupplier> {
                 child: Column(
                   children: [
                     Text(
-                      translate('termsAndConditionsSupplier.defAndInt21a'),
+                      'termsAndConditionsSupplier.defAndInt21a'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.defAndInt21b'),
+                      'termsAndConditionsSupplier.defAndInt21b'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.defAndInt21c'),
+                      'termsAndConditionsSupplier.defAndInt21c'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.defAndInt21d'),
+                      'termsAndConditionsSupplier.defAndInt21d'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.defAndInt21e'),
+                     'termsAndConditionsSupplier.defAndInt21e'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),

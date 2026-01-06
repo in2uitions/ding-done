@@ -4,9 +4,9 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/profile_page_supplier/services_offered/service.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -73,7 +73,7 @@ class _ServicesOfferedSupplierProfileState
                     // SvgPicture.asset('assets/img/services_offered.svg'),
                     // const Gap(10),
                     Text(
-                      translate('profile.servicesOffered'),
+                      'profile.servicesOffered'.tr(),
                       style: getPrimaryBoldStyle(
                         fontSize: 20,
                         color: const Color(0xff180C38),

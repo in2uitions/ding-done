@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class ChangesAndCancellations extends StatefulWidget {
   const ChangesAndCancellations({super.key});
@@ -19,7 +19,7 @@ class _ChangesAndCancellationsState extends State<ChangesAndCancellations> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.changesAndCancellations'),
+           'termsAndConditionsCustomer.changesAndCancellations'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -31,35 +31,35 @@ class _ChangesAndCancellationsState extends State<ChangesAndCancellations> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.changesAndCancellations1'),
+                   'termsAndConditionsCustomer.changesAndCancellations1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.changesAndCancellations2'),
+                    'termsAndConditionsCustomer.changesAndCancellations2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.changesAndCancellations3'),
+                    'termsAndConditionsCustomer.changesAndCancellations3'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.changesAndCancellations4'),
+                   'termsAndConditionsCustomer.changesAndCancellations4'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.changesAndCancellations5'),
+                    'termsAndConditionsCustomer.changesAndCancellations5'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

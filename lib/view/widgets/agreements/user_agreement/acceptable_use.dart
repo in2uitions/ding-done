@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class AcceptableUse extends StatefulWidget {
   const AcceptableUse({super.key});
@@ -18,7 +18,7 @@ class _AcceptableUseState extends State<AcceptableUse> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.acceptableUse'),
+            'termsAndConditionsCustomer.acceptableUse'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -31,7 +31,7 @@ class _AcceptableUseState extends State<AcceptableUse> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.acceptableUse1'),
+                   'termsAndConditionsCustomer.acceptableUse1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
@@ -45,28 +45,28 @@ class _AcceptableUseState extends State<AcceptableUse> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          translate('termsAndConditionsCustomer.acceptableUse11'),
+                         'termsAndConditionsCustomer.acceptableUse11'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.acceptableUse12'),
+                          'termsAndConditionsCustomer.acceptableUse12'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.acceptableUse13'),
+                          'termsAndConditionsCustomer.acceptableUse13'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.acceptableUse14'),
+                          'termsAndConditionsCustomer.acceptableUse14'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
@@ -76,7 +76,7 @@ class _AcceptableUseState extends State<AcceptableUse> {
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.acceptableUse2'),
+                   'termsAndConditionsCustomer.acceptableUse2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
@@ -90,35 +90,35 @@ class _AcceptableUseState extends State<AcceptableUse> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          translate('termsAndConditionsCustomer.acceptableUse21'),
+                          'termsAndConditionsCustomer.acceptableUse21'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.acceptableUse22'),
+                          'termsAndConditionsCustomer.acceptableUse22'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.acceptableUse23'),
+                          'termsAndConditionsCustomer.acceptableUse23'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.acceptableUse24'),
+                          'termsAndConditionsCustomer.acceptableUse24'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),
                         ),
                         SizedBox(height: context.appValues.appSize.s10),
                         Text(
-                          translate('termsAndConditionsCustomer.acceptableUse25'),
+                          'termsAndConditionsCustomer.acceptableUse25'.tr(),
                           style: getPrimaryRegularStyle(
                               color: context.resources.color.btnColorBlue,
                               fontSize: 15),

@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class IndemnityAndLiability extends StatefulWidget {
   const IndemnityAndLiability({super.key});
@@ -18,7 +18,7 @@ class _IndemnityAndLiabilityState extends State<IndemnityAndLiability> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.indemnityAndReliability'),
+            'termsAndConditionsCustomer.indemnityAndReliability'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -30,35 +30,35 @@ class _IndemnityAndLiabilityState extends State<IndemnityAndLiability> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.indemnityAndReliability1'),
+                    'termsAndConditionsCustomer.indemnityAndReliability1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.indemnityAndReliability2'),
+                   'termsAndConditionsCustomer.indemnityAndReliability2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.indemnityAndReliability3'),
+                    'termsAndConditionsCustomer.indemnityAndReliability3'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.indemnityAndReliability4'),
+                    'termsAndConditionsCustomer.indemnityAndReliability4'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.indemnityAndReliability5'),
+                    'termsAndConditionsCustomer.indemnityAndReliability5'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

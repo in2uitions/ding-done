@@ -3,8 +3,8 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/inbox_page/skeleton_notifications.dart';
 import 'package:dingdone/view/widgets/inbox_page/notification_widget.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../../view_model/profile_view_model/profile_view_model.dart';
@@ -75,7 +75,7 @@ class _InboxPageState extends State<InboxPage> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    translate('notifications.notifications'),
+                                    'notifications.notifications'.tr(),
                                     style: getPrimaryBoldStyle(
                                       color: context.resources.color.colorWhite,
                                       fontSize: 28,

@@ -4,10 +4,11 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/new_password/new_password.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
+import 'dart:ui' as ui;
 
 class OTPVerificationScreen extends StatefulWidget {
   var selectedMethod;
@@ -57,7 +58,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  translate('forgotPassword.verify'),
+                  'forgotPassword.verify'.tr(),
                   style: getPrimaryBoldStyle(
                     color: const Color(0xff1F126B),
                     fontSize: 30,
@@ -66,7 +67,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
               ),
               const Gap(15),
               Text(
-                widget.selectedMethod=='sms'?translate('forgotPassword.verificationMsg'):translate('forgotPassword.verificationEmail'),
+                widget.selectedMethod=='sms'?'forgotPassword.verificationMsg'.tr():'forgotPassword.verificationEmail'.tr(),
                 style: getPrimaryRegularStyle(
                   color: const Color(0xff78789D),
                   fontSize: 15,
@@ -95,7 +96,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        translate('formHints.insert_otp'),
+                        'formHints.insert_otp'.tr(),
                         style: getPrimaryRegularStyle(
                           fontSize: 17,
                           color: const Color(0xff1F1F39),
@@ -103,7 +104,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                       ),
                       const Gap(10),
                       Directionality(
-                        textDirection: TextDirection.ltr,
+                        textDirection: ui.TextDirection.ltr,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
@@ -164,7 +165,7 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                                   ),
                                 )
                               : Text(
-                                  translate('forgotPassword.confirm'),
+                                  'forgotPassword.confirm'.tr(),
                                   style: getPrimaryBoldStyle(
                                     color: context.resources.color.colorWhite,
                                     fontSize: 15,

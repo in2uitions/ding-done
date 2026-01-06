@@ -5,10 +5,10 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
@@ -188,7 +188,7 @@ class _AddMediaState extends State<AddMedia> {
                           SvgPicture.asset('assets/img/addmedia.svg'),
                           const Gap(10),
                           Text(
-                            translate('bookService.addMedia'),
+                            'bookService.addMedia'.tr(),
                             style: getPrimaryBoldStyle(
                               fontSize: 14,
                               color: const Color(0xff583EF2),

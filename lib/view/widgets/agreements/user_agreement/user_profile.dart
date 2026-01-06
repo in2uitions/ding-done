@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -18,7 +18,7 @@ class _UserProfileState extends State<UserProfile> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.userProfile'),
+            'termsAndConditionsCustomer.userProfile'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -30,21 +30,21 @@ class _UserProfileState extends State<UserProfile> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.userProfile1'),
+                    'termsAndConditionsCustomer.userProfile1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.userProfile2'),
+                    'termsAndConditionsCustomer.userProfile2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.userProfile3'),
+                   'termsAndConditionsCustomer.userProfile3'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

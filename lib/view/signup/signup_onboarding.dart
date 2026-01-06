@@ -9,9 +9,9 @@ import 'package:dingdone/view/widgets/custom/custom_date_picker.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/image_component/upload_one_image.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:onboarding/onboarding.dart';
 import 'package:provider/provider.dart';
@@ -115,7 +115,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
             },
             child: Center(
               child: Text(
-                translate('button.next'),
+                'button.next'.tr(),
                 style: getPrimaryBoldStyle(
                   fontSize: 14,
                   color: context.resources.color.colorWhite,
@@ -158,7 +158,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
             },
             child: Center(
               child: Text(
-                translate('button.complete'),
+               'button.complete'.tr(),
                 style: getPrimaryBoldStyle(
                   fontSize: 14,
                   color: context.resources.color.colorWhite,
@@ -233,7 +233,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
     return MaterialApp(
       color: const Color(0xffFEFEFE),
       debugShowCheckedModeBanner: false,
-      title: translate('login_screen.signUp'),
+      title:'login_screen.signUp'.tr(),
       home: Scaffold(
         appBar: AppBar(
           backgroundColor: const Color(0xffFEFEFE),
@@ -253,7 +253,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
             ),
           ),
           title: Text(
-            translate('login_screen.swipe'),
+            'login_screen.swipe'.tr(),
 
             style: getPrimaryBoldStyle(
               fontSize: 13,
@@ -281,7 +281,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
-                            translate('profile.personalInformation'),
+                            'profile.personalInformation'.tr(),
                             style: getPrimaryBoldStyle(
                               color: const Color(0xff180C38),
                               fontSize: 28,
@@ -295,7 +295,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           value: signupViewModel.signUpBody['first_name'] ?? '',
                           index: 'first_name',
                           viewModel: signupViewModel.setInputValues,
-                          hintText: translate('formHints.first_name'),
+                          hintText: 'formHints.first_name'.tr(),
                           validator: (val) => signupViewModel.signUpErrors[
                               context
                                   .resources.strings.formKeys['first_name']!],
@@ -310,7 +310,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           value: signupViewModel.signUpBody['last_name'] ?? '',
                           index: 'last_name',
                           viewModel: signupViewModel.setInputValues,
-                          hintText: translate('formHints.last_name'),
+                          hintText:'formHints.last_name'.tr(),
                           validator: (val) => signupViewModel.signUpErrors[
                               context.resources.strings.formKeys['last_name']!],
                           errorText: signupViewModel.signUpErrors[
@@ -327,7 +327,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           value: signupViewModel.signUpBody['dob'] ?? '',
                           index: 'dob',
                           viewModel: signupViewModel.setInputValues,
-                          hintText: translate('formHints.dob'),
+                          hintText: 'formHints.dob'.tr(),
                         ),
                       ),
                     ],
@@ -350,7 +350,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           child: SizedBox(
                             width: context.appValues.appSizePercent.w100,
                             child: Text(
-                              translate('profile.contactInformation'),
+                              'profile.contactInformation'.tr(),
                               style: getPrimaryBoldStyle(
                                 color: const Color(0xff180C38),
                                 fontSize: 28,
@@ -392,7 +392,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                             value: signupViewModel.signUpBody['email'] ?? '',
                             index: 'email',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.email'),
+                            hintText: 'formHints.email'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['email']!],
                             errorText: signupViewModel.signUpErrors[
@@ -420,7 +420,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
-                            translate('signUp.securityInformation'),
+                           'signUp.securityInformation'.tr(),
                             style: getPrimaryBoldStyle(
                               color: const Color(0xff180C38),
                               fontSize: 28,
@@ -434,7 +434,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                             value: signupViewModel.signUpBody['password'] ?? '',
                             index: 'password',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.password'),
+                            hintText:'formHints.password'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context
                                     .resources.strings.formKeys['password']!],
@@ -450,7 +450,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           vertical: 0.0,
                         ),
                         child: Text(
-                          translate('signUp.requirments'),
+                         'signUp.requirments'.tr(),
                           // '● Minimum 8 characters\n'
                           // '● An uppercase letter\n'
                           // '● A lowercase letter\n'
@@ -481,7 +481,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
-                            translate('signUp.addressInformation'),
+                            'signUp.addressInformation'.tr(),
                             style: getPrimaryBoldStyle(
                               color: const Color(0xff180C38),
                               fontSize: 28,
@@ -497,7 +497,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              translate('formHints.location'),
+                             'formHints.location'.tr(),
                               style: getPrimaryRegularStyle(
                                 fontSize: 15,
                                 color: context.resources.color.secondColorBlue,
@@ -1032,7 +1032,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                 '',
                             index: 'street_number',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.street'),
+                            hintText: 'formHints.street'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['street_number']!],
@@ -1048,7 +1048,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                 '',
                             index: 'building_number',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.building'),
+                            hintText: 'formHints.building'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['building_number']!],
@@ -1064,7 +1064,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                             value: signupViewModel.getSignUpBody['floor'] ?? '',
                             index: 'floor',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.floor'),
+                            hintText: 'formHints.floor'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['floor']!],
                             errorText: signupViewModel.signUpErrors[
@@ -1079,7 +1079,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                 '',
                             index: 'apartment_number',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.apartment'),
+                            hintText: 'formHints.apartment'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['apartment_number']!],
@@ -1095,7 +1095,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                             index: 'city',
                             value: signupViewModel.getSignUpBody['city'] ?? '',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.city'),
+                            hintText: 'formHints.city'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['city']!],
                             errorText: signupViewModel.signUpErrors[
@@ -1108,7 +1108,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                             value: signupViewModel.getSignUpBody['zone'] ?? '',
                             index: 'zone',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.zone'),
+                            hintText: 'formHints.zone'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings.formKeys['zone']!],
                             errorText: signupViewModel.signUpErrors[
@@ -1123,7 +1123,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                     '',
                             index: 'address_label',
                             viewModel: signupViewModel.setInputValues,
-                            hintText: translate('formHints.address_label'),
+                            hintText: 'formHints.address_label'.tr(),
                             validator: (val) => signupViewModel.signUpErrors[
                                 context.resources.strings
                                     .formKeys['address_label']!],
@@ -1171,7 +1171,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                         child: SizedBox(
                           width: context.appValues.appSizePercent.w100,
                           child: Text(
-                            translate('signUp.completeProfile'),
+                           'signUp.completeProfile'.tr(),
                             style: getPrimaryBoldStyle(
                               color: const Color(0xff180C38),
                               fontSize: 28,
@@ -1215,7 +1215,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                           },
                           isImage: true,
                           widget: Text(
-                            translate('signUp.uploadProfilePhoto'),
+                           'signUp.uploadProfilePhoto'.tr(),
                             style: getPrimaryBoldStyle(
                               fontSize: 21,
                               color: Colors.white,

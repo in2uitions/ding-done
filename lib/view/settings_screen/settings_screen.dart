@@ -6,12 +6,13 @@ import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../view_model/jobs_view_model/jobs_view_model.dart';
 import '../../view_model/profile_view_model/profile_view_model.dart';
+import '../../res/constants.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -56,7 +57,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ),
                     const Gap(10),
                     Text(
-                      translate('settings.settings'),
+                      'settings.settings'.tr(),
                       style: getPrimarySemiBoldStyle(
                         fontSize: 16,
                         color: Colors.white,
@@ -67,13 +68,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
           ),
+
           // White draggable sheet
-          Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
+          Consumer<JobsViewModel>(
+            builder: (context, jobsViewModel, _) {
               return DraggableScrollableSheet(
                 initialChildSize: 0.85,
                 minChildSize: 0.85,
                 maxChildSize: 1,
-                builder: (BuildContext context, ScrollController scrollController) {
+                builder: (BuildContext context,
+                    ScrollController scrollController) {
                   return Container(
                     decoration: const BoxDecoration(
                       color: Color(0xffFEFEFE),
@@ -94,19 +98,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Gap(30),
+
                               // App Settings section
                               Text(
-                                translate('settings.appSettings'),
+                                'settings.appSettings'.tr(),
                                 style: getPrimaryMediumStyle(
                                   fontSize: 14,
                                   color: const Color(0xff180B3C),
                                 ),
                               ),
                               const Gap(20),
+
                               InkWell(
                                 onTap: () => _onActionSheetPress(context),
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -114,7 +121,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                             'assets/img/lang-settings.svg'),
                                         const Gap(10),
                                         Text(
-                                          translate('settings.language'),
+                                          'settings.language'.tr(),
                                           style: getPrimaryRegularStyle(
                                             fontSize: 14,
                                             color: const Color(0xff180B3C),
@@ -130,10 +137,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ],
                                 ),
                               ),
+
                               const Gap(20),
 
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -141,7 +150,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                           'assets/img/bell-settings.svg'),
                                       const Gap(10),
                                       Text(
-                                        translate('notifications.notifications'),
+                                        'notifications.notifications'.tr(),
                                         style: getPrimaryRegularStyle(
                                           fontSize: 14,
                                           color: const Color(0xff180B3C),
@@ -160,6 +169,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                 ],
                               ),
+
                               const Gap(20),
                               const Divider(
                                 color: Color(0xffD4D6DD),
@@ -167,8 +177,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 height: 1,
                               ),
                               const Gap(20),
+
                               Text(
-                                translate('settings.general'),
+                                'settings.general'.tr(),
                                 style: getPrimaryMediumStyle(
                                   fontSize: 14,
                                   color: const Color(0xff180B3C),
@@ -179,67 +190,75 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               // General items
                               _buildGeneralItem(
                                 icon: 'assets/img/support-icon-new.svg',
-                                label: translate('drawer.support'),
+                                label: 'drawer.support'.tr(),
                                 onTap: () {
                                   jobsViewModel.launchWhatsApp();
                                 },
                               ),
                               const Gap(30),
+
                               _buildGeneralItem(
                                 icon: 'assets/img/about-icon.svg',
-                                label: translate('settings.about'),
+                                label: 'settings.about'.tr(),
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) => WebViewPage(
                                         url: 'https://www.dingdone.app/',
-                                        title: translate('settings.about'),
+                                        title: 'settings.about'.tr(),
                                       ),
                                     ),
                                   );
                                 },
                               ),
                               const Gap(30),
+
                               _buildGeneralItem(
                                 icon: 'assets/img/privacy-icon.svg',
-                                label: translate('settings.privacyPolicy'),
+                                label: 'settings.privacyPolicy'.tr(),
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) => WebViewPage(
-                                        url: 'https://www.dingdone.app/privacy-policy',
-                                        title: translate('settings.privacyPolicy'),
+                                        url:
+                                        'https://www.dingdone.app/privacy-policy',
+                                        title: 'settings.privacyPolicy'.tr(),
                                       ),
                                     ),
                                   );
                                 },
                               ),
                               const Gap(30),
+
                               _buildGeneralItem(
                                 icon: 'assets/img/terms-icon.svg',
-                                label: translate('drawer.termsAndConditions'),
+                                label: 'drawer.termsAndConditions'.tr(),
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) => WebViewPage(
-                                        url: 'https://www.dingdone.app/user-agreement',
-                                        title: translate('drawer.termsAndConditions'),
+                                        url:
+                                        'https://www.dingdone.app/user-agreement',
+                                        title: 'drawer.termsAndConditions'.tr(),
                                       ),
                                     ),
                                   );
                                 },
                               ),
                               const Gap(30),
-                              Consumer<ProfileViewModel>(builder: (context, profileViewModel, _) {
+
+                              Consumer<ProfileViewModel>(
+                                builder: (context, profileViewModel, _) {
                                   return _buildGeneralItem(
                                     icon: 'assets/img/bin.svg',
-                                    label:translate('drawer.deleteAccount'),
+                                    label: 'drawer.deleteAccount'.tr(),
                                     onTap: () {
                                       _confirmAndDelete(profileViewModel);
                                     },
                                   );
-                                }
+                                },
                               ),
+
                               const Gap(40),
                             ],
                           ),
@@ -249,14 +268,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   );
                 },
               );
-            }
+            },
           ),
         ],
       ),
     );
   }
+
   Future<void> _confirmAndDelete(ProfileViewModel profileViewModel) async {
-    final confirmed = await showDialog<bool>(
+    await showDialog<bool>(
       context: context,
       barrierDismissible: false,
       builder: (_) => AlertDialog(
@@ -264,7 +284,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
         elevation: 15,
         content: Column(
           mainAxisSize: MainAxisSize.min,
-          // crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
@@ -275,7 +294,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     child: SvgPicture.asset('assets/img/x.svg'),
                     onTap: () async {
                       Navigator.pop(context);
-
                     },
                   ),
                 ],
@@ -288,8 +306,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 horizontal: context.appValues.appPadding.p0,
               ),
               child: Text(
-                // translate('bookService.serviceRequestConfirmed'),
-                translate('drawer.delete?'),
+                'drawer.delete?'.tr(),
                 textAlign: TextAlign.center,
                 style: getPrimaryMediumStyle(
                   fontSize: 14,
@@ -302,15 +319,19 @@ class _SettingsScreenState extends State<SettingsScreen> {
               onTap: () async {
                 Navigator.pop(context, true);
 
-                dynamic value=await profileViewModel.deleteProfile();
-                if(value["status"].toString().toLowerCase()=='ok'){
+                dynamic value = await profileViewModel.deleteProfile();
+                if (value["status"].toString().toLowerCase() == 'ok') {
                   showDialog(
-                      context: context,
-                      builder:
-                          (BuildContext context) =>
-                          simpleAlert(context, translate('button.success')));
-                }else{
-                  showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, translate('button.failure')));
+                    context: context,
+                    builder: (BuildContext context) =>
+                        simpleAlert(context, 'button.success'.tr()),
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) =>
+                        simpleAlert(context, 'button.failure'.tr()),
+                  );
                 }
               },
               child: Container(
@@ -322,8 +343,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    // translate('confirmAddress.delete'),
-                    "Yes, I’m Done With It",
+                    'profile.confirmDelete'.tr(), // was hardcoded
                     style: getPrimarySemiBoldStyle(
                       fontSize: 12,
                       color: Colors.white,
@@ -332,20 +352,20 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
               ),
             ),
-            // const Gap(20),
           ],
         ),
       ),
     );
-
   }
+
   Widget simpleAlert(BuildContext context, String message) {
+    final success = message == 'button.success'.tr();
+
     return AlertDialog(
       backgroundColor: Colors.white,
       elevation: 15,
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
             padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
@@ -356,13 +376,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   child: SvgPicture.asset('assets/img/x.svg'),
                   onTap: () {
                     Navigator.pop(context);
-
                   },
                 ),
               ],
             ),
           ),
-          message == translate('button.success')
+          success
               ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
               : SvgPicture.asset('assets/img/failure.svg'),
           SizedBox(height: context.appValues.appSize.s40),
@@ -379,22 +398,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
               ),
             ),
           ),
-          message == translate('button.success')?
-          SizedBox(height: context.appValues.appSize.s20):Container(),
-          message == translate('button.success')?Padding(
+          success ? SizedBox(height: context.appValues.appSize.s20) : Container(),
+          success
+              ? Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              'Request Sent',
+              'profile.requestSent'.tr(), // was "Request Sent"
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
-
                 fontSize: 17,
                 color: context.resources.color.btnColorBlue,
               ),
             ),
-          ):Container(),
+          )
+              : Container(),
           SizedBox(height: context.appValues.appSize.s20),
         ],
       ),
@@ -434,12 +453,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  void showDemoActionSheet(
-      {required BuildContext context, required Widget child}) {
+  // Kept your function signature; only replaced changeLocale with easy_localization.
+  void showDemoActionSheet({required BuildContext context, required Widget child}) {
     showCupertinoModalPopup<String>(
-        context: context,
-        builder: (BuildContext context) => child).then((String? value) {
-      if (value != null) changeLocale(context, value);
+      context: context,
+      builder: (BuildContext context) => child,
+    ).then((String? value) async {
+      if (value != null) {
+        await context.setLocale(Locale(value)); // ✅ replacement for changeLocale
+      }
     });
   }
 
@@ -462,32 +484,33 @@ class _SettingsScreenState extends State<SettingsScreen> {
             const Gap(15),
             _languageTile(
               ctx,
-              label: translate('language.name.en-US'),
+              label: 'language.name.en-US'.tr(),
               value: 'en',
               dblangValue: 'en-US',
             ),
             _languageTile(
               ctx,
-              label: translate('language.name.ar-SA'),
+              label: 'language.name.ar-SA'.tr(),
               value: 'ar',
               dblangValue: 'ar-SA',
             ),
             _languageTile(
               ctx,
-              label: translate('language.name.el-GR'),
+              label: 'language.name.el-GR'.tr(),
               value: 'el',
               dblangValue: 'el-GR',
             ),
             _languageTile(
               ctx,
-              label: translate('language.name.ru-RU'),
+              label: 'language.name.ru-RU'.tr(),
               value: 'ru',
               dblangValue: 'ru-RU',
             ),
             const Gap(5),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: context.appValues.appPadding.p16),
+                horizontal: context.appValues.appPadding.p16,
+              ),
               child: const Divider(
                 color: Color(0xffD4D6DD),
               ),
@@ -512,7 +535,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   child: Center(
                     child: Text(
-                      translate('button.cancel'),
+                      'button.cancel'.tr(),
                       textAlign: TextAlign.center,
                       style: getPrimarySemiBoldStyle(
                         fontSize: 12,
@@ -530,11 +553,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _languageTile(
-    BuildContext ctx, {
-    required String label,
-    required String value,
-    required String dblangValue,
-  }) {
+      BuildContext ctx, {
+        required String label,
+        required String value,
+        required String dblangValue,
+      }) {
     return ListTile(
       title: Text(
         label,
@@ -548,10 +571,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
         color: Color(0xff8F9098),
       ),
       onTap: () async {
+        // ✅ keeping EXACT same AppPreferences.save calls/keys/values
         await AppPreferences()
             .save(key: language, value: value, isModel: false);
         await AppPreferences()
             .save(key: dblang, value: dblangValue, isModel: false);
+
+        // ✅ also update easy_localization locale before restart
+        await context.setLocale(Locale(value));
+
         Navigator.pop(ctx);
         RestartWidget.restartApp(ctx);
       },
@@ -567,7 +595,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         const curve = Curves.ease;
 
         var tween =
-            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),

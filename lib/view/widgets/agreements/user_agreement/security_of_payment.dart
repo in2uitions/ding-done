@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class SecurityOfPayment extends StatefulWidget {
   const SecurityOfPayment({super.key});
@@ -18,7 +18,7 @@ class _SecurityOfPaymentState extends State<SecurityOfPayment> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.securityOfPayment'),
+            'termsAndConditionsCustomer.securityOfPayment'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -30,7 +30,7 @@ class _SecurityOfPaymentState extends State<SecurityOfPayment> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.securityOfPayment1'),
+                    'termsAndConditionsCustomer.securityOfPayment1'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

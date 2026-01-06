@@ -5,10 +5,10 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/login/login.dart';
 import 'package:dingdone/view_model/dispose_view_model/app_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -261,7 +261,7 @@ class _ProfileSeconComponentState extends State<ProfileSeconComponent> {
                       ),
                       const Gap(10),
                       Text(
-                        translate('profile.logOut'),
+                       'profile.logOut'.tr(),
                         style: getPrimarySemiBoldStyle(
                           fontSize: 12,
                           color: const Color(0xff4100E3),
@@ -323,7 +323,7 @@ void _onActionSheetPress(BuildContext context) {
       message: const Text('Message'),
       actions: <Widget>[
         CupertinoActionSheetAction(
-          child: Text(translate('language.name.en-US')),
+          child: Text('language.name.en-US'.tr()),
           onPressed: () async {
             await AppPreferences()
                 .save(key: language, value: 'en', isModel: false);
@@ -332,7 +332,7 @@ void _onActionSheetPress(BuildContext context) {
           },
         ),
         CupertinoActionSheetAction(
-          child: Text(translate('language.name.ar-SA')),
+          child: Text('language.name.ar-SA'.tr()),
           onPressed: () async {
             await AppPreferences()
                 .save(key: language, value: 'ar', isModel: false);
@@ -341,7 +341,7 @@ void _onActionSheetPress(BuildContext context) {
           },
         ),
         CupertinoActionSheetAction(
-          child: Text(translate('language.name.el-GR')),
+          child: Text('language.name.el-GR'.tr()),
           onPressed: () async {
             await AppPreferences()
                 .save(key: language, value: 'el', isModel: false);
@@ -350,7 +350,7 @@ void _onActionSheetPress(BuildContext context) {
           },
         ),
         CupertinoActionSheetAction(
-          child: Text(translate('language.name.ru-RU')),
+          child: Text('language.name.ru-RU'.tr()),
           onPressed: () async {
             await AppPreferences()
                 .save(key: language, value: 'ru', isModel: false);
@@ -375,7 +375,8 @@ void showDemoActionSheet(
     context: context,
     builder: (BuildContext context) => child,
   ).then((String? value) {
-    if (value != null) changeLocale(context, value);
+    if (value != null) context.setLocale(Locale.fromSubtags(languageCode: value));
+
   });
 }
 

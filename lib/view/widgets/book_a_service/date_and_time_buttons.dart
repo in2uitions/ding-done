@@ -1,8 +1,8 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 class DateAndTimeButtons extends StatefulWidget {
@@ -28,7 +28,7 @@ class _DateAndTimeButtonsState extends State<DateAndTimeButtons> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  translate('bookService.Now'),
+                  'bookService.Now'.tr(),
                   style: getPrimaryRegularStyle(
                     fontSize: 15,
                   ),
@@ -54,7 +54,7 @@ class _DateAndTimeButtonsState extends State<DateAndTimeButtons> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  translate('bookService.scheduleForLater'),
+                  'bookService.scheduleForLater'.tr(),
                   style: getPrimaryRegularStyle(
                     fontSize: 15,
                   ),

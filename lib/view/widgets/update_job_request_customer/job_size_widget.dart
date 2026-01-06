@@ -6,8 +6,8 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/custom/custom_increment_number.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -71,7 +71,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     right: context.appValues.appPadding.p10,
                   ),
                   child: Text(
-                    translate('updateJob.actualNumberOfUnits'),
+                    'updateJob.actualNumberOfUnits'.tr(),
                     style: getPrimaryRegularStyle(
                       fontSize: 14,
                       color: const Color(0xff180B3C),
@@ -80,7 +80,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                 ),
                 const Gap(10),
                 widget.userRole == Constants.supplierRoleId
-                    ? widget.fromWhere == translate('jobs.completed')
+                    ? widget.fromWhere == 'jobs.completed'.tr()
                         ? Text(
                             '${widget.completed_units}',
                             style: getPrimaryRegularStyle(
@@ -137,7 +137,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     right: context.appValues.appPadding.p10,
                   ),
                   child: Text(
-                    translate('updateJob.estimatedNumberOfUnits'),
+                   'updateJob.estimatedNumberOfUnits'.tr(),
                     style: getPrimaryRegularStyle(
                       fontSize: 14,
                       color: const Color(0xff180B3C),
@@ -146,7 +146,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                 ),
                 const Gap(10),
                 widget.userRole == Constants.supplierRoleId
-                    ? widget.fromWhere == translate('jobs.completed')
+                    ? widget.fromWhere =='jobs.completed'.tr()
                         ? Text(
                             '${widget.number_of_units}',
                             style: getPrimaryRegularStyle(
@@ -202,7 +202,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     right: context.appValues.appPadding.p10,
                   ),
                   child: Text(
-                    translate('updateJob.extraFees'),
+                    'updateJob.extraFees'.tr(),
                     style: getPrimaryRegularStyle(
                       fontSize: 14,
                       color: const Color(0xff180B3C),
@@ -211,7 +211,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                 ),
                 const Gap(10),
                 widget.userRole == Constants.supplierRoleId
-                    ? widget.fromWhere == translate('jobs.completed')
+                    ? widget.fromWhere == 'jobs.completed'.tr()
                         ? Text(
                             '${widget.extra_fees}',
                             style: getPrimaryRegularStyle(
@@ -266,7 +266,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                     right: context.appValues.appPadding.p10,
                   ),
                   child: Text(
-                    translate('updateJob.extraFeesReason'),
+                    'updateJob.extraFeesReason'.tr(),
                     style: getPrimaryRegularStyle(
                       fontSize: 14,
                       color: const Color(0xff180B3C),
@@ -275,7 +275,7 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                 ),
                 const Gap(10),
                 widget.userRole == Constants.supplierRoleId
-                    ? widget.fromWhere == translate('jobs.completed')
+                    ? widget.fromWhere == 'jobs.completed'.tr()
                         ? Text(
                             '${widget.extra_fees_reason}',
                             style: getPrimaryRegularStyle(

@@ -16,7 +16,8 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'dart:ui' as ui;
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
@@ -260,7 +261,7 @@ class _BottomBarState extends State<BottomBar>
                               ),
                               SizedBox(height: context.appValues.appSize.s5),
                               Text(
-                                translate('bottom_bar.home'),
+                                'bottom_bar.home'.tr(),
                                 style: widget.currentTab == 0
                                     ? getPrimarySemiBoldStyle(
                                         fontSize: 10,
@@ -314,7 +315,7 @@ class _BottomBarState extends State<BottomBar>
                                       SizedBox(
                                           height: context.appValues.appSize.s5),
                                       Text(
-                                        translate('updateJob.services'),
+                                        'updateJob.services'.tr(),
                                         style: widget.currentTab == 1
                                             ? getPrimarySemiBoldStyle(
                                                 fontSize: 10,
@@ -416,7 +417,7 @@ class _BottomBarState extends State<BottomBar>
                             ),
                             SizedBox(height: context.appValues.appSize.s5),
                             Text(
-                              translate('bottom_bar.jobs'),
+                              'bottom_bar.jobs'.tr(),
                               style: widget.currentTab == 2
                                   ? getPrimarySemiBoldStyle(
                                       fontSize: 10,
@@ -462,7 +463,7 @@ class _BottomBarState extends State<BottomBar>
                             ),
                             SizedBox(height: context.appValues.appSize.s5),
                             Text(
-                              translate('profile.account'),
+                              'profile.account'.tr(),
                               style: widget.currentTab == 3
                                   ? getPrimarySemiBoldStyle(
                                       fontSize: 10,

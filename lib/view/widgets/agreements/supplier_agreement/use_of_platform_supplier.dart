@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class UseOfPlatformSupplier extends StatefulWidget {
   const UseOfPlatformSupplier({super.key});
@@ -18,7 +18,7 @@ class _UseOfPlatformSupplierState extends State<UseOfPlatformSupplier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.useOfPlatform'),
+          'termsAndConditionsSupplier.useOfPlatform'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -32,7 +32,7 @@ class _UseOfPlatformSupplierState extends State<UseOfPlatformSupplier> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                translate('termsAndConditionsSupplier.useOfPlatform1'),
+                'termsAndConditionsSupplier.useOfPlatform1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
@@ -46,28 +46,28 @@ class _UseOfPlatformSupplierState extends State<UseOfPlatformSupplier> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      translate('termsAndConditionsSupplier.useOfPlatform1a'),
+                      'termsAndConditionsSupplier.useOfPlatform1a'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.useOfPlatform1b'),
+                      'termsAndConditionsSupplier.useOfPlatform1b'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.useOfPlatform1c'),
+                     'termsAndConditionsSupplier.useOfPlatform1c'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.useOfPlatform1d'),
+                      'termsAndConditionsSupplier.useOfPlatform1d'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
@@ -77,25 +77,25 @@ class _UseOfPlatformSupplierState extends State<UseOfPlatformSupplier> {
                 ),
               ),
               Text(
-                translate('termsAndConditionsSupplier.useOfPlatform2'),
+                'termsAndConditionsSupplier.useOfPlatform2'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.useOfPlatform3'),
+                'termsAndConditionsSupplier.useOfPlatform3'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.useOfPlatform4'),
+                'termsAndConditionsSupplier.useOfPlatform4'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.useOfPlatform5'),
+                'termsAndConditionsSupplier.useOfPlatform5'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

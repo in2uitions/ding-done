@@ -3,9 +3,9 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/payment_method_buttons.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -78,7 +78,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                widget.fromWhere != translate('jobs.completed')
+                widget.fromWhere != 'jobs.completed'.tr()
                     ? Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: context.appValues.appPadding.p20,
@@ -87,7 +87,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              translate('paymentMethod.paymentMethod'),
+                             'paymentMethod.paymentMethod'.tr(),
                               style: getPrimaryMediumStyle(
                                   fontSize: 14,
                                   color: context.resources.color.btnColorBlue),
@@ -105,7 +105,7 @@ class _PaymentMethodState extends State<PaymentMethod> {
                       padding: EdgeInsets.symmetric(
                           horizontal: context.appValues.appPadding.p20),
                       child: Text(
-                        translate('paymentMethod.noPaymentMethod'),
+                        'paymentMethod.noPaymentMethod'.tr(),
                         style: getPrimaryRegularStyle(
                           fontSize: 18,
                           color: const Color(0xff38385E),

@@ -2,9 +2,9 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/map_screen/map_display.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
@@ -64,7 +64,7 @@ class _LoacationSupplierProfileState extends State<LoacationSupplierProfile> {
                       color: Color(0xff707070),
                     ),
                     Text(
-                      translate('bookService.location'),
+                     'bookService.location'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 16,
                         color: const Color(0xff180C38),

@@ -4,9 +4,9 @@ import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart
 import 'package:dingdone/view/widgets/custom/custom_dropdown.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:intl/intl.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -140,7 +140,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                 index: 'card_number',
                 value: paymentViewModel.getPaymentBody['card_number'] ?? '',
                 viewModel: paymentViewModel.setInputValues,
-                hintText: translate('paymentMethod.cardNumber'),
+                hintText: 'paymentMethod.cardNumber'.tr(),
                 validator: (val) => paymentViewModel.paymentError['card-number'],
                 errorText: paymentViewModel.paymentError['card-number'],
                 keyboardType: TextInputType.text,
@@ -230,7 +230,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                         child: CustomTextField(
                           index: 'last_digits',
                           viewModel: paymentViewModel.setInputValues,
-                          hintText: translate('paymentMethod.CVC'),
+                          hintText:'paymentMethod.CVC'.tr(),
                           keyboardType: TextInputType.text,
                         ),
                       ),
@@ -255,7 +255,7 @@ class _AddNewPaymentMethodWidgetState extends State<AddNewPaymentMethodWidget> {
                 index: 'nickname',
                 value: paymentViewModel.getPaymentBody['nickname'] ?? '',
                 viewModel: paymentViewModel.setInputValues,
-                hintText: translate('paymentMethod.cardName'),
+                hintText: 'paymentMethod.cardName'.tr(),
                 keyboardType: TextInputType.text,
               ),
             ],

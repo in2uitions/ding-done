@@ -9,9 +9,9 @@ import 'package:dingdone/view/widgets/stars/stars.dart';
 import 'package:dingdone/view_model/dispose_view_model/app_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -74,7 +74,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                translate('profile.account'),
+                               'profile.account'.tr(),
                                 style: getPrimaryBoldStyle(
                                   fontSize: 16,
                                   color: Colors.white,
@@ -217,7 +217,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                                             builder: (BuildContext context) =>
                                                 simpleAlert(
                                                   context,
-                                                  translate('button.success'),
+                                                  'button.success'.tr(),
                                                 ));
                                       } else {
                                         showDialog(
@@ -225,7 +225,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                                             builder: (BuildContext context) =>
                                                 simpleAlert(
                                                   context,
-                                                  translate('button.failure'),
+                                                  'button.failure'.tr(),
                                                 ));
                                       }
                                       setState(() {
@@ -275,7 +275,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                                     SvgPicture.asset('assets/img/logout-new.svg'),
                                     const Gap(10),
                                     Text(
-                                      translate('drawer.logout'),
+                                      'drawer.logout'.tr(),
                                       style: getPrimaryRegularStyle(
                                         fontSize: 20,
                                         color: const Color(0xff4100E3),
@@ -331,7 +331,7 @@ Widget simpleAlert(BuildContext context, String message) {
             ],
           ),
         ),
-        message == translate('button.success')
+        message =='button.success'.tr()
 
         // service-popup-image.svg
             ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')

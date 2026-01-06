@@ -1,6 +1,6 @@
 import 'package:dingdone/view/categories_screen/categories_screen.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -540,7 +540,7 @@ class _ServicesScreenState extends State<ServicesScreen>
                           Icons.search,
                           color: Color(0xFF6E6BE8),
                         ),
-                        hintText: translate('home_screen.hintSearch'),
+                        hintText: 'home_screen.hintSearch'.tr(),
                         hintStyle: getPrimaryRegularStyle(
                           color: const Color(0xFF6E6BE8),
                           fontSize: 14,

@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class GeneralProvisionSupplier extends StatefulWidget {
   const GeneralProvisionSupplier({super.key});
@@ -19,7 +19,7 @@ class _GeneralProvisionSupplierState extends State<GeneralProvisionSupplier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.generalProvision'),
+          'termsAndConditionsSupplier.generalProvision'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -31,25 +31,25 @@ class _GeneralProvisionSupplierState extends State<GeneralProvisionSupplier> {
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsSupplier.generalProvision1'),
+                'termsAndConditionsSupplier.generalProvision1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.generalProvision2'),
+                'termsAndConditionsSupplier.generalProvision2'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.generalProvision3'),
+                'termsAndConditionsSupplier.generalProvision3'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsSupplier.generalProvision4'),
+                'termsAndConditionsSupplier.generalProvision4'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

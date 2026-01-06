@@ -8,9 +8,9 @@ import 'package:dingdone/view/confirm_address/confirm_address.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view/widgets/image_component/upload_one_image.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -100,7 +100,7 @@ class _EditAccountState extends State<EditAccount> {
                         ),
                         const Gap(10),
                         Text(
-                          translate('profile.myProfile'),
+                         'profile.myProfile'.tr(),
                           style: getPrimarySemiBoldStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -271,7 +271,7 @@ class _EditAccountState extends State<EditAccount> {
                                           width: context
                                               .appValues.appSizePercent.w100,
                                           child: Text(
-                                            translate('profile.yourName'),
+                                            'profile.yourName'.tr(),
                                             style: getPrimaryMediumStyle(
                                               color: context
                                                   .resources.color.btnColorBlue,
@@ -292,7 +292,7 @@ class _EditAccountState extends State<EditAccount> {
                                           viewModel:
                                               profileViewModel.setInputValues,
                                           hintText:
-                                              translate('formHints.first_name'),
+                                             'formHints.first_name'.tr(),
                                           keyboardType: TextInputType.text,
                                           value: profileViewModel
                                                   .getProfileBody["user"]
@@ -311,7 +311,7 @@ class _EditAccountState extends State<EditAccount> {
                                           viewModel:
                                               profileViewModel.setInputValues,
                                           hintText:
-                                              translate('formHints.last_name'),
+                                              'formHints.last_name'.tr(),
                                           keyboardType: TextInputType.text,
                                           value: profileViewModel
                                                   .getProfileBody["user"]
@@ -329,7 +329,7 @@ class _EditAccountState extends State<EditAccount> {
                                           width: context
                                               .appValues.appSizePercent.w100,
                                           child: Text(
-                                            translate('formHints.phone_number'),
+                                            'formHints.phone_number'.tr(),
                                             style: getPrimaryMediumStyle(
                                               color: context
                                                   .resources.color.btnColorBlue,
@@ -371,7 +371,7 @@ class _EditAccountState extends State<EditAccount> {
                                           width: context
                                               .appValues.appSizePercent.w100,
                                           child: Text(
-                                            translate('formHints.email'),
+                                            'formHints.email'.tr(),
                                             style: getPrimaryMediumStyle(
                                               color: context
                                                   .resources.color.btnColorBlue,
@@ -392,7 +392,7 @@ class _EditAccountState extends State<EditAccount> {
                                           viewModel:
                                               profileViewModel.setInputValues,
                                           hintText:
-                                              translate('formHints.email'),
+                                              'formHints.email'.tr(),
                                           keyboardType:
                                               TextInputType.emailAddress,
                                           value: profileViewModel
@@ -442,8 +442,8 @@ class _EditAccountState extends State<EditAccount> {
                                                             context) =>
                                                         simpleAlert(
                                                           context,
-                                                          translate(
-                                                              'button.success'),
+
+                                                              'button.success'.tr(),
                                                         ));
                                               } else {
                                                 showDialog(
@@ -452,8 +452,8 @@ class _EditAccountState extends State<EditAccount> {
                                                             context) =>
                                                         simpleAlert(
                                                           context,
-                                                          translate(
-                                                              'button.failure'),
+
+                                                              'button.failure'.tr(),
                                                         ));
                                               }
                                             },
@@ -580,8 +580,8 @@ Widget simpleAlert(BuildContext context, String message) {
             ],
           ),
         ),
-        message == translate(
-            'button.success')
+        message ==
+            'button.success'.tr()
             ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
             : SvgPicture.asset('assets/img/failure.svg'),
         SizedBox(height: context.appValues.appSize.s40),

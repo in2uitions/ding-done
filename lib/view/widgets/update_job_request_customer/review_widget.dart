@@ -4,8 +4,8 @@ import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_area.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 class ReviewWidget extends StatefulWidget {
@@ -44,7 +44,7 @@ class _ReviewWidgetState extends State<ReviewWidget> {
                   vertical: context.appValues.appPadding.p10,
                 ),
                 child: Text(
-                  translate('jobDetails.review'),
+                  'jobDetails.review'.tr(),
                   style: getPrimaryRegularStyle(
                     fontSize: 14,
                     color: const Color(0xff180B3C),

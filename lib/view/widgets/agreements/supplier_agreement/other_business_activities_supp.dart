@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class OtherBusinessActivitiesSupplier extends StatefulWidget {
   const OtherBusinessActivitiesSupplier({super.key});
@@ -20,7 +20,7 @@ class _OtherBusinessActivitiesSupplierState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.otherBusinessActivities'),
+          'termsAndConditionsSupplier.otherBusinessActivities'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -32,7 +32,7 @@ class _OtherBusinessActivitiesSupplierState
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsSupplier.otherBusinessActivities1'),
+                'termsAndConditionsSupplier.otherBusinessActivities1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

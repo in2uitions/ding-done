@@ -1,7 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class GeneralProvisions extends StatefulWidget {
   const GeneralProvisions({super.key});
@@ -18,7 +18,7 @@ class _GeneralProvisionsState extends State<GeneralProvisions> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            translate('termsAndConditionsCustomer.generalProvisions'),
+           'termsAndConditionsCustomer.generalProvisions'.tr(),
             style: getPrimaryRegularStyle(
                 color: context.resources.color.secondColorBlue, fontSize: 18),
           ),
@@ -30,28 +30,27 @@ class _GeneralProvisionsState extends State<GeneralProvisions> {
               child: Column(
                 children: [
                   Text(
-                    translate('termsAndConditionsCustomer.generalProvisions1'),
+                    'termsAndConditionsCustomer.generalProvisions1'.tr(),
+                    style: getPrimaryRegularStyle(
+                        color: context.resources.color.btnColorBlue,
+                        fontSize: 15),
+                  ),
+                  SizedBox(height: context.appValues.appSize.s10),
+                  Text('termsAndConditionsCustomer.generalProvisions2'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.generalProvisions2'),
+                   'termsAndConditionsCustomer.generalProvisions3'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),
                   ),
                   SizedBox(height: context.appValues.appSize.s10),
                   Text(
-                    translate('termsAndConditionsCustomer.generalProvisions3'),
-                    style: getPrimaryRegularStyle(
-                        color: context.resources.color.btnColorBlue,
-                        fontSize: 15),
-                  ),
-                  SizedBox(height: context.appValues.appSize.s10),
-                  Text(
-                    translate('termsAndConditionsCustomer.generalProvisions4'),
+                   'termsAndConditionsCustomer.generalProvisions4'.tr(),
                     style: getPrimaryRegularStyle(
                         color: context.resources.color.btnColorBlue,
                         fontSize: 15),

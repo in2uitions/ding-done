@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class BusinessConductSupp extends StatefulWidget {
   const BusinessConductSupp({super.key});
@@ -18,7 +18,7 @@ class _BusinessConductSuppState extends State<BusinessConductSupp> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsSupplier.businessConduct'),
+          'termsAndConditionsSupplier.businessConduct'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -30,7 +30,7 @@ class _BusinessConductSuppState extends State<BusinessConductSupp> {
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsSupplier.businessConduct1'),
+                'termsAndConditionsSupplier.businessConduct1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
@@ -42,35 +42,35 @@ class _BusinessConductSuppState extends State<BusinessConductSupp> {
                 child: Column(
                   children: [
                     Text(
-                      translate('termsAndConditionsSupplier.businessConduct1a'),
+                     'termsAndConditionsSupplier.businessConduct1a'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.businessConduct1b'),
+                      'termsAndConditionsSupplier.businessConduct1b'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.businessConduct1c'),
+                     'termsAndConditionsSupplier.businessConduct1c'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.businessConduct1d'),
+                      'termsAndConditionsSupplier.businessConduct1d'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsSupplier.businessConduct1e'),
+                      'termsAndConditionsSupplier.businessConduct1e'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),

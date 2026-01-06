@@ -1,8 +1,8 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/button/button_confirm_payment_method.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../../../res/fonts/styles_manager.dart';
@@ -102,7 +102,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  if ((widget.fromWhere == translate('jobs.completed') ||
+                  if ((widget.fromWhere =='jobs.completed'.tr() ||
                       widget.role == Constants.supplierRoleId) &&
                       cards.isNotEmpty) {
                     final pm = cards[0] as Map<String, dynamic>;
@@ -140,7 +140,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                   }
                   return cards.isEmpty
                       ? Text(
-                    translate('paymentMethod.noPaymentMethod'),
+                    'paymentMethod.noPaymentMethod'.tr(),
                     style: getPrimaryRegularStyle(
                       fontSize: 18,
                       color: const Color(0xff38385E),
@@ -150,7 +150,7 @@ class _PaymentMethodButtonsState extends State<PaymentMethodButtons> {
                 }
                 if (widget.role == Constants.customerRoleId) {
                   final card = cards[index - 1] as Map<String, dynamic>;
-                  if (widget.fromWhere != translate('jobs.completed')) {
+                  if (widget.fromWhere != 'jobs.completed'.tr()) {
                     // return Dismissible(
                     //   key: Key(card['id'].toString()),
                     //   direction: DismissDirection.endToStart,

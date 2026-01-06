@@ -1,7 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 
 class Acceptance extends StatefulWidget {
   const Acceptance({super.key});
@@ -18,7 +18,7 @@ class _AcceptanceState extends State<Acceptance> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          translate('termsAndConditionsCustomer.acceptance'),
+          'termsAndConditionsCustomer.acceptance'.tr(),
           style: getPrimaryRegularStyle(
               color: context.resources.color.secondColorBlue, fontSize: 18),
         ),
@@ -30,13 +30,13 @@ class _AcceptanceState extends State<Acceptance> {
           child: Column(
             children: [
               Text(
-                translate('termsAndConditionsCustomer.acceptance1'),
+                'termsAndConditionsCustomer.acceptance1'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsCustomer.acceptance2'),
+                'termsAndConditionsCustomer.acceptance2'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
@@ -48,14 +48,14 @@ class _AcceptanceState extends State<Acceptance> {
                 child: Column(
                   children: [
                     Text(
-                      translate('termsAndConditionsCustomer.acceptance21'),
+                     'termsAndConditionsCustomer.acceptance21'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
                     ),
                     SizedBox(height: context.appValues.appSize.s10),
                     Text(
-                      translate('termsAndConditionsCustomer.acceptance22'),
+                      'termsAndConditionsCustomer.acceptance22'.tr(),
                       style: getPrimaryRegularStyle(
                           color: context.resources.color.btnColorBlue,
                           fontSize: 15),
@@ -66,13 +66,13 @@ class _AcceptanceState extends State<Acceptance> {
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsCustomer.acceptance3'),
+                'termsAndConditionsCustomer.acceptance3'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),
               SizedBox(height: context.appValues.appSize.s10),
               Text(
-                translate('termsAndConditionsCustomer.acceptance4'),
+                'termsAndConditionsCustomer.acceptance4'.tr(),
                 style: getPrimaryRegularStyle(
                     color: context.resources.color.btnColorBlue, fontSize: 15),
               ),

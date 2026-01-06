@@ -1,6 +1,6 @@
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:intl_phone_field/phone_number.dart';
 
@@ -112,7 +112,7 @@ class _CustomPhoneFieldControllerState
       },
       decoration: InputDecoration(
         errorText: widget.errorText,
-        hintText: translate('formHints.phone_number'),
+        hintText: 'formHints.phone_number'.tr(),
         hintStyle: getPrimaryRegularStyle(
           fontSize: 14,
         ),

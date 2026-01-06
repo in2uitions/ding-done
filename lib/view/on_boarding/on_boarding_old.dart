@@ -3,16 +3,17 @@ import 'package:dingdone/view/login/login.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:dingdone/view_model/on_boarding_view_model/on_boarding_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/data/remote/response/Status.dart';
 import 'package:dingdone/models/on_boarding_model.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/view/widgets/on_boarding/walk_through_page_item.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:audioplayers/audioplayers.dart';
+import 'dart:ui' as ui;
 
 class OnBoardingScreen extends StatefulWidget {
   const OnBoardingScreen({super.key});
@@ -56,7 +57,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             // backgroundColor: context.resources.color.colorWhite,
             body: Center(
               child: Directionality(
-                textDirection: TextDirection.ltr,
+                textDirection: ui.TextDirection.ltr,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
@@ -155,7 +156,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           child: InkWell(
                               child: Center(
                                 child: Text(
-                                  translate('button.letsStart'),
+                                  'button.letsStart'.tr(),
                                   style: getPrimaryBoldStyle(
                                       color: Color(0xff222B45), fontSize: 30),
                                 ),

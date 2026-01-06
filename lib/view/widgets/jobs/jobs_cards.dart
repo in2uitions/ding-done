@@ -9,9 +9,9 @@ import 'package:dingdone/view/widgets/custom/custom_text_area.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -107,10 +107,10 @@ class _JobsCardsState extends State<JobsCards> {
                           .push(_createRoute(JobDetailsSupplier(
                           data: data[index],
                           fromWhere: widget.active == 'activeJobs'
-                              ? translate('jobs.active')
+                              ? 'jobs.active'.tr()
                               : widget.active == 'completedJobs'
-                                  ? translate('jobs.completed')
-                                  : translate('jobs.booked'),
+                                  ? 'jobs.completed'.tr()
+                                  : 'jobs.booked'.tr(),
                           title: services?["title"].toString(),
                           lang: widget.lang,
                         )))
@@ -119,12 +119,12 @@ class _JobsCardsState extends State<JobsCards> {
                           data: data[index],
                           title: services?["title"].toString(),
                           fromWhere: widget.active == 'activeJobs'
-                              ? translate('jobs.active')
+                              ? 'jobs.active'.tr()
                               : widget.active == 'completedJobs'
-                                  ? translate('jobs.completed')
+                                  ? 'jobs.completed'.tr()
                                   : widget.active == 'requestedJobs'
-                                      ? translate('jobs.requestedJobs')
-                                      : translate('jobs.booked'),
+                                      ? 'jobs.requestedJobs'.tr()
+                                      : 'jobs.booked'.tr(),
                           lang: widget.lang,
                         )));
                 },
@@ -674,7 +674,7 @@ class _JobsCardsState extends State<JobsCards> {
                                                 MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                '${data[index].supplier_to_job_time ?? 0} ${translate('jobs.minutes')}',
+                                                '${data[index].supplier_to_job_time ?? 0} ${'jobs.minutes'.tr()}',
                                                 style: getPrimaryBoldStyle(
                                                   fontSize: 14,
                                                   color:
@@ -796,7 +796,7 @@ class _JobsCardsState extends State<JobsCards> {
                                             ),
                                           ),
                                           child: Text(
-                                            translate('button.cancel'),
+                                            'button.cancel'.tr(),
                                             style: getPrimaryBoldStyle(
                                               fontSize: 14,
                                               color: const Color(0xff6F6BE8),
@@ -836,10 +836,9 @@ class _JobsCardsState extends State<JobsCards> {
                                                 ),
                                                 child: Text(
                                                   widget.active == 'activeJobs'
-                                                      ? translate(
-                                                          'button.complete')
-                                                      : translate(
-                                                          'button.startJob'),
+                                                      ?  'button.complete'.tr()
+                                                      :
+                                                          'button.startJob'.tr(),
                                                   style: getPrimaryBoldStyle(
                                                     fontSize: 14,
                                                     color: context.resources
@@ -868,15 +867,15 @@ class _JobsCardsState extends State<JobsCards> {
       int job_id, String tab) {
     String message = '';
     if (tab == 'bookedJobs') {
-      message = translate('jobs.provideReasonToCancelBooking');
+      message = 'jobs.provideReasonToCancelBooking'.tr();
     } else if (tab == 'activeJobs') {
-      message = translate('jobs.provideReasonToCancelJob');
+      message = 'jobs.provideReasonToCancelJob'.tr();
     }
     List<String> reasons = [
-      translate('jobs.changeOfPlans'),
-      translate('jobs.unexpectedEmergency'),
-      translate('jobs.illnessOrHealthIssues'),
-      translate('jobs.other')
+      'jobs.changeOfPlans'.tr(),
+      'jobs.unexpectedEmergency'.tr(),
+      'jobs.illnessOrHealthIssues'.tr(),
+      'jobs.other'.tr()
     ];
 
     return SingleChildScrollView(
@@ -982,7 +981,7 @@ class _JobsCardsState extends State<JobsCards> {
                           context: context,
                           builder: (BuildContext context) =>
                               _buildPopupDialogFailure(context,
-                                  translate('button.somethingWentWrong')));
+                                  'button.somethingWentWrong'.tr()));
                     }
                   } else {
                     debugPrint('active    qwd ${widget.active}');
@@ -1019,7 +1018,7 @@ class _JobsCardsState extends State<JobsCards> {
                             context: context,
                             builder: (BuildContext context) =>
                                 _buildPopupDialogSuccess(context,
-                                    translate('button.jobCanceledMsg')));
+                                   'button.jobCanceledMsg'.tr()));
                       } else {
                         Navigator.pop(context);
 
@@ -1028,7 +1027,7 @@ class _JobsCardsState extends State<JobsCards> {
                             context: context,
                             builder: (BuildContext context) =>
                                 _buildPopupDialogFailure(context,
-                                    translate('button.somethingWentWrong')));
+                                   'button.somethingWentWrong'.tr()));
                       }
                     } else {
                       if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
@@ -1042,7 +1041,7 @@ class _JobsCardsState extends State<JobsCards> {
                                 _buildPopupDialogSuccess(
                                     context,
                                     // translate('button.success'),
-                                    translate('button.jobCanceledMsg')));
+                                    'button.jobCanceledMsg'.tr()));
                       } else {
                         Navigator.pop(context);
 
@@ -1051,7 +1050,7 @@ class _JobsCardsState extends State<JobsCards> {
                             context: context,
                             builder: (BuildContext context) =>
                                 _buildPopupDialogFailure(context,
-                                    translate('button.somethingWentWrong')));
+                                    'button.somethingWentWrong'.tr()));
                       }
                     }
                   }
@@ -1069,7 +1068,7 @@ class _JobsCardsState extends State<JobsCards> {
                   ),
                 ),
                 child: Text(
-                  translate('button.proceed'),
+                 'button.proceed'.tr(),
                   style: getPrimaryRegularStyle(
                     fontSize: 15,
                     color: context.resources.color.btnColorBlue,
@@ -1158,7 +1157,7 @@ Widget _buildPopupDialogFailure(BuildContext context, String message) {
             horizontal: context.appValues.appPadding.p32,
           ),
           child: Text(
-            translate('button.failure'),
+            'button.failure'.tr(),
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
                 fontSize: 17, color: context.resources.color.btnColorBlue),
@@ -1170,7 +1169,7 @@ Widget _buildPopupDialogFailure(BuildContext context, String message) {
             horizontal: context.appValues.appPadding.p32,
           ),
           child: Text(
-            translate('button.somethingWentWrong'),
+            'button.somethingWentWrong'.tr(),
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
               fontSize: 15,
@@ -1220,7 +1219,7 @@ Widget _buildPopupDialogSuccess(BuildContext context, String message) {
             horizontal: context.appValues.appPadding.p32,
           ),
           child: Text(
-            translate('button.success'),
+            'button.success'.tr(),
             textAlign: TextAlign.center,
             style: getPrimaryRegularStyle(
                 fontSize: 17, color: context.resources.color.btnColorBlue),

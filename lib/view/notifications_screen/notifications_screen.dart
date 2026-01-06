@@ -2,9 +2,9 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/settings_screen/settings_screen.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
@@ -56,7 +56,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                           ),
                         ),
                         Text(
-                          translate('notifications.notifications'),
+                          'notifications.notifications'.tr(),
                           style: getPrimarySemiBoldStyle(
                             fontSize: 16,
                             color: Colors.white,
@@ -118,7 +118,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                       setState(() {});
                                     },
                                     child: Text(
-                                      translate('notifications.clearAll'),
+                                      'notifications.clearAll'.tr(),
                                       style: getPrimaryRegularStyle(
                                         fontSize: 14,
                                         color: Color(0xffFFC500),

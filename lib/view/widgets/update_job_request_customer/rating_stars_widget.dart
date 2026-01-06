@@ -2,8 +2,8 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/stars/stars.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:provider/provider.dart';
 
 import '../../../view_model/jobs_view_model/jobs_view_model.dart';
@@ -50,7 +50,7 @@ class _RatingStarsWidgetState extends State<RatingStarsWidget> {
                   vertical: context.appValues.appPadding.p10,
                 ),
                 child: Text(
-                  translate('jobDetails.rating'),
+                  'jobDetails.rating'.tr(),
                   style: getPrimaryRegularStyle(
                     fontSize: 14,
                     color: const Color(0xff180B3C),

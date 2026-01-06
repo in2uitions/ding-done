@@ -3,9 +3,11 @@ import 'package:dingdone/view/signup/signup_supplier_onboarding.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_translate/flutter_translate.dart';
-import 'package:location_picker_flutter_map/location_picker_flutter_map.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:geocoding/geocoding.dart';
 
 import '../../res/constants.dart';
 
@@ -14,108 +16,178 @@ class MapScreen extends StatefulWidget {
   final double longitude;
   final double latitude;
 
-  MapScreen({
-    Key? key,
+  const MapScreen({
+    super.key,
     required this.viewModel,
     required this.longitude,
     required this.latitude,
-  }) : super(key: key);
+  });
 
   @override
   State<MapScreen> createState() => _MapScreenState();
 }
 
 class _MapScreenState extends State<MapScreen> {
+  late LatLng selectedLocation;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedLocation = _safeLatLng(widget.latitude, widget.longitude);
+  }
+
+  LatLng _safeLatLng(double lat, double lon) {
+    final safeLat = lat.isFinite ? lat : 51.52;
+    final safeLon = lon.isFinite ? lon : 25.3;
+    return LatLng(safeLat, safeLon);
+  }
+
+  Future<void> _confirmLocation(
+      BuildContext context,
+      SignUpViewModel signupViewModel,
+      ProfileViewModel profileViewModel,
+      ) async {
+    final placemarks = await placemarkFromCoordinates(
+      selectedLocation.latitude,
+      selectedLocation.longitude,
+    );
+
+    final place = placemarks.isNotEmpty ? placemarks.first : null;
+
+    await widget.viewModel.setInputValues(
+      index: "longitude",
+      value: selectedLocation.longitude.toString(),
+    );
+    await widget.viewModel.setInputValues(
+      index: "latitude",
+      value: selectedLocation.latitude.toString(),
+    );
+    await widget.viewModel.setInputValues(
+      index: "address",
+      value: place?.street ?? '',
+    );
+    await widget.viewModel.setInputValues(
+      index: "city",
+      value: place?.locality ?? place?.administrativeArea ?? '',
+    );
+    await widget.viewModel.setInputValues(
+      index: "state",
+      value: place?.administrativeArea ?? '',
+    );
+    await widget.viewModel.setInputValues(
+      index: "street_name",
+      value: place?.street ?? '',
+    );
+    await widget.viewModel.setInputValues(
+      index: "postal_code",
+      value: place?.postalCode ?? '',
+    );
+    await widget.viewModel.setInputValues(
+      index: "zone",
+      value: place?.subLocality ?? '',
+    );
+
+    Navigator.pop(context);
+
+    if (signupViewModel.signUpBody['role'] ==
+        Constants.supplierRoleId) {
+      Navigator.of(context).push(
+        _createRoute(
+           SignUpSupplierOnBoardingScreen(initialIndex: 3),
+        ),
+      );
+    }
+
+    if (signupViewModel.signUpBody['role'] ==
+        Constants.customerRoleId) {
+      Navigator.of(context).push(
+        _createRoute(
+           SignUpOnBoardingScreen(initialIndex: 3),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffF0F3F8),
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop();
-          },
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => Navigator.of(context).pop(),
         ),
       ),
       body: Consumer2<SignUpViewModel, ProfileViewModel>(
         builder: (context, signupViewModel, profileViewModel, _) {
-          return FlutterLocationPicker(
-            initPosition: LatLong(
-              widget.latitude != null
-                  ? double.parse(widget.latitude.toString())
-                  : (profileViewModel.getProfileBody['current_address'] != null
-                  ? profileViewModel.getProfileBody['current_address']['latitude']
-                  : 25.3),
-              widget.longitude != null
-                  ? double.parse(widget.longitude.toString())
-                  : (profileViewModel.getProfileBody['current_address'] != null
-                  ? profileViewModel.getProfileBody['current_address']['longitude']
-                  : 51.52),
-            ),
-            selectLocationButtonStyle: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),
-            ),
-            // selectedLocationButtonTextstyle: const TextStyle(fontSize: 18),
-            selectLocationButtonText: translate('signUp.setCurrentLocation'),
-            selectLocationButtonLeadingIcon: const Icon(Icons.check),
-            initZoom: 11,
-            minZoomLevel: 5,
-            maxZoomLevel: 18,
-            trackMyPosition: true,
-            onError: (e) => debugPrint('Error while trying to build map: $e'),
-            onPicked: (pickedData) async {
-              debugPrint('latitude ${pickedData.latLong.latitude}');
-              debugPrint('longitude ${pickedData.latLong.longitude}');
-              debugPrint('address ${pickedData.address}');
-              debugPrint('country ${pickedData.addressData['country']}');
-              debugPrint('address data ${pickedData.addressData}');
+          return Stack(
+            children: [
+              FlutterMap(
+                options: MapOptions(
+                  initialCenter: selectedLocation,
+                  initialZoom: 11,
+                  minZoom: 5,
+                  maxZoom: 18,
+                  onTap: (tapPosition, latLng) {
+                    setState(() {
+                      selectedLocation = latLng;
+                    });
+                  },
+                ),
+                children: [
+                  TileLayer(
+                    urlTemplate:
+                    'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    userAgentPackageName:
+                    'com.in2uitions.dingdone',
+                  ),
+                  MarkerLayer(
+                    markers: [
+                      Marker(
+                        point: selectedLocation,
+                        width: 40,
+                        height: 40,
+                        child: const Icon(
+                          Icons.location_pin,
+                          color: Colors.red,
+                          size: 40,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
 
-              await widget.viewModel.setInputValues(
-                  index: "longitude",
-                  value: pickedData.latLong.longitude.toString());
-              await widget.viewModel.setInputValues(
-                  index: "latitude",
-                  value: pickedData.latLong.latitude.toString());
-              await widget.viewModel.setInputValues(
-                  index: "address",
-                  value: pickedData.address ?? '');
-              // await widget.viewModel.setInputValues(
-              //     index: "city",
-              //     value: pickedData.addressData['state_district'] ?? '');
-              await widget.viewModel.setInputValues(
-                  index: "city",
-                  value: pickedData.addressData['state'] ?? '');
-              await widget.viewModel.setInputValues(
-                  index: "state",
-                  value: pickedData.addressData['state'] ?? '');
-              await widget.viewModel.setInputValues(
-                  index: "street_name",
-                  value: pickedData.addressData['road'] ?? '');
-              await widget.viewModel.setInputValues(
-                  index: "postal_code",
-                  value: pickedData.addressData['postcode'] ?? '');
-              await widget.viewModel.setInputValues(
-                  index: "zone",
-                  value: pickedData.addressData['zone'] ?? '');
-
-
-              Navigator.pop(context);
-              if(signupViewModel.signUpBody['role']==Constants.supplierRoleId){
-                Navigator.of(context).push(_createRoute(SignUpSupplierOnBoardingScreen(initialIndex: 3,)));
-
-              }
-              if(signupViewModel.signUpBody['role']==Constants.customerRoleId){
-                Navigator.of(context).push(_createRoute(SignUpOnBoardingScreen(initialIndex: 3,)));
-
-              }
-            },
+              // ✅ Confirm button (same UX as before)
+              Positioned(
+                bottom: 20,
+                left: 20,
+                right: 20,
+                child: ElevatedButton.icon(
+                  icon: const Icon(Icons.check),
+                  label: Text(
+                    'signUp.setCurrentLocation'.tr(),
+                    style: const TextStyle(fontSize: 16),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                  ),
+                  onPressed: () => _confirmLocation(
+                    context,
+                    signupViewModel,
+                    profileViewModel,
+                  ),
+                ),
+              ),
+            ],
           );
         },
       ),
     );
   }
 }
+
 Route _createRoute(Widget child) {
   return PageRouteBuilder(
     pageBuilder: (context, animation, secondaryAnimation) => child,

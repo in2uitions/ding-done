@@ -4,9 +4,9 @@ import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_translate/flutter_translate.dart';
 import 'package:gap/gap.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:provider/provider.dart';
@@ -47,7 +47,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                 horizontal: context.appValues.appPadding.p20,
               ),
               child: Text(
-                translate('bookService.location'),
+                'bookService.location'.tr(),
                 style: getPrimaryRegularStyle(
                   fontSize: 12,
                   color: const Color(0xff180C38),
@@ -448,7 +448,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    translate('formHints.area'),
+                    'formHints.area'.tr(),
                     style: getPrimaryRegularStyle(
                       fontSize: 12,
                       color: const Color(0xff2F3036),
@@ -459,7 +459,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                     value: jobsViewModel.getjobsBody["country"] ?? '',
                     index: 'country',
                     viewModel: jobsViewModel.setInputValues,
-                    hintText: translate('formHints.area'),
+                    hintText: 'formHints.area'.tr(),
                     validator: (val) => jobsViewModel.jobsAddressError[
                         context.resources.strings.formKeys['country']!],
                     errorText: jobsViewModel.jobsAddressError[
@@ -491,7 +491,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       value: jobsViewModel.getjobsBody['street_number'] ?? '',
                       index: 'street_number',
                       viewModel: jobsViewModel.setInputValues,
-                      hintText: translate('formHints.street'),
+                      hintText: 'formHints.street'.tr(),
                       validator: (val) => jobsViewModel.jobsAddressError[
                           context.resources.strings.formKeys['street_number']!],
                       errorText: jobsViewModel.jobsAddressError[
@@ -523,7 +523,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                     '',
                             index: 'building_number',
                             viewModel: jobsViewModel.setInputValues,
-                            hintText: translate('formHints.building'),
+                            hintText: 'formHints.building'.tr(),
                             validator: (val) => jobsViewModel.jobsAddressError[
                                 context.resources.strings
                                     .formKeys['building_number']!],
@@ -553,7 +553,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                             value: jobsViewModel.getjobsBody['floor'] ?? '',
                             index: 'floor',
                             viewModel: jobsViewModel.setInputValues,
-                            hintText: translate('formHints.floor'),
+                            hintText: 'formHints.floor'.tr(),
                             validator: (val) => jobsViewModel.jobsAddressError[
                                 context.resources.strings.formKeys['floor']!],
                             errorText: jobsViewModel.jobsAddressError[
@@ -609,7 +609,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                           jobsViewModel.getjobsBody['apartment_number'] ?? '',
                       index: 'apartment_number',
                       viewModel: jobsViewModel.setInputValues,
-                      hintText: translate('formHints.apartment'),
+                      hintText: 'formHints.apartment'.tr(),
                       validator: (val) => jobsViewModel.jobsAddressError[context
                           .resources.strings.formKeys['apartment_number']!],
                       errorText: jobsViewModel.jobsAddressError[context
@@ -631,7 +631,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    translate('formHints.city'),
+                    'formHints.city'.tr(),
                     style: getPrimaryRegularStyle(
                       fontSize: 12,
                       color: const Color(0xff2F3036),
@@ -642,7 +642,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       value: jobsViewModel.getjobsBody["city"] ?? '',
                       index: 'city',
                       viewModel: jobsViewModel.setInputValues,
-                      hintText: translate('formHints.city'),
+                      hintText: 'formHints.city'.tr(),
                       validator: (val) => jobsViewModel.jobsAddressError[
                           context.resources.strings.formKeys['city']!],
                       errorText: jobsViewModel.jobsAddressError[
@@ -668,7 +668,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       value: jobsViewModel.getjobsBody["zone"] ?? '',
                       index: 'zone',
                       viewModel: jobsViewModel.setInputValues,
-                      hintText: translate('formHints.zone'),
+                      hintText: 'formHints.zone'.tr(),
                       validator: (val) => jobsViewModel.jobsAddressError[
                           context.resources.strings.formKeys['zone']!],
                       errorText: jobsViewModel.jobsAddressError[
@@ -683,7 +683,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    translate('formHints.address_label'),
+                    'formHints.address_label'.tr(),
                     style: getPrimaryRegularStyle(
                       fontSize: 12,
                       color: const Color(0xff2F3036),
@@ -694,7 +694,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       value: jobsViewModel.getjobsBody["address_label"] ?? '',
                       index: 'address_label',
                       viewModel: jobsViewModel.setInputValues,
-                      hintText: translate('formHints.address_label'),
+                      hintText: 'formHints.address_label'.tr(),
                       validator: (val) => jobsViewModel.jobsAddressError[
                           context.resources.strings.formKeys['address_label']!],
                       errorText: jobsViewModel.jobsAddressError[
