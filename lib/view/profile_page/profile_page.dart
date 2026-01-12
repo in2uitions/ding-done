@@ -11,6 +11,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
+import '../../res/app_prefs.dart';
+import '../../view_model/dispose_view_model/app_view_model.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
 
@@ -19,6 +22,8 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  bool _isDeleteBusy = false;
+
   Future<void> _handleRefresh() async {
     try {
       await Provider.of<ProfileViewModel>(context, listen: false).readJson();
@@ -228,8 +233,15 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ],
                                     ),
                                   ),
-                                  onTap: () {
-                                    _confirmAndDelete(profileViewModel);
+                                  onTap: _isDeleteBusy
+                                      ? null
+                                      : () async {
+                                    setState(() => _isDeleteBusy = true);
+
+                                    await _confirmAndDelete(profileViewModel);
+
+                                    // If you want to re-enable later, turn it back to false:
+                                    setState(() => _isDeleteBusy = false);
                                   },
                                 ),
                                 const Gap(40),
@@ -300,9 +312,9 @@ class _ProfilePageState extends State<ProfilePage> {
                       context: context,
                       builder:
                           (BuildContext context) =>
-                          simpleAlert(context, 'button.success'.tr()));
+                          simpleAlert(context, 'button.success'.tr(),'',profileViewModel));
                 }else{
-                  showDialog(context: context, builder: (BuildContext context) => simpleAlert(context,'button.failure'.tr()));
+                  showDialog(context: context, builder: (BuildContext context) => simpleAlert(context,'button.failure'.tr(),value["reason"].toString(),profileViewModel));
                 }
               },
               child: Container(
@@ -331,64 +343,187 @@ class _ProfilePageState extends State<ProfilePage> {
     );
 
   }
-  Widget simpleAlert(BuildContext context, String message) {
-    return AlertDialog(
-      backgroundColor: Colors.white,
-      elevation: 15,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-            child: Row(
+  // Widget simpleAlert(BuildContext context, String message,String error,ProfileViewModel profileViewModel) {
+  //   return AlertDialog(
+  //     backgroundColor: Colors.white,
+  //     elevation: 15,
+  //     content: Column(
+  //       mainAxisSize: MainAxisSize.min,
+  //       // crossAxisAlignment: CrossAxisAlignment.center,
+  //       children: <Widget>[
+  //         Padding(
+  //           padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.end,
+  //             children: [
+  //               InkWell(
+  //                 child: SvgPicture.asset('assets/img/x.svg'),
+  //                 onTap: () {
+  //                   if(message == 'button.success'.tr()){
+  //                     Navigator.pop(context);
+  //                     AppPreferences().clear();
+  //                     profileViewModel.clear();
+  //                     AppProviders.disposeAllDisposableProviders(
+  //                         context);
+  //                     Navigator.of(context)
+  //                         .push(_createRoute(const LoginScreen()));
+  //
+  //                   }
+  //
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         message == 'button.success'.tr()
+  //             ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+  //             : SvgPicture.asset('assets/img/failure.svg'),
+  //         SizedBox(height: context.appValues.appSize.s40),
+  //         Padding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: context.appValues.appPadding.p32,
+  //           ),
+  //           child: Text(
+  //             message,
+  //             textAlign: TextAlign.center,
+  //             style: getPrimaryRegularStyle(
+  //               fontSize: 17,
+  //               color: context.resources.color.btnColorBlue,
+  //             ),
+  //           ),
+  //         ),  message == 'button.success'.tr()?
+  //         SizedBox(height: context.appValues.appSize.s20):Container(),
+  //         message == 'button.success'.tr()?Padding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: context.appValues.appPadding.p32,
+  //           ),
+  //           child: Text(
+  //             'Request Sent',
+  //             textAlign: TextAlign.center,
+  //             style: getPrimaryRegularStyle(
+  //
+  //               fontSize: 17,
+  //               color: context.resources.color.btnColorBlue,
+  //             ),
+  //           ),
+  //         ):Padding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: context.appValues.appPadding.p32,
+  //           ),
+  //           child: Text(
+  //             '$error',
+  //             textAlign: TextAlign.center,
+  //             style: getPrimaryRegularStyle(
+  //
+  //               fontSize: 17,
+  //               color: context.resources.color.btnColorBlue,
+  //             ),
+  //           ),
+  //         ),
+  //         SizedBox(height: context.appValues.appSize.s20),
+  //       ],
+  //     ),
+  //   );
+  // }
+  Widget simpleAlert(
+      BuildContext context,
+      String message,
+      String error,
+      ProfileViewModel profileViewModel,
+      ) {
+    final bool isSuccess = message == 'button.success'.tr();
+
+    return WillPopScope(
+      onWillPop: () async => false, // 🚫 disable back button
+      child: AlertDialog(
+        backgroundColor: Colors.white,
+        elevation: 15,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // ❌ Close icon
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 InkWell(
                   child: SvgPicture.asset('assets/img/x.svg'),
-                  onTap: () {
-                    Navigator.pop(context);
-
-                  },
+                  onTap: isSuccess
+                      ? () => _logoutAndGoToLogin(profileViewModel)
+                      : () => Navigator.pop(context),
                 ),
               ],
             ),
-          ),
-          message == 'button.success'.tr()
-              ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
-              : SvgPicture.asset('assets/img/failure.svg'),
-          SizedBox(height: context.appValues.appSize.s40),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
+
+            isSuccess
+                ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+                : SvgPicture.asset('assets/img/failure.svg'),
+
+            SizedBox(height: context.appValues.appSize.s30),
+
+            Text(
               message,
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
-                fontSize: 17,
+                fontSize: 16,
                 color: context.resources.color.btnColorBlue,
               ),
             ),
-          ),  message == 'button.success'.tr()?
-          SizedBox(height: context.appValues.appSize.s20):Container(),
-          message == 'button.success'.tr()?Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              'Request Sent',
+
+            const Gap(10),
+
+            Text(
+              isSuccess ? 'Request Sent' : error,
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
-
-                fontSize: 17,
+                fontSize: 16,
                 color: context.resources.color.btnColorBlue,
               ),
             ),
-          ):Container(),
-          SizedBox(height: context.appValues.appSize.s20),
-        ],
+
+            const Gap(25),
+
+            // ✅ OK BUTTON
+            InkWell(
+              onTap: isSuccess
+                  ? () => _logoutAndGoToLogin(profileViewModel)
+                  : () => Navigator.pop(context),
+              child: Container(
+                height: 44,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: const Color(0xff4100E3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    'button.ok'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                      fontSize: 13,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
+    );
+  }
+  void _logoutAndGoToLogin(ProfileViewModel profileViewModel) {
+    Navigator.pop(context); // close alert dialog
+    Navigator.pop(context); // close profile/settings if needed
+
+    AppPreferences().clear();
+    profileViewModel.clear();
+    AppProviders.disposeAllDisposableProviders(context);
+
+    Navigator.of(context).pushAndRemoveUntil(
+      _createRoute(const LoginScreen()),
+          (route) => false,
     );
   }
 

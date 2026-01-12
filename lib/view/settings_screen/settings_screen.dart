@@ -10,9 +10,11 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../view_model/dispose_view_model/app_view_model.dart';
 import '../../view_model/jobs_view_model/jobs_view_model.dart';
 import '../../view_model/profile_view_model/profile_view_model.dart';
 import '../../res/constants.dart';
+import '../login/login.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -324,13 +326,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) =>
-                        simpleAlert(context, 'button.success'.tr()),
+                        simpleAlert(context, 'button.success'.tr(),profileViewModel),
                   );
                 } else {
                   showDialog(
                     context: context,
                     builder: (BuildContext context) =>
-                        simpleAlert(context, 'button.failure'.tr()),
+                        simpleAlert(context, 'button.failure'.tr(),profileViewModel),
                   );
                 }
               },
@@ -343,7 +345,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    'profile.confirmDelete'.tr(), // was hardcoded
+                    'Yes, I’m Done With It'
+                        , // was hardcoded
                     style: getPrimarySemiBoldStyle(
                       fontSize: 12,
                       color: Colors.white,
@@ -358,65 +361,180 @@ class _SettingsScreenState extends State<SettingsScreen> {
     );
   }
 
-  Widget simpleAlert(BuildContext context, String message) {
+  // Widget simpleAlert(BuildContext context, String message,ProfileViewModel profileViewModel) {
+  //   final success = message == 'button.success'.tr();
+  //
+  //   return AlertDialog(
+  //     backgroundColor: Colors.white,
+  //     elevation: 15,
+  //     content: Column(
+  //       mainAxisSize: MainAxisSize.min,
+  //       children: <Widget>[
+  //         Padding(
+  //           padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.end,
+  //             children: [
+  //               InkWell(
+  //                 child: SvgPicture.asset('assets/img/x.svg'),
+  //                 onTap: () {
+  //                   Navigator.pop(context);
+  //                   if(message == 'button.success'.tr()){
+  //                     Navigator.pop(context);
+  //                     AppPreferences().clear();
+  //                     profileViewModel.clear();
+  //                     AppProviders.disposeAllDisposableProviders(
+  //                         context);
+  //                     Navigator.of(context)
+  //                         .push(_createRoute(const LoginScreen()));
+  //
+  //                   }
+  //
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //         success
+  //             ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+  //             : SvgPicture.asset('assets/img/failure.svg'),
+  //         SizedBox(height: context.appValues.appSize.s40),
+  //         Padding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: context.appValues.appPadding.p32,
+  //           ),
+  //           child: Text(
+  //             message,
+  //             textAlign: TextAlign.center,
+  //             style: getPrimaryRegularStyle(
+  //               fontSize: 17,
+  //               color: context.resources.color.btnColorBlue,
+  //             ),
+  //           ),
+  //         ),
+  //         success ? SizedBox(height: context.appValues.appSize.s20) : Container(),
+  //         success
+  //             ? Padding(
+  //           padding: EdgeInsets.symmetric(
+  //             horizontal: context.appValues.appPadding.p32,
+  //           ),
+  //           child: Text(
+  //             'profile.requestSent'.tr(), // was "Request Sent"
+  //             textAlign: TextAlign.center,
+  //             style: getPrimaryRegularStyle(
+  //               fontSize: 17,
+  //               color: context.resources.color.btnColorBlue,
+  //             ),
+  //           ),
+  //         )
+  //             : Container(),
+  //         SizedBox(height: context.appValues.appSize.s20),
+  //       ],
+  //     ),
+  //   );
+  // }
+  Widget simpleAlert(
+      BuildContext context,
+      String message,
+      ProfileViewModel profileViewModel,
+      ) {
     final success = message == 'button.success'.tr();
 
-    return AlertDialog(
-      backgroundColor: Colors.white,
-      elevation: 15,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-            child: Row(
+    return WillPopScope(
+      onWillPop: () async => false, // 🚫 disable back button
+      child: AlertDialog(
+        backgroundColor: Colors.white,
+        elevation: 15,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            // ❌ Close icon
+            Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 InkWell(
                   child: SvgPicture.asset('assets/img/x.svg'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                  onTap: success
+                      ? () => _logoutAndGoToLogin(context, profileViewModel)
+                      : () => Navigator.pop(context),
                 ),
               ],
             ),
-          ),
-          success
-              ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
-              : SvgPicture.asset('assets/img/failure.svg'),
-          SizedBox(height: context.appValues.appSize.s40),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
+
+            success
+                ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+                : SvgPicture.asset('assets/img/failure.svg'),
+
+            SizedBox(height: context.appValues.appSize.s30),
+
+            Text(
               message,
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
-                fontSize: 17,
+                fontSize: 16,
                 color: context.resources.color.btnColorBlue,
               ),
             ),
-          ),
-          success ? SizedBox(height: context.appValues.appSize.s20) : Container(),
-          success
-              ? Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              'profile.requestSent'.tr(), // was "Request Sent"
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: context.resources.color.btnColorBlue,
+
+            if (success) ...[
+              const Gap(10),
+              Text(
+                'Request Sent',
+                textAlign: TextAlign.center,
+                style: getPrimaryRegularStyle(
+                  fontSize: 16,
+                  color: context.resources.color.btnColorBlue,
+                ),
+              ),
+            ],
+
+            const Gap(25),
+
+            // ✅ OK BUTTON
+            InkWell(
+              onTap: success
+                  ? () => _logoutAndGoToLogin(context, profileViewModel)
+                  : () => Navigator.pop(context),
+              child: Container(
+                height: 44,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: const Color(0xff4100E3),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Center(
+                  child: Text(
+                    'button.ok'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                      fontSize: 13,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
               ),
             ),
-          )
-              : Container(),
-          SizedBox(height: context.appValues.appSize.s20),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+  void _logoutAndGoToLogin(
+      BuildContext context,
+      ProfileViewModel profileViewModel,
+      ) {
+    Navigator.pop(context); // close dialog
+    Navigator.pop(context); // close settings screen
+
+    AppPreferences().clear();
+    profileViewModel.clear();
+    AppProviders.disposeAllDisposableProviders(context);
+
+    Navigator.of(context).pushAndRemoveUntil(
+      _createRoute(const LoginScreen()),
+          (route) => false,
     );
   }
 

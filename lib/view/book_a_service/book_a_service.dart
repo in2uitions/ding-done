@@ -300,7 +300,7 @@ class _BookAServiceState extends State<BookAService> {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          "Add / Edit Methods",
+                                          "Add / Edit Address",
                                           style: getPrimarySemiBoldStyle(
                                             fontSize: 12,
                                             color: const Color(0xff4100E3),
