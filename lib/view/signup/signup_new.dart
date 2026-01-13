@@ -31,6 +31,15 @@ class _SignUpNewState extends State<SignUpNew> {
   final TextEditingController _phoneController = TextEditingController();
   dynamic image = {};
   Position? _currentPosition;
+  final List<TextEditingController> _otpControllers =
+  List.generate(4, (_) => TextEditingController());
+
+  final List<FocusNode> _otpFocusNodes =
+  List.generate(4, (_) => FocusNode());
+
+  bool _otpSent = false;
+  bool _otpVerified = false;
+  bool _resending = false;
 
   @override
   void initState() {
@@ -343,6 +352,85 @@ class _SignUpNewState extends State<SignUpNew> {
             ],
           ),
         ),
+
+
+        /// SEND CODE
+        if (!_otpSent && !_otpVerified)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: GestureDetector(
+              onTap: () async {
+                if (!_hasValidPhone(signupViewModel)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please enter phone number')),
+                  );
+                  return;
+                }
+
+                final success = await signupViewModel.requestOtp();
+                if (success == true) {
+                  setState(() {
+                    _otpSent = true;
+                  });
+                }
+              },
+              child: Text(
+                'Send code',
+                style: getPrimarySemiBoldStyle(
+                  fontSize: 14,
+                  color: const Color(0xff4100E3),
+                ),
+              ),
+            ),
+          ),
+
+        /// OTP SECTION
+        if (_otpSent && !_otpVerified) ...[
+          const Gap(30),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Text(
+              'Enter the 4-digit OTP code',
+              style: getPrimaryRegularStyle(
+                  fontSize: 14, color: const Color(0xFF8F9098)),
+            ),
+          ),
+
+          const Gap(20),
+
+          _buildOtpInput(),
+
+          const Gap(20),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                "Didn't receive OTP? ",
+                style: getPrimaryRegularStyle(
+                    fontSize: 14, color: const Color(0xFF8F9098)),
+              ),
+              GestureDetector(
+                onTap: _resending
+                    ? null
+                    : () async {
+                  setState(() => _resending = true);
+                  await signupViewModel.requestOtp();
+                  setState(() => _resending = false);
+                },
+                child: Text(
+                  'Resend',
+                  style: getPrimarySemiBoldStyle(
+                    fontSize: 14,
+                    color: const Color(0xff4100E3),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+        const Gap(12),
         // Email Field
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
@@ -1051,6 +1139,22 @@ class _SignUpNewState extends State<SignUpNew> {
                             ),
                           ),
                           onPressed: () async {
+                            if (_currentStep == 1) {
+                              if (!_otpSent) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Please request OTP')),
+                                );
+                                return;
+                              }
+
+                              if (!_otpVerified) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(content: Text('Invalid OTP')),
+                                );
+                                return;
+                              }
+                            }
+
                             // Validate current page before navigating.
                             if (_currentStep < _totalSteps - 1) {
                               if (await signupViewModel.validate(
@@ -1087,6 +1191,10 @@ class _SignUpNewState extends State<SignUpNew> {
                                 );
                               }
                             }
+
+
+
+
                           },
                           child: Text(
                             _currentStep == _totalSteps - 1
@@ -1107,4 +1215,75 @@ class _SignUpNewState extends State<SignUpNew> {
       ),
     );
   }
+  String get _enteredOtp =>
+      _otpControllers.map((c) => c.text).join();
+
+  bool _isOtpValid(SignUpViewModel vm) {
+    return _enteredOtp.length == 4 &&
+        vm.getOtp.toString().startsWith(_enteredOtp);
+  }
+  bool _hasValidPhone(SignUpViewModel vm) {
+    final phone = vm.signUpBody['phone_number'];
+    return phone != null && phone.toString().trim().isNotEmpty;
+  }
+
+  Widget _buildOtpInput() {
+    return   Padding(
+      padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: List.generate(4, (index) {
+          return SizedBox(
+            width: 60,
+            height: 55,
+            child: TextField(
+              controller: _otpControllers[index],
+              focusNode: _otpFocusNodes[index],
+              keyboardType: TextInputType.number,
+              textAlign: TextAlign.center,
+              maxLength: 1,
+              style: getPrimarySemiBoldStyle(fontSize: 18),
+              decoration: InputDecoration(
+                counterText: '',
+                hintText: '-',
+                hintStyle: const TextStyle(color: Color(0xFFBDBDBD)),
+                filled: true,
+                fillColor: Colors.white,
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide: const BorderSide(color: Color(0xFFE5E5E5)),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(14),
+                  borderSide:
+                  const BorderSide(color: Color(0xff4100E3), width: 1.5),
+                ),
+              ),
+              onChanged: (value) {
+                if (value.isNotEmpty && index < 3) {
+                  _otpFocusNodes[index + 1].requestFocus();
+                }
+                if (value.isEmpty && index > 0) {
+                  _otpFocusNodes[index - 1].requestFocus();
+                }
+
+                final vm = Provider.of<SignUpViewModel>(context, listen: false);
+
+                setState(() {
+                  _otpVerified = _isOtpValid(vm);
+
+                  if (_otpVerified) {
+                    // _otpSent = false; // 🔥 hides OTP section
+                    FocusScope.of(context).unfocus();
+                  }
+                });
+              },
+
+            ),
+          );
+        }),
+      ),
+    );
+  }
+
 }

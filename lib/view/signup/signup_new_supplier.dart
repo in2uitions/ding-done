@@ -45,6 +45,17 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   dynamic idImage = {};
   String? selectedOption;
   Position? _currentPosition;
+  final List<TextEditingController> _otpControllers =
+  List.generate(4, (_) => TextEditingController());
+
+  final List<FocusNode> _otpFocusNodes =
+  List.generate(4, (_) => FocusNode());
+
+  bool _otpVerified = false;
+  bool _otpSent = false;
+  bool _resending = false;
+
+  final TextEditingController _otpController = TextEditingController();
 
   @override
   void initState() {
@@ -488,8 +499,10 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Gap(25),
+
+        /// PHONE NUMBER
         Padding(
-          padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -499,6 +512,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                     color: const Color(0xff180C38), fontSize: 12),
               ),
               const Gap(10),
+
               CustomPhoneFieldController(
                 value: signupViewModel.signUpBody["phone"],
                 phone_code: signupViewModel.signUpBody["phone_code"],
@@ -508,11 +522,96 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                 controller: _phoneController,
                 keyboardType: TextInputType.number,
               ),
+
+              const Gap(12),
+
+              /// SEND CODE TEXT BUTTON
+              if (!_otpSent && !_otpVerified)
+                GestureDetector(
+                  onTap: () async {
+                    if (!_hasValidPhone(signupViewModel)) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text('Please enter phone number')),
+                      );
+                      return;
+                    }
+
+                    final success = await signupViewModel.requestOtp();
+                    if (success == true) {
+                      setState(() {
+                        _otpSent = true;
+                      });
+                    }
+                  },
+                  child: Text(
+                    'Send code',
+                    style: getPrimarySemiBoldStyle(
+                      fontSize: 14,
+                      color: const Color(0xff4100E3),
+                    ),
+                  ),
+                ),
             ],
           ),
         ),
+
+        /// OTP SECTION
+        if (_otpSent && !_otpVerified) ...[
+          const Gap(30),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Enter the 4-digit OTP code',
+                  style: getPrimaryRegularStyle(
+                      fontSize: 14, color: const Color(0xFF8F9098)),
+                ),
+                const Gap(20),
+
+                _buildOtpInput(),
+
+                const Gap(20),
+
+                /// RESEND
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Didn't receive OTP? ",
+                      style: getPrimaryRegularStyle(
+                          fontSize: 14, color: const Color(0xFF8F9098)),
+                    ),
+                    GestureDetector(
+                      onTap: _resending
+                          ? null
+                          : () async {
+                        setState(() => _resending = true);
+                        await signupViewModel.requestOtp();
+                        setState(() => _resending = false);
+                      },
+                      child: Text(
+                        'Resend',
+                        style: getPrimarySemiBoldStyle(
+                          fontSize: 14,
+                          color: const Color(0xff4100E3),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+
+        const Gap(30),
+
+        /// EMAIL (unchanged)
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -522,15 +621,12 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                     color: const Color(0xff180C38), fontSize: 12),
               ),
               const Gap(10),
+
               CustomTextField(
                 value: signupViewModel.signUpBody['email'] ?? '',
                 index: 'email',
                 viewModel: signupViewModel.setInputValues,
                 hintText: 'formHints.email'.tr(),
-                validator: (val) => signupViewModel
-                    .signUpErrors[context.resources.strings.formKeys['email']!],
-                errorText: signupViewModel
-                    .signUpErrors[context.resources.strings.formKeys['email']!],
                 keyboardType: TextInputType.emailAddress,
               ),
             ],
@@ -1137,42 +1233,85 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                               borderRadius: BorderRadius.circular(12),
                             ),
                           ),
+                          // onPressed: () async {
+                          //   if (_currentStep < pages.length - 1) {
+                          //     if (await signupViewModel.validate(
+                          //         index: _currentStep)) {
+                          //       setState(() {
+                          //         _currentStep++;
+                          //       });
+                          //     } else {
+                          //       ScaffoldMessenger.of(context).showSnackBar(
+                          //         const SnackBar(
+                          //             content: Text(
+                          //                 'Please fill in all required fields')),
+                          //       );
+                          //     }
+                          //   } else {
+                          //     if (await signupViewModel.validate(
+                          //         index: _currentStep)) {
+                          //       ScaffoldMessenger.of(context).showSnackBar(
+                          //         const SnackBar(
+                          //             content: Text('Sign Up Complete!')),
+                          //       );
+                          //       Navigator.of(context).push(
+                          //         MaterialPageRoute(
+                          //           builder: (context) =>
+                          //               SupplierAgreement(index: _currentStep),
+                          //         ),
+                          //       );
+                          //     } else {
+                          //       ScaffoldMessenger.of(context).showSnackBar(
+                          //         const SnackBar(
+                          //             content: Text(
+                          //                 'Please fill in all required fields')),
+                          //       );
+                          //     }
+                          //   }
+                          // },
                           onPressed: () async {
-                            if (_currentStep < pages.length - 1) {
-                              if (await signupViewModel.validate(
-                                  index: _currentStep)) {
-                                setState(() {
-                                  _currentStep++;
-                                });
-                              } else {
+                            final isValidForm =
+                            await signupViewModel.validate(index: _currentStep);
+
+                            // STEP 2 (Contact Information)
+                            if (_currentStep == 1) {
+                              if (!_otpSent) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Please fill in all required fields')),
+                                  const SnackBar(content: Text('Please request OTP')),
                                 );
+                                return;
                               }
-                            } else {
-                              if (await signupViewModel.validate(
-                                  index: _currentStep)) {
+
+                              if (!_isOtpValid(signupViewModel)) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Sign Up Complete!')),
+                                  const SnackBar(content: Text('Invalid OTP')),
                                 );
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        SupplierAgreement(index: _currentStep),
-                                  ),
-                                );
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Please fill in all required fields')),
-                                );
+                                return;
                               }
                             }
+
+                            if (!isValidForm) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Please fill in all required fields')),
+                              );
+                              return;
+                            }
+
+                            // Move forward
+                            if (_currentStep < pages.length - 1) {
+                              setState(() => _currentStep++);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Sign Up Complete!')),
+                              );
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => SupplierAgreement(index: _currentStep),
+                                ),
+                              );
+                            }
                           },
+
                           child: Text(
                             _currentStep == pages.length - 1
                                 ? "Complete"
@@ -1192,6 +1331,75 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       ),
     );
   }
+  Widget _buildOtpInput() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: List.generate(4, (index) {
+        return SizedBox(
+          width: 60,
+          height: 55,
+          child: TextField(
+            controller: _otpControllers[index],
+            focusNode: _otpFocusNodes[index],
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            maxLength: 1,
+            style: getPrimarySemiBoldStyle(fontSize: 18),
+            decoration: InputDecoration(
+              counterText: '',
+              hintText: '-',
+              hintStyle: const TextStyle(color: Color(0xFFBDBDBD)),
+              filled: true,
+              fillColor: Colors.white,
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide: const BorderSide(color: Color(0xFFE5E5E5)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(14),
+                borderSide:
+                const BorderSide(color: Color(0xff4100E3), width: 1.5),
+              ),
+            ),
+            onChanged: (value) {
+              if (value.isNotEmpty && index < 3) {
+                _otpFocusNodes[index + 1].requestFocus();
+              }
+              if (value.isEmpty && index > 0) {
+                _otpFocusNodes[index - 1].requestFocus();
+              }
+
+              final vm = Provider.of<SignUpViewModel>(context, listen: false);
+
+              setState(() {
+                _otpVerified = _isOtpValid(vm);
+
+                if (_otpVerified) {
+                  // _otpSent = false; // 🔥 hides OTP section
+                  FocusScope.of(context).unfocus();
+                }
+              });
+            },
+
+          ),
+        );
+      }),
+    );
+  }
+  String get _enteredOtp {
+    return _otpControllers.map((c) => c.text).join();
+  }
+  bool _isOtpValid(SignUpViewModel vm) {
+    if (!_otpSent) return false; // must request OTP first
+    if (_enteredOtp.length != 4) return false;
+
+    return _enteredOtp == vm.getOtp.toString();
+  }
+  bool _hasValidPhone(SignUpViewModel vm) {
+    final phone = vm.signUpBody['phone_number'];
+    return phone != null && phone.toString().trim().isNotEmpty;
+  }
+
 }
 
 Route _createRoute(dynamic targetPage) {

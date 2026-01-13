@@ -888,11 +888,11 @@ void showAccountNotVerifiedDialog(
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SvgPicture.asset(
-              'assets/img/failure.svg',
-              height: 80,
-            ),
-            const Gap(20),
+            // SvgPicture.asset(
+            //   'assets/img/failure.svg',
+            //   height: 80,
+            // ),
+            const Gap(10),
             Text(
               'Hello $firstName,',
               textAlign: TextAlign.center,

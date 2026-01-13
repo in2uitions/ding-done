@@ -79,6 +79,7 @@ class _CustomPhoneFieldControllerState
       onChanged: (PhoneNumber number) {
         // Concatenate the country code and phone number
         final fullPhoneNumber = '${number.countryCode}${number.number}';
+        debugPrint('full phone nu ber $fullPhoneNumber');
         phone = number.number;
         // Update the controller text
         widget.controller.text = phone;

@@ -14,6 +14,8 @@ class SignUpRepository {
       NetworkApiService(url: ApiEndPoints().getCountries);
   final BaseApiService _apiUserRegister =
       NetworkApiService(url: ApiEndPoints().userRegister);
+  final BaseApiService _apiRequestOtp =
+      NetworkApiService(url: ApiEndPoints().requestOtp);
   // final BaseApiService _apiEmailConfirm =
   //     NetworkApiService(url: ApiEndPoints().emailConfirm);
   final BaseApiService _userUpdate =
@@ -98,6 +100,24 @@ class SignUpRepository {
 
     } catch (error) {
       debugPrint('error in post user credentials ${error}');
+      rethrow;
+    }
+  }
+  Future<dynamic> requestOtp(dynamic body) async {
+    try {
+      dynamic response =
+          await _apiRequestOtp.postResponse(data: {
+          'recipients': [body['phone'].toString().replaceAll('+', '')],
+          'text': ' your one time password (OTP) for Ding Done app. Do not share this passcode with anyone. If you have not raised this request, please ignore.',
+          'sender': 'Optica',
+            // 'mode':'test'
+          }, sendToken: false);
+      debugPrint('response in getting otp is $response');
+      return response;
+
+
+    } catch (error) {
+      debugPrint('error in post getting otp ${error}');
       rethrow;
     }
   }

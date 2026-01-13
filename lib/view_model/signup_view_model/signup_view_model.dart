@@ -32,6 +32,7 @@ class SignUpViewModel with ChangeNotifier {
 
   String _userRole = '';
   String _errorMessage = '';
+  String _otp = '';
 
   SignUpViewModel() {
     roles();
@@ -46,11 +47,11 @@ class SignUpViewModel with ChangeNotifier {
       dynamic response =
           await _signUpRepository.postUserCredentials(signUpBody);
       debugPrint('1 ${response}');
-      if(response is Map){
+      if (response is Map) {
         debugPrint('2 ${response}');
 
-        _errorMessage=response['reason'];
-        signUpBody={};
+        _errorMessage = response['reason'];
+        signUpBody = {};
         notifyListeners();
         return false;
       }
@@ -66,25 +67,42 @@ class SignUpViewModel with ChangeNotifier {
       //         '${_apiRegisterResponse.data?.first_name} ${_apiRegisterResponse.data?.last_name}',
       //     userId: '${_apiRegisterResponse.data?.id}');
       // await saveProfileData();
-      signUpBody={};
+      signUpBody = {};
       notifyListeners();
       return true;
     } catch (error) {
       _apiRegisterResponse = ApiResponse<UserModel>.error(error.toString());
-      _errorMessage=error.toString();
-      signUpBody={};
+      _errorMessage = error.toString();
+      signUpBody = {};
 
       return false;
     }
     // debugPrint('sign up body ${signUpBody}');
     // return false;
   }
+
   Future<void> setDataWriten(bool isWriten) async {
     _isDataWritten = isWriten;
 
     notifyListeners();
   }
 
+  Future<bool?> requestOtp() async {
+    try {
+      dynamic response =
+          await _signUpRepository.requestOtp(signUpBody);
+      debugPrint('response getting otp $response');
+      _otp=response['otp'];
+      return true;
+
+    } catch (error) {
+      debugPrint('error getting otp $error');
+      _apiRegisterResponse = ApiResponse<UserModel>.error(error.toString());
+      _errorMessage = error.toString();
+      signUpBody = {};
+      return false;
+    }
+  }
 
   Future<bool> validate({required int index}) async {
     signUpErrors = {};
@@ -148,8 +166,9 @@ class SignUpViewModel with ChangeNotifier {
           } else {
             debugPrint('comapny 3');
 
-            var companies=await _getCompanies();
-            final isValidCompany = companies!.any((company) => company['id'] == companyId);
+            var companies = await _getCompanies();
+            final isValidCompany =
+                companies!.any((company) => company['id'] == companyId);
 
             if (!isValidCompany) {
               debugPrint('This is not a valid company');
@@ -166,9 +185,11 @@ class SignUpViewModel with ChangeNotifier {
           QIDMessage = 'Please select a profile type';
         }
         debugPrint('QIDMessage ${QIDMessage} ${signUpBody['selectedOption']}');
-        if (firstnameMessage == null && lastnameMessage == null
+        if (firstnameMessage == null &&
+            lastnameMessage == null
             // && dobMessage == null
-            && QIDMessage == null) {
+            &&
+            QIDMessage == null) {
           notifyListeners();
           return true;
         }
@@ -176,9 +197,9 @@ class SignUpViewModel with ChangeNotifier {
             firstnameMessage;
         signUpErrors[EnglishStrings().formKeys['last_name']!] = lastnameMessage;
         // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
-        signUpBody['selectedOption'] =='individual'?
-        signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage:
-        signUpErrors[EnglishStrings().formKeys['company']!] = QIDMessage;
+        signUpBody['selectedOption'] == 'individual'
+            ? signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage
+            : signUpErrors[EnglishStrings().formKeys['company']!] = QIDMessage;
 
         notifyListeners();
         return false;
@@ -186,13 +207,12 @@ class SignUpViewModel with ChangeNotifier {
 
       if (index == 1) {
         phoneMessage = AppValidation().isValidPhoneNumber(
-           signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
-           );
-
+          signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+        );
 
         emailMessage = AppValidation().isEmailValid(
             signUpBody[EnglishStrings().formKeys['email']!] ?? '');
-        if (emailMessage == null && phoneMessage==null) {
+        if (emailMessage == null && phoneMessage == null) {
           notifyListeners();
           return true;
         }
@@ -217,11 +237,12 @@ class SignUpViewModel with ChangeNotifier {
 
       if (index == 3) {
         streetMessage = AppValidation().isNotEmpty(
-            value: signUpBody[EnglishStrings().formKeys['street_number']!] ?? '',
+            value:
+                signUpBody[EnglishStrings().formKeys['street_number']!] ?? '',
             index: 'Street Number');
         buildingMessage = AppValidation().isNotEmpty(
             value:
-            signUpBody[EnglishStrings().formKeys['building_number']!] ?? '',
+                signUpBody[EnglishStrings().formKeys['building_number']!] ?? '',
             index: 'Building Number');
         apartmentMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['apartment_number']!] ??
@@ -234,7 +255,8 @@ class SignUpViewModel with ChangeNotifier {
             value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
             index: 'Zone');
         addressLabelMessage = AppValidation().isNotEmpty(
-            value: signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
+            value:
+                signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
             index: 'Address Label');
         countryMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
@@ -243,43 +265,46 @@ class SignUpViewModel with ChangeNotifier {
             value: signUpBody[EnglishStrings().formKeys['floor']!] ?? '',
             index: 'Floor');
         longitudeMessage = AppValidation().isNotEmpty(
-            value: signUpBody['longitude'] ?? '',
-            index: 'Longitude');
-        latitudeMessage = AppValidation().isNotEmpty(
-            value: signUpBody['latitude'] ?? '',
-            index: 'Latitude');
+            value: signUpBody['longitude'] ?? '', index: 'Longitude');
+        latitudeMessage = AppValidation()
+            .isNotEmpty(value: signUpBody['latitude'] ?? '', index: 'Latitude');
         if (streetMessage == null &&
             buildingMessage == null &&
             apartmentMessage == null &&
             cityMessage == null &&
-            zoneMessage == null && addressLabelMessage == null &&
+            zoneMessage == null &&
+            addressLabelMessage == null &&
             countryMessage == null &&
-            floorMessage == null && signUpBody['longitude']!=null &&signUpBody['latitude']!=null) {
+            floorMessage == null &&
+            signUpBody['longitude'] != null &&
+            signUpBody['latitude'] != null) {
           notifyListeners();
           return true;
         }
-        signUpErrors[EnglishStrings().formKeys['street_number']!] = streetMessage;
+        signUpErrors[EnglishStrings().formKeys['street_number']!] =
+            streetMessage;
         signUpErrors[EnglishStrings().formKeys['building_number']!] =
             buildingMessage;
         signUpErrors[EnglishStrings().formKeys['apartment_number']!] =
             apartmentMessage;
         signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
         signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
-        signUpErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
+        signUpErrors[EnglishStrings().formKeys['address_label']!] =
+            addressLabelMessage;
         signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
         signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
-        signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
+        signUpErrors[EnglishStrings().formKeys['longitude']!] =
+            longitudeMessage;
         signUpErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
         notifyListeners();
         return false;
-
       }
 
       if (index == 4) {
         categoriesMessage = AppValidation().isNotListEmpty(
             value:
-            signUpBody[EnglishStrings().formKeys['supplier_services']!] ??
-                [],
+                signUpBody[EnglishStrings().formKeys['supplier_services']!] ??
+                    [],
             index: 'Categories');
         if (categoriesMessage == null) {
           notifyListeners();
@@ -292,7 +317,7 @@ class SignUpViewModel with ChangeNotifier {
       }
 
       if (index == 5) {
-        debugPrint('index 5 avatar ${ signUpBody["avatar"]}');
+        debugPrint('index 5 avatar ${signUpBody["avatar"]}');
 
         firstnameMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['first_name']!] ?? '',
@@ -303,8 +328,8 @@ class SignUpViewModel with ChangeNotifier {
         emailMessage = AppValidation().isEmailValid(
             signUpBody[EnglishStrings().formKeys['email']!] ?? '');
         phoneMessage = AppValidation().isValidPhoneNumber(
-             signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
-          );
+          signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+        );
         // dobMessage = AppValidation().isNotEmpty(
         //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
         //     index: 'Date of birth');
@@ -312,11 +337,12 @@ class SignUpViewModel with ChangeNotifier {
             signUpBody[EnglishStrings().formKeys['password']!] ?? '');
 
         streetMessage = AppValidation().isNotEmpty(
-            value: signUpBody[EnglishStrings().formKeys['street_number']!] ?? '',
+            value:
+                signUpBody[EnglishStrings().formKeys['street_number']!] ?? '',
             index: 'Street Number');
         buildingMessage = AppValidation().isNotEmpty(
             value:
-            signUpBody[EnglishStrings().formKeys['building_number']!] ?? '',
+                signUpBody[EnglishStrings().formKeys['building_number']!] ?? '',
             index: 'Building Number');
         apartmentMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['apartment_number']!] ??
@@ -329,7 +355,8 @@ class SignUpViewModel with ChangeNotifier {
             value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
             index: 'Zone');
         addressLabelMessage = AppValidation().isNotEmpty(
-            value: signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
+            value:
+                signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
             index: 'Address Label');
         countryMessage = AppValidation().isNotEmpty(
             value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
@@ -339,11 +366,9 @@ class SignUpViewModel with ChangeNotifier {
             index: 'Floor');
 
         longitudeMessage = AppValidation().isNotEmpty(
-            value: signUpBody['longitude'] ?? '',
-            index: 'Longitude');
-        latitudeMessage = AppValidation().isNotEmpty(
-            value: signUpBody['latitude'] ?? '',
-            index: 'Latitude');
+            value: signUpBody['longitude'] ?? '', index: 'Longitude');
+        latitudeMessage = AppValidation()
+            .isNotEmpty(value: signUpBody['latitude'] ?? '', index: 'Latitude');
         // QIDMessage = signUpBody['selectedOption'] =='individual'?
         // AppValidation().isNotEmpty(
         //     value: signUpBody['id_image'] ?? '',
@@ -376,8 +401,9 @@ class SignUpViewModel with ChangeNotifier {
           } else {
             debugPrint('comapny 3');
 
-            var companies=await _getCompanies();
-            final isValidCompany = companies!.any((company) => company['id'] == companyId);
+            var companies = await _getCompanies();
+            final isValidCompany =
+                companies!.any((company) => company['id'] == companyId);
 
             if (!isValidCompany) {
               debugPrint('This is not a valid company');
@@ -393,9 +419,8 @@ class SignUpViewModel with ChangeNotifier {
         else {
           QIDMessage = 'Please select a profile type';
         }
-        debugPrint('signupbody avatar ${ signUpBody["avatar"]}');
-        if (
-            firstnameMessage == null &&
+        debugPrint('signupbody avatar ${signUpBody["avatar"]}');
+        if (firstnameMessage == null &&
             lastnameMessage == null &&
             emailMessage == null &&
             phoneMessage == null &&
@@ -407,12 +432,12 @@ class SignUpViewModel with ChangeNotifier {
             cityMessage == null &&
             zoneMessage == null &&
             addressLabelMessage == null &&
-                countryMessage == null &&
+            countryMessage == null &&
             floorMessage == null &&
             QIDMessage == null &&
-            signUpBody["avatar"]!=null&&
-             signUpBody['longitude']!=null && signUpBody['latitude']!=null) {
-
+            signUpBody["avatar"] != null &&
+            signUpBody['longitude'] != null &&
+            signUpBody['latitude'] != null) {
           notifyListeners();
           return true;
         }
@@ -425,28 +450,28 @@ class SignUpViewModel with ChangeNotifier {
         // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
         signUpErrors[EnglishStrings().formKeys['supplier_services']!] =
             categoriesMessage;
-        signUpErrors[EnglishStrings().formKeys['street_number']!] = streetMessage;
+        signUpErrors[EnglishStrings().formKeys['street_number']!] =
+            streetMessage;
         signUpErrors[EnglishStrings().formKeys['building_number']!] =
             buildingMessage;
         signUpErrors[EnglishStrings().formKeys['apartment_number']!] =
             apartmentMessage;
         signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
         signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
-        signUpErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
+        signUpErrors[EnglishStrings().formKeys['address_label']!] =
+            addressLabelMessage;
         signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
         signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
-        signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
+        signUpErrors[EnglishStrings().formKeys['longitude']!] =
+            longitudeMessage;
         signUpErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
-        signUpBody['selectedOption'] =='individual'?
-        signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage:
-        signUpErrors[EnglishStrings().formKeys['company']!] = QIDMessage;
+        signUpBody['selectedOption'] == 'individual'
+            ? signUpErrors[EnglishStrings().formKeys['id_image']!] = QIDMessage
+            : signUpErrors[EnglishStrings().formKeys['company']!] = QIDMessage;
 
         notifyListeners();
         return false;
-     
       }
-
-
     } else {
       if (role == Constants.customerRoleId) {
         if (index == 0) {
@@ -462,7 +487,7 @@ class SignUpViewModel with ChangeNotifier {
 
           if (firstnameMessage == null && lastnameMessage == null
               // && dobMessage == null
-          ) {
+              ) {
             notifyListeners();
             return true;
           }
@@ -480,8 +505,7 @@ class SignUpViewModel with ChangeNotifier {
           emailMessage = AppValidation().isEmailValid(
               signUpBody[EnglishStrings().formKeys['email']!] ?? '');
           phoneMessage = AppValidation().isValidPhoneNumber(
-
-              signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+            signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
           );
 
           if (emailMessage == null && phoneMessage == null) {
@@ -506,23 +530,22 @@ class SignUpViewModel with ChangeNotifier {
               passwordMessage;
           notifyListeners();
           return false;
-
         }
 
         if (index == 3) {
           streetMessage = AppValidation().isNotEmpty(
               value:
-              signUpBody[EnglishStrings().formKeys['street_number']!] ?? '',
+                  signUpBody[EnglishStrings().formKeys['street_number']!] ?? '',
               index: 'Street Number');
           buildingMessage = AppValidation().isNotEmpty(
               value:
-              signUpBody[EnglishStrings().formKeys['building_number']!] ??
-                  '',
+                  signUpBody[EnglishStrings().formKeys['building_number']!] ??
+                      '',
               index: 'Building Number');
           apartmentMessage = AppValidation().isNotEmpty(
               value:
-              signUpBody[EnglishStrings().formKeys['apartment_number']!] ??
-                  '',
+                  signUpBody[EnglishStrings().formKeys['apartment_number']!] ??
+                      '',
               index: 'Apartment Number');
           cityMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['city']!] ?? '',
@@ -531,30 +554,29 @@ class SignUpViewModel with ChangeNotifier {
               value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
               index: 'Zone');
           addressLabelMessage = AppValidation().isNotEmpty(
-              value: signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
+              value:
+                  signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
               index: 'Address Label');
           countryMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
               index: 'Country');
           floorMessage = AppValidation().isNotEmpty(
-              value:
-              signUpBody[EnglishStrings().formKeys['floor']!] ?? '',
+              value: signUpBody[EnglishStrings().formKeys['floor']!] ?? '',
               index: 'Floor');
           longitudeMessage = AppValidation().isNotEmpty(
-              value: signUpBody['longitude'] ?? '',
-              index: 'Longitude');
+              value: signUpBody['longitude'] ?? '', index: 'Longitude');
           latitudeMessage = AppValidation().isNotEmpty(
-              value: signUpBody['latitude'] ?? '',
-              index: 'Latitude');
-          if (
-              streetMessage == null &&
+              value: signUpBody['latitude'] ?? '', index: 'Latitude');
+          if (streetMessage == null &&
               buildingMessage == null &&
               apartmentMessage == null &&
               cityMessage == null &&
               zoneMessage == null &&
               addressLabelMessage == null &&
               countryMessage == null &&
-              floorMessage == null && latitudeMessage==null && longitudeMessage==null) {
+              floorMessage == null &&
+              latitudeMessage == null &&
+              longitudeMessage == null) {
             notifyListeners();
             return true;
           }
@@ -567,12 +589,14 @@ class SignUpViewModel with ChangeNotifier {
               apartmentMessage;
           signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
           signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
-          signUpErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
+          signUpErrors[EnglishStrings().formKeys['address_label']!] =
+              addressLabelMessage;
           signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
-          signUpErrors[EnglishStrings().formKeys['floor']!] =
-              floorMessage;
-          signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
-          signUpErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
+          signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
+          signUpErrors[EnglishStrings().formKeys['longitude']!] =
+              longitudeMessage;
+          signUpErrors[EnglishStrings().formKeys['latitude']!] =
+              latitudeMessage;
           notifyListeners();
           return false;
         }
@@ -587,8 +611,8 @@ class SignUpViewModel with ChangeNotifier {
           emailMessage = AppValidation().isEmailValid(
               signUpBody[EnglishStrings().formKeys['email']!] ?? '');
           phoneMessage = AppValidation().isValidPhoneNumber(
-              signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
-            );
+            signUpBody[EnglishStrings().formKeys['phone_number']!] ?? '',
+          );
           // dobMessage = AppValidation().isNotEmpty(
           //     value: signUpBody[EnglishStrings().formKeys['dob']!] ?? '',
           //     index: 'Date of birth');
@@ -596,17 +620,17 @@ class SignUpViewModel with ChangeNotifier {
               signUpBody[EnglishStrings().formKeys['password']!] ?? '');
           streetMessage = AppValidation().isNotEmpty(
               value:
-              signUpBody[EnglishStrings().formKeys['street_number']!] ?? '',
+                  signUpBody[EnglishStrings().formKeys['street_number']!] ?? '',
               index: 'Street Number');
           buildingMessage = AppValidation().isNotEmpty(
               value:
-              signUpBody[EnglishStrings().formKeys['building_number']!] ??
-                  '',
+                  signUpBody[EnglishStrings().formKeys['building_number']!] ??
+                      '',
               index: 'Building Number');
           apartmentMessage = AppValidation().isNotEmpty(
               value:
-              signUpBody[EnglishStrings().formKeys['apartment_number']!] ??
-                  '',
+                  signUpBody[EnglishStrings().formKeys['apartment_number']!] ??
+                      '',
               index: 'Apartment Number');
           cityMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['city']!] ?? '',
@@ -615,21 +639,19 @@ class SignUpViewModel with ChangeNotifier {
               value: signUpBody[EnglishStrings().formKeys['zone']!] ?? '',
               index: 'Zone');
           addressLabelMessage = AppValidation().isNotEmpty(
-              value: signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
+              value:
+                  signUpBody[EnglishStrings().formKeys['address_label']!] ?? '',
               index: 'Address Label');
           countryMessage = AppValidation().isNotEmpty(
               value: signUpBody[EnglishStrings().formKeys['country']!] ?? '',
               index: 'Country');
           floorMessage = AppValidation().isNotEmpty(
-              value:
-              signUpBody[EnglishStrings().formKeys['floor']!] ?? '',
+              value: signUpBody[EnglishStrings().formKeys['floor']!] ?? '',
               index: 'Floor');
           longitudeMessage = AppValidation().isNotEmpty(
-              value: signUpBody['longitude'] ?? '',
-              index: 'Longitude');
+              value: signUpBody['longitude'] ?? '', index: 'Longitude');
           latitudeMessage = AppValidation().isNotEmpty(
-              value: signUpBody['latitude'] ?? '',
-              index: 'Latitude');
+              value: signUpBody['latitude'] ?? '', index: 'Latitude');
           if (firstnameMessage == null &&
               lastnameMessage == null &&
               emailMessage == null &&
@@ -642,16 +664,22 @@ class SignUpViewModel with ChangeNotifier {
               cityMessage == null &&
               floorMessage == null &&
               countryMessage == null &&
-              zoneMessage == null  && addressLabelMessage == null  && latitudeMessage==null && longitudeMessage==null) {
+              zoneMessage == null &&
+              addressLabelMessage == null &&
+              latitudeMessage == null &&
+              longitudeMessage == null) {
             notifyListeners();
             return true;
           }
           signUpErrors[EnglishStrings().formKeys['first_name']!] =
               firstnameMessage;
-          signUpErrors[EnglishStrings().formKeys['last_name']!] = lastnameMessage;
+          signUpErrors[EnglishStrings().formKeys['last_name']!] =
+              lastnameMessage;
           signUpErrors[EnglishStrings().formKeys['email']!] = emailMessage;
-          signUpErrors[EnglishStrings().formKeys['phone_number']!] = phoneMessage;
-          signUpErrors[EnglishStrings().formKeys['password']!] = passwordMessage;
+          signUpErrors[EnglishStrings().formKeys['phone_number']!] =
+              phoneMessage;
+          signUpErrors[EnglishStrings().formKeys['password']!] =
+              passwordMessage;
           // signUpErrors[EnglishStrings().formKeys['dob']!] = dobMessage;
           signUpErrors[EnglishStrings().formKeys['street_number']!] =
               streetMessage;
@@ -661,25 +689,24 @@ class SignUpViewModel with ChangeNotifier {
               apartmentMessage;
           signUpErrors[EnglishStrings().formKeys['city']!] = cityMessage;
           signUpErrors[EnglishStrings().formKeys['zone']!] = zoneMessage;
-          signUpErrors[EnglishStrings().formKeys['address_label']!] = addressLabelMessage;
-          signUpErrors[EnglishStrings().formKeys['country']!] =
-              countryMessage;
-          signUpErrors[EnglishStrings().formKeys['floor']!] =
-              floorMessage;
-          signUpErrors[EnglishStrings().formKeys['longitude']!] = longitudeMessage;
-          signUpErrors[EnglishStrings().formKeys['latitude']!] = latitudeMessage;
+          signUpErrors[EnglishStrings().formKeys['address_label']!] =
+              addressLabelMessage;
+          signUpErrors[EnglishStrings().formKeys['country']!] = countryMessage;
+          signUpErrors[EnglishStrings().formKeys['floor']!] = floorMessage;
+          signUpErrors[EnglishStrings().formKeys['longitude']!] =
+              longitudeMessage;
+          signUpErrors[EnglishStrings().formKeys['latitude']!] =
+              latitudeMessage;
           notifyListeners();
           return false;
-
         }
-
-
       }
     }
 
     notifyListeners();
     return false;
   }
+
   Future<List<dynamic>?> _getCompanies() async {
     try {
       debugPrint('Getting companies');
@@ -689,7 +716,6 @@ class SignUpViewModel with ChangeNotifier {
 
       _companies = response["data"];
 
-
       notifyListeners();
       return _companies;
     } catch (error) {
@@ -698,12 +724,14 @@ class SignUpViewModel with ChangeNotifier {
     notifyListeners();
     return _companies;
   }
-  void setInputValues({required String index,required dynamic value}) {
+
+  void setInputValues({required String index, required dynamic value}) {
     signUpBody[index] = value;
     debugPrint('signup body $signUpBody');
     notifyListeners();
   }
-  Future<dynamic> getData() async{
+
+  Future<dynamic> getData() async {
     return signUpBody;
   }
 
@@ -717,6 +745,7 @@ class SignUpViewModel with ChangeNotifier {
     }
     notifyListeners();
   }
+
   Future<List<dynamic>?> countries() async {
     try {
       dynamic response = await _signUpRepository.getCountries();
@@ -736,7 +765,6 @@ class SignUpViewModel with ChangeNotifier {
     return null;
   }
 
-
   // Future<void> getUserRoleFromId(String id) async {
   //   try {
   //     String? user_role = await _signUpRepository.getUserRoleFromId(id);
@@ -752,15 +780,20 @@ class SignUpViewModel with ChangeNotifier {
   get userRole => _userRole;
 
   get getRoleList => _listRole;
+
   get getCountries => _listCountries;
 
   // get isEmailSent => _apiConfirmResponse.status == Status.COMPLETED;
   get getRoleApiResponse => _apiRoleResponse;
+
   get getapiRegisterResponse => _apiRegisterResponse;
 
   get getSignUpBody => signUpBody;
+
   get companies => _companies;
 
   get isDataWritten => _isDataWritten;
+
   get errorMessage => _errorMessage;
+  get getOtp => _otp;
 }
