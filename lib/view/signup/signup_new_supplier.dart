@@ -1048,12 +1048,13 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
             ),
           ),
-          FutureBuilder(
-              future: Provider.of<CategoriesViewModel>(context, listen: false)
-                  .getCategoriesAndServices(),
-              builder: (context, AsyncSnapshot data) {
-                if (data.data != null) {
-                  return Padding(
+          // FutureBuilder(
+          //     future: Provider.of<CategoriesViewModel>(context, listen: false)
+          //         .getCategoriesAndServices(),
+          //     builder: (context, AsyncSnapshot data) {
+          //       if (data.data != null) {
+          //         return
+                    Padding(
                     padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
                     child: CustomMultipleSelectionCheckBoxList(
                       // list: data.data,
@@ -1071,11 +1072,11 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                       // servicesViewModel: Provider.of<ServicesViewModel>(context,
                       //     listen: false),
                     ),
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
+                  ),
+              //   } else {
+              //     return CircularProgressIndicator();
+              //   }
+              // }),
         ],
       ),
     );

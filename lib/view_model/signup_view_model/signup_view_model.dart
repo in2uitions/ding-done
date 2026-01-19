@@ -168,7 +168,7 @@ class SignUpViewModel with ChangeNotifier {
 
             var companies = await _getCompanies();
             final isValidCompany =
-                companies!.any((company) => company['id'] == companyId);
+                companies!.any((company) => company['code'] == companyId);
 
             if (!isValidCompany) {
               debugPrint('This is not a valid company');
@@ -403,7 +403,7 @@ class SignUpViewModel with ChangeNotifier {
 
             var companies = await _getCompanies();
             final isValidCompany =
-                companies!.any((company) => company['id'] == companyId);
+                companies!.any((company) => company['code'] == companyId);
 
             if (!isValidCompany) {
               debugPrint('This is not a valid company');
