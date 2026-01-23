@@ -1302,9 +1302,9 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                             if (_currentStep < pages.length - 1) {
                               setState(() => _currentStep++);
                             } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Sign Up Complete!')),
-                              );
+                              // ScaffoldMessenger.of(context).showSnackBar(
+                              //   const SnackBar(content: Text('Sign Up Complete!')),
+                              // );
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (context) => SupplierAgreement(index: _currentStep),

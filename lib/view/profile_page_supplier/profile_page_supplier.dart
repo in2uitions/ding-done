@@ -139,23 +139,23 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                             ),
                             const Gap(5),
                             // For supplier, we display rating with stars and review count
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Stars(
-                                  rating: 4, // Adjust rating as needed
-                                  itemSize: 18,
-                                ),
-                                const Gap(5),
-                                Text(
-                                  '93 reviews',
-                                  style: getPrimaryRegularStyle(
-                                    fontSize: 16,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     Stars(
+                            //       rating: 4, // Adjust rating as needed
+                            //       itemSize: 18,
+                            //     ),
+                            //     const Gap(5),
+                            //     Text(
+                            //       '93 reviews',
+                            //       style: getPrimaryRegularStyle(
+                            //         fontSize: 16,
+                            //         color: Colors.white,
+                            //       ),
+                            //     ),
+                            //   ],
+                            // ),
                           ],
                         ),
                       ],

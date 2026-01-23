@@ -248,7 +248,9 @@ Widget _buildPopupDialog(BuildContext context, String message) {
           alignment: Alignment.topRight,
           child: TextButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              // Navigator.of(context).pop();
+              Navigator.of(context)
+                  .push(_createRoute(LoginScreen()));
             },
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
