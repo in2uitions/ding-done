@@ -780,7 +780,7 @@ getPayment() async{
                                                         CrossAxisAlignment
                                                             .start,
                                                         children: [
-                                                          Text( 'bookService.location'.tr(),
+                                                          Text( 'updateJob.address'.tr(),
                                                             style:
                                                             getPrimaryRegularStyle(
                                                               fontSize: 16,

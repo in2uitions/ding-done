@@ -177,7 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     // vertical: context.appValues.appPadding.p30,
                                   ),
                                   child: Text(
-                                    'Manage Account',
+                                  'drawer.manageAccount'.tr(),
                                     style: getPrimaryMediumStyle(
                                       fontSize: 14,
                                       color: const Color(0xff180B3C),

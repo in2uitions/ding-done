@@ -1559,7 +1559,7 @@ class _HomePageState extends State<HomePage> {
                                                                   'assets/img/wp.svg'),
                                                               const Gap(5),
                                                               Text(
-                                                                'CONTACT US',
+                                                                'settings.contactUs'.tr(),
                                                                 textAlign:
                                                                     TextAlign
                                                                         .center,

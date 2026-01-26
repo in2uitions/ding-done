@@ -125,8 +125,8 @@
     "illnessOrHealthIssues": "المرض أو مشكلات الصحة",
     "other": "أخرى",
     "cost": "التكلفة",
-    "workingTime": "وقت العمل",
-    "workingDay": "يوم العمل"
+    "workingTime": "وقت الحجز",
+    "workingDay": "تاريخ الحجز"
   },
   "inbox": {
     "inbox": "البريد الوارد"
@@ -183,12 +183,12 @@
     "jobType": "نوع الوظيفة",
     "unitPrice": "سعر الوحدة",
     "jobTitle": "اسم الوظيفة",
-    "jobDescription": "وصف الوظيفة",
+    "jobDescription": "وصف الخدمة",
     "job_duration": "مدة الوظيفة",
     "jobDescriptionByUser": "الوصف الوظيفي من قبل المستخدم",
     "dateAndTime": "التاريخ والوقت",
     "location": "الموقع",
-    "addMedia": "إضافة وسائط",
+    "addMedia": "إضافة ملف/صورة",
     "Now": "الآن",
     "scheduleForLater": "جدولة لاحقًا",
     "requestService": "طلب الخدمة",
@@ -222,6 +222,7 @@
     "rateJob": "لقد انتهت مهمتك! يرجى تقييم مزود الخدمة الخاص بك."
   },
   "drawer": {
+    "manageAccount": "إدارة الحساب",
     "faqs": "الأسئلة الشائعة",
     "termsAndConditions": "شروط الإستخدام",
     "logout": "تسجيل الخروج",

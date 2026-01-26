@@ -120,8 +120,8 @@
     "illnessOrHealthIssues": "Illness or Health Issues",
     "other": "Other",
     "cost": "Cost",
-    "workingTime": "Working Time",
-    "workingDay": "Working Day"
+    "workingTime": "Booking Time",
+    "workingDay": "Booking Day"
   },
   "inbox": {
     "inbox": "Inbox"
@@ -216,6 +216,7 @@
     "rateJob": "Your job is Done! Please rate your Service Provider."
   },
   "drawer": {
+    "manageAccount": "Manage Account",
     "faqs": "FAQs",
     "termsAndConditions": "Terms & Conditions",
     "logout": "Log out",
