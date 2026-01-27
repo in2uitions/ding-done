@@ -612,18 +612,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
               value: 'ar',
               dblangValue: 'ar-SA',
             ),
-            _languageTile(
-              ctx,
-              label: 'language.name.el-GR'.tr(),
-              value: 'el',
-              dblangValue: 'el-GR',
-            ),
-            _languageTile(
-              ctx,
-              label: 'language.name.ru-RU'.tr(),
-              value: 'ru',
-              dblangValue: 'ru-RU',
-            ),
+            // _languageTile(
+            //   ctx,
+            //   label: 'language.name.el-GR'.tr(),
+            //   value: 'el',
+            //   dblangValue: 'el-GR',
+            // ),
+            // _languageTile(
+            //   ctx,
+            //   label: 'language.name.ru-RU'.tr(),
+            //   value: 'ru',
+            //   dblangValue: 'ru-RU',
+            // ),
             const Gap(5),
             Padding(
               padding: EdgeInsets.symmetric(
