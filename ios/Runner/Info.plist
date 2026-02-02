@@ -62,6 +62,8 @@
 	<true/>
     <key>FacebookAppID</key>
     <string>1872490080307627</string>
+    <key>NSUserTrackingUsageDescription</key>
+    <string>This identifier will be used to deliver personalized ads.</string>
 
     <key>FacebookClientToken</key>
     <string>a19404ef227db3be80b72d2215e7291c</string>

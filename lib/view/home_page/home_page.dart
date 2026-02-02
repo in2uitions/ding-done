@@ -1595,15 +1595,15 @@ class _HomePageState extends State<HomePage> {
                                                     IconButton(
                                                       icon: const FaIcon(
                                                           FontAwesomeIcons
-                                                              .facebook),
+                                                              .tiktok),
                                                       color: const Color(
                                                           0xff8F9098),
                                                       onPressed: () async {
                                                         // Handle Facebook tap
                                                         if (await canLaunch(
-                                                            'https://www.facebook.com/share/15McEbBKK95/?mibextid=wwXIfr')) {
+                                                            'https://www.tiktok.com/@itsdingdone')) {
                                                           await launch(
-                                                              'https://www.facebook.com/share/15McEbBKK95/?mibextid=wwXIfr');
+                                                              'https://www.tiktok.com/@itsdingdone');
                                                         } else {
                                                           debugPrint(
                                                               'Could not launch facebook.');
@@ -1619,34 +1619,34 @@ class _HomePageState extends State<HomePage> {
                                                       onPressed: () async {
                                                         // Handle Instagram tap
                                                         if (await canLaunch(
-                                                            'https://www.instagram.com/itsdingdone?igsh=aHR2ZnRzemZheG94&utm_source=qr')) {
+                                                            'https://www.instagram.com/itsdingdone')) {
                                                           await launch(
-                                                              'https://www.instagram.com/itsdingdone?igsh=aHR2ZnRzemZheG94&utm_source=qr');
+                                                              'https://www.instagram.com/itsdingdone');
                                                         } else {
                                                           debugPrint(
                                                               'Could not launch facebook.');
                                                         }
                                                       },
                                                     ),
-                                                    IconButton(
-                                                      icon: const FaIcon(
-                                                          FontAwesomeIcons
-                                                              .xTwitter),
-                                                      color: const Color(
-                                                          0xff8F9098),
-                                                      // X (Twitter)
-                                                      onPressed: () async {
-                                                        // Handle X (Twitter) tap
-                                                        if (await canLaunch(
-                                                        'https://x.com/itsdingdone?s=11 ')) {
-                                                        await launch(
-                                                        'https://x.com/itsdingdone?s=11 ');
-                                                        } else {
-                                                        debugPrint(
-                                                        'Could not launch facebook.');
-                                                        }
-                                                      },
-                                                    ),
+                                                    // IconButton(
+                                                    //   icon: const FaIcon(
+                                                    //       FontAwesomeIcons
+                                                    //           .xTwitter),
+                                                    //   color: const Color(
+                                                    //       0xff8F9098),
+                                                    //   // X (Twitter)
+                                                    //   onPressed: () async {
+                                                    //     // Handle X (Twitter) tap
+                                                    //     if (await canLaunch(
+                                                    //     'https://x.com/itsdingdone?s=11 ')) {
+                                                    //     await launch(
+                                                    //     'https://x.com/itsdingdone?s=11 ');
+                                                    //     } else {
+                                                    //     debugPrint(
+                                                    //     'Could not launch facebook.');
+                                                    //     }
+                                                    //   },
+                                                    // ),
                                                   ],
                                                 ),
                                               ),

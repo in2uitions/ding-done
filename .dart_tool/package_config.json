@@ -8,6 +8,12 @@
       "languageVersion": "3.2"
     },
     {
+      "name": "adjust_sdk",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/adjust_sdk-5.5.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "ansicolor",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/ansicolor-2.0.3",
       "packageUri": "lib/",
@@ -18,12 +24,6 @@
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/app_tracking_transparency-2.0.6+1",
       "packageUri": "lib/",
       "languageVersion": "2.12"
-    },
-    {
-      "name": "appsflyer_sdk",
-      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/appsflyer_sdk-6.17.8",
-      "packageUri": "lib/",
-      "languageVersion": "2.17"
     },
     {
       "name": "archive",

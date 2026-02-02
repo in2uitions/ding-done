@@ -34,6 +34,8 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:uni_links2/uni_links.dart';
+import 'package:adjust_sdk/adjust.dart';
+import 'package:adjust_sdk/adjust_config.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -66,7 +68,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String? userRole;
   String? _userId;
   bool _doLogin = false;
@@ -78,6 +80,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+
     checkUserIsLogged();
     getLanguage();
     initPlatformState();
@@ -87,6 +91,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void dispose() {
     _sub.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+
     super.dispose();
   }
 
@@ -153,9 +159,46 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  // Future<void> initPlatformState() async {
+  //   await Firebase.initializeApp();
+  //   await dotenv.load(fileName: "assets/.env");
+  //
+  //   Stripe.publishableKey =
+  //   "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
+  //
+  //   OneSignal.initialize("357d957a-ed36-4ab5-a29e-cfbe93536a64");
+  //   await OneSignal.Notifications.requestPermission(true);
+  //
+  //   if (defaultTargetPlatform == TargetPlatform.android) {
+  //     AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
+  //   }
+  //
+  //   await Permission.camera.request();
+  // }
   Future<void> initPlatformState() async {
     await Firebase.initializeApp();
     await dotenv.load(fileName: "assets/.env");
+
+    /// ---------------- ADJUST INITIALIZATION ----------------
+    const String adjustAppToken = "uncurdcnlq0w";
+
+    final adjustConfig = AdjustConfig(
+      adjustAppToken,
+      kDebugMode
+          ? AdjustEnvironment.sandbox
+          : AdjustEnvironment.production,
+    );
+
+// Optional Logging (recommended while testing)
+    adjustConfig.logLevel = AdjustLogLevel.verbose;
+
+// Attribution callback
+    adjustConfig.attributionCallback = (data) {
+      debugPrint("Adjust attribution: ${data.trackerName}");
+    };
+
+    Adjust.initSdk(adjustConfig);
+    /// ------------------------------------------------------
 
     Stripe.publishableKey =
     "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
@@ -168,8 +211,29 @@ class _MyAppState extends State<MyApp> {
     }
 
     await Permission.camera.request();
+
+    /// iOS Tracking Permission (you already imported ATT)
+    if (Platform.isIOS) {
+      await _requestTrackingPermission();
+    }
+  }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      Adjust.onResume();
+    } else if (state == AppLifecycleState.paused) {
+      Adjust.onPause();
+    }
   }
 
+  Future<void> _requestTrackingPermission() async {
+    final status =
+    await AppTrackingTransparency.trackingAuthorizationStatus;
+
+    if (status == TrackingStatus.notDetermined) {
+      await AppTrackingTransparency.requestTrackingAuthorization();
+    }
+  }
   void getLanguage() async {
     String? lang = await AppPreferences().get(key: language, isModel: false);
     lang ??= 'en';
