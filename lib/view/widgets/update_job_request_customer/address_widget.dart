@@ -119,8 +119,16 @@ class _AddressWidgetState extends State<AddressWidget> {
                   children: [
                     Expanded(
                       child: Text(
-                        '${widget.address['city'] != null ? widget.address['city'] : ''}, ${widget.address['street_number'] != null ? widget.address['street_number'] : ''}, ${widget.address['zone'] != null ? widget.address['zone'] : ''}',
-                        maxLines: 3,
+                        '${widget.address['country'] != null ? 'formHints.area'.tr():''} ${widget.address['country'] != null ? ':':''} ${widget.address['country'] ?? ''} \n'
+                        '${widget.address['street_number'] != null ? 'formHints.street'.tr():''} ${widget.address['street_number'] != null ? ':':''} ${widget.address['street_number'] ?? ''} \n'
+                        '${widget.address['building_number'] != null ? 'formHints.building'.tr():''} ${widget.address['building_number'] != null ? ':':''} ${widget.address['building_number'] ?? ''} \n'
+                        '${widget.address['floor'] != null ? 'formHints.floor'.tr():''} ${widget.address['floor'] != null ? ':':''} ${widget.address['floor'] ?? ''} \n'
+                        '${widget.address['apartment_number'] != null ? 'formHints.apartment'.tr():''} ${widget.address['apartment_number'] != null ? ':':''} ${widget.address['apartment_number'] ?? ''} \n'
+                        '${widget.address['city'] != null ? 'formHints.city'.tr():''} ${widget.address['city'] != null ? ':':''} ${widget.address['city'] ?? ''} \n'
+                        '${widget.address['zone'] != null ? 'formHints.zone'.tr():''} ${widget.address['zone'] != null ? ':':''} ${widget.address['zone'] ?? ''} \n'
+                        '${widget.address['address_label'] != null ? 'formHints.address_label'.tr():''} ${widget.address['address_label'] != null ? ':':''} ${widget.address['address_label'] ?? ''} \n',
+                            // '${widget.address['city'] != null ? widget.address['city'] : ''}, ${widget.address['street_number'] != null ? widget.address['street_number'] : ''}, ${widget.address['zone'] != null ? widget.address['zone'] : ''}',
+                        maxLines:10,
                         overflow: TextOverflow.ellipsis,
                         style: getPrimaryRegularStyle(
                           fontSize: 14,
