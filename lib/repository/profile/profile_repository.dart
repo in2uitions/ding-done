@@ -43,10 +43,14 @@ class ProfileRepository {
       } else {
         if (Constants.supplierRoleId == role) {
           response = await _apiSupplierProfile.getResponse(
-              params: '?fields=*.*.*&filter[user][_eq]=$userId');
+            params:
+            '?fields=*,supplier_services.*,supplier_services.services_id.*,current_address.*,service_category.*,user.*'
+                '&deep[supplier_services][_limit]=-1'
+                '&filter[user][_eq]=$userId',
+          );
         }
       }
-      // debugPrint('resounse is ${response['data'][0]}');
+      debugPrint('resounse is ${response['data'][0]}');
       if (response['data'] != null && response['data'].length > 0) {
         jsonData = ProfileModel.fromJson(response['data'][0]);
       }

@@ -1606,6 +1606,24 @@ class _HomePageState extends State<HomePage> {
                                                               'https://www.tiktok.com/@itsdingdone');
                                                         } else {
                                                           debugPrint(
+                                                              'Could not launch tiktok.');
+                                                        }
+                                                      },
+                                                    ),
+                                                    IconButton(
+                                                      icon: const FaIcon(
+                                                          FontAwesomeIcons
+                                                              .facebook),
+                                                      color: const Color(
+                                                          0xff8F9098),
+                                                      onPressed: () async {
+                                                        // Handle Instagram tap
+                                                        if (await canLaunch(
+                                                            'https://www.facebook.com/share/1F4rNiwE7d/?mibextid=wwXIfr')) {
+                                                          await launch(
+                                                              'https://www.facebook.com/share/1F4rNiwE7d/?mibextid=wwXIfr');
+                                                        } else {
+                                                          debugPrint(
                                                               'Could not launch facebook.');
                                                         }
                                                       },
@@ -1624,29 +1642,11 @@ class _HomePageState extends State<HomePage> {
                                                               'https://www.instagram.com/itsdingdone');
                                                         } else {
                                                           debugPrint(
-                                                              'Could not launch facebook.');
+                                                              'Could not launch instagram.');
                                                         }
                                                       },
                                                     ),
-                                                    // IconButton(
-                                                    //   icon: const FaIcon(
-                                                    //       FontAwesomeIcons
-                                                    //           .xTwitter),
-                                                    //   color: const Color(
-                                                    //       0xff8F9098),
-                                                    //   // X (Twitter)
-                                                    //   onPressed: () async {
-                                                    //     // Handle X (Twitter) tap
-                                                    //     if (await canLaunch(
-                                                    //     'https://x.com/itsdingdone?s=11 ')) {
-                                                    //     await launch(
-                                                    //     'https://x.com/itsdingdone?s=11 ');
-                                                    //     } else {
-                                                    //     debugPrint(
-                                                    //     'Could not launch facebook.');
-                                                    //     }
-                                                    //   },
-                                                    // ),
+
                                                   ],
                                                 ),
                                               ),

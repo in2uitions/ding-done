@@ -71,6 +71,7 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
       // Check if supplier_services is not null and is a list
       var supplierServices =
       widget.profileViewModel.getProfileBody["supplier_services"];
+      debugPrint('supp services length ${supplierServices.length}');
       if (supplierServices is List) {
         // Map and cast service IDs to int
         selectedServices = supplierServices

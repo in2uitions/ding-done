@@ -698,7 +698,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       validator: (val) => jobsViewModel.jobsAddressError[
                           context.resources.strings.formKeys['address_label']!],
                       errorText: jobsViewModel.jobsAddressError[
-                          context.resources.strings.formKeys['address_label']!],
+                          context.resources.strings.formKeys['address_label']??''],
                       keyboardType: TextInputType.text),
                 ],
               ),
