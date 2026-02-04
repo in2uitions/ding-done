@@ -157,6 +157,15 @@
     "streetNameHouseNumber": "Street Name / House Number",
     "localityPostalCode": "Locality / Postal Code"
   },
+  "popup": {
+    "note": "Note",
+    "cancelMessage1": "This cancellation is subject to a",
+    "cancelMessage2": "late cancellation fee.",
+    "QAR": "QAR",
+    "wouldProceed": "Would you like to proceed?",
+    "yes": "Yes",
+    "no": "No"
+  },
   "paymentMethod": {
     "paymentMethod": "Payment Method",
     "paymentMethods": "Payment Methods",

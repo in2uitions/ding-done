@@ -12,96 +12,96 @@
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
-    <key>GMSApiKey</key>
-    <string>AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
 	<string>dingdone</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
-	<key>NSAppTransportSecurity</key>
-    <dict>
-        <key>NSAllowsArbitraryLoads</key>
-        <true/>
-    </dict>
 	<key>CFBundleShortVersionString</key>
 	<string>$(FLUTTER_BUILD_NAME)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
-	<key>UIBackgroundModes</key>
-    <array>
-        <string>remote-notification</string>
-    </array>
-	<key>GIDClientID</key>
-    <string>69249651926-ilrs70v68uss27839ks8065h818cjlua.apps.googleusercontent.com</string>
-    <key>CFBundleURLTypes</key>
-    <array>
-        <dict>
-        	<key>CFBundleTypeRole</key>
-        	<string>Editor</string>
-        	<key>CFBundleURLSchemes</key>
-        	<array>
-        	    <string>com.googleusercontent.apps.69249651926-ilrs70v68uss27839ks8065h818cjlua</string>
-        	</array>
-        </dict>
-        <dict>
-            <key>CFBundleTypeRole</key>
-       	    <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>com.in2uitions.dingdone</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>dingdone</string>
-            </array>
-        </dict>
-    </array>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.69249651926-ilrs70v68uss27839ks8065h818cjlua</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.in2uitions.dingdone</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>dingdone</string>
+			</array>
+		</dict>
+	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FacebookAdvertiserIDCollectionEnabled</key>
+	<true/>
+	<key>FacebookAppID</key>
+	<string>1872490080307627</string>
+	<key>FacebookAutoLogAppEventsEnabled</key>
+	<true/>
+	<key>FacebookClientToken</key>
+	<string>a19404ef227db3be80b72d2215e7291c</string>
+	<key>FacebookDisplayName</key>
+	<string>DingDone</string>
+	<key>GIDClientID</key>
+	<string>69249651926-ilrs70v68uss27839ks8065h818cjlua.apps.googleusercontent.com</string>
+	<key>GMSApiKey</key>
+	<string>AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+		<string>tel</string>
+		<string>whatsapp</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-    <key>FacebookAppID</key>
-    <string>1872490080307627</string>
-    <key>NSUserTrackingUsageDescription</key>
-    <string>This identifier will be used to deliver personalized ads.</string>
-
-    <key>FacebookClientToken</key>
-    <string>a19404ef227db3be80b72d2215e7291c</string>
-
-    <key>FacebookDisplayName</key>
-    <string>DingDone</string>
-    <key>FacebookAutoLogAppEventsEnabled</key>
-    <true/>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-        <string>fbapi</string>
-        <string>fbauth2</string>
-        <string>fbshareextension</string>
-        <string>tel</string>
-        <string>whatsapp</string>
-    </array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Play videos while in the app</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app requires access to your camera for allowing users to scan credit card</string>
 	<key>NSDocumentsFolderUsageDescription</key>
 	<string>We need access to save files in the documents folder</string>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>This app requires access to your location both in the foreground and background to deliver personalized services, timely updates, and location-based notifications, ensuring you receive the most relevant information wherever you are</string>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>This app requires continuous access to your location to deliver personalized services, real-time updates, and location-based notifications—even when the app is not actively in use.</string>
+	<key>NSLocationUsageDescription</key>
+	<string>This app uses your location to deliver personalized content and relevant local services, ensuring an enhanced experience tailored to where you are.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-    <string>This app uses your location while in use to deliver personalized content and nearby services, ensuring a more relevant and enhanced experience</string>
-    <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-    <string>This app requires access to your location both in the foreground and background to deliver personalized services, timely updates, and location-based notifications, ensuring you receive the most relevant information wherever you are</string>
-    <key>NSLocationUsageDescription</key>
-    <string>This app uses your location to deliver personalized content and relevant local services, ensuring an enhanced experience tailored to where you are.</string>
-    <key>NSLocationAlwaysUsageDescription</key>
-    <string>This app requires continuous access to your location to deliver personalized services, real-time updates, and location-based notifications—even when the app is not actively in use.</string>
+	<string>This app uses your location while in use to deliver personalized content and nearby services, ensuring a more relevant and enhanced experience</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>This app requires access to microphone for uploading audio</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>
 	<string>This app requires permission to add photos to your library so you can easily save and upload the requested service image or your personal image in your profile</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app requires access to your photo library so you can select and share photos, enabling a personalized and engaging experience</string>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>This identifier will be used to deliver personalized ads.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

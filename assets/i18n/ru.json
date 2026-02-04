@@ -164,6 +164,16 @@
     "streetNameHouseNumber": "Улица / Номер дома",
     "localityPostalCode": "Местность / Почтовый индекс"
   },
+  "popup": {
+    "note": "Note",
+    "cancelMessage1": "This cancellation is subject to a ",
+    "cancelMessage2": "late cancellation fee.",
+    "QAR": "QAR",
+
+    "wouldProceed": "Would you like to proceed?",
+    "yes": "Yes",
+    "no": "No"
+  },
   "paymentMethod": {
     "paymentMethod": "Способ оплаты",
     "paymentMethods": "Способы оплаты",

@@ -84,32 +84,42 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                           child: SafeArea(
                             child: Stack(
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 20,
-                                    top: 5,
-                                  ),
-                                  child: InkWell(
-                                    onTap: () {
-                                      Navigator.pop(context);
-                                    },
-                                    child: Icon(
-                                      Icons.arrow_back_ios_new_sharp,
-                                      color: context.resources.color.colorWhite,
-                                      size: 20,
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 20,
+                                      top: 5,
+                                    ),
+                                    child: InkWell(
+                                      onTap: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Icon(
+                                        Icons.arrow_back_ios_new_sharp,
+                                        color: context.resources.color.colorWhite,
+                                        size: 20,
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 55,
-                                    top: 3,
-                                  ),
-                                  child: Text(
-                                    '${'jobDetails.jobDetails'.tr()}',
-                                    style: getPrimarySemiBoldStyle(
-                                      color: context.resources.color.colorWhite,
-                                      fontSize: 16,
+                                InkWell(
+                                  onTap: () {
+                                    Navigator.pop(context);
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 55,
+                                      top: 3,
+                                    ),
+                                    child: Text(
+                                      '${'jobDetails.jobDetails'.tr()}',
+                                      style: getPrimarySemiBoldStyle(
+                                        color: context.resources.color.colorWhite,
+                                        fontSize: 16,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -448,7 +458,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     widget.fromWhere !='jobs.active'.tr() &&
                                     widget.fromWhere != 'notifications'
                                 ? JobTypeWidget(
-                                    job_type: widget.data.job_type["code"],
+                                    job_type: widget.data.job_type,
                                     tab: widget.fromWhere,
                                     service: widget.data.service,
                                   )
@@ -805,8 +815,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     });
                                                     debugPrint(
                                                         'tap_payments_card ${widget.data.tap_payments_card}');
+                                                    debugPrint(
+                                                        'from where ${ widget.fromWhere}');
+
                                                     widget.fromWhere ==
-                                                                'booked' ||
+                                                                'jobs.booked'.tr() ||
                                                             widget.fromWhere ==
 
                                                                     'jobs.requestedJobs'.tr()
@@ -957,7 +970,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
   Widget _buildPopupDialog(BuildContext context, JobsViewModel jobsViewModel,
       int job_id, String tab) {
     String message = '';
-    if (tab == 'booked') {
+    if (tab == 'jobs.booked'.tr()) {
       message = 'updateJob.provideReasonToCancel'.tr();
     } else if (tab == 'jobs.active'.tr()) {
       message = 'updateJob.provideReasonToCancelNote'.tr();
@@ -1100,10 +1113,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (tab == 'booked' ||
+                    if (tab == 'jobs.booked'.tr() ||
                         tab == 'jobs.requestedJobs'.tr()) {
-                      if (tab == 'booked') {
-                        if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
+                      if (tab == 'jobs.booked'.tr()) {
+                        if (await jobsViewModel.cancelJobWithPenalty(job_id,'') ==
                             true) {
                           Navigator.pop(context);
 
@@ -1114,12 +1127,16 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   context, 'button.success'.tr()));
                         } else {
                           Navigator.pop(context);
+                          if(jobsViewModel.errorMessage=='Penalty fee must be accepted by the customer.'){
+                            showPenaltyDialog(context,jobsViewModel,job_id);
+                          }else{
 
-                          Future.delayed(const Duration(seconds: 0));
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) => simpleAlert(
-                                  context, 'button.failure'.tr()));
+                            Future.delayed(const Duration(seconds: 0));
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => simpleAlert(
+                                    context, '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}'));
+                          }
                         }
                       } else {
                         if (tab == 'jobs.requestedJobs'.tr()) {
@@ -1145,7 +1162,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                       }
                     } else {
                       if (tab == 'jobs.active'.tr()) {
-                        if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
+                        if (await jobsViewModel.cancelJobWithPenalty(job_id,'') ==
                             true) {
                           Navigator.pop(context);
 
@@ -1157,12 +1174,19 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                         } else {
                           Navigator.pop(context);
 
-                          Future.delayed(const Duration(seconds: 0));
-                          showDialog(
-                              context: context,
-                              builder: (BuildContext context) => simpleAlert(
-                                  context,'button.failure'.tr()));
-                        }
+                          if(jobsViewModel.errorMessage=='Penalty fee must be accepted by the customer.'){
+                            showPenaltyDialog(context,jobsViewModel,job_id);
+                          }else {
+                            Future.delayed(const Duration(seconds: 0));
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    simpleAlert(
+                                        context, '${'button.failure'
+                                        .tr()}\n${jobsViewModel
+                                        .errorMessage}'));
+                          }
+                          }
                       }
                     }
                   },
@@ -1479,6 +1503,141 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
     }catch(error){
       return 'Rate not found';
     }
+  }
+  void showPenaltyDialog(
+      BuildContext context,
+      JobsViewModel jobsViewModel,
+      dynamic job_id,
+      ) {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        bool isLoading = false;
+
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              backgroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Gap(10),
+
+                  Text(
+                    'popup.note'.tr(),
+                    textAlign: TextAlign.center,
+                    style: getPrimaryBoldStyle(
+                      fontSize: 18,
+                      color: const Color(0xff4100E3),
+                    ),
+                  ),
+
+                  const Gap(10),
+
+                  Text(
+                    '${'popup.cancelMessage1'.tr()} '
+                        '${jobsViewModel.errorData['penalty_fee']} '
+                        '${'popup.${jobsViewModel.errorData['currency']}'.tr()} '
+                        '${'popup.cancelMessage2'.tr()}\n'
+                        '${'popup.wouldProceed'.tr()}',
+                    textAlign: TextAlign.center,
+                    style: getPrimaryRegularStyle(
+                      fontSize: 15,
+                      color: const Color(0xff180D38),
+                    ),
+                  ),
+
+                  const Gap(20),
+
+                  /// YES BUTTON
+                  ElevatedButton(
+                    onPressed: isLoading
+                        ? null
+                        : () async {
+                      setState(() {
+                        isLoading = true;
+                      });
+
+                      bool? success =
+                      await jobsViewModel.cancelJobWithPenalty(
+                        job_id,
+                        'accept_penalty',
+                      );
+
+                      setState(() {
+                        isLoading = false;
+                      });
+
+                      Navigator.pop(context);
+
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) => simpleAlert(
+                          context,
+                          success == true
+                              ? 'button.success'.tr()
+                              : '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}',
+                        ),
+                      );
+                    },
+
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xffFFC500),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+
+                    child: isLoading
+                        ? const SizedBox(
+                      height: 22,
+                      width: 22,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        color: Colors.white,
+                      ),
+                    )
+                        : Text(
+                      'popup.yes'.tr(),
+                      style: getPrimaryBoldStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+
+                  const Gap(5),
+
+                  /// NO BUTTON
+                  ElevatedButton(
+                    onPressed: isLoading
+                        ? null
+                        : () {
+                      Navigator.pop(context);
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xff4100E3),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    child: Text(
+                      'popup.no'.tr(),
+                      style: getPrimaryBoldStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      },
+    );
   }
 
   Route _createRoute(Widget child) {

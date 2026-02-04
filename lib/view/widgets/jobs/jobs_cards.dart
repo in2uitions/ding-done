@@ -250,34 +250,44 @@ class _JobsCardsState extends State<JobsCards> {
                                         ),
                                       ),
                                     ),
-                                    widget.userRole == Constants.supplierRoleId &&
-                                        (widget.active == 'bookedJobs' || widget.active == 'activeJobs' || widget.active == 'completedJobs')
+                                    widget.userRole ==
+                                                Constants.supplierRoleId &&
+                                            (widget.active == 'bookedJobs' ||
+                                                widget.active == 'activeJobs' ||
+                                                widget.active ==
+                                                    'completedJobs')
                                         ? Padding(
-                                      padding: EdgeInsets.only(
-                                          right: context.appValues.appPadding.p8),
-                                      child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          GestureDetector(
-                                            onTap: () {
-                                              final phone = data[index].customer["phone_number"];
-                                              if (phone != null && phone.isNotEmpty) {
-                                                _makePhoneCall(phone);
-                                              }
-                                            },
-                                            child: Text(
-                                              '${data[index].customer["phone_number"] ?? 'No Phone number'}',
-                                              style: getPrimaryBoldStyle(
-                                                fontSize: 12,
-                                                color: const Color(0xff78789D),
-                                              ),
+                                            padding: EdgeInsets.only(
+                                                right: context
+                                                    .appValues.appPadding.p8),
+                                            child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                GestureDetector(
+                                                  onTap: () {
+                                                    final phone =
+                                                        data[index].customer[
+                                                            "phone_number"];
+                                                    if (phone != null &&
+                                                        phone.isNotEmpty) {
+                                                      _makePhoneCall(phone);
+                                                    }
+                                                  },
+                                                  child: Text(
+                                                    '${data[index].customer["phone_number"] ?? 'No Phone number'}',
+                                                    style: getPrimaryBoldStyle(
+                                                      fontSize: 12,
+                                                      color: const Color(
+                                                          0xff78789D),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    )
+                                          )
                                         : Container()
-
                                   ],
                                 ),
                               ],
@@ -617,9 +627,10 @@ class _JobsCardsState extends State<JobsCards> {
                                                                   .job_address
                                                                   .toString() !=
                                                               ''
-                                                      ?Constants.supplierRoleId == widget.userRole?
-                                                  '${data[index].job_address['city'] ?? ''}, ${data[index].job_address['state'] ?? ''}, ${data[index].job_address['street_number'] ?? ''}'
-                                                    :'${data[index].job_address['address_label'] ?? ''}'
+                                                      ? Constants.supplierRoleId ==
+                                                              widget.userRole
+                                                          ? '${data[index].job_address['city'] ?? ''}, ${data[index].job_address['state'] ?? ''}, ${data[index].job_address['street_number'] ?? ''}'
+                                                          : '${data[index].job_address['address_label'] ?? ''}'
                                                       : '',
                                                   style: getPrimaryRegularStyle(
                                                     fontSize: 12,
@@ -836,9 +847,8 @@ class _JobsCardsState extends State<JobsCards> {
                                                 ),
                                                 child: Text(
                                                   widget.active == 'activeJobs'
-                                                      ?  'button.complete'.tr()
-                                                      :
-                                                          'button.startJob'.tr(),
+                                                      ? 'button.complete'.tr()
+                                                      : 'button.startJob'.tr(),
                                                   style: getPrimaryBoldStyle(
                                                     fontSize: 14,
                                                     color: context.resources
@@ -980,8 +990,8 @@ class _JobsCardsState extends State<JobsCards> {
                       showDialog(
                           context: context,
                           builder: (BuildContext context) =>
-                              _buildPopupDialogFailure(context,
-                                  'button.somethingWentWrong'.tr()));
+                              _buildPopupDialogFailure(
+                                  context, 'button.somethingWentWrong'.tr()));
                     }
                   } else {
                     debugPrint('active    qwd ${widget.active}');
@@ -1017,8 +1027,8 @@ class _JobsCardsState extends State<JobsCards> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
-                                _buildPopupDialogSuccess(context,
-                                   'button.jobCanceledMsg'.tr()));
+                                _buildPopupDialogSuccess(
+                                    context, 'button.jobCanceledMsg'.tr()));
                       } else {
                         Navigator.pop(context);
 
@@ -1026,11 +1036,12 @@ class _JobsCardsState extends State<JobsCards> {
                         showDialog(
                             context: context,
                             builder: (BuildContext context) =>
-                                _buildPopupDialogFailure(context,
-                                   'button.somethingWentWrong'.tr()));
+                                _buildPopupDialogFailure(
+                                    context, 'button.somethingWentWrong'.tr()));
                       }
                     } else {
-                      if (await jobsViewModel.cancelJobWithPenalty(job_id) ==
+                      if (await jobsViewModel.cancelJobWithPenalty(
+                              job_id, '') ==
                           true) {
                         Navigator.pop(context);
 
@@ -1044,13 +1055,17 @@ class _JobsCardsState extends State<JobsCards> {
                                     'button.jobCanceledMsg'.tr()));
                       } else {
                         Navigator.pop(context);
-
-                        Future.delayed(const Duration(seconds: 0));
-                        showDialog(
-                            context: context,
-                            builder: (BuildContext context) =>
-                                _buildPopupDialogFailure(context,
-                                    'button.somethingWentWrong'.tr()));
+                        if (jobsViewModel.errorMessage ==
+                            'Penalty fee must be accepted by the customer.') {
+                          showPenaltyDialog(context, jobsViewModel, job_id);
+                        } else {
+                          Future.delayed(const Duration(seconds: 0));
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) => simpleAlert(
+                                  context,
+                                  '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}'));
+                        }
                       }
                     }
                   }
@@ -1068,7 +1083,7 @@ class _JobsCardsState extends State<JobsCards> {
                   ),
                 ),
                 child: Text(
-                 'button.proceed'.tr(),
+                  'button.proceed'.tr(),
                   style: getPrimaryRegularStyle(
                     fontSize: 15,
                     color: context.resources.color.btnColorBlue,
@@ -1081,6 +1096,99 @@ class _JobsCardsState extends State<JobsCards> {
       ),
     );
   }
+}
+
+Widget simpleAlert(BuildContext context, String message) {
+  return AlertDialog(
+    backgroundColor: Colors.white,
+    elevation: 15,
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                child: SvgPicture.asset('assets/img/x.svg'),
+                onTap: () {
+                  Navigator.pop(context);
+                  // Future.delayed(const Duration(seconds: 0));
+                  // Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
+        message == 'button.success'.tr()
+            ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+            : SvgPicture.asset('assets/img/failure.svg'),
+        SizedBox(height: context.appValues.appSize.s40),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p32,
+          ),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: getPrimaryRegularStyle(
+              fontSize: 17,
+              color: context.resources.color.btnColorBlue,
+            ),
+          ),
+        ),
+        SizedBox(height: context.appValues.appSize.s20),
+      ],
+    ),
+  );
+}
+Widget simpleAlert2(BuildContext context, String message) {
+  return AlertDialog(
+    backgroundColor: Colors.white,
+    elevation: 15,
+    content: Column(
+      mainAxisSize: MainAxisSize.min,
+      // crossAxisAlignment: CrossAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              InkWell(
+                child: SvgPicture.asset('assets/img/x.svg'),
+                onTap: () {
+                  Navigator.pop(context);
+                  Future.delayed(const Duration(seconds: 0));
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
+        message == 'button.success'.tr()
+            ? SvgPicture.asset('assets/img/booking-confirmation-icon.svg')
+            : SvgPicture.asset('assets/img/failure.svg'),
+        SizedBox(height: context.appValues.appSize.s40),
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.appValues.appPadding.p32,
+          ),
+          child: Text(
+            message,
+            textAlign: TextAlign.center,
+            style: getPrimaryRegularStyle(
+              fontSize: 17,
+              color: context.resources.color.btnColorBlue,
+            ),
+          ),
+        ),
+        SizedBox(height: context.appValues.appSize.s20),
+      ],
+    ),
+  );
 }
 
 // Widget simpleAlertWithMessage2(
@@ -1181,6 +1289,7 @@ Widget _buildPopupDialogFailure(BuildContext context, String message) {
     ),
   );
 }
+
 Future<void> _makePhoneCall(String phoneNumber) async {
   final Uri launchUri = Uri.parse("tel://$phoneNumber");
   if (await canLaunchUrl(launchUri)) {
@@ -1189,7 +1298,6 @@ Future<void> _makePhoneCall(String phoneNumber) async {
     throw 'Could not launch $phoneNumber';
   }
 }
-
 
 Widget _buildPopupDialogSuccess(BuildContext context, String message) {
   return AlertDialog(
@@ -1243,6 +1351,142 @@ Widget _buildPopupDialogSuccess(BuildContext context, String message) {
     ),
   );
 }
+void showPenaltyDialog(
+    BuildContext context,
+    JobsViewModel jobsViewModel,
+    dynamic job_id,
+    ) {
+  showDialog(
+    context: context,
+    barrierDismissible: false,
+    builder: (BuildContext context) {
+      bool isLoading = false;
+
+      return StatefulBuilder(
+        builder: (context, setState) {
+          return AlertDialog(
+            backgroundColor: Colors.white,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Gap(10),
+
+                Text(
+                  'popup.note'.tr(),
+                  textAlign: TextAlign.center,
+                  style: getPrimaryBoldStyle(
+                    fontSize: 18,
+                    color: const Color(0xff4100E3),
+                  ),
+                ),
+
+                const Gap(10),
+
+                Text(
+                  '${'popup.cancelMessage1'.tr()} '
+                      '${jobsViewModel.errorData['penalty_fee']} '
+                      '${'popup.${jobsViewModel.errorData['currency']}'.tr()} '
+                      '${'popup.cancelMessage2'.tr()}\n'
+                      '${'popup.wouldProceed'.tr()}',
+                  textAlign: TextAlign.center,
+                  style: getPrimaryRegularStyle(
+                    fontSize: 15,
+                    color: const Color(0xff180D38),
+                  ),
+                ),
+
+                const Gap(20),
+
+                /// YES BUTTON
+                ElevatedButton(
+                  onPressed: isLoading
+                      ? null
+                      : () async {
+                    setState(() {
+                      isLoading = true;
+                    });
+
+                    bool? success =
+                    await jobsViewModel.cancelJobWithPenalty(
+                      job_id,
+                      'accept_penalty',
+                    );
+
+                    setState(() {
+                      isLoading = false;
+                    });
+
+                    Navigator.pop(context);
+
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) => simpleAlert(
+                        context,
+                        success == true
+                            ? 'button.success'.tr()
+                            : '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}',
+                      ),
+                    );
+                  },
+
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xffFFC500),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+
+                  child: isLoading
+                      ? const SizedBox(
+                    height: 22,
+                    width: 22,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.white,
+                    ),
+                  )
+                      : Text(
+                    'popup.yes'.tr(),
+                    style: getPrimaryBoldStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+
+                const Gap(5),
+
+                /// NO BUTTON
+                ElevatedButton(
+                  onPressed: isLoading
+                      ? null
+                      : () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff4100E3),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Text(
+                    'popup.no'.tr(),
+                    style: getPrimaryBoldStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
 
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(

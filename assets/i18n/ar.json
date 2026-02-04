@@ -163,6 +163,16 @@
     "streetNameHouseNumber": "اسم الشارع / رقم المنزل",
     "localityPostalCode": "المنطقة / الرمز البريدي"
   },
+  "popup": {
+    "note": "تنبيه",
+    "cancelMessage1": "يخضع هذا الإلغاء لرسوم إلغاء متأخرة بقيمة",
+    "cancelMessage2": ".",
+    "QAR": "ر.ق",
+
+    "wouldProceed": "هل ترغب بالمتابعة؟",
+    "yes": "نعم",
+    "no": "لا"
+  },
   "paymentMethod": {
     "paymentMethod": "وسيلة الدفع",
     "paymentMethods": "وسائل الدفع",

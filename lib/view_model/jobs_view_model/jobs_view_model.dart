@@ -51,6 +51,7 @@ class JobsViewModel with ChangeNotifier {
   Map<String, dynamic> _addressBody = {};
   String? _role = '';
   String? _errorMessage = '';
+  dynamic _errorData ;
   bool _jobUpdated = true;
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
@@ -848,18 +849,21 @@ class JobsViewModel with ChangeNotifier {
     }
   }
 
-  Future<bool?> cancelJobWithPenalty(int id) async {
+  Future<bool?> cancelJobWithPenalty(int id,String action) async {
     debugPrint(
         'cancellation reason with penalty  ${jobsBody['cancellation_reason']}');
     try {
       dynamic response = await _jobsRepository.cancelJobWithPenalty(
-          id, jobsBody['cancellation_reason']);
+          id, jobsBody['cancellation_reason'],action);
       readJson();
       notifyListeners();
       if (response["status"] == "OK") {
         return true;
       } else {
         _errorMessage = response["reason"];
+        _errorData=response;
+        notifyListeners();
+
         return false;
       }
     } catch (error) {
@@ -1104,4 +1108,5 @@ class JobsViewModel with ChangeNotifier {
   get file => _file;
 
   get saved => _addressSaved;
+  get errorData => _errorData;
 }

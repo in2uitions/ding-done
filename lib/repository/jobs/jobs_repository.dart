@@ -277,10 +277,12 @@ class JobsRepository {
       rethrow;
     }
   }
-  Future<dynamic> cancelJobWithPenalty(int job_id,String reason) async {
+  Future<dynamic> cancelJobWithPenalty(int job_id,String reason,String action) async {
     try {
       String? id = await getUserId();
-      dynamic response = await _apicancelJobWithPenalty.postResponse(data: {"customer_id": id,"job_id":job_id,"reason":reason});
+      dynamic response= await _apicancelJobWithPenalty.postResponse(data: {"customer_id": id,"job_id":job_id,"reason":reason,"action":action});
+
+
       debugPrint('response cancel booking  $response');
       return response;
     } catch (error) {

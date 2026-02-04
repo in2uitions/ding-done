@@ -44,7 +44,7 @@ class ProfileRepository {
         if (Constants.supplierRoleId == role) {
           response = await _apiSupplierProfile.getResponse(
             params:
-            '?fields=*,supplier_services.*,supplier_services.services_id.*,current_address.*,service_category.*,user.*'
+            '?fields=*,supplier_services.*,supplier_services.services_id.*,current_address.*,service_category.*,user.*,user.*'
                 '&deep[supplier_services][_limit]=-1'
                 '&filter[user][_eq]=$userId',
           );
