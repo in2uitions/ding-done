@@ -40,6 +40,7 @@ class ApiEndPoints {
   final String authorizeCard = '/customers/authorizeCard';
   final String deletePaymentCard = '/customers/removeCard';
   final String payJob = '/customers/payJob';
+  final String addJob = '/customers/addJob';
   final String finishJobAndCollectPayment = '/suppliers/finishJobAndCollectPayment';
   final String getAllPayments = '/items/customer_payment_cards?fields=*.*';
   final String downloadInvoice = '/invoices/downloadInvoice';

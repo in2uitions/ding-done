@@ -909,14 +909,24 @@ class JobsViewModel with ChangeNotifier {
       } else {
         jobsBody['severity_level'] = 'minor';
       }
+      if(jobsBody['job_address'] is Map<String,dynamic>){
+        jobsBody['job_address']=jobsBody['job_address']['id'];
 
+      }
       setInputValues(index: 'start_date', value: combinedDateTime.toString());
 
       if (jobsBody['tap_payments_card'] == null) {
         return false;
       } else {
         dynamic response = await _jobsRepository.postNewJobRequest(jobsBody);
-        _jobsResponse = ApiResponse<JobsModel>.completed(response);
+        debugPrint('response adding job in view model $response');
+        if(response['status']=='NOT_OK'){
+          _errorMessage=response['reason'];
+          notifyListeners();
+          return false;
+        }
+
+        // _jobsResponse = ApiResponse<JobsModel>.completed(response);
       }
 
       return true;

@@ -128,7 +128,9 @@ class NetworkApiService extends BaseApiService {
           body: jsonEncode(data));
       debugPrint('response network ${response.body}');
 
-      responseJson = returnResponse(response);
+      responseJson = await returnResponse(response);
+      debugPrint('response json ${responseJson}');
+
     } catch (error) {
       debugPrint('error network api $error');
       rethrow;
@@ -219,6 +221,7 @@ class NetworkApiService extends BaseApiService {
       response = await http.patch(Uri.parse(finalUrl),
           headers: headers, body: jsonEncode(data));
       debugPrint('response json ${response.body}');
+      debugPrint('returnResponse ${returnResponse(response)}');
 
       responseJson = returnResponse(response);
     } on SocketException {
@@ -252,10 +255,12 @@ class NetworkApiService extends BaseApiService {
 
   dynamic returnResponse(http.Response response) async {
     LoginViewModel loginViewModel = LoginViewModel();
+    debugPrint('status code ${response.statusCode}');
     switch (response.statusCode) {
       case 200:
         //
         dynamic responseJson = jsonDecode(response.body);
+        debugPrint('respon j $responseJson');
         return responseJson;
         case 503:
         //

@@ -1053,7 +1053,7 @@ getPayment() async{
                                                       builder: (BuildContext
                                                       context) =>
                                                           _buildPopupDialogNo(
-                                                              context,'button.somethingWentWrong'.tr()),
+                                                              context,'${'button.somethingWentWrong'.tr()}\n${jobsViewModel.errorMessage}'),
                                                     );
                                                   }
                                                 }

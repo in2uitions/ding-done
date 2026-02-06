@@ -46,6 +46,8 @@ class JobsRepository {
       NetworkApiService(url: ApiEndPoints().customerCancelJobWithPenalty);
   final BaseApiService _apiInvoice =
       NetworkApiService(url: ApiEndPoints().invoices);
+  final BaseApiService _apiAddJob =
+      NetworkApiService(url: ApiEndPoints().addJob);
   // final BaseApiService _apiCustomerInvoice =
   //     NetworkApiService(url: ApiEndPoints().customerInvoice);
   // final BaseApiService _apiSupplierInvoice =
@@ -291,7 +293,7 @@ class JobsRepository {
     }
   }
 
-  Future<JobsModel?> postNewJobRequest(dynamic body) async {
+  Future<dynamic> postNewJobRequest(dynamic body) async {
     try {
       String currentUser = await getUserId();
       // if(body["start_date"]==null){
@@ -300,10 +302,13 @@ class JobsRepository {
       //   body["start_date"]=formattedDateTime;
       // }
       body["customer"] = currentUser;
+      debugPrint('jobs body issss $body');
+      // dynamic response = await _apiJobs.postResponse(data: body);
+      dynamic response = await _apiAddJob.postResponse(data: body);
+      debugPrint('response adding new job ${response['status']}');
 
-      dynamic response = await _apiJobs.postResponse(data: body);
-      final jsonData = JobsModel.fromJson(response['data']);
-      return jsonData;
+      // final jsonData = JobsModel.fromJson(response['data']);
+      return response;
     } catch (error) {
       debugPrint('error in post jobs repo ${error}');
       rethrow;
