@@ -189,8 +189,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
           ),
           DraggableScrollableSheet(
               initialChildSize: 0.87,
-              minChildSize: 0.87,
-              maxChildSize: 1,
+              minChildSize: 0.85,
+              maxChildSize: 0.90,
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return Container(

@@ -217,8 +217,8 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               // TOTAL CONTENT
               DraggableScrollableSheet(
                 initialChildSize: 0.90,
-                minChildSize: 0.90,
-                maxChildSize: 1.0,
+                minChildSize: 0.9,
+                maxChildSize: 0.95,
                 builder: (context, scrollController) {
                   return Container(
                     decoration: const BoxDecoration(

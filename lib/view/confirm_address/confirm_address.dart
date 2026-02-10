@@ -127,7 +127,7 @@ class _ConfirmAddressState extends State<ConfirmAddress> {
               DraggableScrollableSheet(
                   initialChildSize: 0.85,
                   minChildSize: 0.85,
-                  maxChildSize: 1,
+                  maxChildSize: 0.88,
                   builder: (BuildContext context,
                       ScrollController scrollController) {
                     return Container(

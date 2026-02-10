@@ -408,737 +408,742 @@ getPayment() async{
 
           return Scaffold(
             backgroundColor: const Color(0xffFEFEFE),
-            body: Stack(
-              children: [
-                Column(
+            body: Container(
+              color: const Color(0xff4100E3),
+              child: SafeArea(
+                child: Stack(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.all(context.appValues.appPadding.p0),
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: context.appValues.appSizePercent.w100,
-                            height: context.appValues.appSizePercent.h50,
-                            decoration: const BoxDecoration(
-                              color: Color(0xff4100E3),
-                              // image: DecorationImage(
-                              //   image: NetworkImage(widget.image),
-                              //   fit: BoxFit.cover,
-                              // ),
-                            ),
-                            child: SafeArea(
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: context.appValues.appPadding.p20,
-                                  vertical: context.appValues.appPadding.p10,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Icon(
-                                        Icons.arrow_back_ios_new_sharp,
-                                        color: Colors.white,
-                                        size: 20,
-                                      ),
-                                    ),
-                                    const Gap(5),
-                                    Text(
-                                      'bookService.bookService'.tr(),
-                                      style: getPrimarySemiBoldStyle(
-                                        color: context.resources.color
-                                            .colorWhite,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Positioned(
-                            bottom: 50,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: context.appValues.appPadding.p20,
-                                vertical: context.appValues.appPadding.p10,
-                              ),
-                              child: SizedBox(
-                                width: context.appValues.appSizePercent.w80,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      categories != null
-                                          ? '${categories["title"]}'
-                                          : '',
-                                      style: getPrimaryBoldStyle(
-                                        fontSize: 16,
-                                        color: context.resources.color
-                                            .btnColorBlue,
-                                      ),
-                                    ),
-                                    Text(
-                                      services != null
-                                          ? '${services["title"]}'
-                                          : '',
-                                      style: getPrimaryBoldStyle(
-                                        fontSize: 10,
-                                        color: const Color(0xff6E6BE8),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-                DraggableScrollableSheet(
-                    initialChildSize: 0.85,
-                    minChildSize: 0.85,
-                    maxChildSize: 1,
-                    builder: (context, scrollController) {
-                      return Container(
-                        decoration: const BoxDecoration(
-                          color: Color(0xffFEFEFE),
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(30),
-                            topRight: Radius.circular(30),
-                          ),
-                        ),
-                        child: ListView.builder(
-                            controller: scrollController,
-                            itemCount: 1,
-                            padding: EdgeInsets.zero,
-                            itemBuilder: (context, index) {
-                              // 1) Grab the **subcategory** translation:
-                              Map<String, dynamic>? subCatTrans;
-                              for (var t
-                              in widget.service["translations"] as List) {
-                                if(t["languages_code"] is Map<String,dynamic>){
-                                  if (t["languages_code"]["code"] == widget.lang) {
-                                    subCatTrans = t;
-                                    break;
-                                  }
-                                }else{
-                                  if (t["languages_code"] == widget.lang) {
-                                    subCatTrans = t;
-                                    break;
-                                  }
-                                }
-
-                              }
-
-                              // 2) (Optional) Grab the **parent** category translation too:
-                              Map<String, dynamic>? parentCatTrans;
-                              for (var t in widget.service["category"]
-                              ["translations"] as List) {
-
-                                if(t["languages_code"] is Map<String,dynamic>){
-                                  if (t["languages_code"]["code"]== widget.lang) {
-                                    debugPrint('not else $t');
-
-                                    parentCatTrans = t;
-                                    break;
-                                  }
-                                }else{
-                                  if (t["languages_code"]== widget.lang) {
-                                    parentCatTrans = t;
-                                    break;
-                                  }
-                                }
-
-                              }
-
-                              return Column(
-                                children: [
-                                  const Gap(30),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                        context.appValues.appPadding.p20),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Container(
-                                              width: 76,
-                                              height: 76,
-                                              decoration: BoxDecoration(
-                                                color: const Color(0xffEAEAFF),
-                                                image: DecorationImage(
-                                                  image: NetworkImage(widget.image),
-                                                  fit: BoxFit.cover,
-                                                ),
-                                                borderRadius:
-                                                BorderRadius.circular(16),
-                                              ),
-
-                                            ),
-                                            const Gap(20),
-                                            Column(
-                                              crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                              children: [
-                                                SizedBox(
-                                                  width: context
-                                                      .appValues.appSizePercent
-                                                      .w62,
-                                                  child: Text(
-                                                    subCatTrans != null
-                                                        ? '${subCatTrans!["title"]}'
-                                                        : '',
-                                                    maxLines: 2,
-                                                    overflow: TextOverflow
-                                                        .ellipsis,
-                                                    style: getPrimarySemiBoldStyle(
-                                                      fontSize: 16,
-                                                      color: context.resources
-                                                          .color
-                                                          .btnColorBlue,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: context
-                                                      .appValues.appSizePercent
-                                                      .w62,
-                                                  child: Text(
-                                                    categories != null
-                                                        ? '${parentCatTrans!['title']
-                                                        .toString()
-                                                        .toUpperCase()}'
-                                                        : 'Leak',
-                                                    maxLines: 3,
-                                                    overflow: TextOverflow
-                                                        .ellipsis,
-                                                    style: getPrimarySemiBoldStyle(
-                                                      fontSize: 10,
-                                                      color:
-                                                      const Color(0xff6E6BE8),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        const Gap(15),
-                                        Text(
-                                          subCatTrans!['description']!=null?'${subCatTrans!['description']}':'',
-                                          style: getPrimaryRegularStyle(
-                                            fontSize: 12,
-                                            //
-                                            color: const Color(0xff190C39),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                  const Gap(15),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                        context.appValues.appPadding.p20),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                            context.appValues.appPadding.p0,
-                                            vertical:
-                                            context.appValues.appPadding.p10,
-                                          ),
-                                          child: Text(
-                                            'bookService.jobDescription'.tr(),
-                                            style: getPrimaryMediumStyle(
-                                              fontSize: 16,
-                                              color: context
-                                                  .resources.color.btnColorBlue,
-                                            ),
-                                          ),
-                                        ),
-                                        CustomTextArea(
-                                          index: 'job_description',
-                                          hintText: 'bookService.jobDescription'.tr(),
-                                          viewModel: jobsViewModel
-                                              .setInputValues,
-                                          keyboardType: TextInputType.text,
-                                          maxlines: 4,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  const AddMedia(),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: context.appValues.appPadding
-                                          .p20,
-                                    ),
-                                    child: const Divider(
-                                      color: Color(0xffD4D6DD),
-                                      thickness: 1,
-                                      height: 5,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                        context.appValues.appPadding.p20),
-                                    child: Container(
-                                      width: context.appValues.appSizePercent
-                                          .w100,
-                                      decoration: BoxDecoration(
-                                        color: context.resources.color
-                                            .colorWhite,
-                                        borderRadius: const BorderRadius.all(
-                                          Radius.circular(20),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: [
-                                          // Padding(
-                                          //   padding: EdgeInsets.symmetric(
-                                          //     horizontal:
-                                          //         context.appValues.appPadding.p20,
-                                          //     vertical:
-                                          //         context.appValues.appPadding.p10,
-                                          //   ),
-                                          //   child: Text(
-                                          //     "Working Day",
-                                          //     style: getPrimaryBoldStyle(
-                                          //       fontSize: 16,
-                                          //       color: const Color(0xff1F1F39),
-                                          //     ),
-                                          //   ),
-                                          // ),
-                                          const Gap(15),
-                                          const DatePickerWidget(),
-
-                                          const Gap(20),
-                                          CustomTimePicker(
-                                            index: 'time',
-                                            viewModel: jobsViewModel
-                                                .setInputValues,
-                                          ),
-                                          const Gap(20),
-                                          InkWell(
-                                            onTap: () {
-                                              // Navigator.of(context).push(
-                                              //   _createRoute(ConfirmAddress()),
-                                              // );
-                                              _onActionSheetPress(context);
-                                            },
-                                            child: Container(
-                                              width: context
-                                                  .appValues.appSizePercent
-                                                  .w100,
-                                              decoration: BoxDecoration(
-                                                color: context
-                                                    .resources.color.colorWhite,
-                                                borderRadius:
-                                                const BorderRadius.all(
-                                                    Radius.circular(20)),
-                                              ),
-                                              // Adjust padding as needed
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: context
-                                                    .appValues.appPadding.p10,
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    crossAxisAlignment:
-                                                    CrossAxisAlignment.center,
-                                                    children: [
-                                                      // Location SVG icon
-                                                      SvgPicture.asset(
-                                                        'assets/img/locationbookservice.svg',
-                                                        width: 20,
-                                                        height: 20,
-                                                      ),
-                                                      const Gap(10),
-                                                      // Column with a title and the current location or hint
-                                                      Column(
-                                                        crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                        children: [
-                                                          Text( 'updateJob.address'.tr(),
-                                                            style:
-                                                            getPrimaryRegularStyle(
-                                                              fontSize: 16,
-                                                              color: context
-                                                                  .resources
-                                                                  .color
-                                                                  .btnColorBlue,
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                            // '${profileViewModel
-                                                            //     .getProfileBody['current_address']["street_number"]} ${profileViewModel
-                                                            //     .getProfileBody['current_address']["building_number"]}, ${profileViewModel
-                                                            //     .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
-                                                            //     .getProfileBody['current_address']["floor"]}',
-                                                            '${profileViewModel
-                                                                .getProfileBody['current_address']["address_label"]}',
-
-                                                            style:
-                                                            getPrimaryRegularStyle(
-                                                              fontSize: 12,
-                                                              color: const Color(
-                                                                  0xff71727A),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  // Trailing arrow icon
-                                                  const Icon(
-                                                    Icons
-                                                        .arrow_forward_ios_sharp,
-                                                    size: 20,
-                                                    color: Color(0xff8F9098),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const Gap(20),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Divider(
-                                      color: Color(0xffD4D6DD),
-                                      thickness: 1,
-                                      height: 5,
-                                    ),
-                                  ),
-
-                                  PaymentMethod(
-                                    fromWhere: 'book a service',
-                                    jobsViewModel: jobsViewModel,
-                                    paymentViewModel: paymentViewModel,
-                                    payment_method: paymentViewModel
-                                        .paymentList,
-                                    role: Constants.customerRoleId,
-                                  ),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Divider(
-                                      color: Color(0xffD4D6DD),
-                                      thickness: 1,
-                                      height: 5,
-                                    ),
-                                  ),
-                                  const Gap(20),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: context.appValues.appPadding
-                                          .p20,
-                                      vertical: context.appValues.appPadding.p0,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Text(
-                                          'bookService.unitPrice'.tr(),
-                                          style: getPrimaryRegularStyle(
-                                            fontSize: 14,
-                                            color: context
-                                                .resources.color.btnColorBlue,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                      padding: const EdgeInsets.only(
-                                          right: 20.0, left: 20.0),
-                                      child: Padding(
-                                        padding: const EdgeInsets.symmetric(),
-                                        child: Row(
-                                          children: [
-                                            Text(
-                                              _getUnitPrice(profileViewModel),
-                                              style: getPrimaryRegularStyle(
-                                                  color: context.resources.color
-                                                      .secondColorBlue,
-                                                  fontSize: 14),
-                                            ),
-                                            // Text(
-                                            //   '/${_getType(profileViewModel)}',
-                                            //   style: getPrimaryRegularStyle(
-                                            //       color: context.resources.color
-                                            //           .secondColorBlue,
-                                            //       fontSize: 10),
-                                            // ),
-                                          ],
-                                        ),
-                                      )),
-                                  const Gap(10),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: context.appValues.appPadding
-                                          .p20,
-                                      vertical: context.appValues.appPadding.p0,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          'updateJob.actualNumberOfUnits'.tr(),
-                                          style: getPrimaryRegularStyle(
-                                            fontSize: 14,
-                                            color: context
-                                                .resources.color.btnColorBlue,
-                                          ),
-                                        ),
-                                        Consumer<JobsViewModel>(
-                                            builder: (context, jobsViewModel,
-                                                _) {
-                                              return CustomIncrementFieldRequest(
-                                                index: 'number_of_units',
-                                                editable: isLumpsum
-                                                    ? false
-                                                    : true,
-                                                value: _matchingRate != null
-                                                    ? '${_matchingRate['minimum_order']}'
-                                                    : '0',
-                                                // hintText: 'Job Type',
-                                                viewModel: jobsViewModel
-                                                    .setInputValues,
-                                              );
-                                            }),
-                                      ],
-                                    ),
-                                  ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.only(
-                                  //       right: 40.0, left: 40.0),
-                                  //   child: Consumer<JobsViewModel>(
-                                  //       builder: (context, jobsViewModel, _) {
-                                  //     return CustomIncrementFieldRequest(
-                                  //       index: 'number_of_units',
-                                  //       editable: isLumpsum ? false : true,
-                                  //       value: _matchingRate != null
-                                  //           ? '${_matchingRate['minimum_order']}'
-                                  //           : '0',
-                                  //       // hintText: 'Job Type',
-                                  //       viewModel: jobsViewModel.setInputValues,
-                                  //     );
-                                  //   }),
+                    Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(context.appValues.appPadding.p0),
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: context.appValues.appSizePercent.w100,
+                                height: context.appValues.appSizePercent.h50,
+                                decoration: const BoxDecoration(
+                                  color: Color(0xff4100E3),
+                                  // image: DecorationImage(
+                                  //   image: NetworkImage(widget.image),
+                                  //   fit: BoxFit.cover,
                                   // ),
-                                  const Gap(10),
-                                  Padding(
+                                ),
+                                child: SafeArea(
+                                  child: Padding(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: context.appValues.appPadding
-                                          .p20,
-                                      vertical: context.appValues.appPadding.p0,
+                                      horizontal: context.appValues.appPadding.p20,
+                                      vertical: context.appValues.appPadding.p10,
                                     ),
                                     child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(
-                                          'home_screen.totalPrice'.tr(),
-                                          style: getPrimaryRegularStyle(
-                                            fontSize: 14,
-                                            color: context
-                                                .resources.color.btnColorBlue,
+                                        InkWell(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Icon(
+                                            Icons.arrow_back_ios_new_sharp,
+                                            color: Colors.white,
+                                            size: 20,
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: context.appValues.appPadding
-                                          .p20,
-                                      vertical: context.appValues.appPadding.p0,
-                                    ),
-                                    child: Row(
-                                      children: [
+                                        const Gap(5),
                                         Text(
-                                          _getServiceRate(
-                                              profileViewModel, jobsViewModel),
+                                          'bookService.bookService'.tr(),
                                           style: getPrimarySemiBoldStyle(
-                                            color: const Color(0xff4100E3),
+                                            color: context.resources.color
+                                                .colorWhite,
                                             fontSize: 16,
                                           ),
                                         ),
                                       ],
                                     ),
                                   ),
-                                  const Gap(20),
-                                  const Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    child: Divider(
-                                      color: Color(0xffD4D6DD),
-                                      thickness: 1,
-                                      height: 5,
+                                ),
+                              ),
+                              Positioned(
+                                bottom: 50,
+                                child: Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: context.appValues.appPadding.p20,
+                                    vertical: context.appValues.appPadding.p10,
+                                  ),
+                                  child: SizedBox(
+                                    width: context.appValues.appSizePercent.w80,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          categories != null
+                                              ? '${categories["title"]}'
+                                              : '',
+                                          style: getPrimaryBoldStyle(
+                                            fontSize: 16,
+                                            color: context.resources.color
+                                                .btnColorBlue,
+                                          ),
+                                        ),
+                                        Text(
+                                          services != null
+                                              ? '${services["title"]}'
+                                              : '',
+                                          style: getPrimaryBoldStyle(
+                                            fontSize: 10,
+                                            color: const Color(0xff6E6BE8),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                  const Gap(10),
-                                  Container(
-                                    height: context.appValues.appSizePercent.h8,
-                                    width: context.appValues.appSizePercent
-                                        .w100,
-                                    color: Colors.transparent,
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical:
-                                          context.appValues.appPadding.p10,
-                                          horizontal:
-                                          context.appValues.appPadding.p15),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          SizedBox(
-                                            width: context
-                                                .appValues.appSizePercent.w57,
-                                            height: context
-                                                .appValues.appSizePercent.h100,
-                                            child: ElevatedButton(
-                                              onPressed: isLoading ? null :  () async {
-                                                setState(() {
-                                                  isLoading = true;
-                                                });
-                                                if (await jobsViewModel
-                                                    .requestService() ==
-                                                    true) {
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext
-                                                    context) =>
-                                                        _buildPopupDialog(
-                                                            context),
-                                                  );
-                                                } else {
-                                                  if (jobsViewModel.getjobsBody[
-                                                  'tap_payments_card'] ==
-                                                      null) {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                      context) =>
-                                                          _buildPopupDialogNo(
-                                                              context, 'button.pleaseProvidePaymentCard'.tr()),
-                                                    );
-                                                  } else {
-                                                    showDialog(
-                                                      context: context,
-                                                      builder: (BuildContext
-                                                      context) =>
-                                                          _buildPopupDialogNo(
-                                                              context,'${'button.somethingWentWrong'.tr()}\n${jobsViewModel.errorMessage}'),
-                                                    );
-                                                  }
-                                                }
-                                                setState(() {
-                                                  isLoading = false;
-                                                });
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor:
-                                                const Color(0xff4100E3),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                  BorderRadius.circular(12),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    DraggableScrollableSheet(
+                        initialChildSize: 0.90,
+                        minChildSize: 0.9,
+                        maxChildSize: 0.95,
+                        builder: (context, scrollController) {
+                          return Container(
+                            decoration: const BoxDecoration(
+                              color: Color(0xffFEFEFE),
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
+                              ),
+                            ),
+                            child: ListView.builder(
+                                controller: scrollController,
+                                itemCount: 1,
+                                padding: EdgeInsets.zero,
+                                itemBuilder: (context, index) {
+                                  // 1) Grab the **subcategory** translation:
+                                  Map<String, dynamic>? subCatTrans;
+                                  for (var t
+                                  in widget.service["translations"] as List) {
+                                    if(t["languages_code"] is Map<String,dynamic>){
+                                      if (t["languages_code"]["code"] == widget.lang) {
+                                        subCatTrans = t;
+                                        break;
+                                      }
+                                    }else{
+                                      if (t["languages_code"] == widget.lang) {
+                                        subCatTrans = t;
+                                        break;
+                                      }
+                                    }
+
+                                  }
+
+                                  // 2) (Optional) Grab the **parent** category translation too:
+                                  Map<String, dynamic>? parentCatTrans;
+                                  for (var t in widget.service["category"]
+                                  ["translations"] as List) {
+
+                                    if(t["languages_code"] is Map<String,dynamic>){
+                                      if (t["languages_code"]["code"]== widget.lang) {
+                                        debugPrint('not else $t');
+
+                                        parentCatTrans = t;
+                                        break;
+                                      }
+                                    }else{
+                                      if (t["languages_code"]== widget.lang) {
+                                        parentCatTrans = t;
+                                        break;
+                                      }
+                                    }
+
+                                  }
+
+                                  return Column(
+                                    children: [
+                                      const Gap(30),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                            context.appValues.appPadding.p20),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Container(
+                                                  width: 76,
+                                                  height: 76,
+                                                  decoration: BoxDecoration(
+                                                    color: const Color(0xffEAEAFF),
+                                                    image: DecorationImage(
+                                                      image: NetworkImage(widget.image),
+                                                      fit: BoxFit.cover,
+                                                    ),
+                                                    borderRadius:
+                                                    BorderRadius.circular(16),
+                                                  ),
+
                                                 ),
+                                                const Gap(20),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                                  children: [
+                                                    SizedBox(
+                                                      width: context
+                                                          .appValues.appSizePercent
+                                                          .w62,
+                                                      child: Text(
+                                                        subCatTrans != null
+                                                            ? '${subCatTrans!["title"]}'
+                                                            : '',
+                                                        maxLines: 2,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: getPrimarySemiBoldStyle(
+                                                          fontSize: 16,
+                                                          color: context.resources
+                                                              .color
+                                                              .btnColorBlue,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: context
+                                                          .appValues.appSizePercent
+                                                          .w62,
+                                                      child: Text(
+                                                        categories != null
+                                                            ? '${parentCatTrans!['title']
+                                                            .toString()
+                                                            .toUpperCase()}'
+                                                            : 'Leak',
+                                                        maxLines: 3,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                        style: getPrimarySemiBoldStyle(
+                                                          fontSize: 10,
+                                                          color:
+                                                          const Color(0xff6E6BE8),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            const Gap(15),
+                                            Text(
+                                              subCatTrans!['description']!=null?'${subCatTrans!['description']}':'',
+                                              style: getPrimaryRegularStyle(
+                                                fontSize: 12,
+                                                //
+                                                color: const Color(0xff190C39),
                                               ),
-                                              child: isLoading
-                                                  ? SizedBox(
-                                                width: 20,
-                                                height: 20,
-                                                child: CircularProgressIndicator(
-                                                  color: Colors.white,
-                                                  strokeWidth: 2,
-                                                ),
-                                              )
-                                                  :Text( 'bookService.requestService'.tr(),
-                                                style: getPrimarySemiBoldStyle(
-                                                  fontSize: 12,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      const Gap(15),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                            context.appValues.appPadding.p20),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment
+                                              .start,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                horizontal:
+                                                context.appValues.appPadding.p0,
+                                                vertical:
+                                                context.appValues.appPadding.p10,
+                                              ),
+                                              child: Text(
+                                                'bookService.jobDescription'.tr(),
+                                                style: getPrimaryMediumStyle(
+                                                  fontSize: 16,
                                                   color: context
-                                                      .resources.color
-                                                      .colorWhite,
+                                                      .resources.color.btnColorBlue,
                                                 ),
                                               ),
                                             ),
+                                            CustomTextArea(
+                                              index: 'job_description',
+                                              hintText: 'bookService.jobDescription'.tr(),
+                                              viewModel: jobsViewModel
+                                                  .setInputValues,
+                                              keyboardType: TextInputType.text,
+                                              maxlines: 4,
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const AddMedia(),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: context.appValues.appPadding
+                                              .p20,
+                                        ),
+                                        child: const Divider(
+                                          color: Color(0xffD4D6DD),
+                                          thickness: 1,
+                                          height: 5,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal:
+                                            context.appValues.appPadding.p20),
+                                        child: Container(
+                                          width: context.appValues.appSizePercent
+                                              .w100,
+                                          decoration: BoxDecoration(
+                                            color: context.resources.color
+                                                .colorWhite,
+                                            borderRadius: const BorderRadius.all(
+                                              Radius.circular(20),
+                                            ),
                                           ),
-                                          SizedBox(
-                                            width: context
-                                                .appValues.appSizePercent.w31,
-                                            height: context
-                                                .appValues.appSizePercent.h100,
-                                            child: ElevatedButton(
-                                              onPressed: () {
-                                                jobsViewModel.launchWhatsApp();
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                elevation: 0,
-                                                backgroundColor: Colors
-                                                    .transparent,
-                                                shape: RoundedRectangleBorder(
-                                                  side: const BorderSide(
-                                                    color: Color(0xff4100E3),
-                                                    width: 1.5,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              // Padding(
+                                              //   padding: EdgeInsets.symmetric(
+                                              //     horizontal:
+                                              //         context.appValues.appPadding.p20,
+                                              //     vertical:
+                                              //         context.appValues.appPadding.p10,
+                                              //   ),
+                                              //   child: Text(
+                                              //     "Working Day",
+                                              //     style: getPrimaryBoldStyle(
+                                              //       fontSize: 16,
+                                              //       color: const Color(0xff1F1F39),
+                                              //     ),
+                                              //   ),
+                                              // ),
+                                              const Gap(15),
+                                              const DatePickerWidget(),
+
+                                              const Gap(20),
+                                              CustomTimePicker(
+                                                index: 'time',
+                                                viewModel: jobsViewModel
+                                                    .setInputValues,
+                                              ),
+                                              const Gap(20),
+                                              InkWell(
+                                                onTap: () {
+                                                  // Navigator.of(context).push(
+                                                  //   _createRoute(ConfirmAddress()),
+                                                  // );
+                                                  _onActionSheetPress(context);
+                                                },
+                                                child: Container(
+                                                  width: context
+                                                      .appValues.appSizePercent
+                                                      .w100,
+                                                  decoration: BoxDecoration(
+                                                    color: context
+                                                        .resources.color.colorWhite,
+                                                    borderRadius:
+                                                    const BorderRadius.all(
+                                                        Radius.circular(20)),
                                                   ),
-                                                  borderRadius:
-                                                  BorderRadius.circular(12),
+                                                  // Adjust padding as needed
+                                                  padding: EdgeInsets.symmetric(
+                                                    horizontal: context
+                                                        .appValues.appPadding.p10,
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      Row(
+                                                        crossAxisAlignment:
+                                                        CrossAxisAlignment.center,
+                                                        children: [
+                                                          // Location SVG icon
+                                                          SvgPicture.asset(
+                                                            'assets/img/locationbookservice.svg',
+                                                            width: 20,
+                                                            height: 20,
+                                                          ),
+                                                          const Gap(10),
+                                                          // Column with a title and the current location or hint
+                                                          Column(
+                                                            crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                            children: [
+                                                              Text( 'updateJob.address'.tr(),
+                                                                style:
+                                                                getPrimaryRegularStyle(
+                                                                  fontSize: 16,
+                                                                  color: context
+                                                                      .resources
+                                                                      .color
+                                                                      .btnColorBlue,
+                                                                ),
+                                                              ),
+                                                              Text(
+                                                                // '${profileViewModel
+                                                                //     .getProfileBody['current_address']["street_number"]} ${profileViewModel
+                                                                //     .getProfileBody['current_address']["building_number"]}, ${profileViewModel
+                                                                //     .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
+                                                                //     .getProfileBody['current_address']["floor"]}',
+                                                                '${profileViewModel
+                                                                    .getProfileBody['current_address']["address_label"]}',
+
+                                                                style:
+                                                                getPrimaryRegularStyle(
+                                                                  fontSize: 12,
+                                                                  color: const Color(
+                                                                      0xff71727A),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      // Trailing arrow icon
+                                                      const Icon(
+                                                        Icons
+                                                            .arrow_forward_ios_sharp,
+                                                        size: 20,
+                                                        color: Color(0xff8F9098),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    'assets/img/support-icon.svg',
-                                                  ),
-                                                  Text( 'bookService.chat'.tr(),
-                                                    style: getPrimarySemiBoldStyle(
-                                                      fontSize: 12,
-                                                      color:
-                                                      const Color(0xff4100E3),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      const Gap(20),
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Divider(
+                                          color: Color(0xffD4D6DD),
+                                          thickness: 1,
+                                          height: 5,
+                                        ),
+                                      ),
+
+                                      PaymentMethod(
+                                        fromWhere: 'book a service',
+                                        jobsViewModel: jobsViewModel,
+                                        paymentViewModel: paymentViewModel,
+                                        payment_method: paymentViewModel
+                                            .paymentList,
+                                        role: Constants.customerRoleId,
+                                      ),
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Divider(
+                                          color: Color(0xffD4D6DD),
+                                          thickness: 1,
+                                          height: 5,
+                                        ),
+                                      ),
+                                      const Gap(20),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: context.appValues.appPadding
+                                              .p20,
+                                          vertical: context.appValues.appPadding.p0,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'bookService.unitPrice'.tr(),
+                                              style: getPrimaryRegularStyle(
+                                                fontSize: 14,
+                                                color: context
+                                                    .resources.color.btnColorBlue,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                          padding: const EdgeInsets.only(
+                                              right: 20.0, left: 20.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.symmetric(),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  _getUnitPrice(profileViewModel),
+                                                  style: getPrimaryRegularStyle(
+                                                      color: context.resources.color
+                                                          .secondColorBlue,
+                                                      fontSize: 14),
+                                                ),
+                                                // Text(
+                                                //   '/${_getType(profileViewModel)}',
+                                                //   style: getPrimaryRegularStyle(
+                                                //       color: context.resources.color
+                                                //           .secondColorBlue,
+                                                //       fontSize: 10),
+                                                // ),
+                                              ],
+                                            ),
+                                          )),
+                                      const Gap(10),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: context.appValues.appPadding
+                                              .p20,
+                                          vertical: context.appValues.appPadding.p0,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'updateJob.actualNumberOfUnits'.tr(),
+                                              style: getPrimaryRegularStyle(
+                                                fontSize: 14,
+                                                color: context
+                                                    .resources.color.btnColorBlue,
+                                              ),
+                                            ),
+                                            Consumer<JobsViewModel>(
+                                                builder: (context, jobsViewModel,
+                                                    _) {
+                                                  return CustomIncrementFieldRequest(
+                                                    index: 'number_of_units',
+                                                    editable: isLumpsum
+                                                        ? false
+                                                        : true,
+                                                    value: _matchingRate != null
+                                                        ? '${_matchingRate['minimum_order']}'
+                                                        : '0',
+                                                    // hintText: 'Job Type',
+                                                    viewModel: jobsViewModel
+                                                        .setInputValues,
+                                                  );
+                                                }),
+                                          ],
+                                        ),
+                                      ),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.only(
+                                      //       right: 40.0, left: 40.0),
+                                      //   child: Consumer<JobsViewModel>(
+                                      //       builder: (context, jobsViewModel, _) {
+                                      //     return CustomIncrementFieldRequest(
+                                      //       index: 'number_of_units',
+                                      //       editable: isLumpsum ? false : true,
+                                      //       value: _matchingRate != null
+                                      //           ? '${_matchingRate['minimum_order']}'
+                                      //           : '0',
+                                      //       // hintText: 'Job Type',
+                                      //       viewModel: jobsViewModel.setInputValues,
+                                      //     );
+                                      //   }),
+                                      // ),
+                                      const Gap(10),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: context.appValues.appPadding
+                                              .p20,
+                                          vertical: context.appValues.appPadding.p0,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              'home_screen.totalPrice'.tr(),
+                                              style: getPrimaryRegularStyle(
+                                                fontSize: 14,
+                                                color: context
+                                                    .resources.color.btnColorBlue,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: context.appValues.appPadding
+                                              .p20,
+                                          vertical: context.appValues.appPadding.p0,
+                                        ),
+                                        child: Row(
+                                          children: [
+                                            Text(
+                                              _getServiceRate(
+                                                  profileViewModel, jobsViewModel),
+                                              style: getPrimarySemiBoldStyle(
+                                                color: const Color(0xff4100E3),
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      const Gap(20),
+                                      const Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 20),
+                                        child: Divider(
+                                          color: Color(0xffD4D6DD),
+                                          thickness: 1,
+                                          height: 5,
+                                        ),
+                                      ),
+                                      const Gap(10),
+                                      Container(
+                                        height: context.appValues.appSizePercent.h8,
+                                        width: context.appValues.appSizePercent
+                                            .w100,
+                                        color: Colors.transparent,
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical:
+                                              context.appValues.appPadding.p10,
+                                              horizontal:
+                                              context.appValues.appPadding.p15),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              SizedBox(
+                                                width: context
+                                                    .appValues.appSizePercent.w57,
+                                                height: context
+                                                    .appValues.appSizePercent.h100,
+                                                child: ElevatedButton(
+                                                  onPressed: isLoading ? null :  () async {
+                                                    setState(() {
+                                                      isLoading = true;
+                                                    });
+                                                    if (await jobsViewModel
+                                                        .requestService() ==
+                                                        true) {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                        context) =>
+                                                            _buildPopupDialog(
+                                                                context),
+                                                      );
+                                                    } else {
+                                                      if (jobsViewModel.getjobsBody[
+                                                      'tap_payments_card'] ==
+                                                          null) {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                          context) =>
+                                                              _buildPopupDialogNo(
+                                                                  context, 'button.pleaseProvidePaymentCard'.tr()),
+                                                        );
+                                                      } else {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext
+                                                          context) =>
+                                                              _buildPopupDialogNo(
+                                                                  context,'${'button.somethingWentWrong'.tr()}\n${jobsViewModel.errorMessage}'),
+                                                        );
+                                                      }
+                                                    }
+                                                    setState(() {
+                                                      isLoading = false;
+                                                    });
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                    const Color(0xff4100E3),
+                                                    shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                      BorderRadius.circular(12),
                                                     ),
                                                   ),
-                                                ],
+                                                  child: isLoading
+                                                      ? SizedBox(
+                                                    width: 20,
+                                                    height: 20,
+                                                    child: CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                      strokeWidth: 2,
+                                                    ),
+                                                  )
+                                                      :Text( 'bookService.requestService'.tr(),
+                                                    style: getPrimarySemiBoldStyle(
+                                                      fontSize: 12,
+                                                      color: context
+                                                          .resources.color
+                                                          .colorWhite,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
-                                            ),
+                                              SizedBox(
+                                                width: context
+                                                    .appValues.appSizePercent.w31,
+                                                height: context
+                                                    .appValues.appSizePercent.h100,
+                                                child: ElevatedButton(
+                                                  onPressed: () {
+                                                    jobsViewModel.launchWhatsApp();
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                    elevation: 0,
+                                                    backgroundColor: Colors
+                                                        .transparent,
+                                                    shape: RoundedRectangleBorder(
+                                                      side: const BorderSide(
+                                                        color: Color(0xff4100E3),
+                                                        width: 1.5,
+                                                      ),
+                                                      borderRadius:
+                                                      BorderRadius.circular(12),
+                                                    ),
+                                                  ),
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment.spaceBetween,
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                        'assets/img/support-icon.svg',
+                                                      ),
+                                                      Text( 'bookService.chat'.tr(),
+                                                        style: getPrimarySemiBoldStyle(
+                                                          fontSize: 12,
+                                                          color:
+                                                          const Color(0xff4100E3),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  const Gap(20),
-                                ],
-                              );
-                            }),
-                      );
-                    }),
-              ],
+                                      const Gap(20),
+                                    ],
+                                  );
+                                }),
+                          );
+                        }),
+                  ],
+                ),
+              ),
             ),
           );
         });

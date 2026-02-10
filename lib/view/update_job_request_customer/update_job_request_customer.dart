@@ -135,9 +135,9 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
             ],
           ),
           DraggableScrollableSheet(
-              initialChildSize: 0.85,
+              initialChildSize: 0.87,
               minChildSize: 0.85,
-              maxChildSize: 1,
+              maxChildSize: 0.90,
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return Container(

@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
             DraggableScrollableSheet(
                 initialChildSize: 0.62,
                 minChildSize: 0.62,
-                maxChildSize: 1,
+                maxChildSize: 0.87,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return RefreshIndicator(

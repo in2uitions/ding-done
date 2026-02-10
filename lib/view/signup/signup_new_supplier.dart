@@ -523,38 +523,69 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                 keyboardType: TextInputType.number,
               ),
 
-              const Gap(12),
 
-              /// SEND CODE TEXT BUTTON
-              if (!_otpSent && !_otpVerified)
-                GestureDetector(
-                  onTap: () async {
-                    if (!_hasValidPhone(signupViewModel)) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Please enter phone number')),
-                      );
-                      return;
-                    }
-
-                    final success = await signupViewModel.requestOtp();
-                    if (success == true) {
-                      setState(() {
-                        _otpSent = true;
-                      });
-                    }
-                  },
-                  child: Text(
-                    'Send code',
-                    style: getPrimarySemiBoldStyle(
-                      fontSize: 14,
-                      color: const Color(0xff4100E3),
-                    ),
-                  ),
-                ),
             ],
           ),
         ),
 
+
+        // const Gap(30),
+
+        /// EMAIL (unchanged)
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'formHints.email'.tr(),
+                style: getPrimarySemiBoldStyle(
+                    color: const Color(0xff180C38), fontSize: 12),
+              ),
+              const Gap(10),
+
+              CustomTextField(
+                value: signupViewModel.signUpBody['email'] ?? '',
+                index: 'email',
+                viewModel: signupViewModel.setInputValues,
+                hintText: 'formHints.email'.tr(),
+                keyboardType: TextInputType.emailAddress,
+              ),
+            ],
+          ),
+        ),
+
+        const Gap(12),
+
+        /// SEND CODE TEXT BUTTON
+        if (!_otpSent && !_otpVerified)
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
+            child: GestureDetector(
+              onTap: () async {
+                if (!_hasValidPhone(signupViewModel)) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Please enter phone number')),
+                  );
+                  return;
+                }
+
+                final success = await signupViewModel.requestOtp();
+                if (success == true) {
+                  setState(() {
+                    _otpSent = true;
+                  });
+                }
+              },
+              child: Text(
+                'Send code',
+                style: getPrimarySemiBoldStyle(
+                  fontSize: 14,
+                  color: const Color(0xff4100E3),
+                ),
+              ),
+            ),
+          ),
         /// OTP SECTION
         if (_otpSent && !_otpVerified) ...[
           const Gap(30),
@@ -606,32 +637,6 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
             ),
           ),
         ],
-
-        const Gap(30),
-
-        /// EMAIL (unchanged)
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'formHints.email'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
-              ),
-              const Gap(10),
-
-              CustomTextField(
-                value: signupViewModel.signUpBody['email'] ?? '',
-                index: 'email',
-                viewModel: signupViewModel.setInputValues,
-                hintText: 'formHints.email'.tr(),
-                keyboardType: TextInputType.emailAddress,
-              ),
-            ],
-          ),
-        ),
       ],
     );
 

@@ -656,10 +656,11 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
               //   ],
               // ),
               DraggableScrollableSheet(
+
                   initialChildSize:jobsViewModel
                       .supplierInProgressJobs.isNotEmpty && jobsViewModel.supplierOpenJobs.toString()!='null'? 0.43:0.75,
                   minChildSize: 0.43,
-                  maxChildSize: 1,
+                  maxChildSize: 0.85,
                   builder: (BuildContext context,
                       ScrollController scrollController) {
                     return  jobsViewModel.supplierOpenJobs.toString()!='null' && jobsViewModel.supplierOpenJobs.isNotEmpty ?
