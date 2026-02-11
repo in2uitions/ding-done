@@ -197,7 +197,11 @@ class _SignUpNewState extends State<SignUpNew> {
         : const NetworkImage(
             'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
           );
-
+    final hasLocation =
+        signupViewModel.getSignUpBody['latitude'] != null &&
+            signupViewModel.getSignUpBody['latitude'].toString().isNotEmpty &&
+            signupViewModel.getSignUpBody['longitude'] != null &&
+            signupViewModel.getSignUpBody['longitude'].toString().isNotEmpty;
     // ─────────────────────────────────────────────
     // PAGE 1: PERSONAL INFORMATION (Same as Onboarding)
     // ─────────────────────────────────────────────
@@ -354,83 +358,6 @@ class _SignUpNewState extends State<SignUpNew> {
         ),
 
 
-        /// SEND CODE
-        if (!_otpSent && !_otpVerified)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GestureDetector(
-              onTap: () async {
-                if (!_hasValidPhone(signupViewModel)) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please enter phone number')),
-                  );
-                  return;
-                }
-
-                final success = await signupViewModel.requestOtp();
-                if (success == true) {
-                  setState(() {
-                    _otpSent = true;
-                  });
-                }
-              },
-              child: Text(
-                'Send code',
-                style: getPrimarySemiBoldStyle(
-                  fontSize: 14,
-                  color: const Color(0xff4100E3),
-                ),
-              ),
-            ),
-          ),
-
-        /// OTP SECTION
-        if (_otpSent && !_otpVerified) ...[
-          const Gap(30),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Text(
-              'Enter the 4-digit OTP code',
-              style: getPrimaryRegularStyle(
-                  fontSize: 14, color: const Color(0xFF8F9098)),
-            ),
-          ),
-
-          const Gap(20),
-
-          _buildOtpInput(),
-
-          const Gap(20),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                "Didn't receive OTP? ",
-                style: getPrimaryRegularStyle(
-                    fontSize: 14, color: const Color(0xFF8F9098)),
-              ),
-              GestureDetector(
-                onTap: _resending
-                    ? null
-                    : () async {
-                  setState(() => _resending = true);
-                  await signupViewModel.requestOtp();
-                  setState(() => _resending = false);
-                },
-                child: Text(
-                  'Resend',
-                  style: getPrimarySemiBoldStyle(
-                    fontSize: 14,
-                    color: const Color(0xff4100E3),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
-        const Gap(12),
         // Email Field
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
@@ -457,9 +384,107 @@ class _SignUpNewState extends State<SignUpNew> {
                     .signUpErrors[context.resources.strings.formKeys['email']!],
                 keyboardType: TextInputType.emailAddress,
               ),
+
             ],
+
           ),
         ),
+        const Gap(12),
+
+        /// SEND CODE TEXT BUTTON
+        if (!_otpSent && !_otpVerified)
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+            child: SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  backgroundColor: const Color(0xff4100E3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () async {
+                  if (!_hasValidPhone(signupViewModel)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please enter phone number')),
+                    );
+                    return;
+                  }
+
+                  final success = await signupViewModel.requestOtp();
+                  if (success == true) {
+                    setState(() {
+                      _otpSent = true;
+                    });
+                  }
+                },
+                child: Text(
+                  'Send Code',
+                  style: getPrimarySemiBoldStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        /// OTP SECTION
+        if (_otpSent && !_otpVerified) ...[
+          const Gap(30),
+
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Enter the 4-digit OTP code',
+                  style: getPrimaryRegularStyle(
+                      fontSize: 14, color: const Color(0xFF8F9098)),
+                ),
+                const Gap(20),
+
+                _buildOtpInput(),
+
+                const Gap(20),
+
+                /// RESEND
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Didn't receive OTP? ",
+                      style: getPrimaryRegularStyle(
+                          fontSize: 14, color: const Color(0xFF8F9098)),
+                    ),
+                    GestureDetector(
+                      onTap: _resending
+                          ? null
+                          : () async {
+                        setState(() => _resending = true);
+                        await signupViewModel.requestOtp();
+                        setState(() => _resending = false);
+                      },
+                      child: Text(
+                        'Resend',
+                        style: getPrimarySemiBoldStyle(
+                          fontSize: 14,
+                          color: const Color(0xff4100E3),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+
+
       ],
     );
 
@@ -723,18 +748,32 @@ class _SignUpNewState extends State<SignUpNew> {
           ),
         ),
         // Address fields (same as the old UI)
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.street_number'.tr(),
-                style: getPrimarySemiBoldStyle(
-                  color: const Color(0xff180C38),
-                  fontSize: 12,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'formHints.street_number'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                      color: const Color(0xff180C38),
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -750,19 +789,33 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.building_number'.tr(),
-                style: getPrimarySemiBoldStyle(
-                  color: const Color(0xff180C38),
-                  fontSize: 12,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'formHints.building_number'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                      color: const Color(0xff180C38),
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -778,19 +831,33 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-              'formHints.floor'.tr(),
-                style: getPrimarySemiBoldStyle(
-                  color: const Color(0xff180C38),
-                  fontSize: 12,
-                ),
+              Row(
+                children: [
+                  Text(
+                  'formHints.floor'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                      color: const Color(0xff180C38),
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -806,19 +873,33 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-               'formHints.apartment_number'.tr(),
-                style: getPrimarySemiBoldStyle(
-                  color: const Color(0xff180C38),
-                  fontSize: 12,
-                ),
+              Row(
+                children: [
+                  Text(
+                   'formHints.apartment_number'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                      color: const Color(0xff180C38),
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -834,19 +915,33 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.city'.tr(),
-                style: getPrimarySemiBoldStyle(
-                  color: const Color(0xff180C38),
-                  fontSize: 12,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'formHints.city'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                      color: const Color(0xff180C38),
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -862,19 +957,33 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.zone'.tr(),
-                style: getPrimarySemiBoldStyle(
-                  color: const Color(0xff180C38),
-                  fontSize: 12,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'formHints.zone'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                      color: const Color(0xff180C38),
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -890,19 +999,33 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.address_label'.tr(),
-                style: getPrimarySemiBoldStyle(
-                  color: const Color(0xff180C38),
-                  fontSize: 12,
-                ),
+              Row(
+                children: [
+                  Text(
+                    'formHints.address_label'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                      color: const Color(0xff180C38),
+                      fontSize: 12,
+                    ),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -918,7 +1041,7 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
             ],
           ),
-        ),
+        ):Container(),
       ],
     );
 
@@ -1124,6 +1247,7 @@ class _SignUpNewState extends State<SignUpNew> {
                       ),
                     ),
                     // Fixed bottom button.
+                    if (_currentStep != 1 || (_currentStep == 1 && _otpVerified))
                     Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: SizedBox(

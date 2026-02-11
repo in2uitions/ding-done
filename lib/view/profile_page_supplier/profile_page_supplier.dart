@@ -167,7 +167,7 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
               DraggableScrollableSheet(
                 initialChildSize: 0.60,
                 minChildSize: 0.60,
-                maxChildSize: 0.87,
+                maxChildSize: 0.60,
                 builder:
                     (BuildContext context, ScrollController scrollController) {
                   return RefreshIndicator(

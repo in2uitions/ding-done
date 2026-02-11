@@ -564,6 +564,12 @@
     "city": "Πόλη",
     "zone": "Ζώνη",
     "address_label": "ετικέτα διεύθυνσης",
+    "select_address": "Επιλέξτε την τοποθεσία σας στον χάρτη",
+    "apartment_company": "Διαμέρισμα / Όνομα εταιρείας",
+    "street_name": "Όνομα Οδού",
+    "floor_number": "Αριθμός Ορόφου",
+    "building_name": "Όνομα Κτιρίου",
+
     "area": "Περιοχή"
   },
   "forgotPassword": {

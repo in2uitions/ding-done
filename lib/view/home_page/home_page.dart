@@ -1010,7 +1010,7 @@ class _HomePageState extends State<HomePage> {
                       ? DraggableScrollableSheet(
                           initialChildSize: 0.75,
                           minChildSize: 0.75,
-                          maxChildSize: 0.93,
+                          maxChildSize: 0.75,
                           builder: (BuildContext context,
                               ScrollController scrollController) {
                             return Container(

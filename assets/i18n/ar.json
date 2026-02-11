@@ -560,6 +560,12 @@
     "city": "المدينة",
     "zone": "المنطقة",
     "address_label": "تسمية العنوان",
+    "select_address": "حدد موقعك على الخريطة",
+    "apartment_company": "اسم الشقة / الشركة",
+    "street_name": "اسم الشارع",
+    "floor_number": "رقم الطابق",
+    "building_name": "اسم المبنى",
+
     "area": "المنطقة"
   },
   "forgotPassword": {

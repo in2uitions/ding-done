@@ -660,7 +660,7 @@ class _HomePageSupplierState extends State<HomePageSupplier> {
                   initialChildSize:jobsViewModel
                       .supplierInProgressJobs.isNotEmpty && jobsViewModel.supplierOpenJobs.toString()!='null'? 0.43:0.75,
                   minChildSize: 0.43,
-                  maxChildSize: 0.85,
+                  maxChildSize: 0.75,
                   builder: (BuildContext context,
                       ScrollController scrollController) {
                     return  jobsViewModel.supplierOpenJobs.toString()!='null' && jobsViewModel.supplierOpenJobs.isNotEmpty ?

@@ -442,7 +442,7 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
               DraggableScrollableSheet(
                 initialChildSize: 0.85,
                 minChildSize: 0.85,
-                maxChildSize: 0.89,
+                maxChildSize: 0.85,
                 builder: (context, scrollController) {
                   return RefreshIndicator(
                     onRefresh: _handleRefresh,

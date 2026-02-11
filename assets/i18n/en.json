@@ -552,9 +552,14 @@
     "floor": "Floor",
     "apartment_number": "Apartment number",
     "apartment": "Apartment",
+    "apartment_company": "Apartment / Company Name",
+    "street_name": "Street Name",
+    "floor_number": "Floor Number",
+    "building_name": "Building Name",
     "city": "City",
     "zone": "Zone",
     "address_label": "Address Label",
+    "select_address": "Select your location on the map",
     "area": "Area"
   },
   "forgotPassword": {

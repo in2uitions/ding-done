@@ -235,7 +235,11 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   Widget build(BuildContext context) {
     // Access the view models.
     final signupViewModel = Provider.of<SignUpViewModel>(context);
-    final servicesViewModel = Provider.of<ServicesViewModel>(context);
+    final hasLocation =
+        signupViewModel.getSignUpBody['latitude'] != null &&
+            signupViewModel.getSignUpBody['latitude'].toString().isNotEmpty &&
+            signupViewModel.getSignUpBody['longitude'] != null &&
+            signupViewModel.getSignUpBody['longitude'].toString().isNotEmpty;
 
     // Prepare image previews.
     dynamic profileImageWidget = profileImage['image'] != null
@@ -560,32 +564,45 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
         /// SEND CODE TEXT BUTTON
         if (!_otpSent && !_otpVerified)
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: GestureDetector(
-              onTap: () async {
-                if (!_hasValidPhone(signupViewModel)) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Please enter phone number')),
-                  );
-                  return;
-                }
+            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+            child: SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  backgroundColor: const Color(0xff4100E3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: () async {
+                  if (!_hasValidPhone(signupViewModel)) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('Please enter phone number')),
+                    );
+                    return;
+                  }
 
-                final success = await signupViewModel.requestOtp();
-                if (success == true) {
-                  setState(() {
-                    _otpSent = true;
-                  });
-                }
-              },
-              child: Text(
-                'Send code',
-                style: getPrimarySemiBoldStyle(
-                  fontSize: 14,
-                  color: const Color(0xff4100E3),
+                  final success = await signupViewModel.requestOtp();
+                  if (success == true) {
+                    setState(() {
+                      _otpSent = true;
+                    });
+                  }
+                },
+                child: Text(
+                  'Send Code',
+                  style: getPrimarySemiBoldStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
           ),
+
         /// OTP SECTION
         if (_otpSent && !_otpVerified) ...[
           const Gap(30),
@@ -859,15 +876,29 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
           ),
         ),
         // Address fields.
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.street_number'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
+              Row(
+                children: [
+                  Text(
+                    'formHints.street_number'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                        color: const Color(0xff180C38), fontSize: 12),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -883,16 +914,30 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-               'formHints.building_number'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
+              Row(
+                children: [
+                  Text(
+                   'formHints.building_number'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                        color: const Color(0xff180C38), fontSize: 12),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -908,16 +953,30 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.floor'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
+              Row(
+                children: [
+                  Text(
+                    'formHints.floor'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                        color: const Color(0xff180C38), fontSize: 12),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -933,16 +992,30 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.apartment_number'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
+              Row(
+                children: [
+                  Text(
+                    'formHints.apartment_number'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                        color: const Color(0xff180C38), fontSize: 12),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -958,16 +1031,30 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.city'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
+              Row(
+                children: [
+                  Text(
+                    'formHints.city'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                        color: const Color(0xff180C38), fontSize: 12),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -983,16 +1070,30 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-               'formHints.zone'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
+              Row(
+                children: [
+                  Text(
+                   'formHints.zone'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                        color: const Color(0xff180C38), fontSize: 12),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -1008,16 +1109,30 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
             ],
           ),
-        ),
+        ):Container(),
+        hasLocation?
         Padding(
           padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.address_label'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
+              Row(
+                children: [
+                  Text(
+                    'formHints.address_label'.tr(),
+                    style: getPrimarySemiBoldStyle(
+                        color: const Color(0xff180C38), fontSize: 12),
+                  ),
+                  const SizedBox(width: 4),
+                  const Text(
+                    '*',
+                    style: TextStyle(
+                      color: Colors.red,
+                      fontSize: 12,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
               ),
               const Gap(10),
               CustomTextField(
@@ -1033,7 +1148,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
             ],
           ),
-        ),
+        ):Container(),
       ],
     );
 
@@ -1225,109 +1340,56 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                       ),
                     ),
                     // Fixed bottom Next/Complete button.
-                    Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: SizedBox(
-                        width: double.infinity,
-                        height: 50,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            elevation: 0,
-                            shadowColor: Colors.transparent,
-                            backgroundColor: const Color(0xff4100E3),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+
+                    if (_currentStep != 1 || (_currentStep == 1 && _otpVerified))
+                      Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              elevation: 0,
+                              shadowColor: Colors.transparent,
+                              backgroundColor: const Color(0xff4100E3),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(12),
+                              ),
                             ),
-                          ),
-                          // onPressed: () async {
-                          //   if (_currentStep < pages.length - 1) {
-                          //     if (await signupViewModel.validate(
-                          //         index: _currentStep)) {
-                          //       setState(() {
-                          //         _currentStep++;
-                          //       });
-                          //     } else {
-                          //       ScaffoldMessenger.of(context).showSnackBar(
-                          //         const SnackBar(
-                          //             content: Text(
-                          //                 'Please fill in all required fields')),
-                          //       );
-                          //     }
-                          //   } else {
-                          //     if (await signupViewModel.validate(
-                          //         index: _currentStep)) {
-                          //       ScaffoldMessenger.of(context).showSnackBar(
-                          //         const SnackBar(
-                          //             content: Text('Sign Up Complete!')),
-                          //       );
-                          //       Navigator.of(context).push(
-                          //         MaterialPageRoute(
-                          //           builder: (context) =>
-                          //               SupplierAgreement(index: _currentStep),
-                          //         ),
-                          //       );
-                          //     } else {
-                          //       ScaffoldMessenger.of(context).showSnackBar(
-                          //         const SnackBar(
-                          //             content: Text(
-                          //                 'Please fill in all required fields')),
-                          //       );
-                          //     }
-                          //   }
-                          // },
-                          onPressed: () async {
-                            final isValidForm =
-                            await signupViewModel.validate(index: _currentStep);
+                            onPressed: () async {
+                              final isValidForm =
+                              await signupViewModel.validate(index: _currentStep);
 
-                            // STEP 2 (Contact Information)
-                            if (_currentStep == 1) {
-                              if (!_otpSent) {
+                              if (!isValidForm) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Please request OTP')),
+                                  const SnackBar(
+                                      content: Text('Please fill in all required fields')),
                                 );
                                 return;
                               }
 
-                              if (!_isOtpValid(signupViewModel)) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(content: Text('Invalid OTP')),
+                              if (_currentStep < pages.length - 1) {
+                                setState(() => _currentStep++);
+                              } else {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        SupplierAgreement(index: _currentStep),
+                                  ),
                                 );
-                                return;
                               }
-                            }
-
-                            if (!isValidForm) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(content: Text('Please fill in all required fields')),
-                              );
-                              return;
-                            }
-
-                            // Move forward
-                            if (_currentStep < pages.length - 1) {
-                              setState(() => _currentStep++);
-                            } else {
-                              // ScaffoldMessenger.of(context).showSnackBar(
-                              //   const SnackBar(content: Text('Sign Up Complete!')),
-                              // );
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => SupplierAgreement(index: _currentStep),
-                                ),
-                              );
-                            }
-                          },
-
-                          child: Text(
-                            _currentStep == pages.length - 1
-                                ? "Complete"
-                                : "Next",
-                            style: getPrimarySemiBoldStyle(
-                                fontSize: 16, color: Colors.white),
+                            },
+                            child: Text(
+                              _currentStep == pages.length - 1
+                                  ? "Complete"
+                                  : "Next",
+                              style: getPrimarySemiBoldStyle(
+                                  fontSize: 16, color: Colors.white),
+                            ),
                           ),
                         ),
                       ),
-                    ),
+
                   ],
                 ),
               );

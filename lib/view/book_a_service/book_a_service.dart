@@ -507,7 +507,7 @@ getPayment() async{
                     DraggableScrollableSheet(
                         initialChildSize: 0.90,
                         minChildSize: 0.9,
-                        maxChildSize: 0.95,
+                        maxChildSize: 0.90,
                         builder: (context, scrollController) {
                           return Container(
                             decoration: const BoxDecoration(

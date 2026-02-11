@@ -562,6 +562,12 @@
     "city": "Город",
     "zone": "Зона",
     "address_label": "адресная метка",
+    "select_address": "Выберите свое местоположение на карте",
+    "apartment_company": "Квартира / Название компании",
+    "street_name": "Название улицы",
+    "floor_number": "Номер этажа",
+    "building_name": "Название здания",
+
     "area": "Регион"
   },
   "forgotPassword": {

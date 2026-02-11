@@ -85,7 +85,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           DraggableScrollableSheet(
             initialChildSize: 0.85,
             minChildSize: 0.85,
-            maxChildSize: 0.87,
+            maxChildSize: 0.85,
             builder: (BuildContext context, ScrollController scrollController) {
               return FutureBuilder(
                   future: Provider.of<JobsViewModel>(context, listen: false)

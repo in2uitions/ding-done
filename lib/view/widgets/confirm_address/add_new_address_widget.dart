@@ -26,7 +26,15 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
   Widget build(BuildContext context) {
     return Consumer3<JobsViewModel, ProfileViewModel, SignUpViewModel>(builder:
         (context, jobsViewModel, profileViewModel, signupViewModel, _) {
-      return Padding(
+          final jobsViewModel = Provider.of<JobsViewModel>(context);
+
+          final hasLocation =
+              jobsViewModel.getjobsBody['latitude'] != null &&
+                  jobsViewModel.getjobsBody['latitude'].toString().isNotEmpty &&
+                  jobsViewModel.getjobsBody['longitude'] != null &&
+                  jobsViewModel.getjobsBody['longitude'].toString().isNotEmpty;
+
+          return Padding(
         padding: EdgeInsets.fromLTRB(
           context.appValues.appPadding.p0,
           context.appValues.appPadding.p20,
@@ -238,8 +246,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                     );
                   },
                   child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: context.appValues.appPadding.p20),
+                    padding: EdgeInsets.only(
+                        left: context.appValues.appPadding.p20),
                     child: SizedBox(
                       height: 180,
                       child: Stack(
@@ -442,24 +450,50 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                   style: const TextStyle(color: Colors.red),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
+                child:  Text(
+                  'formHints.select_address'.tr(),
+                  style: getPrimaryRegularStyle(
+                    fontSize: 12,
+                    color: const Color(0xff2F3036),
+                  ),
+                ),
+              ),
+            hasLocation?
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'formHints.area'.tr(),
-                    style: getPrimaryRegularStyle(
-                      fontSize: 12,
-                      color: const Color(0xff2F3036),
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'formHints.country'.tr(),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 12,
+                          color: const Color(0xff2F3036),
+                        ),
+                      ),
+                        const SizedBox(width: 4),
+                        const Text(
+                          '*',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                    ],
                   ),
                   const Gap(5),
+
                   CustomDropDown(
                     value: jobsViewModel.getjobsBody["country"] ?? '',
                     index: 'country',
                     viewModel: jobsViewModel.setInputValues,
-                    hintText: 'formHints.area'.tr(),
+                    hintText: 'formHints.country'.tr(),
                     validator: (val) => jobsViewModel.jobsAddressError[
                         context.resources.strings.formKeys['country']!],
                     errorText: jobsViewModel.jobsAddressError[
@@ -473,18 +507,33 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                   ),
                 ],
               ),
-            ),
+            ):Container(),
+            hasLocation?
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 20, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Street Name',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 12,
-                      color: const Color(0xff2F3036),
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'formHints.street_name'.tr(),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 12,
+                          color: const Color(0xff2F3036),
+                        ),
+          ),
+                        const SizedBox(width: 4),
+                        const Text(
+                          '*',
+                          style: TextStyle(
+                            color: Colors.red,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                    ],
                   ),
                   const Gap(5),
                   CustomTextField(
@@ -499,7 +548,8 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       keyboardType: TextInputType.text),
                 ],
               ),
-            ),
+            ):Container(),
+            hasLocation?
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Row(
@@ -509,12 +559,25 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Building Name',
-                          style: getPrimaryRegularStyle(
-                            fontSize: 12,
-                            color: const Color(0xff2F3036),
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              'formHints.building_name'.tr(),
+                              style: getPrimaryRegularStyle(
+                                fontSize: 12,
+                                color: const Color(0xff2F3036),
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            const Text(
+                              '*',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                         const Gap(5),
                         CustomTextField(
@@ -541,12 +604,25 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Floor Number',
-                          style: getPrimaryRegularStyle(
-                            fontSize: 12,
-                            color: const Color(0xff2F3036),
-                          ),
+                        Row(
+                          children: [
+                            Text(
+                              'formHints.floor_number'.tr(),
+                              style: getPrimaryRegularStyle(
+                                fontSize: 12,
+                                color: const Color(0xff2F3036),
+                              ),
+                            ),
+                            const SizedBox(width: 4),
+                            const Text(
+                              '*',
+                              style: TextStyle(
+                                color: Colors.red,
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
                         const Gap(5),
                         CustomTextField(
@@ -564,7 +640,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                   ),
                 ],
               ),
-            ),
+            ):Container(),
             // Padding(
             //   padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
             //   child: Column(
@@ -591,17 +667,31 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
             //     ],
             //   ),
             // ),
+            hasLocation?
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Apartment / Company Name',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 12,
-                      color: const Color(0xff2F3036),
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'formHints.apartment_company'.tr(),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 12,
+                          color: const Color(0xff2F3036),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Text(
+                        '*',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   const Gap(5),
                   CustomTextField(
@@ -617,7 +707,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       keyboardType: TextInputType.text),
                 ],
               ),
-            ),
+            ):Container(),
             // FutureBuilder(
             //     future: Provider.of<SignUpViewModel>(context,
             //             listen: false)
@@ -625,17 +715,31 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
             //     builder: (context, AsyncSnapshot data) {
             //
             //         return
+            hasLocation?
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'formHints.city'.tr(),
-                    style: getPrimaryRegularStyle(
-                      fontSize: 12,
-                      color: const Color(0xff2F3036),
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'formHints.city'.tr(),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 12,
+                          color: const Color(0xff2F3036),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Text(
+                        '*',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   const Gap(5),
                   CustomTextField(
@@ -650,18 +754,32 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       keyboardType: TextInputType.text),
                 ],
               ),
-            ),
+            ):Container(),
+            hasLocation?
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'Zone',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 12,
-                      color: const Color(0xff2F3036),
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'Zone',
+                        style: getPrimaryRegularStyle(
+                          fontSize: 12,
+                          color: const Color(0xff2F3036),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Text(
+                        '*',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   const Gap(5),
                   CustomTextField(
@@ -676,18 +794,32 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       keyboardType: TextInputType.text),
                 ],
               ),
-            ),
+            ):Container(),
+            hasLocation?
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    'formHints.address_label'.tr(),
-                    style: getPrimaryRegularStyle(
-                      fontSize: 12,
-                      color: const Color(0xff2F3036),
-                    ),
+                  Row(
+                    children: [
+                      Text(
+                        'formHints.address_label'.tr(),
+                        style: getPrimaryRegularStyle(
+                          fontSize: 12,
+                          color: const Color(0xff2F3036),
+                        ),
+                      ),
+                      const SizedBox(width: 4),
+                      const Text(
+                        '*',
+                        style: TextStyle(
+                          color: Colors.red,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                   const Gap(5),
                   CustomTextField(
@@ -702,7 +834,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       keyboardType: TextInputType.text),
                 ],
               ),
-            ),
+            ):Container(),
             // FutureBuilder(
             //     future: Provider.of<SignUpViewModel>(context,
             //             listen: false)

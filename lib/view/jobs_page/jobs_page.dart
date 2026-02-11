@@ -336,7 +336,7 @@ class _JobsPageState extends State<JobsPage> {
           DraggableScrollableSheet(
               initialChildSize: 0.8,
               minChildSize: 0.8,
-              maxChildSize: 0.85,
+              maxChildSize: 0.8,
               builder:
                   (BuildContext context, ScrollController scrollController) {
                 return RefreshIndicator(
