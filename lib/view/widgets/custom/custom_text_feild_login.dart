@@ -21,8 +21,13 @@ class CustomTextFieldLogin extends StatefulWidget {
     this.onFieldSubmitted,
     this.onChanged,
     this.onTap,
+    this.controller,
+    this.autofillHints,
+
     this.keyboardType = TextInputType.text,
   });
+  final TextEditingController? controller;
+  final List<String>? autofillHints;
 
   final dynamic viewModel;
   final String? value;
@@ -48,30 +53,30 @@ class _CustomTextFieldLoginState extends State<CustomTextFieldLogin> {
   final GlobalKey<FormFieldState<String>> globalKey =
       GlobalKey<FormFieldState<String>>();
   bool obscureText = true;
-  final TextEditingController _customController = TextEditingController();
+  late TextEditingController _customController;
 
   @override
   void initState() {
-    _customController.text = widget.value ?? '';
-    _customController.addListener(() {
-      // if (widget.tag == '') {
-      widget.viewModel(index: widget.index, value: _customController.text);
-      // } else {
-      //   widget.viewModel(
-      //       index: widget.index,
-      //       value: _customController.text,
-      //       arrayIndex: widget.arrayIndex,
-      //       tag: widget.tag);
-      // }
-    });
     super.initState();
+
+    _customController =
+        widget.controller ?? TextEditingController(text: widget.value ?? '');
+
+    _customController.addListener(() {
+      widget.viewModel(
+        index: widget.index,
+        value: _customController.text,
+      );
+    });
   }
+
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      cursorColor: const Color(0xffB4B4B4),
       controller: _customController,
+      autofillHints: widget.autofillHints,
+      cursorColor: const Color(0xffB4B4B4),
       textAlignVertical: TextAlignVertical.center,
       obscureText: widget.hintText == "Password" ? obscureText : false,
       validator: widget.hintText == 'paymentMethod.cardNumber'.tr()

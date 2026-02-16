@@ -18,6 +18,7 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -36,6 +37,11 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+
+
   @override
   void initState() {
     super.initState();
@@ -43,17 +49,18 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> getCredentials() async {
-    // email = await AppPreferences().get(key: userEmailKey, isModel: false);
-    // password = await AppPreferences().get(key: userPasswordKey, isModel: false);
-    setState(() async {
-      email = await AppPreferences().get(key: userEmailKey, isModel: false);
-      password =
-          await AppPreferences().get(key: userPasswordKey, isModel: false);
-    });
-    debugPrint('email $email and password $password');
+    final savedEmail =
+    await AppPreferences().get(key: userEmailKey, isModel: false);
+    final savedPassword =
+    await AppPreferences().get(key: userPasswordKey, isModel: false);
+
     setState(() {
-      // Update the state with retrieved values
+      email = savedEmail;
+      password = savedPassword;
       _isChecked = email != null && password != null;
+
+      _emailController.text = email ?? '';
+      _passwordController.text = password ?? '';
     });
   }
 
@@ -209,213 +216,229 @@ class _LoginScreenState extends State<LoginScreen> {
                                           categoriesViewModel,
                                           jobsViewModel,
                                           error) {
-                                    return Column(
-                                      children: [
-                                        Text(
-                                              'login_screen.signInToYourAccount'.tr(),
-                                          style: getPrimarySemiBoldStyle(
-                                            fontSize: 16,
-                                            color: const Color(0xff180B3C),
-                                          ),
-                                        ),
-                                        const Gap(10),
-                                        CustomTextFieldLogin(
-                                          viewModel:
-                                              loginViewModel.setInputValues,
-                                          index: context.resources.strings
-                                              .formKeys['email']!,
-                                          // hintText: context
-                                          //     .resources.strings.formHints['email_address']!,
-                                          hintText:
-                                              'formHints.email'.tr(),
-                                          validator: (val) =>
-                                              loginViewModel.loginErrors[context
-                                                  .resources
-                                                  .strings
-                                                  .formKeys['email']!],
-                                          errorText: loginViewModel.loginErrors[
-                                              context.resources.strings
-                                                  .formKeys['email']!],
-                                          keyboardType:
-                                              TextInputType.emailAddress,
-                                          value: email ?? '',
-                                        ),
-                                        const Gap(15),
-                                        CustomTextFieldLogin(
-                                          viewModel:
-                                              loginViewModel.setInputValues,
-                                          index: context.resources.strings
-                                              .formKeys['password']!,
-                                          // hintText: context
-                                          //     .resources.strings.formHints['password']!,
-                                          hintText:
-                                             'formHints.password'.tr(),
-                                          errorText: loginViewModel.loginErrors[
-                                              context.resources.strings
-                                                  .formKeys['password']!],
-                                          keyboardType:
-                                              TextInputType.visiblePassword,
-                                          value: password ?? '',
-                                        ),
-                                        const Gap(10),
-                                        loginViewModel.errorMsg != null
-                                            ? Text(
-                                                loginViewModel.errorMsg,
-                                                style: getPrimaryRegularStyle(
-                                                    color: context
-                                                        .resources
-                                                        .color
-                                                        .colorText['red']),
-                                              )
-                                            : Container(),
-                                        SizedBox(
-                                            height:
-                                                context.appValues.appSize.s10),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: SizedBox(
-                                                width: context.appValues
-                                                    .appSizePercent.w45,
-                                                child: CheckboxListTile(
-                                                  title: Text(
+                                    return AutofillGroup(
 
-                                                        'login_screen.rememberMe'.tr(),
-                                                    style:
-                                                        getPrimaryRegularStyle(
+                                    child: Column(
+                                        children: [
+                                          Text(
+                                                'login_screen.signInToYourAccount'.tr(),
+                                            style: getPrimarySemiBoldStyle(
+                                              fontSize: 16,
+                                              color: const Color(0xff180B3C),
+                                            ),
+                                          ),
+                                          const Gap(10),
+                                          CustomTextFieldLogin(
+                                            controller: _emailController,
+                                            autofillHints: const [AutofillHints.email],
+                                            viewModel: loginViewModel.setInputValues,
+                                            index: context.resources.strings.formKeys['email']!,
+                                            hintText: 'formHints.email'.tr(),
+                                            validator: (val) => loginViewModel.loginErrors[
+                                            context.resources.strings.formKeys['email']!],
+                                            errorText: loginViewModel.loginErrors[
+                                            context.resources.strings.formKeys['email']!],
+                                            keyboardType: TextInputType.emailAddress,
+                                          ),
+
+                                          const Gap(15),
+
+                                          CustomTextFieldLogin(
+                                            controller: _passwordController,
+                                            autofillHints: const [AutofillHints.password],
+                                            viewModel: loginViewModel.setInputValues,
+                                            index: context.resources.strings.formKeys['password']!,
+                                            hintText: 'formHints.password'.tr(),
+                                            errorText: loginViewModel.loginErrors[
+                                            context.resources.strings.formKeys['password']!],
+                                            keyboardType: TextInputType.visiblePassword,
+                                          ),
+                                          const Gap(10),
+                                          loginViewModel.errorMsg != null
+                                              ? Text(
+                                                  loginViewModel.errorMsg,
+                                                  style: getPrimaryRegularStyle(
+                                                      color: context
+                                                          .resources
+                                                          .color
+                                                          .colorText['red']),
+                                                )
+                                              : Container(),
+                                          SizedBox(
+                                              height:
+                                                  context.appValues.appSize.s10),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: SizedBox(
+                                                  width: context.appValues
+                                                      .appSizePercent.w45,
+                                                  child: CheckboxListTile(
+                                                    title: Text(
+
+                                                          'login_screen.rememberMe'.tr(),
+                                                      style:
+                                                          getPrimaryRegularStyle(
+                                                        fontSize: 12,
+                                                        color: const Color(
+                                                            0xff71727A),
+                                                      ),
+                                                    ),
+                                                    side: const BorderSide(
+                                                      color: Color(0xff71727A),
+                                                    ),
+                                                    contentPadding:
+                                                        EdgeInsets.zero,
+                                                    // Remove padding
+                                                    activeColor:
+                                                        const Color(0xff71727A),
+                                                    checkColor: context.resources
+                                                        .color.btnColorBlue,
+                                                    dense: true,
+                                                    // Make the tile more compact
+                                                    controlAffinity:
+                                                        ListTileControlAffinity
+                                                            .leading,
+                                                    // Checkbox before text
+                                                    visualDensity:
+                                                        const VisualDensity(
+                                                            horizontal: -4,
+                                                            vertical: -4),
+                                                    // Reduce space
+                                                    value: _isChecked,
+                                                    onChanged: (newValue) async {
+                                                        setState(() {
+                                                          _isChecked =
+                                                          newValue!;
+                                                        });
+
+                                                        if (!_isChecked) {
+                                                          AppPreferences()
+                                                              .remove(
+                                                              key: userEmailKey);
+                                                          AppPreferences()
+                                                              .remove(
+                                                              key: userPasswordKey);
+                                                        }
+
+
+
+
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+
+                                              // SizedBox(height: context.appValues.appSize.s15),
+                                              Align(
+                                                alignment: Alignment.centerRight,
+                                                child: InkWell(
+                                                  child: Text(
+
+                                                        'login_screen.forgotPassword'.tr(),
+                                                    style: getPrimaryRegularStyle(
+                                                      color:
+                                                          const Color(0xff4100E3),
                                                       fontSize: 12,
-                                                      color: const Color(
-                                                          0xff71727A),
                                                     ),
                                                   ),
-                                                  side: const BorderSide(
-                                                    color: Color(0xff71727A),
-                                                  ),
-                                                  contentPadding:
-                                                      EdgeInsets.zero,
-                                                  // Remove padding
-                                                  activeColor:
-                                                      const Color(0xff71727A),
-                                                  checkColor: context.resources
-                                                      .color.btnColorBlue,
-                                                  dense: true,
-                                                  // Make the tile more compact
-                                                  controlAffinity:
-                                                      ListTileControlAffinity
-                                                          .leading,
-                                                  // Checkbox before text
-                                                  visualDensity:
-                                                      const VisualDensity(
-                                                          horizontal: -4,
-                                                          vertical: -4),
-                                                  // Reduce space
-                                                  value: _isChecked,
-                                                  onChanged: (newValue) async {
-                                                    setState(() {
-                                                      _isChecked = newValue!;
-                                                    });
+                                                  onTap: () {
+                                                    Navigator.of(context).push(
+                                                        _createRoute(
+                                                            const ForgotPasswordScreen()));
                                                   },
                                                 ),
                                               ),
-                                            ),
-
-                                            // SizedBox(height: context.appValues.appSize.s15),
-                                            Align(
-                                              alignment: Alignment.centerRight,
-                                              child: InkWell(
-                                                child: Text(
-
-                                                      'login_screen.forgotPassword'.tr(),
-                                                  style: getPrimaryRegularStyle(
-                                                    color:
-                                                        const Color(0xff4100E3),
-                                                    fontSize: 12,
+                                            ],
+                                          ),
+                                          const Gap(25),
+                                          SizedBox(
+                                            height: 48,
+                                            width: context
+                                                .appValues.appSizePercent.w100,
+                                            child: ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor:
+                                                    const Color(0xff4100E3),
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.all(
+                                                    Radius.circular(12),
                                                   ),
                                                 ),
-                                                onTap: () {
-                                                  Navigator.of(context).push(
-                                                      _createRoute(
-                                                          const ForgotPasswordScreen()));
-                                                },
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        const Gap(25),
-                                        SizedBox(
-                                          height: 48,
-                                          width: context
-                                              .appValues.appSizePercent.w100,
-                                          child: ElevatedButton(
-                                            style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  const Color(0xff4100E3),
-                                              shape:
-                                                  const RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                  Radius.circular(12),
-                                                ),
-                                              ),
-                                            ),
-                                            onPressed: () async {
-                                              setState(() {
-                                                isLoading = true;
-                                              });
+                                              onPressed: () async {
+                                                setState(() {
+                                                  isLoading = true;
+                                                });
 
-                                              if (loginViewModel.validate()) {
-                                                if (await loginViewModel
-                                                    .login()) {
+                                                if (loginViewModel.validate()) {
                                                   if (await loginViewModel
-                                                      .isActiveUser()) {
-                                                    if (loginViewModel
-                                                        .isLoggedIn) {
-                                                      await loginViewModel
-                                                          .setCredentials();
-                                                      await categoriesViewModel
-                                                          .getCategoriesAndServices();
-                                                      await jobsViewModel
-                                                          .readJson();
-                                                      Navigator.of(context)
-                                                          .push(_createRoute(
-                                                              BottomBar(
-                                                        userRole: loginViewModel
-                                                            .userRole,
-                                                        currentTab: 0,
-                                                      )));
-                                                    } else {
-                                                      const CircularProgressIndicator();
+                                                      .login()) {
+                                                    if (_isChecked) {
+                                                      await AppPreferences().save(
+                                                          key: userEmailKey,
+                                                          value: _emailController.text,
+                                                          isModel: false);
+
+                                                      await AppPreferences().save(
+                                                          key: userPasswordKey,
+                                                          value: _passwordController.text,
+                                                          isModel: false);
+                                                    }
+                                                    if (await loginViewModel
+                                                        .isActiveUser()) {
+                                                      if (loginViewModel
+                                                          .isLoggedIn) {
+                                                        TextInput.finishAutofillContext();
+                                                        await loginViewModel
+                                                            .setCredentials();
+                                                        await categoriesViewModel
+                                                            .getCategoriesAndServices();
+                                                        await jobsViewModel
+                                                            .readJson();
+                                                        Navigator.of(context)
+                                                            .push(_createRoute(
+                                                                BottomBar(
+                                                          userRole: loginViewModel
+                                                              .userRole,
+                                                          currentTab: 0,
+                                                        )));
+                                                      } else {
+                                                        const CircularProgressIndicator();
+                                                      }
                                                     }
                                                   }
                                                 }
-                                              }
-                                              setState(() {
-                                                isLoading = false;
-                                              });
-                                            },
-                                            child: (isLoading)
-                                                ? const SizedBox(
-                                                    width: 16,
-                                                    height: 16,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color: Colors.white,
-                                                      strokeWidth: 1.5,
-                                                    ))
-                                                : Text(
-                                                        'login_screen.signIn'.tr(),
-                                                    style:
-                                                        getPrimaryRegularStyle(
-                                                      color: context.resources
-                                                          .color.colorWhite,
-                                                      fontSize: 12,
+                                                setState(() {
+                                                  isLoading = false;
+                                                });
+                                              },
+                                              child: (isLoading)
+                                                  ? const SizedBox(
+                                                      width: 16,
+                                                      height: 16,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color: Colors.white,
+                                                        strokeWidth: 1.5,
+                                                      ))
+                                                  : Text(
+                                                          'login_screen.signIn'.tr(),
+                                                      style:
+                                                          getPrimaryRegularStyle(
+                                                        color: context.resources
+                                                            .color.colorWhite,
+                                                        fontSize: 12,
+                                                      ),
                                                     ),
-                                                  ),
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     );
                                   }),
                                   const Gap(15),

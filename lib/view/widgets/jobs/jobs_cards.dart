@@ -970,32 +970,32 @@ class _JobsCardsState extends State<JobsCards> {
               ),
               SvgPicture.asset('assets/img/cancelation-icon.svg'),
               SizedBox(height: context.appValues.appSize.s40),
-              Text(
-                'Important!',
-                textAlign: TextAlign.center,
-                style: getPrimarySemiBoldStyle(
-                  fontSize: 16,
-                  color: context.resources.color.btnColorBlue,
-                ),
-              ),
-              const Gap(10),
-              Text(
-                'Cancellations made within 4 hours of the job start time will incur a 50 QAR fee.',
-                textAlign: TextAlign.center,
-                style: getPrimaryRegularStyle(
-                  fontSize: 12,
-                  color: const Color(0xff71727A),
-                ),
-              ),
-              const Gap(10),
-              Text(
-                'Would you like to continue with the cancellation?',
-                textAlign: TextAlign.center,
-                style: getPrimaryRegularStyle(
-                  fontSize: 12,
-                  color: const Color(0xff71727A),
-                ),
-              ),
+              // Text(
+              //   'Important!',
+              //   textAlign: TextAlign.center,
+              //   style: getPrimarySemiBoldStyle(
+              //     fontSize: 16,
+              //     color: context.resources.color.btnColorBlue,
+              //   ),
+              // ),
+              // const Gap(10),
+              // Text(
+              //   'Cancellations made within 4 hours of the job start time will incur a 50 QAR fee.',
+              //   textAlign: TextAlign.center,
+              //   style: getPrimaryRegularStyle(
+              //     fontSize: 12,
+              //     color: const Color(0xff71727A),
+              //   ),
+              // ),
+              // const Gap(10),
+              // Text(
+              //   'Would you like to continue with the cancellation?',
+              //   textAlign: TextAlign.center,
+              //   style: getPrimaryRegularStyle(
+              //     fontSize: 12,
+              //     color: const Color(0xff71727A),
+              //   ),
+              // ),
               SizedBox(height: context.appValues.appSize.s20),
               Align(
                 alignment: Alignment.centerLeft,

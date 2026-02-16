@@ -817,6 +817,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                         'tap_payments_card ${widget.data.tap_payments_card}');
                                                     debugPrint(
                                                         'from where ${ widget.fromWhere}');
+ debugPrint(
+                                                        'from where ${ 'jobs.requestedJobs'.tr()}');
 
                                                     widget.fromWhere ==
                                                                 'jobs.booked'.tr() ||
@@ -1011,32 +1013,32 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
               ),
               SvgPicture.asset('assets/img/cancelation-icon.svg'),
               SizedBox(height: context.appValues.appSize.s40),
-              Text(
-                'Important!',
-                textAlign: TextAlign.center,
-                style: getPrimarySemiBoldStyle(
-                  fontSize: 16,
-                  color: context.resources.color.btnColorBlue,
-                ),
-              ),
-              const Gap(10),
-              Text(
-                'Cancellations made within 4 hours of the job start time will incur a 50 QAR fee.',
-                textAlign: TextAlign.center,
-                style: getPrimaryRegularStyle(
-                  fontSize: 12,
-                  color: const Color(0xff71727A),
-                ),
-              ),
-              const Gap(10),
-              Text(
-                'Would you like to continue with the cancellation?',
-                textAlign: TextAlign.center,
-                style: getPrimaryRegularStyle(
-                  fontSize: 12,
-                  color: const Color(0xff71727A),
-                ),
-              ),
+              // Text(
+              //   'Important!',
+              //   textAlign: TextAlign.center,
+              //   style: getPrimarySemiBoldStyle(
+              //     fontSize: 16,
+              //     color: context.resources.color.btnColorBlue,
+              //   ),
+              // ),
+              // const Gap(10),
+              // // Text(
+              // //   'Cancellations made within 4 hours of the job start time will incur a 50 QAR fee.',
+              // //   textAlign: TextAlign.center,
+              // //   style: getPrimaryRegularStyle(
+              // //     fontSize: 12,
+              // //     color: const Color(0xff71727A),
+              // //   ),
+              // // ),
+              // const Gap(10),
+              // Text(
+              //   'Would you like to continue with the cancellation?',
+              //   textAlign: TextAlign.center,
+              //   style: getPrimaryRegularStyle(
+              //     fontSize: 12,
+              //     color: const Color(0xff71727A),
+              //   ),
+              // ),
               SizedBox(height: context.appValues.appSize.s20),
               Align(
                 alignment: Alignment.centerLeft,
