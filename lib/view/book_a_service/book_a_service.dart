@@ -730,7 +730,7 @@ getPayment() async{
                                               //   ),
                                               // ),
                                               const Gap(15),
-                                              const DatePickerWidget(),
+                                              DatePickerWidget(leadTime:widget.service['country_rates'][0]['lead_time_hours']),
 
                                               const Gap(20),
                                               CustomTimePicker(

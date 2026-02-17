@@ -262,46 +262,46 @@ class _JobsCardsState extends State<JobsCards> {
                                             ),
                                           ),
                                         ),
-                                        widget.userRole ==
-                                            Constants.supplierRoleId &&
-                                            (widget.active == 'bookedJobs' ||
-                                                widget.active == 'activeJobs' ||
-                                                widget.active ==
-                                                    'completedJobs')
-                                            ? Padding(
-                                          padding: EdgeInsets.only(
-                                              right: context
-                                                  .appValues.appPadding.p8),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                            MainAxisAlignment
-                                                .spaceBetween,
-                                            children: [
-                                              GestureDetector(
-                                                onTap: () {
-                                                  final phone =
-                                                  data[index].customer[
-                                                  "phone_number"];
-                                                  if (phone != null &&
-                                                      phone.isNotEmpty) {
-                                                    _makePhoneCall(phone);
-                                                  }
-                                                },
-                                                child: Text(
-                                                  '${data[index]
-                                                      .customer["phone_number"] ??
-                                                      'No Phone number'}',
-                                                  style: getPrimaryBoldStyle(
-                                                    fontSize: 12,
-                                                    color: const Color(
-                                                        0xff78789D),
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        )
-                                            : Container()
+                                        // widget.userRole ==
+                                        //     Constants.supplierRoleId &&
+                                        //     (widget.active == 'bookedJobs' ||
+                                        //         widget.active == 'activeJobs' ||
+                                        //         widget.active ==
+                                        //             'completedJobs')
+                                        //     ? Padding(
+                                        //   padding: EdgeInsets.only(
+                                        //       right: context
+                                        //           .appValues.appPadding.p8),
+                                        //   child: Row(
+                                        //     mainAxisAlignment:
+                                        //     MainAxisAlignment
+                                        //         .spaceBetween,
+                                        //     children: [
+                                        //       GestureDetector(
+                                        //         onTap: () {
+                                        //           final phone =
+                                        //           data[index].customer[
+                                        //           "phone_number"];
+                                        //           if (phone != null &&
+                                        //               phone.isNotEmpty) {
+                                        //             _makePhoneCall(phone);
+                                        //           }
+                                        //         },
+                                        //         child: Text(
+                                        //           '${data[index]
+                                        //               .customer["phone_number"] ??
+                                        //               'No Phone number'}',
+                                        //           style: getPrimaryBoldStyle(
+                                        //             fontSize: 12,
+                                        //             color: const Color(
+                                        //                 0xff78789D),
+                                        //           ),
+                                        //         ),
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        // )
+                                        //     : Container()
                                       ],
                                     ),
                                   ],
@@ -1035,14 +1035,16 @@ class _JobsCardsState extends State<JobsCards> {
                                 style: getPrimaryRegularStyle(fontSize: 12),
                               ),
                               value: reasons[i],
-                              groupValue: jobsViewModel.selectedReason,
+                              groupValue: jobsViewModel.reason,
                               activeColor: Theme
                                   .of(context)
                                   .primaryColor,
                               onChanged: (value) {
-                                setState(() {
-                                  // You can perform additional actions based on the selected reason if needed
-                                });
+                                // setState(() {
+                                //   // You can perform additional actions based on the selected reason if needed
+                                // });
+                                jobsViewModel1.setSelectedReason(value!); // 👈 THIS IS REQUIRED
+
                                 jobsViewModel1.setInputValues(
                                     index: 'cancellation_reason',
                                     value: value.toString());
@@ -1074,9 +1076,10 @@ class _JobsCardsState extends State<JobsCards> {
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
-                    if (tab == 'jobs.booked'.tr() ||
+                    debugPrint('hello card $tab');
+                    if (tab == 'jobs.booked'.tr() || tab == 'bookedJobs' ||
                         tab == 'jobs.requestedJobs'.tr()) {
-                      if (tab == 'jobs.booked'.tr()) {
+                      if (tab == 'jobs.booked'.tr() || tab == 'bookedJobs' ) {
                         if (await jobsViewModel.cancelJobWithPenalty(
                             job_id, '') ==
                             true) {

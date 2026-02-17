@@ -8,13 +8,19 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class DatePickerWidget extends StatefulWidget {
-  const DatePickerWidget({super.key});
+  var leadTime;
+
+   DatePickerWidget({super.key,required this.leadTime});
 
   @override
   State<DatePickerWidget> createState() => _DatePickerWidgetState();
 }
 
 class _DatePickerWidgetState extends State<DatePickerWidget> {
+  DateTime get _minimumAllowedDate {
+    final now = DateTime.now();
+    return now.add(Duration(hours: widget.leadTime));
+  }
   @override
   Widget build(BuildContext context) {
     return Consumer<JobsViewModel>(builder: (context, jobsViewModel, _) {
@@ -24,7 +30,7 @@ class _DatePickerWidgetState extends State<DatePickerWidget> {
         child: CustomDatePicker2(
           value:DateFormat('dd-MM-yyyy').format(DateTime.now()),
           index: 'date',
-          viewModel: jobsViewModel.setInputValues,
+          viewModel: jobsViewModel.setInputValues, leadTime: widget.leadTime,
         ),
         // DatePicker(
         //   DateTime.now(),

@@ -1078,12 +1078,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             style: getPrimaryRegularStyle(fontSize: 12),
                           ),
                           value: reasons[i],
-                          groupValue: jobsViewModel.selectedReason,
+                          groupValue: jobsViewModel.reason,
                           activeColor: Theme.of(context).primaryColor,
                           onChanged: (value) {
-                            setState(() {
-                              // You can perform additional actions based on the selected reason if needed
-                            });
+                            jobsViewModel1.setSelectedReason(value!); // 👈 THIS IS REQUIRED
+
                             jobsViewModel1.setInputValues(
                                 index: 'cancellation_reason',
                                 value: value.toString());

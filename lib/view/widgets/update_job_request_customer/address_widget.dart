@@ -43,163 +43,241 @@ class _AddressWidgetState extends State<AddressWidget> {
                 ),
               ),
             ),
-            InkWell(
-              onTap: (){
-                final jobAddress =
-                    widget.address;
-                if (jobAddress != null &&
-                    jobAddress['latitude'] !=
-                        null &&
-                    jobAddress['longitude'] !=
-                        null) {
-                  final latitude =
-                  jobAddress['latitude'];
-                  final longitude =
-                  jobAddress['longitude'];
+            // InkWell(
+            //   onTap: (){
+            //     final jobAddress =
+            //         widget.address;
+            //     if (jobAddress != null &&
+            //         jobAddress['latitude'] !=
+            //             null &&
+            //         jobAddress['longitude'] !=
+            //             null) {
+            //       final latitude =
+            //       jobAddress['latitude'];
+            //       final longitude =
+            //       jobAddress['longitude'];
+            //
+            //       showModalBottomSheet(
+            //         context: context,
+            //         shape:
+            //         const RoundedRectangleBorder(
+            //           borderRadius:
+            //           BorderRadius.vertical(
+            //               top: Radius.circular(
+            //                   16)),
+            //         ),
+            //         builder:
+            //             (BuildContext context) {
+            //           return Padding(
+            //             padding:
+            //             const EdgeInsets.all(
+            //                 16.0),
+            //             child: Wrap(
+            //               children: [
+            //                 ListTile(
+            //                   leading: const Icon(
+            //                       Icons.map),
+            //                   title: const Text(
+            //                       'Open with Google Maps'),
+            //                   onTap: () async {
+            //                     final googleMapsUrl =
+            //                         'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+            //
+            //                     final uri = Uri.parse(
+            //                         googleMapsUrl);
+            //                     if (await canLaunchUrl(
+            //                         uri)) {
+            //                       await launchUrl(
+            //                           uri,
+            //                           mode: LaunchMode
+            //                               .externalApplication);
+            //                     } else {
+            //                       ScaffoldMessenger
+            //                           .of(context)
+            //                           .showSnackBar(
+            //                         const SnackBar(
+            //                             content: Text(
+            //                                 'Could not open Google Maps')),
+            //                       );
+            //                     }
+            //
+            //                     Navigator.pop(
+            //                         context); // Close the bottom sheet
+            //                   },
+            //                 ),
+            //               ],
+            //             ),
+            //           );
+            //         },
+            //       );
+            //       }
+            //   },
+            //   child: SizedBox(
+            //     width: context.appValues.appSizePercent.w100,
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //       children: [
+            //         Expanded(
+            //           child: Text(
+            //             '${widget.address['country'] != null ? 'formHints.area'.tr():''} ${widget.address['country'] != null ? ':':''} ${widget.address['country'] ?? ''} \n'
+            //             '${widget.address['street_number'] != null ? 'formHints.street'.tr():''} ${widget.address['street_number'] != null ? ':':''} ${widget.address['street_number'] ?? ''} \n'
+            //             '${widget.address['building_number'] != null ? 'formHints.building'.tr():''} ${widget.address['building_number'] != null ? ':':''} ${widget.address['building_number'] ?? ''} \n'
+            //             '${widget.address['floor'] != null ? 'formHints.floor'.tr():''} ${widget.address['floor'] != null ? ':':''} ${widget.address['floor'] ?? ''} \n'
+            //             '${widget.address['apartment_number'] != null ? 'formHints.apartment'.tr():''} ${widget.address['apartment_number'] != null ? ':':''} ${widget.address['apartment_number'] ?? ''} \n'
+            //             '${widget.address['city'] != null ? 'formHints.city'.tr():''} ${widget.address['city'] != null ? ':':''} ${widget.address['city'] ?? ''} \n'
+            //             '${widget.address['zone'] != null ? 'formHints.zone'.tr():''} ${widget.address['zone'] != null ? ':':''} ${widget.address['zone'] ?? ''} \n'
+            //             '${widget.address['address_label'] != null ? 'formHints.address_label'.tr():''} ${widget.address['address_label'] != null ? ':':''} ${widget.address['address_label'] ?? ''} \n',
+            //                 // '${widget.address['city'] != null ? widget.address['city'] : ''}, ${widget.address['street_number'] != null ? widget.address['street_number'] : ''}, ${widget.address['zone'] != null ? widget.address['zone'] : ''}',
+            //             maxLines:10,
+            //             overflow: TextOverflow.ellipsis,
+            //             style: getPrimaryRegularStyle(
+            //               fontSize: 14,
+            //               color: const Color(0xff71727A),
+            //             ),
+            //           ),
+            //         ),
+            //         // IconButton(
+            //         //   icon: Icon(
+            //         //     Icons.location_on,
+            //         //     color: const Color(0xff71727A),
+            //         //     size: 50,
+            //         //   ),
+            //         //   onPressed: () {
+            //         //     Navigator.push(
+            //         //       context,
+            //         //       MaterialPageRoute(
+            //         //         builder: (context) {
+            //         //           return
+            //         //               //   MapLocationPicker(
+            //         //               //   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+            //         //               //   popOnNextButtonTaped: true,
+            //         //               //   currentLatLng: LatLng(
+            //         //               //       widget.address['latitude'],widget.address['longitude']
+            //         //               //   ),
+            //         //               //
+            //         //               // );
+            //         //               Scaffold(
+            //         //             backgroundColor: const Color(0xffFFFFFF),
+            //         //             appBar: AppBar(
+            //         //               title: Text(translate('map.map')),
+            //         //             ),
+            //         //             body: GoogleMap(
+            //         //               onMapCreated: null,
+            //         //               initialCameraPosition: CameraPosition(
+            //         //                 zoom: 16.0,
+            //         //                 target: LatLng(widget.address['latitude'],
+            //         //                     widget.address['longitude']),
+            //         //               ),
+            //         //               mapType: MapType.normal,
+            //         //               markers: <Marker>{
+            //         //                 Marker(
+            //         //                   markerId: const MarkerId('marker'),
+            //         //                   infoWindow: InfoWindow(
+            //         //                     title:
+            //         //                         '${translate('jobDetails.job')} 🚖',
+            //         //                     onTap: () => _showOptionsDialog(
+            //         //                         context,
+            //         //                         widget.address['latitude'],
+            //         //                         widget.address['longitude']),
+            //         //                   ),
+            //         //                   position: LatLng(
+            //         //                     widget.address['latitude'],
+            //         //                     widget.address['longitude'],
+            //         //                   ),
+            //         //                 ),
+            //         //               },
+            //         //               onCameraMove: null,
+            //         //               myLocationButtonEnabled: false,
+            //         //             ),
+            //         //           );
+            //         //         },
+            //         //       ),
+            //         //     );
+            //         //   },
+            //         // ),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
 
-                  showModalBottomSheet(
-                    context: context,
-                    shape:
-                    const RoundedRectangleBorder(
-                      borderRadius:
-                      BorderRadius.vertical(
-                          top: Radius.circular(
-                              16)),
-                    ),
-                    builder:
-                        (BuildContext context) {
-                      return Padding(
-                        padding:
-                        const EdgeInsets.all(
-                            16.0),
-                        child: Wrap(
-                          children: [
-                            ListTile(
-                              leading: const Icon(
-                                  Icons.map),
-                              title: const Text(
-                                  'Open with Google Maps'),
-                              onTap: () async {
-                                final googleMapsUrl =
-                                    'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+          /// Address Text (NOT clickable anymore)
+          Text(
+            '${widget.address['country'] != null ? 'formHints.area'.tr():''} ${widget.address['country'] != null ? ':':''} ${widget.address['country'] is Map<String,dynamic>?widget.address['country']["name"]:widget.address['country'] ?? ''} \n'
+                '${widget.address['street_number'] != null ? 'formHints.street'.tr():''} ${widget.address['street_number'] != null ? ':':''} ${widget.address['street_number'] ?? ''} \n'
+                '${widget.address['building_number'] != null ? 'formHints.building'.tr():''} ${widget.address['building_number'] != null ? ':':''} ${widget.address['building_number'] ?? ''} \n'
+                '${widget.address['floor'] != null ? 'formHints.floor'.tr():''} ${widget.address['floor'] != null ? ':':''} ${widget.address['floor'] ?? ''} \n'
+                '${widget.address['apartment_number'] != null ? 'formHints.apartment'.tr():''} ${widget.address['apartment_number'] != null ? ':':''} ${widget.address['apartment_number'] ?? ''} \n'
+                '${widget.address['city'] != null ? 'formHints.city'.tr():''} ${widget.address['city'] != null ? ':':''} ${widget.address['city'] ?? ''} \n'
+                '${widget.address['zone'] != null ? 'formHints.zone'.tr():''} ${widget.address['zone'] != null ? ':':''} ${widget.address['zone'] ?? ''} \n'
+                '${widget.address['address_label'] != null ? 'formHints.address_label'.tr():''} ${widget.address['address_label'] != null ? ':':''} ${widget.address['address_label'] ?? ''} \n',
+            maxLines: 10,
+            overflow: TextOverflow.ellipsis,
+            style: getPrimaryRegularStyle(
+              fontSize: 14,
+              color: const Color(0xff71727A),
+            ),
+          ),
 
-                                final uri = Uri.parse(
-                                    googleMapsUrl);
-                                if (await canLaunchUrl(
-                                    uri)) {
-                                  await launchUrl(
-                                      uri,
-                                      mode: LaunchMode
-                                          .externalApplication);
-                                } else {
-                                  ScaffoldMessenger
-                                      .of(context)
-                                      .showSnackBar(
-                                    const SnackBar(
-                                        content: Text(
-                                            'Could not open Google Maps')),
-                                  );
-                                }
+          // const SizedBox(height: 12),
 
-                                Navigator.pop(
-                                    context); // Close the bottom sheet
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                  }
-              },
-              child: SizedBox(
-                width: context.appValues.appSizePercent.w100,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Text(
-                        '${widget.address['country'] != null ? 'formHints.area'.tr():''} ${widget.address['country'] != null ? ':':''} ${widget.address['country'] ?? ''} \n'
-                        '${widget.address['street_number'] != null ? 'formHints.street'.tr():''} ${widget.address['street_number'] != null ? ':':''} ${widget.address['street_number'] ?? ''} \n'
-                        '${widget.address['building_number'] != null ? 'formHints.building'.tr():''} ${widget.address['building_number'] != null ? ':':''} ${widget.address['building_number'] ?? ''} \n'
-                        '${widget.address['floor'] != null ? 'formHints.floor'.tr():''} ${widget.address['floor'] != null ? ':':''} ${widget.address['floor'] ?? ''} \n'
-                        '${widget.address['apartment_number'] != null ? 'formHints.apartment'.tr():''} ${widget.address['apartment_number'] != null ? ':':''} ${widget.address['apartment_number'] ?? ''} \n'
-                        '${widget.address['city'] != null ? 'formHints.city'.tr():''} ${widget.address['city'] != null ? ':':''} ${widget.address['city'] ?? ''} \n'
-                        '${widget.address['zone'] != null ? 'formHints.zone'.tr():''} ${widget.address['zone'] != null ? ':':''} ${widget.address['zone'] ?? ''} \n'
-                        '${widget.address['address_label'] != null ? 'formHints.address_label'.tr():''} ${widget.address['address_label'] != null ? ':':''} ${widget.address['address_label'] ?? ''} \n',
-                            // '${widget.address['city'] != null ? widget.address['city'] : ''}, ${widget.address['street_number'] != null ? widget.address['street_number'] : ''}, ${widget.address['zone'] != null ? widget.address['zone'] : ''}',
-                        maxLines:10,
-                        overflow: TextOverflow.ellipsis,
-                        style: getPrimaryRegularStyle(
-                          fontSize: 14,
-                          color: const Color(0xff71727A),
-                        ),
-                      ),
-                    ),
-                    // IconButton(
-                    //   icon: Icon(
-                    //     Icons.location_on,
-                    //     color: const Color(0xff71727A),
-                    //     size: 50,
-                    //   ),
-                    //   onPressed: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) {
-                    //           return
-                    //               //   MapLocationPicker(
-                    //               //   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
-                    //               //   popOnNextButtonTaped: true,
-                    //               //   currentLatLng: LatLng(
-                    //               //       widget.address['latitude'],widget.address['longitude']
-                    //               //   ),
-                    //               //
-                    //               // );
-                    //               Scaffold(
-                    //             backgroundColor: const Color(0xffFFFFFF),
-                    //             appBar: AppBar(
-                    //               title: Text(translate('map.map')),
-                    //             ),
-                    //             body: GoogleMap(
-                    //               onMapCreated: null,
-                    //               initialCameraPosition: CameraPosition(
-                    //                 zoom: 16.0,
-                    //                 target: LatLng(widget.address['latitude'],
-                    //                     widget.address['longitude']),
-                    //               ),
-                    //               mapType: MapType.normal,
-                    //               markers: <Marker>{
-                    //                 Marker(
-                    //                   markerId: const MarkerId('marker'),
-                    //                   infoWindow: InfoWindow(
-                    //                     title:
-                    //                         '${translate('jobDetails.job')} 🚖',
-                    //                     onTap: () => _showOptionsDialog(
-                    //                         context,
-                    //                         widget.address['latitude'],
-                    //                         widget.address['longitude']),
-                    //                   ),
-                    //                   position: LatLng(
-                    //                     widget.address['latitude'],
-                    //                     widget.address['longitude'],
-                    //                   ),
-                    //                 ),
-                    //               },
-                    //               onCameraMove: null,
-                    //               myLocationButtonEnabled: false,
-                    //             ),
-                    //           );
-                    //         },
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
-                  ],
+          /// Open Map Button
+          SizedBox(
+            width: context.appValues.appSizePercent.w50,
+            child: ElevatedButton.icon(
+              icon: const Icon(Icons.map,color: Colors.white,),
+              label: const Text("Open in Google Maps",style: TextStyle(color: Colors.white),),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xff4100E3),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
                 ),
               ),
+              onPressed: () async {
+
+                final jobAddress = widget.address;
+
+                if (jobAddress != null &&
+                    jobAddress['latitude'] != null &&
+                    jobAddress['longitude'] != null) {
+
+                  final latitude = jobAddress['latitude'];
+                  final longitude = jobAddress['longitude'];
+
+                  final googleMapsUrl =
+                      'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+                  final uri = Uri.parse(googleMapsUrl);
+
+                  if (await canLaunchUrl(uri)) {
+                    await launchUrl(
+                      uri,
+                      mode: LaunchMode.externalApplication,
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Could not open Google Maps'),
+                      ),
+                    );
+                  }
+
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Location not available'),
+                    ),
+                  );
+                }
+              },
             ),
-          ],
+          ),
+        ],
+      ),
+
+      ],
         ),
       ),
     );

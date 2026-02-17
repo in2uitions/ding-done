@@ -34,6 +34,7 @@ class JobsViewModel with ChangeNotifier {
   List<JobsModel>? _supplierInProgressJobs = [];
   List<JobsModel>? _supplierBookedJobs = [];
   List<JobsModel>? _supplierOpenJobs = [];
+  String? selectedReason1;
   List<JobsModel>? _customerPay = List.empty();
   ApiResponse<JobsModelMain> _apiJobsResponse = ApiResponse.loading();
   ApiResponse<JobsModelMain> _apiCustomerJobsResponse = ApiResponse.loading();
@@ -871,7 +872,10 @@ class JobsViewModel with ChangeNotifier {
       return false;
     }
   }
-
+  void setSelectedReason(String value) {
+    selectedReason1 = value;
+    notifyListeners();
+  }
   Future<bool> requestService() async {
     try {
       int year = selectedDate.year;
@@ -1118,5 +1122,6 @@ class JobsViewModel with ChangeNotifier {
   get file => _file;
 
   get saved => _addressSaved;
+  get reason => selectedReason1;
   get errorData => _errorData;
 }

@@ -123,18 +123,21 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 
 class CustomDatePicker2 extends StatefulWidget {
-  const CustomDatePicker2({
+   CustomDatePicker2({
     super.key,
     required this.index,
     required this.viewModel,
     this.hintText,
     this.value,
+    required this.leadTime,
   });
 
   final dynamic viewModel;
   final String index;
   final String? hintText;
   final String? value;
+
+  final dynamic leadTime;
 
   @override
   State<StatefulWidget> createState() {
@@ -165,15 +168,34 @@ class _CustomDatePicker2 extends State<CustomDatePicker2> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
+
+        final now = DateTime.now();
+        final minDateTime = now.add(Duration(hours: widget.leadTime));
+
+        /// We only compare by date (not hour)
+        final firstAllowedDate = DateTime(
+          minDateTime.year,
+          minDateTime.month,
+          minDateTime.day,
+        );
+
         DateTime? pickedDate = await showDatePicker(
           context: context,
-          initialDate: DateTime.now(),
-          firstDate: DateTime(DateTime.now().year - 100, 1),
-          lastDate: DateTime(DateTime.now().year + 100, 1),
+          initialDate: firstAllowedDate.isAfter(now)
+              ? firstAllowedDate
+              : now,
+          firstDate: firstAllowedDate, // 👈 disables past + leadTime
+          lastDate: DateTime(now.year + 2),
+
+          selectableDayPredicate: (DateTime day) {
+            /// Disable everything before allowed date
+            return !day.isBefore(firstAllowedDate);
+          },
+
           builder: (BuildContext context, Widget? child) {
             return Theme(
               data: Theme.of(context).copyWith(
-                colorScheme: ColorScheme.light(),
+                colorScheme: const ColorScheme.light(),
                 textButtonTheme: TextButtonThemeData(
                   style: TextButton.styleFrom(),
                 ),
@@ -184,12 +206,17 @@ class _CustomDatePicker2 extends State<CustomDatePicker2> {
         );
 
         if (pickedDate != null) {
-          String formattedDate = DateFormat('dd-MM-yyyy').format(pickedDate);
+          String formattedDate =
+          DateFormat('dd-MM-yyyy').format(pickedDate);
 
           setState(() {
             dateinput.text = formattedDate;
           });
-          widget.viewModel(index: 'date', value: formattedDate.toString());
+
+          widget.viewModel(
+            index: widget.index,
+            value: formattedDate,
+          );
         }
       },
       child: Row(
