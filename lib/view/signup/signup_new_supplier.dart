@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:async';
 import 'dart:io';
 
 import 'package:dingdone/res/app_context_extension.dart';
@@ -16,6 +17,7 @@ import 'package:dingdone/view_model/services_view_model/services_view_model.dart
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:geolocator/geolocator.dart';
@@ -39,27 +41,53 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   // 5. Select Your Skills
   // 6. Complete Profile (upload profile picture)
   int _currentStep = 0;
-  final int _totalSteps = 6;
+  final int _totalSteps = 7;
   final TextEditingController _phoneController = TextEditingController();
   dynamic profileImage = {};
   dynamic idImage = {};
   String? selectedOption;
   Position? _currentPosition;
-  final List<TextEditingController> _otpControllers =
-  List.generate(4, (_) => TextEditingController());
+  int? selectedParentCategoryId;
+  final FocusNode _otpFocusNode = FocusNode();
 
-  final List<FocusNode> _otpFocusNodes =
-  List.generate(4, (_) => FocusNode());
+  final TextEditingController _phoneOtpController = TextEditingController();
+  final TextEditingController _emailOtpController = TextEditingController();
 
-  bool _otpVerified = false;
-  bool _otpSent = false;
-  bool _resending = false;
+  final FocusNode _phoneOtpFocusNode = FocusNode();
+  final FocusNode _emailOtpFocusNode = FocusNode();
+
+  bool _phoneOtpSent = false;
+  bool _emailOtpSent = false;
+
+  bool _phoneOtpVerified = false;
+  bool _emailOtpVerified = false;
+
+  bool _sendingPhoneOtp = false;
+  bool _sendingEmailOtp = false;
+
+  bool _resendingPhoneOtp = false;
+  bool _resendingEmailOtp = false;
+
+  Timer? _phoneResendTimer;
+  Timer? _emailResendTimer;
+
+  int _phoneResendSecondsRemaining = 0;
+  int _emailResendSecondsRemaining = 0;
+
+  bool get _canResendPhoneOtp => _phoneResendSecondsRemaining == 0;
+  bool get _canResendEmailOtp => _emailResendSecondsRemaining == 0;
+  bool get _canProceedFromContactStep => _phoneOtpVerified && _emailOtpVerified;
 
   final TextEditingController _otpController = TextEditingController();
 
+  Timer? _resendTimer;
+  int _resendSecondsRemaining = 0;
+
+  bool get _canResendOtp => _resendSecondsRemaining == 0;
   @override
   void initState() {
     super.initState();
+    selectedParentCategoryId = null;
     _currentStep = 0;
     selectedOption = null;
     Provider.of<SignUpViewModel>(context, listen: false).countries();
@@ -207,6 +235,214 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   // ─────────────────────────────────────────────
   // Popup error dialog.
   // ─────────────────────────────────────────────
+
+  void _startResendCountdown() {
+    _resendTimer?.cancel();
+
+    setState(() {
+      _resendSecondsRemaining = 60;
+    });
+
+    _resendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+
+      if (_resendSecondsRemaining <= 1) {
+        timer.cancel();
+        setState(() {
+          _resendSecondsRemaining = 0;
+        });
+      } else {
+        setState(() {
+          _resendSecondsRemaining--;
+        });
+      }
+    });
+  }
+
+  String _formatCountdown(int totalSeconds) {
+    final minutes = (totalSeconds ~/ 60).toString().padLeft(2, '0');
+    final seconds = (totalSeconds % 60).toString().padLeft(2, '0');
+    return '$minutes:$seconds';
+  }
+
+
+  @override
+  void dispose() {
+    _phoneResendTimer?.cancel();
+    _emailResendTimer?.cancel();
+
+    _phoneOtpController.dispose();
+    _emailOtpController.dispose();
+
+    _phoneOtpFocusNode.dispose();
+    _emailOtpFocusNode.dispose();
+
+    super.dispose();
+  }
+
+  void _startPhoneResendCountdown() {
+    _phoneResendTimer?.cancel();
+    setState(() => _phoneResendSecondsRemaining = 60);
+
+    _phoneResendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+
+      if (_phoneResendSecondsRemaining <= 1) {
+        timer.cancel();
+        setState(() => _phoneResendSecondsRemaining = 0);
+      } else {
+        setState(() => _phoneResendSecondsRemaining--);
+      }
+    });
+  }
+
+  void _startEmailResendCountdown() {
+    _emailResendTimer?.cancel();
+    setState(() => _emailResendSecondsRemaining = 60);
+
+    _emailResendTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        timer.cancel();
+        return;
+      }
+
+      if (_emailResendSecondsRemaining <= 1) {
+        timer.cancel();
+        setState(() => _emailResendSecondsRemaining = 0);
+      } else {
+        setState(() => _emailResendSecondsRemaining--);
+      }
+    });
+  }
+  bool _hasValidPhone(SignUpViewModel vm) {
+    final phone = vm.signUpBody['phone_number'];
+    return phone != null && phone.toString().trim().isNotEmpty;
+  }
+
+  bool _hasValidEmail(SignUpViewModel vm) {
+    final email = vm.signUpBody['email']?.toString().trim() ?? '';
+    return RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$').hasMatch(email);
+  }
+  Future<void> _sendPhoneOtp(SignUpViewModel vm) async {
+    if (!_hasValidPhone(vm)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a valid phone number')),
+      );
+      return;
+    }
+
+    setState(() => _sendingPhoneOtp = true);
+
+    final success = await vm.requestOtp(); // create this in ViewModel/API
+
+    if (!mounted) return;
+
+    setState(() => _sendingPhoneOtp = false);
+
+    if (success == true) {
+      setState(() {
+        _phoneOtpSent = true;
+        _phoneOtpVerified = false;
+      });
+      _phoneOtpController.clear();
+      _startPhoneResendCountdown();
+      FocusScope.of(context).requestFocus(_phoneOtpFocusNode);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Phone OTP sent successfully')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(vm.errorMessage.isNotEmpty ? vm.errorMessage : 'Failed to send phone OTP')),
+      );
+    }
+  }
+
+  Future<void> _sendEmailOtp(SignUpViewModel vm) async {
+    if (!_hasValidEmail(vm)) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please enter a valid email address')),
+      );
+      return;
+    }
+
+    setState(() => _sendingEmailOtp = true);
+
+    final success = await vm.requestEmailOtp(); // create this in ViewModel/API
+
+    if (!mounted) return;
+
+    setState(() => _sendingEmailOtp = false);
+
+    if (success == true) {
+      setState(() {
+        _emailOtpSent = true;
+        _emailOtpVerified = false;
+      });
+      _emailOtpController.clear();
+      _startEmailResendCountdown();
+      FocusScope.of(context).requestFocus(_emailOtpFocusNode);
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Email OTP sent successfully')),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(vm.errorMessage.isNotEmpty ? vm.errorMessage : 'Failed to send email OTP')),
+      );
+    }
+  }
+  Future<void> _verifyPhoneOtp(SignUpViewModel vm) async {
+    if (_phoneOtpController.text.trim().length != 4) return;
+
+    final success = await vm.getOtp==_phoneOtpController.text.trim();
+
+    if (!mounted) return;
+
+    setState(() {
+      _phoneOtpVerified = success == true;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          _phoneOtpVerified ? 'Phone number verified' : 'Invalid phone OTP',
+        ),
+      ),
+    );
+  }
+
+  Future<void> _verifyEmailOtp(SignUpViewModel vm) async {
+    if (_emailOtpController.text.trim().length != 4) return;
+
+    final success = await vm.getEmailOtp==_emailOtpController.text.trim();
+
+    if (!mounted) return;
+
+    setState(() {
+      _emailOtpVerified = success == true;
+    });
+
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          _emailOtpVerified ? 'Email verified' : 'Invalid email OTP',
+        ),
+      ),
+    );
+  }
+  void _focusOtpField() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      FocusScope.of(context).requestFocus(_otpFocusNode);
+    });
+  }
   Widget _buildPopupDialog(BuildContext context, String message) {
     return AlertDialog(
       backgroundColor: Colors.white,
@@ -504,19 +740,35 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       children: [
         const Gap(25),
 
-        /// PHONE NUMBER
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            'Contact Verification',
+            style: getPrimarySemiBoldStyle(
+              color: const Color(0xff180C38),
+              fontSize: 22,
+            ),
+          ),
+        ),
+        const Gap(8),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(
+            'Verify both your phone number and email address before continuing.',
+            style: getPrimaryRegularStyle(
+              color: const Color(0xFF8F9098),
+              fontSize: 13,
+            ),
+          ),
+        ),
+        const Gap(20),
+
+        _buildVerificationCard(
+          title: 'Phone Number',
+          icon: Icons.phone_outlined,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.phone_number'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
-              ),
-              const Gap(10),
-
               CustomPhoneFieldController(
                 value: signupViewModel.signUpBody["phone"],
                 phone_code: signupViewModel.signUpBody["phone_code"],
@@ -526,28 +778,44 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                 controller: _phoneController,
                 keyboardType: TextInputType.number,
               ),
-
-
+              const Gap(14),
+              _buildActionButton(
+                text: _phoneOtpVerified ? 'Verified' : 'Send Phone OTP',
+                loading: _sendingPhoneOtp,
+                enabled: !_phoneOtpVerified,
+                onTap: () => _sendPhoneOtp(signupViewModel),
+              ),
+              if (_phoneOtpSent && !_phoneOtpVerified) ...[
+                const Gap(16),
+                _buildOtpBoxes(
+                  controller: _phoneOtpController,
+                  focusNode: _phoneOtpFocusNode,
+                  onCompleted: (_) => _verifyPhoneOtp(signupViewModel),
+                ),
+                const Gap(12),
+                _buildOtpFooter(
+                  secondsRemaining: _phoneResendSecondsRemaining,
+                  canResend: _canResendPhoneOtp,
+                  resending: _resendingPhoneOtp,
+                  onResend: () async {
+                    setState(() => _resendingPhoneOtp = true);
+                    await _sendPhoneOtp(signupViewModel);
+                    if (mounted) setState(() => _resendingPhoneOtp = false);
+                  },
+                ),
+              ],
             ],
           ),
         ),
 
+        const Gap(16),
 
-        // const Gap(30),
-
-        /// EMAIL (unchanged)
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        _buildVerificationCard(
+          title: 'Email Address',
+          icon: Icons.email_outlined,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'formHints.email'.tr(),
-                style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 12),
-              ),
-              const Gap(10),
-
               CustomTextField(
                 value: signupViewModel.signUpBody['email'] ?? '',
                 index: 'email',
@@ -555,108 +823,51 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                 hintText: 'formHints.email'.tr(),
                 keyboardType: TextInputType.emailAddress,
               ),
+              const Gap(14),
+              _buildActionButton(
+                text: _emailOtpVerified ? 'Verified' : 'Send Email OTP',
+                loading: _sendingEmailOtp,
+                enabled: !_emailOtpVerified,
+                onTap: () => _sendEmailOtp(signupViewModel),
+              ),
+              if (_emailOtpSent && !_emailOtpVerified) ...[
+                const Gap(16),
+                _buildOtpBoxes(
+                  controller: _emailOtpController,
+                  focusNode: _emailOtpFocusNode,
+                  onCompleted: (_) => _verifyEmailOtp(signupViewModel),
+                ),
+                const Gap(12),
+                _buildOtpFooter(
+                  secondsRemaining: _emailResendSecondsRemaining,
+                  canResend: _canResendEmailOtp,
+                  resending: _resendingEmailOtp,
+                  onResend: () async {
+                    setState(() => _resendingEmailOtp = true);
+                    await _sendEmailOtp(signupViewModel);
+                    if (mounted) setState(() => _resendingEmailOtp = false);
+                  },
+                ),
+              ],
             ],
           ),
         ),
 
-        const Gap(12),
+        const Gap(14),
 
-        /// SEND CODE TEXT BUTTON
-        if (!_otpSent && !_otpVerified)
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-            child: SizedBox(
-              width: double.infinity,
-              height: 50,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  backgroundColor: const Color(0xff4100E3),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                ),
-                onPressed: () async {
-                  if (!_hasValidPhone(signupViewModel)) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Please enter phone number')),
-                    );
-                    return;
-                  }
-
-                  final success = await signupViewModel.requestOtp();
-                  if (success == true) {
-                    setState(() {
-                      _otpSent = true;
-                    });
-                  }
-                },
-                child: Text(
-                  'Send Code',
-                  style: getPrimarySemiBoldStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            children: [
+              _buildStatusChip('Phone', _phoneOtpVerified),
+              const SizedBox(width: 10),
+              _buildStatusChip('Email', _emailOtpVerified),
+            ],
           ),
-
-        /// OTP SECTION
-        if (_otpSent && !_otpVerified) ...[
-          const Gap(30),
-
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Enter the 4-digit OTP code',
-                  style: getPrimaryRegularStyle(
-                      fontSize: 14, color: const Color(0xFF8F9098)),
-                ),
-                const Gap(20),
-
-                _buildOtpInput(),
-
-                const Gap(20),
-
-                /// RESEND
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "Didn't receive OTP? ",
-                      style: getPrimaryRegularStyle(
-                          fontSize: 14, color: const Color(0xFF8F9098)),
-                    ),
-                    GestureDetector(
-                      onTap: _resending
-                          ? null
-                          : () async {
-                        setState(() => _resending = true);
-                        await signupViewModel.requestOtp();
-                        setState(() => _resending = false);
-                      },
-                      child: Text(
-                        'Resend',
-                        style: getPrimarySemiBoldStyle(
-                          fontSize: 14,
-                          color: const Color(0xff4100E3),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
+        const Gap(10),
       ],
     );
-
     Widget buildPasswordRequirements(String password) {
       final requirements = [
         {
@@ -776,14 +987,23 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                 style: getPrimarySemiBoldStyle(
                     fontSize: 12, color: context.resources.color.btnColorBlue),
               ),
-              InkWell(
-                child: Text(
-                  'signUp.chooseLocation'.tr(),
-                  style: getPrimaryRegularStyle(
-                      fontSize: 12,
-                      color: context.resources.color.btnColorBlue),
-                ),
-                onTap: () => _openMapPicker(signupViewModel),
+              Column(
+                children: [
+                  InkWell(
+                    child: Text(
+                      'signUp.chooseLocation'.tr(),
+                      style: getPrimaryBoldStyle(
+                          fontSize: 15,
+                          color: context.resources.color.btnColorBlue),
+                    ),
+                    onTap: () => _openMapPicker(signupViewModel),
+                  ),
+                  Icon(
+                    Icons.arrow_drop_down,
+                    color: context.resources.color.btnColorBlue,
+                    size: 20,
+                  ),
+                ],
               ),
             ],
           ),
@@ -1152,8 +1372,123 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       ],
     );
 
-    // Page 5: Select Your Skills.
-    Widget page5 = SingleChildScrollView(
+    // Page 5: Choose Parent Category.
+    Widget page5 = Consumer<CategoriesViewModel>(
+      builder: (context, categoriesVM, _) {
+        final parentCategories = categoriesVM.parentCategoriesList ?? [];
+
+        if (parentCategories.isEmpty) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        String getTranslation(List<dynamic> translations) {
+          final currentLang = context.locale.languageCode == 'ar' ? 'ar' : 'en-US';
+
+          final currentMatch = translations.cast<Map<String, dynamic>>().where(
+                (t) =>
+            t['languages_code'] == currentLang &&
+                (t['title'] ?? '').toString().isNotEmpty,
+          );
+
+          if (currentMatch.isNotEmpty) {
+            return (currentMatch.first['title'] ?? '').toString();
+          }
+
+          final englishMatch = translations.cast<Map<String, dynamic>>().where(
+                (t) =>
+            t['languages_code'] == 'en-US' &&
+                (t['title'] ?? '').toString().isNotEmpty,
+          );
+
+          if (englishMatch.isNotEmpty) {
+            return (englishMatch.first['title'] ?? '').toString();
+          }
+
+          return (translations.first['title'] ?? '').toString();
+        }
+
+        return SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Gap(25),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
+                child: SizedBox(
+                  width: context.appValues.appSizePercent.w100,
+                  child: Text(
+                    'Choose your category',
+                    style: getPrimarySemiBoldStyle(
+                      color: const Color(0xff180C38),
+                      fontSize: 22,
+                    ),
+                  ),
+                ),
+              ),
+              ...parentCategories.map((parent) {
+                final bool isSelected =
+                    selectedParentCategoryId == (parent['id'] as int);
+
+                return Padding(
+                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 12),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(16),
+                    onTap: () {
+                      setState(() {
+                        selectedParentCategoryId = parent['id'] as int;
+                      });
+
+                      signupViewModel.setInputValues(
+                        index: 'supplier_parent_category',
+                        value: parent['id'],
+                      );
+
+                      signupViewModel.setInputValues(
+                        index: 'supplier_services',
+                        value: <String>[],
+                      );
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+                      decoration: BoxDecoration(
+                        color: isSelected ? const Color(0xff4100E3) : Colors.white,
+                        borderRadius: BorderRadius.circular(16),
+                        border: Border.all(
+                          color: const Color(0xff4100E3),
+                          width: 1.2,
+                        ),
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              getTranslation(parent['translations'] as List<dynamic>),
+                              style: getPrimarySemiBoldStyle(
+                                color: isSelected
+                                    ? Colors.white
+                                    : const Color(0xff180C38),
+                                fontSize: 15,
+                              ),
+                            ),
+                          ),
+                          if (isSelected)
+                            const Icon(Icons.check_circle, color: Colors.white),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ],
+          ),
+        );
+      },
+    );
+
+// Page 6: Select Your Skills.
+    Widget page6 = SingleChildScrollView(
       child: Column(
         children: [
           const Gap(25),
@@ -1164,45 +1499,54 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               child: Text(
                 'signUp.selectYourSkills'.tr(),
                 style: getPrimarySemiBoldStyle(
-                    color: const Color(0xff180C38), fontSize: 22),
+                  color: const Color(0xff180C38),
+                  fontSize: 22,
+                ),
               ),
             ),
           ),
-          // FutureBuilder(
-          //     future: Provider.of<CategoriesViewModel>(context, listen: false)
-          //         .getCategoriesAndServices(),
-          //     builder: (context, AsyncSnapshot data) {
-          //       if (data.data != null) {
-          //         return
-                    Padding(
-                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
-                    child: CustomMultipleSelectionCheckBoxList(
-                      // list: data.data,
-                      onChange: (selectedValues) {
-                        setState(() {}); // Optionally store selectedValues.
-                        signupViewModel.setInputValues(
-                            index: 'supplier_services', value: selectedValues);
-                      },
-                      viewModel: signupViewModel.setInputValues,
-                      validator: (val) => signupViewModel.signUpErrors[context
-                          .resources.strings.formKeys['supplier_services']!],
-                      errorText: signupViewModel.signUpErrors[context
-                          .resources.strings.formKeys['supplier_services']!],
-                      index: 'supplier_services',
-                      // servicesViewModel: Provider.of<ServicesViewModel>(context,
-                      //     listen: false),
-                    ),
-                  ),
-              //   } else {
-              //     return CircularProgressIndicator();
-              //   }
-              // }),
+          if (selectedParentCategoryId == null)
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: Text(
+                'Please select a category first.',
+                style: getPrimaryRegularStyle(
+                  color: const Color(0xff180C38),
+                  fontSize: 14,
+                ),
+              ),
+            )
+          else
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
+              child: CustomMultipleSelectionCheckBoxList(
+                selectedParentCategoryId: selectedParentCategoryId!,
+                selectedValues: (signupViewModel.signUpBody['supplier_services']
+                as List?)
+                    ?.map((e) => e.toString())
+                    .toList() ??
+                    [],
+                onChange: (selectedValues) {
+                  setState(() {});
+                  signupViewModel.setInputValues(
+                    index: 'supplier_services',
+                    value: selectedValues,
+                  );
+                },
+                viewModel: signupViewModel.setInputValues,
+                validator: (val) => signupViewModel.signUpErrors[
+                context.resources.strings.formKeys['supplier_services']!],
+                errorText: signupViewModel.signUpErrors[
+                context.resources.strings.formKeys['supplier_services']!],
+                index: 'supplier_services',
+              ),
+            ),
         ],
       ),
     );
 
-    // Page 6: Complete Profile.
-    Widget page6 = Column(
+// Page 7: Complete Profile.
+    Widget page7 = Column(
       children: [
         const Gap(25),
         Align(
@@ -1245,7 +1589,9 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                           }
                           if (save != null) {
                             signupViewModel.setInputValues(
-                                index: 'avatar', value: save[0]["image"]);
+                              index: 'avatar',
+                              value: save[0]["image"],
+                            );
                           }
                         },
                         isImage: true,
@@ -1260,8 +1606,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
         ),
       ],
     );
-
-    final List<Widget> pages = [page1, page2, page3, page4, page5, page6];
+    final List<Widget> pages = [page1, page2, page3, page4, page5, page6, page7];
 
     return Scaffold(
       body: Stack(
@@ -1341,8 +1686,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                     ),
                     // Fixed bottom Next/Complete button.
 
-                    if (_currentStep != 1 || (_currentStep == 1 && _otpVerified))
-                      Padding(
+                    if (_currentStep != 1 || (_currentStep == 1 && _canProceedFromContactStep))                      Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: SizedBox(
                           width: double.infinity,
@@ -1367,7 +1711,16 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                                 );
                                 return;
                               }
-
+                              if (_currentStep == 4 && selectedParentCategoryId == null) {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) => _buildPopupDialog(
+                                    context,
+                                    'Please choose a category first.',
+                                  ),
+                                );
+                                return;
+                              }
                               if (_currentStep < pages.length - 1) {
                                 setState(() => _currentStep++);
                               } else {
@@ -1399,74 +1752,242 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       ),
     );
   }
-  Widget _buildOtpInput() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: List.generate(4, (index) {
-        return SizedBox(
-          width: 60,
-          height: 55,
-          child: TextField(
-            controller: _otpControllers[index],
-            focusNode: _otpFocusNodes[index],
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-            maxLength: 1,
-            style: getPrimarySemiBoldStyle(fontSize: 18),
-            decoration: InputDecoration(
-              counterText: '',
-              hintText: '-',
-              hintStyle: const TextStyle(color: Color(0xFFBDBDBD)),
-              filled: true,
-              fillColor: Colors.white,
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide: const BorderSide(color: Color(0xFFE5E5E5)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(14),
-                borderSide:
-                const BorderSide(color: Color(0xff4100E3), width: 1.5),
-              ),
+  Widget _buildVerificationCard({
+    required String title,
+    required IconData icon,
+    required Widget child,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Container(
+        width: double.infinity,
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: const Color(0xFFEAEAEA)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: const Color(0xff4100E3), size: 20),
+                const SizedBox(width: 8),
+                Text(
+                  title,
+                  style: getPrimarySemiBoldStyle(
+                    color: const Color(0xff180C38),
+                    fontSize: 16,
+                  ),
+                ),
+              ],
             ),
-            onChanged: (value) {
-              if (value.isNotEmpty && index < 3) {
-                _otpFocusNodes[index + 1].requestFocus();
-              }
-              if (value.isEmpty && index > 0) {
-                _otpFocusNodes[index - 1].requestFocus();
-              }
-
-              final vm = Provider.of<SignUpViewModel>(context, listen: false);
-
-              setState(() {
-                _otpVerified = _isOtpValid(vm);
-
-                if (_otpVerified) {
-                  // _otpSent = false; // 🔥 hides OTP section
-                  FocusScope.of(context).unfocus();
-                }
-              });
-            },
-
-          ),
-        );
-      }),
+            const Gap(14),
+            child,
+          ],
+        ),
+      ),
     );
   }
-  String get _enteredOtp {
-    return _otpControllers.map((c) => c.text).join();
-  }
-  bool _isOtpValid(SignUpViewModel vm) {
-    if (!_otpSent) return false; // must request OTP first
-    if (_enteredOtp.length != 4) return false;
 
-    return _enteredOtp == vm.getOtp.toString();
+  Widget _buildActionButton({
+    required String text,
+    required bool loading,
+    required bool enabled,
+    required VoidCallback onTap,
+  }) {
+    return SizedBox(
+      width: double.infinity,
+      height: 48,
+      child: ElevatedButton(
+        onPressed: enabled && !loading ? onTap : null,
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          backgroundColor: const Color(0xff4100E3),
+          disabledBackgroundColor: const Color(0xFFBDBDBD),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        child: loading
+            ? const SizedBox(
+          width: 20,
+          height: 20,
+          child: CircularProgressIndicator(
+            strokeWidth: 2,
+            color: Colors.white,
+          ),
+        )
+            : Text(
+          text,
+          style: getPrimarySemiBoldStyle(
+            fontSize: 15,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    );
   }
-  bool _hasValidPhone(SignUpViewModel vm) {
-    final phone = vm.signUpBody['phone_number'];
-    return phone != null && phone.toString().trim().isNotEmpty;
+
+  Widget _buildStatusChip(String label, bool verified) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      decoration: BoxDecoration(
+        color: verified ? const Color(0xFFE8F7EE) : const Color(0xFFF5F5F5),
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(
+          color: verified ? const Color(0xFF34A853) : const Color(0xFFE0E0E0),
+        ),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(
+            verified ? Icons.check_circle : Icons.radio_button_unchecked,
+            size: 16,
+            color: verified ? const Color(0xFF34A853) : const Color(0xFF8F9098),
+          ),
+          const SizedBox(width: 6),
+          Text(
+            '$label ${verified ? "Verified" : "Pending"}',
+            style: getPrimaryMediumStyle(
+              fontSize: 12,
+              color: verified ? const Color(0xFF34A853) : const Color(0xFF8F9098),
+            ),
+          ),
+        ],
+      ),
+    );
   }
+  Widget _buildOtpBoxes({
+    required TextEditingController controller,
+    required FocusNode focusNode,
+    required ValueChanged<String> onCompleted,
+  }) {
+    return AutofillGroup(
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).requestFocus(focusNode),
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            Opacity(
+              opacity: 0.01,
+              child: SizedBox(
+                width: double.infinity,
+                height: 60,
+                child: TextField(
+                  controller: controller,
+                  focusNode: focusNode,
+                  keyboardType: TextInputType.number,
+                  maxLength: 4,
+                  autofillHints: const [AutofillHints.oneTimeCode],
+                  decoration: const InputDecoration(
+                    counterText: '',
+                    border: InputBorder.none,
+                  ),
+                  onChanged: (value) {
+                    final digitsOnly = value.replaceAll(RegExp(r'[^0-9]'), '');
+                    if (digitsOnly != value) {
+                      controller.value = TextEditingValue(
+                        text: digitsOnly,
+                        selection: TextSelection.collapsed(offset: digitsOnly.length),
+                      );
+                    }
+
+                    if (digitsOnly.length == 4) {
+                      FocusScope.of(context).unfocus();
+                      onCompleted(digitsOnly);
+                    }
+
+                    setState(() {});
+                  },
+                ),
+              ),
+            ),
+            IgnorePointer(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: List.generate(4, (index) {
+                  final text = controller.text;
+                  final digit = index < text.length ? text[index] : '';
+                  final isActive = text.length == index || (text.isEmpty && index == 0);
+                  final isFilled = digit.isNotEmpty;
+
+                  return Container(
+                    width: 60,
+                    height: 56,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF9F9FB),
+                      borderRadius: BorderRadius.circular(14),
+                      border: Border.all(
+                        color: isActive
+                            ? const Color(0xff4100E3)
+                            : const Color(0xFFE5E7EB),
+                        width: isActive ? 1.5 : 1,
+                      ),
+                    ),
+                    child: Text(
+                      isFilled ? digit : '',
+                      style: getPrimarySemiBoldStyle(
+                        fontSize: 20,
+                        color: const Color(0xff180C38),
+                      ),
+                    ),
+                  );
+                }),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+  String get _enteredOtp => _otpController.text.trim();
+
+  Widget _buildOtpFooter({
+    required int secondsRemaining,
+    required bool canResend,
+    required bool resending,
+    required VoidCallback onResend,
+  }) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          'Enter the 4-digit code',
+          style: getPrimaryRegularStyle(
+            fontSize: 13,
+            color: const Color(0xFF8F9098),
+          ),
+        ),
+        if (!canResend)
+          Text(
+            _formatCountdown(secondsRemaining),
+            style: getPrimarySemiBoldStyle(
+              fontSize: 13,
+              color: const Color(0xff4100E3),
+            ),
+          )
+        else
+          GestureDetector(
+            onTap: resending ? null : onResend,
+            child: Text(
+              resending ? 'Sending...' : 'Resend',
+              style: getPrimarySemiBoldStyle(
+                fontSize: 13,
+                color: const Color(0xff4100E3),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+
+
+
 
 }
 

@@ -13,6 +13,7 @@ class CustomMultipleSelectionCheckBoxList extends StatefulWidget {
     this.selectedValues,
     required this.index,
     required this.viewModel,
+    required this.selectedParentCategoryId,
     this.errorText,
     this.validator,
   }) : super(key: key);
@@ -20,6 +21,7 @@ class CustomMultipleSelectionCheckBoxList extends StatefulWidget {
   final Function(List<String>) onChange;
   final List<String>? selectedValues;
   final String index;
+  final int selectedParentCategoryId;
   final void Function({required String index, required List<String> value})
   viewModel;
   final String? errorText;
@@ -38,38 +40,96 @@ class _CustomMultipleSelectionCheckBoxListState
   @override
   void initState() {
     super.initState();
-    _selectedValues = widget.selectedValues != null
-        ? List.from(widget.selectedValues!)
-        : [];
+    _selectedValues =
+    widget.selectedValues != null ? List.from(widget.selectedValues!) : [];
     _loadLanguage();
   }
 
   Future<void> _loadLanguage() async {
     final lang = await AppPreferences().get(key: dblang, isModel: false);
-    setState(() => _lang = lang ?? 'en-US');
+    if (mounted) {
+      setState(() => _lang = lang ?? 'en-US');
+    }
   }
 
   String _getTranslation(List<dynamic> translations) {
-    final match = translations.firstWhere(
+    if (translations.isEmpty) return '';
+
+    final currentLangMatch = translations.cast<Map<String, dynamic>>().where(
           (t) =>
       t['languages_code'] == _lang &&
           (t['title'] ?? '').toString().isNotEmpty,
-      orElse: () => translations.firstWhere(
-              (t) => t['languages_code'] == 'en-US' ) ,
     );
-    return (match['title'] ?? '').toString();
+
+    if (currentLangMatch.isNotEmpty) {
+      return (currentLangMatch.first['title'] ?? '').toString();
+    }
+
+    final englishMatch = translations.cast<Map<String, dynamic>>().where(
+          (t) =>
+      t['languages_code'] == 'en-US' &&
+          (t['title'] ?? '').toString().isNotEmpty,
+    );
+
+    if (englishMatch.isNotEmpty) {
+      return (englishMatch.first['title'] ?? '').toString();
+    }
+
+    return (translations.first['title'] ?? '').toString();
+  }
+
+  int? _extractServiceCategoryId(dynamic svc) {
+    try {
+      final catTrans = svc['category']['translations'] as List<dynamic>;
+
+      final currentLangMatch = catTrans.cast<Map<String, dynamic>>().where(
+            (t) => t['languages_code'] == _lang && t['categories_id'] != null,
+      );
+
+      if (currentLangMatch.isNotEmpty) {
+        return currentLangMatch.first['categories_id'] as int;
+      }
+
+      final englishMatch = catTrans.cast<Map<String, dynamic>>().where(
+            (t) => t['languages_code'] == 'en-US' && t['categories_id'] != null,
+      );
+
+      if (englishMatch.isNotEmpty) {
+        return englishMatch.first['categories_id'] as int;
+      }
+
+      if (catTrans.isNotEmpty && catTrans.first['categories_id'] != null) {
+        return catTrans.first['categories_id'] as int;
+      }
+    } catch (_) {}
+
+    return null;
   }
 
   @override
   Widget build(BuildContext context) {
     return Consumer2<ServicesViewModel, CategoriesViewModel>(
       builder: (context, servicesVM, categoriesVM, _) {
-        final topParents   = categoriesVM.parentCategoriesList ?? [];
-        final subParents   = categoriesVM.categoriesList       ?? [];
-        final allServices  = categoriesVM.servicesList         ?? [];
+        final subParents = categoriesVM.categoriesList ?? [];
+        final allServices = categoriesVM.servicesList ?? [];
 
-        if (topParents.isEmpty) {
-          return const Center(child: CircularProgressIndicator());
+        final filteredSubParents = subParents.where((p) {
+          final parentClass = p['class'];
+          if (parentClass == null) return false;
+          return (parentClass['id'] as int) == widget.selectedParentCategoryId;
+        }).toList();
+
+        if (filteredSubParents.isEmpty) {
+          return Padding(
+            padding: const EdgeInsets.all(16),
+            child: Text(
+              'No subcategories found for this category.',
+              style: getPrimaryRegularStyle(
+                fontSize: 14,
+                color: context.resources.color.secondColorBlue,
+              ),
+            ),
+          );
         }
 
         return Padding(
@@ -77,51 +137,24 @@ class _CustomMultipleSelectionCheckBoxListState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // 1) For each top‐level parent category
-              for (final top in topParents) ...[
-                // Show its title
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 8.0),
-                  child: Text(
-                    _getTranslation(top['translations'] as List<dynamic>),
-                    style: getPrimaryBoldStyle(
-                      fontSize: 16,
-                      color: context.resources.color.btnColorBlue,
+              for (final parentCat in filteredSubParents) ...[
+                ExpansionTile(
+                  title: Text(
+                    _getTranslation(parentCat['translations'] as List<dynamic>),
+                    style: getPrimaryRegularStyle(
+                      fontSize: 15,
+                      color: context.resources.color.secondColorBlue,
                     ),
                   ),
+                  children: [
+                    for (final svc in allServices.where((svc) {
+                      final serviceCategoryId = _extractServiceCategoryId(svc);
+                      return serviceCategoryId == (parentCat['id'] as int);
+                    }))
+                      _buildServiceRow(context, svc),
+                  ],
                 ),
-
-                // 2) Under that, show only the "parents" whose `class` equals top.id
-                for (final parentCat in subParents.where((p) =>
-                (p['class']['id'] as int) == (top['id'] as int))) ...[
-                  ExpansionTile(
-                    title: Text(
-                      _getTranslation(parentCat['translations'] as List<dynamic>),
-                      style: getPrimaryRegularStyle(
-                        fontSize: 15,
-                        color: context.resources.color.secondColorBlue,
-                      ),
-                    ),
-                    children: [
-                      // 3) And for each of those, list exactly the same services
-                      //    you were already filtering by parentCat.id
-                      for (final svc in allServices.where((svc) {
-                        final catTrans =
-                        svc['category']['translations'] as List<dynamic>;
-                        final t = catTrans.firstWhere(
-                              (t) => t['languages_code'] == _lang,
-                           orElse: () => (catTrans as List).firstWhere(
-                              (t) => t['languages_code'] == 'en-US' ) ,
-                        );
-                        return (t['categories_id'] as int) ==
-                            (parentCat['id'] as int);
-                      }))
-                        _buildServiceRow(context, svc),
-                    ],
-                  ),
-                ],
               ],
-
               if (widget.errorText != null)
                 Padding(
                   padding: const EdgeInsets.only(top: 8),
@@ -150,14 +183,18 @@ class _CustomMultipleSelectionCheckBoxListState
           onChanged: (checked) {
             setState(() {
               if (checked == true) {
-                _selectedValues.add(svcId);
+                if (!_selectedValues.contains(svcId)) {
+                  _selectedValues.add(svcId);
+                }
               } else {
                 _selectedValues.remove(svcId);
               }
+
               widget.viewModel(
                 index: widget.index,
                 value: _selectedValues,
               );
+
               widget.onChange(_selectedValues);
             });
           },

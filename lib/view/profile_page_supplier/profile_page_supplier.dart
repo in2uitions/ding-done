@@ -15,6 +15,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
+import '../edit_account/edit_account.dart';
+
 class ProfilePageSupplier extends StatefulWidget {
   final dynamic data;
   final dynamic list;
@@ -92,71 +94,81 @@ class _ProfilePageSupplierState extends State<ProfilePageSupplier> {
                           ),
                         ),
                         // Profile image
-                        Padding(
-                          padding: EdgeInsets.only(
-                            top: context.appValues.appPadding.p10,
-                            bottom: context.appValues.appPadding.p15,
-                          ),
-                          child: Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(32),
-                              ),
-                              image: DecorationImage(
-                                fit: BoxFit.cover,
-                                image: profileViewModel
-                                                .getProfileBody['user'] !=
-                                            null &&
-                                        profileViewModel.getProfileBody['user']
-                                                ['avatar'] !=
-                                            null
-                                    ? NetworkImage(
-                                        profileViewModel.getProfileBody['user']
-                                                    ['avatar']
-                                                is Map<String, dynamic>
-                                            ? '${context.resources.image.networkImagePath2}/${profileViewModel.getProfileBody['user']['avatar']['filename_disk']}'
-                                            : '${context.resources.image.networkImagePath2}/${profileViewModel.getProfileBody['user']['avatar']}',
-                                      )
-                                    : const NetworkImage(
-                                        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'),
+                        InkWell(
+                          onTap: (){
+                            Navigator.of(context).push(_createRoute(const EditAccount()));
+                          },
+                          child: Padding(
+                            padding: EdgeInsets.only(
+                              top: context.appValues.appPadding.p10,
+                              bottom: context.appValues.appPadding.p15,
+                            ),
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                borderRadius: const BorderRadius.all(
+                                  Radius.circular(32),
+                                ),
+                                image: DecorationImage(
+                                  fit: BoxFit.cover,
+                                  image: profileViewModel
+                                                  .getProfileBody['user'] !=
+                                              null &&
+                                          profileViewModel.getProfileBody['user']
+                                                  ['avatar'] !=
+                                              null
+                                      ? NetworkImage(
+                                          profileViewModel.getProfileBody['user']
+                                                      ['avatar']
+                                                  is Map<String, dynamic>
+                                              ? '${context.resources.image.networkImagePath2}/${profileViewModel.getProfileBody['user']['avatar']['filename_disk']}'
+                                              : '${context.resources.image.networkImagePath2}/${profileViewModel.getProfileBody['user']['avatar']}',
+                                        )
+                                      : const NetworkImage(
+                                          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'),
+                                ),
                               ),
                             ),
                           ),
                         ),
                         // Name and rating information
-                        Column(
-                          children: [
-                            Text(
-                              profileViewModel.getProfileBody["user"] != null
-                                  ? '${profileViewModel.getProfileBody["user"]["first_name"]} ${profileViewModel.getProfileBody["user"]["last_name"]}'
-                                  : '',
-                              style: getPrimaryBoldStyle(
-                                fontSize: 18,
-                                color: Colors.white,
+                        InkWell(
+                          onTap: (){
+                            Navigator.of(context).push(_createRoute(const EditAccount()));
+                          },
+                          child: Column(
+                            children: [
+                              Text(
+                                profileViewModel.getProfileBody["user"] != null
+                                    ? '${profileViewModel.getProfileBody["user"]["first_name"]} ${profileViewModel.getProfileBody["user"]["last_name"]}'
+                                    : '',
+                                style: getPrimaryBoldStyle(
+                                  fontSize: 18,
+                                  color: Colors.white,
+                                ),
                               ),
-                            ),
-                            const Gap(5),
-                            // For supplier, we display rating with stars and review count
-                            // Row(
-                            //   mainAxisAlignment: MainAxisAlignment.center,
-                            //   children: [
-                            //     Stars(
-                            //       rating: 4, // Adjust rating as needed
-                            //       itemSize: 18,
-                            //     ),
-                            //     const Gap(5),
-                            //     Text(
-                            //       '93 reviews',
-                            //       style: getPrimaryRegularStyle(
-                            //         fontSize: 16,
-                            //         color: Colors.white,
-                            //       ),
-                            //     ),
-                            //   ],
-                            // ),
-                          ],
+                              const Gap(5),
+                              // For supplier, we display rating with stars and review count
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     Stars(
+                              //       rating: 4, // Adjust rating as needed
+                              //       itemSize: 18,
+                              //     ),
+                              //     const Gap(5),
+                              //     Text(
+                              //       '93 reviews',
+                              //       style: getPrimaryRegularStyle(
+                              //         fontSize: 16,
+                              //         color: Colors.white,
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                            ],
+                          ),
                         ),
                       ],
                     ),

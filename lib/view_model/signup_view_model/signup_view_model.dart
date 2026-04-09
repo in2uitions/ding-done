@@ -33,7 +33,7 @@ class SignUpViewModel with ChangeNotifier {
   String _userRole = '';
   String _errorMessage = '';
   String _otp = '';
-
+  String _otpEmail = '';
   SignUpViewModel() {
     roles();
     countries();
@@ -93,6 +93,23 @@ class SignUpViewModel with ChangeNotifier {
           await _signUpRepository.requestOtp(signUpBody);
       debugPrint('response getting otp $response');
       _otp=response['otp'];
+      return true;
+
+    } catch (error) {
+      debugPrint('error getting otp $error');
+      _apiRegisterResponse = ApiResponse<UserModel>.error(error.toString());
+      _errorMessage = error.toString();
+      signUpBody = {};
+      return false;
+    }
+  }
+
+  Future<bool?> requestEmailOtp() async {
+    try {
+      dynamic response =
+          await _signUpRepository.requesEmailtOtp(signUpBody);
+      debugPrint('response getting otp email $response');
+      _otpEmail=response['otp'];
       return true;
 
     } catch (error) {
@@ -301,6 +318,13 @@ class SignUpViewModel with ChangeNotifier {
       }
 
       if (index == 4) {
+
+          notifyListeners();
+          return true;
+
+
+      }
+      if (index == 5) {
         categoriesMessage = AppValidation().isNotListEmpty(
             value:
                 signUpBody[EnglishStrings().formKeys['supplier_services']!] ??
@@ -316,7 +340,7 @@ class SignUpViewModel with ChangeNotifier {
         return false;
       }
 
-      if (index == 5) {
+      if (index == 6) {
         debugPrint('index 5 avatar ${signUpBody["avatar"]}');
 
         firstnameMessage = AppValidation().isNotEmpty(
@@ -796,4 +820,5 @@ class SignUpViewModel with ChangeNotifier {
 
   get errorMessage => _errorMessage;
   get getOtp => _otp;
+  get getEmailOtp => _otpEmail;
 }

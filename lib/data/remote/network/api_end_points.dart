@@ -7,6 +7,7 @@ class ApiEndPoints {
   final String getRoles = '/roles?filter[name][_neq]=Administrator';
   final String userRegister = '/authentication/registerUser';
   final String requestOtp = '/authentication/request-otp';
+  final String requestEmailOtp = '/authentication/request-email-otp';
   final String userUpdate = '/users';
   final String files = '/files';
   final String getCategories = '/items/categories?fields=*.*.*.*';

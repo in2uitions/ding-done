@@ -1130,7 +1130,7 @@ class _SignUpSupplierOnBoardingScreenState
                                     // errorText: signupViewModel.signUpErrors[
                                     // context.resources.strings.formKeys['categories']!],
                                     // hint: 'Categories',
-                                    index: 'supplier_services',
+                                    index: 'supplier_services', selectedParentCategoryId: 0,
                                     // servicesViewModel: servicesViewModel,
                                   ),
                                 ),

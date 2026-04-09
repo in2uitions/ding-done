@@ -14,6 +14,7 @@ import '../../view_model/dispose_view_model/app_view_model.dart';
 import '../../view_model/jobs_view_model/jobs_view_model.dart';
 import '../../view_model/profile_view_model/profile_view_model.dart';
 import '../../res/constants.dart';
+import '../edit_account/edit_account.dart';
 import '../login/login.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -190,6 +191,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               const Gap(20),
 
                               // General items
+                              _buildGeneralItem(
+                                icon:  'assets/img/account.svg',
+                                label: 'profile.myProfile'.tr(),
+                                onTap: () {
+                                  Navigator.of(context).push(_createRoute(const EditAccount()));
+
+                                },
+                              ),
+                              const Gap(30),
+  // General items
                               _buildGeneralItem(
                                 icon: 'assets/img/support-icon-new.svg',
                                 label: 'drawer.support'.tr(),
