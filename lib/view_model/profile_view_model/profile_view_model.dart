@@ -147,8 +147,10 @@ class ProfileViewModel extends DisposableViewModel {
       final String userId = await getUserId();
       final role = await AppPreferences().get(key: userRoleKey, isModel: false);
       // make a mutable copy of your existing addresses
+      debugPrint('profile body address ${profileBody["address"]}');
       final List<Map<String, dynamic>> existingAddresses =
       List<Map<String, dynamic>>.from(profileBody["address"] as List);
+      debugPrint('profile body address2 ${profileBody["address"]}');
 
       debugPrint('body in patch profile data: $body');
       final addressId = body['id'];

@@ -86,6 +86,7 @@ class SignUpRepository {
 
   Future<dynamic?> postUserCredentials(dynamic body) async {
     try {
+      debugPrint('body of signup $body');
       dynamic response =
           await _apiUserRegister.postResponse(data: body, sendToken: false);
       if(response["data"]!=null){

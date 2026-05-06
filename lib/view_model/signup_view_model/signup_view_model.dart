@@ -46,10 +46,9 @@ class SignUpViewModel with ChangeNotifier {
     try {
       dynamic response =
           await _signUpRepository.postUserCredentials(signUpBody);
-      debugPrint('1 ${response}');
+      debugPrint('1 signup ${response}');
       if (response is Map) {
-        debugPrint('2 ${response}');
-
+        debugPrint('2 signup ${response}');
         _errorMessage = response['reason'];
         signUpBody = {};
         notifyListeners();
