@@ -7,6 +7,7 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
+import 'package:dingdone/view/edit_account/edit_account.dart';
 import 'package:dingdone/view/forgot_password/forgot_password.dart';
 import 'package:dingdone/view/sign_up_as/country_selection.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild_login.dart';
@@ -863,6 +864,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       Constants.customerRoleId,
                                                   currentTab: 0,
                                                 )));
+
+
 
                                                 // TODO: Save token to local storage for future authenticated requests
                                               } else {

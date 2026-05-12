@@ -22,6 +22,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
+import '../edit_account/edit_account.dart';
 class BottomBar extends StatefulWidget {
   var userRole;
 
@@ -85,6 +86,43 @@ class _BottomBarState extends State<BottomBar>
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 
+  getProfileInfo();
+
+  }
+
+  bool _isCheckingProfile = false;
+
+  Future<void> getProfileInfo() async {
+    if (_isCheckingProfile) return;
+    _isCheckingProfile = true;
+
+    final profileData =
+    await Provider.of<ProfileViewModel>(context, listen: false)
+        .getProfiledata();
+
+    _isCheckingProfile = false;
+
+    final user = profileData?["user"];
+
+    final bool isProfileIncomplete =
+        user?["first_name"] == null || user["first_name"].toString().trim().isEmpty ||
+            user?["last_name"] == null || user["last_name"].toString().trim().isEmpty ||
+            user?["phone"] == null || user["phone"].toString().trim().isEmpty ||
+            user?["email"] == null || user["email"].toString().trim().isEmpty
+    // ||
+            // user?["dob"] == null || user["dob"].toString().trim().isEmpty
+    ;
+
+    if (isProfileIncomplete && mounted) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const EditAccount()),
+      );
+
+      if (!mounted) return;
+
+      getProfileInfo();
+    }
   }
 
   getNotifications() async {
