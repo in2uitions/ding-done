@@ -12,6 +12,11 @@
       "title": "Language Selection"
     }
   },
+  "onBoarding": {
+    "theSmarterWay": "The smarter way",
+    "toGetThingsDone": "to get things done",
+    "getStarted": "Get Started"
+  },
   "button": {
     "submit": "Submit",
     "cancel": "Cancel",
@@ -513,7 +518,39 @@
     "company": "Company",
     "companyId": "Company Id",
     "selectYourSkills": "Select your Skills",
-    "identificationCard": "Upload Your ID"
+    "identificationCard": "Upload Your ID",
+    "letsGetThingsDone": "Let’s get things done!",
+    "enterYourEmailAndPassword": "Enter your details to proceed",
+    "contactVerification": "Contact Verification",
+    "verifyPhoneAndEmail": "Verify both your phone number and email address before continuing.",
+    "phoneNumber": "Phone Number",
+    "emailAddress": "Email Address",
+    "sendPhoneOtp": "Send Phone OTP",
+    "sendEmailOtp": "Send Email OTP",
+    "verified": "Verified",
+    "pending": "Pending",
+    "enter4DigitCode": "Enter the 4-digit code",
+    "resend": "Resend",
+    "sending": "Sending...",
+    "phoneVerified": "Phone number verified",
+    "emailVerified": "Email verified",
+    "invalidPhoneOtp": "Invalid phone OTP",
+    "invalidEmailOtp": "Invalid email OTP",
+    "phoneOtpSent": "Phone OTP sent successfully",
+    "emailOtpSent": "Email OTP sent successfully",
+    "failedPhoneOtp": "Failed to send phone OTP",
+    "failedEmailOtp": "Failed to send email OTP",
+    "verifyBoth": "Please verify both phone number and email",
+    "signUpComplete": "Sign Up Complete!",
+    "fillRequiredFields": "Please fill in all required fields",
+    "currentLocation": "Current Location",
+    "locationDisabled": "Location services are disabled. Please enable the services",
+    "locationDenied": "Location permissions are denied",
+    "locationDeniedForever": "Location permissions are permanently denied, we cannot request permissions.",
+    "validPhone": "Please enter a valid phone number",
+    "validEmail": "Please enter a valid email address",
+    "chooseCategory": "Choose your category",
+    "selectCategoryFirst": "Please select a category first."
   },
   "passRequirments": {
     "req1": "Minimum 8 characters",

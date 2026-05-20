@@ -73,9 +73,9 @@ class _SignUpNewState extends State<SignUpNew> {
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content:
-            Text('Location services are disabled. Please enable the services'),
+            Text('signUp.locationDisabled'.tr()),
       ));
       return false;
     }
@@ -83,16 +83,16 @@ class _SignUpNewState extends State<SignUpNew> {
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-          content: Text('Location permissions are denied'),
+        ScaffoldMessenger.of(context).showSnackBar( SnackBar(
+          content: Text('signUp.locationDenied'.tr()),
         ));
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(
         content: Text(
-            'Location permissions are permanently denied, we cannot request permissions.'),
+            'signUp.locationDeniedForever'.tr()),
       ));
       return false;
     }
@@ -209,7 +209,7 @@ class _SignUpNewState extends State<SignUpNew> {
   Future<void> _sendPhoneOtp(SignUpViewModel vm) async {
     if (!_hasValidPhone(vm)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a valid phone number')),
+         SnackBar(content: Text('signUp.validPhone'.tr())),
       );
       return;
     }
@@ -233,13 +233,13 @@ class _SignUpNewState extends State<SignUpNew> {
       FocusScope.of(context).requestFocus(_phoneOtpFocusNode);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Phone OTP sent successfully')),
+        SnackBar(content: Text('signUp.phoneOtpSent'.tr()),),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            vm.errorMessage.isNotEmpty ? vm.errorMessage : 'Failed to send phone OTP',
+            vm.errorMessage.isNotEmpty ? vm.errorMessage : 'signUp.failedPhoneOtp'.tr()
           ),
         ),
       );
@@ -249,7 +249,7 @@ class _SignUpNewState extends State<SignUpNew> {
   Future<void> _sendEmailOtp(SignUpViewModel vm) async {
     if (!_hasValidEmail(vm)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a valid email address')),
+         SnackBar(content: Text('signUp.validEmail'.tr())),
       );
       return;
     }
@@ -273,13 +273,13 @@ class _SignUpNewState extends State<SignUpNew> {
       FocusScope.of(context).requestFocus(_emailOtpFocusNode);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email OTP sent successfully')),
+         SnackBar(content: Text('signUp.emailOtpSent'.tr())),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            vm.errorMessage.isNotEmpty ? vm.errorMessage : 'Failed to send email OTP',
+            vm.errorMessage.isNotEmpty ? vm.errorMessage :  'signUp.failedEmailOtp'.tr(),
           ),
         ),
       );
@@ -300,7 +300,7 @@ class _SignUpNewState extends State<SignUpNew> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          _phoneOtpVerified ? 'Phone number verified' : 'Invalid phone OTP',
+          _phoneOtpVerified ? 'signUp.phoneVerified'.tr() : 'signUp.invalidPhoneOtp'.tr() ,
         ),
       ),
     );
@@ -320,7 +320,7 @@ class _SignUpNewState extends State<SignUpNew> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          _emailOtpVerified ? 'Email verified' : 'Invalid email OTP',
+          _emailOtpVerified ? 'signUp.emailVerified'.tr() : 'signUp.invalidEmailOtp'.tr(),
         ),
       ),
     );
@@ -527,8 +527,8 @@ class _SignUpNewState extends State<SignUpNew> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'Contact Verification',
-            style: getPrimarySemiBoldStyle(
+              'signUp.contactVerification'.tr(),
+              style: getPrimarySemiBoldStyle(
               color: const Color(0xff180C38),
               fontSize: 22,
             ),
@@ -538,7 +538,7 @@ class _SignUpNewState extends State<SignUpNew> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'Verify both your phone number and email address before continuing.',
+            'signUp.verifyPhoneAndEmail'.tr(),
             style: getPrimaryRegularStyle(
               color: const Color(0xFF8F9098),
               fontSize: 13,
@@ -548,7 +548,7 @@ class _SignUpNewState extends State<SignUpNew> {
         const Gap(20),
 
         _buildVerificationCard(
-          title: 'Phone Number',
+          title: 'signUp.phoneNumber'.tr(),
           icon: Icons.phone_outlined,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -564,7 +564,7 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
               const Gap(14),
               _buildActionButton(
-                text: _phoneOtpVerified ? 'Verified' : 'Send Phone OTP',
+                text: _phoneOtpVerified ? 'signUp.verified'.tr() : 'signUp.sendPhoneOtp'.tr(),
                 loading: _sendingPhoneOtp,
                 enabled: !_phoneOtpVerified,
                 onTap: () => _sendPhoneOtp(signupViewModel),
@@ -595,7 +595,7 @@ class _SignUpNewState extends State<SignUpNew> {
         const Gap(16),
 
         _buildVerificationCard(
-          title: 'Email Address',
+          title: 'signUp.emailAddress'.tr(),
           icon: Icons.email_outlined,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -613,7 +613,7 @@ class _SignUpNewState extends State<SignUpNew> {
               ),
               const Gap(14),
               _buildActionButton(
-                text: _emailOtpVerified ? 'Verified' : 'Send Email OTP',
+                text: _emailOtpVerified ? 'signUp.verified'.tr() : 'signUp.sendEmailOtp'.tr(),
                 loading: _sendingEmailOtp,
                 enabled: !_emailOtpVerified,
                 onTap: () => _sendEmailOtp(signupViewModel),
@@ -647,9 +647,9 @@ class _SignUpNewState extends State<SignUpNew> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
-              _buildStatusChip('Phone', _phoneOtpVerified),
+              _buildStatusChip('signUp.phoneNumber'.tr(), _phoneOtpVerified),
               const SizedBox(width: 10),
-              _buildStatusChip('Email', _emailOtpVerified),
+              _buildStatusChip('signUp.emailAddress'.tr(), _emailOtpVerified),
             ],
           ),
         ),
@@ -1214,7 +1214,7 @@ class _SignUpNewState extends State<SignUpNew> {
                 validator: (val) => signupViewModel.signUpErrors[
                     context.resources.strings.formKeys['address_label']!],
                 errorText: signupViewModel.signUpErrors[
-                    context.resources.strings.formKeys['address_label']!],
+                    context.resources.strings.formKeys['address_label']??''],
                 keyboardType: TextInputType.text,
               ),
             ],
@@ -1383,7 +1383,7 @@ class _SignUpNewState extends State<SignUpNew> {
                     const Gap(40),
                     // Title.
                     Text(
-                      "Let’s get things done!",
+                      'signUp.letsGetThingsDone'.tr(),
                       style: getPrimaryBoldStyle(
                         fontSize: 22,
                         color: Colors.white,
@@ -1391,7 +1391,7 @@ class _SignUpNewState extends State<SignUpNew> {
                     ),
                     const Gap(10),
                     Text(
-                      "Enter you’re email and set up a password",
+                      'signUp.enterYourEmailAndPassword'.tr(),
                       style: getPrimaryRegularStyle(
                         fontSize: 14,
                         color: Colors.white,
@@ -1442,8 +1442,8 @@ class _SignUpNewState extends State<SignUpNew> {
                           onPressed: () async {
                             if (_currentStep == 1 && !_canProceedFromContactStep) {
                               ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text('Please verify both phone number and email'),
+                                 SnackBar(
+                                  content: Text('signUp.verifyBoth'.tr()),
                                 ),
                               );
                               return;
@@ -1468,8 +1468,8 @@ class _SignUpNewState extends State<SignUpNew> {
                               if (await signupViewModel.validate(
                                   index: _currentStep)) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Sign Up Complete!')),
+                                   SnackBar(
+                                      content: Text('signUp.signUpComplete'.tr())),
                                 );
                                 Navigator.of(context).push(
                                   MaterialPageRoute(
@@ -1479,9 +1479,9 @@ class _SignUpNewState extends State<SignUpNew> {
                                 );
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
+                                   SnackBar(
                                       content: Text(
-                                          'Please fill in all required fields')),
+                                          'signUp.fillRequiredFields'.tr())),
                                 );
                               }
                             }
@@ -1492,8 +1492,8 @@ class _SignUpNewState extends State<SignUpNew> {
                           },
                           child: Text(
                             _currentStep == _totalSteps - 1
-                                ? "Complete"
-                                : "Next",
+                                ? 'button.complete'.tr()
+                                : 'button.next'.tr(),
                             style: getPrimaryBoldStyle(
                                 fontSize: 16, color: Colors.white),
                           ),
@@ -1607,7 +1607,7 @@ class _SignUpNewState extends State<SignUpNew> {
           ),
           const SizedBox(width: 6),
           Text(
-            '$label ${verified ? "Verified" : "Pending"}',
+            '$label ${verified ? 'signUp.verified'.tr() : 'signUp.pending'.tr()}',
             style: getPrimarySemiBoldStyle(
               fontSize: 12,
               color: verified ? const Color(0xFF34A853) : const Color(0xFF8F9098),
@@ -1703,7 +1703,7 @@ class _SignUpNewState extends State<SignUpNew> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Enter the 4-digit code',
+          'signUp.enter4DigitCode'.tr(),
           style: getPrimaryRegularStyle(
             fontSize: 13,
             color: const Color(0xFF8F9098),
@@ -1721,7 +1721,7 @@ class _SignUpNewState extends State<SignUpNew> {
           GestureDetector(
             onTap: resending ? null : onResend,
             child: Text(
-              resending ? 'Sending...' : 'Resend',
+              resending ? 'signUp.sending'.tr() : 'signUp.resend'.tr(),
               style: getPrimarySemiBoldStyle(
                 fontSize: 13,
                 color: const Color(0xff4100E3),

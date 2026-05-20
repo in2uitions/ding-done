@@ -15,6 +15,11 @@
   "map": {
     "map": "ο χάρτης"
   },
+  "onBoarding": {
+    "theSmarterWay": "Ο πιο έξυπνος τρόπος",
+    "toGetThingsDone": "για να γίνονται οι δουλειές",
+    "getStarted": "Ξεκινήστε"
+  },
   "button": {
     "submit": "Υποβολή",
     "cancel": "Ακύρωση",
@@ -525,7 +530,39 @@
     "company": "Εταιρεία",
     "companyId": "Αριθμός Εταιρείας",
     "selectYourSkills": "Επιλέξτε τις δεξιότητές σας",
-    "identificationCard": "Ανεβάστε την ταυτότητά σας"
+    "identificationCard": "Ανεβάστε την ταυτότητά σας",
+    "letsGetThingsDone": "Ας κάνουμε τα πράγματα να γίνουν!",
+    "contactVerification": "Επαλήθευση Επικοινωνίας",
+    "verifyPhoneAndEmail": "Επαληθεύστε τόσο τον αριθμό τηλεφώνου όσο και τη διεύθυνση email πριν συνεχίσετε.",
+    "phoneNumber": "Αριθμός Τηλεφώνου",
+    "emailAddress": "Διεύθυνση Email",
+    "sendPhoneOtp": "Αποστολή OTP Τηλεφώνου",
+    "sendEmailOtp": "Αποστολή OTP Email",
+    "verified": "Επαληθεύτηκε",
+    "pending": "Σε αναμονή",
+    "enter4DigitCode": "Εισάγετε τον 4ψήφιο κωδικό",
+    "resend": "Επανάληψη αποστολής",
+    "sending": "Αποστολή...",
+    "phoneVerified": "Ο αριθμός τηλεφώνου επαληθεύτηκε",
+    "emailVerified": "Το email επαληθεύτηκε",
+    "invalidPhoneOtp": "Μη έγκυρο OTP τηλεφώνου",
+    "invalidEmailOtp": "Μη έγκυρο OTP email",
+    "phoneOtpSent": "Το OTP τηλεφώνου στάλθηκε με επιτυχία",
+    "emailOtpSent": "Το OTP email στάλθηκε με επιτυχία",
+    "failedPhoneOtp": "Αποτυχία αποστολής OTP τηλεφώνου",
+    "failedEmailOtp": "Αποτυχία αποστολής OTP email",
+    "verifyBoth": "Παρακαλώ επαληθεύστε και το τηλέφωνο και το email",
+    "signUpComplete": "Η εγγραφή ολοκληρώθηκε!",
+    "fillRequiredFields": "Παρακαλώ συμπληρώστε όλα τα απαιτούμενα πεδία",
+    "currentLocation": "Τρέχουσα Τοποθεσία",
+    "locationDisabled": "Οι υπηρεσίες τοποθεσίας είναι απενεργοποιημένες. Παρακαλώ ενεργοποιήστε τις υπηρεσίες",
+    "locationDenied": "Οι άδειες τοποθεσίας απορρίφθηκαν",
+    "locationDeniedForever": "Οι άδειες τοποθεσίας απορρίφθηκαν μόνιμα, δεν μπορούμε να ζητήσουμε ξανά άδειες.",
+    "validPhone": "Παρακαλώ εισάγετε έγκυρο αριθμό τηλεφώνου",
+    "validEmail": "Παρακαλώ εισάγετε έγκυρη διεύθυνση email",
+    "enterYourEmailAndPassword": "Εισάγετε τα στοιχεία σας για να συνεχίσετε",
+    "chooseCategory": "Επιλέξτε την κατηγορία σας",
+    "selectCategoryFirst": "Παρακαλώ επιλέξτε πρώτα μια κατηγορία"
   },
   "passRequirments": {
     "req1": "Ελάχιστο 8 χαρακτήρες",

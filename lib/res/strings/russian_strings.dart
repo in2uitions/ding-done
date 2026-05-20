@@ -12,6 +12,7 @@ class RussianStrings extends Strings {
     'country': 'country',
 
     'street_number': 'street_number',
+    'address_label': 'address_label',
     'building_number': 'building_number',
     'apartment_number': 'apartment_number',
     'city': 'city',
@@ -36,6 +37,7 @@ class RussianStrings extends Strings {
     'first_name': 'First Name',
     'last_name': 'Last Name',
     'street_name': 'Street Name',
+    'address_label': 'Address Label',
     'floor': 'Floor',
     'zone': 'Zone',
     'country': 'Country',

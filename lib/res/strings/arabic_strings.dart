@@ -12,6 +12,7 @@ class ArabicStrings extends Strings {
     'country': 'country',
 
     'street_number': 'street_number',
+    'address_label': 'address_label',
     'building_number': 'building_number',
     'apartment_number': 'apartment_number',
     'city': 'city',
@@ -39,6 +40,7 @@ class ArabicStrings extends Strings {
     'floor': 'Floor',
     'zone': 'Zone',
     'country': 'Country',
+    'address_label': 'Address Label',
 
     'street_number': 'Street Number',
     'building_number': 'Building Number',

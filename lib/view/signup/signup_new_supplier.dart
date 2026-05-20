@@ -102,9 +102,9 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   Future<bool> _handleLocationPermission() async {
     bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(
           content: Text(
-              'Location services are disabled. Please enable the services')));
+              'signUp.locationDisabled'.tr())));
       return false;
     }
     LocationPermission permission = await Geolocator.checkPermission();
@@ -112,14 +112,14 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       permission = await Geolocator.requestPermission();
       if (permission == LocationPermission.denied) {
         ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Location permissions are denied')));
+             SnackBar(content: Text('signUp.locationDenied'.tr())));
         return false;
       }
     }
     if (permission == LocationPermission.deniedForever) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      ScaffoldMessenger.of(context).showSnackBar( SnackBar(
           content: Text(
-              'Location permissions are permanently denied, we cannot request permissions.')));
+              'signUp.locationDeniedForever'.tr())));
       return false;
     }
     return true;
@@ -332,7 +332,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   Future<void> _sendPhoneOtp(SignUpViewModel vm) async {
     if (!_hasValidPhone(vm)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a valid phone number')),
+         SnackBar(content: Text('signUp.validPhone'.tr())),
       );
       return;
     }
@@ -355,11 +355,11 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       FocusScope.of(context).requestFocus(_phoneOtpFocusNode);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Phone OTP sent successfully')),
+         SnackBar(content: Text('signUp.phoneOtpSent'.tr())),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(vm.errorMessage.isNotEmpty ? vm.errorMessage : 'Failed to send phone OTP')),
+        SnackBar(content: Text(vm.errorMessage.isNotEmpty ? vm.errorMessage : 'signUp.failedPhoneOtp'.tr())),
       );
     }
   }
@@ -367,7 +367,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   Future<void> _sendEmailOtp(SignUpViewModel vm) async {
     if (!_hasValidEmail(vm)) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please enter a valid email address')),
+         SnackBar(content: Text('signUp.validEmail'.tr())),
       );
       return;
     }
@@ -390,11 +390,11 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       FocusScope.of(context).requestFocus(_emailOtpFocusNode);
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Email OTP sent successfully')),
+         SnackBar(content: Text('signUp.emailOtpSent'.tr())),
       );
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(vm.errorMessage.isNotEmpty ? vm.errorMessage : 'Failed to send email OTP')),
+        SnackBar(content: Text(vm.errorMessage.isNotEmpty ? vm.errorMessage : 'signUp.failedEmailOtp'.tr())),
       );
     }
   }
@@ -412,7 +412,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          _phoneOtpVerified ? 'Phone number verified' : 'Invalid phone OTP',
+          _phoneOtpVerified ? 'signUp.phoneVerified'.tr():'signUp.invalidPhoneOtp'.tr(),
         ),
       ),
     );
@@ -432,7 +432,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text(
-          _emailOtpVerified ? 'Email verified' : 'Invalid email OTP',
+          _emailOtpVerified ? 'signUp.emailVerified'.tr() :'signUp.invalidEmailOtp'.tr(),
         ),
       ),
     );
@@ -743,7 +743,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'Contact Verification',
+              'signUp.contactVerification'.tr(),
             style: getPrimarySemiBoldStyle(
               color: const Color(0xff180C38),
               fontSize: 22,
@@ -754,7 +754,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Text(
-            'Verify both your phone number and email address before continuing.',
+          'signUp.verifyPhoneAndEmail'.tr(),
             style: getPrimaryRegularStyle(
               color: const Color(0xFF8F9098),
               fontSize: 13,
@@ -764,7 +764,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
         const Gap(20),
 
         _buildVerificationCard(
-          title: 'Phone Number',
+          title: 'signUp.phoneNumber'.tr(),
           icon: Icons.phone_outlined,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -780,7 +780,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
               const Gap(14),
               _buildActionButton(
-                text: _phoneOtpVerified ? 'Verified' : 'Send Phone OTP',
+                text: _phoneOtpVerified ? 'signUp.verified'.tr() : 'signUp.sendPhoneOtp'.tr(),
                 loading: _sendingPhoneOtp,
                 enabled: !_phoneOtpVerified,
                 onTap: () => _sendPhoneOtp(signupViewModel),
@@ -811,7 +811,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
         const Gap(16),
 
         _buildVerificationCard(
-          title: 'Email Address',
+          title: 'signUp.emailAddress'.tr(),
           icon: Icons.email_outlined,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -825,7 +825,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
               ),
               const Gap(14),
               _buildActionButton(
-                text: _emailOtpVerified ? 'Verified' : 'Send Email OTP',
+                text: _emailOtpVerified ? 'signUp.verified'.tr() : 'signUp.sendEmailOtp'.tr(),
                 loading: _sendingEmailOtp,
                 enabled: !_emailOtpVerified,
                 onTap: () => _sendEmailOtp(signupViewModel),
@@ -859,9 +859,9 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             children: [
-              _buildStatusChip('Phone', _phoneOtpVerified),
+              _buildStatusChip('signUp.phoneNumber'.tr(), _phoneOtpVerified),
               const SizedBox(width: 10),
-              _buildStatusChip('Email', _emailOtpVerified),
+              _buildStatusChip('signUp.emailAddress'.tr(), _emailOtpVerified),
             ],
           ),
         ),
@@ -1079,7 +1079,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                                       : 0,
                             ),
                             infoWindow:
-                                const InfoWindow(title: 'Current Location'),
+                                 InfoWindow(title:'signUp.currentLocation'.tr()),
                           )
                         },
                         myLocationButtonEnabled: false,
@@ -1363,7 +1363,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                 validator: (val) => signupViewModel.signUpErrors[
                     context.resources.strings.formKeys['address_label']!],
                 errorText: signupViewModel.signUpErrors[
-                    context.resources.strings.formKeys['address_label']!],
+                    context.resources.strings.formKeys['address_label']??''],
                 keyboardType: TextInputType.text,
               ),
             ],
@@ -1417,7 +1417,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                 child: SizedBox(
                   width: context.appValues.appSizePercent.w100,
                   child: Text(
-                    'Choose your category',
+                    'signUp.chooseCategory'.tr(),
                     style: getPrimarySemiBoldStyle(
                       color: const Color(0xff180C38),
                       fontSize: 22,
@@ -1509,7 +1509,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
             Padding(
               padding: const EdgeInsets.all(20),
               child: Text(
-                'Please select a category first.',
+                'signUp.selectCategoryFirst'.tr(),
                 style: getPrimaryRegularStyle(
                   color: const Color(0xff180C38),
                   fontSize: 14,
@@ -1648,13 +1648,13 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                     _buildStepIndicator(),
                     const Gap(40),
                     Text(
-                      "Let’s get things done!",
+                      'signUp.letsGetThingsDone'.tr(),
                       style: getPrimarySemiBoldStyle(
                           fontSize: 22, color: Colors.white),
                     ),
                     const Gap(10),
                     Text(
-                      "Enter your details to proceed",
+                      'signUp.enterYourEmailAndPassword'.tr(),
                       style: getPrimaryRegularStyle(
                           fontSize: 14, color: Colors.white),
                     ),
@@ -1706,8 +1706,8 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
 
                               if (!isValidForm) {
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text('Please fill in all required fields')),
+                                   SnackBar(
+                                      content: Text('signUp.fillRequiredFields'.tr())),
                                 );
                                 return;
                               }
@@ -1716,7 +1716,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                                   context: context,
                                   builder: (context) => _buildPopupDialog(
                                     context,
-                                    'Please choose a category first.',
+                                    'signUp.selectCategoryFirst'.tr(),
                                   ),
                                 );
                                 return;
@@ -1734,8 +1734,8 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
                             },
                             child: Text(
                               _currentStep == pages.length - 1
-                                  ? "Complete"
-                                  : "Next",
+                                  ? 'button.complete'.tr()
+                                  : 'button.next'.tr(),
                               style: getPrimarySemiBoldStyle(
                                   fontSize: 16, color: Colors.white),
                             ),
@@ -1850,7 +1850,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
           ),
           const SizedBox(width: 6),
           Text(
-            '$label ${verified ? "Verified" : "Pending"}',
+            '$label ${verified ? 'signUp.verified'.tr() : 'signUp.pending'.tr()}',
             style: getPrimaryMediumStyle(
               fontSize: 12,
               color: verified ? const Color(0xFF34A853) : const Color(0xFF8F9098),
@@ -1956,7 +1956,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Enter the 4-digit code',
+          'signUp.enter4DigitCode'.tr(),
           style: getPrimaryRegularStyle(
             fontSize: 13,
             color: const Color(0xFF8F9098),
@@ -1974,7 +1974,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
           GestureDetector(
             onTap: resending ? null : onResend,
             child: Text(
-              resending ? 'Sending...' : 'Resend',
+              resending ? 'signUp.sending'.tr() : 'signUp.resend'.tr(),
               style: getPrimarySemiBoldStyle(
                 fontSize: 13,
                 color: const Color(0xff4100E3),

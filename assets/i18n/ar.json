@@ -15,6 +15,11 @@
   "map": {
     "map": "الخريطة"
   },
+  "onBoarding": {
+    "theSmarterWay": "الطريقة الأذكى",
+    "toGetThingsDone": "لإنجاز المهام",
+    "getStarted": "ابدأ الآن"
+  },
   "button": {
     "submit": "إرسال",
     "cancel": "إلغاء",
@@ -521,7 +526,39 @@
     "company": "شركة",
     "companyId": "معرف الشركة",
     "selectYourSkills": "اختر مهاراتك",
-    "identificationCard": "قم بتحميل معرفك"
+    "identificationCard": "قم بتحميل معرفك",
+    "letsGetThingsDone": "لننجز الأمور!",
+    "enterYourEmailAndPassword": "أدخل بياناتك للمتابعة",
+    "contactVerification": "التحقق من معلومات التواصل",
+    "verifyPhoneAndEmail": "قم بالتحقق من رقم الهاتف والبريد الإلكتروني قبل المتابعة.",
+    "phoneNumber": "رقم الهاتف",
+    "emailAddress": "البريد الإلكتروني",
+    "sendPhoneOtp": "إرسال رمز التحقق للهاتف",
+    "sendEmailOtp": "إرسال رمز التحقق للبريد الإلكتروني",
+    "verified": "تم التحقق",
+    "pending": "قيد الانتظار",
+    "enter4DigitCode": "أدخل الرمز المكون من 4 أرقام",
+    "resend": "إعادة الإرسال",
+    "sending": "جارٍ الإرسال...",
+    "phoneVerified": "تم التحقق من رقم الهاتف",
+    "emailVerified": "تم التحقق من البريد الإلكتروني",
+    "invalidPhoneOtp": "رمز التحقق للهاتف غير صحيح",
+    "invalidEmailOtp": "رمز التحقق للبريد الإلكتروني غير صحيح",
+    "phoneOtpSent": "تم إرسال رمز التحقق للهاتف بنجاح",
+    "emailOtpSent": "تم إرسال رمز التحقق للبريد الإلكتروني بنجاح",
+    "failedPhoneOtp": "فشل إرسال رمز التحقق للهاتف",
+    "failedEmailOtp": "فشل إرسال رمز التحقق للبريد الإلكتروني",
+    "verifyBoth": "يرجى التحقق من رقم الهاتف والبريد الإلكتروني",
+    "signUpComplete": "اكتمل التسجيل!",
+    "fillRequiredFields": "يرجى تعبئة جميع الحقول المطلوبة",
+    "currentLocation": "الموقع الحالي",
+    "locationDisabled": "خدمات الموقع معطلة. يرجى تفعيلها",
+    "locationDenied": "تم رفض صلاحيات الموقع",
+    "locationDeniedForever": "تم رفض صلاحيات الموقع بشكل دائم، لا يمكننا طلب الصلاحيات مرة أخرى.",
+    "validPhone": "يرجى إدخال رقم هاتف صالح",
+    "validEmail": "يرجى إدخال بريد إلكتروني صالح",
+    "chooseCategory": "اختر الفئة الخاصة بك",
+    "selectCategoryFirst": "يرجى اختيار فئة أولاً"
   },
   "passRequirments": {
     "req1": "الحد الأدنى 8 أحرف",

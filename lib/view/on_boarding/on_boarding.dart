@@ -3,6 +3,7 @@ import 'package:dingdone/view/login/login.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:dingdone/view_model/on_boarding_view_model/on_boarding_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/data/remote/response/Status.dart';
 import 'package:dingdone/models/on_boarding_model.dart';
@@ -70,7 +71,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
                         // "The smarter way"
                         Text(
-                          "The smarter way",
+                          'onBoarding.theSmarterWay'.tr(),
                           style: const TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 25,
@@ -83,7 +84,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
 
                         // "to get things done"
                         Text(
-                          "to get things done",
+                          'onBoarding.toGetThingsDone'.tr(),
                           style: const TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 25,
@@ -118,8 +119,8 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                             MaterialPageRoute(builder: (_) => const LoginScreen()),
                           );
                         },
-                        child: const Text(
-                          "Get Started",
+                        child:  Text(
+                          'onBoarding.getStarted'.tr(),
                           style: TextStyle(
                             fontFamily: "Poppins",
                             fontSize: 18,

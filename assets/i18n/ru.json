@@ -15,6 +15,11 @@
   "map": {
     "map": "карта"
   },
+  "onBoarding": {
+    "theSmarterWay": "Более умный способ",
+    "toGetThingsDone": "решать задачи",
+    "getStarted": "Начать"
+  },
   "button": {
     "submit": "Отправить",
     "cancel": "Отменить",
@@ -523,7 +528,39 @@
     "company": "Компания",
     "companyId": "Идентификационный номер компании",
     "selectYourSkills": "Выберите ваши навыки",
-    "identificationCard": "Загрузите свой идентификатор"
+    "identificationCard": "Загрузите свой идентификатор",
+    "letsGetThingsDone": "Давайте сделаем дело!",
+    "enterYourEmailAndPassword": "Введите свои данные, чтобы продолжить",
+    "contactVerification": "Проверка контактов",
+    "verifyPhoneAndEmail": "Подтвердите номер телефона и адрес электронной почты перед продолжением.",
+    "phoneNumber": "Номер телефона",
+    "emailAddress": "Электронная почта",
+    "sendPhoneOtp": "Отправить код на телефон",
+    "sendEmailOtp": "Отправить код на email",
+    "verified": "Подтверждено",
+    "pending": "В ожидании",
+    "enter4DigitCode": "Введите 4-значный код",
+    "resend": "Отправить повторно",
+    "sending": "Отправка...",
+    "phoneVerified": "Номер телефона подтвержден",
+    "emailVerified": "Email подтвержден",
+    "invalidPhoneOtp": "Неверный код телефона",
+    "invalidEmailOtp": "Неверный код email",
+    "phoneOtpSent": "Код для телефона успешно отправлен",
+    "emailOtpSent": "Код для email успешно отправлен",
+    "failedPhoneOtp": "Не удалось отправить код для телефона",
+    "failedEmailOtp": "Не удалось отправить код для email",
+    "verifyBoth": "Пожалуйста, подтвердите телефон и email",
+    "signUpComplete": "Регистрация завершена!",
+    "fillRequiredFields": "Пожалуйста, заполните все обязательные поля",
+    "currentLocation": "Текущее местоположение",
+    "locationDisabled": "Службы геолокации отключены. Пожалуйста, включите их",
+    "locationDenied": "Доступ к геолокации запрещен",
+    "locationDeniedForever": "Доступ к геолокации был запрещен навсегда, мы не можем снова запросить разрешение.",
+    "validPhone": "Пожалуйста, введите действительный номер телефона",
+    "validEmail": "Пожалуйста, введите действительный адрес электронной почты",
+    "chooseCategory": "Выберите вашу категорию",
+    "selectCategoryFirst": "Пожалуйста, сначала выберите категорию"
   },
   "passRequirments": {
     "req1": "Минимум 8 символов",
