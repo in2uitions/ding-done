@@ -27,6 +27,7 @@ import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
+import '../widgets/translate/translate_text_section.dart';
 import '../widgets/update_job_request_customer/actual_end_time_widget.dart';
 
 class JobDetailsSupplier extends StatefulWidget {
@@ -313,8 +314,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                     0,
                                     context.appValues.appPadding.p0,
                                     0),
-                                child: Text(
-                                  widget.title,
+                                child: TranslateTextSection(
+                                  text: widget.title?.toString() ?? '',
                                   style: getPrimaryRegularStyle(
                                     fontSize: 14,
                                     color: const Color(0xff71727A),
@@ -372,10 +373,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                             }
                                           }
 
-                                          // Display the description if found, otherwise fallback to default
-                                          return Text(
-                                            description ??
-                                                'No description available', // Fallback text if no matching translation is found
+                                          return TranslateTextSection(
+                                            text: description ??
+                                                'No description available',
                                             style: getPrimaryRegularStyle(
                                               fontSize: 14,
                                               color: const Color(0xff71727A),

@@ -263,6 +263,52 @@ class ProfileRepository {
     }
   }
 
+  Future<void> clearSupplierServicesField(int supplierId) async {
+    // `supplier_services` is a relation field inside the `supplier_info` record.
+    // Clearing it to an empty array is the “start from scratch” behavior.
+    debugPrint('clearSupplierServicesField: clearing supplier_services for supplier_info=$supplierId');
+    final response = await _apiSupplierProfile.patchResponse(
+      id: supplierId,
+      data: {'supplier_services': []},
+    );
+    debugPrint('clearSupplierServicesField: response=${response.runtimeType}');
+  }
+
+  Future<dynamic> replaceProfileServices(
+    int supplierId,
+    List<int> serviceIds,
+  ) async {
+    final uniqueServiceIds = serviceIds.toSet().toList();
+    debugPrint('replaceProfileServices: supplier_info=$supplierId uniqueServiceIds=${uniqueServiceIds.length} => $uniqueServiceIds');
+
+    // 1) Clear everything.
+    await clearSupplierServicesField(supplierId);
+
+    // 2) Re-create only the selected ones.
+    if (uniqueServiceIds.isEmpty) {
+      return {'supplier_services': []};
+    }
+
+    final createPayload = uniqueServiceIds
+        .map((serviceId) => {
+              // Directus join payload shape (supplier_services items)
+              'supplier_info_id': supplierId,
+              'services_id': serviceId,
+            })
+        .toList();
+
+    debugPrint('replaceProfileServices: createPayload sample=${createPayload.isNotEmpty ? createPayload.first : {}}');
+
+    final response = await _apiSupplierProfile.patchResponse(
+      id: supplierId,
+      data: {
+        'supplier_services': createPayload,
+      },
+    );
+
+    return response['data'];
+  }
+
   Future<String> getUserId() async {
     try {
       // String? token =

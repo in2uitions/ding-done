@@ -73,14 +73,13 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
       widget.profileViewModel.getProfileBody["supplier_services"];
       debugPrint('supp services length ${supplierServices.length}');
       if (supplierServices is List) {
-        // Map and cast service IDs to int
         selectedServices = supplierServices
-            .map((service) =>
-        service["services_id"]?['id'] as int) // Explicitly cast to int
-            .where((id) => id != null) // Ensure no null values are added
+            .map((service) => service['services_id']?['id'] as int?)
+            .whereType<int>()
+            .toSet()
             .toList();
       } else {
-        selectedServices = []; // Default to an empty list if not a list
+        selectedServices = [];
       }
 
       isLoading = false; // Set loading to false after fetching
@@ -170,7 +169,9 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
                                 setState(() {
                                   final id = svc['id'] as int;
                                   if (checked) {
-                                    selectedServices.add(id);
+                                    if (!selectedServices.contains(id)) {
+                                      selectedServices.add(id);
+                                    }
                                   } else {
                                     selectedServices.remove(id);
                                   }

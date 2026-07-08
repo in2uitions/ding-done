@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:map_location_picker/map_location_picker.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+import '../translate/translate_text_section.dart';
+
 class AddressWidget extends StatefulWidget {
   var address;
 
@@ -204,8 +206,9 @@ class _AddressWidgetState extends State<AddressWidget> {
         children: [
 
           /// Address Text (NOT clickable anymore)
-          Text(
-            '${widget.address['country'] != null ? 'formHints.area'.tr():''} ${widget.address['country'] != null ? ':':''} ${widget.address['country'] is Map<String,dynamic>?widget.address['country']["name"]:widget.address['country'] ?? ''} \n'
+          TranslateTextSection(
+            text:
+                '${widget.address['country'] != null ? 'formHints.area'.tr():''} ${widget.address['country'] != null ? ':':''} ${widget.address['country'] is Map<String,dynamic>?widget.address['country']["name"]:widget.address['country'] ?? ''} \n'
                 '${widget.address['street_number'] != null ? 'formHints.street'.tr():''} ${widget.address['street_number'] != null ? ':':''} ${widget.address['street_number'] ?? ''} \n'
                 '${widget.address['building_number'] != null ? 'formHints.building'.tr():''} ${widget.address['building_number'] != null ? ':':''} ${widget.address['building_number'] ?? ''} \n'
                 '${widget.address['floor'] != null ? 'formHints.floor'.tr():''} ${widget.address['floor'] != null ? ':':''} ${widget.address['floor'] ?? ''} \n'

@@ -84,28 +84,31 @@ class ProfileViewModel extends DisposableViewModel {
 
   Future<bool>? patchProfileServices() async {
     try {
-      debugPrint('patching Selected services $_selectedServices');
-      if(_selectedServices!.isNotEmpty){
-        dynamic response = await _homeRepository.patchProfileServices(
-          profileBody["id"],
-          {
-            "supplier_services": _selectedServices?.map((serviceId) {
-              return {"services_id": serviceId};
-            }).toList(),
-          },
-        );
-        debugPrint('response ${response}');
-        // profileBody=response;
-        notifyListeners();
+      final uniqueServiceIds = (_selectedServices ?? [])
+          .map((id) => id is int ? id : int.tryParse(id.toString()))
+          .whereType<int>()
+          .toSet()
+          .toList();
 
-        return true;
-      }else{
-        return false;
+      final supplierId = profileBody['id'];
+      if (supplierId == null) return false;
 
-      }
+      debugPrint(
+        'replacing supplier services from scratch with $uniqueServiceIds',
+      );
 
+      await _homeRepository.replaceProfileServices(
+        supplierId is int ? supplierId : int.parse(supplierId.toString()),
+        uniqueServiceIds,
+      );
+
+      _selectedServices = uniqueServiceIds;
+      await getProfiledata();
+      notifyListeners();
+
+      return true;
     } catch (error) {
-      // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
+      debugPrint('error patching profile services $error');
       notifyListeners();
       return false;
     }
@@ -113,7 +116,15 @@ class ProfileViewModel extends DisposableViewModel {
 
   Future<void> setSelectedServices(dynamic services) async {
     try {
-      _selectedServices = services;
+      if (services is List) {
+        _selectedServices = services
+            .map((id) => id is int ? id : int.tryParse(id.toString()))
+            .whereType<int>()
+            .toSet()
+            .toList();
+      } else {
+        _selectedServices = services;
+      }
       notifyListeners();
     } catch (error) {
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());

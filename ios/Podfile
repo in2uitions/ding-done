@@ -58,5 +58,20 @@ post_install do |installer|
         config.build_settings['GCC_PREPROCESSOR_DEFINITIONS'] << 'ONESIGNAL_EXCLUDE_FACEBOOK_SUPPORT=1'
       end
     end
+
+    # go_sell_sdk_flutter excludes arm64 simulators, which breaks Xcode 26+ on Apple Silicon.
+    if target.name == 'go_sell_sdk_flutter'
+      target.build_configurations.each do |config|
+        config.build_settings['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = ''
+        config.build_settings['VALID_ARCHS[sdk=iphonesimulator*]'] = 'arm64 x86_64'
+      end
+    end
+  end
+
+  # Ensure simulator builds use arm64 after podspec overrides.
+  installer.aggregate_targets.each do |aggregate_target|
+    aggregate_target.xcconfigs.each do |config_name, config_file|
+      config_file.attributes['EXCLUDED_ARCHS[sdk=iphonesimulator*]'] = ''
+    end
   end
 end

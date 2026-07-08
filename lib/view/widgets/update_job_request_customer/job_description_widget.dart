@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 
 import '../full_screen_image/full_screen_image.dart';
+import '../translate/translate_text_section.dart';
 
 class JobDescriptionWidget extends StatefulWidget {
   var description;
@@ -96,8 +97,8 @@ class _JobDescriptionWidgetState extends State<JobDescriptionWidget> {
                   children: [
                     SizedBox(
                       width: context.appValues.appSizePercent.w40,
-                      child: Text(
-                        widget.description != null
+                      child: TranslateTextSection(
+                        text: widget.description != null
                             ? '${widget.description}'
                             : 'No Job Description',
                         maxLines: 5,

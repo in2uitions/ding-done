@@ -26,6 +26,7 @@ class EditAccount extends StatefulWidget {
 
 class _EditAccountState extends State<EditAccount> {
   dynamic image = {};
+  bool _isLoading = false;
 
   Future<void> _handleRefresh() async {
     try {
@@ -430,7 +431,12 @@ class _EditAccountState extends State<EditAccount> {
                                           height: context
                                               .appValues.appSizePercent.h100,
                                           child: ElevatedButton(
-                                            onPressed: () async {
+                                            onPressed: _isLoading
+                                                ? null
+                                                : () async {
+                                              setState(() {
+                                                _isLoading = true;
+                                              });
                                               if (await profileViewModel
                                                       .patchUserData(
                                                           profileViewModel
@@ -456,6 +462,9 @@ class _EditAccountState extends State<EditAccount> {
                                                               'button.failure'.tr(),
                                                         ));
                                               }
+                                              setState(() {
+                                                _isLoading = false;
+                                              });
                                             },
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor:
@@ -465,13 +474,24 @@ class _EditAccountState extends State<EditAccount> {
                                                     BorderRadius.circular(15),
                                               ),
                                             ),
-                                            child: Text(
-                                              'Save',
-                                              style: getPrimarySemiBoldStyle(
-                                                fontSize: 12,
-                                                color: Colors.white,
-                                              ),
-                                            ),
+                                            child: _isLoading
+                                                ? const SizedBox(
+                                                    width: 22,
+                                                    height: 22,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                      strokeWidth: 2,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    'Save',
+                                                    style:
+                                                        getPrimarySemiBoldStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
                                           ),
                                         ),
                                       ],
