@@ -20,6 +20,10 @@
     "toGetThingsDone": "لإنجاز المهام",
     "getStarted": "ابدأ الآن"
   },
+  "app_update": {
+    "title": "التحديث مطلوب",
+    "message": "يتوفر إصدار جديد من DingDone في المتجر. يرجى تحديث التطبيق للمتابعة."
+  },
   "button": {
     "submit": "إرسال",
     "cancel": "إلغاء",

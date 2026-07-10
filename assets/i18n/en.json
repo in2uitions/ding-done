@@ -17,6 +17,10 @@
     "toGetThingsDone": "to get things done",
     "getStarted": "Get Started"
   },
+  "app_update": {
+    "title": "Update Required",
+    "message": "A new version of DingDone is available on the store. Please update the app to continue."
+  },
   "button": {
     "submit": "Submit",
     "cancel": "Cancel",

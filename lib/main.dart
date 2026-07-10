@@ -9,6 +9,8 @@ import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart
 import 'package:dingdone/view/job_details_supplier/job_details_supplier.dart';
 import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:dingdone/view/update_job_request_customer/update_job_request_customer.dart';
+import 'package:dingdone/services/app_update_service.dart';
+import 'package:dingdone/view/widgets/custom/force_update_dialog.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -76,6 +78,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late StreamSubscription _sub;
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final FacebookAppEvents facebookAppEvents = FacebookAppEvents();
+  final AppUpdateService _appUpdateService = AppUpdateService();
+  bool _isUpdateDialogVisible = false;
 
   @override
   void initState() {
@@ -86,6 +90,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     getLanguage();
     initPlatformState();
     initialDeepLink();
+    // Wait until MaterialApp / navigator are ready, then check store version.
+    // Same path for debug and release.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Future<void>.delayed(const Duration(seconds: 2), _checkForAppUpdate);
+    });
   }
 
   @override
@@ -221,9 +230,52 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
       Adjust.onResume();
+      _checkForAppUpdate();
     } else if (state == AppLifecycleState.paused) {
       Adjust.onPause();
     }
+  }
+
+  Future<void> _checkForAppUpdate({int attempt = 0}) async {
+    if (_isUpdateDialogVisible || !mounted) return;
+
+    final updateAvailable = await _appUpdateService.isStoreUpdateAvailable();
+    debugPrint(
+      'AppUpdate: available=$updateAvailable '
+      'store=${_appUpdateService.lastStoreVersion} '
+      'installed=${_appUpdateService.lastCurrentVersion} '
+      'attempt=$attempt',
+    );
+
+    // Retry once if store version could not be read (common on slow release networks).
+    if (!updateAvailable &&
+        _appUpdateService.lastStoreVersion == null &&
+        attempt < 2) {
+      await Future<void>.delayed(const Duration(seconds: 2));
+      if (mounted) await _checkForAppUpdate(attempt: attempt + 1);
+      return;
+    }
+
+    if (!updateAvailable || !mounted) return;
+
+    final storeUrl = _appUpdateService.storeUrl;
+    if (storeUrl == null) {
+      debugPrint('AppUpdate: store URL missing, skipping dialog');
+      return;
+    }
+
+    final context = navigatorKey.currentContext;
+    if (context == null || !context.mounted) {
+      debugPrint('AppUpdate: navigator context not ready, retrying...');
+      if (attempt < 3) {
+        await Future<void>.delayed(const Duration(seconds: 1));
+        if (mounted) await _checkForAppUpdate(attempt: attempt + 1);
+      }
+      return;
+    }
+
+    _isUpdateDialogVisible = true;
+    showForceUpdateDialog(context, storeUrl: storeUrl);
   }
 
   Future<void> _requestTrackingPermission() async {
