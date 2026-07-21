@@ -816,63 +816,40 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     debugPrint(
                                                         'tap_payments_card ${widget.data.tap_payments_card}');
                                                     debugPrint(
-                                                        'from where ${ widget.fromWhere}');
- debugPrint(
-                                                        'from where ${ 'jobs.requestedJobs'.tr()}');
+                                                        'from where ${widget.fromWhere}');
+                                                    debugPrint(
+                                                        'from where ${'jobs.requestedJobs'.tr()}');
 
-                                                    widget.fromWhere ==
-                                                                'jobs.booked'.tr() ||
-                                                            widget.fromWhere ==
-
-                                                                    'jobs.requestedJobs'.tr()
-                                                        ? showDialog(
-                                                            context: context,
-                                                            builder: (BuildContext
-                                                                    context) =>
-                                                                _buildPopupDialog(
-                                                                    context,
-                                                                    jobsViewModel,
-                                                                    widget.data
-                                                                        .id,
-                                                                    widget
-                                                                        .fromWhere),
-                                                          )
-                                                        // : widget.fromWhere == translate('jobs.completed')
-                                                        //     ? (widget.fromWhere == translate('jobs.completed') &&
-                                                        //             !widget.data.is_paid)
-                                                        //         ? showDialog(
-                                                        //             context: context,
-                                                        //             builder:
-                                                        //                 (BuildContext context) =>
-                                                        //                     payFees(
-                                                        //                       context,
-                                                        //                       jobsViewModel,
-                                                        //                     ))
-                                                        //         : ''
-                                                        : widget.fromWhere ==
-
-                                                                    'jobs.active'.tr()
-                                                            ?
-                                                            // widget.data.payment_card!=null?
-                                                            // showDialog(
-                                                            //                 context: context,
-                                                            //                 builder: (BuildContext context) =>
-                                                            //                     payFees(
-                                                            //                         context, jobsViewModel))
-                                                            //             :showDialog(
-                                                            //     context: context,
-                                                            //     builder: (BuildContext context) =>
-                                                            //         simpleAlert(
-                                                            //             context, 'Make sure that you have payed by cash'))
-                                                            showDialog(
-                                                                context:
-                                                                    context,
-                                                                builder: (BuildContext
-                                                                        context) =>
-                                                                    review(
-                                                                        context,
-                                                                        jobsViewModel))
-                                                            : '';
+                                                    if (widget.fromWhere ==
+                                                            'jobs.booked'.tr() ||
+                                                        widget.fromWhere ==
+                                                            'jobs.requestedJobs'
+                                                                .tr()) {
+                                                      jobsViewModel
+                                                          .clearCancellationReason();
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            _buildPopupDialog(
+                                                          context,
+                                                          jobsViewModel,
+                                                          widget.data.id,
+                                                          widget.fromWhere,
+                                                        ),
+                                                      );
+                                                    } else if (widget.fromWhere ==
+                                                        'jobs.active'.tr()) {
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext
+                                                                context) =>
+                                                            review(
+                                                          context,
+                                                          jobsViewModel,
+                                                        ),
+                                                      );
+                                                    }
                                                     setState(() {
                                                       _isLoading = false;
                                                     });

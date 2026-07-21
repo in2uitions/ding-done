@@ -833,6 +833,7 @@ class _JobsCardsState extends State<JobsCards> {
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
+                                          jobsViewModel.clearCancellationReason();
                                           showDialog(
                                             context: context,
                                             builder: (BuildContext context) =>
@@ -1079,7 +1080,7 @@ class _JobsCardsState extends State<JobsCards> {
                     debugPrint('hello card $tab');
                     if (tab == 'jobs.booked'.tr() || tab == 'bookedJobs' ||
                         tab == 'jobs.requestedJobs'.tr()) {
-                      if (tab == 'jobs.booked'.tr() || tab == 'bookedJobs' ) {
+                      if (tab == 'jobs.booked'.tr() || tab == 'bookedJobs') {
                         if (await jobsViewModel.cancelJobWithPenalty(
                             job_id, '') ==
                             true) {

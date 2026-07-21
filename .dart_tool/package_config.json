@@ -309,7 +309,7 @@
     },
     {
       "name": "file_picker",
-      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/file_picker-10.3.10",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/file_picker-10.3.8",
       "packageUri": "lib/",
       "languageVersion": "3.4"
     },
@@ -1344,12 +1344,6 @@
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/signature-6.3.0",
       "packageUri": "lib/",
       "languageVersion": "3.7"
-    },
-    {
-      "name": "skeletons",
-      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/skeletons-0.0.3",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "sky_engine",

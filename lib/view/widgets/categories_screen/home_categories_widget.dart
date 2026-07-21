@@ -1,6 +1,6 @@
+import 'package:dingdone/view/widgets/custom/skeleton_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:skeletons/skeletons.dart';
 
 import '../../../models/roles_model.dart';
 import '../../../res/app_context_extension.dart';

@@ -296,15 +296,11 @@ class JobsRepository {
   Future<dynamic> postNewJobRequest(dynamic body) async {
     try {
       String currentUser = await getUserId();
-      // if(body["start_date"]==null){
-      //   DateTime date =DateTime.now();
-      //   String formattedDateTime = date.toIso8601String();
-      //   body["start_date"]=formattedDateTime;
-      // }
-      body["customer"] = currentUser;
-      debugPrint('jobs body issss $body');
-      // dynamic response = await _apiJobs.postResponse(data: body);
-      dynamic response = await _apiAddJob.postResponse(data: body);
+      final requestBody = Map<String, dynamic>.from(body);
+      requestBody.remove('cancellation_reason');
+      requestBody["customer"] = currentUser;
+      debugPrint('jobs body issss $requestBody');
+      dynamic response = await _apiAddJob.postResponse(data: requestBody);
       debugPrint('response adding new job ${response['status']}');
 
       // final jsonData = JobsModel.fromJson(response['data']);

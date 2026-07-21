@@ -7,6 +7,7 @@ import 'package:dingdone/repository/jobs/jobs_repository.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/data/remote/response/ApiResponse.dart';
 import 'package:intl/intl.dart';
@@ -181,6 +182,26 @@ class JobsViewModel with ChangeNotifier {
   void deleteInputValues({required String index}) {
     jobsBody.remove(index);
     notifyListeners();
+  }
+
+  void clearCancellationReason() {
+    jobsBody.remove('cancellation_reason');
+    _selectedReason = '';
+    selectedReason1 = null;
+    _showCustomTextArea = false;
+    notifyListeners();
+  }
+
+  String? get cancellationReason {
+    final bodyReason = jobsBody['cancellation_reason']?.toString().trim();
+    if (bodyReason != null && bodyReason.isNotEmpty) {
+      return bodyReason;
+    }
+    final selected = selectedReason1?.trim();
+    if (selected != null && selected.isNotEmpty) {
+      return selected;
+    }
+    return null;
   }
   Future<void> initWebSocket() async {
     _keepAliveTimer?.cancel();
@@ -811,14 +832,20 @@ class JobsViewModel with ChangeNotifier {
   }
 
   Future<bool?> cancelBooking(int id) async {
-    debugPrint('cancellation reason bookik ${jobsBody['cancellation_reason']}');
+    final reason = cancellationReason;
+    debugPrint('cancellation reason booking $reason');
+    if (reason == null || reason.isEmpty) {
+      _errorMessage = 'updateJob.provideReasonToCancel'.tr();
+      notifyListeners();
+      return false;
+    }
     try {
-      dynamic response = await _jobsRepository.cancelBooking(
-          id, jobsBody['cancellation_reason']);
+      dynamic response = await _jobsRepository.cancelBooking(id, reason);
       readJson();
       notifyListeners();
       debugPrint('${response['status']}');
       if (response["status"] == "OK") {
+        clearCancellationReason();
         return true;
       } else {
         _errorMessage = response["reason"];
@@ -831,14 +858,20 @@ class JobsViewModel with ChangeNotifier {
   }
 
   Future<bool?> cancelJobNoPenalty(int id) async {
-    debugPrint(
-        'cancellation reason no penalty${jobsBody['cancellation_reason']}');
+    final reason = cancellationReason;
+    debugPrint('cancellation reason no penalty $reason');
+    if (reason == null || reason.isEmpty) {
+      _errorMessage = 'updateJob.provideReasonToCancel'.tr();
+      notifyListeners();
+      return false;
+    }
     try {
-      dynamic response = await _jobsRepository.cancelJobNoPenalty(
-          id, jobsBody['cancellation_reason'].toString());
+      dynamic response =
+          await _jobsRepository.cancelJobNoPenalty(id, reason);
       readJson();
       notifyListeners();
       if (response["status"] == "OK") {
+        clearCancellationReason();
         return true;
       } else {
         _errorMessage = response["reason"];
@@ -850,19 +883,25 @@ class JobsViewModel with ChangeNotifier {
     }
   }
 
-  Future<bool?> cancelJobWithPenalty(int id,String action) async {
-    debugPrint(
-        'cancellation reason with penalty  ${jobsBody['cancellation_reason']}');
+  Future<bool?> cancelJobWithPenalty(int id, String action) async {
+    final reason = cancellationReason;
+    debugPrint('cancellation reason with penalty $reason');
+    if (reason == null || reason.isEmpty) {
+      _errorMessage = 'updateJob.provideReasonToCancel'.tr();
+      notifyListeners();
+      return false;
+    }
     try {
-      dynamic response = await _jobsRepository.cancelJobWithPenalty(
-          id, jobsBody['cancellation_reason'],action);
+      dynamic response =
+          await _jobsRepository.cancelJobWithPenalty(id, reason, action);
       readJson();
       notifyListeners();
       if (response["status"] == "OK") {
+        clearCancellationReason();
         return true;
       } else {
         _errorMessage = response["reason"];
-        _errorData=response;
+        _errorData = response;
         notifyListeners();
 
         return false;
@@ -913,11 +952,13 @@ class JobsViewModel with ChangeNotifier {
       } else {
         jobsBody['severity_level'] = 'minor';
       }
-      if(jobsBody['job_address'] is Map<String,dynamic>){
-        jobsBody['job_address']=jobsBody['job_address']['id'];
-
+      if (jobsBody['job_address'] is Map<String, dynamic>) {
+        jobsBody['job_address'] = jobsBody['job_address']['id'];
       }
       setInputValues(index: 'start_date', value: combinedDateTime.toString());
+
+      // Cancellation reason belongs only to cancel flows, not new job requests.
+      clearCancellationReason();
 
       if (jobsBody['tap_payments_card'] == null) {
         return false;

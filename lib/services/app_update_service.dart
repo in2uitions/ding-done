@@ -16,6 +16,12 @@ class AppUpdateService {
   String? get storeUrl => _storeUrl;
 
   Future<bool> isStoreUpdateAvailable() async {
+    // Don't block local/debug builds while preparing a new store release.
+    if (kDebugMode) {
+      debugPrint('AppUpdate: skipped in debug mode');
+      return false;
+    }
+
     try {
       final packageInfo = await PackageInfo.fromPlatform();
       final currentVersion = packageInfo.version;
@@ -23,7 +29,7 @@ class AppUpdateService {
 
       debugPrint(
         'AppUpdate: installed=$currentVersion '
-        '(build ${packageInfo.buildNumber}, mode=${kDebugMode ? 'debug' : 'release'})',
+        '(build ${packageInfo.buildNumber})',
       );
 
       if (Platform.isIOS) {

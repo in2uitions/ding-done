@@ -44,6 +44,17 @@ class _BookAServiceState extends State<BookAService> {
   bool isLumpsum = false;
   var _matchingRate;
   bool isLoading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    getPayment();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      Provider.of<JobsViewModel>(context, listen: false).clearCancellationReason();
+    });
+  }
+
   String _getServiceRate(ProfileViewModel profileViewModel,
       JobsViewModel jobsViewModel) {
     // Extract the currency from job address
@@ -353,16 +364,10 @@ class _BookAServiceState extends State<BookAService> {
 
   }
 
-  @override
-  void initState() {
-    super.initState();
-    getPayment();
-
+  Future<void> getPayment() async {
+    await Provider.of<PaymentViewModel>(context, listen: false)
+        .getPaymentMethodsTap();
   }
-getPayment() async{
-  await Provider.of<PaymentViewModel>(context, listen: false)
-      .getPaymentMethodsTap();
-}
   @override
   Widget build(BuildContext context) {
     return Consumer4<ProfileViewModel,

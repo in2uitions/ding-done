@@ -10,7 +10,6 @@ import 'package:dingdone/view_model/services_view_model/services_view_model.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:skeletons/skeletons.dart';
 
 class ServicesPage extends StatefulWidget {
   const ServicesPage({super.key});
