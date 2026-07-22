@@ -913,6 +913,8 @@ class JobsViewModel with ChangeNotifier {
   }
   void setSelectedReason(String value) {
     selectedReason1 = value;
+    _selectedReason = value;
+    jobsBody['cancellation_reason'] = value;
     notifyListeners();
   }
   Future<bool> requestService() async {

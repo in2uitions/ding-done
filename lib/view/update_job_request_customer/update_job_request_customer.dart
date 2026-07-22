@@ -955,11 +955,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
       message = 'updateJob.provideReasonToCancelNote'.tr();
     }
     List<String> reasons = [
-     'jobs.changeOfPlans'.tr(),
+      'jobs.changeOfPlans'.tr(),
       'jobs.unexpectedEmergency'.tr(),
       'jobs.illnessOrHealthIssues'.tr(),
       'jobs.other'.tr(),
     ];
+    final otherReason = 'jobs.other'.tr();
 
     return AlertDialog(
       backgroundColor: Colors.white,
@@ -1058,12 +1059,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                           groupValue: jobsViewModel.reason,
                           activeColor: Theme.of(context).primaryColor,
                           onChanged: (value) {
-                            jobsViewModel1.setSelectedReason(value!); // 👈 THIS IS REQUIRED
+                            jobsViewModel1.setSelectedReason(value!);
 
                             jobsViewModel1.setInputValues(
                                 index: 'cancellation_reason',
                                 value: value.toString());
-                            if (value == 'Other') {
+                            if (value == otherReason) {
                               // If "Other" is selected, show the CustomTextArea
                               jobsViewModel1.setShowCustomTextArea(true);
                             } else {

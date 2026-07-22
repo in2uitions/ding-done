@@ -21,6 +21,26 @@ subprojects {
     project.evaluationDependsOn(":app")
 }
 
+// AGP 8+ requires every Android library module to declare a namespace.
+// Covers outdated plugins (e.g. uni_links2) that only set package in the manifest.
+subprojects { subproject ->
+    subproject.plugins.withId("com.android.library") {
+        def androidExt = subproject.extensions.findByName("android")
+        if (androidExt != null && androidExt.namespace == null) {
+            def manifest = subproject.file("src/main/AndroidManifest.xml")
+            if (manifest.exists()) {
+                def m = (manifest.getText("UTF-8") =~ /package="([^"]+)"/)
+                if (m.find()) {
+                    androidExt.namespace = m.group(1)
+                }
+            }
+            if (androidExt.namespace == null && subproject.group != null) {
+                androidExt.namespace = subproject.group.toString()
+            }
+        }
+    }
+}
+
 tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }

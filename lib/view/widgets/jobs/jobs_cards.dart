@@ -941,6 +941,7 @@ class _JobsCardsState extends State<JobsCards> {
       'jobs.illnessOrHealthIssues'.tr(),
       'jobs.other'.tr(),
     ];
+    final otherReason = 'jobs.other'.tr();
 
     return AlertDialog(
       backgroundColor: Colors.white,
@@ -1041,15 +1042,12 @@ class _JobsCardsState extends State<JobsCards> {
                                   .of(context)
                                   .primaryColor,
                               onChanged: (value) {
-                                // setState(() {
-                                //   // You can perform additional actions based on the selected reason if needed
-                                // });
-                                jobsViewModel1.setSelectedReason(value!); // 👈 THIS IS REQUIRED
+                                jobsViewModel1.setSelectedReason(value!);
 
                                 jobsViewModel1.setInputValues(
                                     index: 'cancellation_reason',
                                     value: value.toString());
-                                if (value == 'Other') {
+                                if (value == otherReason) {
                                   // If "Other" is selected, show the CustomTextArea
                                   jobsViewModel1.setShowCustomTextArea(true);
                                 } else {

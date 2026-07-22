@@ -48,31 +48,23 @@ class _CustomTextAreaState extends State<CustomTextArea> {
       GlobalKey<FormFieldState<String>>();
   bool obscureText = true;
 
-  final TextEditingController _customController = TextEditingController();
+  late final TextEditingController _customController;
 
   @override
   void initState() {
     super.initState();
-    _customController.text = widget.value ?? '';
-    _customController.addListener(_updateValue);
+    // Constructor does not notify listeners — avoids wiping the selected
+    // cancellation reason with '' when this field mounts for "Other".
+    _customController = TextEditingController(text: widget.value ?? '');
   }
 
-  void _updateValue() {
-    widget.viewModel(index: widget.index, value: _customController.text);
-    // if (widget.tag == '') {
-    //   widget.viewModel(index: widget.index, value: _customController.text);
-    // } else {
-    //   widget.viewModel(
-    //       index: widget.index,
-    //       value: _customController.text,
-    //       arrayIndex: widget.arrayIndex,
-    //       tag: widget.tag);
-    // }
+  void _pushValue(String value) {
+    widget.viewModel(index: widget.index, value: value);
+    widget.onChanged?.call(value);
   }
 
   @override
   void dispose() {
-    _customController.removeListener(_updateValue);
     _customController.dispose();
     super.dispose();
   }
@@ -85,7 +77,7 @@ class _CustomTextAreaState extends State<CustomTextArea> {
       obscureText: widget.hintText == "Password" ? obscureText : false,
       maxLines: widget.maxlines,
       validator: widget.validator,
-      onChanged: widget.onChanged,
+      onChanged: _pushValue,
       keyboardType: widget.keyboardType,
       cursorColor: context.resources.color.btnColorBlue,
       autofocus: false,

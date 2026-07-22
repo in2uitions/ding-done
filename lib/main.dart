@@ -35,7 +35,7 @@ import 'package:provider/provider.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:uni_links2/uni_links.dart';
+import 'package:app_links/app_links.dart';
 import 'package:adjust_sdk/adjust.dart';
 import 'package:adjust_sdk/adjust_config.dart';
 
@@ -75,7 +75,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   String? _userId;
   bool _doLogin = false;
 
-  late StreamSubscription _sub;
+  StreamSubscription? _sub;
+  final AppLinks _appLinks = AppLinks();
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   final FacebookAppEvents facebookAppEvents = FacebookAppEvents();
   final AppUpdateService _appUpdateService = AppUpdateService();
@@ -99,17 +100,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   void dispose() {
-    _sub.cancel();
+    _sub?.cancel();
     WidgetsBinding.instance.removeObserver(this);
 
     super.dispose();
   }
 
   Future<void> initialDeepLink() async {
-    _sub = linkStream.listen((String? link) {
-      if (link != null) {
-        handleIncomingLink(link);
-      }
+    // Cold start
+    final initial = await _appLinks.getInitialLink();
+    if (initial != null) {
+      handleIncomingLink(initial.toString());
+    }
+    // Warm / foreground links
+    _sub = _appLinks.uriLinkStream.listen((Uri uri) {
+      handleIncomingLink(uri.toString());
     });
   }
 

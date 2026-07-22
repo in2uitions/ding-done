@@ -20,6 +20,30 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "app_links",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/app_links-6.4.1",
+      "packageUri": "lib/",
+      "languageVersion": "3.5"
+    },
+    {
+      "name": "app_links_linux",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/app_links_linux-1.0.3",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "app_links_platform_interface",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/app_links_platform_interface-2.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
+      "name": "app_links_web",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/app_links_web-1.0.4",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "app_tracking_transparency",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/app_tracking_transparency-2.0.6+1",
       "packageUri": "lib/",
@@ -758,6 +782,12 @@
       "languageVersion": "3.4"
     },
     {
+      "name": "gtk",
+      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/gtk-2.2.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.0"
+    },
+    {
       "name": "hooks",
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/hooks-1.0.3",
       "packageUri": "lib/",
@@ -1494,24 +1524,6 @@
       "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/typed_data-1.4.0",
       "packageUri": "lib/",
       "languageVersion": "3.5"
-    },
-    {
-      "name": "uni_links2",
-      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/uni_links2-0.6.0+2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "uni_links2_platform_interface",
-      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/uni_links2_platform_interface-1.0.0+2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
-    },
-    {
-      "name": "uni_links_web2",
-      "rootUri": "file:///Users/souheiljabbour/.pub-cache/hosted/pub.dev/uni_links_web2-0.1.0+2",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "unicode",
