@@ -2,6 +2,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -21,9 +22,7 @@ class MyaddressBook extends StatefulWidget {
 class _MyaddressBookState extends State<MyaddressBook> {
   Future<void> _handleRefresh() async {
     try {
-
       await Provider.of<ProfileViewModel>(context, listen: false).readJson();
-
     } catch (error) {
       // Handle the error, e.g., by displaying a snackbar
       ScaffoldMessenger.of(context).showSnackBar(
@@ -33,6 +32,7 @@ class _MyaddressBookState extends State<MyaddressBook> {
       );
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,11 +79,13 @@ class _MyaddressBookState extends State<MyaddressBook> {
             ),
           ),
           // DraggableScrollableSheet for the addresses list.
-          Consumer<ProfileViewModel>(builder: (context, profileViewModel, _) {
-            // 1. Extract the list of addresses (or empty list if null)
-            final List<dynamic> addresses = (profileViewModel
-                    .getProfileBody['address'] as List<dynamic>?) ??
-                [];
+          Consumer2<ProfileViewModel, CountryViewModel>(
+              builder: (context, profileViewModel, countryViewModel, _) {
+            final allAddresses =
+                profileViewModel.getProfileBody['address'] as List? ?? const [];
+            final addresses = allAddresses.asMap().entries.where((entry) {
+              return countryViewModel.matchesAddress(entry.value);
+            }).toList();
 
             return DraggableScrollableSheet(
               initialChildSize: 0.85,
@@ -107,7 +109,10 @@ class _MyaddressBookState extends State<MyaddressBook> {
                       itemCount: addresses.length,
                       itemBuilder: (BuildContext context, int index) {
                         // 3. Grab this address
-                        final address = addresses[index] as Map<String, dynamic>;
+                        final originalIndex = addresses[index].key;
+                        final address = Map<String, dynamic>.from(
+                          addresses[index].value as Map,
+                        );
 
                         return Padding(
                           padding: EdgeInsets.symmetric(
@@ -125,7 +130,8 @@ class _MyaddressBookState extends State<MyaddressBook> {
                                   children: [
                                     CustomSlidableAction(
                                       onPressed: (_) async {
-                                        final confirmed = await showDialog<bool>(
+                                        final confirmed =
+                                            await showDialog<bool>(
                                           context: context,
                                           builder: (ctx) => AlertDialog(
                                             backgroundColor: Colors.white,
@@ -146,12 +152,14 @@ class _MyaddressBookState extends State<MyaddressBook> {
                                                         child: SvgPicture.asset(
                                                             'assets/img/x.svg'),
                                                         onTap: () async {
-                                                          Navigator.pop(context);
+                                                          Navigator.pop(
+                                                              context);
                                                           await Future.delayed(
                                                               const Duration(
                                                                   milliseconds:
                                                                       1));
-                                                          Navigator.pop(context);
+                                                          Navigator.pop(
+                                                              context);
                                                           // Future.delayed(
                                                           //     const Duration(seconds: 0), () => Navigator.pop(context));
                                                         },
@@ -167,13 +175,16 @@ class _MyaddressBookState extends State<MyaddressBook> {
                                                 Padding(
                                                   padding: EdgeInsets.symmetric(
                                                     horizontal: context
-                                                        .appValues.appPadding.p0,
+                                                        .appValues
+                                                        .appPadding
+                                                        .p0,
                                                   ),
                                                   child: Text(
                                                     // translate('bookService.serviceRequestConfirmed'),
                                                     'Are you sure you want to remove this address?',
                                                     textAlign: TextAlign.center,
-                                                    style: getPrimaryMediumStyle(
+                                                    style:
+                                                        getPrimaryMediumStyle(
                                                       fontSize: 14,
                                                       color: context.resources
                                                           .color.btnColorBlue,
@@ -190,8 +201,8 @@ class _MyaddressBookState extends State<MyaddressBook> {
                                                         .appSizePercent.w100,
                                                     height: 44,
                                                     decoration: BoxDecoration(
-                                                      color:
-                                                          const Color(0xff4100E3),
+                                                      color: const Color(
+                                                          0xff4100E3),
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               12),
@@ -217,7 +228,7 @@ class _MyaddressBookState extends State<MyaddressBook> {
                                         if (confirmed == true) {
                                           Provider.of<ProfileViewModel>(context,
                                                   listen: false)
-                                              .deleteAddress(index);
+                                              .deleteAddress(originalIndex);
                                           setState(() {});
                                         }
                                       },
@@ -242,7 +253,8 @@ class _MyaddressBookState extends State<MyaddressBook> {
                                     );
                                   },
                                   child: Container(
-                                    width: context.appValues.appSizePercent.w100,
+                                    width:
+                                        context.appValues.appSizePercent.w100,
                                     decoration: BoxDecoration(
                                       color: context.resources.color.colorWhite,
                                       borderRadius: const BorderRadius.all(
@@ -273,12 +285,12 @@ class _MyaddressBookState extends State<MyaddressBook> {
                                                 Text(
                                                   address['address_label']
                                                           as String? ??
-
-                                                          'bookService.location'.tr(),
+                                                      'bookService.location'
+                                                          .tr(),
                                                   style: getPrimaryBoldStyle(
                                                     fontSize: 16,
-                                                    color: context.resources.color
-                                                        .btnColorBlue,
+                                                    color: context.resources
+                                                        .color.btnColorBlue,
                                                   ),
                                                 ),
                                                 Text(
@@ -349,7 +361,6 @@ class _MyaddressBookState extends State<MyaddressBook> {
                       jobsVM.deleteInputValues(index: 'latitude');
                       jobsVM.deleteInputValues(index: 'longitude');
 
-
                       Navigator.of(context).push(
                         _createRoute(ConfirmAddress()),
                       );
@@ -361,7 +372,7 @@ class _MyaddressBookState extends State<MyaddressBook> {
                       ),
                     ),
                     child: Text(
-                     'confirmAddress.addNewAddress'.tr(),
+                      'confirmAddress.addNewAddress'.tr(),
                       style: getPrimarySemiBoldStyle(
                         fontSize: 12,
                         color: Colors.white,

@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/utils/country_helper.dart';
 import 'package:dingdone/view/home_page/home_page.dart';
 import 'package:dingdone/view/home_page/home_page_supplier.dart';
 import 'package:dingdone/view/jobs_page/jobs_page.dart';
@@ -11,18 +12,21 @@ import 'package:dingdone/view/profile_page/profile_page.dart';
 import 'package:dingdone/view/profile_page_supplier/profile_page_supplier.dart';
 import 'package:dingdone/view/services_screen/services_screen.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
-import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:gap/gap.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'dart:ui' as ui;
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
 import '../edit_account/edit_account.dart';
+
 class BottomBar extends StatefulWidget {
   var userRole;
 
@@ -54,14 +58,13 @@ class _BottomBarState extends State<BottomBar>
 
   String? _currentAddress;
   Position? _currentPosition;
+  bool _countryPromptShown = false;
   @override
   void initState() {
     super.initState();
     getLanguage();
     Provider.of<CategoriesViewModel>(context, listen: false).readJson();
-    Provider.of<ServicesViewModel>(context, listen: false).readJson();
     getNotifications();
-    _handleLocationPermission();
     _getCurrentPosition();
     _jobsViewModel.readJson();
     currentScreen = widget.currentTab == 0
@@ -86,8 +89,7 @@ class _BottomBarState extends State<BottomBar>
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
 
-  getProfileInfo();
-
+    getProfileInfo();
   }
 
   bool _isCheckingProfile = false;
@@ -96,22 +98,33 @@ class _BottomBarState extends State<BottomBar>
     if (_isCheckingProfile) return;
     _isCheckingProfile = true;
 
-    final profileData =
-    await Provider.of<ProfileViewModel>(context, listen: false)
-        .getProfiledata();
+    final profileViewModel =
+        Provider.of<ProfileViewModel>(context, listen: false);
+    final profileData = await profileViewModel.getProfiledata();
+    if (mounted) {
+      final countryViewModel =
+          Provider.of<CountryViewModel>(context, listen: false);
+      if (!countryViewModel.isLoaded) await countryViewModel.load();
+      await profileViewModel.ensureCurrentAddressForCountry(
+        countryViewModel,
+      );
+    }
 
     _isCheckingProfile = false;
 
     final user = profileData?["user"];
 
-    final bool isProfileIncomplete =
-        user?["first_name"] == null || user["first_name"].toString().trim().isEmpty ||
-            user?["last_name"] == null || user["last_name"].toString().trim().isEmpty ||
-            user?["phone"] == null || user["phone"].toString().trim().isEmpty ||
-            user?["email"] == null || user["email"].toString().trim().isEmpty
-    // ||
-            // user?["dob"] == null || user["dob"].toString().trim().isEmpty
-    ;
+    final bool isProfileIncomplete = user?["first_name"] == null ||
+            user["first_name"].toString().trim().isEmpty ||
+            user?["last_name"] == null ||
+            user["last_name"].toString().trim().isEmpty ||
+            user?["phone"] == null ||
+            user["phone"].toString().trim().isEmpty ||
+            user?["email"] == null ||
+            user["email"].toString().trim().isEmpty
+        // ||
+        // user?["dob"] == null || user["dob"].toString().trim().isEmpty
+        ;
 
     if (isProfileIncomplete && mounted) {
       await Navigator.push(
@@ -157,18 +170,227 @@ class _BottomBarState extends State<BottomBar>
     debugPrint('has location permission $hasPermission');
     if (!hasPermission) return;
 
-    await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((Position position) {
+    try {
+      final position = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high,
+      );
       debugPrint('current location $position');
+      if (!mounted) return;
       setState(() => _currentPosition = position);
-      // AppPreferences().save(key: currentPositionKey, value: position, isModel: false);
-      debugPrint('current location $position');
-      Provider.of<ProfileViewModel>(context, listen: false)
+      await Provider.of<ProfileViewModel>(context, listen: false)
           .changeCurrentLocation(position.latitude, position.longitude);
-    }).catchError((e) {
+      if (!mounted) return;
+      await _checkLiveCountry(position);
+    } catch (e) {
       debugPrint('error getting position $e');
-      debugPrint(e);
-    });
+    }
+  }
+
+  Future<SupportedCountry?> _resolveLiveCountry(Position position) async {
+    try {
+      final placemarks = await placemarkFromCoordinates(
+        position.latitude,
+        position.longitude,
+      );
+      if (placemarks.isNotEmpty) {
+        final mark = placemarks.first;
+        final fromIso = SupportedCountry.fromValue(mark.isoCountryCode);
+        if (fromIso != null) return fromIso;
+        final fromName = SupportedCountry.fromValue(mark.country);
+        if (fromName != null) return fromName;
+      }
+    } catch (e) {
+      debugPrint('reverse geocode for country failed $e');
+    }
+    // Fallback when placemarks are unavailable or locale-specific.
+    return SupportedCountry.fromCoordinates(
+      position.latitude,
+      position.longitude,
+    );
+  }
+
+  /// Wait out incomplete-profile / other stacked routes before prompting.
+  Future<bool> _waitUntilSafeToPrompt() async {
+    for (var attempt = 0; attempt < 30; attempt++) {
+      if (!mounted) return false;
+      final isTopRoute = ModalRoute.of(context)?.isCurrent == true;
+      if (!_isCheckingProfile && isTopRoute) {
+        await Future<void>.delayed(const Duration(milliseconds: 300));
+        if (!mounted) return false;
+        if (!_isCheckingProfile &&
+            ModalRoute.of(context)?.isCurrent == true) {
+          return true;
+        }
+      }
+      await Future<void>.delayed(const Duration(milliseconds: 500));
+    }
+    return mounted && ModalRoute.of(context)?.isCurrent == true;
+  }
+
+  Future<void> _checkLiveCountry(Position position) async {
+    if (_countryPromptShown || !mounted) return;
+
+    final countryViewModel =
+        Provider.of<CountryViewModel>(context, listen: false);
+    if (countryViewModel.locationPromptHandled) return;
+    final selectedName =
+        countryViewModel.selectedCountry ?? await countryViewModel.load();
+    final selectedCountry = SupportedCountry.fromValue(selectedName);
+    if (selectedCountry == null || !mounted) return;
+
+    final liveCountry = await _resolveLiveCountry(position);
+    if (liveCountry == selectedCountry) return;
+
+    if (!await _waitUntilSafeToPrompt()) return;
+    if (!mounted || _countryPromptShown || countryViewModel.locationPromptHandled) {
+      return;
+    }
+    _countryPromptShown = true;
+    countryViewModel.markLocationPromptHandled();
+
+    SupportedCountry? countryToSelect;
+    if (liveCountry != null) {
+      final shouldSwitch = await _showCountryMismatchDialog(liveCountry);
+      if (shouldSwitch == true) countryToSelect = liveCountry;
+    } else {
+      countryToSelect = await _showOutsideCountriesDialog();
+    }
+
+    if (countryToSelect == null || !mounted) return;
+    await countryViewModel.selectCountry(countryToSelect.displayName);
+    if (!mounted) return;
+    await Provider.of<ProfileViewModel>(context, listen: false)
+        .ensureCurrentAddressForCountry(countryViewModel);
+    if (!mounted) return;
+    await Provider.of<CategoriesViewModel>(context, listen: false)
+        .getCategoriesAndServices();
+  }
+
+  Future<bool?> _showCountryMismatchDialog(
+    SupportedCountry liveCountry,
+  ) {
+    return showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: Colors.white,
+        elevation: 15,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.location_on_outlined,
+              size: 48,
+              color: Color(0xff4100E3),
+            ),
+            const Gap(20),
+            Text(
+              'country_location.mismatch'.tr(
+                namedArgs: {'country': liveCountry.displayName},
+              ),
+              textAlign: TextAlign.center,
+              style: getPrimaryMediumStyle(
+                fontSize: 14,
+                color: const Color(0xff180B3C),
+              ),
+            ),
+            const Gap(24),
+            _dialogButton(
+              text: 'country_location.yesSwitch'.tr(),
+              onTap: () => Navigator.pop(dialogContext, true),
+              filled: true,
+            ),
+            const Gap(10),
+            _dialogButton(
+              text: 'country_location.no'.tr(),
+              onTap: () => Navigator.pop(dialogContext, false),
+              filled: false,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Future<SupportedCountry?> _showOutsideCountriesDialog() {
+    return showDialog<SupportedCountry>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: Colors.white,
+        elevation: 15,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16),
+        ),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(
+              Icons.location_off_outlined,
+              size: 48,
+              color: Color(0xff4100E3),
+            ),
+            const Gap(20),
+            Text(
+              'country_location.outside'.tr(),
+              textAlign: TextAlign.center,
+              style: getPrimaryMediumStyle(
+                fontSize: 14,
+                color: const Color(0xff180B3C),
+              ),
+            ),
+            const Gap(24),
+            _dialogButton(
+              text: 'Qatar',
+              onTap: () => Navigator.pop(dialogContext, SupportedCountry.qatar),
+              filled: true,
+            ),
+            const Gap(10),
+            _dialogButton(
+              text: 'Cyprus',
+              onTap: () =>
+                  Navigator.pop(dialogContext, SupportedCountry.cyprus),
+              filled: true,
+            ),
+            const Gap(10),
+            _dialogButton(
+              text: 'country_location.notNow'.tr(),
+              onTap: () => Navigator.pop(dialogContext),
+              filled: false,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _dialogButton({
+    required String text,
+    required VoidCallback onTap,
+    required bool filled,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 44,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: filled ? const Color(0xff4100E3) : Colors.white,
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: const Color(0xff4100E3)),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: getPrimarySemiBoldStyle(
+              fontSize: 12,
+              color: filled ? Colors.white : const Color(0xff4100E3),
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Future<bool> _handleLocationPermission() async {
@@ -397,15 +619,15 @@ class _BottomBarState extends State<BottomBar>
                                               ),
                                             )
                                           : Container()
-                                      : jobsViewModel.getcustomerJobs!=null?
-                                  jobsViewModel.getcustomerJobs
-                                                  .where((e) =>
-                                                      e.status == 'booked')
-                                                  .toList()
-                                                  .length >
-                                              0
-                                          ? Container()
-                                          : Container()
+                                      : jobsViewModel.getcustomerJobs != null
+                                          ? jobsViewModel.getcustomerJobs
+                                                      .where((e) =>
+                                                          e.status == 'booked')
+                                                      .toList()
+                                                      .length >
+                                                  0
+                                              ? Container()
+                                              : Container()
                                           : Container()
                                 ],
                               ),

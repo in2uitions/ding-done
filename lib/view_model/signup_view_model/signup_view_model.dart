@@ -1,6 +1,7 @@
 import 'package:dingdone/models/roles_model.dart';
 import 'package:dingdone/repository/signup/signup_repo.dart';
 import 'package:dingdone/res/constants.dart';
+import 'package:dingdone/utils/country_helper.dart';
 import 'package:flutter/foundation.dart';
 import 'package:dingdone/data/remote/response/ApiResponse.dart';
 import 'package:dingdone/models/user_model.dart';
@@ -774,18 +775,22 @@ class SignUpViewModel with ChangeNotifier {
       dynamic response = await _signUpRepository.getCountries();
       debugPrint('response getting countries $response');
 
-      // Filter only published countries
-      _listCountries = response['data']
-          .where((country) => country['status'] == 'published')
-          .toList();
+      // Prefer published rows; still keep Qatar/Cyprus so address forms can
+      // save a country code even if the CMS row is still draft.
+      final data = (response['data'] as List?) ?? const [];
+      _listCountries = data.where((country) {
+        if (country is! Map) return false;
+        if (country['status'] == 'published') return true;
+        return SupportedCountry.fromValue(country) != null;
+      }).toList();
 
+      notifyListeners();
       return _listCountries;
     } catch (error) {
       debugPrint('error getting countries $error');
+      notifyListeners();
+      return null;
     }
-
-    notifyListeners(); // This line is technically unreachable if there's no error
-    return null;
   }
 
   // Future<void> getUserRoleFromId(String id) async {

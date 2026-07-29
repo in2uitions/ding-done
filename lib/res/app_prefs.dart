@@ -22,10 +22,10 @@ const String userIdTochangePassword = "userIdTochangePassword";
 const String language = "LANGUAGE";
 const String currentPositionKey = "CURRENT_POSITION";
 const String dblang = "DBLANG";
+const String selectedCountryKey = "SELECTED_COUNTRY";
 const String userRefreshToken = "REFRESH_TOKEN";
 const String loginTime = '';
 const String userTokenExpiry = "TOKEN EXPIRY";
-
 
 class AppPreferences {
   save(

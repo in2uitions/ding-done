@@ -2,6 +2,7 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
 import 'package:dingdone/view/widgets/confirm_address/buttons/buttons_confirm_addresses.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -77,9 +78,13 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer2<ProfileViewModel, JobsViewModel>(
-      builder: (context, profileVM, jobsVM, _) {
-        final addresses = profileVM.getProfileBody['address'] as List<dynamic>;
+    return Consumer3<ProfileViewModel, JobsViewModel, CountryViewModel>(
+      builder: (context, profileVM, jobsVM, countryViewModel, _) {
+        final allAddresses =
+            profileVM.getProfileBody['address'] as List? ?? const [];
+        final addresses = allAddresses.asMap().entries.where((entry) {
+          return countryViewModel.matchesAddress(entry.value);
+        }).toList();
         return Column(
           children: [
             ListView.builder(
@@ -88,7 +93,10 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
               itemCount: addresses.length,
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                final address = addresses[index] as Map<String, dynamic>;
+                final originalIndex = addresses[index].key;
+                final address = Map<String, dynamic>.from(
+                  addresses[index].value as Map,
+                );
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -98,7 +106,7 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
                       confirmDismiss: (_) async {
                         final confirmed = await _confirmDelete(context);
                         if (confirmed) {
-                          _deleteAddress(index);
+                          _deleteAddress(originalIndex);
                         }
                         return confirmed;
                       },
@@ -112,8 +120,16 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
                         action: (tag) {
                           _setActive(tag);
                           profileVM.setCurrentAddress(address);
-                          ['street_number', 'address_label', 'city', 'floor', 'building_number', 'apartment_number', 'zone', 'country']
-                              .forEach((field) {
+                          [
+                            'street_number',
+                            'address_label',
+                            'city',
+                            'floor',
+                            'building_number',
+                            'apartment_number',
+                            'zone',
+                            'country'
+                          ].forEach((field) {
                             jobsVM.setInputValues(
                               index: field,
                               value: address[field]?.toString() ?? '',
@@ -123,20 +139,23 @@ class _AddressesButtonsWidgetState extends State<AddressesButtonsWidget> {
                             Navigator.pop(context);
                             Navigator.of(context).push(
                               PageRouteBuilder(
-                                pageBuilder: (ctx, anim1, anim2) => ConfirmAddress(),
+                                pageBuilder: (ctx, anim1, anim2) =>
+                                    ConfirmAddress(),
                                 transitionsBuilder: (c, a, sa, child) =>
                                     SlideTransition(
-                                      position: Tween(begin: const Offset(1, 0), end: Offset.zero)
-                                          .chain(CurveTween(curve: Curves.ease))
-                                          .animate(a),
-                                      child: child,
-                                    ),
+                                  position: Tween(
+                                          begin: const Offset(1, 0),
+                                          end: Offset.zero)
+                                      .chain(CurveTween(curve: Curves.ease))
+                                      .animate(a),
+                                  child: child,
+                                ),
                               ),
                             );
                           });
                         },
-                        tag: '$index',
-                        active: _active == '$index',
+                        tag: '$originalIndex',
+                        active: _active == '$originalIndex',
                         text: address['address_label'] ??
                             '${address['street_number']}, ${address['city']}, ${address['building_number']}, ${address['apartment_number']}, ${address['zone']}',
                         address: address,

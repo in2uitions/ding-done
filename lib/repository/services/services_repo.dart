@@ -1,5 +1,4 @@
 import 'package:dingdone/models/country_rates_model.dart';
-import 'package:dingdone/models/services_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dingdone/data/remote/network/api_end_points.dart';
 import 'package:dingdone/data/remote/network/base_api_service.dart';
@@ -7,22 +6,10 @@ import 'package:dingdone/data/remote/network/network_api_service.dart';
 import 'package:dingdone/res/app_prefs.dart';
 
 class ServicesRepository {
-  final BaseApiService _apiServices =
-      NetworkApiService(url: ApiEndPoints().getServices);
   final BaseApiService _apiSupplier =
       NetworkApiService(url: ApiEndPoints().supplierProfile);
   final BaseApiService _apiCountryRates =
       NetworkApiService(url: ApiEndPoints().countryRates);
-
-  Future<ServicesModelMain?> getAllServices() async {
-    try {
-      dynamic response = await _apiServices.getResponse();
-      final jsonData = ServicesModelMain.fromJson(response);
-      return jsonData;
-    } catch (error) {
-      rethrow;
-    }
-  }
 
   Future<CountryRatesModelMain?> getContryRate(
       dynamic service_id, String country_code) async {
@@ -32,20 +19,6 @@ class ServicesRepository {
               '?filter[country][_eq]=$country_code&filter[service][id][_eq]=${service_id}');
       final jsonData = CountryRatesModelMain.fromJson(response);
       return jsonData;
-    } catch (error) {
-      rethrow;
-    }
-  }
-
-  Future<dynamic> getServicesByCategoryID(int id) async {
-    try {
-      dynamic response = await _apiServices.getResponse(
-          params: '&filter[category][id][_eq]=$id');
-      debugPrint('responseee 2222${response["data"]}');
-      // final jsonData = ServicesModelMain.fromJson(response["data"]);
-      // debugPrint('jsoon data ${jsonData}');
-      return response["data"];
-      // return jsonData;
     } catch (error) {
       rethrow;
     }

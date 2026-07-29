@@ -11,6 +11,7 @@ import 'package:dingdone/view/widgets/custom/custom_increment_number_request.dar
 import 'package:dingdone/view/widgets/custom/custom_text_area.dart';
 import 'package:dingdone/view/widgets/custom/custom_time_picker.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
@@ -161,15 +162,14 @@ class _BookAServiceState extends State<BookAService> {
 
 
   void _onActionSheetPress(BuildContext context) {
-    final addresses = (Provider
-        .of<ProfileViewModel>(context, listen: false)
-        .getProfileBody['address'] as List<dynamic>)
-        .cast<Map<String, dynamic>>();
+    final profileViewModel =
+        Provider.of<ProfileViewModel>(context, listen: false);
+    final addresses = Provider.of<CountryViewModel>(context, listen: false)
+        .filterAddresses(profileViewModel.getProfileBody['address']);
+    final currentAddress = profileViewModel.getProfileBody['current_address'];
 
     int selectedIndex = addresses.indexWhere((addr) =>
-    addr['id'] == Provider
-        .of<ProfileViewModel>(context, listen: false)
-        .getProfileBody['current_address']['id']);
+        currentAddress is Map && addr['id'] == currentAddress['id']);
 
     showModalBottomSheet(
       context: context,
@@ -287,14 +287,6 @@ class _BookAServiceState extends State<BookAService> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      var addr = profVM.getProfileBody['current_address'];
-                                      jobsVM.setInputValues(index: 'job_address', value: addr);
-                                      jobsVM.setInputValues(index: 'address', value:
-                                      '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
-                                      jobsVM.setInputValues(index: 'latitude', value: addr['latitude']);
-                                      jobsVM.setInputValues(index: 'longitude', value: addr['longitude']);
-                                      jobsVM.setInputValues(index: 'payment_method', value: 'Card');
-
                                       Navigator.of(context).push(
                                         _createRoute(const MyaddressBook()),
                                       );
@@ -324,7 +316,9 @@ class _BookAServiceState extends State<BookAService> {
                                 const Gap(15),
                                 Expanded(
                                   child: InkWell(
-                                    onTap: () {
+                                    onTap: selectedIndex < 0
+                                        ? null
+                                        : () {
                                       Provider.of<ProfileViewModel>(context, listen: false)
                                           .setCurrentAddress(addresses[selectedIndex]);
                                       Navigator.pop(ctx);
@@ -376,6 +370,11 @@ class _BookAServiceState extends State<BookAService> {
         PaymentViewModel>(
         builder: (context, profileViewModel, jobsViewModel, servicesViewModel,
             paymentViewModel, _) {
+          final currentAddress =
+              profileViewModel.getProfileBody['current_address'];
+          final hasCurrentAddressForCountry =
+              Provider.of<CountryViewModel>(context)
+                  .matchesAddress(currentAddress);
           Map<String, dynamic>? services;
           Map<String, dynamic>? categories;
 
@@ -804,8 +803,9 @@ class _BookAServiceState extends State<BookAService> {
                                                                 //     .getProfileBody['current_address']["building_number"]}, ${profileViewModel
                                                                 //     .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
                                                                 //     .getProfileBody['current_address']["floor"]}',
-                                                                '${profileViewModel
-                                                                    .getProfileBody['current_address']["address_label"]}',
+                                                                hasCurrentAddressForCountry
+                                                                    ? '${profileViewModel.getProfileBody['current_address']["address_label"]}'
+                                                                    : '',
 
                                                                 style:
                                                                 getPrimaryRegularStyle(

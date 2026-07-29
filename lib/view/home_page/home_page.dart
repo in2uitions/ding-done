@@ -8,6 +8,7 @@ import 'package:dingdone/view/categories/parent_categories.dart';
 import 'package:dingdone/view/notifications_screen/notifications_screen.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
@@ -361,7 +362,16 @@ class _HomePageState extends State<HomePage> {
             JobsViewModel>(
         builder: (context, profileViewModel, servicesViewModel,
             categoriesViewModel, jobsViewModel, _) {
+      final countryViewModel = Provider.of<CountryViewModel>(context);
+      final currentAddress =
+          profileViewModel.getProfileBody['current_address'];
+      final hasCurrentAddressForCountry =
+          countryViewModel.matchesAddress(currentAddress);
       featuredServices = categoriesViewModel.getItDoneData.toList();
+      if (searchController.text.isEmpty) {
+        filteredServices =
+            List<dynamic>.from(categoriesViewModel.servicesList2 ?? const []);
+      }
       return Scaffold(
         key: _scaffoldKey,
         backgroundColor: const Color(0xffFEFEFE),
@@ -969,12 +979,7 @@ class _HomePageState extends State<HomePage> {
                                                     //     .getProfileBody['current_address']["building_number"]}, ${profileViewModel
                                                     //     .getProfileBody['current_address']['apartment_number']}, ${profileViewModel
                                                     //     .getProfileBody['current_address']["floor"]}',
-                                                    profileViewModel.getProfileBody !=
-                                                                null &&
-                                                            profileViewModel
-                                                                        .getProfileBody[
-                                                                    'current_address'] !=
-                                                                null
+                                                    hasCurrentAddressForCountry
                                                         ? '${profileViewModel.getProfileBody['current_address']["address_label"]}'
                                                         : '',
 
@@ -2027,14 +2032,14 @@ class _HomePageState extends State<HomePage> {
   //   );
   // }
   void _onActionSheetPress(BuildContext context) {
-    final addresses = (Provider.of<ProfileViewModel>(context, listen: false)
-            .getProfileBody['address'] as List<dynamic>)
-        .cast<Map<String, dynamic>>();
+    final profileViewModel =
+        Provider.of<ProfileViewModel>(context, listen: false);
+    final addresses = Provider.of<CountryViewModel>(context, listen: false)
+        .filterAddresses(profileViewModel.getProfileBody['address']);
+    final currentAddress = profileViewModel.getProfileBody['current_address'];
 
-    int selectedIndex = addresses.indexWhere((addr) =>
-        addr['id'] ==
-        Provider.of<ProfileViewModel>(context, listen: false)
-            .getProfileBody['current_address']['id']);
+    int selectedIndex = addresses.indexWhere(
+        (addr) => currentAddress is Map && addr['id'] == currentAddress['id']);
 
     showModalBottomSheet(
       context: context,
@@ -2165,24 +2170,6 @@ class _HomePageState extends State<HomePage> {
                                 Expanded(
                                   child: InkWell(
                                     onTap: () {
-                                      var addr = profVM
-                                          .getProfileBody['current_address'];
-                                      jobsVM.setInputValues(
-                                          index: 'job_address', value: addr);
-                                      jobsVM.setInputValues(
-                                          index: 'address',
-                                          value:
-                                              '${addr['street_number']} ${addr['building_number']}, ${addr['apartment_number']}, ${addr['floor']}');
-                                      jobsVM.setInputValues(
-                                          index: 'latitude',
-                                          value: addr['latitude']);
-                                      jobsVM.setInputValues(
-                                          index: 'longitude',
-                                          value: addr['longitude']);
-                                      jobsVM.setInputValues(
-                                          index: 'payment_method',
-                                          value: 'Card');
-
                                       Navigator.of(context).push(
                                         _createRoute(const MyaddressBook()),
                                       );
@@ -2214,13 +2201,16 @@ class _HomePageState extends State<HomePage> {
                                 const Gap(15),
                                 Expanded(
                                   child: InkWell(
-                                    onTap: () {
-                                      Provider.of<ProfileViewModel>(context,
-                                              listen: false)
-                                          .setCurrentAddress(
-                                              addresses[selectedIndex]);
-                                      Navigator.pop(ctx);
-                                    },
+                                    onTap: selectedIndex < 0
+                                        ? null
+                                        : () {
+                                            Provider.of<ProfileViewModel>(
+                                                    context,
+                                                    listen: false)
+                                                .setCurrentAddress(
+                                                    addresses[selectedIndex]);
+                                            Navigator.pop(ctx);
+                                          },
                                     child: Container(
                                       height: 44,
                                       decoration: const BoxDecoration(

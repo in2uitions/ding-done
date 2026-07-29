@@ -619,5 +619,12 @@
     "confirmPass": "Confirm Password",
     "confirm": "Confirm",
     "passwordChanged": "Password changed"
+  },
+  "country_location": {
+    "mismatch": "You seem to be in {country}. Do you want to switch locations?",
+    "outside": "You seem to be far from both Qatar and Cyprus. Would you like to switch location?",
+    "yesSwitch": "Yes, switch location",
+    "no": "No",
+    "notNow": "Not now"
   }
 }

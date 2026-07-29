@@ -11,6 +11,8 @@ import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import '../../view_model/dispose_view_model/app_view_model.dart';
+import '../../view_model/categories_view_model/categories_view_model.dart';
+import '../../view_model/country_view_model/country_view_model.dart';
 import '../../view_model/jobs_view_model/jobs_view_model.dart';
 import '../../view_model/profile_view_model/profile_view_model.dart';
 import '../../res/constants.dart';
@@ -26,6 +28,20 @@ class SettingsScreen extends StatefulWidget {
 
 class _SettingsScreenState extends State<SettingsScreen> {
   bool _notificationsEnabled = true;
+  String? _selectedCountry;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadSelectedCountry();
+  }
+
+  Future<void> _loadSelectedCountry() async {
+    final savedCountry =
+        await AppPreferences().get(key: selectedCountryKey, isModel: false);
+    if (!mounted) return;
+    setState(() => _selectedCountry = savedCountry);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +95,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 initialChildSize: 0.85,
                 minChildSize: 0.85,
                 maxChildSize: 0.85,
-                builder: (BuildContext context,
-                    ScrollController scrollController) {
+                builder:
+                    (BuildContext context, ScrollController scrollController) {
                   return Container(
                     decoration: const BoxDecoration(
                       color: Color(0xffFEFEFE),
@@ -116,7 +132,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                 onTap: () => _onActionSheetPress(context),
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Row(
                                       children: [
@@ -143,9 +159,56 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                               const Gap(20),
 
+                              InkWell(
+                                onTap: () => _onCountrySheetPress(context),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Icon(
+                                          Icons.flag_outlined,
+                                          color: Color(0xff4100E3),
+                                          size: 20,
+                                        ),
+                                        const Gap(10),
+                                        Text(
+                                          'formHints.country'.tr(),
+                                          style: getPrimaryRegularStyle(
+                                            fontSize: 14,
+                                            color: const Color(0xff180B3C),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          _selectedCountry ??
+                                              'formHints.country'.tr(),
+                                          style: getPrimaryRegularStyle(
+                                            fontSize: 12,
+                                            color: const Color(0xff8F9098),
+                                          ),
+                                        ),
+                                        const Gap(8),
+                                        const Icon(
+                                          Icons.arrow_forward_ios_sharp,
+                                          size: 12,
+                                          color: Color(0xff8F9098),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+
+                              const Gap(20),
+
                               Row(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -192,15 +255,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
                               // General items
                               _buildGeneralItem(
-                                icon:  'assets/img/account.svg',
+                                icon: 'assets/img/account.svg',
                                 label: 'profile.myProfile'.tr(),
                                 onTap: () {
-                                  Navigator.of(context).push(_createRoute(const EditAccount()));
-
+                                  Navigator.of(context)
+                                      .push(_createRoute(const EditAccount()));
                                 },
                               ),
                               const Gap(30),
-  // General items
+                              // General items
                               _buildGeneralItem(
                                 icon: 'assets/img/support-icon-new.svg',
                                 label: 'drawer.support'.tr(),
@@ -234,7 +297,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     MaterialPageRoute(
                                       builder: (_) => WebViewPage(
                                         url:
-                                        'https://www.dingdone.app/privacy-policy',
+                                            'https://www.dingdone.app/privacy-policy',
                                         title: 'settings.privacyPolicy'.tr(),
                                       ),
                                     ),
@@ -251,7 +314,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     MaterialPageRoute(
                                       builder: (_) => WebViewPage(
                                         url:
-                                        'https://www.dingdone.app/user-agreement',
+                                            'https://www.dingdone.app/user-agreement',
                                         title: 'drawer.termsAndConditions'.tr(),
                                       ),
                                     ),
@@ -336,14 +399,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 if (value["status"].toString().toLowerCase() == 'ok') {
                   showDialog(
                     context: context,
-                    builder: (BuildContext context) =>
-                        simpleAlert(context, 'button.success'.tr(),profileViewModel),
+                    builder: (BuildContext context) => simpleAlert(
+                        context, 'button.success'.tr(), profileViewModel),
                   );
                 } else {
                   showDialog(
                     context: context,
-                    builder: (BuildContext context) =>
-                        simpleAlert(context, 'button.failure'.tr(),profileViewModel),
+                    builder: (BuildContext context) => simpleAlert(
+                        context, 'button.failure'.tr(), profileViewModel),
                   );
                 }
               },
@@ -356,8 +419,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 child: Center(
                   child: Text(
-                    'Yes, I’m Done With It'
-                        , // was hardcoded
+                    'Yes, I’m Done With It', // was hardcoded
                     style: getPrimarySemiBoldStyle(
                       fontSize: 12,
                       color: Colors.white,
@@ -445,10 +507,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
   //   );
   // }
   Widget simpleAlert(
-      BuildContext context,
-      String message,
-      ProfileViewModel profileViewModel,
-      ) {
+    BuildContext context,
+    String message,
+    ProfileViewModel profileViewModel,
+  ) {
     final success = message == 'button.success'.tr();
 
     return WillPopScope(
@@ -532,10 +594,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
       ),
     );
   }
+
   void _logoutAndGoToLogin(
-      BuildContext context,
-      ProfileViewModel profileViewModel,
-      ) {
+    BuildContext context,
+    ProfileViewModel profileViewModel,
+  ) {
     Navigator.pop(context); // close dialog
     Navigator.pop(context); // close settings screen
 
@@ -545,7 +608,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
 
     Navigator.of(context).pushAndRemoveUntil(
       _createRoute(const LoginScreen()),
-          (route) => false,
+      (route) => false,
     );
   }
 
@@ -583,15 +646,81 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   // Kept your function signature; only replaced changeLocale with easy_localization.
-  void showDemoActionSheet({required BuildContext context, required Widget child}) {
+  void showDemoActionSheet(
+      {required BuildContext context, required Widget child}) {
     showCupertinoModalPopup<String>(
       context: context,
       builder: (BuildContext context) => child,
     ).then((String? value) async {
       if (value != null) {
-        await context.setLocale(Locale(value)); // ✅ replacement for changeLocale
+        await context
+            .setLocale(Locale(value)); // ✅ replacement for changeLocale
       }
     });
+  }
+
+  void _onCountrySheetPress(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(32),
+          topRight: Radius.circular(32),
+        ),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Gap(15),
+            Text(
+              'formHints.country'.tr(),
+              style: getPrimarySemiBoldStyle(
+                fontSize: 16,
+                color: const Color(0xff180B3C),
+              ),
+            ),
+            const Gap(8),
+            _countryTile(ctx, 'Qatar'),
+            _countryTile(ctx, 'Cyprus'),
+            const Gap(15),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _countryTile(BuildContext ctx, String country) {
+    return ListTile(
+      leading: Icon(
+        _selectedCountry == country
+            ? Icons.radio_button_checked
+            : Icons.radio_button_off,
+        color: const Color(0xff4100E3),
+      ),
+      title: Text(
+        country,
+        style: getPrimaryRegularStyle(
+          fontSize: 14,
+          color: const Color(0xff180B3C),
+        ),
+      ),
+      onTap: () async {
+        await Provider.of<CountryViewModel>(context, listen: false)
+            .selectCountry(country);
+        if (!mounted) return;
+        setState(() => _selectedCountry = country);
+        Navigator.pop(ctx);
+        await Provider.of<ProfileViewModel>(context, listen: false)
+            .ensureCurrentAddressForCountry(
+          Provider.of<CountryViewModel>(context, listen: false),
+        );
+        if (!mounted) return;
+        await Provider.of<CategoriesViewModel>(context, listen: false)
+            .getCategoriesAndServices();
+      },
+    );
   }
 
   void _onActionSheetPress(BuildContext context) {
@@ -682,11 +811,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _languageTile(
-      BuildContext ctx, {
-        required String label,
-        required String value,
-        required String dblangValue,
-      }) {
+    BuildContext ctx, {
+    required String label,
+    required String value,
+    required String dblangValue,
+  }) {
     return ListTile(
       title: Text(
         label,
@@ -724,7 +853,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
         const curve = Curves.ease;
 
         var tween =
-        Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
         return SlideTransition(
           position: animation.drive(tween),

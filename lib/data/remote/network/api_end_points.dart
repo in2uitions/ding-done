@@ -10,13 +10,12 @@ class ApiEndPoints {
   final String requestEmailOtp = '/authentication/request-email-otp';
   final String userUpdate = '/users';
   final String files = '/files';
-  final String getCategories = '/items/categories?fields=*.*.*.*';
   final String getCountries = '/items/countries';
-  final String getItDone = '/items/get_it_done?fields=*.*.*.*.*';
+  final String getItDone =
+      '/items/get_it_done?fields=id,status,sort,external_link,featured_image.filename_disk,parent_category.id,parent_category.translations.*,sub_category.id,sub_category.translations.*,service.id';
+  // Lightweight categories+services catalog (replaces old /items/categories and /items/services deep queries).
   final String getCategoriesAndServices = '/suppliers/categories';
   final String getCompanies = '/items/companies';
-  final String getServices = '/items/services?fields=*.*.*.*';
-  final String getJobs = '/items/jobs?fields=*.*.*';
   final String supplierProfile = '/items/supplier_info';
   final String countryRates = '/items/country_rates';
   final String customerProfile = '/items/customer_info';
@@ -42,12 +41,13 @@ class ApiEndPoints {
   final String deletePaymentCard = '/customers/removeCard';
   final String payJob = '/customers/payJob';
   final String addJob = '/customers/addJob';
-  final String finishJobAndCollectPayment = '/suppliers/finishJobAndCollectPayment';
+  final String finishJobAndCollectPayment =
+      '/suppliers/finishJobAndCollectPayment';
   final String getAllPayments = '/items/customer_payment_cards?fields=*.*';
   final String downloadInvoice = '/invoices/downloadInvoice';
   // final String  customerInvoice= '/invoices/customerInvoice';
   // final String  supplierInvoice= '/invoices/supplierInvoice';
-  final String  invoices= '/invoices/download';
+  final String invoices = '/invoices/download';
   // final String apiSendReset = '/email/reset-test';
   final String apiSendReset = '/email/reset-email';
   final String notifications = '/i18/notifications';

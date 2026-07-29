@@ -47,6 +47,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
+      key: ValueKey('dropdown_${widget.index}_${widget.value}_${widget.list.length}'),
       icon: const Icon(Icons.keyboard_arrow_down),
       elevation: 16,
       isExpanded: true,
@@ -99,6 +100,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
         fillColor: Colors.white,
       ),
       onChanged: widget.onChange,
+      initialValue: _selectedValueInList(),
       hint: Text(
         widget.hintText!,
         style: getPrimaryRegularStyle(
@@ -108,7 +110,7 @@ class _CustomDropDownState extends State<CustomDropDown> {
       ),
       items: widget.list.map<DropdownMenuItem<String>>((dynamic value) {
         return DropdownMenuItem<String>(
-          value: value['code'],
+          value: value['code']?.toString(),
           child: Text(
             value['name'] ?? '',
             overflow: TextOverflow.ellipsis,
@@ -117,5 +119,14 @@ class _CustomDropDownState extends State<CustomDropDown> {
         );
       }).toList(),
     );
+  }
+
+  String? _selectedValueInList() {
+    final value = widget.value;
+    if (value == null || value.isEmpty || widget.list.isEmpty) return null;
+    for (final item in widget.list) {
+      if (item is Map && item['code']?.toString() == value) return value;
+    }
+    return null;
   }
 }

@@ -13,6 +13,7 @@ import 'package:dingdone/view/sign_up_as/country_selection.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild_login.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
@@ -40,8 +41,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
-
+  String? _selectedCountry;
 
   @override
   void initState() {
@@ -51,13 +51,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Future<void> getCredentials() async {
     final savedEmail =
-    await AppPreferences().get(key: userEmailKey, isModel: false);
+        await AppPreferences().get(key: userEmailKey, isModel: false);
     final savedPassword =
-    await AppPreferences().get(key: userPasswordKey, isModel: false);
+        await AppPreferences().get(key: userPasswordKey, isModel: false);
+    final savedCountry =
+        await AppPreferences().get(key: selectedCountryKey, isModel: false);
 
     setState(() {
       email = savedEmail;
       password = savedPassword;
+      _selectedCountry = savedCountry;
       _isChecked = email != null && password != null;
 
       _emailController.text = email ?? '';
@@ -126,17 +129,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                     color: Colors.white,
                                   ),
                                 ),
-                                onTap: () async {
-                                  await Provider.of<CategoriesViewModel>(
-                                          context,
-                                          listen: false)
-                                      .getCategoriesAndServices();
+                                onTap: _selectedCountry == null
+                                    ? null
+                                    : () async {
+                                        await Provider.of<CategoriesViewModel>(
+                                                context,
+                                                listen: false)
+                                            .getCategoriesAndServices();
 
-                                  Navigator.of(context)
-                                      .push(_createRoute(const ServicesScreen(
-                                    initialTabIndex: 0,
-                                  )));
-                                }),
+                                        Navigator.of(context).push(
+                                            _createRoute(const ServicesScreen(
+                                          initialTabIndex: 0,
+                                        )));
+                                      }),
                             Align(
                               alignment: Alignment.topRight,
                               child: InkWell(
@@ -144,16 +149,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                     Icons.navigate_next,
                                     color: Colors.white,
                                   ),
-                                  onTap: () async {
-                                    await Provider.of<CategoriesViewModel>(
-                                            context,
-                                            listen: false)
-                                        .getCategoriesAndServices();
-                                    Navigator.of(context)
-                                        .push(_createRoute(const ServicesScreen(
-                                      initialTabIndex: 0,
-                                    )));
-                                  }),
+                                  onTap: _selectedCountry == null
+                                      ? null
+                                      : () async {
+                                          await Provider.of<
+                                                      CategoriesViewModel>(
+                                                  context,
+                                                  listen: false)
+                                              .getCategoriesAndServices();
+                                          Navigator.of(context).push(
+                                              _createRoute(const ServicesScreen(
+                                            initialTabIndex: 0,
+                                          )));
+                                        }),
                             ),
                           ],
                         ),
@@ -163,15 +171,42 @@ class _LoginScreenState extends State<LoginScreen> {
                           top: context.appValues.appPadding.p10,
                           right: context.appValues.appPadding.p10,
                         ),
-                        child: Align(
-                          alignment: Alignment.topRight,
-                          child: InkWell(
-                            child: const Icon(
-                              Icons.language,
-                              color: Colors.white,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            InkWell(
+                              onTap: () => _onCountrySheetPress(context),
+                              borderRadius: BorderRadius.circular(8),
+                              child: Padding(
+                                padding: const EdgeInsets.all(6),
+                                child: Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.flag_outlined,
+                                      color: Colors.white,
+                                    ),
+                                    const Gap(4),
+                                    Text(
+                                      _selectedCountry ??
+                                          'formHints.country'.tr(),
+                                      style: getPrimaryRegularStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
-                            onTap: () => _onActionSheetPress(context),
-                          ),
+                            const Gap(6),
+                            InkWell(
+                              child: const Icon(
+                                Icons.language,
+                                color: Colors.white,
+                              ),
+                              onTap: () => _onActionSheetPress(context),
+                            ),
+                          ],
                         ),
                       ),
                     ],
@@ -218,11 +253,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                           jobsViewModel,
                                           error) {
                                     return AutofillGroup(
-
-                                    child: Column(
+                                      child: Column(
                                         children: [
                                           Text(
-                                                'login_screen.signInToYourAccount'.tr(),
+                                            'login_screen.signInToYourAccount'
+                                                .tr(),
                                             style: getPrimarySemiBoldStyle(
                                               fontSize: 16,
                                               color: const Color(0xff180B3C),
@@ -231,28 +266,42 @@ class _LoginScreenState extends State<LoginScreen> {
                                           const Gap(10),
                                           CustomTextFieldLogin(
                                             controller: _emailController,
-                                            autofillHints: const [AutofillHints.email],
-                                            viewModel: loginViewModel.setInputValues,
-                                            index: context.resources.strings.formKeys['email']!,
+                                            autofillHints: const [
+                                              AutofillHints.email
+                                            ],
+                                            viewModel:
+                                                loginViewModel.setInputValues,
+                                            index: context.resources.strings
+                                                .formKeys['email']!,
                                             hintText: 'formHints.email'.tr(),
-                                            validator: (val) => loginViewModel.loginErrors[
-                                            context.resources.strings.formKeys['email']!],
-                                            errorText: loginViewModel.loginErrors[
-                                            context.resources.strings.formKeys['email']!],
-                                            keyboardType: TextInputType.emailAddress,
+                                            validator: (val) =>
+                                                loginViewModel.loginErrors[
+                                                    context.resources.strings
+                                                        .formKeys['email']!],
+                                            errorText:
+                                                loginViewModel.loginErrors[
+                                                    context.resources.strings
+                                                        .formKeys['email']!],
+                                            keyboardType:
+                                                TextInputType.emailAddress,
                                           ),
-
                                           const Gap(15),
-
                                           CustomTextFieldLogin(
                                             controller: _passwordController,
-                                            autofillHints: const [AutofillHints.password],
-                                            viewModel: loginViewModel.setInputValues,
-                                            index: context.resources.strings.formKeys['password']!,
+                                            autofillHints: const [
+                                              AutofillHints.password
+                                            ],
+                                            viewModel:
+                                                loginViewModel.setInputValues,
+                                            index: context.resources.strings
+                                                .formKeys['password']!,
                                             hintText: 'formHints.password'.tr(),
-                                            errorText: loginViewModel.loginErrors[
-                                            context.resources.strings.formKeys['password']!],
-                                            keyboardType: TextInputType.visiblePassword,
+                                            errorText:
+                                                loginViewModel.loginErrors[
+                                                    context.resources.strings
+                                                        .formKeys['password']!],
+                                            keyboardType:
+                                                TextInputType.visiblePassword,
                                           ),
                                           const Gap(10),
                                           loginViewModel.errorMsg != null
@@ -266,8 +315,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                 )
                                               : Container(),
                                           SizedBox(
-                                              height:
-                                                  context.appValues.appSize.s10),
+                                              height: context
+                                                  .appValues.appSize.s10),
                                           Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.spaceBetween,
@@ -279,8 +328,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                       .appSizePercent.w45,
                                                   child: CheckboxListTile(
                                                     title: Text(
-
-                                                          'login_screen.rememberMe'.tr(),
+                                                      'login_screen.rememberMe'
+                                                          .tr(),
                                                       style:
                                                           getPrimaryRegularStyle(
                                                         fontSize: 12,
@@ -296,8 +345,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     // Remove padding
                                                     activeColor:
                                                         const Color(0xff71727A),
-                                                    checkColor: context.resources
-                                                        .color.btnColorBlue,
+                                                    checkColor: context
+                                                        .resources
+                                                        .color
+                                                        .btnColorBlue,
                                                     dense: true,
                                                     // Make the tile more compact
                                                     controlAffinity:
@@ -310,24 +361,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                                             vertical: -4),
                                                     // Reduce space
                                                     value: _isChecked,
-                                                    onChanged: (newValue) async {
-                                                        setState(() {
-                                                          _isChecked =
-                                                          newValue!;
-                                                        });
+                                                    onChanged:
+                                                        (newValue) async {
+                                                      setState(() {
+                                                        _isChecked = newValue!;
+                                                      });
 
-                                                        if (!_isChecked) {
-                                                          AppPreferences()
-                                                              .remove(
-                                                              key: userEmailKey);
-                                                          AppPreferences()
-                                                              .remove(
-                                                              key: userPasswordKey);
-                                                        }
-
-
-
-
+                                                      if (!_isChecked) {
+                                                        AppPreferences().remove(
+                                                            key: userEmailKey);
+                                                        AppPreferences().remove(
+                                                            key:
+                                                                userPasswordKey);
+                                                      }
                                                     },
                                                   ),
                                                 ),
@@ -335,14 +381,16 @@ class _LoginScreenState extends State<LoginScreen> {
 
                                               // SizedBox(height: context.appValues.appSize.s15),
                                               Align(
-                                                alignment: Alignment.centerRight,
+                                                alignment:
+                                                    Alignment.centerRight,
                                                 child: InkWell(
                                                   child: Text(
-
-                                                        'login_screen.forgotPassword'.tr(),
-                                                    style: getPrimaryRegularStyle(
-                                                      color:
-                                                          const Color(0xff4100E3),
+                                                    'login_screen.forgotPassword'
+                                                        .tr(),
+                                                    style:
+                                                        getPrimaryRegularStyle(
+                                                      color: const Color(
+                                                          0xff4100E3),
                                                       fontSize: 12,
                                                     ),
                                                   ),
@@ -366,58 +414,72 @@ class _LoginScreenState extends State<LoginScreen> {
                                                     const Color(0xff4100E3),
                                                 shape:
                                                     const RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.all(
+                                                  borderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(12),
                                                   ),
                                                 ),
                                               ),
-                                              onPressed: () async {
-                                                setState(() {
-                                                  isLoading = true;
-                                                });
+                                              onPressed: _selectedCountry ==
+                                                      null
+                                                  ? null
+                                                  : () async {
+                                                      setState(() {
+                                                        isLoading = true;
+                                                      });
 
-                                                if (loginViewModel.validate()) {
-                                                  if (await loginViewModel
-                                                      .login()) {
-                                                    if (_isChecked) {
-                                                      await AppPreferences().save(
-                                                          key: userEmailKey,
-                                                          value: _emailController.text,
-                                                          isModel: false);
-
-                                                      await AppPreferences().save(
-                                                          key: userPasswordKey,
-                                                          value: _passwordController.text,
-                                                          isModel: false);
-                                                    }
-                                                    if (await loginViewModel
-                                                        .isActiveUser()) {
                                                       if (loginViewModel
-                                                          .isLoggedIn) {
-                                                        TextInput.finishAutofillContext();
-                                                        await loginViewModel
-                                                            .setCredentials();
-                                                        await categoriesViewModel
-                                                            .getCategoriesAndServices();
-                                                        await jobsViewModel
-                                                            .readJson();
-                                                        Navigator.of(context)
-                                                            .push(_createRoute(
-                                                                BottomBar(
-                                                          userRole: loginViewModel
-                                                              .userRole,
-                                                          currentTab: 0,
-                                                        )));
-                                                      } else {
-                                                        const CircularProgressIndicator();
+                                                          .validate()) {
+                                                        if (await loginViewModel
+                                                            .login()) {
+                                                          if (_isChecked) {
+                                                            await AppPreferences().save(
+                                                                key:
+                                                                    userEmailKey,
+                                                                value:
+                                                                    _emailController
+                                                                        .text,
+                                                                isModel: false);
+
+                                                            await AppPreferences().save(
+                                                                key:
+                                                                    userPasswordKey,
+                                                                value:
+                                                                    _passwordController
+                                                                        .text,
+                                                                isModel: false);
+                                                          }
+                                                          if (await loginViewModel
+                                                              .isActiveUser()) {
+                                                            if (loginViewModel
+                                                                .isLoggedIn) {
+                                                              TextInput
+                                                                  .finishAutofillContext();
+                                                              await loginViewModel
+                                                                  .setCredentials();
+                                                              await categoriesViewModel
+                                                                  .getCategoriesAndServices();
+                                                              await jobsViewModel
+                                                                  .readJson();
+                                                              Navigator.of(
+                                                                      context)
+                                                                  .push(_createRoute(
+                                                                      BottomBar(
+                                                                userRole:
+                                                                    loginViewModel
+                                                                        .userRole,
+                                                                currentTab: 0,
+                                                              )));
+                                                            } else {
+                                                              const CircularProgressIndicator();
+                                                            }
+                                                          }
+                                                        }
                                                       }
-                                                    }
-                                                  }
-                                                }
-                                                setState(() {
-                                                  isLoading = false;
-                                                });
-                                              },
+                                                      setState(() {
+                                                        isLoading = false;
+                                                      });
+                                                    },
                                               child: (isLoading)
                                                   ? const SizedBox(
                                                       width: 16,
@@ -428,7 +490,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         strokeWidth: 1.5,
                                                       ))
                                                   : Text(
-                                                          'login_screen.signIn'.tr(),
+                                                      'login_screen.signIn'
+                                                          .tr(),
                                                       style:
                                                           getPrimaryRegularStyle(
                                                         color: context.resources
@@ -518,167 +581,184 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ),
                                             ),
                                           ),
-                                          onPressed: () async {
-                                            setState(() {
-                                              isLoadingGoogle = true;
-                                            });
-                                            try {
-                                              final GoogleSignIn _googleSignIn =
-                                                  GoogleSignIn(
-                                                scopes: ['email'],
-                                              );
-                                              // Sign out first to ensure fresh login
-                                              await _googleSignIn.signOut();
+                                          onPressed: _selectedCountry == null
+                                              ? null
+                                              : () async {
+                                                  setState(() {
+                                                    isLoadingGoogle = true;
+                                                  });
+                                                  try {
+                                                    final GoogleSignIn
+                                                        _googleSignIn =
+                                                        GoogleSignIn(
+                                                      scopes: ['email'],
+                                                    );
+                                                    // Sign out first to ensure fresh login
+                                                    await _googleSignIn
+                                                        .signOut();
 
-                                              // Start Google Sign-In
-                                              final GoogleSignInAccount?
-                                                  googleUser =
-                                                  await _googleSignIn.signIn();
-                                              if (googleUser == null) {
-                                                debugPrint(
-                                                    "User canceled Google Sign-In");
-                                                return;
-                                              }
+                                                    // Start Google Sign-In
+                                                    final GoogleSignInAccount?
+                                                        googleUser =
+                                                        await _googleSignIn
+                                                            .signIn();
+                                                    if (googleUser == null) {
+                                                      debugPrint(
+                                                          "User canceled Google Sign-In");
+                                                      return;
+                                                    }
 
-                                              // Get authentication details from Google
-                                              final GoogleSignInAuthentication
-                                                  googleAuth = await googleUser
-                                                      .authentication;
+                                                    // Get authentication details from Google
+                                                    final GoogleSignInAuthentication
+                                                        googleAuth =
+                                                        await googleUser
+                                                            .authentication;
 
-                                              // Get the ID token (used for Directus authentication)
-                                              final String? idToken =
-                                                  googleAuth.idToken;
-                                              final String? accessToken =
-                                                  googleAuth.accessToken;
+                                                    // Get the ID token (used for Directus authentication)
+                                                    final String? idToken =
+                                                        googleAuth.idToken;
+                                                    final String? accessToken =
+                                                        googleAuth.accessToken;
 
-                                              debugPrint(
-                                                  "Google ID Token: $idToken");
-                                              debugPrint(
-                                                  "access Token: $accessToken");
-                                              //
-                                              if (idToken == null) {
-                                                debugPrint(
-                                                    "Error: ID token is null.");
-                                                return;
-                                              }
-                                              //
-                                              // // Send the ID token to Directus for authentication
-                                              final response = await http.post(
-                                                Uri.parse(
-                                                    'https://cms.dingdone.app/sso-login/google'),
-                                                headers: {
-                                                  'Content-Type':
-                                                      'application/json',
-                                                  'Accept': 'application/json',
+                                                    debugPrint(
+                                                        "Google ID Token: $idToken");
+                                                    debugPrint(
+                                                        "access Token: $accessToken");
+                                                    //
+                                                    if (idToken == null) {
+                                                      debugPrint(
+                                                          "Error: ID token is null.");
+                                                      return;
+                                                    }
+                                                    //
+                                                    // // Send the ID token to Directus for authentication
+                                                    final response =
+                                                        await http.post(
+                                                      Uri.parse(
+                                                          'https://cms.dingdone.app/sso-login/google'),
+                                                      headers: {
+                                                        'Content-Type':
+                                                            'application/json',
+                                                        'Accept':
+                                                            'application/json',
+                                                      },
+                                                      body: jsonEncode(
+                                                          {'idToken': idToken}),
+                                                    );
+                                                    //
+                                                    //
+                                                    debugPrint(
+                                                        'Directus Response Status: ${response.statusCode}');
+                                                    debugPrint(
+                                                        'Directus Response Body: ${response.body}');
+                                                    //
+                                                    if (response.statusCode ==
+                                                        200) {
+                                                      final Map<String, dynamic>
+                                                          responseData =
+                                                          jsonDecode(
+                                                              response.body);
+                                                      debugPrint(
+                                                          'response data is $responseData');
+                                                      // Assuming Directus returns a user token
+                                                      final String
+                                                          directusToken =
+                                                          responseData[
+                                                              'access_token'];
+                                                      final prefs =
+                                                          await SharedPreferences
+                                                              .getInstance();
+
+                                                      await AppPreferences()
+                                                          .save(
+                                                              key: userIdKey,
+                                                              value:
+                                                                  responseData[
+                                                                      'user'],
+                                                              isModel: false);
+                                                      await prefs.setString(
+                                                          userIdKey,
+                                                          '${responseData['user']}');
+                                                      await AppPreferences().save(
+                                                          key: userRoleKey,
+                                                          value:
+                                                              '008f8da4-ae7c-42f2-a498-68d490fe4593',
+                                                          isModel: false);
+                                                      await prefs.setString(
+                                                          userRoleKey,
+                                                          '008f8da4-ae7c-42f2-a498-68d490fe4593');
+
+                                                      await AppPreferences().save(
+                                                          key: userTokenKey,
+                                                          value: responseData[
+                                                              'access_token'],
+                                                          isModel: false);
+                                                      await prefs.setString(
+                                                          userTokenKey,
+                                                          '${responseData['access_token']}');
+
+                                                      await loginViewModel
+                                                          .isActiveUser();
+                                                      await profileViewModel
+                                                          .getProfiledata();
+
+                                                      debugPrint(
+                                                          "Successfully signed in! Directus Token: $directusToken");
+
+                                                      await categoriesViewModel
+                                                          .getCategoriesAndServices();
+                                                      await jobsViewModel
+                                                          .readJson();
+                                                      // if(profileViewModel.getProfileBody['first_name']!=null
+                                                      // && profileViewModel.getProfileBody['last_name']!=null
+                                                      // && profileViewModel.getProfileBody['phone_number']!=null
+                                                      // && profileViewModel.getProfileBody['email']!=null
+                                                      // && profileViewModel.getProfileBody['latitude']!=null
+                                                      // && profileViewModel.getProfileBody['longitude']!=null
+                                                      // && profileViewModel.getProfileBody['address']!=null
+                                                      // && profileViewModel.getProfileBody['city']!=null
+                                                      // && profileViewModel.getProfileBody['street_number']!=null
+                                                      // && profileViewModel.getProfileBody['building_number']!=null
+                                                      // && profileViewModel.getProfileBody['floor']!=null
+                                                      // && profileViewModel.getProfileBody['apartment_number']!=null
+                                                      // && profileViewModel.getProfileBody['zone']!=null
+                                                      // && profileViewModel.getProfileBody['address_label']!=null
+                                                      // && profileViewModel.profileBody['user']['avatar']!=null
+                                                      // ){
+                                                      Navigator.of(context)
+                                                          .push(_createRoute(
+                                                              BottomBar(
+                                                        userRole: Constants
+                                                            .customerRoleId,
+                                                        currentTab: 0,
+                                                      )));
+                                                      // }else{
+                                                      //   Navigator.of(context).push(_createRoute(
+                                                      //       SignUpNew()));
+                                                      // }
+
+                                                      // TODO: Save token to local storage for future authenticated requests
+                                                    } else {
+                                                      debugPrint(
+                                                          "Failed to sign in with Directus: ${response.body}");
+                                                    }
+                                                    // _handleGoogleSignIn();
+                                                    // var data =await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'));
+                                                    // debugPrint('dataaa $data');
+                                                    // if (!await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'))) {
+                                                    //   throw Exception('Could not launch url');
+                                                    // }
+                                                    // loginGoogle();
+                                                    // _launchGoogleSignIn();
+                                                  } catch (e) {
+                                                    debugPrint(
+                                                        "Error signing in with Google: $e");
+                                                  }
+
+                                                  setState(() {
+                                                    isLoadingGoogle = false;
+                                                  });
                                                 },
-                                                body: jsonEncode(
-                                                    {'idToken': idToken}),
-                                              );
-                                              //
-                                              //
-                                              debugPrint(
-                                                  'Directus Response Status: ${response.statusCode}');
-                                              debugPrint(
-                                                  'Directus Response Body: ${response.body}');
-                                              //
-                                              if (response.statusCode == 200) {
-                                                final Map<String, dynamic>
-                                                    responseData =
-                                                    jsonDecode(response.body);
-                                                debugPrint(
-                                                    'response data is $responseData');
-                                                // Assuming Directus returns a user token
-                                                final String directusToken =
-                                                    responseData[
-                                                        'access_token'];
-                                                final prefs =
-                                                    await SharedPreferences
-                                                        .getInstance();
-
-                                                await AppPreferences().save(
-                                                    key: userIdKey,
-                                                    value: responseData['user'],
-                                                    isModel: false);
-                                                await prefs.setString(userIdKey,
-                                                    '${responseData['user']}');
-                                                await AppPreferences().save(
-                                                    key: userRoleKey,
-                                                    value:
-                                                        '008f8da4-ae7c-42f2-a498-68d490fe4593',
-                                                    isModel: false);
-                                                await prefs.setString(
-                                                    userRoleKey,
-                                                    '008f8da4-ae7c-42f2-a498-68d490fe4593');
-
-                                                await AppPreferences().save(
-                                                    key: userTokenKey,
-                                                    value: responseData[
-                                                        'access_token'],
-                                                    isModel: false);
-                                                await prefs.setString(
-                                                    userTokenKey,
-                                                    '${responseData['access_token']}');
-
-                                                await loginViewModel
-                                                    .isActiveUser();
-                                                await profileViewModel
-                                                    .getProfiledata();
-
-                                                debugPrint(
-                                                    "Successfully signed in! Directus Token: $directusToken");
-
-                                                await categoriesViewModel
-                                                    .getCategoriesAndServices();
-                                                await jobsViewModel.readJson();
-                                                // if(profileViewModel.getProfileBody['first_name']!=null
-                                                // && profileViewModel.getProfileBody['last_name']!=null
-                                                // && profileViewModel.getProfileBody['phone_number']!=null
-                                                // && profileViewModel.getProfileBody['email']!=null
-                                                // && profileViewModel.getProfileBody['latitude']!=null
-                                                // && profileViewModel.getProfileBody['longitude']!=null
-                                                // && profileViewModel.getProfileBody['address']!=null
-                                                // && profileViewModel.getProfileBody['city']!=null
-                                                // && profileViewModel.getProfileBody['street_number']!=null
-                                                // && profileViewModel.getProfileBody['building_number']!=null
-                                                // && profileViewModel.getProfileBody['floor']!=null
-                                                // && profileViewModel.getProfileBody['apartment_number']!=null
-                                                // && profileViewModel.getProfileBody['zone']!=null
-                                                // && profileViewModel.getProfileBody['address_label']!=null
-                                                // && profileViewModel.profileBody['user']['avatar']!=null
-                                                // ){
-                                                Navigator.of(context).push(
-                                                    _createRoute(BottomBar(
-                                                  userRole:
-                                                      Constants.customerRoleId,
-                                                  currentTab: 0,
-                                                )));
-                                                // }else{
-                                                //   Navigator.of(context).push(_createRoute(
-                                                //       SignUpNew()));
-                                                // }
-
-                                                // TODO: Save token to local storage for future authenticated requests
-                                              } else {
-                                                debugPrint(
-                                                    "Failed to sign in with Directus: ${response.body}");
-                                              }
-                                              // _handleGoogleSignIn();
-                                              // var data =await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'));
-                                              // debugPrint('dataaa $data');
-                                              // if (!await launchUrl(Uri.parse('https://tuacms.in2apps.xyz/auth/login/google'))) {
-                                              //   throw Exception('Could not launch url');
-                                              // }
-                                              // loginGoogle();
-                                              // _launchGoogleSignIn();
-                                            } catch (e) {
-                                              debugPrint(
-                                                  "Error signing in with Google: $e");
-                                            }
-
-                                            setState(() {
-                                              isLoadingGoogle = false;
-                                            });
-                                          },
                                           child: (isLoadingGoogle)
                                               ? const SizedBox(
                                                   width: 16,
@@ -698,8 +778,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         width: context.appValues
                                                             .appSize.s10),
                                                     Text(
-
-                                                          'login_screen.connectWithGoogle'.tr(),
+                                                      'login_screen.connectWithGoogle'
+                                                          .tr(),
                                                       style:
                                                           getPrimaryRegularStyle(
                                                         color: context.resources
@@ -748,159 +828,176 @@ class _LoginScreenState extends State<LoginScreen> {
                                               ),
                                             ),
                                           ),
-                                          onPressed: () async {
-                                            try {
-                                              setState(() {
-                                                isLoadingApple = true;
-                                              });
-                                              final credential =
-                                                  await SignInWithApple
-                                                      .getAppleIDCredential(
-                                                scopes: [
-                                                  AppleIDAuthorizationScopes
-                                                      .email,
-                                                  AppleIDAuthorizationScopes
-                                                      .fullName,
-                                                ],
-                                              );
-                                              final userIdentifier =
-                                                  credential.userIdentifier;
-                                              final email = credential
-                                                  .email; // will be null after first login
-                                              final firstName =
-                                                  credential.givenName;
-                                              final lastName =
-                                                  credential.familyName;
+                                          onPressed: _selectedCountry == null
+                                              ? null
+                                              : () async {
+                                                  try {
+                                                    setState(() {
+                                                      isLoadingApple = true;
+                                                    });
+                                                    final credential =
+                                                        await SignInWithApple
+                                                            .getAppleIDCredential(
+                                                      scopes: [
+                                                        AppleIDAuthorizationScopes
+                                                            .email,
+                                                        AppleIDAuthorizationScopes
+                                                            .fullName,
+                                                      ],
+                                                    );
+                                                    final userIdentifier =
+                                                        credential
+                                                            .userIdentifier;
+                                                    final email = credential
+                                                        .email; // will be null after first login
+                                                    final firstName =
+                                                        credential.givenName;
+                                                    final lastName =
+                                                        credential.familyName;
 
-                                              debugPrint(
-                                                  "Apple ID: $userIdentifier");
-                                              debugPrint("Email: $email");
-                                              debugPrint(
-                                                  "First name: $firstName");
-                                              debugPrint(
-                                                  "Last name: $lastName");
-                                              final identityToken = credential
-                                                  .identityToken; // JWT
-                                              final authorizationCode =
-                                                  credential.authorizationCode;
+                                                    debugPrint(
+                                                        "Apple ID: $userIdentifier");
+                                                    debugPrint("Email: $email");
+                                                    debugPrint(
+                                                        "First name: $firstName");
+                                                    debugPrint(
+                                                        "Last name: $lastName");
+                                                    final identityToken =
+                                                        credential
+                                                            .identityToken; // JWT
+                                                    final authorizationCode =
+                                                        credential
+                                                            .authorizationCode;
 
-                                              /// Send to your backend
-                                              final response = await http.post(
-                                                Uri.parse(
-                                                    'https://cms.dingdone.app/sso-login/apple'),
-                                                headers: {
-                                                  'Content-Type':
-                                                      'application/json'
-                                                },
-                                                body: jsonEncode({
-                                                  'identityToken':
-                                                      identityToken,
-                                                  'authorizationCode':
-                                                      authorizationCode,
-                                                  'userIdentifier':
-                                                      userIdentifier,
-                                                  'first_name': firstName,
-                                                  'last_name': lastName,
-                                                  'email': email,
-                                                }),
-                                              );
-                                              debugPrint(
-                                                  'response in apple sign in ${response.body}');
-                                              debugPrint(
-                                                  'Directus Response Status: ${response.statusCode}');
-                                              if (response.statusCode == 200) {
-                                                final Map<String, dynamic>
-                                                    responseData =
-                                                    jsonDecode(response.body);
-                                                debugPrint(
-                                                    'response data is $responseData');
-                                                // Assuming Directus returns a user token
-                                                final String directusToken =
-                                                    responseData[
-                                                        'access_token'];
-                                                final prefs =
-                                                    await SharedPreferences
-                                                        .getInstance();
+                                                    /// Send to your backend
+                                                    final response =
+                                                        await http.post(
+                                                      Uri.parse(
+                                                          'https://cms.dingdone.app/sso-login/apple'),
+                                                      headers: {
+                                                        'Content-Type':
+                                                            'application/json'
+                                                      },
+                                                      body: jsonEncode({
+                                                        'identityToken':
+                                                            identityToken,
+                                                        'authorizationCode':
+                                                            authorizationCode,
+                                                        'userIdentifier':
+                                                            userIdentifier,
+                                                        'first_name': firstName,
+                                                        'last_name': lastName,
+                                                        'email': email,
+                                                      }),
+                                                    );
+                                                    debugPrint(
+                                                        'response in apple sign in ${response.body}');
+                                                    debugPrint(
+                                                        'Directus Response Status: ${response.statusCode}');
+                                                    if (response.statusCode ==
+                                                        200) {
+                                                      final Map<String, dynamic>
+                                                          responseData =
+                                                          jsonDecode(
+                                                              response.body);
+                                                      debugPrint(
+                                                          'response data is $responseData');
+                                                      // Assuming Directus returns a user token
+                                                      final String
+                                                          directusToken =
+                                                          responseData[
+                                                              'access_token'];
+                                                      final prefs =
+                                                          await SharedPreferences
+                                                              .getInstance();
 
-                                                await AppPreferences().save(
-                                                    key: userIdKey,
-                                                    value: responseData['user'],
-                                                    isModel: false);
-                                                await prefs.setString(userIdKey,
-                                                    '${responseData['user']}');
-                                                await AppPreferences().save(
-                                                    key: userRoleKey,
-                                                    value:
-                                                        '008f8da4-ae7c-42f2-a498-68d490fe4593',
-                                                    isModel: false);
-                                                await prefs.setString(
-                                                    userRoleKey,
-                                                    '008f8da4-ae7c-42f2-a498-68d490fe4593');
+                                                      await AppPreferences()
+                                                          .save(
+                                                              key: userIdKey,
+                                                              value:
+                                                                  responseData[
+                                                                      'user'],
+                                                              isModel: false);
+                                                      await prefs.setString(
+                                                          userIdKey,
+                                                          '${responseData['user']}');
+                                                      await AppPreferences().save(
+                                                          key: userRoleKey,
+                                                          value:
+                                                              '008f8da4-ae7c-42f2-a498-68d490fe4593',
+                                                          isModel: false);
+                                                      await prefs.setString(
+                                                          userRoleKey,
+                                                          '008f8da4-ae7c-42f2-a498-68d490fe4593');
 
-                                                await AppPreferences().save(
-                                                    key: userTokenKey,
-                                                    value: responseData[
-                                                        'access_token'],
-                                                    isModel: false);
-                                                await prefs.setString(
-                                                    userTokenKey,
-                                                    '${responseData['access_token']}');
+                                                      await AppPreferences().save(
+                                                          key: userTokenKey,
+                                                          value: responseData[
+                                                              'access_token'],
+                                                          isModel: false);
+                                                      await prefs.setString(
+                                                          userTokenKey,
+                                                          '${responseData['access_token']}');
 
-                                                await loginViewModel
-                                                    .isActiveUser();
-                                                await profileViewModel
-                                                    .getProfiledata();
+                                                      await loginViewModel
+                                                          .isActiveUser();
+                                                      await profileViewModel
+                                                          .getProfiledata();
 
-                                                debugPrint(
-                                                    "Successfully signed in! Directus Token: $directusToken");
+                                                      debugPrint(
+                                                          "Successfully signed in! Directus Token: $directusToken");
 
-                                                await categoriesViewModel
-                                                    .getCategoriesAndServices();
-                                                await jobsViewModel.readJson();
+                                                      await categoriesViewModel
+                                                          .getCategoriesAndServices();
+                                                      await jobsViewModel
+                                                          .readJson();
 
-                                                Navigator.of(context).push(
-                                                    _createRoute(BottomBar(
-                                                  userRole:
-                                                      Constants.customerRoleId,
-                                                  currentTab: 0,
-                                                )));
+                                                      Navigator.of(context)
+                                                          .push(_createRoute(
+                                                              BottomBar(
+                                                        userRole: Constants
+                                                            .customerRoleId,
+                                                        currentTab: 0,
+                                                      )));
 
-
-
-                                                // TODO: Save token to local storage for future authenticated requests
-                                              } else {
-                                                if (response.statusCode ==
-                                                    300) {
-                                                  final Map<String, dynamic>
-                                                      jsonBody =
-                                                      jsonDecode(response.body)
-                                                          as Map<String,
-                                                              dynamic>;
-                                                  await _showPopupDialog(
-                                                      context,
-                                                      jsonBody["error"]);
-                                                } else {
-                                                  if (response.statusCode ==
-                                                      500) {
-                                                    await _showPopupDialog(
-                                                        context,
-                                                        'Internal Server Error\nTry again later!');
+                                                      // TODO: Save token to local storage for future authenticated requests
+                                                    } else {
+                                                      if (response.statusCode ==
+                                                          300) {
+                                                        final Map<String,
+                                                                dynamic>
+                                                            jsonBody =
+                                                            jsonDecode(response
+                                                                    .body)
+                                                                as Map<String,
+                                                                    dynamic>;
+                                                        await _showPopupDialog(
+                                                            context,
+                                                            jsonBody["error"]);
+                                                      } else {
+                                                        if (response
+                                                                .statusCode ==
+                                                            500) {
+                                                          await _showPopupDialog(
+                                                              context,
+                                                              'Internal Server Error\nTry again later!');
+                                                        }
+                                                      }
+                                                      await _showPopupDialog(
+                                                          context,
+                                                          'Failed to sign in using apple\nTry again later!');
+                                                    }
+                                                    setState(() {
+                                                      isLoadingApple = false;
+                                                    });
+                                                  } catch (error) {
+                                                    setState(() {
+                                                      isLoadingApple = false;
+                                                    });
+                                                    debugPrint(
+                                                        'error signing in with apple $error');
                                                   }
-                                                }
-                                                await _showPopupDialog(context,
-                                                    'Failed to sign in using apple\nTry again later!');
-                                              }
-                                              setState(() {
-                                                isLoadingApple = false;
-                                              });
-                                            } catch (error) {
-                                              setState(() {
-                                                isLoadingApple = false;
-                                              });
-                                              debugPrint(
-                                                  'error signing in with apple $error');
-                                            }
-                                          },
+                                                },
                                           child: (isLoadingApple)
                                               ? SizedBox(
                                                   width: 16,
@@ -923,7 +1020,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                                         width: context.appValues
                                                             .appSize.s10),
                                                     Text(
-                                                          'login_screen.connectWithApple'.tr(),
+                                                      'login_screen.connectWithApple'
+                                                          .tr(),
                                                       style:
                                                           getPrimaryRegularStyle(
                                                         color: context.resources
@@ -958,9 +1056,67 @@ class _LoginScreenState extends State<LoginScreen> {
     showCupertinoModalPopup<String>(
         context: context,
         builder: (BuildContext context) => child).then((String? value) {
-      if (value != null)   context.setLocale(Locale(value));
-
+      if (value != null) context.setLocale(Locale(value));
     });
+  }
+
+  void _onCountrySheetPress(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(32),
+          topRight: Radius.circular(32),
+        ),
+      ),
+      builder: (ctx) => SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Gap(15),
+            Text(
+              'formHints.country'.tr(),
+              style: getPrimarySemiBoldStyle(
+                fontSize: 16,
+                color: const Color(0xff180B3C),
+              ),
+            ),
+            const Gap(8),
+            _countryTile(ctx, 'Qatar'),
+            _countryTile(ctx, 'Cyprus'),
+            const Gap(15),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _countryTile(BuildContext ctx, String country) {
+    return ListTile(
+      leading: Icon(
+        _selectedCountry == country
+            ? Icons.radio_button_checked
+            : Icons.radio_button_off,
+        color: const Color(0xff4100E3),
+      ),
+      title: Text(
+        country,
+        style: getPrimaryRegularStyle(
+          fontSize: 14,
+          color: const Color(0xff180B3C),
+        ),
+      ),
+      onTap: () async {
+        await Provider.of<CountryViewModel>(context, listen: false)
+            .selectCountry(country);
+        if (!mounted) return;
+        setState(() => _selectedCountry = country);
+        Navigator.pop(ctx);
+        await Provider.of<CategoriesViewModel>(context, listen: false)
+            .getCategoriesAndServices();
+      },
+    );
   }
 
   void _onActionSheetPress(BuildContext context) {

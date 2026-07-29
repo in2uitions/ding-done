@@ -8,8 +8,6 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class JobsRepository {
-  final BaseApiService _apiJobs =
-      NetworkApiService(url: ApiEndPoints().getJobs);
   final BaseApiService _apiCustomerJobs =
       NetworkApiService(url: ApiEndPoints().getCustomerJobs);
   final BaseApiService _apiSupplierCompletedJobs =
@@ -52,17 +50,6 @@ class JobsRepository {
   //     NetworkApiService(url: ApiEndPoints().customerInvoice);
   // final BaseApiService _apiSupplierInvoice =
   //     NetworkApiService(url: ApiEndPoints().supplierInvoice);
-
-  Future<JobsModelMain?> getAllJobs() async {
-    try {
-      dynamic response = await _apiJobs.getResponse();
-      final jsonData = JobsModelMain.fromJson(response);
-      return jsonData;
-    } catch (error) {
-      debugPrint('error in getting jobs $error');
-      rethrow;
-    }
-  }
 
   Future<JobsModelMain?> getCustomerJobs() async {
     try {

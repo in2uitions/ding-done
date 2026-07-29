@@ -29,7 +29,6 @@ class JobsViewModel with ChangeNotifier {
   ProfileRepository _homeRepository = ProfileRepository();
 
   ApiResponse<JobsModel> _jobsResponse = ApiResponse.loading();
-  List<JobsModel>? _jobsList = [];
   List<JobsModel>? _customerjobsList = [];
   List<JobsModel>? _supplierCompletedJobs = [];
   List<JobsModel>? _supplierInProgressJobs = [];
@@ -37,7 +36,6 @@ class JobsViewModel with ChangeNotifier {
   List<JobsModel>? _supplierOpenJobs = [];
   String? selectedReason1;
   List<JobsModel>? _customerPay = List.empty();
-  ApiResponse<JobsModelMain> _apiJobsResponse = ApiResponse.loading();
   ApiResponse<JobsModelMain> _apiCustomerJobsResponse = ApiResponse.loading();
   ApiResponse<JobsModelMain> _apiSupplierCompletedJobsResponse =
       ApiResponse.loading();
@@ -81,8 +79,6 @@ class JobsViewModel with ChangeNotifier {
 
   Future<void> readJson() async {
     await getRole();
-    // await getJobs();
-    // debugPrint('supplier gettiong jobs ');
     if (Constants.supplierRoleId == _role) {
       debugPrint('supplier gettiong jobs ');
       await getSupplierCompletedJobs();
@@ -398,44 +394,6 @@ class JobsViewModel with ChangeNotifier {
     } catch (err) {
       return;
     }
-  }
-
-  Future<bool?> getJobs() async {
-    try {
-      dynamic response = await _jobsRepository.getAllJobs();
-      _apiJobsResponse = ApiResponse.completed(response);
-      _jobsList = _apiJobsResponse.data?.jobs;
-      notifyListeners();
-    } catch (error) {
-      debugPrint('Error fetching jobs ${error}');
-    }
-    notifyListeners();
-    return true;
-  }
-
-  Future<JobsModel?> findJobById(dynamic id) async {
-    try {
-      debugPrint('returning job $id');
-      await getJobs();
-      debugPrint('returning job $_jobsList');
-
-      debugPrint('Looking for job id: $id');
-      for (var job in _jobsList ?? []) {
-        debugPrint('Available job id: ${job.id}');
-      }
-
-      debugPrint('returning job ${_jobsList?.firstWhere(
-        (job) => job.id.toString() == id.toString(),
-        orElse: () => JobsModel(),
-      )}');
-      return _jobsList?.firstWhere(
-        (job) => job.id.toString() == id.toString(),
-        orElse: () => JobsModel(),
-      );
-    } catch (error) {
-      debugPrint('Error returning job ${error}');
-    }
-    return JobsModel();
   }
 
   bool validate() {
@@ -1134,8 +1092,6 @@ class JobsViewModel with ChangeNotifier {
   }
 
   // get isActive => _userModelResponse.data?.status == 'active';
-  get jobsList => _jobsList;
-
   get supplierCompletedJobs => _supplierCompletedJobs;
 
   get supplierInProgressJobs => _supplierInProgressJobs;

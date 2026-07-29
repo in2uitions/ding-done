@@ -1,7 +1,9 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CustomLocationDropDown extends StatefulWidget {
   CustomLocationDropDown(
@@ -32,21 +34,21 @@ class _CustomLocationDropDownState extends State<CustomLocationDropDown> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    items = widget.profileViewModel.getProfileBody["address"] != null
-        ? widget.profileViewModel.getProfileBody["address"]
-        : [];
-    dropdownvalue = widget.profileViewModel.getProfileBody["address"] != null
-        ? '${items[0]["street_number"]} ${items[0]["building_number"]}, ${items[0]["city"]}, ${items[0]["zone"]} '
-        : '';
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    items = Provider.of<CountryViewModel>(context)
+        .filterAddresses(widget.profileViewModel.getProfileBody["address"]);
+    final values = items.map(_addressText).toList();
+    final selectedValue = values.contains(dropdownvalue)
+        ? dropdownvalue
+        : (values.isNotEmpty ? values.first : null);
+
     return DropdownButtonHideUnderline(
       child: DropdownButton(
-        value: dropdownvalue,
+        value: selectedValue,
         style:
             getPrimaryBoldStyle(color: const Color(0xffEDF1F7), fontSize: 13),
         dropdownColor: Color(widget.backgroundColor),
@@ -55,8 +57,7 @@ class _CustomLocationDropDownState extends State<CustomLocationDropDown> {
         // Array list of items
         items: items.map((dynamic items) {
           return DropdownMenuItem(
-            value:
-                '${items["street_number"]} ${items["building_number"]}, ${items["city"]}, ${items["zone"]} ',
+            value: _addressText(items),
             child: SizedBox(
               width: context.appValues.appSizePercent.w75,
               child: Text(
@@ -78,5 +79,10 @@ class _CustomLocationDropDownState extends State<CustomLocationDropDown> {
         },
       ),
     );
+  }
+
+  String _addressText(dynamic address) {
+    return '${address["street_number"]} ${address["building_number"]}, '
+        '${address["city"]}, ${address["zone"]} ';
   }
 }

@@ -1,6 +1,8 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/sign_up_as/sign_up_as.dart';
+import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -15,12 +17,10 @@ class CountrySelectionScreen extends StatefulWidget {
   const CountrySelectionScreen({super.key});
 
   @override
-  State<CountrySelectionScreen> createState() =>
-      _CountrySelectionScreenState();
+  State<CountrySelectionScreen> createState() => _CountrySelectionScreenState();
 }
 
-class _CountrySelectionScreenState
-    extends State<CountrySelectionScreen> {
+class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,8 +29,7 @@ class _CountrySelectionScreenState
         child: Consumer<SignUpViewModel>(
           builder: (context, signupViewModel, _) {
             return Column(
-              crossAxisAlignment:
-              CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
                   padding: EdgeInsets.fromLTRB(
@@ -42,14 +41,11 @@ class _CountrySelectionScreenState
                   child: Directionality(
                     textDirection: ui.TextDirection.ltr,
                     child: Align(
-                      alignment:
-                      Alignment.centerLeft,
+                      alignment: Alignment.centerLeft,
                       child: InkWell(
                         child: Icon(
-                          Icons
-                              .arrow_back_ios_new_sharp,
-                          color: context.resources
-                              .color.colorBlack[50],
+                          Icons.arrow_back_ios_new_sharp,
+                          color: context.resources.color.colorBlack[50],
                           size: 20,
                         ),
                         onTap: () {
@@ -60,92 +56,74 @@ class _CountrySelectionScreenState
                   ),
                 ),
                 SizedBox(
-                  width: context
-                      .appValues.appSizePercent.w100,
+                  width: context.appValues.appSizePercent.w100,
                   child: Column(
-                    mainAxisAlignment:
-                    MainAxisAlignment.center,
-                    crossAxisAlignment:
-                    CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         'formHints.country'.tr(),
                         style: getSecondaryBoldStyle(
-                          color:
-                          const Color(0xff190C39),
+                          color: const Color(0xff190C39),
                           fontSize: 22,
                         ),
                       ),
                       const Gap(50),
                       Padding(
-                        padding: EdgeInsets.all(
-                            context.appValues
-                                .appPadding.p20),
+                        padding:
+                            EdgeInsets.all(context.appValues.appPadding.p20),
                         child: FutureBuilder(
-                          future: Provider.of<
-                              SignUpViewModel>(
-                              context,
-                              listen: false)
+                          future: Provider.of<SignUpViewModel>(context,
+                                  listen: false)
                               .countries(),
-                          builder:
-                              (context, AsyncSnapshot data) {
+                          builder: (context, AsyncSnapshot data) {
                             return Padding(
-                              padding:
-                              const EdgeInsets.fromLTRB(
-                                  20, 0, 20, 20),
+                              padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
                               child: CustomDropDown(
-                                value: signupViewModel
-                                    .getSignUpBody[
-                                "country"],
+                                value: signupViewModel.getSignUpBody["country"],
                                 index: 'country',
-                                viewModel:
-                                signupViewModel
-                                    .setInputValues,
-                                hintText:
-                                'formHints.country'
-                                    .tr(),
+                                viewModel: signupViewModel.setInputValues,
+                                hintText: 'formHints.country'.tr(),
                                 validator: (val) =>
-                                signupViewModel
-                                    .signUpErrors[
-                                context
-                                    .resources
-                                    .strings
-                                    .formKeys['country']!],
-                                errorText: signupViewModel
-                                    .signUpErrors[
-                                context
-                                    .resources
-                                    .strings
-                                    .formKeys['country']!],
-                                keyboardType:
-                                TextInputType.text,
-                                list: signupViewModel
-                                    .getCountries,
-                                onChange: (value) {
-                                  var selectedCountry =
-                                  signupViewModel
-                                      .getCountries
-                                      .firstWhere(
-                                        (country) =>
-                                    country['code'] ==
-                                        value,
-                                    orElse: () =>
-                                    '',
-                                  )["iso_a2"];
-                                  debugPrint(
-                                      'country is $selectedCountry');
-                                  signupViewModel
-                                      .setInputValues(
+                                    signupViewModel.signUpErrors[context
+                                        .resources
+                                        .strings
+                                        .formKeys['country']!],
+                                errorText: signupViewModel.signUpErrors[context
+                                    .resources.strings.formKeys['country']!],
+                                keyboardType: TextInputType.text,
+                                list: signupViewModel.getCountries,
+                                onChange: (value) async {
+                                  final country =
+                                      signupViewModel.getCountries.firstWhere(
+                                    (country) => country['code'] == value,
+                                    orElse: () => const <String, dynamic>{},
+                                  );
+                                  final selectedCountry = country["iso_a2"];
+                                  debugPrint('country is $selectedCountry');
+                                  signupViewModel.setInputValues(
                                     index: 'country',
                                     value: value,
                                   );
-                                  signupViewModel
-                                      .setInputValues(
+                                  signupViewModel.setInputValues(
                                     index: 'phone_code',
                                     value: selectedCountry
                                         .toString()
                                         .toUpperCase(),
                                   );
+                                  final countryName =
+                                      country['name']?.toString().trim();
+                                  if (countryName == 'Qatar' ||
+                                      countryName == 'Cyprus') {
+                                    await Provider.of<CountryViewModel>(context,
+                                            listen: false)
+                                        .selectCountry(countryName!);
+                                    if (!context.mounted) return;
+                                    await Provider.of<CategoriesViewModel>(
+                                            context,
+                                            listen: false)
+                                        .getCategoriesAndServices();
+                                  }
                                 },
                               ),
                             );
@@ -154,59 +132,42 @@ class _CountrySelectionScreenState
                       ),
                       Padding(
                         padding: EdgeInsets.fromLTRB(
-                          context.appValues
-                              .appPadding.p20,
-                          context.appValues
-                              .appPadding.p0,
-                          context.appValues
-                              .appPadding.p20,
-                          context.appValues
-                              .appPadding.p20,
+                          context.appValues.appPadding.p20,
+                          context.appValues.appPadding.p0,
+                          context.appValues.appPadding.p20,
+                          context.appValues.appPadding.p20,
                         ),
                         child: InkWell(
                           onTap: () async {
-                            if (signupViewModel
-                                .getSignUpBody['country'] !=
+                            if (signupViewModel.getSignUpBody['country'] !=
                                 null) {
-                              Navigator.of(context)
-                                  .push(
-                                _createRoute(
-                                    const SignUpAsScreen()),
+                              Navigator.of(context).push(
+                                _createRoute(const SignUpAsScreen()),
                               );
                             } else {
                               showDialog(
                                 context: context,
-                                builder:
-                                    (BuildContext context) =>
+                                builder: (BuildContext context) =>
                                     _buildPopupDialog(
-                                      context,
-                                      'Please provide country',
-                                    ),
+                                  context,
+                                  'Please provide country',
+                                ),
                               );
                             }
                           },
                           child: Container(
-                            width: context.appValues
-                                .appSizePercent.w80,
-                            height: context.appValues
-                                .appSizePercent.h6,
+                            width: context.appValues.appSizePercent.w80,
+                            height: context.appValues.appSizePercent.h6,
                             decoration: BoxDecoration(
-                              color:
-                              const Color(0xff4100E3),
-                              borderRadius:
-                              BorderRadius.circular(15),
+                              color: const Color(0xff4100E3),
+                              borderRadius: BorderRadius.circular(15),
                             ),
                             child: Center(
                               child: Text(
-                                'login_screen.signUp'
-                                    .tr(),
-                                style:
-                                getPrimaryBoldStyle(
+                                'login_screen.signUp'.tr(),
+                                style: getPrimaryBoldStyle(
                                   fontSize: 14,
-                                  color: context
-                                      .resources
-                                      .color
-                                      .colorWhite,
+                                  color: context.resources.color.colorWhite,
                                 ),
                               ),
                             ),
@@ -225,14 +186,12 @@ class _CountrySelectionScreenState
   }
 }
 
-Widget _buildPopupDialog(
-    BuildContext context, String message) {
+Widget _buildPopupDialog(BuildContext context, String message) {
   return AlertDialog(
     backgroundColor: Colors.white,
     content: Column(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment:
-      CrossAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Align(
           alignment: Alignment.topRight,
@@ -241,11 +200,9 @@ Widget _buildPopupDialog(
               Navigator.of(context).pop();
             },
             child: Row(
-              mainAxisAlignment:
-              MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                SvgPicture.asset(
-                    'assets/img/x.svg'),
+                SvgPicture.asset('assets/img/x.svg'),
               ],
             ),
           ),
@@ -264,18 +221,13 @@ Widget _buildPopupDialog(
 
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(
-    pageBuilder:
-        (context, animation, secondaryAnimation) =>
-    classname,
-    transitionsBuilder:
-        (context, animation, secondaryAnimation, child) {
+    pageBuilder: (context, animation, secondaryAnimation) => classname,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
       const begin = Offset(1.0, 0.0);
       const end = Offset.zero;
       const curve = Curves.ease;
 
-      var tween =
-      Tween(begin: begin, end: end)
-          .chain(CurveTween(curve: curve));
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
       return SlideTransition(
         position: animation.drive(tween),

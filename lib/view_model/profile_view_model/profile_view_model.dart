@@ -9,6 +9,7 @@ import 'package:flutter/foundation.dart';
 import '../../res/app_validation.dart';
 import '../../res/constants.dart';
 import '../../res/strings/english_strings.dart';
+import '../country_view_model/country_view_model.dart';
 
 class ProfileViewModel extends DisposableViewModel {
   ProfileRepository _homeRepository = ProfileRepository();
@@ -52,6 +53,19 @@ class ProfileViewModel extends DisposableViewModel {
       debugPrint('error getting profile $error');
       // _apiProfileResponse = ApiResponse<ProfileModel>.error(error.toString());
       notifyListeners();
+    }
+  }
+
+  Future<void> ensureCurrentAddressForCountry(
+    CountryViewModel countryViewModel,
+  ) async {
+    final currentAddress = profileBody['current_address'];
+    if (countryViewModel.matchesAddress(currentAddress)) return;
+
+    final matchingAddresses =
+        countryViewModel.filterAddresses(profileBody['address']);
+    if (matchingAddresses.isNotEmpty) {
+      await setCurrentAddress(matchingAddresses.first);
     }
   }
 

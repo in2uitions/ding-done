@@ -37,11 +37,8 @@ class ServicesViewModel with ChangeNotifier {
   }
 
   Future<void> readJson() async {
-    await getServices();
-    _checkboxValues = List.generate(listOfLists.length, (index) {
-      var servicesInCategory = listOfLists[index];
-      return List.generate(servicesInCategory.length, (innerIndex) => false);
-    });
+    // Categories/services catalog comes from CategoriesViewModel
+    // (/suppliers/categories). Avoid the heavy /items/services dump.
   }
 
   void setInputValues({required String index, dynamic value}) {
@@ -208,21 +205,8 @@ class ServicesViewModel with ChangeNotifier {
   }
 
   Future<bool?> getServices() async {
-    try {
-      dynamic response = await _servicesRepository.getAllServices();
-      _apiServicesResponse = ApiResponse.completed(response);
-      _servicesList = _apiServicesResponse.data?.services;
-      _servicesList = _servicesList!.where((service) => service.status.toString().toLowerCase() == 'published').toList();
-
-      _servicesList2 = _apiServicesResponse.data?.services;
-      _servicesList2 = _servicesList2!.where((service) => service.status.toString().toLowerCase() == 'published').toList();
-
-      debugPrint('services response ${_servicesList}');
-      notifyListeners();
-    } catch (error) {
-      debugPrint('Error fetching services 2${error}');
-    }
-    notifyListeners();
+    // Intentionally no-op: full /items/services?fields=*.*.*.* dump removed.
+    // Use CategoriesViewModel.servicesList from /suppliers/categories instead.
     return true;
   }
 
@@ -246,45 +230,11 @@ class ServicesViewModel with ChangeNotifier {
     return true;
   }
 
-  Future<void> getServicesByCategoryID(int id,dynamic supplier_services) async {
-    try {
-      dynamic response = await _servicesRepository.getServicesByCategoryID(id);
-      debugPrint('response is in service view model $response');
-      _apiServicesCategoryResponse = ApiResponse.completed(response);
-      _servicesCategoryList = _apiServicesResponse.data?.services;
-      // _servicesCategoryList = _servicesCategoryList!.where((service) => service.status.toString().toLowerCase() == 'published').toList();
-
-      listOfLists.add(response);
-      listOfLists = listOfLists.toSet().toList();
-      // Extract service IDs from supplier_services
-      if(supplier_services!=null){
-        var supplierServiceIds = supplier_services.map((service) => service['services_id']['id']).toSet();
-
-        // Initialize checkbox values based on supplier_services
-        if (_checkboxValues.length < listOfLists.length) {
-          for (var i = _checkboxValues.length; i < listOfLists.length; i++) {
-            var categoryServices = listOfLists[i];
-            _checkboxValues.add(List.generate(categoryServices.length, (innerIndex) {
-              var serviceId = categoryServices[innerIndex]["id"];
-              // Check if this serviceId is in supplier_services
-              return supplierServiceIds.contains(serviceId);
-            }));
-          }
-        }
-      }else{
-        _checkboxValues = List.generate(listOfServices.length, (index) {
-          var servicesInCategory = listOfServices[index];
-          return List.generate(servicesInCategory.length, (innerIndex) => false);
-        });
-      }
-      debugPrint('list of lists ${listOfLists}');
-      notifyListeners();
-      // return listOfLists;
-    } catch (error) {
-      debugPrint('Error fetching services 4${error}');
-    }
-    notifyListeners();
-    // return [];
+  Future<void> getServicesByCategoryID(int id, dynamic supplier_services) async {
+    // Intentionally no-op: used the removed /items/services deep query.
+    // Supplier offered-services UI reads from CategoriesViewModel instead.
+    debugPrint(
+        'getServicesByCategoryID skipped for category $id; use CategoriesViewModel');
   }
 
   Future<void> setCheckbox(int index, int innerIndex) async {

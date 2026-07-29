@@ -1,15 +1,16 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/confirm_address/add_new_address_widget.dart';
+import 'package:dingdone/utils/country_helper.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
+import 'package:dingdone/view_model/signup_view_model/signup_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-
-import '../../res/app_prefs.dart';
 
 class ConfirmAddress extends StatefulWidget {
   final Map<String, dynamic>? initialAddress;
@@ -29,23 +30,72 @@ class _ConfirmAddressState extends State<ConfirmAddress>
     super.didChangeDependencies();
     if (!_didInit) {
       final jobsVM = Provider.of<JobsViewModel>(context, listen: false);
+      final countryViewModel =
+          Provider.of<CountryViewModel>(context, listen: false);
+      final signupViewModel =
+          Provider.of<SignUpViewModel>(context, listen: false);
+
+      void seedCountry([List<dynamic>? countries]) {
+        final existing = widget.initialAddress?['country']?.toString();
+        if (existing != null && existing.isNotEmpty) {
+          jobsVM.setInputValues(index: 'country', value: existing);
+          return;
+        }
+        final code = SupportedCountry.cmsCodeFor(
+          countryViewModel.selectedCountry,
+          countries: countries ?? signupViewModel.getCountries,
+        );
+        if (code == null) return;
+        final current = jobsVM.getjobsBody['country']?.toString() ?? '';
+        if (current.isEmpty ||
+            SupportedCountry.fromValue(current) ==
+                SupportedCountry.fromValue(
+                    countryViewModel.selectedCountry)) {
+          jobsVM.setInputValues(index: 'country', value: code);
+        }
+      }
 
       if (widget.initialAddress != null) {
         final a = widget.initialAddress!;
 
         jobsVM.setInputValues(index: 'id', value: a['id']?.toString() ?? '');
-        jobsVM.setInputValues(index: 'street_number', value: a['street_number']?.toString() ?? '');
-        jobsVM.setInputValues(index: 'building_number', value: a['building_number']?.toString() ?? '');
-        jobsVM.setInputValues(index: 'floor', value: a['floor']?.toString() ?? '');
-        jobsVM.setInputValues(index: 'apartment_number', value: a['apartment_number']?.toString() ?? '');
-        jobsVM.setInputValues(index: 'city', value: a['city']?.toString() ?? '');
-        jobsVM.setInputValues(index: 'zone', value: a['zone']?.toString() ?? '');
-        jobsVM.setInputValues(index: 'address_label', value: a['address_label']?.toString() ?? '');
-        jobsVM.setInputValues(index: 'latitude', value: a['latitude']?.toString() ?? '');
-        jobsVM.setInputValues(index: 'longitude', value: a['longitude']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'street_number',
+            value: a['street_number']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'building_number',
+            value: a['building_number']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'floor', value: a['floor']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'apartment_number',
+            value: a['apartment_number']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'city', value: a['city']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'zone', value: a['zone']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'address_label',
+            value: a['address_label']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'latitude', value: a['latitude']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'longitude', value: a['longitude']?.toString() ?? '');
+        jobsVM.setInputValues(
+            index: 'address',
+            value: a['street_name']?.toString() ??
+                a['address']?.toString() ??
+                '');
+        seedCountry();
       } else {
         jobsVM.setSaved(false);
+        seedCountry();
       }
+
+      signupViewModel.countries().then((countries) {
+        if (!mounted) return;
+        seedCountry(countries);
+      });
 
       _didInit = true;
     }

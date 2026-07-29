@@ -2,6 +2,7 @@ import 'package:dingdone/models/categories_model.dart';
 import 'package:dingdone/models/roles_model.dart';
 import 'package:dingdone/models/services_model.dart';
 import 'package:dingdone/repository/categories/categories_repo.dart';
+import 'package:dingdone/utils/country_helper.dart';
 import 'package:dingdone/view_model/services_view_model/services_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:dingdone/data/remote/response/ApiResponse.dart';
@@ -26,7 +27,6 @@ class CategoriesViewModel with ChangeNotifier {
     readJson();
   }
   Future<void> readJson() async {
-    // await getCategories();
     await getCategoriesAndServices();
     getLanguage();
   }
@@ -35,67 +35,151 @@ class CategoriesViewModel with ChangeNotifier {
     lang = await AppPreferences().get(key: dblang, isModel: false);
   }
 
-  // Future<List<dynamic>?> getCategories() async {
-  //   try {
-  //
-  //     dynamic response = await _categoriesRepository.getAllCategories();
-  //     // _categoriesResponse = ApiResponse.completed(response);
-  //     // _categoriesList = _categoriesResponse.data?.toJson()["categories"];
-  //
-  //     // _jobsResponseList =
-  //     // _apiJobsResponse.data?.toCarouselJson()["jobs_carousel"];
-  //     ServicesViewModel servicesViewModel =ServicesViewModel();
-  //
-  //     _apiCategoriesResponse = ApiResponse.completed(response);
-  //     _categoriesList = _apiCategoriesResponse.data?.dropDownList;
-  //     _parentCategoriesList = _categoriesList!.where((category) => category.classs == null && category.status=='published').toList();
-  //     _categoriesList = _categoriesList!.where((category) => category.classs != null && category.status=='published').toList();
-  //     // _categoriesList2 = _categoriesList!.where((category) => category.classs == servicesViewModel.searchBody['search_services']).toList();
-  //
-  //     notifyListeners();
-  //
-  //
-  //   } catch (error) {
-  //     debugPrint('Error fetching categories ${error}');
-  //   }
-  //   notifyListeners();
-  //   return _categoriesList;
-  // }
-
   Future<List<dynamic>?> getCategoriesAndServices() async {
     try {
       debugPrint('Getting categories and services ');
 
+      // Run featured carousel fetch in parallel with the main catalog.
+      final getItDoneFuture = _categoriesRepository.getItDone();
       dynamic response = await _categoriesRepository.getCategoriesAndServices();
+      final selectedCountry = await AppPreferences()
+          .get(key: selectedCountryKey, isModel: false) as String?;
 
       // debugPrint('Getting categories and services2 $response');
 
       // _apiCategoriesResponse = ApiResponse.completed(response["categories"]);
       // _categoriesList = _apiCategoriesResponse.data?.dropDownList;
-      _categoriesList = response["categories"];
-      _parentCategoriesList = _categoriesList!
-          .where((category) =>
-              category["class"] == null && category["status"] == 'published')
-          .toList();
-      _categoriesList = _categoriesList!
-          .where((category) =>
-              category["class"] != null && category["status"] == 'published')
-          .toList();
-      // _categoriesList2 = _categoriesList!.where((category) => category.classs == servicesViewModel.searchBody['search_services']).toList();
-      _servicesList = response["services"];
-      // debugPrint('services list $_servicesList');
-      _servicesList = _servicesList!
+      final allCategories = _asMapList(response["categories"]);
+      final allServices = _asMapList(response["services"]);
+      final categoriesById = <dynamic, Map<String, dynamic>>{
+        for (final category in allCategories)
+          if (_categoryId(category) != null) _categoryId(category): category,
+      };
+
+      if (selectedCountry == null || selectedCountry.isEmpty) {
+        _categoriesList = [];
+        _parentCategoriesList = [];
+        _servicesList = [];
+        _servicesList2 = [];
+        _getItDoneData = [];
+        notifyListeners();
+        return _categoriesList;
+      }
+
+      _servicesList = allServices
           .where((service) =>
               service["status"].toString().toLowerCase() == 'published')
+          .map((service) {
+            final matchingRates =
+                (service["country_rates"] as List? ?? const [])
+                    .where((rate) => _rateMatchesCountry(rate, selectedCountry))
+                    .toList();
+            if (matchingRates.isEmpty) return null;
+
+            return <String, dynamic>{
+              ...service,
+              "country_rates": matchingRates,
+            };
+          })
+          .whereType<Map<String, dynamic>>()
           .toList();
 
-      _servicesList2 = _servicesList;
-      // await _getCompanies();
-      dynamic response2 = await _categoriesRepository.getItDone();
-      debugPrint('get it done data ${response2["data"]}');
-      _getItDoneData=response2["data"];
+      final serviceCategoryIds = _servicesList!
+          .map((service) => _categoryId(service["category"]))
+          .where((id) => id != null)
+          .toSet();
+      final leafCategories = allCategories
+          .where((category) =>
+              serviceCategoryIds.contains(_categoryId(category)) &&
+              category["status"] == 'published')
+          .toList();
 
+      // Walk nested class chains (e.g. leaf → mid → root) so Cyprus-style
+      // multi-level categories still resolve to a visible parent tab.
+      final rootParents = <dynamic, Map<String, dynamic>>{};
+      for (final category in leafCategories) {
+        final root = _rootParent(category, categoriesById);
+        if (root != null && root["status"] == 'published') {
+          final rootId = _categoryId(root);
+          if (rootId != null) rootParents[rootId] = root;
+        }
+      }
+
+      _categoriesList = leafCategories
+          .where((category) => category["class"] != null)
+          .map((category) {
+        final root = _rootParent(category, categoriesById);
+        if (root == null) return category;
+        return <String, dynamic>{
+          ...category,
+          // Existing screens filter with category['class']['id'] == parentId.
+          "class": root,
+        };
+      }).toList();
+      _parentCategoriesList = rootParents.values.toList();
+
+      // Some catalogs attach services directly to a parent category.
+      _parentCategoriesList!.addAll(leafCategories.where((category) =>
+          category["class"] == null &&
+          !_parentCategoriesList!
+              .any((parent) => parent["id"] == category["id"])));
+
+      _servicesList2 = List<dynamic>.from(_servicesList!);
+      // Show catalog immediately; featured carousel catches up next.
       notifyListeners();
+
+      try {
+        dynamic response2 = await getItDoneFuture;
+        debugPrint('get it done data ${response2["data"]}');
+        final servicesById = <dynamic, Map<String, dynamic>>{
+          for (final service in _servicesList!)
+            if (_relationId(service["id"]) != null)
+              _relationId(service["id"]): service,
+        };
+        final allowedServiceIds = servicesById.keys.toSet();
+        final allowedCategoryIds = <dynamic>{
+          ..._categoriesList!.map(_categoryId),
+          ..._parentCategoriesList!.map(_categoryId),
+        }..removeWhere((id) => id == null);
+
+        _getItDoneData =
+            List<dynamic>.from(response2["data"] as List? ?? const [])
+                .whereType<Map>()
+                .map((item) => Map<String, dynamic>.from(item))
+                .where((item) {
+          final serviceId = _relationId(item["service"]);
+          if (serviceId != null) {
+            return allowedServiceIds.contains(serviceId);
+          }
+
+          final subCategoryId = _categoryId(item["sub_category"]);
+          if (subCategoryId != null) {
+            return allowedCategoryIds.contains(subCategoryId);
+          }
+
+          final parentCategoryId = _categoryId(item["parent_category"]);
+          if (parentCategoryId != null) {
+            return allowedCategoryIds.contains(parentCategoryId);
+          }
+
+          // Entries that only carry an external link are country agnostic.
+          return true;
+        }).map((item) {
+          final serviceId = _relationId(item["service"]);
+          if (serviceId != null && servicesById.containsKey(serviceId)) {
+            // Hydrate slim API service id with the already-filtered catalog row.
+            return <String, dynamic>{
+              ...item,
+              "service": servicesById[serviceId],
+            };
+          }
+          return item;
+        }).toList();
+        notifyListeners();
+      } catch (error) {
+        debugPrint('Error fetching get it done $error');
+      }
+
       return _categoriesList;
     } catch (error) {
       debugPrint('Error fetching categories and services ${error}');
@@ -104,7 +188,65 @@ class CategoriesViewModel with ChangeNotifier {
     return _categoriesList;
   }
 
+  dynamic _relationId(dynamic relation) {
+    if (relation is Map) return relation["id"];
+    return relation;
+  }
 
+  List<Map<String, dynamic>> _asMapList(dynamic value) {
+    return List<dynamic>.from(value as List? ?? const [])
+        .whereType<Map>()
+        .map((item) => Map<String, dynamic>.from(item))
+        .toList();
+  }
+
+  /// Catalog services expose their category as a translations-only object, so
+  /// the id has to come from `translations[*].categories_id`.
+  dynamic _categoryId(dynamic category) {
+    if (category is! Map) return category;
+    if (category["id"] != null) return category["id"];
+
+    for (final translation in (category["translations"] as List? ?? const [])) {
+      if (translation is Map && translation["categories_id"] != null) {
+        return _relationId(translation["categories_id"]);
+      }
+    }
+    return null;
+  }
+
+  /// Resolve the top-most parent category for nested class chains.
+  Map<String, dynamic>? _rootParent(
+    Map<String, dynamic> category,
+    Map<dynamic, Map<String, dynamic>> categoriesById,
+  ) {
+    dynamic current = category["class"];
+    if (current == null) return null;
+
+    final seen = <dynamic>{};
+    while (current != null) {
+      if (current is Map) {
+        final currentMap = Map<String, dynamic>.from(current);
+        final currentId = _categoryId(currentMap);
+        if (currentMap["class"] == null) return currentMap;
+        if (currentId != null && !seen.add(currentId)) break;
+        current = currentMap["class"] ??
+            (currentId != null ? categoriesById[currentId] : null);
+        continue;
+      }
+
+      if (!seen.add(current)) break;
+      final next = categoriesById[current];
+      if (next == null) return null;
+      if (next["class"] == null) return next;
+      current = next["class"];
+    }
+    return null;
+  }
+
+  bool _rateMatchesCountry(dynamic rate, String selectedCountry) {
+    if (rate is! Map) return false;
+    return countryValuesMatch(rate["country"], selectedCountry);
+  }
 
   Future<void> sortCategories(dynamic serv) async {
     try {

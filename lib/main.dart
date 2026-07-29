@@ -13,6 +13,7 @@ import 'package:dingdone/services/app_update_service.dart';
 import 'package:dingdone/view/widgets/custom/force_update_dialog.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
+import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:dingdone/view_model/on_boarding_view_model/on_boarding_view_model.dart';
@@ -318,6 +319,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             create: (BuildContext context) => LoginViewModel()),
         ChangeNotifierProvider<SignUpViewModel>(
             create: (BuildContext context) => SignUpViewModel()),
+        ChangeNotifierProvider<CountryViewModel>(
+            create: (BuildContext context) => CountryViewModel()),
         ChangeNotifierProvider<CategoriesViewModel>(
             create: (BuildContext context) => CategoriesViewModel()),
         ChangeNotifierProvider<ServicesViewModel>(
