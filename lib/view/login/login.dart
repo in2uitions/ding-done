@@ -26,7 +26,6 @@ import 'package:gap/gap.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../services_screen/services_screen.dart';
@@ -665,9 +664,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           directusToken =
                                                           responseData[
                                                               'access_token'];
-                                                      final prefs =
-                                                          await SharedPreferences
-                                                              .getInstance();
 
                                                       await AppPreferences()
                                                           .save(
@@ -676,26 +672,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                   responseData[
                                                                       'user'],
                                                               isModel: false);
-                                                      await prefs.setString(
-                                                          userIdKey,
-                                                          '${responseData['user']}');
                                                       await AppPreferences().save(
                                                           key: userRoleKey,
                                                           value:
                                                               '008f8da4-ae7c-42f2-a498-68d490fe4593',
                                                           isModel: false);
-                                                      await prefs.setString(
-                                                          userRoleKey,
-                                                          '008f8da4-ae7c-42f2-a498-68d490fe4593');
 
                                                       await AppPreferences().save(
                                                           key: userTokenKey,
                                                           value: responseData[
                                                               'access_token'],
                                                           isModel: false);
-                                                      await prefs.setString(
-                                                          userTokenKey,
-                                                          '${responseData['access_token']}');
 
                                                       await loginViewModel
                                                           .isActiveUser();
@@ -907,9 +894,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           directusToken =
                                                           responseData[
                                                               'access_token'];
-                                                      final prefs =
-                                                          await SharedPreferences
-                                                              .getInstance();
 
                                                       await AppPreferences()
                                                           .save(
@@ -918,26 +902,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                                                   responseData[
                                                                       'user'],
                                                               isModel: false);
-                                                      await prefs.setString(
-                                                          userIdKey,
-                                                          '${responseData['user']}');
                                                       await AppPreferences().save(
                                                           key: userRoleKey,
                                                           value:
                                                               '008f8da4-ae7c-42f2-a498-68d490fe4593',
                                                           isModel: false);
-                                                      await prefs.setString(
-                                                          userRoleKey,
-                                                          '008f8da4-ae7c-42f2-a498-68d490fe4593');
 
                                                       await AppPreferences().save(
                                                           key: userTokenKey,
                                                           value: responseData[
                                                               'access_token'],
                                                           isModel: false);
-                                                      await prefs.setString(
-                                                          userTokenKey,
-                                                          '${responseData['access_token']}');
 
                                                       await loginViewModel
                                                           .isActiveUser();
@@ -1108,13 +1083,18 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
       onTap: () async {
-        await Provider.of<CountryViewModel>(context, listen: false)
-            .selectCountry(country);
         if (!mounted) return;
         setState(() => _selectedCountry = country);
         Navigator.pop(ctx);
-        await Provider.of<CategoriesViewModel>(context, listen: false)
-            .getCategoriesAndServices();
+        try {
+          await Provider.of<CountryViewModel>(context, listen: false)
+              .selectCountry(country);
+          if (!mounted) return;
+          await Provider.of<CategoriesViewModel>(context, listen: false)
+              .getCategoriesAndServices();
+        } catch (error) {
+          debugPrint('Country selection failed: $error');
+        }
       },
     );
   }

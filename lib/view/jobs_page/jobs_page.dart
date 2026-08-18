@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../res/app_prefs.dart';
 import '../../view_model/categories_view_model/categories_view_model.dart';
@@ -514,8 +513,8 @@ class _JobsPageState extends State<JobsPage> {
                     onTap: () async {
                       Navigator.pop(context);
 
-                      final prefs = await SharedPreferences.getInstance();
-                      final role = prefs.getString(userRoleKey);
+                      final role = await AppPreferences()
+                          .get(key: userRoleKey, isModel: false);
 
                       Navigator.of(context).push(
                         _createRoute(BottomBar(

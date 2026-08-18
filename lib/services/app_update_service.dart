@@ -70,6 +70,10 @@ class AppUpdateService {
     lastStoreVersion = storeVersion;
 
     if (storeVersion == null) return false;
+    if (!_isPlausibleStoreVersion(storeVersion, currentVersion)) {
+      debugPrint('AppUpdate iOS: ignoring implausible store version $storeVersion');
+      return false;
+    }
 
     final needsUpdate = _isStoreVersionNewer(storeVersion, currentVersion);
     debugPrint(
@@ -110,6 +114,12 @@ class AppUpdateService {
       debugPrint('AppUpdate Android: could not parse store version from HTML');
       return false;
     }
+    if (!_isPlausibleStoreVersion(storeVersion, currentVersion)) {
+      debugPrint(
+        'AppUpdate Android: ignoring implausible store version $storeVersion',
+      );
+      return false;
+    }
 
     final needsUpdate = _isStoreVersionNewer(storeVersion, currentVersion);
     debugPrint(
@@ -142,6 +152,16 @@ class AppUpdateService {
     }
 
     return null;
+  }
+
+  bool _isPlausibleStoreVersion(String storeVersion, String currentVersion) {
+    final storeParts = _versionParts(storeVersion);
+    final currentParts = _versionParts(currentVersion);
+    if (storeParts.isEmpty || currentParts.isEmpty) return false;
+    // Play HTML scrape often picks dates like 2024.x.x
+    if (storeParts.first >= 2000 && storeParts.first <= 2100) return false;
+    if ((storeParts.first - currentParts.first).abs() > 1) return false;
+    return true;
   }
 
   bool _isStoreVersionNewer(String storeVersion, String currentVersion) {

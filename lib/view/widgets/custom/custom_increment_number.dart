@@ -52,15 +52,24 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
   int currentValue = 1;
   final TextEditingController _customController = TextEditingController();
 
+  int get _minimumOrder {
+    final parsed = int.tryParse('${widget.minimumOrder}');
+    return parsed == null || parsed < 1 ? 1 : parsed;
+  }
+
   @override
   void initState() {
     super.initState();
     debugPrint('value is ${widget.value}');
 
-    currentValue = widget.value != null && widget.value != '' && widget.value != '0'
-        ? int.parse(widget.value.toString())
-        : 1;
-    widget.viewModel(index: widget.index, value: widget.value);
+    final parsedValue =
+        widget.value != null && widget.value != '' && widget.value != '0'
+            ? int.tryParse(widget.value.toString())
+            : null;
+    currentValue = parsedValue == null || parsedValue < _minimumOrder
+        ? _minimumOrder
+        : parsedValue;
+    widget.viewModel(index: widget.index, value: currentValue.toString());
     _customController.text = currentValue.toString();
     _customController.addListener(() {
       widget.viewModel(index: widget.index, value: _customController.text);
@@ -81,7 +90,7 @@ class _CustomIncrementFieldState extends State<CustomIncrementField> {
   }
 
   void _decrement() {
-    if (currentValue > widget.minimumOrder) {
+    if (currentValue > _minimumOrder) {
       setState(() {
         currentValue--;
         _customController.text = currentValue.toString();

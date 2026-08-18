@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:map_location_picker/map_location_picker.dart';
+import 'package:android_intent_plus/android_intent.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../translate/translate_text_section.dart';
@@ -239,35 +242,19 @@ class _AddressWidgetState extends State<AddressWidget> {
                 ),
               ),
               onPressed: () async {
-
                 final jobAddress = widget.address;
 
                 if (jobAddress != null &&
                     jobAddress['latitude'] != null &&
                     jobAddress['longitude'] != null) {
-
                   final latitude = jobAddress['latitude'];
                   final longitude = jobAddress['longitude'];
-
-                  final googleMapsUrl =
-                      'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-
-                  final uri = Uri.parse(googleMapsUrl);
-
-                  if (await canLaunchUrl(uri)) {
-                    await launchUrl(
-                      uri,
-                      mode: LaunchMode.externalApplication,
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Could not open Google Maps'),
-                      ),
-                    );
-                  }
-
+                  await _openGoogleMaps(
+                    double.parse(latitude.toString()),
+                    double.parse(longitude.toString()),
+                  );
                 } else {
+                  if (!context.mounted) return;
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Location not available'),
@@ -321,22 +308,42 @@ class _AddressWidgetState extends State<AddressWidget> {
   }
 
   void _launchGoogleMapsDirections(double latitude, double longitude) async {
-    final String googleMapsUrl =
-        'https://www.google.com/maps/dir/?api=1&destination=$latitude,$longitude';
-    if (await canLaunch(googleMapsUrl)) {
-      await launch(googleMapsUrl);
-    } else {
-      throw 'Could not open Google Maps.';
-    }
+    await _openGoogleMaps(latitude, longitude, directions: true);
   }
 
   void _launchGoogleMaps(double latitude, double longitude) async {
-    final String googleMapsUrl =
-        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-    if (await canLaunch(googleMapsUrl)) {
-      await launch(googleMapsUrl);
-    } else {
-      throw 'Could not open Google Maps.';
+    await _openGoogleMaps(latitude, longitude);
+  }
+
+  Future<void> _openGoogleMaps(
+    double latitude,
+    double longitude, {
+    bool directions = false,
+  }) async {
+    final web = Uri.parse(
+      directions
+          ? 'https://www.google.com/maps/dir/?api=1&destination=$latitude,$longitude'
+          : 'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude',
+    );
+
+    try {
+      if (Platform.isAndroid) {
+        final intent = AndroidIntent(
+          action: 'action_view',
+          data: 'geo:$latitude,$longitude?q=$latitude,$longitude',
+        );
+        await intent.launch();
+        return;
+      }
+      final opened = await launchUrl(
+        web,
+        mode: LaunchMode.externalApplication,
+      );
+      if (!opened) {
+        await launchUrl(web, mode: LaunchMode.platformDefault);
+      }
+    } catch (_) {
+      await launchUrl(web, mode: LaunchMode.platformDefault);
     }
   }
 }

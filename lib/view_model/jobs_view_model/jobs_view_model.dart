@@ -252,13 +252,10 @@ class JobsViewModel with ChangeNotifier {
       case 'auth':
         if (msg['status'] == 'error') {
           debugPrint('🚨 Error authenticating');
-          // refreshAccessToken();
-          // _subscribeToAllStages();
         }
         if (msg['status'] != 'error') {
           debugPrint('✅ AUTH SUCCESS');
           _subscribe();
-          // _subscribeToAllStages();
         }
         break;
 
@@ -268,16 +265,32 @@ class JobsViewModel with ChangeNotifier {
 
       case 'post':
         _subscribe();
+        break;
 
       case 'subscription':
       case 'update':
-        final data = (msg['data'] ?? msg['payload']) as List<dynamic>;
-        debugPrint('✅ UPDATING $data');
-        _applyUpdate(data);
+        final action = msg['action']?.toString().toLowerCase();
+        final rawData = msg['data'] ?? msg['payload'];
+        final updates = <dynamic>[];
+        if (rawData is List) {
+          updates.addAll(rawData);
+        } else if (rawData is Map) {
+          updates.add(rawData);
+        } else if (rawData != null) {
+          // Delete events often send bare ids: [968] or just 968.
+          updates.add(rawData);
+        }
+        debugPrint('✅ UPDATING $updates (action=$action)');
+        if (updates.isNotEmpty) {
+          _applyUpdate(updates);
+        }
+        break;
+
+      case 'error':
+        debugPrint('⚠️ Socket error: ${msg['data'] ?? msg}');
         break;
 
       default:
-        // _updateStatuses();
         debugPrint('⚠️ Unhandled message: $msg');
     }
   }
@@ -885,11 +898,9 @@ class JobsViewModel with ChangeNotifier {
       jobsBody['job_type'] = 'work';
 
       if (jobsBody['time'] == null) {
-        // Get the current time directly using TimeOfDay.now()
         TimeOfDay now = TimeOfDay.now();
         selectedTime = now;
-
-        debugPrint('Selected time: $selectedTime'); // Your selected time
+        debugPrint('Selected time: $selectedTime');
       }
 
       int hour = selectedTime.hour;
@@ -898,45 +909,52 @@ class JobsViewModel with ChangeNotifier {
       DateTime combinedDateTime = DateTime(year, month, day, hour, minute);
       debugPrint('combinedDateTime $combinedDateTime');
 
-      // Get the current date and time
       DateTime currentDateTime = DateTime.now();
-
-      // Calculate the time two hours from now
       DateTime twoHoursFromNow = currentDateTime.add(Duration(hours: 2));
 
-      // Check if the combinedDateTime is between now and two hours from now
-      if (
-          // combinedDateTime.isAfter(currentDateTime) &&
-          combinedDateTime.isBefore(twoHoursFromNow)) {
+      if (combinedDateTime.isBefore(twoHoursFromNow)) {
         jobsBody['severity_level'] = 'major';
       } else {
         jobsBody['severity_level'] = 'minor';
       }
-      if (jobsBody['job_address'] is Map<String, dynamic>) {
-        jobsBody['job_address'] = jobsBody['job_address']['id'];
-      }
-      setInputValues(index: 'start_date', value: combinedDateTime.toString());
 
-      // Cancellation reason belongs only to cancel flows, not new job requests.
+      dynamic jobAddress = jobsBody['job_address'];
+      if (jobAddress is Map) {
+        jobAddress = jobAddress['id'];
+        jobsBody['job_address'] = jobAddress;
+      }
+      if (jobAddress == null || jobAddress.toString().isEmpty) {
+        _errorMessage = 'Please select a valid address';
+        notifyListeners();
+        return false;
+      }
+
+      // ISO-8601 without timezone noise from DateTime.toString().
+      final startDateIso =
+          combinedDateTime.toIso8601String().split('.').first;
+      jobsBody['start_date'] = startDateIso;
+
       clearCancellationReason();
 
       if (jobsBody['tap_payments_card'] == null) {
         return false;
-      } else {
-        dynamic response = await _jobsRepository.postNewJobRequest(jobsBody);
-        debugPrint('response adding job in view model $response');
-        if(response['status']=='NOT_OK'){
-          _errorMessage=response['reason'];
-          notifyListeners();
-          return false;
-        }
+      }
 
-        // _jobsResponse = ApiResponse<JobsModel>.completed(response);
+      dynamic response = await _jobsRepository.postNewJobRequest(jobsBody);
+      debugPrint('response adding job in view model $response');
+      if (response is Map && response['status'] == 'NOT_OK') {
+        _errorMessage = (response['reason'] ?? response['message'] ?? 'Failed')
+            .toString();
+        notifyListeners();
+        return false;
       }
 
       return true;
     } catch (error) {
+      debugPrint('error requesting service $error');
+      _errorMessage = error.toString();
       _jobsResponse = ApiResponse<JobsModel>.error(error.toString());
+      notifyListeners();
       return false;
     }
   }

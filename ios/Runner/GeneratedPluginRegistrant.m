@@ -96,6 +96,12 @@
 @import flutter_pdfview;
 #endif
 
+#if __has_include(<flutter_secure_storage_darwin/FlutterSecureStorageDarwinPlugin.h>)
+#import <flutter_secure_storage_darwin/FlutterSecureStorageDarwinPlugin.h>
+#else
+@import flutter_secure_storage_darwin;
+#endif
+
 #if __has_include(<flutter_web_browser/FlutterWebBrowserPlugin.h>)
 #import <flutter_web_browser/FlutterWebBrowserPlugin.h>
 #else
@@ -246,6 +252,7 @@
   [FlutterKeyboardVisibilityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterKeyboardVisibilityPlugin"]];
   [FlutterNativeSplashPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterNativeSplashPlugin"]];
   [FLTPDFViewFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTPDFViewFlutterPlugin"]];
+  [FlutterSecureStorageDarwinPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterSecureStorageDarwinPlugin"]];
   [FlutterWebBrowserPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterWebBrowserPlugin"]];
   [GeocodingPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeocodingPlugin"]];
   [GeolocatorPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeolocatorPlugin"]];

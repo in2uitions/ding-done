@@ -15,8 +15,7 @@ import 'package:dingdone/res/strings/english_strings.dart';
 import 'package:dingdone/utils/navigation_service.dart';
 import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dingdone/services/onesignal_service.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -60,12 +59,11 @@ class LoginViewModel with ChangeNotifier {
   Future<void> splashLogin() async {
     await checkAndRefreshToken();
 
-    if (await isTokenNotEmpty() && !await isTokenExpired()) {
+    if (await isTokenNotEmpty() && !isTokenExpired) {
       if (await isTokenExpired) {
         bool refreshSuccess = await refreshAccessToken();
         print('refreshed access token from splash login');
         if (!refreshSuccess) {
-          NavigationService().navigateToScreen(const OnBoardingScreen());
           FlutterNativeSplash.remove();
           return;
         }
@@ -76,15 +74,15 @@ class LoginViewModel with ChangeNotifier {
         NavigationService().navigateToScreen(BottomBar(userRole: userRole, currentTab: 0,));
       }
     } else {
-      NavigationService().navigateToScreen(const OnBoardingScreen());
+      FlutterNativeSplash.remove();
+      return;
     }
     FlutterNativeSplash.remove();
   }
   Future<bool> refreshAccessToken() async {
     debugPrint("Attempting to refresh access token");
-    final prefs = await SharedPreferences.getInstance();
-
-    String? refreshToken = prefs.getString('refresh_token');
+    final String? refreshToken =
+        await AppPreferences().get(key: userRefreshToken, isModel: false);
 
     try {
       LoginModel? newTokenData = await _loginRepository.refreshAccessToken();
@@ -98,7 +96,7 @@ class LoginViewModel with ChangeNotifier {
                 (newTokenData.expires ?? 0).toInt(),
             isModel: false);
         await AppPreferences().save(
-            key: refreshToken,
+            key: userRefreshToken,
             value: newTokenData.refreshToken,
             isModel: false);
         return true;
@@ -121,14 +119,8 @@ class LoginViewModel with ChangeNotifier {
       if (await login()) {
         if (await isActiveUser()) {
           NavigationService().navigateToScreen(BottomBar(userRole: userRole, currentTab: 0,));
-        } else {
-          NavigationService().navigateToScreen(const OnBoardingScreen());
         }
-      } else {
-        NavigationService().navigateToScreen(const OnBoardingScreen());
       }
-    } else {
-      NavigationService().navigateToScreen(const OnBoardingScreen());
     }
   }
 
@@ -138,8 +130,7 @@ class LoginViewModel with ChangeNotifier {
   }
 
   Future<void> setPref(String index, dynamic value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setString(index, value);
+    await AppPreferences().save(key: index, value: value, isModel: false);
   }
 
   void setLoginResponseData(ApiResponse<LoginModel> response) async {
@@ -160,8 +151,11 @@ class LoginViewModel with ChangeNotifier {
           isModel: false);
       await setPref('userPasswordKey',
           _loginCredentials[EnglishStrings().formKeys['password']!]);
-      final prefs = await SharedPreferences.getInstance();
-      int? tokenExpiryTime = prefs.getInt(userTokenExpiry);
+      final dynamic tokenExpiryValue =
+          await AppPreferences().get(key: userTokenExpiry, isModel: false);
+      final int? tokenExpiryTime = tokenExpiryValue is int
+          ? tokenExpiryValue
+          : int.tryParse('${tokenExpiryValue ?? ''}');
       print("is token expired" + tokenExpiryTime.toString());
       int currentTime = DateTime.now().millisecondsSinceEpoch;
 
@@ -176,25 +170,16 @@ class LoginViewModel with ChangeNotifier {
         key: userPasswordKey,
         value: _loginCredentials['password'],
         isModel: false);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(SHARED_LOGGED, true);
-    await prefs.setString(
-      userEmailKey,
-      _loginCredentials['email'],
-    );
-    await prefs.setString(userPasswordKey, _loginCredentials['password']);
+    await AppPreferences().save(
+        key: SHARED_LOGGED, value: true, isModel: false);
 
     notifyListeners();
   }
 
   Future<void> getCredentials() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
     _userEmail = await AppPreferences().get(key: userEmailKey, isModel: false);
     _userPass =
         await AppPreferences().get(key: userPasswordKey, isModel: false);
-    _userEmail = await prefs.getString(userEmailKey);
-    _userPass = await prefs.getString(userPasswordKey);
     notifyListeners();
   }
 
@@ -209,11 +194,8 @@ class LoginViewModel with ChangeNotifier {
       dynamic result = await _loginRepository.getUserDetails();
       _userModelResponse = ApiResponse.completed(result);
       // await loginUserToCometChat(userId: _userModelResponse.data?.id ?? '');
-      final prefs = await SharedPreferences.getInstance();
-
       await AppPreferences().save(
           key: userIdKey, value: _userModelResponse.data?.id, isModel: false);
-      await prefs.setString(userIdKey, '${_userModelResponse.data?.id}');
 
       _userRole = _userModelResponse.data?.role;
       debugPrint('user role is $_userRole');
@@ -221,7 +203,6 @@ class LoginViewModel with ChangeNotifier {
           key: userRoleKey,
           value: _userModelResponse.data?.role,
           isModel: false);
-      await prefs.setString(userRoleKey, _userRole!);
       // await AppPreferences().save(
       //     key: userRoleKey,
       //     value: _userModelResponse.data?.role,
@@ -230,12 +211,11 @@ class LoginViewModel with ChangeNotifier {
           key: userNameKey,
           value: '${_userModelResponse.data?.first_name}',
           isModel: false);
-      await prefs.setString(
-          userNameKey, '${_userModelResponse.data?.first_name}');
-      OneSignal.login('${_userModelResponse.data?.id}');
-      OneSignal.User.addEmail('${_userModelResponse.data?.email}');
-      OneSignal.User.addSms('${_userModelResponse.data?.phone}');
-      debugPrint('Onesignal ${OneSignal.User}');
+      await OneSignalService.identifyUser(
+        userId: _userModelResponse.data?.id,
+        email: _userModelResponse.data?.email,
+        phone: _userModelResponse.data?.phone,
+      );
 
       notifyListeners();
 
@@ -251,8 +231,8 @@ class LoginViewModel with ChangeNotifier {
       LoginModel? response =
           await _loginRepository.postLoginCredentials(_loginCredentials);
       setLoginResponseData(ApiResponse.completed(response));
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setBool(SHARED_LOGGED, true);
+      await AppPreferences()
+          .save(key: SHARED_LOGGED, value: true, isModel: false);
       return true;
     } catch (error) {
       debugPrint('error loging in $error');
@@ -339,11 +319,8 @@ class LoginViewModel with ChangeNotifier {
 
   Future<bool> isTokenNotEmpty() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-
-      String? token =
-          // await AppPreferences().get(key: userTokenKey, isModel: false);
-          await prefs.getString(userTokenKey);
+      final dynamic token =
+          await AppPreferences().get(key: userTokenKey, isModel: false);
       return token != null && token != '';
     } catch (err) {
       return false;

@@ -579,8 +579,20 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                               widget.fromWhere != 'jobs.booked'.tr()
                           ? JobSizeWidget(
                         minimum_order:widget.data.service['country_rates'][0]['minimum_order']!=0 && widget.data.service['country_rates'][0]['minimum_order']!=null ?int.parse(widget.data.service['country_rates'][0]['minimum_order'].toString()) : 1,
-                              completed_units:widget.data.completed_units!=0 && widget.data.completed_units!=null?widget.data.completed_units:
-                                  widget.data.service['country_rates'][0]['minimum_order']!=0 && widget.data.service['country_rates'][0]['minimum_order']!=null ?int.parse(widget.data.service['country_rates'][0]['minimum_order'].toString()) : 1,
+                              // Actual units start at estimated units (and cannot go below).
+                              completed_units: () {
+                                final estimated = int.tryParse(
+                                        '${widget.data.number_of_units ?? 1}') ??
+                                    1;
+                                final completed = int.tryParse(
+                                    '${widget.data.completed_units ?? ''}');
+                                if (completed != null && completed > 0) {
+                                  return completed < estimated
+                                      ? estimated
+                                      : completed;
+                                }
+                                return estimated;
+                              }(),
                               number_of_units:
                                   widget.data.number_of_units ?? 1,
                               extra_fees: widget.data.extra_fees ?? '',

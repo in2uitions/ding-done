@@ -5,7 +5,6 @@ import 'package:dingdone/data/remote/network/api_end_points.dart';
 import 'package:dingdone/data/remote/network/base_api_service.dart';
 import 'package:dingdone/data/remote/network/network_api_service.dart';
 import 'package:dingdone/res/app_prefs.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class PaymentsRepository {
   final BaseApiService _addPaymentCard =
@@ -90,10 +89,7 @@ class PaymentsRepository {
 
   Future<String> getUserId() async {
     try {
-      // String? token =
-      // await AppPreferences().get(key: userIdKey, isModel: false);
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(userIdKey);
+      final token = await AppPreferences().get(key: userIdKey, isModel: false);
       return token ?? '';
     } catch (err) {
       return '';
@@ -101,9 +97,8 @@ class PaymentsRepository {
   }
   Future<String> getRole() async {
     try {
-      // String? role=await AppPreferences().get(key: userRoleKey, isModel: false);
-      final prefs = await SharedPreferences.getInstance();
-      final role=prefs.getString(userRoleKey);
+      final role =
+          await AppPreferences().get(key: userRoleKey, isModel: false);
       return role ?? '';
     } catch (err) {
       return '';

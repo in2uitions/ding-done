@@ -7,7 +7,6 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/view/categories/categories.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileRepository {
   final BaseApiService _apiSupplierProfile =
@@ -311,10 +310,7 @@ class ProfileRepository {
 
   Future<String> getUserId() async {
     try {
-      // String? token =
-      // await AppPreferences().get(key: userIdKey, isModel: false);
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(userIdKey);
+      final token = await AppPreferences().get(key: userIdKey, isModel: false);
       return token ?? '';
     } catch (err) {
       return '';
@@ -323,9 +319,8 @@ class ProfileRepository {
 
   Future<String> getRole() async {
     try {
-      // String? role=await AppPreferences().get(key: userRoleKey, isModel: false);
-      final prefs = await SharedPreferences.getInstance();
-      final role = prefs.getString(userRoleKey);
+      final role =
+          await AppPreferences().get(key: userRoleKey, isModel: false);
       return role ?? '';
     } catch (err) {
       return '';

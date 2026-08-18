@@ -11,8 +11,6 @@ import 'package:dingdone/res/app_prefs.dart';
 import 'package:http/http.dart' as http;
 import 'dart:math';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
 class LoginRepository {
   final BaseApiService _apiService =
       NetworkApiService(url: ApiEndPoints().login);
@@ -45,9 +43,6 @@ class LoginRepository {
 
   Future<LoginModel?> refreshAccessToken() async {
     try {
-      final prefs = await SharedPreferences.getInstance();
-
-      // Get the old refresh token from SharedPreferences
       String? oldRefreshToken =
           await AppPreferences().get(key: userRefreshToken, isModel: false);
 

@@ -6,8 +6,6 @@ import 'package:http/http.dart' as http;
 import 'package:dingdone/data/remote/app_exception.dart';
 import 'package:dingdone/data/remote/network/base_api_service.dart';
 import 'package:dingdone/res/app_prefs.dart';
-import 'package:dingdone/utils/navigation_service.dart';
-import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -21,6 +19,20 @@ class NetworkApiService extends BaseApiService {
     }
   }
 
+  Future<void> _applyAuthHeader({bool sendToken = true}) async {
+    if (!sendToken) {
+      headers.remove(HttpHeaders.authorizationHeader);
+      return;
+    }
+    final tokenValue = await getToken();
+    if (tokenValue.isEmpty) {
+      headers.remove(HttpHeaders.authorizationHeader);
+    } else {
+      headers[HttpHeaders.contentTypeHeader] = 'application/json';
+      headers[HttpHeaders.authorizationHeader] = tokenValue;
+    }
+  }
+
   @override
   Future getResponse({params = '',bool sendToken = true,}) async {
     dynamic responseJson;
@@ -30,21 +42,10 @@ class NetworkApiService extends BaseApiService {
     }
     debugPrint(finalUrl);
     try {
-      String? tokenValue;
-      if(sendToken){
-        tokenValue = await getToken();
-        if (tokenValue != '' && url=='/users/me') {
-          headers[HttpHeaders.authorizationHeader] = tokenValue;
-        }else{
-          headers[HttpHeaders.contentTypeHeader] = 'application/json';
-
-        }
-
-        headers[HttpHeaders.authorizationHeader] = tokenValue;
-      }
+      await _applyAuthHeader(sendToken: sendToken);
 
       debugPrint('final url $finalUrl');
-      debugPrint('token value $tokenValue');
+      debugPrint('token value ${headers[HttpHeaders.authorizationHeader]}');
       // headers[HttpHeaders.authorizationHeader] =
       // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
       final response;
@@ -65,21 +66,10 @@ class NetworkApiService extends BaseApiService {
     }
     debugPrint(finalUrl);
     try {
-      String? tokenValue;
-      if(sendToken){
-        tokenValue = await getToken();
-        if (tokenValue != '' && url=='/users/me') {
-          headers[HttpHeaders.authorizationHeader] = tokenValue;
-        }else{
-          headers[HttpHeaders.contentTypeHeader] = 'application/json';
-
-        }
-
-        headers[HttpHeaders.authorizationHeader] = tokenValue;
-      }
+      await _applyAuthHeader(sendToken: sendToken);
 
       debugPrint('final url file $finalUrl');
-      debugPrint('token value $tokenValue');
+      debugPrint('token value ${headers[HttpHeaders.authorizationHeader]}');
       // headers[HttpHeaders.authorizationHeader] =
       // 'Bearer yINQ0FBZ_j35uR8OP1gUZ8P3BP6RNEuh';
       final response;
@@ -99,12 +89,9 @@ class NetworkApiService extends BaseApiService {
       String params = ''}) async {
     dynamic responseJson;
     if (sendToken) {
-      String tokenValue = await getToken();
-      if (tokenValue != '') {
-        debugPrint('there is a token');
-        headers[HttpHeaders.authorizationHeader] = tokenValue;
-      }
-      headers[HttpHeaders.authorizationHeader] = await getToken();
+      await _applyAuthHeader();
+    } else {
+      headers.remove(HttpHeaders.authorizationHeader);
     }
     debugPrint('final kkk}');
 
@@ -279,13 +266,10 @@ class NetworkApiService extends BaseApiService {
       case 401:
         if (await getToken() != '') {
           loginViewModel.loginSharedPreference();
-        } else {
-          AppPreferences().clear();
         }
         throw UnauthorisedException(
             jsonDecode(response.body)['errors'][0]['message']);
       case 403:
-        NavigationService().navigateToScreen(const OnBoardingScreen());
         throw UnauthorisedException(
             jsonDecode(response.body)['errors'][0]['message']);
       case 404:
@@ -299,17 +283,16 @@ class NetworkApiService extends BaseApiService {
 
   Future<String> getToken() async {
     try {
-      String? token =
+      final token =
           await AppPreferences().get(key: userTokenKey, isModel: false);
-      if ((headers[HttpHeaders.authorizationHeader] == null ||
-              headers[HttpHeaders.authorizationHeader] != token) &&
-          token != null &&
-          token != '') {
-        debugPrint('token is $token');
-
-        return "Bearer $token";
+      if (token == null || token.toString().trim().isEmpty) {
+        return '';
       }
-      return '';
+      final raw = token.toString().trim();
+      if (raw.startsWith('Bearer ')) {
+        return raw;
+      }
+      return 'Bearer $raw';
     } catch (err) {
       return '';
     }

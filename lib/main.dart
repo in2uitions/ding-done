@@ -11,6 +11,7 @@ import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:dingdone/view/update_job_request_customer/update_job_request_customer.dart';
 import 'package:dingdone/services/app_update_service.dart';
 import 'package:dingdone/view/widgets/custom/force_update_dialog.dart';
+import 'package:dingdone/utils/navigation_service.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
 import 'package:dingdone/view_model/categories_view_model/categories_view_model.dart';
 import 'package:dingdone/view_model/country_view_model/country_view_model.dart';
@@ -33,19 +34,21 @@ import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-import 'package:onesignal_flutter/onesignal_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:dingdone/services/onesignal_service.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:app_links/app_links.dart';
 import 'package:adjust_sdk/adjust.dart';
 import 'package:adjust_sdk/adjust_config.dart';
 
-Future<void> main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  if (Platform.isAndroid) {
+    runApp(const DingDoneBootstrap());
+    return;
+  }
+
   await EasyLocalization.ensureInitialized();
-
-  final prefs = await SharedPreferences.getInstance();
-
   runApp(
     RestartWidget(
       child: EasyLocalization(
@@ -57,15 +60,107 @@ Future<void> main() async {
         ],
         fallbackLocale: const Locale('en'),
         path: 'assets/i18n',
-        child: MyApp(prefs: prefs),
+        saveLocale: true,
+        child: const MyApp(),
       ),
     ),
   );
 }
 
+class _StartupSplash extends StatelessWidget {
+  const _StartupSplash();
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: Stack(
+          fit: StackFit.expand,
+          children: [
+            Image.asset(
+              'assets/img/onboarding_bg.png',
+              fit: BoxFit.cover,
+            ),
+            Center(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(36),
+                child: Image.asset(
+                  'assets/img/app-icon.png',
+                  width: 160,
+                  height: 160,
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class DingDoneBootstrap extends StatefulWidget {
+  const DingDoneBootstrap({super.key});
+
+  @override
+  State<DingDoneBootstrap> createState() => _DingDoneBootstrapState();
+}
+
+class _DingDoneBootstrapState extends State<DingDoneBootstrap> {
+  Widget? _app;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _startApp());
+  }
+
+  Future<void> _ensureLocalizationReady() async {
+    Object? lastError;
+    for (var attempt = 0; attempt < 8; attempt++) {
+      try {
+        await EasyLocalization.ensureInitialized();
+        return;
+      } catch (error) {
+        lastError = error;
+        debugPrint('Localization init attempt $attempt failed: $error');
+        await Future<void>.delayed(Duration(milliseconds: 150 * (attempt + 1)));
+      }
+    }
+
+    debugPrint('Localization init gave up: $lastError');
+  }
+
+  Future<void> _startApp() async {
+    if (!mounted) return;
+    setState(() {
+      _app = RestartWidget(
+        child: EasyLocalization(
+          supportedLocales: const [
+            Locale('en'),
+            Locale('ar'),
+            Locale('el'),
+            Locale('ru'),
+          ],
+          fallbackLocale: const Locale('en'),
+          startLocale: const Locale('en'),
+          path: 'assets/i18n',
+          saveLocale: false,
+          child: const MyApp(),
+        ),
+      );
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _app ?? const _StartupSplash();
+  }
+}
+
 class MyApp extends StatefulWidget {
-  final SharedPreferences prefs;
-  const MyApp({super.key, required this.prefs});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -78,7 +173,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   StreamSubscription? _sub;
   final AppLinks _appLinks = AppLinks();
-  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey =
+      NavigationService().navigationKey;
   final FacebookAppEvents facebookAppEvents = FacebookAppEvents();
   final AppUpdateService _appUpdateService = AppUpdateService();
   bool _isUpdateDialogVisible = false;
@@ -89,8 +185,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     WidgetsBinding.instance.addObserver(this);
 
     checkUserIsLogged();
-    getLanguage();
-    initPlatformState();
+    WidgetsBinding.instance.addPostFrameCallback((_) => getLanguage());
+    WidgetsBinding.instance.addPostFrameCallback((_) => initPlatformState());
     initialDeepLink();
     // Wait until MaterialApp / navigator are ready, then check store version.
     // Same path for debug and release.
@@ -154,6 +250,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     final role = await AppPreferences().get(key: userRoleKey, isModel: false);
     final userId = await AppPreferences().get(key: userIdKey, isModel: false);
 
+    if (!mounted) return;
     setState(() {
       userRole = role;
       _userId = userId;
@@ -218,8 +315,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     Stripe.publishableKey =
     "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
 
-    OneSignal.initialize("357d957a-ed36-4ab5-a29e-cfbe93536a64");
-    await OneSignal.Notifications.requestPermission(true);
+    await OneSignalService.initialize();
 
     if (defaultTargetPlatform == TargetPlatform.android) {
       AndroidGoogleMapsFlutter.useAndroidViewSurface = true;
@@ -243,7 +339,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   Future<void> _checkForAppUpdate({int attempt = 0}) async {
-    if (_isUpdateDialogVisible || !mounted) return;
+    if (_isUpdateDialogVisible || !mounted || !_doLogin) return;
 
     final updateAvailable = await _appUpdateService.isStoreUpdateAvailable();
     debugPrint(
@@ -293,20 +389,24 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     }
   }
   void getLanguage() async {
-    String? lang = await AppPreferences().get(key: language, isModel: false);
-    lang ??= 'en';
-
-    await context.setLocale(Locale(lang));
-    await AppPreferences().save(
-        key: dblang,
-        value: lang == 'ar'
-            ? 'ar-SA'
-            : lang == 'ru'
-            ? 'ru-RU'
-            : lang == 'el'
-            ? 'el-GR'
-            : 'en-US',
-        isModel: false);
+    try {
+      String? lang = await AppPreferences().get(key: language, isModel: false);
+      lang ??= 'en';
+      if (!mounted) return;
+      await context.setLocale(Locale(lang));
+      await AppPreferences().save(
+          key: dblang,
+          value: lang == 'ar'
+              ? 'ar-SA'
+              : lang == 'ru'
+              ? 'ru-RU'
+              : lang == 'el'
+              ? 'el-GR'
+              : 'en-US',
+          isModel: false);
+    } catch (error) {
+      debugPrint('getLanguage failed: $error');
+    }
   }
 
   @override

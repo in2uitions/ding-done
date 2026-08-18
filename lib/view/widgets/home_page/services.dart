@@ -185,10 +185,6 @@ class _ServicesWidgetState extends State<ServicesWidget> {
               value: profileViewModel.getProfileBody['current_address'],
             );
             jobsViewModel.setInputValues(
-              index: 'country',
-              value: 'CYP',
-            );
-            jobsViewModel.setInputValues(
               index: 'address',
               value:
               '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',

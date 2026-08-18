@@ -29,12 +29,16 @@ class CountryViewModel with ChangeNotifier {
 
     _selectedCountry = supportedCountry.displayName;
     _isLoaded = true;
-    await AppPreferences().save(
-      key: selectedCountryKey,
-      value: _selectedCountry,
-      isModel: false,
-    );
     notifyListeners();
+    try {
+      await AppPreferences().save(
+        key: selectedCountryKey,
+        value: _selectedCountry,
+        isModel: false,
+      );
+    } catch (error) {
+      debugPrint('Failed to persist country: $error');
+    }
   }
 
   void markLocationPromptHandled() {

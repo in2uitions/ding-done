@@ -92,13 +92,16 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                             padding: const EdgeInsets.only(right: 20.0),
                             child: Consumer<JobsViewModel>(
                                 builder: (context, jobsViewModel, _) {
-                              return
-                                CustomIncrementField(
+                              final estimatedUnits = int.tryParse(
+                                      '${widget.number_of_units}') ??
+                                  int.tryParse('${widget.minimum_order}') ??
+                                  1;
+                              return CustomIncrementField(
                                 index: 'completed_units',
                                 value: '${widget.completed_units}',
-                                // hintText: 'Job Type',
                                 viewModel: jobsViewModel.setUpdatedJob,
-                                  minimumOrder:int.parse(widget.minimum_order.toString()),
+                                // Actual units cannot go below estimated units.
+                                minimumOrder: estimatedUnits,
                               );
                             }),
                           )

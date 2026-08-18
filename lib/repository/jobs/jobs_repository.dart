@@ -5,7 +5,6 @@ import 'package:dingdone/data/remote/network/api_end_points.dart';
 import 'package:dingdone/data/remote/network/base_api_service.dart';
 import 'package:dingdone/data/remote/network/network_api_service.dart';
 import 'package:dingdone/res/app_prefs.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class JobsRepository {
   final BaseApiService _apiCustomerJobs =
@@ -299,14 +298,40 @@ class JobsRepository {
   Future<dynamic> postNewJobRequest(dynamic body) async {
     try {
       String currentUser = await getUserId();
-      final requestBody = Map<String, dynamic>.from(body);
-      requestBody.remove('cancellation_reason');
-      requestBody["customer"] = currentUser;
+      final source = Map<String, dynamic>.from(body as Map);
+
+      // Only send fields the addJob endpoint expects.
+      final requestBody = <String, dynamic>{
+        'customer': currentUser,
+        'service': source['service'],
+        'job_address': source['job_address'] is Map
+            ? source['job_address']['id']
+            : source['job_address'],
+        'start_date': source['start_date'],
+        'job_type': source['job_type'] ?? 'work',
+        'severity_level': source['severity_level'],
+        'payment_method': source['payment_method'] ?? 'Card',
+        'tap_payments_card': source['tap_payments_card'],
+        'latitude': source['latitude'],
+        'longitude': source['longitude'],
+      };
+
+      final units = source['number_of_units'];
+      if (units != null) {
+        requestBody['number_of_units'] =
+            int.tryParse(units.toString()) ?? units;
+      }
+      if (source['job_description'] != null &&
+          source['job_description'].toString().trim().isNotEmpty) {
+        requestBody['job_description'] = source['job_description'];
+      }
+      if (source['media'] != null) {
+        requestBody['media'] = source['media'];
+      }
+
       debugPrint('jobs body issss $requestBody');
       dynamic response = await _apiAddJob.postResponse(data: requestBody);
-      debugPrint('response adding new job ${response['status']}');
-
-      // final jsonData = JobsModel.fromJson(response['data']);
+      debugPrint('response adding new job ${response}');
       return response;
     } catch (error) {
       debugPrint('error in post jobs repo ${error}');
@@ -316,10 +341,7 @@ class JobsRepository {
 
   Future<String> getUserId() async {
     try {
-      // String? token =
-      // await AppPreferences().get(key: userIdKey, isModel: false);
-      final prefs = await SharedPreferences.getInstance();
-      final token = prefs.getString(userIdKey);
+      final token = await AppPreferences().get(key: userIdKey, isModel: false);
       return token ?? '';
     } catch (err) {
       return '';
@@ -328,9 +350,8 @@ class JobsRepository {
 
   Future<String> getRole() async {
     try {
-      // String? role=await AppPreferences().get(key: userRoleKey, isModel: false);
-      final prefs = await SharedPreferences.getInstance();
-      final role = prefs.getString(userRoleKey);
+      final role =
+          await AppPreferences().get(key: userRoleKey, isModel: false);
       return role ?? '';
     } catch (err) {
       return '';

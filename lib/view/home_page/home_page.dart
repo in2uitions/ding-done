@@ -4,6 +4,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/utils/country_helper.dart';
 import 'package:dingdone/view/categories/parent_categories.dart';
 import 'package:dingdone/view/notifications_screen/notifications_screen.dart';
 import 'package:dingdone/view/widgets/restart/restart_widget.dart';
@@ -1436,76 +1437,14 @@ class _HomePageState extends State<HomePage> {
                                                                       serviceId[
                                                                           'translations'][0],
                                                                 );
-                                                            jobsViewModel.setInputValues(
-                                                                index:
-                                                                    'service',
-                                                                value: service[
-                                                                    "id"]);
-                                                            jobsViewModel
-                                                                .setInputValues(
-                                                              index:
-                                                                  'job_address',
-                                                              value: profileViewModel
-                                                                      .getProfileBody[
-                                                                  'current_address'],
-                                                            );
-
-                                                            jobsViewModel
-                                                                .setInputValues(
-                                                              index: 'address',
-                                                              value:
-                                                                  '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
-                                                            );
-                                                            jobsViewModel.setInputValues(
-                                                                index:
-                                                                    'latitude',
-                                                                value: profileViewModel
-                                                                            .getProfileBody[
-                                                                        'current_address']
-                                                                    [
-                                                                    'latitude']);
-                                                            jobsViewModel.setInputValues(
-                                                                index:
-                                                                    'longitude',
-                                                                value: profileViewModel
-                                                                            .getProfileBody[
-                                                                        'current_address']
-                                                                    [
-                                                                    'longitude']);
-                                                            jobsViewModel
-                                                                .setInputValues(
-                                                                    index:
-                                                                        'payment_method',
-                                                                    value:
-                                                                        'Card');
-                                                            // jobsViewModel.setInputValues(index: 'number_of_units',value:service['country_rates'][0]['minimum_order'].toString() );
                                                             servicesViewModel
                                                                 .setParentCategory(
                                                                     trans[
                                                                         "title"]);
-                                                            debugPrint(
-                                                                'service id $serviceId');
-                                                            debugPrint(
-                                                                'lang service id $lang');
-                                                            debugPrint(
-                                                                'image service id ${serviceId["image"]}');
-                                                            debugPrint(
-                                                                'translations service id ${serviceId["translations"][0]['languages_code']}');
-                                                            Navigator.of(
-                                                                    context)
-                                                                .push(
-                                                              _createRoute(
-                                                                BookAService(
-                                                                  service:
-                                                                      serviceId,
-                                                                  lang: lang,
-                                                                  image: serviceId[
-                                                                              "image"] !=
-                                                                          null
-                                                                      ? '${context.resources.image.networkImagePath2}${serviceId["image"]["filename_disk"]}'
-                                                                      : 'https://www.shutterstock.com/image-vector/incognito-icon-browse-private-vector-260nw-1462596698.jpg',
-                                                                ),
-                                                              ),
+                                                            _handleServiceSelection(
+                                                              serviceId,
+                                                              jobsViewModel,
+                                                              profileViewModel,
                                                             );
                                                             return;
                                                           }
@@ -1937,27 +1876,56 @@ class _HomePageState extends State<HomePage> {
     if (lang == null) {
       lang = 'en-US';
     }
+    final currentAddress = profileViewModel.getProfileBody['current_address'];
+    if (currentAddress is! Map) {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const MyaddressBook()),
+      );
+      return;
+    }
+
+    final countryViewModel =
+        Provider.of<CountryViewModel>(context, listen: false);
+    if (!countryViewModel.matchesAddress(currentAddress)) {
+      Navigator.of(context).push(
+        MaterialPageRoute(builder: (_) => const MyaddressBook()),
+      );
+      return;
+    }
+
+    final rates = service['country_rates'];
+    Map? matchingRate;
+    if (rates is List) {
+      for (final rate in rates) {
+        if (rate is Map &&
+            countryValuesMatch(rate['country'], currentAddress['country'])) {
+          matchingRate = rate;
+          break;
+        }
+      }
+      matchingRate ??= rates.isNotEmpty && rates.first is Map ? rates.first : null;
+    }
+    final minimumOrder =
+        matchingRate?['minimum_order']?.toString() ?? '1';
+
     jobsViewModel.setInputValues(index: 'service', value: service["id"]);
     jobsViewModel.setInputValues(
       index: 'job_address',
-      value: profileViewModel.getProfileBody['current_address'],
+      value: currentAddress,
     );
 
     jobsViewModel.setInputValues(
       index: 'address',
       value:
-          '${profileViewModel.getProfileBody['current_address']["street_number"]} ${profileViewModel.getProfileBody['current_address']["building_number"]}, ${profileViewModel.getProfileBody['current_address']['apartment_number']}, ${profileViewModel.getProfileBody['current_address']["floor"]}',
+          '${currentAddress["street_number"]} ${currentAddress["building_number"]}, ${currentAddress['apartment_number']}, ${currentAddress["floor"]}',
     );
     jobsViewModel.setInputValues(
-        index: 'latitude',
-        value: profileViewModel.getProfileBody['current_address']['latitude']);
+        index: 'latitude', value: currentAddress['latitude']);
     jobsViewModel.setInputValues(
-        index: 'longitude',
-        value: profileViewModel.getProfileBody['current_address']['longitude']);
+        index: 'longitude', value: currentAddress['longitude']);
     jobsViewModel.setInputValues(index: 'payment_method', value: 'Card');
     jobsViewModel.setInputValues(
-        index: 'number_of_units',
-        value: service['country_rates'][0]['minimum_order'].toString());
+        index: 'number_of_units', value: minimumOrder);
 
     Navigator.of(context).push(_createRoute(BookAService(
       service: service,

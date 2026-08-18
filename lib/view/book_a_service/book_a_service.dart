@@ -3,6 +3,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/utils/country_helper.dart';
 import 'package:dingdone/view/confirm_address/confirm_address.dart';
 import 'package:dingdone/view/widgets/book_a_service/add_media.dart';
 import 'package:dingdone/view/widgets/book_a_service/date_picker.dart';
@@ -23,8 +24,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 
-
-import 'package:provider/provider.dart';
 import '../my_address_book/my_address_book.dart';
 
 class BookAService extends StatefulWidget {
@@ -56,16 +55,34 @@ class _BookAServiceState extends State<BookAService> {
     });
   }
 
+  Map<String, dynamic>? _findMatchingRate(
+    ProfileViewModel profileViewModel,
+  ) {
+    final rates = widget.service["country_rates"];
+    if (rates is! List || rates.isEmpty) return null;
+
+    final currentAddress = profileViewModel.getProfileBody['current_address'];
+    final addressCountry =
+        currentAddress is Map ? currentAddress['country'] : null;
+    final selectedCountry =
+        Provider.of<CountryViewModel>(context, listen: false).selectedCountry;
+
+    for (final candidate in [addressCountry, selectedCountry]) {
+      if (candidate == null) continue;
+      for (final rate in rates) {
+        if (rate is Map && countryValuesMatch(rate['country'], candidate)) {
+          return Map<String, dynamic>.from(rate);
+        }
+      }
+    }
+
+    final first = rates.first;
+    return first is Map ? Map<String, dynamic>.from(first) : null;
+  }
+
   String _getServiceRate(ProfileViewModel profileViewModel,
       JobsViewModel jobsViewModel) {
-    // Extract the currency from job address
-    String currency =
-    profileViewModel.getProfileBody['current_address']["country"];
-    // Find the rate from country_rates where currency matches
-    var matchingRate = widget.service["country_rates"].firstWhere(
-          (rate) => rate["country"]['code'] == currency,
-      orElse: () => null, // If no match is found, return null
-    );
+    final matchingRate = _findMatchingRate(profileViewModel);
 
     if (matchingRate != null) {
       _matchingRate = matchingRate;
@@ -73,62 +90,57 @@ class _BookAServiceState extends State<BookAService> {
       debugPrint(
           'jobsViewModel.getjobsBodynumber_of_units ${jobsViewModel
               .getjobsBody['number_of_units']}');
-      // Check the job type and return the appropriate rate
       if (matchingRate["unit_type"].toString().toLowerCase() == 'lumpsum') {
         isLumpsum = true;
       }
-      if (profileViewModel.getProfileBody['current_address']['job_type'] ==
-          'inspection') {
-        return matchingRate['inspection_rate'] ?? 'No rate available';
-      } else {
-
-        return '${jobsViewModel.getjobsBody['number_of_units'] != null ? (int
-            .parse(jobsViewModel.getjobsBody['number_of_units']) *
-            int.parse(matchingRate['unit_rate'].toString())) : (int.parse(
-            matchingRate['minimum_order'].toString()) * int.parse(
-            matchingRate['unit_rate']
-                .toString()))} ${matchingRate["country"]["currency"]}';
+      final currentAddress =
+          profileViewModel.getProfileBody['current_address'];
+      if (currentAddress is Map &&
+          currentAddress['job_type'] == 'inspection') {
+        return matchingRate['inspection_rate']?.toString() ??
+            'No rate available';
       }
+
+      final unitsRaw = jobsViewModel.getjobsBody['number_of_units'];
+      final units = int.tryParse('${unitsRaw ?? ''}') ??
+          int.tryParse('${matchingRate['minimum_order']}') ??
+          1;
+      final unitRate = int.tryParse('${matchingRate['unit_rate']}') ?? 0;
+      final currency = matchingRate["country"] is Map
+          ? matchingRate["country"]["currency"]
+          : '';
+      return '${units * unitRate} $currency';
     } else {
-      return 'Rate not found'; // Fallback if no matching currency is found
+      return 'Rate not found';
     }
   }
 
   String _getUnitPrice(ProfileViewModel profileViewModel) {
-    // Extract the currency from job address
-    String currency =
-    profileViewModel.getProfileBody['current_address']["country"];
-    // Find the rate from country_rates where currency matches
-    var matchingRate = widget.service["country_rates"].firstWhere(
-          (rate) => rate["country"]['code'] == currency,
-      orElse: () => null, // If no match is found, return null
-    );
+    final matchingRate = _findMatchingRate(profileViewModel);
 
     if (matchingRate != null) {
       _matchingRate = matchingRate;
       debugPrint('_matchingRate ${_matchingRate['unit_rate']}');
 
-      if (profileViewModel.getProfileBody['current_address']['job_type'] ==
-          'inspection') {
-        return matchingRate['inspection_rate'] ?? 'No rate available';
-      } else {
-        return '${int.parse(matchingRate['unit_rate']
-            .toString())} ${matchingRate["country"]["currency"]}';
+      final currentAddress =
+          profileViewModel.getProfileBody['current_address'];
+      if (currentAddress is Map &&
+          currentAddress['job_type'] == 'inspection') {
+        return matchingRate['inspection_rate']?.toString() ??
+            'No rate available';
       }
+      final unitRate = int.tryParse('${matchingRate['unit_rate']}') ?? 0;
+      final currency = matchingRate["country"] is Map
+          ? matchingRate["country"]["currency"]
+          : '';
+      return '$unitRate $currency';
     } else {
-      return 'Rate not found'; // Fallback if no matching currency is found
+      return 'Rate not found';
     }
   }
 
   String _getType(ProfileViewModel profileViewModel) {
-    // Extract the currency from job address
-    String currency =
-    profileViewModel.getProfileBody['current_address']["country"];
-    // Find the rate from country_rates where currency matches
-    var matchingRate = widget.service["country_rates"].firstWhere(
-          (rate) => rate["country"]['code'] == currency,
-      orElse: () => null, // If no match is found, return null
-    );
+    final matchingRate = _findMatchingRate(profileViewModel);
     debugPrint('lang rate is ${widget.lang}');
     if (widget.lang == null) {
       widget.lang = "en-US";
@@ -136,16 +148,20 @@ class _BookAServiceState extends State<BookAService> {
     if (matchingRate != null) {
       var matchingType;
       debugPrint('matching rate is ${matchingRate["unit_type"]}');
-      for (Map<String, dynamic> translation in matchingRate["unit_type"]
-      ["translations"]) {
-        if (translation["languages_code"] == widget.lang) {
-          matchingType = translation["name"];
-          break; // Break the loop once the translation is found
+      final unitType = matchingRate["unit_type"];
+      final translations = unitType is Map ? unitType["translations"] : null;
+      if (translations is List) {
+        for (final translation in translations) {
+          if (translation is Map &&
+              translation["languages_code"] == widget.lang) {
+            matchingType = translation["name"];
+            break;
+          }
         }
       }
-      return '${matchingType}';
+      return '${matchingType ?? ''}';
     } else {
-      return 'Rate not found'; // Fallback if no matching currency is found
+      return 'Rate not found';
     }
   }
 
@@ -394,20 +410,22 @@ class _BookAServiceState extends State<BookAService> {
             }
 
           }
-          for (Map<String, dynamic> translations in widget.service["category"]
-          ["translations"]) {
-            if(translations["languages_code"] is Map<String,dynamic>){
-              if (translations["languages_code"]["code"] == widget.lang) {
-                categories = translations;
-                break; // Break the loop once the translation is found
+          final category = widget.service["category"];
+          if (category is Map && category["translations"] is List) {
+            for (Map<String, dynamic> translations in category["translations"]) {
+              if(translations["languages_code"] is Map<String,dynamic>){
+                if (translations["languages_code"]["code"] == widget.lang) {
+                  categories = translations;
+                  break; // Break the loop once the translation is found
+                }
+              }else{
+                if (translations["languages_code"] == widget.lang) {
+                  categories = translations;
+                  break; // Break the loop once the translation is found
+                }
               }
-            }else{
-              if (translations["languages_code"] == widget.lang) {
-                categories = translations;
-                break; // Break the loop once the translation is found
-              }
-            }
 
+            }
           }
 
           return Scaffold(
