@@ -27,6 +27,43 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
   late List<int> selectedServices; // Local list to manage checked states
   bool isLoading = true; // Loading state
 
+  int? _serviceCategoryId(dynamic service) {
+    final category = service['category'];
+    if (category is Map<String, dynamic>) {
+      final directId = category['id'];
+      if (directId is int) return directId;
+
+      final translations = category['translations'];
+      if (translations is List) {
+        for (final translation in translations) {
+          if (translation is Map<String, dynamic>) {
+            final id = translation['categories_id'];
+            if (id is int) return id;
+          }
+        }
+      }
+    }
+    return null;
+  }
+
+  List<dynamic> _servicesInCategory(
+    List<dynamic> allServices,
+    int categoryId,
+  ) {
+    return allServices.where((svc) {
+      return _serviceCategoryId(svc) == categoryId && svc['status'] == 'published';
+    }).toList();
+  }
+
+  List<dynamic> _selectedServicesInCategory(
+    List<dynamic> allServices,
+    int categoryId,
+  ) {
+    return _servicesInCategory(allServices, categoryId)
+        .where((svc) => selectedServices.contains(svc['id']))
+        .toList();
+  }
+
   @override
   void initState() {
     super.initState();
@@ -110,90 +147,114 @@ class _ServiceOfferedWidgetState extends State<ServiceOfferedWidget> {
             // shrinkWrap: true,
             children: [
               for (final parent in parents) ...[
-                // Top-level parent title
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12.0),
-                  child: Text(
-                    _getTranslation(parent['translations'] as List<dynamic>),
-                    style: getPrimaryBoldStyle(
-                      fontSize: 18,
-                      color: const Color(0xff1F1F39),
-                    ),
-                  ),
-                ),
+                Builder(builder: (_) {
+                  final parentId = parent['id'] as int;
 
-                // Sub-categories under this parent
-                for (final cat in subCats.where(
-                      (c) => (c['class']['id'] as int) == (parent['id'] as int),
-                )) ...[
-                  Builder(builder: (_) {
-                    // Compute services in this sub-category:
-                    final servicesInCategory = allServices.where((svc) {
-                      final catTransList =
-                      svc['category']['translations'] as List<dynamic>;
-                      final translation = catTransList.firstWhere(
-                            (tr) => tr['languages_code'] == lang,
-                        orElse: () => catTransList.first,
-                      );
-                      return (translation['categories_id'] as int) ==
-                          (cat['id'] as int) &&
-                          svc['status'] == 'published';
-                    }).toList();
-
-                    if (servicesInCategory.isEmpty) {
-                      return const SizedBox.shrink();
+                  // Every subcategory that belongs to this parent and has
+                  // at least one published service in the catalog.
+                  final allSubCategoriesForParent = subCats.where((cat) {
+                    final parentClass = cat['class'];
+                    if (parentClass is! Map<String, dynamic>) {
+                      return false;
                     }
 
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 8.0),
-                      // decoration: BoxDecoration(
-                      //   border:
-                      //   Border.all(width: 0, color: const Color(0xffEDF1F7)),
-                      // ),
-                      child: ExpansionTile(
-                        title: Text(
-                          _getTranslation(cat['translations'] as List<dynamic>),
-                          style: getPrimaryRegularStyle(
-                            fontSize: 15,
+                    final categoryParentId = parentClass['id'];
+                    if (categoryParentId != parentId) {
+                      return false;
+                    }
+
+                    final categoryId = cat['id'];
+                    if (categoryId is! int) {
+                      return false;
+                    }
+
+                    return _servicesInCategory(allServices, categoryId)
+                        .isNotEmpty;
+                  }).toList();
+
+                  // Show this parent only if the supplier has data in at least
+                  // one of its subcategories. When that is true, show ALL
+                  // subcategories under the parent.
+                  final parentHasSupplierData = allSubCategoriesForParent.any(
+                    (cat) => _selectedServicesInCategory(
+                      allServices,
+                      cat['id'] as int,
+                    ).isNotEmpty,
+                  );
+
+                  if (!parentHasSupplierData) {
+                    return const SizedBox.shrink();
+                  }
+
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 12.0),
+                        child: Text(
+                          _getTranslation(parent['translations'] as List<dynamic>),
+                          style: getPrimaryBoldStyle(
+                            fontSize: 18,
                             color: const Color(0xff1F1F39),
                           ),
                         ),
-                        children: [
-                          for (final svc in servicesInCategory)
-                            CheckboxListTile(
-                              value: selectedServices.contains(svc['id']),
-                              activeColor:
-                              context.resources.color.btnColorBlue,
-                              onChanged: (bool? checked) {
-                                if (checked == null) return;
-                                setState(() {
-                                  final id = svc['id'] as int;
-                                  if (checked) {
-                                    if (!selectedServices.contains(id)) {
-                                      selectedServices.add(id);
-                                    }
-                                  } else {
-                                    selectedServices.remove(id);
-                                  }
-                                  widget.profileViewModel
-                                      .setSelectedServices(selectedServices);
-                                });
-                              },
+                      ),
+                      for (final cat in allSubCategoriesForParent)
+                        Builder(builder: (_) {
+                          final categoryId = cat['id'] as int;
+                          final servicesInCategory = _servicesInCategory(
+                            allServices,
+                            categoryId,
+                          );
+
+                          return Container(
+                            margin: const EdgeInsets.only(bottom: 8.0),
+                            child: ExpansionTile(
                               title: Text(
-                                _getTranslation(
-                                    svc['translations'] as List<dynamic>),
+                                _getTranslation(cat['translations'] as List<dynamic>),
                                 style: getPrimaryRegularStyle(
                                   fontSize: 15,
-                                  color:
-                                  context.resources.color.secondColorBlue,
+                                  color: const Color(0xff1F1F39),
                                 ),
                               ),
+                              children: [
+                                for (final svc in servicesInCategory)
+                                  CheckboxListTile(
+                                    value: selectedServices.contains(svc['id']),
+                                    activeColor:
+                                        context.resources.color.btnColorBlue,
+                                    onChanged: (bool? checked) {
+                                      if (checked == null) return;
+                                      setState(() {
+                                        final id = svc['id'] as int;
+                                        if (checked) {
+                                          if (!selectedServices.contains(id)) {
+                                            selectedServices.add(id);
+                                          }
+                                        } else {
+                                          selectedServices.remove(id);
+                                        }
+                                        widget.profileViewModel
+                                            .setSelectedServices(selectedServices);
+                                      });
+                                    },
+                                    title: Text(
+                                      _getTranslation(
+                                          svc['translations'] as List<dynamic>),
+                                      style: getPrimaryRegularStyle(
+                                        fontSize: 15,
+                                        color: context
+                                            .resources.color.secondColorBlue,
+                                      ),
+                                    ),
+                                  ),
+                              ],
                             ),
-                        ],
-                      ),
-                    );
-                  }),
-                ],
+                          );
+                        }),
+                    ],
+                  );
+                }),
               ],
             ],
           ),
