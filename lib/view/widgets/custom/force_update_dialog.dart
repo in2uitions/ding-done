@@ -2,7 +2,6 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:gap/gap.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -27,7 +26,12 @@ class ForceUpdateDialog extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SvgPicture.asset('assets/img/failure.svg'),
+            Image.asset(
+              'assets/img/update-required-icon.png',
+              width: 120,
+              height: 93,
+              fit: BoxFit.contain,
+            ),
             SizedBox(height: context.appValues.appSize.s30),
             Text(
               'app_update.title'.tr(),
