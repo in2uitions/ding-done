@@ -168,7 +168,10 @@ class _BottomBarState extends State<BottomBar>
   Future<void> _getCurrentPosition() async {
     final hasPermission = await _handleLocationPermission();
     debugPrint('has location permission $hasPermission');
-    if (!hasPermission) return;
+    if (!hasPermission) {
+      await _ensureDefaultCountryIfNeeded();
+      return;
+    }
 
     try {
       final position = await Geolocator.getCurrentPosition(
@@ -183,6 +186,7 @@ class _BottomBarState extends State<BottomBar>
       await _checkLiveCountry(position);
     } catch (e) {
       debugPrint('error getting position $e');
+      await _ensureDefaultCountryIfNeeded();
     }
   }
 
@@ -217,14 +221,39 @@ class _BottomBarState extends State<BottomBar>
       if (!_isCheckingProfile && isTopRoute) {
         await Future<void>.delayed(const Duration(milliseconds: 300));
         if (!mounted) return false;
-        if (!_isCheckingProfile &&
-            ModalRoute.of(context)?.isCurrent == true) {
+        if (!_isCheckingProfile && ModalRoute.of(context)?.isCurrent == true) {
           return true;
         }
       }
       await Future<void>.delayed(const Duration(milliseconds: 500));
     }
     return mounted && ModalRoute.of(context)?.isCurrent == true;
+  }
+
+  Future<void> _ensureDefaultCountryIfNeeded() async {
+    if (!mounted) return;
+    final countryViewModel =
+        Provider.of<CountryViewModel>(context, listen: false);
+    final selectedName =
+        countryViewModel.selectedCountry ?? await countryViewModel.load();
+    if (SupportedCountry.fromValue(selectedName) != null) return;
+    await _applySelectedCountry(
+      countryViewModel,
+      SupportedCountry.nearestOrDefault(),
+    );
+  }
+
+  Future<void> _applySelectedCountry(
+    CountryViewModel countryViewModel,
+    SupportedCountry country,
+  ) async {
+    await countryViewModel.selectCountry(country.displayName);
+    if (!mounted) return;
+    await Provider.of<ProfileViewModel>(context, listen: false)
+        .ensureCurrentAddressForCountry(countryViewModel);
+    if (!mounted) return;
+    await Provider.of<CategoriesViewModel>(context, listen: false)
+        .getCategoriesAndServices();
   }
 
   Future<void> _checkLiveCountry(Position position) async {
@@ -235,14 +264,28 @@ class _BottomBarState extends State<BottomBar>
     if (countryViewModel.locationPromptHandled) return;
     final selectedName =
         countryViewModel.selectedCountry ?? await countryViewModel.load();
-    final selectedCountry = SupportedCountry.fromValue(selectedName);
-    if (selectedCountry == null || !mounted) return;
+    var selectedCountry = SupportedCountry.fromValue(selectedName);
 
     final liveCountry = await _resolveLiveCountry(position);
+    if (!mounted) return;
+
+    if (selectedCountry == null) {
+      final autoCountry = liveCountry ??
+          SupportedCountry.nearestOrDefault(
+            position.latitude,
+            position.longitude,
+          );
+      await _applySelectedCountry(countryViewModel, autoCountry);
+      if (liveCountry != null) return;
+      selectedCountry = autoCountry;
+    }
+
     if (liveCountry == selectedCountry) return;
 
     if (!await _waitUntilSafeToPrompt()) return;
-    if (!mounted || _countryPromptShown || countryViewModel.locationPromptHandled) {
+    if (!mounted ||
+        _countryPromptShown ||
+        countryViewModel.locationPromptHandled) {
       return;
     }
     _countryPromptShown = true;
@@ -257,13 +300,7 @@ class _BottomBarState extends State<BottomBar>
     }
 
     if (countryToSelect == null || !mounted) return;
-    await countryViewModel.selectCountry(countryToSelect.displayName);
-    if (!mounted) return;
-    await Provider.of<ProfileViewModel>(context, listen: false)
-        .ensureCurrentAddressForCountry(countryViewModel);
-    if (!mounted) return;
-    await Provider.of<CategoriesViewModel>(context, listen: false)
-        .getCategoriesAndServices();
+    await _applySelectedCountry(countryViewModel, countryToSelect);
   }
 
   Future<bool?> _showCountryMismatchDialog(

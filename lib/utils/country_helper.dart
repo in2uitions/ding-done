@@ -68,6 +68,17 @@ enum SupportedCountry {
     }
     return null;
   }
+
+  /// Picks the supported market the user is in, otherwise Qatar.
+  static SupportedCountry nearestOrDefault([
+    double? latitude,
+    double? longitude,
+  ]) {
+    if (latitude != null && longitude != null) {
+      return fromCoordinates(latitude, longitude) ?? qatar;
+    }
+    return qatar;
+  }
 }
 
 bool countryValuesMatch(dynamic first, dynamic second) {

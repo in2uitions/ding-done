@@ -42,8 +42,11 @@ class CategoriesViewModel with ChangeNotifier {
       // Run featured carousel fetch in parallel with the main catalog.
       final getItDoneFuture = _categoriesRepository.getItDone();
       dynamic response = await _categoriesRepository.getCategoriesAndServices();
-      final selectedCountry = await AppPreferences()
+      final savedCountry = await AppPreferences()
           .get(key: selectedCountryKey, isModel: false) as String?;
+      final selectedCountry =
+          SupportedCountry.fromValue(savedCountry)?.displayName ??
+              SupportedCountry.qatar.displayName;
 
       // debugPrint('Getting categories and services2 $response');
 
@@ -55,16 +58,6 @@ class CategoriesViewModel with ChangeNotifier {
         for (final category in allCategories)
           if (_categoryId(category) != null) _categoryId(category): category,
       };
-
-      if (selectedCountry == null || selectedCountry.isEmpty) {
-        _categoriesList = [];
-        _parentCategoriesList = [];
-        _servicesList = [];
-        _servicesList2 = [];
-        _getItDoneData = [];
-        notifyListeners();
-        return _categoriesList;
-      }
 
       _servicesList = allServices
           .where((service) =>

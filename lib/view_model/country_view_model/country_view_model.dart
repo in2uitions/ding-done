@@ -41,6 +41,13 @@ class CountryViewModel with ChangeNotifier {
     }
   }
 
+  /// Qatar when the user has not chosen a market yet and location is unknown.
+  Future<void> ensureDefaultCountry() async {
+    if (!_isLoaded) await load();
+    if (SupportedCountry.fromValue(_selectedCountry) != null) return;
+    await selectCountry(SupportedCountry.nearestOrDefault().displayName);
+  }
+
   void markLocationPromptHandled() {
     _locationPromptHandled = true;
   }
