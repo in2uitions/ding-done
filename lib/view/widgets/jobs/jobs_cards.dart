@@ -9,6 +9,7 @@ import 'package:dingdone/view/widgets/custom/custom_text_area.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:dingdone/view_model/login_view_model/login_view_model.dart';
 import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
+import 'package:dingdone/utils/job_payment_status.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -50,481 +51,471 @@ class _JobsCardsState extends State<JobsCards> {
   Widget build(BuildContext context) {
     return Consumer3<LoginViewModel, JobsViewModel, PaymentViewModel>(
         builder: (context, loginViewModel, jobsViewModel, paymentViewModel, _) {
-          data = Constants.supplierRoleId == widget.userRole
-              ? widget.active == 'activeJobs'
+      data = Constants.supplierRoleId == widget.userRole
+          ? widget.active == 'activeJobs'
               ? widget.jobsViewModel.supplierInProgressJobs
               : widget.active == 'completedJobs'
-              ? widget.jobsViewModel.supplierCompletedJobs
-              : widget.jobsViewModel.supplierBookedJobs
-              : widget.active == 'activeJobs'
+                  ? widget.jobsViewModel.supplierCompletedJobs
+                  : widget.jobsViewModel.supplierBookedJobs
+          : widget.active == 'activeJobs'
               ? widget.jobsViewModel.getcustomerJobs
-              .where((e) => e.status == 'inprogress')
-              .toList()
+                  .where((e) => e.status == 'inprogress')
+                  .toList()
               : widget.active == 'completedJobs'
-              ? widget.jobsViewModel.getcustomerJobs
-              .where((e) => e.status == 'completed')
-              .toList()
-              : widget.active == 'requestedJobs'
-              ? widget.jobsViewModel.getcustomerJobs
-              .where((e) =>
-          e.status == 'circulating' || e.status == 'draft')
-              .toList()
-              : widget.jobsViewModel.getcustomerJobs
-              .where((e) => e.status == 'booked')
-              .toList();
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 150),
-            child: ListView.builder(
-                controller: widget.scrollController,
-                padding: EdgeInsets.zero,
-                shrinkWrap: true,
-                itemCount: data != null ? data.length : 0,
-                // physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (BuildContext context, int index) {
-                  Map<String, dynamic>? services;
-                  for (Map<String, dynamic> translation
-                  in data[index].service != null
-                      ? data[index].service["translations"]
-                      : []) {
-                    if (translation["languages_code"] == widget.lang) {
-                      services = translation;
-                      break; // Break the loop once the translation is found
-                    }
-                  }
+                  ? widget.jobsViewModel.getcustomerJobs
+                      .where((e) => e.status == 'completed')
+                      .toList()
+                  : widget.active == 'requestedJobs'
+                      ? widget.jobsViewModel.getcustomerJobs
+                          .where((e) =>
+                              JobPaymentStatus.needsInitialPayment(
+                                  e.payment_status) ||
+                              ((e.status == 'circulating' ||
+                                      e.status == 'draft') &&
+                                  !JobPaymentStatus.isCancelled(
+                                      e.payment_status)))
+                          .toList()
+                      : widget.jobsViewModel.getcustomerJobs
+                          .where((e) =>
+                              e.status == 'booked' &&
+                              !JobPaymentStatus.needsInitialPayment(
+                                  e.payment_status))
+                          .toList();
+      return ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).padding.bottom + 80,
+          ),
+          itemCount: data != null ? data.length : 0,
+          // physics: const NeverScrollableScrollPhysics(),
+          itemBuilder: (BuildContext context, int index) {
+            Map<String, dynamic>? services;
+            for (Map<String, dynamic> translation in data[index].service != null
+                ? data[index].service["translations"]
+                : []) {
+              if (translation["languages_code"] == widget.lang) {
+                services = translation;
+                break; // Break the loop once the translation is found
+              }
+            }
 
-                  return InkWell(
-                    onTap: () {
-                      debugPrint(
-                          'uploaded media on tap ${data[index]
-                              .uploaded_media}');
-                      widget.userRole == Constants.supplierRoleId
-                          ? paymentViewModel
-                          .getCustomerPayments(data[index].customer["id"])
-                          : debugPrint(
-                          'i am a customer ${data[index].customer["id"]}');
-                      debugPrint('statuuuus ${data[index].status}');
-                      widget.userRole == Constants.supplierRoleId
-                          ? Navigator.of(context)
-                          .push(_createRoute(JobDetailsSupplier(
+            return InkWell(
+              onTap: () {
+                debugPrint(
+                    'uploaded media on tap ${data[index].uploaded_media}');
+                widget.userRole == Constants.supplierRoleId
+                    ? paymentViewModel
+                        .getCustomerPayments(data[index].customer["id"])
+                    : debugPrint(
+                        'i am a customer ${data[index].customer["id"]}');
+                debugPrint('statuuuus ${data[index].status}');
+                widget.userRole == Constants.supplierRoleId
+                    ? Navigator.of(context)
+                        .push(_createRoute(JobDetailsSupplier(
                         data: data[index],
                         fromWhere: widget.active == 'activeJobs'
                             ? 'jobs.active'.tr()
                             : widget.active == 'completedJobs'
-                            ? 'jobs.completed'.tr()
-                            : 'jobs.booked'.tr(),
+                                ? 'jobs.completed'.tr()
+                                : 'jobs.booked'.tr(),
                         title: services?["title"].toString(),
                         lang: widget.lang,
                       )))
-                          : Navigator.of(context)
-                          .push(_createRoute(UpdateJobRequestCustomer(
+                    : Navigator.of(context)
+                        .push(_createRoute(UpdateJobRequestCustomer(
                         data: data[index],
                         title: services?["title"].toString(),
                         fromWhere: widget.active == 'activeJobs'
                             ? 'jobs.active'.tr()
                             : widget.active == 'completedJobs'
-                            ? 'jobs.completed'.tr()
-                            : widget.active == 'requestedJobs'
-                            ? 'jobs.requestedJobs'.tr()
-                            : 'jobs.booked'.tr(),
+                                ? 'jobs.completed'.tr()
+                                : widget.active == 'requestedJobs'
+                                    ? 'jobs.requestedJobs'.tr()
+                                    : 'jobs.booked'.tr(),
                         lang: widget.lang,
                       )));
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.all(context.appValues.appPadding.p10),
-                      child: Container(
-                        width: context.appValues.appSizePercent.w100,
-                        // height: context.appValues.appSizePercent.h45,
-                        decoration: BoxDecoration(
-                          // boxShadow: [
-                          //   BoxShadow(
-                          //     color: const Color(0xff000000).withOpacity(0.1),
-                          //     spreadRadius: 1,
-                          //     blurRadius: 5,
-                          //     offset:
-                          //         const Offset(0, 3), // changes position of shadow
-                          //   ),
-                          // ],
-                          // color: context.resources.color.colorWhite,
-                          color: const Color(0xffEAEAFF).withOpacity(0.4),
-                          borderRadius: const BorderRadius.all(Radius.circular(
-                              10)),
-                        ),
-                        child: Column(children: [
+              },
+              child: Padding(
+                padding: EdgeInsets.all(context.appValues.appPadding.p10),
+                child: Container(
+                  width: context.appValues.appSizePercent.w100,
+                  // height: context.appValues.appSizePercent.h45,
+                  decoration: BoxDecoration(
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: const Color(0xff000000).withOpacity(0.1),
+                    //     spreadRadius: 1,
+                    //     blurRadius: 5,
+                    //     offset:
+                    //         const Offset(0, 3), // changes position of shadow
+                    //   ),
+                    // ],
+                    // color: context.resources.color.colorWhite,
+                    color: const Color(0xffEAEAFF).withOpacity(0.4),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: Column(children: [
+                    Padding(
+                      padding: const EdgeInsets.all(20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.all(
+                                    context.appValues.appPadding.p0),
+                                child: Align(
+                                  alignment: Alignment.topCenter,
+                                  child: InkWell(
+                                    child: Container(
+                                      width:
+                                          context.appValues.appSizePercent.w18,
+                                      height:
+                                          context.appValues.appSizePercent.h9,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(10),
+                                        ),
+                                        image: DecorationImage(
+                                          image: NetworkImage(
+                                            data[index].service['image'] != null
+                                                ? '${context.resources.image.networkImagePath2}/${data[index].service['image']}.svg'
+                                                : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                          ),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                    // Image.network(
+                                    //   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                    //   width:
+                                    //       context.appValues.appSizePercent.w18,
+                                    //   //width: 71,
+                                    //   height:
+                                    //       context.appValues.appSizePercent.h9,
+                                    //   // height: 71,
+                                    //   fit: BoxFit.cover,
+                                    // ),
+                                    onTap: () {
+                                      // Navigator.of(context)
+                                      //     .push(_createRoute(ViewProfilePage()));
+                                    },
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: context.appValues.appSizePercent.w2,
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    width: context.appValues.appSizePercent.w63,
+                                    child: Text(
+                                      services != null
+                                          ? widget.userRole ==
+                                                  Constants.supplierRoleId
+                                              ? '${services?['title']}'
+                                              : '${services!["title"]}'
+                                          : '',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: getPrimaryMediumStyle(
+                                        fontSize: 14,
+                                        color: const Color(0xff180B3C),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: context.appValues.appSizePercent.w63,
+                                    child: Text(
+                                      widget.active == 'requestedJobs'
+                                          ? JobPaymentStatus
+                                                  .needsInitialPayment(
+                                                      data[index]
+                                                          .payment_status)
+                                              ? 'payment.status.${JobPaymentStatus.normalize(data[index].payment_status) ?? 'unpaid'}'
+                                                  .tr()
+                                                  .toUpperCase()
+                                              : 'CIRCULATING'
+                                          : widget.userRole ==
+                                                  Constants.supplierRoleId
+                                              ? data[index].customer != null
+                                                  ? '${data[index].customer["first_name"]} ${data[index].customer["last_name"]}'
+                                                      .toUpperCase()
+                                                  : ''
+                                              : data[index].supplier != null
+                                                  ? '${data[index].supplier["first_name"]} ${data[index].supplier["last_name"]}'
+                                                      .toUpperCase()
+                                                  : '',
+                                      // : data[index].supplier != null
+                                      //     ? '${data[index].customer["first_name"]} ${data[index].customer["last_name"]}'
+                                      //     : '',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: getPrimarySemiBoldStyle(
+                                        fontSize: 10,
+                                        color: const Color(0xff6E6BE8),
+                                      ),
+                                    ),
+                                  ),
+                                  // widget.userRole ==
+                                  //     Constants.supplierRoleId &&
+                                  //     (widget.active == 'bookedJobs' ||
+                                  //         widget.active == 'activeJobs' ||
+                                  //         widget.active ==
+                                  //             'completedJobs')
+                                  //     ? Padding(
+                                  //   padding: EdgeInsets.only(
+                                  //       right: context
+                                  //           .appValues.appPadding.p8),
+                                  //   child: Row(
+                                  //     mainAxisAlignment:
+                                  //     MainAxisAlignment
+                                  //         .spaceBetween,
+                                  //     children: [
+                                  //       GestureDetector(
+                                  //         onTap: () {
+                                  //           final phone =
+                                  //           data[index].customer[
+                                  //           "phone_number"];
+                                  //           if (phone != null &&
+                                  //               phone.isNotEmpty) {
+                                  //             _makePhoneCall(phone);
+                                  //           }
+                                  //         },
+                                  //         child: Text(
+                                  //           '${data[index]
+                                  //               .customer["phone_number"] ??
+                                  //               'No Phone number'}',
+                                  //           style: getPrimaryBoldStyle(
+                                  //             fontSize: 12,
+                                  //             color: const Color(
+                                  //                 0xff78789D),
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //     ],
+                                  //   ),
+                                  // )
+                                  //     : Container()
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: context.appValues.appSizePercent.h2,
+                          ),
                           Padding(
-                            padding: const EdgeInsets.all(20),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.all(
-                                          context.appValues.appPadding.p0),
-                                      child: Align(
-                                        alignment: Alignment.topCenter,
-                                        child: InkWell(
-                                          child: Container(
-                                            width: context
-                                                .appValues.appSizePercent.w18,
-                                            height:
-                                            context.appValues.appSizePercent.h9,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                Radius.circular(10),
+                            padding: EdgeInsets.only(
+                                right: context.appValues.appPadding.p8),
+                            child: widget.userRole ==
+                                        Constants.supplierRoleId ||
+                                    widget.active == 'requestedJobs' ||
+                                    widget.active == 'completedJobs' ||
+                                    widget.active == 'bookedJobs'
+                                ? widget.active == 'activeJobs'
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/calendarjobs.svg',
                                               ),
-                                              image: DecorationImage(
-                                                image: NetworkImage(
-                                                  data[index]
-                                                      .service['image'] !=
-                                                      null
-                                                      ? '${context.resources
-                                                      .image
-                                                      .networkImagePath2}/${data[index]
-                                                      .service['image']}.svg'
-                                                      : 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
+                                              const Gap(5),
+                                              Text(
+                                                data[index].actual_start_date !=
+                                                        null
+                                                    ? DateFormat('d MMMM yyyy')
+                                                        .format(DateTime.parse(
+                                                                data[index]
+                                                                        .actual_start_date +
+                                                                    'Z')
+                                                            .toUtc()
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 14,
+                                                  color:
+                                                      const Color(0xff78789D),
                                                 ),
-                                                fit: BoxFit.cover,
                                               ),
-                                            ),
+                                            ],
                                           ),
-                                          // Image.network(
-                                          //   'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png',
-                                          //   width:
-                                          //       context.appValues.appSizePercent.w18,
-                                          //   //width: 71,
-                                          //   height:
-                                          //       context.appValues.appSizePercent.h9,
-                                          //   // height: 71,
-                                          //   fit: BoxFit.cover,
-                                          // ),
-                                          onTap: () {
-                                            // Navigator.of(context)
-                                            //     .push(_createRoute(ViewProfilePage()));
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: context.appValues.appSizePercent
-                                          .w2,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment
-                                          .start,
-                                      children: [
-                                        SizedBox(
-                                          width:
-                                          context.appValues.appSizePercent.w63,
-                                          child: Text(
-                                            services != null
-                                                ? widget.userRole ==
-                                                Constants.supplierRoleId
-                                                ? '${services?['title']}'
-                                                : '${services!["title"]}'
-                                                : '',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: getPrimaryMediumStyle(
-                                              fontSize: 14,
-                                              color: const Color(0xff180B3C),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width:
-                                          context.appValues.appSizePercent.w63,
-                                          child: Text(
-                                            widget.active == 'requestedJobs'
-                                                ? 'CIRCULATING'
-                                                : widget.userRole ==
-                                                Constants.supplierRoleId
-                                                ? data[index].customer != null
-                                                ? '${data[index]
-                                                .customer["first_name"]} ${data[index]
-                                                .customer["last_name"]}'
-                                                .toUpperCase()
-                                                : ''
-                                                : data[index].supplier != null
-                                                ? '${data[index]
-                                                .supplier["first_name"]} ${data[index]
-                                                .supplier["last_name"]}'
-                                                .toUpperCase()
-                                                : '',
-                                            // : data[index].supplier != null
-                                            //     ? '${data[index].customer["first_name"]} ${data[index].customer["last_name"]}'
-                                            //     : '',
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: getPrimarySemiBoldStyle(
-                                              fontSize: 10,
-                                              color: const Color(0xff6E6BE8),
-                                            ),
-                                          ),
-                                        ),
-                                        // widget.userRole ==
-                                        //     Constants.supplierRoleId &&
-                                        //     (widget.active == 'bookedJobs' ||
-                                        //         widget.active == 'activeJobs' ||
-                                        //         widget.active ==
-                                        //             'completedJobs')
-                                        //     ? Padding(
-                                        //   padding: EdgeInsets.only(
-                                        //       right: context
-                                        //           .appValues.appPadding.p8),
-                                        //   child: Row(
-                                        //     mainAxisAlignment:
-                                        //     MainAxisAlignment
-                                        //         .spaceBetween,
-                                        //     children: [
-                                        //       GestureDetector(
-                                        //         onTap: () {
-                                        //           final phone =
-                                        //           data[index].customer[
-                                        //           "phone_number"];
-                                        //           if (phone != null &&
-                                        //               phone.isNotEmpty) {
-                                        //             _makePhoneCall(phone);
-                                        //           }
-                                        //         },
-                                        //         child: Text(
-                                        //           '${data[index]
-                                        //               .customer["phone_number"] ??
-                                        //               'No Phone number'}',
-                                        //           style: getPrimaryBoldStyle(
-                                        //             fontSize: 12,
-                                        //             color: const Color(
-                                        //                 0xff78789D),
-                                        //           ),
-                                        //         ),
-                                        //       ),
-                                        //     ],
-                                        //   ),
-                                        // )
-                                        //     : Container()
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: context.appValues.appSizePercent.h2,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      right: context.appValues.appPadding.p8),
-                                  child: widget.userRole ==
-                                      Constants.supplierRoleId ||
-                                      widget.active == 'requestedJobs' ||
-                                      widget.active == 'completedJobs' ||
-                                      widget.active == 'bookedJobs'
-                                      ? widget.active == 'activeJobs'
-                                      ? Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/img/calendarjobs.svg',
-                                          ),
-                                          const Gap(5),
-                                          Text(
-                                            data[index].actual_start_date !=
-                                                null
-                                                ? DateFormat(
-                                                'd MMMM yyyy')
-                                                .format(DateTime.parse(
-                                                data[index]
-                                                    .actual_start_date +
-                                                    'Z')
-                                                .toUtc()
-                                                .toLocal())
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                              fontSize: 14,
-                                              color:
-                                              const Color(0xff78789D),
-                                            ),
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/timejobs.svg',
+                                              ),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].actual_start_date !=
+                                                        null
+                                                    ? DateFormat('HH:mm').format(
+                                                        DateTime.parse(data[
+                                                                        index]
+                                                                    .actual_start_date +
+                                                                'Z')
+                                                            .toUtc()
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 12,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
-                                      ),
-                                      Row(
+                                      )
+                                    : Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          SvgPicture.asset(
-                                            'assets/img/timejobs.svg',
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/calendarjobs.svg',
+                                              ),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].start_date != null
+                                                    ? DateFormat('d MMMM yyyy')
+                                                        .format(DateTime.parse(
+                                                                data[index]
+                                                                    .start_date)
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 12,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          const Gap(5),
-                                          Text(
-                                            data[index].actual_start_date !=
-                                                null
-                                                ? DateFormat('HH:mm').format(
-                                                DateTime.parse(data[
-                                                index]
-                                                    .actual_start_date +
-                                                    'Z')
-                                                    .toUtc()
-                                                    .toLocal())
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                              fontSize: 12,
-                                              color: context.resources
-                                                  .color.btnColorBlue,
-                                            ),
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/timejobs.svg',
+                                              ),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].start_date != null
+                                                    ? DateFormat('HH:mm')
+                                                        .format(DateTime.parse(
+                                                                data[index]
+                                                                    .start_date)
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 12,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
+                                                ),
+                                              ),
+                                            ],
                                           ),
                                         ],
-                                      ),
-                                    ],
-                                  )
-                                      : Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
+                                      )
+                                : widget.active == 'activeJobs'
+                                    ? Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
                                         children: [
-                                          SvgPicture.asset(
-                                            'assets/img/calendarjobs.svg',
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                  'assets/img/calendarjobs.svg'),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].actual_start_date !=
+                                                        null
+                                                    ? DateFormat('d MMMM yyyy')
+                                                        .format(DateTime.parse(
+                                                                data[index]
+                                                                        .actual_start_date +
+                                                                    'Z')
+                                                            .toUtc()
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                    fontSize: 12,
+                                                    color: context.resources
+                                                        .color.btnColorBlue),
+                                              ),
+                                            ],
                                           ),
-                                          const Gap(5),
-                                          Text(
-                                            data[index].start_date != null
-                                                ? DateFormat(
-                                                'd MMMM yyyy')
-                                                .format(DateTime
-                                                .parse(data[
-                                            index]
-                                                .start_date)
-                                                .toLocal())
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                              fontSize: 12,
-                                              color: context.resources
-                                                  .color.btnColorBlue,
-                                            ),
+                                          Row(
+                                            children: [
+                                              SvgPicture.asset(
+                                                'assets/img/timejobs.svg',
+                                              ),
+                                              const Gap(5),
+                                              Text(
+                                                data[index].actual_start_date !=
+                                                        null
+                                                    ? DateFormat('HH:mm').format(
+                                                        DateTime.parse(data[
+                                                                        index]
+                                                                    .actual_start_date +
+                                                                'Z')
+                                                            .toUtc()
+                                                            .toLocal())
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                    fontSize: 14,
+                                                    color: context.resources
+                                                        .color.btnColorBlue),
+                                              ),
+                                            ],
                                           ),
                                         ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/img/timejobs.svg',
-                                          ),
-                                          const Gap(5),
-                                          Text(
-                                            data[index].start_date != null
-                                                ? DateFormat('HH:mm')
-                                                .format(DateTime
-                                                .parse(data[
-                                            index]
-                                                .start_date)
-                                                .toLocal())
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                              fontSize: 12,
-                                              color: context.resources
-                                                  .color.btnColorBlue,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                      : widget.active == 'activeJobs'
-                                      ? Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                              'assets/img/calendarjobs.svg'),
-                                          const Gap(5),
-                                          Text(
-                                            data[index].actual_start_date !=
-                                                null
-                                                ? DateFormat(
-                                                'd MMMM yyyy')
-                                                .format(DateTime.parse(
-                                                data[index]
-                                                    .actual_start_date +
-                                                    'Z')
-                                                .toUtc()
-                                                .toLocal())
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                                fontSize: 12,
-                                                color: context.resources
-                                                    .color.btnColorBlue),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          SvgPicture.asset(
-                                            'assets/img/timejobs.svg',
-                                          ),
-                                          const Gap(5),
-                                          Text(
-                                            data[index].actual_start_date !=
-                                                null
-                                                ? DateFormat('HH:mm').format(
-                                                DateTime.parse(data[
-                                                index]
-                                                    .actual_start_date +
-                                                    'Z')
-                                                    .toUtc()
-                                                    .toLocal())
-                                                : '',
-                                            style: getPrimaryRegularStyle(
-                                                fontSize: 14,
-                                                color: context.resources
-                                                    .color.btnColorBlue),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                      : Container(),
-                                ),
-                                widget.active == 'completedJobs' &&
-                                    widget.userRole == Constants.customerRoleId
-                                    ? Gap(7)
+                                      )
                                     : Container(),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      right: context.appValues.appPadding.p8),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      // widget.active == 'completedJobs' &&
-                                      //         widget.userRole ==
-                                      //             Constants.customerRoleId
-                                      //     ? Text(
-                                      //         translate('jobs.dateTime'),
-                                      //         style: getPrimaryRegularStyle(
-                                      //             fontSize: 18,
-                                      //             color: context.resources.color
-                                      //                 .secondColorBlue),
-                                      //       )
-                                      //     : Container(),
+                          ),
+                          widget.active == 'completedJobs' &&
+                                  widget.userRole == Constants.customerRoleId
+                              ? Gap(7)
+                              : Container(),
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: context.appValues.appPadding.p8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // widget.active == 'completedJobs' &&
+                                //         widget.userRole ==
+                                //             Constants.customerRoleId
+                                //     ? Text(
+                                //         translate('jobs.dateTime'),
+                                //         style: getPrimaryRegularStyle(
+                                //             fontSize: 18,
+                                //             color: context.resources.color
+                                //                 .secondColorBlue),
+                                //       )
+                                //     : Container(),
 
-                                      widget.active == 'completedJobs' &&
-                                          widget.userRole ==
-                                              Constants.customerRoleId
-                                          ? Padding(
+                                widget.active == 'completedJobs' &&
+                                        widget.userRole ==
+                                            Constants.customerRoleId
+                                    ? Padding(
                                         padding:
-                                        const EdgeInsets.only(left: 0.0),
+                                            const EdgeInsets.only(left: 0.0),
                                         child: Text(
-                                          data[index].actual_start_date !=
-                                              null
-                                              ? DateFormat(
-                                              'd MMMM yyyy, HH:mm')
-                                              .format(DateTime.parse(data[
-                                          index]
-                                              .actual_start_date +
-                                              'Z')
-                                              .toUtc()
-                                              .toLocal())
+                                          data[index].actual_start_date != null
+                                              ? DateFormat('d MMMM yyyy, HH:mm')
+                                                  .format(DateTime.parse(data[
+                                                                  index]
+                                                              .actual_start_date +
+                                                          'Z')
+                                                      .toUtc()
+                                                      .toLocal())
                                               : '',
                                           style: getPrimaryRegularStyle(
                                             fontSize: 12,
@@ -533,307 +524,257 @@ class _JobsCardsState extends State<JobsCards> {
                                           ),
                                         ),
                                       )
-                                          : Container(),
-                                    ],
-                                  ),
-                                ),
-                                const Gap(7),
-                                // widget.active == 'bookedJobs' ||
-                                //         widget.active == 'requestedJobs'
-                                //     ?
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      right: context.appValues.appPadding.p8),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      // Text(
-                                      //   translate('updateJob.address'),
-                                      //   style: getPrimaryRegularStyle(
-                                      //       fontSize: 18,
-                                      //       color: context.resources.color
-                                      //           .secondColorBlue),
-                                      // ),
-                                      // const Gap(30),
-                                      Expanded(
-                                        child: Align(
-                                            alignment: Alignment.centerLeft,
-                                            child: InkWell(
-                                              onTap: () {
-                                                final jobAddress =
-                                                    data[index].job_address;
-                                                if (jobAddress != null &&
-                                                    jobAddress['latitude'] !=
-                                                        null &&
-                                                    jobAddress['longitude'] !=
-                                                        null) {
-                                                  final latitude =
-                                                  jobAddress['latitude'];
-                                                  final longitude =
-                                                  jobAddress['longitude'];
+                                    : Container(),
+                              ],
+                            ),
+                          ),
+                          const Gap(7),
+                          // widget.active == 'bookedJobs' ||
+                          //         widget.active == 'requestedJobs'
+                          //     ?
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: context.appValues.appPadding.p8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                // Text(
+                                //   translate('updateJob.address'),
+                                //   style: getPrimaryRegularStyle(
+                                //       fontSize: 18,
+                                //       color: context.resources.color
+                                //           .secondColorBlue),
+                                // ),
+                                // const Gap(30),
+                                Expanded(
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: InkWell(
+                                        onTap: () {
+                                          final jobAddress =
+                                              data[index].job_address;
+                                          if (jobAddress != null &&
+                                              jobAddress['latitude'] != null &&
+                                              jobAddress['longitude'] != null) {
+                                            final latitude =
+                                                jobAddress['latitude'];
+                                            final longitude =
+                                                jobAddress['longitude'];
 
-                                                  showModalBottomSheet(
-                                                    context: context,
-                                                    shape:
-                                                    const RoundedRectangleBorder(
-                                                      borderRadius:
-                                                      BorderRadius.vertical(
-                                                          top: Radius.circular(
-                                                              16)),
-                                                    ),
-                                                    builder:
-                                                        (BuildContext context) {
-                                                      return Padding(
-                                                        padding:
-                                                        const EdgeInsets.all(
-                                                            16.0),
-                                                        child: Wrap(
-                                                          children: [
-                                                            ListTile(
-                                                              leading: const Icon(
-                                                                  Icons.map),
-                                                              title: const Text(
-                                                                  'Open with Google Maps'),
-                                                              onTap: () async {
-                                                                final googleMapsUrl =
-                                                                    'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
-
-                                                                final uri = Uri
-                                                                    .parse(
-                                                                    googleMapsUrl);
-                                                                if (await canLaunchUrl(
-                                                                    uri)) {
-                                                                  await launchUrl(
-                                                                      uri,
-                                                                      mode: LaunchMode
-                                                                          .externalApplication);
-                                                                } else {
-                                                                  ScaffoldMessenger
-                                                                      .of(
-                                                                      context)
-                                                                      .showSnackBar(
-                                                                    const SnackBar(
-                                                                        content: Text(
-                                                                            'Could not open Google Maps')),
-                                                                  );
-                                                                }
-
-                                                                Navigator.pop(
-                                                                    context); // Close the bottom sheet
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                }
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                      'assets/img/locationjobs.svg'),
-                                                  const SizedBox(width: 4),
-                                                  Flexible(
-                                                    child: Text(
-                                                      data[index].job_address !=
-                                                          null &&
-                                                          data[index]
-                                                              .job_address
-                                                              .toString() !=
-                                                              ''
-                                                          ? Constants
-                                                          .supplierRoleId ==
-                                                          widget.userRole
-                                                          ? '${data[index]
-                                                          .job_address['city'] ??
-                                                          ''}, ${data[index]
-                                                          .job_address['state'] ??
-                                                          ''}, ${data[index]
-                                                          .job_address['street_number'] ??
-                                                          ''}'
-                                                          : '${data[index]
-                                                          .job_address['address_label'] ??
-                                                          ''}'
-                                                          : '',
-                                                      style: getPrimaryRegularStyle(
-                                                        fontSize: 12,
-                                                        color: context.resources
-                                                            .color.btnColorBlue,
-                                                      ),
-                                                      overflow:
-                                                      TextOverflow.visible,
-                                                      softWrap: true,
-                                                    ),
-                                                  ),
-                                                ],
+                                            showModalBottomSheet(
+                                              context: context,
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.vertical(
+                                                        top: Radius.circular(
+                                                            16)),
                                               ),
-                                            )),
-                                      ),
-                                    ],
+                                              builder: (BuildContext context) {
+                                                return Padding(
+                                                  padding: const EdgeInsets.all(
+                                                      16.0),
+                                                  child: Wrap(
+                                                    children: [
+                                                      ListTile(
+                                                        leading: const Icon(
+                                                            Icons.map),
+                                                        title: const Text(
+                                                            'Open with Google Maps'),
+                                                        onTap: () async {
+                                                          final googleMapsUrl =
+                                                              'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+
+                                                          final uri = Uri.parse(
+                                                              googleMapsUrl);
+                                                          if (await canLaunchUrl(
+                                                              uri)) {
+                                                            await launchUrl(uri,
+                                                                mode: LaunchMode
+                                                                    .externalApplication);
+                                                          } else {
+                                                            ScaffoldMessenger
+                                                                    .of(context)
+                                                                .showSnackBar(
+                                                              const SnackBar(
+                                                                  content: Text(
+                                                                      'Could not open Google Maps')),
+                                                            );
+                                                          }
+
+                                                          Navigator.pop(
+                                                              context); // Close the bottom sheet
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }
+                                        },
+                                        child: Row(
+                                          children: [
+                                            SvgPicture.asset(
+                                                'assets/img/locationjobs.svg'),
+                                            const SizedBox(width: 4),
+                                            Flexible(
+                                              child: Text(
+                                                data[index].job_address !=
+                                                            null &&
+                                                        data[index]
+                                                                .job_address
+                                                                .toString() !=
+                                                            ''
+                                                    ? Constants.supplierRoleId ==
+                                                            widget.userRole
+                                                        ? '${data[index].job_address['city'] ?? ''}, ${data[index].job_address['state'] ?? ''}, ${data[index].job_address['street_number'] ?? ''}'
+                                                        : '${data[index].job_address['address_label'] ?? ''}'
+                                                    : '',
+                                                style: getPrimaryRegularStyle(
+                                                  fontSize: 12,
+                                                  color: context.resources.color
+                                                      .btnColorBlue,
+                                                ),
+                                                overflow: TextOverflow.visible,
+                                                softWrap: true,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )),
+                                ),
+                              ],
+                            ),
+                          ),
+                          // : Container(),
+                          const Gap(15),
+                          widget.userRole == Constants.supplierRoleId
+                              ? widget.active == 'bookedJobs'
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                          right:
+                                              context.appValues.appPadding.p8),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '${(data[index].supplier_to_job_distance != null ? (data[index].supplier_to_job_distance / 1000).toStringAsFixed(3) : "0")} km',
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 14,
+                                                color: const Color(0xff78789D),
+                                              ),
+                                            ),
+                                          ]),
+                                    )
+                                  : Container()
+                              : Container(),
+                          // const Gap(5),
+                          widget.userRole == Constants.supplierRoleId
+                              ? widget.active == 'bookedJobs'
+                                  ? Padding(
+                                      padding: EdgeInsets.only(
+                                          right:
+                                              context.appValues.appPadding.p8),
+                                      child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              '${data[index].supplier_to_job_time ?? 0} ${'jobs.minutes'.tr()}',
+                                              style: getPrimaryBoldStyle(
+                                                fontSize: 14,
+                                                color: const Color(0xff78789D),
+                                              ),
+                                            ),
+                                          ]),
+                                    )
+                                  : Container()
+                              : Container(),
+
+                          Padding(
+                            padding: EdgeInsets.only(
+                                right: context.appValues.appPadding.p8),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  data[index].total_amount != null &&
+                                          data[index].total_amount.toString() !=
+                                              ''
+                                      ? '${data[index].total_amount} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
+                                      : '${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}',
+
+                                  // '',
+                                  // data[index].supplier_total != null &&
+                                  //         data[index]
+                                  //                 .supplier_total
+                                  //                 .toString() !=
+                                  //             ''
+                                  //     ? '${data[index].supplier_total} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
+                                  //     :
+                                  // data[index].service!=null?'${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}':'',
+                                  style: getPrimarySemiBoldStyle(
+                                    fontSize: 14,
+                                    color: const Color(0xff180B3C),
                                   ),
                                 ),
-                                // : Container(),
-                                const Gap(15),
-                                widget.userRole == Constants.supplierRoleId
-                                    ? widget.active == 'bookedJobs'
-                                    ? Padding(
-                                  padding: EdgeInsets.only(
-                                      right: context
-                                          .appValues.appPadding.p8),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          '${(data[index]
-                                              .supplier_to_job_distance != null
-                                              ? (data[index]
-                                              .supplier_to_job_distance / 1000)
-                                              .toStringAsFixed(3)
-                                              : "0")} km',
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 14,
-                                            color:
-                                            const Color(0xff78789D),
-                                          ),
-                                        ),
-                                      ]),
-                                )
-                                    : Container()
-                                    : Container(),
-                                // const Gap(5),
-                                widget.userRole == Constants.supplierRoleId
-                                    ? widget.active == 'bookedJobs'
-                                    ? Padding(
-                                  padding: EdgeInsets.only(
-                                      right: context
-                                          .appValues.appPadding.p8),
-                                  child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text(
-                                          '${data[index].supplier_to_job_time ??
-                                              0} ${'jobs.minutes'.tr()}',
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 14,
-                                            color:
-                                            const Color(0xff78789D),
-                                          ),
-                                        ),
-                                      ]),
-                                )
-                                    : Container()
-                                    : Container(),
+                              ],
+                            ),
+                          ),
+                          const Gap(5),
 
-                                Padding(
+                          widget.active == 'requestedJobs'
+                              ? Padding(
                                   padding: EdgeInsets.only(
                                       right: context.appValues.appPadding.p8),
                                   child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Text(
-                                        data[index].total_amount != null &&
-                                            data[index]
-                                                .total_amount
-                                                .toString() !=
-                                                ''
-                                            ? '${data[index]
-                                            .total_amount} ${data[index]
-                                            .service["country_rates"] != null &&
-                                            data[index].service["country_rates"]
-                                                .isNotEmpty
-                                            ? data[index]
-                                            .service["country_rates"][0]["country"]["currency"]
-                                            : ''}'
-                                            : '${data[index]
-                                            .service["country_rates"] != null
-                                            ? data[index].number_of_units !=
-                                            null
-                                            ? (data[index]
-                                            .service["country_rates"][0]["unit_rate"] *
-                                            data[index].number_of_units)
-                                            : (data[index]
-                                            .service["country_rates"][0]["unit_rate"] *
-                                            data[index]
-                                                .service["country_rates"][0]["minimum_order"])
-                                            : ''} ${data[index]
-                                            .service["country_rates"] != null
-                                            ? data[index]
-                                            .service["country_rates"][0]["country"]["currency"]
-                                            : ''}',
-
-                                        // '',
-                                        // data[index].supplier_total != null &&
-                                        //         data[index]
-                                        //                 .supplier_total
-                                        //                 .toString() !=
-                                        //             ''
-                                        //     ? '${data[index].supplier_total} ${data[index].service["country_rates"] != null && data[index].service["country_rates"].isNotEmpty ? data[index].service["country_rates"][0]["country"]["currency"] : ''}'
-                                        //     :
-                                        // data[index].service!=null?'${data[index].service["country_rates"] != null ? data[index].number_of_units != null ? (data[index].service["country_rates"][0]["unit_rate"] * data[index].number_of_units) : (data[index].service["country_rates"][0]["unit_rate"] * data[index].service["country_rates"][0]["minimum_order"]) : ''} ${data[index].service["country_rates"] != null ? data[index].service["country_rates"][0]["country"]["currency"] : ''}':'',
-                                        style: getPrimarySemiBoldStyle(
-                                          fontSize: 14,
-                                          color: const Color(0xff180B3C),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                const Gap(5),
-
-                                widget.active == 'requestedJobs'
-                                    ? Padding(
-                                  padding: EdgeInsets.only(
-                                      right: context.appValues.appPadding.p8),
-                                  child: Row(
                                       mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           data[index].severity_level != null
                                               ? data[index]
-                                              .severity_level
-                                              .toString()
-                                              .toLowerCase() ==
-                                              'major'
-                                              ? 'URGENT'
-                                              : 'SCHEDULED'
+                                                          .severity_level
+                                                          .toString()
+                                                          .toLowerCase() ==
+                                                      'major'
+                                                  ? 'URGENT'
+                                                  : 'SCHEDULED'
                                               : '',
                                           style: getPrimarySemiBoldStyle(
                                               fontSize: 10,
                                               color: data[index]
-                                                  .severity_level !=
-                                                  null
+                                                          .severity_level !=
+                                                      null
                                                   ? data[index]
-                                                  .severity_level
-                                                  .toString()
-                                                  .toLowerCase() ==
-                                                  'major'
-                                                  ? Colors.red
-                                                  : Colors.green
+                                                              .severity_level
+                                                              .toString()
+                                                              .toLowerCase() ==
+                                                          'major'
+                                                      ? Colors.red
+                                                      : Colors.green
                                                   : Colors.white),
                                         ),
                                       ]),
                                 )
-                                    : Container(),
+                              : Container(),
 
-                                const Gap(15),
-                                widget.active == 'bookedJobs'
-                                    ? Padding(
+                          const Gap(15),
+                          widget.active == 'bookedJobs'
+                              ? Padding(
                                   padding: EdgeInsets.only(
                                     top: context.appValues.appPadding.p10,
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       ElevatedButton(
                                         onPressed: () {
-                                          jobsViewModel.clearCancellationReason();
+                                          jobsViewModel
+                                              .clearCancellationReason();
                                           showDialog(
                                             context: context,
                                             builder: (BuildContext context) =>
@@ -848,16 +789,15 @@ class _JobsCardsState extends State<JobsCards> {
                                           elevation: 0,
                                           // shadowColor: Colors.black,
                                           backgroundColor:
-                                          const Color(0xffF4F3FD),
+                                              const Color(0xffF4F3FD),
                                           shape: RoundedRectangleBorder(
                                             borderRadius:
-                                            BorderRadius.circular(10),
+                                                BorderRadius.circular(10),
                                           ),
                                           fixedSize: Size(
                                             context
                                                 .appValues.appSizePercent.w40,
-                                            context
-                                                .appValues.appSizePercent.h6,
+                                            context.appValues.appSizePercent.h6,
                                           ),
                                         ),
                                         child: Text(
@@ -869,62 +809,69 @@ class _JobsCardsState extends State<JobsCards> {
                                         ),
                                       ),
                                       widget.active != 'activeJobs' &&
-                                          widget.userRole ==
-                                              Constants.supplierRoleId
+                                              widget.userRole ==
+                                                  Constants.supplierRoleId
                                           ? ElevatedButton(
-                                        onPressed: () {
-                                          debugPrint(
-                                              'data ${data[index]}');
-                                          widget.active == 'activeJobs'
-                                              ? jobsViewModel
-                                              .finishJobAndCollectPayment(
-                                              data[index].id)
-                                              : jobsViewModel.startJob(
-                                              data[index].id);
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                          elevation: 0,
-                                          // shadowColor: Colors.black,
-                                          backgroundColor:
-                                          const Color(0xff4100E3),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(
-                                                10),
-                                          ),
-                                          fixedSize: Size(
-                                            context.appValues
-                                                .appSizePercent.w40,
-                                            context.appValues
-                                                .appSizePercent.h6,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          widget.active == 'activeJobs'
-                                              ? 'button.complete'.tr()
-                                              : 'button.startJob'.tr(),
-                                          style: getPrimaryBoldStyle(
-                                            fontSize: 14,
-                                            color: context.resources
-                                                .color.colorWhite,
-                                          ),
-                                        ),
-                                      )
+                                              onPressed: () async {
+                                                debugPrint(
+                                                    'data ${data[index]}');
+                                                final started =
+                                                    await jobsViewModel
+                                                        .startJob(
+                                                            data[index].id);
+                                                if (!context.mounted) return;
+                                                if (started != true) {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        _buildPopupDialogFailure(
+                                                      context,
+                                                      '${jobsViewModel.errorMessage}',
+                                                    ),
+                                                  );
+                                                }
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                elevation: 0,
+                                                // shadowColor: Colors.black,
+                                                backgroundColor:
+                                                    const Color(0xff4100E3),
+                                                shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(10),
+                                                ),
+                                                fixedSize: Size(
+                                                  context.appValues
+                                                      .appSizePercent.w40,
+                                                  context.appValues
+                                                      .appSizePercent.h6,
+                                                ),
+                                              ),
+                                              child: Text(
+                                                widget.active == 'activeJobs'
+                                                    ? 'button.complete'.tr()
+                                                    : 'button.startJob'.tr(),
+                                                style: getPrimaryBoldStyle(
+                                                  fontSize: 14,
+                                                  color: context.resources.color
+                                                      .colorWhite,
+                                                ),
+                                              ),
+                                            )
                                           : Container(),
                                     ],
                                   ),
                                 )
-                                    : Container(),
-                              ],
-                            ),
-                          )
-                        ]),
+                              : Container(),
+                        ],
                       ),
-                    ),
-                  );
-                }),
-          );
-        });
+                    )
+                  ]),
+                ),
+              ),
+            );
+          });
+    });
   }
 
   Widget _buildPopupDialog(BuildContext context, JobsViewModel jobsViewModel,
@@ -957,7 +904,7 @@ class _JobsCardsState extends State<JobsCards> {
             children: <Widget>[
               Padding(
                 padding:
-                EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+                    EdgeInsets.only(bottom: context.appValues.appPadding.p8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -1023,51 +970,49 @@ class _JobsCardsState extends State<JobsCards> {
 
                 child: Consumer<JobsViewModel>(
                     builder: (context, jobsViewModel1, _) {
-                      return Column(
-                        children: [
-                          const Gap(10),
-                          // Radio buttons
-                          for (int i = 0; i < reasons.length; i++)
-                            RadioListTile<String>(
-                              contentPadding: EdgeInsets.zero,
-                              dense: true,
-                              visualDensity: const VisualDensity(vertical: -4),
-                              title: Text(
-                                reasons[i],
-                                style: getPrimaryRegularStyle(fontSize: 12),
-                              ),
-                              value: reasons[i],
-                              groupValue: jobsViewModel.reason,
-                              activeColor: Theme
-                                  .of(context)
-                                  .primaryColor,
-                              onChanged: (value) {
-                                jobsViewModel1.setSelectedReason(value!);
+                  return Column(
+                    children: [
+                      const Gap(10),
+                      // Radio buttons
+                      for (int i = 0; i < reasons.length; i++)
+                        RadioListTile<String>(
+                          contentPadding: EdgeInsets.zero,
+                          dense: true,
+                          visualDensity: const VisualDensity(vertical: -4),
+                          title: Text(
+                            reasons[i],
+                            style: getPrimaryRegularStyle(fontSize: 12),
+                          ),
+                          value: reasons[i],
+                          groupValue: jobsViewModel.reason,
+                          activeColor: Theme.of(context).primaryColor,
+                          onChanged: (value) {
+                            jobsViewModel1.setSelectedReason(value!);
 
-                                jobsViewModel1.setInputValues(
-                                    index: 'cancellation_reason',
-                                    value: value.toString());
-                                if (value == otherReason) {
-                                  // If "Other" is selected, show the CustomTextArea
-                                  jobsViewModel1.setShowCustomTextArea(true);
-                                } else {
-                                  // If any other reason is selected, hide the CustomTextArea
-                                  jobsViewModel1.setShowCustomTextArea(false);
-                                }
-                              },
-                            ),
-                          const Gap(10),
-                          // Your other widgets can go here
-                          if (jobsViewModel1.showCustomTextArea)
-                            CustomTextArea(
-                              index: 'cancellation_reason',
-                              viewModel: jobsViewModel.setInputValues,
-                              keyboardType: TextInputType.text,
-                              maxlines: 8,
-                            ),
-                        ],
-                      );
-                    }),
+                            jobsViewModel1.setInputValues(
+                                index: 'cancellation_reason',
+                                value: value.toString());
+                            if (value == otherReason) {
+                              // If "Other" is selected, show the CustomTextArea
+                              jobsViewModel1.setShowCustomTextArea(true);
+                            } else {
+                              // If any other reason is selected, hide the CustomTextArea
+                              jobsViewModel1.setShowCustomTextArea(false);
+                            }
+                          },
+                        ),
+                      const Gap(10),
+                      // Your other widgets can go here
+                      if (jobsViewModel1.showCustomTextArea)
+                        CustomTextArea(
+                          index: 'cancellation_reason',
+                          viewModel: jobsViewModel.setInputValues,
+                          keyboardType: TextInputType.text,
+                          maxlines: 8,
+                        ),
+                    ],
+                  );
+                }),
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -1076,11 +1021,12 @@ class _JobsCardsState extends State<JobsCards> {
                 child: ElevatedButton(
                   onPressed: () async {
                     debugPrint('hello card $tab');
-                    if (tab == 'jobs.booked'.tr() || tab == 'bookedJobs' ||
+                    if (tab == 'jobs.booked'.tr() ||
+                        tab == 'bookedJobs' ||
                         tab == 'jobs.requestedJobs'.tr()) {
                       if (tab == 'jobs.booked'.tr() || tab == 'bookedJobs') {
                         if (await jobsViewModel.cancelJobWithPenalty(
-                            job_id, '') ==
+                                job_id, '') ==
                             true) {
                           Navigator.pop(context);
 
@@ -1088,8 +1034,7 @@ class _JobsCardsState extends State<JobsCards> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>
-                                  simpleAlert(
-                                      context, 'button.success'.tr()));
+                                  simpleAlert(context, 'button.success'.tr()));
                         } else {
                           Navigator.pop(context);
                           if (jobsViewModel.errorMessage ==
@@ -1099,11 +1044,9 @@ class _JobsCardsState extends State<JobsCards> {
                             Future.delayed(const Duration(seconds: 0));
                             showDialog(
                                 context: context,
-                                builder: (BuildContext context) =>
-                                    simpleAlert(
-                                        context, '${'button.failure'
-                                        .tr()}\n${jobsViewModel
-                                        .errorMessage}'));
+                                builder: (BuildContext context) => simpleAlert(
+                                    context,
+                                    '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}'));
                           }
                         }
                       } else {
@@ -1115,25 +1058,23 @@ class _JobsCardsState extends State<JobsCards> {
                             Future.delayed(const Duration(seconds: 0));
                             showDialog(
                                 context: context,
-                                builder: (BuildContext context) =>
-                                    simpleAlert(
-                                        context, 'button.success'.tr()));
+                                builder: (BuildContext context) => simpleAlert(
+                                    context, 'button.success'.tr()));
                           } else {
                             Navigator.pop(context);
 
                             Future.delayed(const Duration(seconds: 0));
                             showDialog(
                                 context: context,
-                                builder: (BuildContext context) =>
-                                    simpleAlert(
-                                        context, 'button.failure'.tr()));
+                                builder: (BuildContext context) => simpleAlert(
+                                    context, 'button.failure'.tr()));
                           }
                         }
                       }
                     } else {
                       if (tab == 'jobs.active'.tr()) {
                         if (await jobsViewModel.cancelJobWithPenalty(
-                            job_id, '') ==
+                                job_id, '') ==
                             true) {
                           Navigator.pop(context);
 
@@ -1141,8 +1082,7 @@ class _JobsCardsState extends State<JobsCards> {
                           showDialog(
                               context: context,
                               builder: (BuildContext context) =>
-                                  simpleAlert(
-                                      context, 'button.success'.tr()));
+                                  simpleAlert(context, 'button.success'.tr()));
                         } else {
                           Navigator.pop(context);
 
@@ -1153,11 +1093,9 @@ class _JobsCardsState extends State<JobsCards> {
                             Future.delayed(const Duration(seconds: 0));
                             showDialog(
                                 context: context,
-                                builder: (BuildContext context) =>
-                                    simpleAlert(
-                                        context, '${'button.failure'
-                                        .tr()}\n${jobsViewModel
-                                        .errorMessage}'));
+                                builder: (BuildContext context) => simpleAlert(
+                                    context,
+                                    '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}'));
                           }
                         }
                       }
@@ -1191,7 +1129,6 @@ class _JobsCardsState extends State<JobsCards> {
     );
   }
 }
-
 
 Widget simpleAlert(BuildContext context, String message) {
   return AlertDialog(
@@ -1239,6 +1176,7 @@ Widget simpleAlert(BuildContext context, String message) {
     ),
   );
 }
+
 Widget simpleAlert2(BuildContext context, String message) {
   return AlertDialog(
     backgroundColor: Colors.white,
@@ -1446,11 +1384,12 @@ Widget _buildPopupDialogSuccess(BuildContext context, String message) {
     ),
   );
 }
+
 void showPenaltyDialog(
-    BuildContext context,
-    JobsViewModel jobsViewModel,
-    dynamic job_id,
-    ) {
+  BuildContext context,
+  JobsViewModel jobsViewModel,
+  dynamic job_id,
+) {
   showDialog(
     context: context,
     barrierDismissible: false,
@@ -1482,10 +1421,10 @@ void showPenaltyDialog(
 
                 Text(
                   '${'popup.cancelMessage1'.tr()} '
-                      '${jobsViewModel.errorData['penalty_fee']} '
-                      '${'popup.${jobsViewModel.errorData['currency']}'.tr()} '
-                      '${'popup.cancelMessage2'.tr()}\n'
-                      '${'popup.wouldProceed'.tr()}',
+                  '${jobsViewModel.errorData['penalty_fee']} '
+                  '${'popup.${jobsViewModel.errorData['currency']}'.tr()} '
+                  '${'popup.cancelMessage2'.tr()}\n'
+                  '${'popup.wouldProceed'.tr()}',
                   textAlign: TextAlign.center,
                   style: getPrimaryRegularStyle(
                     fontSize: 15,
@@ -1500,55 +1439,53 @@ void showPenaltyDialog(
                   onPressed: isLoading
                       ? null
                       : () async {
-                    setState(() {
-                      isLoading = true;
-                    });
+                          setState(() {
+                            isLoading = true;
+                          });
 
-                    bool? success =
-                    await jobsViewModel.cancelJobWithPenalty(
-                      job_id,
-                      'accept_penalty',
-                    );
+                          bool? success =
+                              await jobsViewModel.cancelJobWithPenalty(
+                            job_id,
+                            'accept_penalty',
+                          );
 
-                    setState(() {
-                      isLoading = false;
-                    });
+                          setState(() {
+                            isLoading = false;
+                          });
 
-                    Navigator.pop(context);
+                          Navigator.pop(context);
 
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) => simpleAlert(
-                        context,
-                        success == true
-                            ? 'button.success'.tr()
-                            : '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}',
-                      ),
-                    );
-                  },
-
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) => simpleAlert(
+                              context,
+                              success == true
+                                  ? 'button.success'.tr()
+                                  : '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}',
+                            ),
+                          );
+                        },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xffFFC500),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
                     ),
                   ),
-
                   child: isLoading
                       ? const SizedBox(
-                    height: 22,
-                    width: 22,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                      color: Colors.white,
-                    ),
-                  )
+                          height: 22,
+                          width: 22,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
                       : Text(
-                    'popup.yes'.tr(),
-                    style: getPrimaryBoldStyle(
-                      color: Colors.white,
-                    ),
-                  ),
+                          'popup.yes'.tr(),
+                          style: getPrimaryBoldStyle(
+                            color: Colors.white,
+                          ),
+                        ),
                 ),
 
                 const Gap(5),
@@ -1558,8 +1495,8 @@ void showPenaltyDialog(
                   onPressed: isLoading
                       ? null
                       : () {
-                    Navigator.pop(context);
-                  },
+                          Navigator.pop(context);
+                        },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff4100E3),
                     shape: RoundedRectangleBorder(
@@ -1581,7 +1518,6 @@ void showPenaltyDialog(
     },
   );
 }
-
 
 Route _createRoute(dynamic classname) {
   return PageRouteBuilder(

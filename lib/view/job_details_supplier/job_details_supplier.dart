@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
+import 'package:dingdone/utils/job_payment_status.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/payment_method_buttons.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/actual_start_time_widget.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/address_widget.dart';
@@ -50,13 +51,18 @@ class JobDetailsSupplier extends StatefulWidget {
 class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
   bool _isLoading = false;
   bool _isLoading2 = false;
+  bool _seededUnits = false;
   final GlobalKey<SfPdfViewerState> _pdfViewerKey = GlobalKey();
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    // _pdfViewerKey.currentState?.openBookmarkView();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_seededUnits) return;
+    _seededUnits = true;
+    Provider.of<JobsViewModel>(context, listen: false).seedSupplierJobUnits(
+      numberOfUnits: widget.data.number_of_units,
+      completedUnits: widget.data.completed_units,
+    );
   }
 
   String _getServiceRate() {
@@ -66,7 +72,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
 
       // Find the rate from country_rates where currency matches
       var matchingRate = widget.data.service["country_rates"].firstWhere(
-            (rate) => rate["country"]['code'] == currency,
+        (rate) => rate["country"]['code'] == currency,
         orElse: () => null, // If no match is found, return null
       );
 
@@ -81,15 +87,15 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
       } else {
         return 'Rate not found'; // Fallback if no matching currency is found
       }
-    }catch(error){
+    } catch (error) {
       return 'Rate not found'; // Fallback if no matching currency is found
-
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    debugPrint('job country_rates ${ widget.data.service['country_rates'][0]['minimum_order']}');
+    debugPrint(
+        'job country_rates ${widget.data.service['country_rates'][0]['minimum_order']}');
 
     return Scaffold(
       // backgroundColor: const Color(0xffF0F3F8),
@@ -220,7 +226,9 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                               ),
                             ),
                             Text(
-                              widget.data.status=='inprogress'?'in progress':widget.data.status,
+                              widget.data.status == 'inprogress'
+                                  ? 'in progress'
+                                  : widget.data.status,
                               // Fallback text if no matching translation is found
                               style: getPrimarySemiBoldStyle(
                                 color: const Color(0xff4100E3),
@@ -230,8 +238,34 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                           ],
                         ),
                       ),
+                      if (widget.data.payment_status != null &&
+                          widget.data.payment_status.toString().isNotEmpty)
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: context.appValues.appPadding.p20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'payment.paymentStatus'.tr(),
+                                style: getPrimaryRegularStyle(
+                                  fontSize: 14,
+                                  color: const Color(0xff180B3C),
+                                ),
+                              ),
+                              Text(
+                                'payment.status.${JobPaymentStatus.normalize(widget.data.payment_status) ?? 'unpaid'}'
+                                    .tr(),
+                                style: getPrimarySemiBoldStyle(
+                                  color: const Color(0xff4100E3),
+                                  fontSize: 10,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       widget.fromWhere == 'jobs.active'.tr() ||
-                              widget.fromWhere =='jobs.booked'.tr()
+                              widget.fromWhere == 'jobs.booked'.tr()
                           ? Padding(
                               padding: EdgeInsets.symmetric(
                                   horizontal: context.appValues.appPadding.p20),
@@ -395,54 +429,52 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                           description: widget.data.job_description),
                       // const Gap(20),
                       // const Gap(20),
-                      widget.fromWhere =='jobs.completed'.tr()
+                      widget.fromWhere == 'jobs.completed'.tr()
                           ? Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: context.appValues.appPadding.p20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Padding(
                               padding: EdgeInsets.symmetric(
-                                  horizontal:
-                                  context.appValues.appPadding.p0,
-                                  vertical:
-                                  context.appValues.appPadding.p0),
-                              child: Text(
-                              'bookService.customerName'.tr(),
-                                style: getPrimaryRegularStyle(
-                                  fontSize: 14,
-                                  color: const Color(0xff180B3C),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal:
-                                context.appValues.appPadding.p0,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(
-                                  context.appValues.appPadding.p0,
-                                  0,
-                                  context.appValues.appPadding.p0,
-                                  0,
-                                ),
-                                child:
-                                     Text(
-                                     '${ widget.data.customer['first_name']} ${widget.data.customer['last_name']}' ??
-                                          '', // Fallback text if no matching translation is found
+                                  horizontal: context.appValues.appPadding.p20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            context.appValues.appPadding.p0,
+                                        vertical:
+                                            context.appValues.appPadding.p0),
+                                    child: Text(
+                                      'bookService.customerName'.tr(),
                                       style: getPrimaryRegularStyle(
                                         fontSize: 14,
-                                        color: const Color(0xff71727A),
+                                        color: const Color(0xff180B3C),
                                       ),
                                     ),
-
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          context.appValues.appPadding.p0,
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                        context.appValues.appPadding.p0,
+                                        0,
+                                        context.appValues.appPadding.p0,
+                                        0,
+                                      ),
+                                      child: Text(
+                                        '${widget.data.customer['first_name']} ${widget.data.customer['last_name']}' ??
+                                            '', // Fallback text if no matching translation is found
+                                        style: getPrimaryRegularStyle(
+                                          fontSize: 14,
+                                          color: const Color(0xff71727A),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ),
-                          ],
-                        ),
-                      )
+                            )
                           : Container(),
 
                       AddressWidget(address: widget.data.job_address),
@@ -483,8 +515,10 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                   ),
                                   Text(
                                     _getFormattedDuration(
-                                        widget.data.actual_start_date??DateTime.now().toString(),
-                                        widget.data.finish_date??DateTime.now().toString()),
+                                        widget.data.actual_start_date ??
+                                            DateTime.now().toString(),
+                                        widget.data.finish_date ??
+                                            DateTime.now().toString()),
                                     style: getPrimaryRegularStyle(
                                       fontSize: 14,
                                       color: const Color(0xff71727A),
@@ -504,7 +538,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
 
                       widget.fromWhere != 'request' &&
                               widget.fromWhere != 'jobs.booked'.tr() &&
-                              widget.fromWhere !='jobs.active'.tr() &&
+                              widget.fromWhere != 'jobs.active'.tr() &&
                               widget.fromWhere != 'jobs.completed'.tr()
                           ? JobTypeWidget(
                               service: widget.data.service,
@@ -578,7 +612,19 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                       widget.fromWhere != 'request' &&
                               widget.fromWhere != 'jobs.booked'.tr()
                           ? JobSizeWidget(
-                        minimum_order:widget.data.service['country_rates'][0]['minimum_order']!=0 && widget.data.service['country_rates'][0]['minimum_order']!=null ?int.parse(widget.data.service['country_rates'][0]['minimum_order'].toString()) : 1,
+                              minimum_order:
+                                  widget.data.service['country_rates'][0]
+                                                  ['minimum_order'] !=
+                                              0 &&
+                                          widget.data.service['country_rates']
+                                                  [0]['minimum_order'] !=
+                                              null
+                                      ? int.parse(widget
+                                          .data
+                                          .service['country_rates'][0]
+                                              ['minimum_order']
+                                          .toString())
+                                      : 1,
                               // Actual units start at estimated units (and cannot go below).
                               completed_units: () {
                                 final estimated = int.tryParse(
@@ -593,8 +639,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                 }
                                 return estimated;
                               }(),
-                              number_of_units:
-                                  widget.data.number_of_units ?? 1,
+                              number_of_units: widget.data.number_of_units ?? 1,
                               extra_fees: widget.data.extra_fees ?? '',
                               extra_fees_reason:
                                   widget.data.extra_fees_reason ?? '',
@@ -646,9 +691,12 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                           context.appValues.appPadding.p0,
                                     ),
                                     child: Text(
-                                      widget.data.total_amount != null && widget.data.total_amount.toString()!=''
-                                          ? '${widget.data.total_amount} ${widget.data.service["country_rates"] != null && widget.data.service["country_rates"].isNotEmpty ?  widget.data.service["country_rates"][0]["country"] is String?widget.data.service["country_rates"][0]["country"]:widget.data.service["country_rates"][0]["country"]["currency"] : ''}'
-                                          : '${widget.data.service["country_rates"] != null ? widget.data.number_of_units != null ? ( widget.data.service["country_rates"][0]["unit_rate"] *  widget.data.number_of_units) : ( widget.data.service["country_rates"][0]["unit_rate"] * widget.data.service["country_rates"][0]["minimum_order"]) : ''} ${ widget.data.service["country_rates"] != null ?  widget.data.service["country_rates"][0]["country"] is String?widget.data.service["country_rates"][0]["country"]:widget.data.service["country_rates"][0]["country"]["currency"] : ''}',
+                                      widget.data.total_amount != null &&
+                                              widget.data.total_amount
+                                                      .toString() !=
+                                                  ''
+                                          ? '${widget.data.total_amount} ${widget.data.service["country_rates"] != null && widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"] is String ? widget.data.service["country_rates"][0]["country"] : widget.data.service["country_rates"][0]["country"]["currency"] : ''}'
+                                          : '${widget.data.service["country_rates"] != null ? widget.data.number_of_units != null ? (widget.data.service["country_rates"][0]["unit_rate"] * widget.data.number_of_units) : (widget.data.service["country_rates"][0]["unit_rate"] * widget.data.service["country_rates"][0]["minimum_order"]) : ''} ${widget.data.service["country_rates"] != null ? widget.data.service["country_rates"][0]["country"] is String ? widget.data.service["country_rates"][0]["country"] : widget.data.service["country_rates"][0]["country"]["currency"] : ''}',
                                       style: getPrimarySemiBoldStyle(
                                         color: const Color(0xff4100E3),
                                         fontSize: 16,
@@ -733,8 +781,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                           context) =>
                                                       _buildPopupDialogSuccess(
                                                           context,
-                                                              'jobDetails.jobUpdated'.tr()
-                                                          ));
+                                                          'jobDetails.jobUpdated'
+                                                              .tr()));
                                             } else {
                                               showDialog(
                                                   context: context,
@@ -742,8 +790,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                           context) =>
                                                       _buildPopupDialogFailure(
                                                           context,
-                                                              'jobDetails.notUpdated'.tr()
-                                                          ));
+                                                          'jobDetails.notUpdated'
+                                                              .tr()));
                                             }
                                             setState(() {
                                               _isLoading2 = false;
@@ -796,8 +844,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                               context) =>
                                                           _buildPopupDialogSuccess(
                                                               context,
-                                                                  'jobDetails.jobIgnored'.tr()
-                                                             ));
+                                                              'jobDetails.jobIgnored'
+                                                                  .tr()));
                                                 } else {
                                                   showDialog(
                                                       context: context,
@@ -805,8 +853,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                               context) =>
                                                           _buildPopupDialogFailure(
                                                               context,
-                                                                  'jobDetails.couldNotIgnored'.tr()
-                                                             ));
+                                                              'jobDetails.couldNotIgnored'
+                                                                  .tr()));
                                                 }
                                                 setState(() {
                                                   _isLoading2 = false;
@@ -824,7 +872,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                               child: _isLoading2
                                                   ? const CircularProgressIndicator()
                                                   : Text(
-                                                          'jobDetails.ignore'.tr(),
+                                                      'jobDetails.ignore'.tr(),
                                                       style:
                                                           getPrimaryRegularStyle(
                                                         fontSize: 15,
@@ -840,7 +888,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                 Consumer<ProfileViewModel>(
                                     builder: (context, profileViewModel, _) {
                                   return widget.fromWhere ==
-                                            'jobs.completed'.tr() &&
+                                              'jobs.completed'.tr() &&
                                           profileViewModel
                                                   .getProfileBody["company"] ==
                                               null
@@ -854,78 +902,90 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                               setState(() {
                                                 _isLoading = true;
                                               });
-                                              var supplierLatitude=profileViewModel.getProfileBody['current_address']['latitude'];
-                                              var supplierLongitude=profileViewModel.getProfileBody['current_address']['longitude'];
+                                              var supplierLatitude =
+                                                  profileViewModel
+                                                              .getProfileBody[
+                                                          'current_address']
+                                                      ['latitude'];
+                                              var supplierLongitude =
+                                                  profileViewModel
+                                                              .getProfileBody[
+                                                          'current_address']
+                                                      ['longitude'];
                                               widget.fromWhere == 'request'
                                                   ? await jobsViewModel.acceptJob(
-                                                              widget.data,supplierLatitude,supplierLongitude) ==
+                                                              widget.data,
+                                                              supplierLatitude,
+                                                              supplierLongitude) ==
                                                           true
                                                       ? showDialog(
                                                           context: context,
-                                                          builder: (BuildContext context) => _buildPopupDialogSuccess(
-                                                              context,
-                                                                  'jobDetails.jobAccepted'.tr()
-                                                              ))
+                                                          builder: (BuildContext context) =>
+                                                              _buildPopupDialogSuccess(
+                                                                  context,
+                                                                  'jobDetails.jobAccepted'
+                                                                      .tr()))
                                                       : showDialog(
                                                           context: context,
                                                           builder: (BuildContext context) =>
                                                               _buildPopupDialogFailure(
                                                                   context,
-                                                                  '${jobsViewModel.errorMessage}'
-                                                                 ))
+                                                                  '${jobsViewModel.errorMessage}'))
                                                   : widget.fromWhere ==
-
-                                                              'jobs.active'.tr()
+                                                          'jobs.active'.tr()
                                                       ? showDialog(
                                                           context: context,
-                                                          builder: (BuildContext context) =>
-                                                              showFinalData(
-                                                                  context,
-                                                                  jobsViewModel))
+                                                          builder:
+                                                              (BuildContext context) =>
+                                                                  showFinalData(
+                                                                      context,
+                                                                      jobsViewModel))
                                                       : widget.fromWhere ==
                                                               'booked'
-                                                          ? await jobsViewModel.startJob(widget.data.id) ==
-                                                                  true
-                                                              ? showDialog(
-                                                                  context:
-                                                                      context,
-                                                                  builder: (BuildContext context) =>
-                                                                      _buildPopupDialogSuccess(context, 'jobDetails.jobStarted'.tr()))
+                                                          ? await jobsViewModel.startJob(widget.data.id) == true
+                                                              ? showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogSuccess(context, 'jobDetails.jobStarted'.tr()))
                                                               : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context, '${jobsViewModel.errorMessage}'))
                                                           : widget.fromWhere == 'jobs.completed'.tr()
                                                               ? await jobsViewModel.downloadInvoice(widget.data.id) != null
                                                                   ? await Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) => Scaffold(
-                                                    appBar: AppBar(
-                                                      title: const Text('Invoice'),
-                                                      actions: [
-                                                        IconButton(
-                                                          icon: const Icon(Icons.print),
-                                                          onPressed: () async {
-                                                            await Printing.layoutPdf(
-                                                              onLayout: (_) async => jobsViewModel.file,
-                                                            );
-                                                          },
-                                                        ),
-                                                        IconButton(
-                                                          icon: const Icon(Icons.share),
-                                                          onPressed: () async {
-                                                            final directory = await getTemporaryDirectory();
-                                                            final filePath = '${directory.path}/invoice.pdf';
-                                                            final file = File(filePath);
-                                                            await file.writeAsBytes(jobsViewModel.file);
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                Scaffold(
+                                                                          appBar:
+                                                                              AppBar(
+                                                                            title:
+                                                                                const Text('Invoice'),
+                                                                            actions: [
+                                                                              IconButton(
+                                                                                icon: const Icon(Icons.print),
+                                                                                onPressed: () async {
+                                                                                  await Printing.layoutPdf(
+                                                                                    onLayout: (_) async => jobsViewModel.file,
+                                                                                  );
+                                                                                },
+                                                                              ),
+                                                                              IconButton(
+                                                                                icon: const Icon(Icons.share),
+                                                                                onPressed: () async {
+                                                                                  final directory = await getTemporaryDirectory();
+                                                                                  final filePath = '${directory.path}/invoice.pdf';
+                                                                                  final file = File(filePath);
+                                                                                  await file.writeAsBytes(jobsViewModel.file);
 
-                                                            Share.shareXFiles([XFile(filePath)], text: 'Here is your invoice.');
-                                                          },
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    body: SfPdfViewer.memory(jobsViewModel.file),
-                                                  ),
-                                                ),
-                                              )
+                                                                                  Share.shareXFiles([
+                                                                                    XFile(filePath)
+                                                                                  ], text: 'Here is your invoice.');
+                                                                                },
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          body:
+                                                                              SfPdfViewer.memory(jobsViewModel.file),
+                                                                        ),
+                                                                      ),
+                                                                    )
                                                                   : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context, '${jobsViewModel.errorMessage}'))
                                                               : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context, '${jobsViewModel.errorMessage}'));
                                               setState(() {
@@ -946,22 +1006,21 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                                 : Text(
                                                     widget.fromWhere ==
                                                             'request'
-                                                        ?
-                                                            'button.accept'.tr()
+                                                        ? 'button.accept'.tr()
                                                         : widget.fromWhere ==
-
-                                                                    'jobs.active'.tr()
-                                                            ?
-                                                                'button.finish'.tr()
+                                                                'jobs.active'
+                                                                    .tr()
+                                                            ? 'button.finish'
+                                                                .tr()
                                                             : widget.fromWhere ==
                                                                     'booked'
-                                                                ?
-                                                                    'button.start'.tr()
+                                                                ? 'button.start'
+                                                                    .tr()
                                                                 : widget.fromWhere ==
-
-                                                                            'jobs.completed'.tr()
-                                                                    ?
-                                                                        'button.invoice'.tr()
+                                                                        'jobs.completed'
+                                                                            .tr()
+                                                                    ? 'button.invoice'
+                                                                        .tr()
                                                                     : '',
                                                     style:
                                                         getPrimarySemiBoldStyle(
@@ -975,136 +1034,158 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
                                       : Container();
                                 }),
                                 widget.fromWhere != 'jobs.completed'.tr()
-                                    ?  Consumer<ProfileViewModel>(
-                                    builder: (context, profileViewModel, _) {
+                                    ? Consumer<ProfileViewModel>(builder:
+                                        (context, profileViewModel, _) {
                                         return SizedBox(
-                                            width: context
-                                                .appValues.appSizePercent.w35,
-                                            height:
-                                                context.appValues.appSizePercent.h6,
-                                            child: ElevatedButton(
-                                              onPressed: () async {
-                                                setState(() {
-                                                  _isLoading = true;
-                                                });
-                                                var supplierLatitude=profileViewModel.getProfileBody['current_address']['latitude'];
-                                                var supplierLongitude=profileViewModel.getProfileBody['current_address']['longitude'];
-                                                final rootContext = context;
-                                                widget.fromWhere == 'request'
-                                                    ? await jobsViewModel.acceptJob(
-                                                                widget.data,supplierLatitude,supplierLongitude) ==
-                                                            true
-                                                        ? showDialog(
-                                                            context: context,
-                                                            builder: (BuildContext context) =>
-                                                                _buildPopupDialogSuccess(
-                                                                    context,
+                                          width: context
+                                              .appValues.appSizePercent.w35,
+                                          height: context
+                                              .appValues.appSizePercent.h6,
+                                          child: ElevatedButton(
+                                            onPressed: () async {
+                                              setState(() {
+                                                _isLoading = true;
+                                              });
+                                              var supplierLatitude =
+                                                  profileViewModel
+                                                              .getProfileBody[
+                                                          'current_address']
+                                                      ['latitude'];
+                                              var supplierLongitude =
+                                                  profileViewModel
+                                                              .getProfileBody[
+                                                          'current_address']
+                                                      ['longitude'];
+                                              final rootContext = context;
+                                              widget.fromWhere == 'request'
+                                                  ? await jobsViewModel.acceptJob(
+                                                              widget.data,
+                                                              supplierLatitude,
+                                                              supplierLongitude) ==
+                                                          true
+                                                      ? showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext context) => _buildPopupDialogSuccess(
+                                                              context,
+                                                              'jobDetails.jobAccepted'
+                                                                  .tr()))
+                                                      : showDialog(
+                                                          context: context,
+                                                          builder: (BuildContext context) =>
+                                                              _buildPopupDialogFailure(
+                                                                  context,
+                                                                  ' ${jobsViewModel.errorMessage}'
+                                                                      .tr()))
+                                                  : widget.fromWhere ==
+                                                          'jobs.active'.tr()
+                                                      ? showDialog(
+                                                          context: rootContext,
+                                                          builder: (_) =>
+                                                              showFinalData(
+                                                                  rootContext,
+                                                                  jobsViewModel),
+                                                        )
+                                                      : widget.fromWhere ==
+                                                              'booked'
+                                                          ? await jobsViewModel.startJob(widget.data.id) ==
+                                                                  true
+                                                              ? showDialog(
+                                                                  context:
+                                                                      context,
+                                                                  builder: (BuildContext context) => _buildPopupDialogSuccess(
+                                                                      context,
+                                                                      'jobDetails.jobStarted'
+                                                                          .tr()))
+                                                              : showDialog(
+                                                                  context: context,
+                                                                  builder: (BuildContext context) => _buildPopupDialogFailure(context, '${jobsViewModel.errorMessage}'))
+                                                          : widget.fromWhere == 'jobs.completed'.tr()
+                                                              ? await jobsViewModel.downloadInvoice(widget.data.id) != null
+                                                                  ? await Navigator.push(
+                                                                      context,
+                                                                      MaterialPageRoute(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                Scaffold(
+                                                                          appBar:
+                                                                              AppBar(
+                                                                            title:
+                                                                                const Text('Invoice'),
+                                                                            actions: [
+                                                                              IconButton(
+                                                                                icon: const Icon(Icons.print),
+                                                                                onPressed: () async {
+                                                                                  await Printing.layoutPdf(
+                                                                                    onLayout: (_) async => jobsViewModel.file,
+                                                                                  );
+                                                                                },
+                                                                              ),
+                                                                              IconButton(
+                                                                                icon: const Icon(Icons.share),
+                                                                                onPressed: () async {
+                                                                                  final directory = await getTemporaryDirectory();
+                                                                                  final filePath = '${directory.path}/invoice.pdf';
+                                                                                  final file = File(filePath);
+                                                                                  await file.writeAsBytes(jobsViewModel.file);
 
-                                                                        'jobDetails.jobAccepted'.tr()
-                                                                   ))
-                                                        : showDialog(
-                                                            context: context,
-                                                            builder: (BuildContext context) =>
-                                                                _buildPopupDialogFailure(
-                                                                    context,
-                                                                    ' ${jobsViewModel.errorMessage}'.tr()))
-                                                    : widget.fromWhere ==
-                                                            'jobs.active'.tr()
-                                                        ? showDialog(
-                                                  context: rootContext,
-                                                  builder: (_) => showFinalData(rootContext, jobsViewModel),
-                                                )
+                                                                                  Share.shareXFiles([
+                                                                                    XFile(filePath)
+                                                                                  ], text: 'Here is your invoice.');
+                                                                                },
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                          body:
+                                                                              SfPdfViewer.memory(jobsViewModel.file),
+                                                                        ),
+                                                                      ),
+                                                                    )
+                                                                  : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context, '${jobsViewModel.errorMessage}'))
+                                                              : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context, '${jobsViewModel.errorMessage}'));
+                                              setState(() {
+                                                _isLoading = false;
+                                              });
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                              elevation: 0,
+                                              backgroundColor:
+                                                  const Color(0xff4100E3),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(12),
+                                              ),
+                                            ),
+                                            child: _isLoading
+                                                ? const CircularProgressIndicator()
+                                                : Text(
+                                                    widget.fromWhere ==
+                                                            'request'
+                                                        ? 'button.accept'.tr()
                                                         : widget.fromWhere ==
-                                                                'booked'
-                                                            ? await jobsViewModel.startJob(widget.data.id) ==
-                                                                    true
-                                                                ? showDialog(
-                                                                    context:
-                                                                        context,
-                                                                    builder: (BuildContext context) =>
-                                                                        _buildPopupDialogSuccess(context,'jobDetails.jobStarted'.tr()))
-                                                                : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context, '${jobsViewModel.errorMessage}'))
-                                                            : widget.fromWhere == 'jobs.completed'.tr()
-                                                                ? await jobsViewModel.downloadInvoice(widget.data.id) != null
-                                                                    ? await Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) => Scaffold(
-                                                      appBar: AppBar(
-                                                        title: const Text('Invoice'),
-                                                        actions: [
-                                                          IconButton(
-                                                            icon: const Icon(Icons.print),
-                                                            onPressed: () async {
-                                                              await Printing.layoutPdf(
-                                                                onLayout: (_) async => jobsViewModel.file,
-                                                              );
-                                                            },
-                                                          ),
-                                                          IconButton(
-                                                            icon: const Icon(Icons.share),
-                                                            onPressed: () async {
-                                                              final directory = await getTemporaryDirectory();
-                                                              final filePath = '${directory.path}/invoice.pdf';
-                                                              final file = File(filePath);
-                                                              await file.writeAsBytes(jobsViewModel.file);
-
-                                                              Share.shareXFiles([XFile(filePath)], text: 'Here is your invoice.');
-                                                            },
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      body: SfPdfViewer.memory(jobsViewModel.file),
+                                                                'jobs.active'
+                                                                    .tr()
+                                                            ? 'button.finish'
+                                                                .tr()
+                                                            : widget.fromWhere ==
+                                                                    'booked'
+                                                                ? 'button.start'
+                                                                    .tr()
+                                                                : widget.fromWhere ==
+                                                                        'jobs.completed'
+                                                                            .tr()
+                                                                    ? 'button.invoice'
+                                                                        .tr()
+                                                                    : '',
+                                                    style:
+                                                        getPrimarySemiBoldStyle(
+                                                      fontSize: 12,
+                                                      color: context.resources
+                                                          .color.colorWhite,
                                                     ),
                                                   ),
-                                                )
-                                                                    : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context,'${jobsViewModel.errorMessage}'))
-                                                                : showDialog(context: context, builder: (BuildContext context) => _buildPopupDialogFailure(context,'${jobsViewModel.errorMessage}'));
-                                                setState(() {
-                                                  _isLoading = false;
-                                                });
-                                              },
-                                              style: ElevatedButton.styleFrom(
-                                                elevation: 0,
-                                                backgroundColor:
-                                                    const Color(0xff4100E3),
-                                                shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.circular(12),
-                                                ),
-                                              ),
-                                              child: _isLoading
-                                                  ? const CircularProgressIndicator()
-                                                  : Text(
-                                                      widget.fromWhere == 'request'
-                                                          ?
-                                                              'button.accept'.tr()
-                                                          : widget.fromWhere ==
-
-                                                                      'jobs.active'.tr()
-                                                              ?
-                                                                  'button.finish'.tr()
-                                                              : widget.fromWhere ==
-                                                                      'booked'
-                                                                  ?
-                                                                      'button.start'.tr()
-                                                                  : widget.fromWhere ==
-
-                                                                              'jobs.completed'.tr()
-                                                                      ?
-                                                                          'button.invoice'.tr()
-                                                                      : '',
-                                                      style:
-                                                          getPrimarySemiBoldStyle(
-                                                        fontSize: 12,
-                                                        color: context.resources
-                                                            .color.colorWhite,
-                                                      ),
-                                                    ),
-                                            ),
-                                          );
-                                      }
-                                    )
+                                          ),
+                                        );
+                                      })
                                     : Container(),
                               ],
                             ));
@@ -1176,7 +1257,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
   //     ),
   //   );
   // }
-  Widget _buildPopupDialogSuccess(BuildContext context,String message) {
+  Widget _buildPopupDialogSuccess(BuildContext context, String message) {
     return AlertDialog(
       elevation: 15,
       content: Column(
@@ -1230,7 +1311,8 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
       ),
     );
   }
-  Widget _buildPopupDialogFailure(BuildContext context,String message) {
+
+  Widget _buildPopupDialogFailure(BuildContext context, String message) {
     return AlertDialog(
       elevation: 15,
       content: Column(
@@ -1260,7 +1342,7 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-             'button.failure'.tr(),
+              'button.failure'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                   fontSize: 17, color: context.resources.color.btnColorBlue),
@@ -1286,305 +1368,140 @@ class _JobDetailsSupplierState extends State<JobDetailsSupplier> {
   }
 
   Widget showFinalData(BuildContext context, JobsViewModel jobsViewModel) {
-    return jobsViewModel.jobUpdated
-        ? AlertDialog(
-            backgroundColor: Colors.white,
-            elevation: 15,
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding:
-                      EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        child: SvgPicture.asset('assets/img/x.svg'),
-                        onTap: () {
-                          Navigator.pop(context);
-                          Future.delayed(const Duration(seconds: 0),
-                              () => Navigator.of(context).pop());
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                // message == 'Success'
-                //     ?
-                // SvgPicture.asset('assets/img/service-popup-image.svg')
-                //     : SvgPicture.asset('assets/img/failure.svg'),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p32,
-                  ),
-                  child: Text(
-                    '${'updateJob.actualNumberOfUnits'.tr()}: ${jobsViewModel.updatedBody["completed_units"] ?? widget.data.completed_units}',
-                    textAlign: TextAlign.center,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 17,
-                      color: context.resources.color.btnColorBlue,
-                    ),
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p32,
-                  ),
-                  child: Text(
-                    '${'updateJob.estimatedNumberOfUnits'.tr()}: ${jobsViewModel.updatedBody["number_of_units"] ?? widget.data.number_of_units}',
-                    textAlign: TextAlign.center,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 17,
-                      color: context.resources.color.btnColorBlue,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p32,
-                  ),
-                  child: Text(
-                    'Extra Fees: ${jobsViewModel.updatedBody["extra_fees"] ?? widget.data.extra_fees}',
-                    textAlign: TextAlign.center,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 17,
-                      color: context.resources.color.btnColorBlue,
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p32,
-                  ),
-                  child: Text(
-                    'Extra Fees Reason: ${jobsViewModel.updatedBody["extra_fees_reason"] ?? widget.data.extra_fees_reason}',
-                    textAlign: TextAlign.center,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 17,
-                      color: context.resources.color.btnColorBlue,
-                    ),
-                  ),
-                ),
-                SizedBox(height: context.appValues.appSize.s20),
-                ElevatedButton(
-                  onPressed: () async {
-                    debugPrint('data in finish ${widget.data.customer['id']}');
-                    // if(await jobsViewModel.payFees(widget.data.id,widget.data.customer['id']) == true) {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    if (await jobsViewModel.updateJob(
-                        widget.data.id) ==
-                        true && await jobsViewModel
-                            .finishJobAndCollectPayment(widget.data.id) ==
-                        true) {
-
-                      Future.delayed(const Duration(milliseconds: 100), () {
-                        showDialog(
-                          context: context, // <- this must be the original parentContext
-                          builder: (BuildContext _) =>
-                              _buildPopupDialogSuccess(context, 'Job Done'), // use parentContext
-                        );
-                      });
-                    } else {
-                      debugPrint('job is not  done ');
-
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => _buildPopupDialogFailure(
-                              context,
-                              'Something went wrong while finishing job \n${jobsViewModel.errorMessage}',
-                              ));
-                    }
-                    // }else {
-                    //   showDialog(
-                    //       context: context,
-                    //       builder: (BuildContext context) => simpleAlert(
-                    //           context,
-                    //           'Failure',
-                    //           'Something went wrong while paying job\n${jobsViewModel.errorMessage}'));
-                    // }
+    jobsViewModel.prepareSupplierFinish(
+      numberOfUnits: widget.data.number_of_units,
+      completedUnits: widget.data.completed_units,
+    );
+    final completedUnits = jobsViewModel.updatedBody['completed_units'];
+    final estimatedUnits = jobsViewModel.updatedBody['number_of_units'] ??
+        widget.data.number_of_units;
+    return AlertDialog(
+      backgroundColor: Colors.white,
+      elevation: 15,
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                InkWell(
+                  child: SvgPicture.asset('assets/img/x.svg'),
+                  onTap: () {
+                    Navigator.pop(context);
                   },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0.0,
-                    shadowColor: Colors.transparent,
-                    backgroundColor: Color(0xff4100E3),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    fixedSize: Size(
-                      context.appValues.appSizePercent.w30,
-                      context.appValues.appSizePercent.h5,
-                    ),
-                  ),
-                  child: Text(
-                    'Finish',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                    ),
-                  ),
                 ),
-
-                SizedBox(height: context.appValues.appSize.s20),
               ],
             ),
-          )
-        : AlertDialog(
-            backgroundColor: Colors.white,
-            elevation: 15,
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Padding(
-                  padding:
-                      EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        child: SvgPicture.asset('assets/img/x.svg'),
-                        onTap: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                // message == 'Success'
-                //     ?
-                // SvgPicture.asset('assets/img/service-popup-image.svg')
-                //     : SvgPicture.asset('assets/img/failure.svg'),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p32,
-                  ),
-                  child: Text(
-                    'Make sure to update data before finishing',
-                    textAlign: TextAlign.center,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 17,
-                      color: Colors.red,
-                    ),
-                  ),
-                ),
-                const Gap(7),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p32,
-                  ),
-                  child: Text(
-                    'Completed Units: ${widget.data.completed_units ?? ''}',
-                    textAlign: TextAlign.center,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 17,
-                      // color: context.resources.color.btnColorBlue,
-                      color: Color(0xff4100E3),
-                    ),
-                  ),
-                ),
-                const Gap(7),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p32,
-                  ),
-                  child: Text(
-                    '${'updateJob.estimatedNumberOfUnits'.tr()}: ${widget.data.number_of_units ?? ''}',
-                    textAlign: TextAlign.center,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 17,
-                      color: Color(0xff4100E3),
-                    ),
-                  ),
-                ),
-                const Gap(7),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p32,
-                  ),
-                  child: Text(
-                    'Extra Fees: ${widget.data.extra_fees ?? ''}',
-                    textAlign: TextAlign.center,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 17,
-                      color: Color(0xff4100E3),
-                    ),
-                  ),
-                ),
-                const Gap(7),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.appValues.appPadding.p32,
-                  ),
-                  child: Text(
-                    'Extra Fees Reason: ${widget.data.extra_fees_reason ?? ''}',
-                    textAlign: TextAlign.center,
-                    style: getPrimaryRegularStyle(
-                      fontSize: 17,
-                      color: Color(0xff4100E3),
-                    ),
-                  ),
-                ),
-                SizedBox(height: context.appValues.appSize.s20),
-                ElevatedButton(
-                  onPressed: () async {
-                    Navigator.of(context, rootNavigator: true).pop();
-                    if (await jobsViewModel.updateJob(
-                        widget.data.id) ==
-                        true && await jobsViewModel
-                            .finishJobAndCollectPayment(widget.data.id) ==
-                        true) {
-
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) =>
-                              _buildPopupDialogSuccess(context, 'Job Done'));
-                    } else {
-                      showDialog(
-                          context: context,
-                          builder: (BuildContext context) => _buildPopupDialogFailure(
-                              context,
-                              '${jobsViewModel.errorMessage}',
-                             ));
-                    }
-
-                    // await jobsViewModel.finishJob(widget.data.id);
-                    // Navigator.pop(context);
-                    //
-                    // new Future.delayed(const Duration(seconds: 0), () =>
-                    //     showDialog(
-                    //         context: context,
-                    //         builder: (BuildContext context) =>
-                    //             simpleAlert(
-                    //                 context,'Success' ,'Job Done')));
-                  },
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0.0,
-                    shadowColor: Colors.transparent,
-                    backgroundColor: Color(0xff4100E3),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    fixedSize: Size(
-                      context.appValues.appSizePercent.w40,
-                      context.appValues.appSizePercent.h5,
-                    ),
-                  ),
-                  child: Text(
-                    'Finish Job',
-                    style: getPrimaryRegularStyle(
-                      fontSize: 15,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-
-                SizedBox(height: context.appValues.appSize.s20),
-              ],
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
             ),
-          );
+            child: Text(
+              '${'updateJob.actualNumberOfUnits'.tr()}: $completedUnits',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              '${'updateJob.estimatedNumberOfUnits'.tr()}: $estimatedUnits',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Extra Fees: ${jobsViewModel.updatedBody["extra_fees"] ?? widget.data.extra_fees ?? ''}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Extra Fees Reason: ${jobsViewModel.updatedBody["extra_fees_reason"] ?? widget.data.extra_fees_reason ?? ''}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s20),
+          ElevatedButton(
+            onPressed: () async {
+              jobsViewModel.prepareSupplierFinish(
+                numberOfUnits: widget.data.number_of_units,
+                completedUnits: widget.data.completed_units,
+              );
+              Navigator.of(context, rootNavigator: true).pop();
+              if (await jobsViewModel.updateJob(widget.data.id) == true &&
+                  await jobsViewModel
+                          .finishJobAndCollectPayment(widget.data.id) ==
+                      true) {
+                Future.delayed(const Duration(milliseconds: 100), () {
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext _) => _buildPopupDialogSuccess(
+                        context,
+                        jobsViewModel.lastExtraPaymentRequired
+                            ? 'payment.extraRequiredSupplier'.tr()
+                            : 'Job Done'),
+                  );
+                });
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) => _buildPopupDialogFailure(
+                          context,
+                          'Something went wrong while finishing job \n${jobsViewModel.errorMessage}',
+                        ));
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              elevation: 0.0,
+              shadowColor: Colors.transparent,
+              backgroundColor: Color(0xff4100E3),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+              fixedSize: Size(
+                context.appValues.appSizePercent.w30,
+                context.appValues.appSizePercent.h5,
+              ),
+            ),
+            child: Text(
+              'Finish',
+              style: getPrimaryRegularStyle(
+                fontSize: 15,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          SizedBox(height: context.appValues.appSize.s20),
+        ],
+      ),
+    );
   }
 }
 

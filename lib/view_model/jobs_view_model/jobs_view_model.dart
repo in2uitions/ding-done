@@ -6,6 +6,7 @@ import 'package:dingdone/models/jobs_model.dart';
 import 'package:dingdone/repository/jobs/jobs_repository.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/constants.dart';
+import 'package:dingdone/utils/job_payment_status.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -51,7 +52,7 @@ class JobsViewModel with ChangeNotifier {
   Map<String, dynamic> _addressBody = {};
   String? _role = '';
   String? _errorMessage = '';
-  dynamic _errorData ;
+  dynamic _errorData;
   bool _jobUpdated = true;
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
@@ -59,9 +60,13 @@ class JobsViewModel with ChangeNotifier {
   bool _showCustomTextArea = false;
   bool _addressSaved = false;
   List<dynamic>? _notifications = List.empty();
+  List<JobsModel> _pendingPayments = [];
   String? lang;
   bool _hasNotifications = true;
   dynamic _file;
+  int? lastCreatedJobId;
+  bool lastExtraPaymentRequired = false;
+  dynamic lastRemainingAmount;
   Map<String?, String?> jobsAddressError = {};
   final _wsUrl =
       'wss://cms.dingdone.app/websocket?access_token=TQOqIMMMKEdfHAk5TeA-dSna0TgINW55';
@@ -85,7 +90,6 @@ class JobsViewModel with ChangeNotifier {
       await getSupplierInProgressJobs();
       await getSupplierBookedJobs();
       await getSupplierOpenJobs();
-
     } else {
       debugPrint('customer gettiong jobs ');
 
@@ -93,20 +97,21 @@ class JobsViewModel with ChangeNotifier {
     }
   }
 
-
   getLanguage() async {
     lang = await AppPreferences().get(key: dblang, isModel: false);
     if (lang == null) {
       lang = 'en-US';
     }
   }
+
   apigetNotifications() async {
-    dynamic notifications =
-    await getNotifications();
+    dynamic notifications = await getNotifications();
     if (notifications != null) {
-      if (notifications.isNotEmpty && notifications!=[]) {
+      if (notifications.isNotEmpty && notifications != []) {
         _hasNotifications = true;
-      } else {  _hasNotifications = false;}
+      } else {
+        _hasNotifications = false;
+      }
     } else {
       _hasNotifications = false;
     }
@@ -114,10 +119,12 @@ class JobsViewModel with ChangeNotifier {
     debugPrint('has notifications $_hasNotifications');
     return notifications;
   }
-  setNotificationsData(bool value){
-    _hasNotifications=value;
+
+  setNotificationsData(bool value) {
+    _hasNotifications = value;
     notifyListeners();
   }
+
   Future<dynamic> getNotifications() async {
     //Todo sign up save user
     try {
@@ -136,10 +143,11 @@ class JobsViewModel with ChangeNotifier {
       notifyListeners();
     }
   }
+
   Future<void> deleteNotificationById(dynamic id) async {
     try {
       ProfileModel? response = await _homeRepository.deleteNotificationById(
-        id:id,
+        id: id,
       );
       debugPrint('deletingNotification ${response}');
 
@@ -149,6 +157,7 @@ class JobsViewModel with ChangeNotifier {
       notifyListeners();
     }
   }
+
   Future<void> clearAllNotifications() async {
     try {
       ProfileModel? response = await _homeRepository.deleteNotifications();
@@ -160,6 +169,7 @@ class JobsViewModel with ChangeNotifier {
       notifyListeners();
     }
   }
+
   Future<void> getRole() async {
     try {
       _role = await AppPreferences().get(key: userRoleKey, isModel: false);
@@ -167,14 +177,16 @@ class JobsViewModel with ChangeNotifier {
       return;
     }
   }
+
   Future<void> clearJobsBody() async {
     try {
-      jobsBody={};
+      jobsBody = {};
       notifyListeners();
     } catch (err) {
       return;
     }
   }
+
   void deleteInputValues({required String index}) {
     jobsBody.remove(index);
     notifyListeners();
@@ -199,6 +211,7 @@ class JobsViewModel with ChangeNotifier {
     }
     return null;
   }
+
   Future<void> initWebSocket() async {
     _keepAliveTimer?.cancel();
     await _closeSockets();
@@ -328,7 +341,6 @@ class JobsViewModel with ChangeNotifier {
     });
   }
 
-
   Future<void> _applyUpdate(List<dynamic> updates) async {
     try {
       debugPrint('updating jobs $updates');
@@ -352,7 +364,6 @@ class JobsViewModel with ChangeNotifier {
         }
         await readJson();
         await apigetNotifications();
-
 
         // final jobStatus = updatedJob['status'];
         // switch (jobStatus) {
@@ -618,16 +629,27 @@ class JobsViewModel with ChangeNotifier {
 
   Future<bool?> finishJobAndCollectPayment(int id) async {
     try {
+      lastExtraPaymentRequired = false;
+      lastRemainingAmount = null;
       dynamic response = await _jobsRepository.finishJobAndCollectPayment(id);
-      // _apiCustomerPayResponse = ApiResponse.completed(response);
-      // _customerPay = _apiCustomerPayResponse.data?.jobs;
       debugPrint('Response of finishing job and paying fees ${response}');
       if (response["status"] == 'OK') {
+        lastExtraPaymentRequired = response["extra_payment_required"] == true ||
+            JobPaymentStatus.needsExtraPayment(
+              response["payment_status"] ??
+                  (response["data"] is Map
+                      ? response["data"]["payment_status"]
+                      : null),
+            );
+        lastRemainingAmount = response["remaining_amount"];
         readJson();
         notifyListeners();
         return true;
       } else {
-        _errorMessage = response["reason"] ?? response["error"]??response["message"]??'';
+        _errorMessage = response["reason"] ??
+            response["error"] ??
+            response["message"] ??
+            '';
         notifyListeners();
         return false;
       }
@@ -645,9 +667,6 @@ class JobsViewModel with ChangeNotifier {
       notifyListeners();
       return false;
     }
-    notifyListeners();
-
-    return true;
   }
 
   Future<bool?> startJob(int id) async {
@@ -658,7 +677,10 @@ class JobsViewModel with ChangeNotifier {
       if (response["status"] == "OK") {
         return true;
       } else {
-        _errorMessage = response["reason"];
+        _errorData = response;
+        _errorMessage = response["reason"] == 'authorization_required'
+            ? (response["message"] ?? response["reason"]).toString()
+            : (response["reason"] ?? response["message"] ?? '').toString();
         return false;
       }
     } catch (error) {
@@ -837,8 +859,7 @@ class JobsViewModel with ChangeNotifier {
       return false;
     }
     try {
-      dynamic response =
-          await _jobsRepository.cancelJobNoPenalty(id, reason);
+      dynamic response = await _jobsRepository.cancelJobNoPenalty(id, reason);
       readJson();
       notifyListeners();
       if (response["status"] == "OK") {
@@ -882,12 +903,14 @@ class JobsViewModel with ChangeNotifier {
       return false;
     }
   }
+
   void setSelectedReason(String value) {
     selectedReason1 = value;
     _selectedReason = value;
     jobsBody['cancellation_reason'] = value;
     notifyListeners();
   }
+
   Future<bool> requestService() async {
     try {
       int year = selectedDate.year;
@@ -930,8 +953,7 @@ class JobsViewModel with ChangeNotifier {
       }
 
       // ISO-8601 without timezone noise from DateTime.toString().
-      final startDateIso =
-          combinedDateTime.toIso8601String().split('.').first;
+      final startDateIso = combinedDateTime.toIso8601String().split('.').first;
       jobsBody['start_date'] = startDateIso;
 
       clearCancellationReason();
@@ -940,20 +962,27 @@ class JobsViewModel with ChangeNotifier {
         return false;
       }
 
+      lastCreatedJobId = null;
       dynamic response = await _jobsRepository.postNewJobRequest(jobsBody);
       debugPrint('response adding job in view model $response');
       if (response is Map && response['status'] == 'NOT_OK') {
-        _errorMessage = (response['reason'] ?? response['message'] ?? 'Failed')
-            .toString();
+        _errorMessage =
+            (response['reason'] ?? response['message'] ?? 'Failed').toString();
         notifyListeners();
         return false;
       }
 
+      lastCreatedJobId = _extractJobId(response);
+      if (lastCreatedJobId == null) {
+        _errorMessage = 'Failed';
+        notifyListeners();
+        return false;
+      }
       return true;
     } catch (error) {
       debugPrint('error requesting service $error');
-      _errorMessage = error.toString();
-      _jobsResponse = ApiResponse<JobsModel>.error(error.toString());
+      _errorMessage = _readableError(error);
+      _jobsResponse = ApiResponse<JobsModel>.error(_errorMessage);
       notifyListeners();
       return false;
     }
@@ -1044,6 +1073,30 @@ class JobsViewModel with ChangeNotifier {
     }
   }
 
+  void seedSupplierJobUnits({
+    dynamic numberOfUnits,
+    dynamic completedUnits,
+  }) {
+    final estimated = int.tryParse('${numberOfUnits ?? 1}') ?? 1;
+    final safeEstimated = estimated < 1 ? 1 : estimated;
+    final completed = int.tryParse('${completedUnits ?? ''}');
+    final actual = (completed != null && completed > 0)
+        ? (completed < safeEstimated ? safeEstimated : completed)
+        : safeEstimated;
+    _updatedBody['number_of_units'] = safeEstimated;
+    _updatedBody['completed_units'] = actual;
+  }
+
+  void prepareSupplierFinish({
+    dynamic numberOfUnits,
+    dynamic completedUnits,
+  }) {
+    seedSupplierJobUnits(
+      numberOfUnits: _updatedBody['number_of_units'] ?? numberOfUnits,
+      completedUnits: _updatedBody['completed_units'] ?? completedUnits,
+    );
+  }
+
   void setUpdatedJob({required String index, dynamic value}) {
     debugPrint('_updatedBody $_updatedBody $value');
     if ((index == 'tap_payments_card' || index == 'payment_method') &&
@@ -1052,7 +1105,6 @@ class JobsViewModel with ChangeNotifier {
       _updatedBody[index] = value;
       debugPrint('_updatedBody $_updatedBody $value');
       notifyListeners();
-
     }
     _jobUpdated = false;
     debugPrint('hhhh $index $value');
@@ -1141,4 +1193,134 @@ class JobsViewModel with ChangeNotifier {
   get saved => _addressSaved;
   get reason => selectedReason1;
   get errorData => _errorData;
+  get pendingPayments => _pendingPayments;
+
+  JobsModel? jobById(int? id) {
+    if (id == null) return null;
+    for (final job in _customerjobsList ?? const <JobsModel>[]) {
+      if (job.id == id) return job;
+    }
+    for (final job in _pendingPayments) {
+      if (job.id == id) return job;
+    }
+    return null;
+  }
+
+  int? _extractJobId(dynamic response) {
+    if (response is! Map) return null;
+    final data = response['data'];
+    final job = response['job'];
+    final candidates = <dynamic>[
+      response['id'],
+      response['job_id'],
+      if (job is Map) job['id'],
+      if (job is Map) job['job_id'],
+      if (data is Map) data['id'],
+      if (data is Map) data['job_id'],
+      if (data is Map && data['job'] is Map) data['job']['id'],
+      if (data is List && data.isNotEmpty)
+        data.first is Map ? data.first['id'] : data.first,
+    ];
+    for (final candidate in candidates) {
+      final id = int.tryParse(candidate?.toString() ?? '');
+      if (id != null) return id;
+    }
+    return null;
+  }
+
+  Future<Map<String, dynamic>?> initiateJobPayment(int jobId) async {
+    try {
+      final response = await _jobsRepository.initiateJobPayment(jobId);
+      if (response is Map) {
+        final payload = Map<String, dynamic>.from(response);
+        final redirectUrl = payload['redirect_url']?.toString() ??
+            (payload['transaction'] is Map
+                ? payload['transaction']['url']?.toString()
+                : null);
+        if (redirectUrl != null &&
+            redirectUrl.isNotEmpty &&
+            payload['status'] != 'NOT_OK') {
+          return payload;
+        }
+        _errorMessage = _messageFromApi(payload);
+        notifyListeners();
+        return null;
+      }
+      _errorMessage = 'Failed';
+      notifyListeners();
+      return null;
+    } catch (error) {
+      debugPrint('Error initiating job payment $error');
+      _errorMessage = _readableError(error);
+      notifyListeners();
+      return null;
+    }
+  }
+
+  Future<Map<String, dynamic>?> initiateExtraPayment(int jobId) async {
+    try {
+      final response = await _jobsRepository.initiateExtraPayment(jobId);
+      if (response is Map) {
+        final payload = Map<String, dynamic>.from(response);
+        if (payload['status'] == 'NOT_OK') {
+          _errorMessage = _messageFromApi(payload);
+          notifyListeners();
+          return null;
+        }
+        return payload;
+      }
+      return null;
+    } catch (error) {
+      debugPrint('Error initiating extra payment $error');
+      _errorMessage = _readableError(error);
+      notifyListeners();
+      return null;
+    }
+  }
+
+  Future<List<JobsModel>> getPendingPayments() async {
+    try {
+      final response = await _jobsRepository.getPendingPayments();
+      final data = response is Map ? response['data'] : response;
+      _pendingPayments = data is List
+          ? data
+              .whereType<Map>()
+              .map((job) => JobsModel.fromJson(Map<String, dynamic>.from(job)))
+              .toList()
+          : [];
+      notifyListeners();
+      return _pendingPayments;
+    } catch (error) {
+      debugPrint('Error getting pending payments $error');
+      _pendingPayments = [];
+      notifyListeners();
+      return _pendingPayments;
+    }
+  }
+
+  String _messageFromApi(Map payload) {
+    final errors = payload['errors'];
+    if (errors is List && errors.isNotEmpty) {
+      final first = errors.first;
+      if (first is Map && first['message'] != null) {
+        return first['message'].toString();
+      }
+      return first.toString();
+    }
+    for (final key in ['reason', 'message', 'error', 'detail']) {
+      final value = payload[key];
+      if (value != null && value.toString().trim().isNotEmpty) {
+        return value.toString();
+      }
+    }
+    return 'Failed';
+  }
+
+  String _readableError(dynamic error) {
+    final text = error?.toString() ?? '';
+    if (text.toLowerCase().contains('instance of')) {
+      return 'Request failed';
+    }
+    return text.isNotEmpty ? text : 'Request failed';
+  }
 }

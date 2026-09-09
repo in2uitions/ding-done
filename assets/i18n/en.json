@@ -142,6 +142,35 @@
     "notifications": "Notifications",
     "clearAll": "Clear All"
   },
+  "payment": {
+    "paymentStatus": "Payment status",
+    "payAuthorize": "Pay / authorize",
+    "approveExtra": "Approve extra payment",
+    "authorizeTitle": "Authorize payment",
+    "pendingPayments": "Pending payments",
+    "pendingLaunchMessage": "You have a payment that still needs your approval. Do you want to complete it now?",
+    "noPending": "No payments need your attention right now.",
+    "couldNotStart": "We could not start this payment. Please try again.",
+    "jobSavedRetry": "The job is already created. Authorization failed — retry payment without booking again, or open it from Requested jobs.",
+    "retry": "Retry",
+    "incompleteTitle": "Payment not finished",
+    "incompleteMessage": "You can finish this payment later from your jobs.",
+    "pendingTitle": "Payment pending",
+    "pendingMessage": "We have not confirmed this payment yet. Please try again.",
+    "authorized": "Payment authorized. Your request is now being circulated.",
+    "extraPaid": "Extra payment completed.",
+    "extraDue": "Extra amount due",
+    "authorizeDue": "Authorization required",
+    "extraRequiredSupplier": "Job completed. The customer still needs to approve the extra amount.",
+    "status": {
+      "unpaid": "Unpaid",
+      "authorization_pending": "Authorization pending",
+      "authorized": "Authorized",
+      "extra_pending": "Extra payment due",
+      "paid": "Paid",
+      "cancelled": "Cancelled"
+    }
+  },
   "profile": {
     "help": "Help",
     "privacyPolicy": "Policy",

@@ -1,6 +1,7 @@
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/settings_screen/settings_screen.dart';
+import 'package:dingdone/view/job_payment/pending_job_payments_screen.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -47,7 +48,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                       children: [
                         IconButton(
                           onPressed: () async {
-                            await widget.jobsViewModel.setNotificationsData(false);
+                            await widget.jobsViewModel
+                                .setNotificationsData(false);
                             Navigator.pop(context);
                           },
                           icon: const Icon(
@@ -110,7 +112,6 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(),
-
                                   TextButton(
                                     onPressed: () async {
                                       await widget.jobsViewModel
@@ -131,8 +132,8 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                             Expanded(
                               child: ListView.builder(
                                 controller: scrollController,
-                                itemCount: widget
-                                    .jobsViewModel.notifications.length,
+                                itemCount:
+                                    widget.jobsViewModel.notifications.length,
                                 padding: EdgeInsets.zero,
                                 itemBuilder: (BuildContext context, int index) {
                                   final notification = data.data[index];
@@ -140,10 +141,27 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                     title: '${notification['subject']}',
                                     message: '${notification['body']}',
                                     time: '',
-                                    onTap: () {},
+                                    onTap: () async {
+                                      final nested = notification['data'];
+                                      final type =
+                                          '${notification['type'] ?? notification['name'] ?? notification['template'] ?? (nested is Map ? nested['type'] : '')}'
+                                              .toLowerCase();
+                                      if (type.contains('payment_required')) {
+                                        await Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                            builder: (_) =>
+                                                const PendingJobPaymentsScreen(
+                                              autoResume: true,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                    },
                                     trailing: InkWell(
                                       onTap: () async {
-                                        await widget.jobsViewModel.deleteNotificationById(notification['id']);
+                                        await widget.jobsViewModel
+                                            .deleteNotificationById(
+                                                notification['id']);
                                         setState(() {}); // Refresh the list
                                       },
                                       child: SvgPicture.asset(

@@ -26,6 +26,7 @@ import 'package:provider/provider.dart';
 
 import '../../res/app_prefs.dart';
 import '../edit_account/edit_account.dart';
+import '../job_payment/pending_job_payments_screen.dart';
 
 class BottomBar extends StatefulWidget {
   var userRole;
@@ -59,6 +60,7 @@ class _BottomBarState extends State<BottomBar>
   String? _currentAddress;
   Position? _currentPosition;
   bool _countryPromptShown = false;
+  bool _pendingPaymentsChecked = false;
   @override
   void initState() {
     super.initState();
@@ -135,6 +137,59 @@ class _BottomBarState extends State<BottomBar>
       if (!mounted) return;
 
       getProfileInfo();
+      return;
+    }
+
+    await _checkPendingPayments();
+  }
+
+  Future<void> _checkPendingPayments() async {
+    if (_pendingPaymentsChecked ||
+        widget.userRole != Constants.customerRoleId ||
+        !mounted) {
+      return;
+    }
+    _pendingPaymentsChecked = true;
+    final jobsViewModel = Provider.of<JobsViewModel>(context, listen: false);
+    final pending = await jobsViewModel.getPendingPayments();
+    if (!mounted || pending.isEmpty) return;
+    final shouldOpen = await showDialog<bool>(
+      context: context,
+      builder: (dialogContext) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: Text(
+          'payment.pendingPayments'.tr(),
+          style: getPrimarySemiBoldStyle(
+            fontSize: 16,
+            color: const Color(0xff180B3C),
+          ),
+        ),
+        content: Text(
+          'payment.pendingLaunchMessage'.tr(),
+          style: getPrimaryRegularStyle(
+            fontSize: 14,
+            color: const Color(0xff180B3C),
+          ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, false),
+            child: Text('button.no'.tr()),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(dialogContext, true),
+            child: Text('button.yes'.tr()),
+          ),
+        ],
+      ),
+    );
+    if (shouldOpen == true && mounted) {
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const PendingJobPaymentsScreen(),
+        ),
+      );
     }
   }
 

@@ -41,6 +41,9 @@ class ApiEndPoints {
   final String deletePaymentCard = '/customers/removeCard';
   final String payJob = '/customers/payJob';
   final String addJob = '/customers/addJob';
+  final String initiateJobPayment = '/customers/initiateJobPayment';
+  final String initiateExtraPayment = '/customers/initiateExtraPayment';
+  final String pendingPayments = '/customers/pendingPayments';
   final String finishJobAndCollectPayment =
       '/suppliers/finishJobAndCollectPayment';
   final String getAllPayments = '/items/customer_payment_cards?fields=*.*';

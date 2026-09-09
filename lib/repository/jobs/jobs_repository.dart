@@ -45,6 +45,12 @@ class JobsRepository {
       NetworkApiService(url: ApiEndPoints().invoices);
   final BaseApiService _apiAddJob =
       NetworkApiService(url: ApiEndPoints().addJob);
+  final BaseApiService _apiInitiateJobPayment =
+      NetworkApiService(url: ApiEndPoints().initiateJobPayment);
+  final BaseApiService _apiInitiateExtraPayment =
+      NetworkApiService(url: ApiEndPoints().initiateExtraPayment);
+  final BaseApiService _apiPendingPayments =
+      NetworkApiService(url: ApiEndPoints().pendingPayments);
   // final BaseApiService _apiCustomerInvoice =
   //     NetworkApiService(url: ApiEndPoints().customerInvoice);
   // final BaseApiService _apiSupplierInvoice =
@@ -53,7 +59,8 @@ class JobsRepository {
   Future<JobsModelMain?> getCustomerJobs() async {
     try {
       String? id = await getUserId();
-      dynamic response = await _apiCustomerJobs.postResponse(data: {'user_id':id});
+      dynamic response =
+          await _apiCustomerJobs.postResponse(data: {'user_id': id});
       final jsonData = JobsModelMain.fromJson(response);
       return jsonData;
     } catch (error) {
@@ -120,20 +127,24 @@ class JobsRepository {
       rethrow;
     }
   }
+
   Future<dynamic> finishJob(int job_id) async {
     try {
       String? id = await getUserId();
-      dynamic response = await _apiFinishJob.postResponse(data: {"supplier_id": id,"job_id":job_id});
+      dynamic response = await _apiFinishJob
+          .postResponse(data: {"supplier_id": id, "job_id": job_id});
       return response;
     } catch (error) {
       debugPrint('error in getting finished jobs $error');
       rethrow;
     }
   }
-  Future<dynamic> payJob(int job_id,dynamic customer_id) async {
+
+  Future<dynamic> payJob(int job_id, dynamic customer_id) async {
     try {
       // String? id = await getUserId();
-      dynamic response = await _apiPayJob.postResponse(data: {"customer_id": customer_id,"job_id":job_id});
+      dynamic response = await _apiPayJob
+          .postResponse(data: {"customer_id": customer_id, "job_id": job_id});
       // final jsonData = JobsModelMain.fromJson(response["data"]);
       return response;
     } catch (error) {
@@ -141,10 +152,12 @@ class JobsRepository {
       rethrow;
     }
   }
+
   Future<dynamic> finishJobAndCollectPayment(int job_id) async {
     try {
       // String? id = await getUserId();
-      dynamic response = await _apiFinishJobAndCollectPayment.postResponse(data: {"job_id":job_id});
+      dynamic response = await _apiFinishJobAndCollectPayment
+          .postResponse(data: {"job_id": job_id});
       // final jsonData = JobsModelMain.fromJson(response["data"]);
       return response;
     } catch (error) {
@@ -152,35 +165,42 @@ class JobsRepository {
       rethrow;
     }
   }
+
   Future<dynamic> startJob(int job_id) async {
     try {
       String? id = await getUserId();
 
-      dynamic response = await _apiStartJob.postResponse(data: {"supplier_id": id,"job_id":job_id});
+      dynamic response = await _apiStartJob
+          .postResponse(data: {"supplier_id": id, "job_id": job_id});
       return response;
-
     } catch (error) {
       debugPrint('error in getting start jobs $error');
       rethrow;
     }
   }
+
   Future<dynamic> ignoreJob(int job_id) async {
     try {
       String? id = await getUserId();
 
-      dynamic response = await _apiIgnoreJob.postResponse(data: {"supplier_id": id,"job_id":job_id});
+      dynamic response = await _apiIgnoreJob
+          .postResponse(data: {"supplier_id": id, "job_id": job_id});
       return response;
-
     } catch (error) {
       debugPrint('error in ignoring jobs $error');
       rethrow;
     }
   }
-  Future<dynamic> acceptJob(int job_id,dynamic body) async {
+
+  Future<dynamic> acceptJob(int job_id, dynamic body) async {
     try {
       String? id = await getUserId();
-      dynamic response = await _apiAcceptJob
-          .postResponse(data: {"supplier_id": id, "job_id": job_id,"supplier_to_job_distance":body["supplier_to_job_distance"],"supplier_to_job_time":body["supplier_to_job_time"]});
+      dynamic response = await _apiAcceptJob.postResponse(data: {
+        "supplier_id": id,
+        "job_id": job_id,
+        "supplier_to_job_distance": body["supplier_to_job_distance"],
+        "supplier_to_job_time": body["supplier_to_job_time"]
+      });
       debugPrint('response book or accept jobs $response');
       return response;
     } catch (error) {
@@ -188,17 +208,18 @@ class JobsRepository {
       rethrow;
     }
   }
-  Future<dynamic> updateJob(int job_id,dynamic body) async {
+
+  Future<dynamic> updateJob(int job_id, dynamic body) async {
     try {
       String? id = await getUserId();
-      String role=await getRole();
-      body["job_id"]=job_id;
+      String role = await getRole();
+      body["job_id"] = job_id;
       dynamic response;
-      if(Constants.supplierRoleId==role){
-        body["supplier_id"]=id;
+      if (Constants.supplierRoleId == role) {
+        body["supplier_id"] = id;
         response = await _apiUpdateJob.postResponse(data: body);
-      }else{
-        body["customer_id"]=id;
+      } else {
+        body["customer_id"] = id;
         response = await _apiUpdateJobCustomer.postResponse(data: body);
       }
 
@@ -208,16 +229,16 @@ class JobsRepository {
       rethrow;
     }
   }
-  Future<dynamic> rateJob(int job_id,dynamic body) async {
+
+  Future<dynamic> rateJob(int job_id, dynamic body) async {
     try {
       String? id = await getUserId();
-      String role=await getRole();
-      body["job_id"]=job_id;
+      String role = await getRole();
+      body["job_id"] = job_id;
       dynamic response;
 
-        body["customer_id"]=id;
-        response = await _apiRateJob.postResponse(data: body);
-
+      body["customer_id"] = id;
+      response = await _apiRateJob.postResponse(data: body);
 
       return response;
     } catch (error) {
@@ -225,27 +246,29 @@ class JobsRepository {
       rethrow;
     }
   }
+
   Future<dynamic> downloadInvoice(int job_id) async {
     try {
       String? id = await getUserId();
-      String? role =await getRole();
+      String? role = await getRole();
       dynamic response;
 
-      if(role==Constants.customerRoleId){
-        response = await _apiInvoice.getResponseFile(params: "?job_id=$job_id&format=customer");
-
-      }else{
-        response = await _apiInvoice.getResponseFile(params: "?job_id=$job_id&format=supplier");
-
+      if (role == Constants.customerRoleId) {
+        response = await _apiInvoice.getResponseFile(
+            params: "?job_id=$job_id&format=customer");
+      } else {
+        response = await _apiInvoice.getResponseFile(
+            params: "?job_id=$job_id&format=supplier");
       }
-        debugPrint('response of the downloaded invoice $response');
+      debugPrint('response of the downloaded invoice $response');
       return response;
     } catch (error) {
       debugPrint('error in downloading invoice $error');
       rethrow;
     }
   }
-  Future<dynamic> cancelBooking(int job_id,String reason) async {
+
+  Future<dynamic> cancelBooking(int job_id, String reason) async {
     try {
       String? id = await getUserId();
       dynamic response = await _apiCancelBooking.postResponse(data: {
@@ -260,7 +283,8 @@ class JobsRepository {
       rethrow;
     }
   }
-  Future<dynamic> cancelJobNoPenalty(int job_id,String reason) async {
+
+  Future<dynamic> cancelJobNoPenalty(int job_id, String reason) async {
     try {
       String? id = await getUserId();
       dynamic response = await _apicancelJobNoPenalty.postResponse(data: {
@@ -275,17 +299,18 @@ class JobsRepository {
       rethrow;
     }
   }
-  Future<dynamic> cancelJobWithPenalty(int job_id,String reason,String action) async {
+
+  Future<dynamic> cancelJobWithPenalty(
+      int job_id, String reason, String action) async {
     try {
       String? id = await getUserId();
-      dynamic response= await _apicancelJobWithPenalty.postResponse(data: {
+      dynamic response = await _apicancelJobWithPenalty.postResponse(data: {
         "customer_id": id,
         "job_id": job_id,
         "reason": reason,
         "cancellation_reason": reason,
         "action": action,
       });
-
 
       debugPrint('response cancel booking  $response');
       return response;
@@ -339,6 +364,37 @@ class JobsRepository {
     }
   }
 
+  Future<dynamic> initiateJobPayment(int jobId) async {
+    try {
+      return await _apiInitiateJobPayment.postResponse(data: {
+        'job_id': jobId.toString(),
+      });
+    } catch (error) {
+      debugPrint('error initiating job payment $error');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> initiateExtraPayment(int jobId) async {
+    try {
+      return await _apiInitiateExtraPayment.postResponse(data: {
+        'job_id': jobId.toString(),
+      });
+    } catch (error) {
+      debugPrint('error initiating extra payment $error');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> getPendingPayments() async {
+    try {
+      return await _apiPendingPayments.getResponse();
+    } catch (error) {
+      debugPrint('error getting pending payments $error');
+      rethrow;
+    }
+  }
+
   Future<String> getUserId() async {
     try {
       final token = await AppPreferences().get(key: userIdKey, isModel: false);
@@ -350,8 +406,7 @@ class JobsRepository {
 
   Future<String> getRole() async {
     try {
-      final role =
-          await AppPreferences().get(key: userRoleKey, isModel: false);
+      final role = await AppPreferences().get(key: userRoleKey, isModel: false);
       return role ?? '';
     } catch (err) {
       return '';

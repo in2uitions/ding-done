@@ -7,6 +7,7 @@ import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
 import 'package:dingdone/view/job_details_supplier/job_details_supplier.dart';
+import 'package:dingdone/view/job_payment/pending_job_payments_screen.dart';
 import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:dingdone/view/update_job_request_customer/update_job_request_customer.dart';
 import 'package:dingdone/services/app_update_service.dart';
@@ -227,13 +228,19 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
               builder: (context, profileViewModel, paymentViewModel, _) {
                 return ConfirmPaymentMethod(
                   payment_method:
-                  paymentViewModel.getPaymentBody['tap_payments_card'],
+                      paymentViewModel.getPaymentBody['tap_payments_card'],
                   paymentViewModel: paymentViewModel,
                   profileViewModel: profileViewModel,
                   role: role,
                 );
               },
             ),
+          ),
+        );
+      } else if (uri.toString().contains('job_payment')) {
+        navigatorKey.currentState?.push(
+          MaterialPageRoute(
+            builder: (_) => const PendingJobPaymentsScreen(autoResume: true),
           ),
         );
       } else {
@@ -263,8 +270,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       pageBuilder: (_, animation, __) => page,
       transitionsBuilder: (_, animation, __, child) {
         return SlideTransition(
-          position:
-          Tween(begin: const Offset(1, 0), end: Offset.zero).animate(animation),
+          position: Tween(begin: const Offset(1, 0), end: Offset.zero)
+              .animate(animation),
           child: child,
         );
       },
@@ -296,9 +303,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     final adjustConfig = AdjustConfig(
       adjustAppToken,
-      kDebugMode
-          ? AdjustEnvironment.sandbox
-          : AdjustEnvironment.production,
+      kDebugMode ? AdjustEnvironment.sandbox : AdjustEnvironment.production,
     );
 
 // Optional Logging (recommended while testing)
@@ -310,10 +315,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     };
 
     Adjust.initSdk(adjustConfig);
+
     /// ------------------------------------------------------
 
     Stripe.publishableKey =
-    "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
+        "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
 
     await OneSignalService.initialize();
 
@@ -328,6 +334,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       await _requestTrackingPermission();
     }
   }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
@@ -381,13 +388,13 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   Future<void> _requestTrackingPermission() async {
-    final status =
-    await AppTrackingTransparency.trackingAuthorizationStatus;
+    final status = await AppTrackingTransparency.trackingAuthorizationStatus;
 
     if (status == TrackingStatus.notDetermined) {
       await AppTrackingTransparency.requestTrackingAuthorization();
     }
   }
+
   void getLanguage() async {
     try {
       String? lang = await AppPreferences().get(key: language, isModel: false);
@@ -399,10 +406,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
           value: lang == 'ar'
               ? 'ar-SA'
               : lang == 'ru'
-              ? 'ru-RU'
-              : lang == 'el'
-              ? 'el-GR'
-              : 'en-US',
+                  ? 'ru-RU'
+                  : lang == 'el'
+                      ? 'el-GR'
+                      : 'en-US',
           isModel: false);
     } catch (error) {
       debugPrint('getLanguage failed: $error');
@@ -436,11 +443,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       child: MaterialApp(
         navigatorKey: navigatorKey,
         debugShowCheckedModeBanner: false,
-
         locale: context.locale,
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
-
         home: _doLogin
             ? BottomBar(userRole: userRole, currentTab: 0)
             : const OnBoardingScreen(),

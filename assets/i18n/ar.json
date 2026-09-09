@@ -148,6 +148,35 @@
     "clearAll": "مسح الكل"
 
   },
+  "payment": {
+    "paymentStatus": "حالة الدفع",
+    "payAuthorize": "ادفع / فوّض",
+    "approveExtra": "الموافقة على المبلغ الإضافي",
+    "authorizeTitle": "تفويض الدفع",
+    "pendingPayments": "مدفوعات معلّقة",
+    "pendingLaunchMessage": "لديك دفعة تحتاج إلى موافقتك. هل تريد إكمالها الآن؟",
+    "noPending": "لا توجد مدفوعات تحتاج إلى اهتمامك الآن.",
+    "couldNotStart": "تعذر بدء هذه الدفعة. يرجى المحاولة مرة أخرى.",
+    "jobSavedRetry": "تم إنشاء الوظيفة مسبقاً. فشل التفويض — أعد محاولة الدفع دون حجز جديد، أو افتحها من الوظائف المطلوبة.",
+    "retry": "إعادة المحاولة",
+    "incompleteTitle": "لم يكتمل الدفع",
+    "incompleteMessage": "يمكنك إكمال هذه الدفعة لاحقاً من وظائفك.",
+    "pendingTitle": "الدفع معلّق",
+    "pendingMessage": "لم نؤكد هذه الدفعة بعد. يرجى المحاولة مرة أخرى.",
+    "authorized": "تم تفويض الدفع. يتم الآن تعميم طلبك.",
+    "extraPaid": "تم إكمال الدفعة الإضافية.",
+    "extraDue": "مبلغ إضافي مستحق",
+    "authorizeDue": "يلزم التفويض",
+    "extraRequiredSupplier": "اكتملت الوظيفة. ما زال العميل بحاجة للموافقة على المبلغ الإضافي.",
+    "status": {
+      "unpaid": "غير مدفوع",
+      "authorization_pending": "التفويض معلّق",
+      "authorized": "مفوّض",
+      "extra_pending": "دفعة إضافية مستحقة",
+      "paid": "مدفوع",
+      "cancelled": "ملغى"
+    }
+  },
   "profile": {
     "help": "المساعدة",
     "privacyPolicy": "سياسة الخصوصية",

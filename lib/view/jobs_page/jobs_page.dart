@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/utils/job_payment_status.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/notifications_screen/notifications_screen.dart';
@@ -51,9 +52,7 @@ class _JobsPageState extends State<JobsPage> {
   AudioPlayer _audioPlayer = AudioPlayer();
   Future<void> _handleRefresh() async {
     try {
-
       await Provider.of<JobsViewModel>(context, listen: false).readJson();
-
     } catch (error) {
       // Handle the error, e.g., by displaying a snackbar
       ScaffoldMessenger.of(context).showSnackBar(
@@ -63,6 +62,7 @@ class _JobsPageState extends State<JobsPage> {
       );
     }
   }
+
   @override
   void initState() {
     super.initState();
@@ -87,6 +87,7 @@ class _JobsPageState extends State<JobsPage> {
 
     await _audioPlayer.play(AssetSource(soundPath));
   }
+
   void _showReviewDialog(
       BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
     playSound();
@@ -102,7 +103,6 @@ class _JobsPageState extends State<JobsPage> {
     );
   }
 
-
   Widget review(
       BuildContext context, dynamic job, JobsViewModel jobsViewModel) {
     return AlertDialog(
@@ -117,7 +117,7 @@ class _JobsPageState extends State<JobsPage> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-             'updateJob.rateJob'.tr(),
+              'updateJob.rateJob'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -130,7 +130,9 @@ class _JobsPageState extends State<JobsPage> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              job.service!=null?job.service['translations'][0]['title']:'',
+              job.service != null
+                  ? job.service['translations'][0]['title']
+                  : '',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -140,7 +142,10 @@ class _JobsPageState extends State<JobsPage> {
           ),
           SizedBox(height: context.appValues.appSize.s10),
           RatingStarsWidget(
-            stars: jobsViewModel.updatedBody!=null && jobsViewModel.updatedBody["rating_stars"]!=null?jobsViewModel.updatedBody["rating_stars"]:0,
+            stars: jobsViewModel.updatedBody != null &&
+                    jobsViewModel.updatedBody["rating_stars"] != null
+                ? jobsViewModel.updatedBody["rating_stars"]
+                : 0,
             userRole: Constants.customerRoleId,
           ),
           ReviewWidget(
@@ -160,8 +165,9 @@ class _JobsPageState extends State<JobsPage> {
                   } else {
                     showDialog(
                         context: context,
-                        builder: (BuildContext context) => _buildPopupDialogFailure(context,
-                            '${jobsViewModel.errorMessage}'));
+                        builder: (BuildContext context) =>
+                            _buildPopupDialogFailure(
+                                context, '${jobsViewModel.errorMessage}'));
                   }
                 },
                 style: ElevatedButton.styleFrom(
@@ -247,35 +253,42 @@ class _JobsPageState extends State<JobsPage> {
                                     ),
                                     Consumer<JobsViewModel>(
                                         builder: (context, jobsViewModel, _) {
-                                        return  Stack(
-                                          children: [
-                                            InkWell(
-                                              onTap: () {
-                                                Navigator.of(context).push(
-                                                  _createRoute(
-                                                    NotificationsScreen(jobsViewModel: jobsViewModel),
-                                                  ),
-                                                ).then((_) {
-                                                  setState(() {}); // Triggers rebuild after pop
-                                                });
-                                              },
-                                              child: SvgPicture.asset(
-                                                jobsViewModel.hasNotifications
-                                                    ? 'assets/img/notification.svg'
-                                                    : 'assets/img/white-bell.svg',
-                                                color: jobsViewModel.hasNotifications ?const Color(0xffFFC500) : null,
-                                              ),
+                                      return Stack(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              Navigator.of(context)
+                                                  .push(
+                                                _createRoute(
+                                                  NotificationsScreen(
+                                                      jobsViewModel:
+                                                          jobsViewModel),
+                                                ),
+                                              )
+                                                  .then((_) {
+                                                setState(
+                                                    () {}); // Triggers rebuild after pop
+                                              });
+                                            },
+                                            child: SvgPicture.asset(
+                                              jobsViewModel.hasNotifications
+                                                  ? 'assets/img/notification.svg'
+                                                  : 'assets/img/white-bell.svg',
+                                              color:
+                                                  jobsViewModel.hasNotifications
+                                                      ? const Color(0xffFFC500)
+                                                      : null,
                                             ),
-                                            // if (profileViewModel.hasNotifications)
-                                            //   Positioned(
-                                            //     right: 0,
-                                            //     top: 0,
-                                            //     child: PulsingDot(),
-                                            //   ),
-                                          ],
-                                        );
-                                      }
-                                    ),
+                                          ),
+                                          // if (profileViewModel.hasNotifications)
+                                          //   Positioned(
+                                          //     right: 0,
+                                          //     top: 0,
+                                          //     child: PulsingDot(),
+                                          //   ),
+                                        ],
+                                      );
+                                    }),
                                   ],
                                 ),
                                 // InkWell(
@@ -348,119 +361,88 @@ class _JobsPageState extends State<JobsPage> {
                       ),
                       color: Color(0xffFEFEFE),
                     ),
-                    child: ListView.builder(
-                        controller: scrollController,
-                        itemCount: 1,
-                        padding: EdgeInsets.zero,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            children: [
-                              const Gap(30),
-                              Consumer<JobsViewModel>(
-                                builder: (context, jobsViewModel, _) {
-                                  List<int> jobCounts =
-                                      getJobCounts(jobsViewModel);
-                                  debugPrint('job counts  is $jobCounts');
+                    child: Column(
+                      children: [
+                        const Gap(30),
+                        Expanded(
+                          child: Consumer<JobsViewModel>(
+                            builder: (context, jobsViewModel, _) {
+                              List<int> jobCounts = getJobCounts(jobsViewModel);
+                              debugPrint('job counts  is $jobCounts');
 
-                                  return widget.userRole ==
-                                          Constants.supplierRoleId
-                                      ? SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.height,
-                                          child: TabsJobsSupplier(
-                                            tabtitle: [
-                                              'jobs.bookedJobs'.tr(),
-                                             'jobs.activeJobs'.tr(),
-                                             'jobs.completedJobs'.tr(),
-                                            ],
-                                            tabContent: [
-                                              JobsCards(
-                                                active: "bookedJobs",
-                                                userRole: widget.userRole,
-                                                jobsViewModel: jobsViewModel,
-                                                lang: widget.lang,
-                                                scrollController:
-                                                    scrollController,
-                                              ),
-                                              JobsCards(
-                                                active: "activeJobs",
-                                                userRole: widget.userRole,
-                                                jobsViewModel: jobsViewModel,
-                                                lang: widget.lang,
-                                                scrollController:
-                                                    scrollController,
-                                              ),
-                                              JobsCards(
-                                                active: "completedJobs",
-                                                userRole: widget.userRole,
-                                                jobsViewModel: jobsViewModel,
-                                                lang: widget.lang,
-                                                scrollController:
-                                                    scrollController,
-                                              ),
-                                            ], // Ensure this is List<Widget>
-                                            jobCounts: jobCounts,
-                                            initialActiveTab: _active,
-                                            initialIndex: widget.initialIndex,
-                                          ),
-                                        )
-                                      : SizedBox(
-                                          height:
-                                              MediaQuery.of(context).size.height,
-                                          child: TabsJobs(
-                                            tabtitle: [
-                                             'jobs.requestedJobs'.tr(),
-                                              'jobs.confirmedJobs'.tr(),
-                                             'jobs.activeJobs'.tr(),
-                                              'jobs.completedJobs'.tr(),
-                                            ],
-                                            tabContent: [
-                                              JobsCards(
-                                                active: "requestedJobs",
-                                                userRole: widget.userRole,
-                                                jobsViewModel: jobsViewModel,
-                                                lang: widget.lang,
-                                                scrollController:
-                                                    scrollController,
-                                              ),
-                                              JobsCards(
-                                                active: "bookedJobs",
-                                                userRole: widget.userRole,
-                                                jobsViewModel: jobsViewModel,
-                                                lang: widget.lang,
-                                                scrollController:
-                                                    scrollController,
-                                              ),
-                                              JobsCards(
-                                                active: "activeJobs",
-                                                userRole: widget.userRole,
-                                                jobsViewModel: jobsViewModel,
-                                                lang: widget.lang,
-                                                scrollController:
-                                                    scrollController,
-                                              ),
-                                              JobsCards(
-                                                active: "completedJobs",
-                                                userRole: widget.userRole,
-                                                jobsViewModel: jobsViewModel,
-                                                lang: widget.lang,
-                                                scrollController:
-                                                    scrollController,
-                                              ),
-                                            ],
-                                            jobCounts: jobCounts,
-                                            initialActiveTab: _active,
-                                            initialIndex: widget.initialIndex,
-                                            // Pass the active tab here
-                                            // content: buildHeader(context),
-                                          ),
-                                        );
-                                },
-                              ),
-
-                            ],
-                          );
-                        }),
+                              return widget.userRole == Constants.supplierRoleId
+                                  ? TabsJobsSupplier(
+                                      tabtitle: [
+                                        'jobs.bookedJobs'.tr(),
+                                        'jobs.activeJobs'.tr(),
+                                        'jobs.completedJobs'.tr(),
+                                      ],
+                                      tabContent: [
+                                        JobsCards(
+                                          active: "bookedJobs",
+                                          userRole: widget.userRole,
+                                          jobsViewModel: jobsViewModel,
+                                          lang: widget.lang,
+                                        ),
+                                        JobsCards(
+                                          active: "activeJobs",
+                                          userRole: widget.userRole,
+                                          jobsViewModel: jobsViewModel,
+                                          lang: widget.lang,
+                                        ),
+                                        JobsCards(
+                                          active: "completedJobs",
+                                          userRole: widget.userRole,
+                                          jobsViewModel: jobsViewModel,
+                                          lang: widget.lang,
+                                        ),
+                                      ], // Ensure this is List<Widget>
+                                      jobCounts: jobCounts,
+                                      initialActiveTab: _active,
+                                      initialIndex: widget.initialIndex,
+                                    )
+                                  : TabsJobs(
+                                      tabtitle: [
+                                        'jobs.requestedJobs'.tr(),
+                                        'jobs.confirmedJobs'.tr(),
+                                        'jobs.activeJobs'.tr(),
+                                        'jobs.completedJobs'.tr(),
+                                      ],
+                                      tabContent: [
+                                        JobsCards(
+                                          active: "requestedJobs",
+                                          userRole: widget.userRole,
+                                          jobsViewModel: jobsViewModel,
+                                          lang: widget.lang,
+                                        ),
+                                        JobsCards(
+                                          active: "bookedJobs",
+                                          userRole: widget.userRole,
+                                          jobsViewModel: jobsViewModel,
+                                          lang: widget.lang,
+                                        ),
+                                        JobsCards(
+                                          active: "activeJobs",
+                                          userRole: widget.userRole,
+                                          jobsViewModel: jobsViewModel,
+                                          lang: widget.lang,
+                                        ),
+                                        JobsCards(
+                                          active: "completedJobs",
+                                          userRole: widget.userRole,
+                                          jobsViewModel: jobsViewModel,
+                                          lang: widget.lang,
+                                        ),
+                                      ],
+                                      jobCounts: jobCounts,
+                                      initialActiveTab: _active,
+                                      initialIndex: widget.initialIndex,
+                                    );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               }),
@@ -472,13 +454,22 @@ class _JobsPageState extends State<JobsPage> {
   List<int> getJobCounts(JobsViewModel jobsViewModel) {
     List<int> a = Constants.supplierRoleId == widget.userRole
         ? [
-            jobsViewModel.supplierBookedJobs!=null?jobsViewModel.supplierBookedJobs.length:0,
-            jobsViewModel.supplierInProgressJobs!=null?jobsViewModel.supplierInProgressJobs.length:0,
-            jobsViewModel.supplierCompletedJobs!=null?jobsViewModel.supplierCompletedJobs.length:0,
+            jobsViewModel.supplierBookedJobs != null
+                ? jobsViewModel.supplierBookedJobs.length
+                : 0,
+            jobsViewModel.supplierInProgressJobs != null
+                ? jobsViewModel.supplierInProgressJobs.length
+                : 0,
+            jobsViewModel.supplierCompletedJobs != null
+                ? jobsViewModel.supplierCompletedJobs.length
+                : 0,
           ]
         : [
             jobsViewModel.getcustomerJobs
-                .where((e) => e.status == 'circulating' || e.status == 'draft')
+                .where((e) =>
+                    JobPaymentStatus.needsInitialPayment(e.payment_status) ||
+                    ((e.status == 'circulating' || e.status == 'draft') &&
+                        !JobPaymentStatus.isCancelled(e.payment_status)))
                 .toList()
                 .length,
             jobsViewModel.getcustomerJobs
@@ -545,7 +536,8 @@ class _JobsPageState extends State<JobsPage> {
     );
   }
 }
-Widget _buildPopupDialogFailure(BuildContext context,String message) {
+
+Widget _buildPopupDialogFailure(BuildContext context, String message) {
   return AlertDialog(
     elevation: 15,
     content: Column(

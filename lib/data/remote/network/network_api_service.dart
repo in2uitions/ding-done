@@ -240,44 +240,74 @@ class NetworkApiService extends BaseApiService {
     }
   }
 
+  dynamic _decodeBody(http.Response response) {
+    if (response.body.isEmpty) return <String, dynamic>{};
+    try {
+      return jsonDecode(response.body);
+    } catch (_) {
+      return response.body;
+    }
+  }
+
+  String _messageFromBody(dynamic decoded, http.Response response) {
+    if (decoded is Map) {
+      final errors = decoded['errors'];
+      if (errors is List && errors.isNotEmpty) {
+        final first = errors.first;
+        if (first is Map && first['message'] != null) {
+          return first['message'].toString();
+        }
+        return first.toString();
+      }
+      final message = decoded['message'] ??
+          decoded['reason'] ??
+          decoded['error'] ??
+          decoded['detail'];
+      if (message != null && message.toString().trim().isNotEmpty) {
+        return message.toString();
+      }
+    }
+    final body = response.body.trim();
+    if (body.isNotEmpty && !body.toLowerCase().contains('instance of')) {
+      return body;
+    }
+    return 'Request failed (${response.statusCode})';
+  }
+
   dynamic returnResponse(http.Response response) async {
     LoginViewModel loginViewModel = LoginViewModel();
     debugPrint('status code ${response.statusCode}');
     switch (response.statusCode) {
       case 200:
-        //
-        dynamic responseJson = jsonDecode(response.body);
+      case 201:
+      case 202:
+      case 300:
+      case 503:
+      case 505:
+        final responseJson = _decodeBody(response);
         debugPrint('respon j $responseJson');
         return responseJson;
-        case 503:
-        //
-        dynamic responseJson = jsonDecode(response.body);
-        return responseJson;
-        case 505:
-        //
-        dynamic responseJson = jsonDecode(response.body);
-        return responseJson;
-        case 300:
-        //
-        dynamic responseJson = jsonDecode(response.body);
-        return responseJson;
       case 400:
-        throw BadRequestException(response.toString());
+      case 422:
+        final decoded = _decodeBody(response);
+        if (decoded is Map) return decoded;
+        throw BadRequestException(_messageFromBody(decoded, response));
       case 401:
         if (await getToken() != '') {
           loginViewModel.loginSharedPreference();
         }
         throw UnauthorisedException(
-            jsonDecode(response.body)['errors'][0]['message']);
+            _messageFromBody(_decodeBody(response), response));
       case 403:
         throw UnauthorisedException(
-            jsonDecode(response.body)['errors'][0]['message']);
+            _messageFromBody(_decodeBody(response), response));
       case 404:
-        throw UnauthorisedException(response.body.toString());
+        throw UnauthorisedException(
+            _messageFromBody(_decodeBody(response), response));
       case 500:
       default:
         throw FetchDataException(
-            'Error occured while communication with server with status code : ${response.statusCode} ${response.body}');
+            _messageFromBody(_decodeBody(response), response));
     }
   }
 

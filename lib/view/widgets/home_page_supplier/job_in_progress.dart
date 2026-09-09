@@ -58,7 +58,8 @@ class _JobInProgressState extends State<JobInProgress> {
                 break; // Break the loop once the translation is found
               }
             }
-            debugPrint('amount ${jobsViewModel.supplierInProgressJobs[index].total_amount}');
+            debugPrint(
+                'amount ${jobsViewModel.supplierInProgressJobs[index].total_amount}');
 
             return Padding(
               padding: EdgeInsets.symmetric(
@@ -94,14 +95,12 @@ class _JobInProgressState extends State<JobInProgress> {
                               decoration: BoxDecoration(
                                 color: const Color(0xffEAEAFF),
                                 borderRadius: BorderRadius.circular(16),
-
-                                  image: DecorationImage(
-                                    image: NetworkImage(
-                                      '${context.resources.image.networkImagePath2}/${jobsViewModel.supplierInProgressJobs[index].service['image']}.svg',
-                                    ),
-                                    fit: BoxFit.cover,
+                                image: DecorationImage(
+                                  image: NetworkImage(
+                                    '${context.resources.image.networkImagePath2}/${jobsViewModel.supplierInProgressJobs[index].service['image']}.svg',
                                   ),
-
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                               // child: SvgPicture.network(
                               //   '${context.resources.image.networkImagePath2}/${jobsViewModel.supplierInProgressJobs[index].service['image']}.svg',
@@ -161,8 +160,7 @@ class _JobInProgressState extends State<JobInProgress> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                 'jobs.workingDay'.tr(),
-
+                                  'jobs.workingDay'.tr(),
                                   style: getPrimaryBoldStyle(
                                     fontSize: 12,
                                     color: const Color(0xff180B3C),
@@ -175,12 +173,16 @@ class _JobInProgressState extends State<JobInProgress> {
                                     const Gap(7),
                                     Text(
                                       jobsViewModel
-                                          .supplierInProgressJobs[index]
-                                          .start_date.toString()!='null'?DateFormat('d MMMM yyyy').format(
-                                          DateTime.parse(jobsViewModel
-                                              .supplierInProgressJobs[index]
-                                              .start_date
-                                              .toString())):'',
+                                                  .supplierInProgressJobs[index]
+                                                  .start_date
+                                                  .toString() !=
+                                              'null'
+                                          ? DateFormat('d MMMM yyyy').format(
+                                              DateTime.parse(jobsViewModel
+                                                  .supplierInProgressJobs[index]
+                                                  .start_date
+                                                  .toString()))
+                                          : '',
 
                                       // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
                                       style: getPrimaryRegularStyle(
@@ -209,14 +211,17 @@ class _JobInProgressState extends State<JobInProgress> {
                                         'assets/img/clockhpsupp.svg'),
                                     const Gap(7),
                                     Text(
-                                        jobsViewModel
-                                            .supplierInProgressJobs[index]
-                                            .start_date
-                                            .toString()!='null'? DateFormat('HH:mm').format(DateTime.parse(
-                                          jobsViewModel
-                                              .supplierInProgressJobs[index]
-                                              .start_date
-                                              .toString())):'',
+                                      jobsViewModel
+                                                  .supplierInProgressJobs[index]
+                                                  .start_date
+                                                  .toString() !=
+                                              'null'
+                                          ? DateFormat('HH:mm').format(
+                                              DateTime.parse(jobsViewModel
+                                                  .supplierInProgressJobs[index]
+                                                  .start_date
+                                                  .toString()))
+                                          : '',
 
                                       // '${jobsViewModel.supplierInProgressJobs[index].start_date}',
                                       style: getPrimaryRegularStyle(
@@ -260,11 +265,15 @@ class _JobInProgressState extends State<JobInProgress> {
                                     ),
                                   ),
                                   Text(
-                                    jobsViewModel.supplierInProgressJobs[index].total_amount != null &&
-                                        jobsViewModel.supplierInProgressJobs[index]
-                                            .total_amount
-                                            .toString() !=
-                                            ''
+                                    jobsViewModel.supplierInProgressJobs[index]
+                                                    .total_amount !=
+                                                null &&
+                                            jobsViewModel
+                                                    .supplierInProgressJobs[
+                                                        index]
+                                                    .total_amount
+                                                    .toString() !=
+                                                ''
                                         ? '${jobsViewModel.supplierInProgressJobs[index].total_amount} ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null && jobsViewModel.supplierInProgressJobs[index].service["country_rates"].isNotEmpty ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["currency"] : ''}'
                                         : '${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].number_of_units != null ? (jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] * jobsViewModel.supplierInProgressJobs[index].number_of_units) : (jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["unit_rate"] * jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["minimum_order"]) : ''} ${jobsViewModel.supplierInProgressJobs[index].service["country_rates"] != null ? jobsViewModel.supplierInProgressJobs[index].service["country_rates"][0]["country"]["currency"] : ''}',
 
@@ -294,7 +303,10 @@ class _JobInProgressState extends State<JobInProgress> {
                                       builder: (BuildContext context) =>
                                           showFinalData(
                                               context,
-                                              jobsViewModel,jobsViewModel.supplierInProgressJobs[index]));
+                                              jobsViewModel,
+                                              jobsViewModel
+                                                      .supplierInProgressJobs[
+                                                  index]));
                                   // debugPrint(
                                   //     '${jobsViewModel.supplierInProgressJobs[index].id}');
                                   // jobsViewModel.finishJobAndCollectPayment(
@@ -326,18 +338,24 @@ class _JobInProgressState extends State<JobInProgress> {
           });
     });
   }
-  Widget showFinalData(BuildContext context, JobsViewModel jobsViewModel,var data ) {
-    return jobsViewModel.jobUpdated
-        ? AlertDialog(
+
+  Widget showFinalData(
+      BuildContext context, JobsViewModel jobsViewModel, var data) {
+    jobsViewModel.prepareSupplierFinish(
+      numberOfUnits: data.number_of_units,
+      completedUnits: data.completed_units,
+    );
+    final completedUnits = jobsViewModel.updatedBody['completed_units'];
+    final estimatedUnits =
+        jobsViewModel.updatedBody['number_of_units'] ?? data.number_of_units;
+    return AlertDialog(
       backgroundColor: Colors.white,
       elevation: 15,
       content: Column(
         mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding:
-            EdgeInsets.only(bottom: context.appValues.appPadding.p8),
+            padding: EdgeInsets.only(bottom: context.appValues.appPadding.p8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -345,36 +363,17 @@ class _JobInProgressState extends State<JobInProgress> {
                   child: SvgPicture.asset('assets/img/x.svg'),
                   onTap: () {
                     Navigator.pop(context);
-
                   },
                 ),
               ],
             ),
           ),
-          // message == 'Success'
-          //     ?
-          // SvgPicture.asset('assets/img/service-popup-image.svg')
-          //     : SvgPicture.asset('assets/img/failure.svg'),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              'Completed Units: ${jobsViewModel.updatedBody["completed_units"] ?? data.completed_units}',
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: context.resources.color.btnColorBlue,
-              ),
-            ),
-          ),
-
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              '${'updateJob.estimatedNumberOfUnits'.tr()}: ${jobsViewModel.updatedBody["number_of_units"] ?? data.number_of_units}',
+              '${'updateJob.actualNumberOfUnits'.tr()}: $completedUnits',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -387,7 +386,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              'Extra Fees: ${jobsViewModel.updatedBody["extra_fees"] ?? data.extra_fees}',
+              '${'updateJob.estimatedNumberOfUnits'.tr()}: $estimatedUnits',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -400,7 +399,20 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              'Extra Fees Reason: ${jobsViewModel.updatedBody["extra_fees_reason"] ?? data.extra_fees_reason}',
+              'Extra Fees: ${jobsViewModel.updatedBody["extra_fees"] ?? data.extra_fees ?? ''}',
+              textAlign: TextAlign.center,
+              style: getPrimaryRegularStyle(
+                fontSize: 17,
+                color: context.resources.color.btnColorBlue,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.appValues.appPadding.p32,
+            ),
+            child: Text(
+              'Extra Fees Reason: ${jobsViewModel.updatedBody["extra_fees_reason"] ?? data.extra_fees_reason ?? ''}',
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 17,
@@ -411,20 +423,27 @@ class _JobInProgressState extends State<JobInProgress> {
           SizedBox(height: context.appValues.appSize.s20),
           ElevatedButton(
             onPressed: () async {
-              debugPrint('data in finish ${data.customer['id']}');
-              if (await jobsViewModel.finishJobAndCollectPayment(data.id) == true) {
-                Navigator.pop(context); // ❗Close showFinalData dialog first
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _buildPopupDialogSuccess(context),
-                );
-              } else {
-                Navigator.pop(context); // ❗Close showFinalData dialog first
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _buildPopupDialogFailure(context),
-                );
-              }
+              jobsViewModel.prepareSupplierFinish(
+                numberOfUnits: data.number_of_units,
+                completedUnits: data.completed_units,
+              );
+              final updated = await jobsViewModel.updateJob(data.id);
+              final finished = updated == true &&
+                  await jobsViewModel.finishJobAndCollectPayment(data.id) ==
+                      true;
+              if (!context.mounted) return;
+              Navigator.pop(context);
+              showDialog(
+                context: context,
+                builder: (BuildContext context) => finished
+                    ? _buildPopupDialogSuccess(
+                        context,
+                        jobsViewModel.lastExtraPaymentRequired
+                            ? 'payment.extraRequiredSupplier'.tr()
+                            : null,
+                      )
+                    : _buildPopupDialogFailure(context),
+              );
             },
             style: ElevatedButton.styleFrom(
               elevation: 0.0,
@@ -446,151 +465,13 @@ class _JobInProgressState extends State<JobInProgress> {
               ),
             ),
           ),
-
-          SizedBox(height: context.appValues.appSize.s20),
-        ],
-      ),
-    )
-        : AlertDialog(
-      backgroundColor: Colors.white,
-      elevation: 15,
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Padding(
-            padding:
-            EdgeInsets.only(bottom: context.appValues.appPadding.p8),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  child: SvgPicture.asset('assets/img/x.svg'),
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ],
-            ),
-          ),
-          // message == 'Success'
-          //     ?
-          // SvgPicture.asset('assets/img/service-popup-image.svg')
-          //     : SvgPicture.asset('assets/img/failure.svg'),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              'Make sure to update data before finishing',
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: Colors.red,
-              ),
-            ),
-          ),
-          const Gap(7),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              'Completed Units: $data.completed_units ?? ''}',
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                // color: context.resources.color.btnColorBlue,
-                color: Color(0xff4100E3),
-              ),
-            ),
-          ),
-          const Gap(7),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              '${'updateJob.estimatedNumberOfUnits'.tr()}: ${data.number_of_units ?? ''}',
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: Color(0xff4100E3),
-              ),
-            ),
-          ),
-          const Gap(7),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              'Extra Fees: ${data.extra_fees ?? ''}',
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: Color(0xff4100E3),
-              ),
-            ),
-          ),
-          const Gap(7),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.appValues.appPadding.p32,
-            ),
-            child: Text(
-              'Extra Fees Reason: ${data.extra_fees_reason ?? ''}',
-              textAlign: TextAlign.center,
-              style: getPrimaryRegularStyle(
-                fontSize: 17,
-                color: Color(0xff4100E3),
-              ),
-            ),
-          ),
-          SizedBox(height: context.appValues.appSize.s20),
-          ElevatedButton(
-            onPressed: () async {
-              if (await jobsViewModel.finishJobAndCollectPayment(data.id) == true) {
-                Navigator.pop(context); // ❗Close showFinalData dialog first
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _buildPopupDialogSuccess(context),
-                );
-              } else {
-                Navigator.pop(context); // ❗Close showFinalData dialog first
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) => _buildPopupDialogFailure(context),
-                );
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              elevation: 0.0,
-              shadowColor: Colors.transparent,
-              backgroundColor: Color(0xff4100E3),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              fixedSize: Size(
-                context.appValues.appSizePercent.w30,
-                context.appValues.appSizePercent.h5,
-              ),
-            ),
-            child: Text(
-              'Finish Job',
-              style: getPrimaryRegularStyle(
-                fontSize: 15,
-                color: Colors.white,
-              ),
-            ),
-          ),
-
           SizedBox(height: context.appValues.appSize.s20),
         ],
       ),
     );
   }
-  Widget _buildPopupDialogSuccess(BuildContext context) {
+
+  Widget _buildPopupDialogSuccess(BuildContext context, [String? message]) {
     return AlertDialog(
       elevation: 15,
       content: Column(
@@ -630,7 +511,7 @@ class _JobInProgressState extends State<JobInProgress> {
               horizontal: context.appValues.appPadding.p32,
             ),
             child: Text(
-              'jobDetails.jobAccepted'.tr(),
+              message ?? 'jobDetails.jobAccepted'.tr(),
               textAlign: TextAlign.center,
               style: getPrimaryRegularStyle(
                 fontSize: 15,
@@ -642,6 +523,7 @@ class _JobInProgressState extends State<JobInProgress> {
       ),
     );
   }
+
   Widget _buildPopupDialogFailure(BuildContext context) {
     return AlertDialog(
       elevation: 15,
@@ -741,5 +623,4 @@ class _JobInProgressState extends State<JobInProgress> {
   //     ),
   //   );
   // }
-
 }

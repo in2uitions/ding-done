@@ -38,10 +38,17 @@ class JobSizeWidget extends StatefulWidget {
 class _JobSizeWidgetState extends State<JobSizeWidget> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     debugPrint('completed unit s${widget.completed_units}');
     debugPrint('number_of_units unit s${widget.number_of_units}');
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      if (widget.userRole != Constants.supplierRoleId) return;
+      Provider.of<JobsViewModel>(context, listen: false).seedSupplierJobUnits(
+        numberOfUnits: widget.number_of_units,
+        completedUnits: widget.completed_units,
+      );
+    });
   }
   @override
   Widget build(BuildContext context) {
@@ -99,7 +106,8 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                               return CustomIncrementField(
                                 index: 'completed_units',
                                 value: '${widget.completed_units}',
-                                viewModel: jobsViewModel.setUpdatedJob,
+                                viewModel:
+                                    jobsViewModel.setUpdatedJobWithoutNotify,
                                 // Actual units cannot go below estimated units.
                                 minimumOrder: estimatedUnits,
                               );
@@ -164,9 +172,10 @@ class _JobSizeWidgetState extends State<JobSizeWidget> {
                               return CustomIncrementField(
                                 index: 'number_of_units',
                                 value: '${widget.number_of_units}',
-                                // hintText: 'Job Type',
-                                viewModel: jobsViewModel.setUpdatedJob,
-                                minimumOrder: int.parse(widget.number_of_units.toString()),
+                                viewModel:
+                                    jobsViewModel.setUpdatedJobWithoutNotify,
+                                minimumOrder: int.parse(
+                                    widget.number_of_units.toString()),
                               );
                             }),
                           )

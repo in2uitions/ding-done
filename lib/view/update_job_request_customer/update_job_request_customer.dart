@@ -6,6 +6,8 @@ import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/book_a_service/payment_method.dart';
+import 'package:dingdone/view/job_payment/job_payment_flow.dart';
+import 'package:dingdone/utils/job_payment_status.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_area.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/actual_end_time_widget.dart';
 import 'package:dingdone/view/widgets/update_job_request_customer/actual_start_time_widget.dart';
@@ -53,6 +55,7 @@ class UpdateJobRequestCustomer extends StatefulWidget {
 class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
   bool _isLoading = false;
   bool _isLoading2 = false;
+  bool _isPaying = false;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +102,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                       },
                                       child: Icon(
                                         Icons.arrow_back_ios_new_sharp,
-                                        color: context.resources.color.colorWhite,
+                                        color:
+                                            context.resources.color.colorWhite,
                                         size: 20,
                                       ),
                                     ),
@@ -117,7 +121,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     child: Text(
                                       '${'jobDetails.jobDetails'.tr()}',
                                       style: getPrimarySemiBoldStyle(
-                                        color: context.resources.color.colorWhite,
+                                        color:
+                                            context.resources.color.colorWhite,
                                         fontSize: 16,
                                       ),
                                     ),
@@ -154,7 +159,6 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                       padding: EdgeInsets.zero,
                       itemBuilder: (BuildContext context, int index) {
                         return Column(
-
                           children: [
                             const Gap(30),
                             Padding(
@@ -182,7 +186,9 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           ),
                                         ),
                                         Text(
-                                  widget.data.status=='inprogress'?'in progress':widget.data.status,
+                                          widget.data.status == 'inprogress'
+                                              ? 'in progress'
+                                              : widget.data.status,
                                           style: getPrimarySemiBoldStyle(
                                             color: const Color(0xff4100E3),
                                             fontSize: 10,
@@ -191,6 +197,34 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                       ],
                                     ),
                                   ),
+                                  if (widget.data.payment_status != null &&
+                                      widget.data.payment_status
+                                          .toString()
+                                          .isNotEmpty) ...[
+                                    const Gap(8),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'payment.paymentStatus'.tr(),
+                                          style: getPrimaryRegularStyle(
+                                            fontSize: 14,
+                                            color: context
+                                                .resources.color.btnColorBlue,
+                                          ),
+                                        ),
+                                        Text(
+                                          'payment.status.${JobPaymentStatus.normalize(widget.data.payment_status) ?? 'unpaid'}'
+                                              .tr(),
+                                          style: getPrimarySemiBoldStyle(
+                                            color: const Color(0xff4100E3),
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                   const Gap(20),
                                   Padding(
                                     padding: EdgeInsets.symmetric(
@@ -228,133 +262,143 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     ),
                                   ),
                                   const Gap(20),
-
                                   widget.fromWhere == 'jobs.completed'.tr() ||
-                                      widget.fromWhere == 'jobs.active'.tr()
+                                          widget.fromWhere == 'jobs.active'.tr()
                                       ? Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal:
-                                        context.appValues.appPadding.p0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.start,
-                                      children: [
-                                        Padding(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: context
-                                                  .appValues.appPadding.p0,
-                                              vertical: context
                                                   .appValues.appPadding.p0),
-                                          child: Text(
-
-                                                'bookService.jobDescription'.tr(),
-
-                                            style: getPrimaryRegularStyle(
-                                              fontSize: 14,
-                                              color: const Color(0xff180C38),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                            context.appValues.appPadding.p0,
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                              context.appValues.appPadding.p0,
-                                              0,
-                                              context.appValues.appPadding.p0,
-                                              0,
-                                            ),
-                                            child: Builder(
-                                              builder: (context) {
-                                                String? description;
-                                                for (var translation in widget
-                                                    .data
-                                                    .service['translations']) {
-                                                  if (translation[
-                                                  'languages_code'] ==
-                                                      widget.lang) {
-                                                    description = translation[
-                                                    'description'];
-                                                    break; // Exit loop once the match is found
-                                                  }
-                                                }
-
-                                                // Display the description if found, otherwise fallback to default
-                                                return Text(
-                                                  description ??
-                                                      'No description available',
-                                                  // Fallback text if no matching translation is found
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: context
+                                                        .appValues
+                                                        .appPadding
+                                                        .p0,
+                                                    vertical: context.appValues
+                                                        .appPadding.p0),
+                                                child: Text(
+                                                  'bookService.jobDescription'
+                                                      .tr(),
                                                   style: getPrimaryRegularStyle(
-                                                    color:
-                                                    const Color(0xff71727A),
                                                     fontSize: 14,
+                                                    color:
+                                                        const Color(0xff180C38),
                                                   ),
-                                                );
-                                              },
-                                            ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: context
+                                                      .appValues.appPadding.p0,
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                    context.appValues.appPadding
+                                                        .p0,
+                                                    0,
+                                                    context.appValues.appPadding
+                                                        .p0,
+                                                    0,
+                                                  ),
+                                                  child: Builder(
+                                                    builder: (context) {
+                                                      String? description;
+                                                      for (var translation
+                                                          in widget
+                                                                  .data.service[
+                                                              'translations']) {
+                                                        if (translation[
+                                                                'languages_code'] ==
+                                                            widget.lang) {
+                                                          description =
+                                                              translation[
+                                                                  'description'];
+                                                          break; // Exit loop once the match is found
+                                                        }
+                                                      }
+
+                                                      // Display the description if found, otherwise fallback to default
+                                                      return Text(
+                                                        description ??
+                                                            'No description available',
+                                                        // Fallback text if no matching translation is found
+                                                        style:
+                                                            getPrimaryRegularStyle(
+                                                          color: const Color(
+                                                              0xff71727A),
+                                                          fontSize: 14,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ),
+                                                ),
+                                              )
+                                            ],
                                           ),
                                         )
-                                      ],
-                                    ),
-                                  )
                                       : Container(),
                                   const Gap(20),
-
-                                  widget.fromWhere =='jobs.completed'.tr()
+                                  widget.fromWhere == 'jobs.completed'.tr()
                                       ? Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        horizontal: context.appValues.appPadding.p0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-
-                                      children: [
-                                        Padding(
                                           padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                              context.appValues.appPadding.p0,
-                                              vertical:
-                                              context.appValues.appPadding.p0),
-                                          child: Text(
-                                            'signUp.supplier'.tr(),
-                                            style: getPrimaryRegularStyle(
-                                              fontSize: 14,
-                                              color: const Color(0xff180B3C),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            horizontal:
-                                            context.appValues.appPadding.p0,
-                                          ),
-                                          child: Padding(
-                                            padding: EdgeInsets.fromLTRB(
-                                              context.appValues.appPadding.p0,
-                                              0,
-                                              context.appValues.appPadding.p0,
-                                              0,
-                                            ),
-                                            child:
-                                            Text(
-                                              '${ widget.data.supplier['first_name']} ${widget.data.supplier['last_name']}' ??
-                                                  '', // Fallback text if no matching translation is found
-                                              style: getPrimaryRegularStyle(
-                                                fontSize: 14,
-                                                color: const Color(0xff71727A),
+                                              horizontal: context
+                                                  .appValues.appPadding.p0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    horizontal: context
+                                                        .appValues
+                                                        .appPadding
+                                                        .p0,
+                                                    vertical: context.appValues
+                                                        .appPadding.p0),
+                                                child: Text(
+                                                  'signUp.supplier'.tr(),
+                                                  style: getPrimaryRegularStyle(
+                                                    fontSize: 14,
+                                                    color:
+                                                        const Color(0xff180B3C),
+                                                  ),
+                                                ),
                                               ),
-                                            ),
-
+                                              Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: context
+                                                      .appValues.appPadding.p0,
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                    context.appValues.appPadding
+                                                        .p0,
+                                                    0,
+                                                    context.appValues.appPadding
+                                                        .p0,
+                                                    0,
+                                                  ),
+                                                  child: Text(
+                                                    '${widget.data.supplier['first_name']} ${widget.data.supplier['last_name']}' ??
+                                                        '', // Fallback text if no matching translation is found
+                                                    style:
+                                                        getPrimaryRegularStyle(
+                                                      fontSize: 14,
+                                                      color: const Color(
+                                                          0xff71727A),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
+                                        )
                                       : Container(),
                                 ],
                               ),
@@ -367,14 +411,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             ),
                             // :Container(),
 
-
                             widget.fromWhere != 'jobs.active'.tr() &&
-                                    widget.fromWhere !=
-                                        'jobs.completed'.tr()
+                                    widget.fromWhere != 'jobs.completed'.tr()
                                 ? AddressWidget(
                                     address: widget.data.job_address)
                                 : Container(),
-                            widget.fromWhere ==  'jobs.booked'.tr()
+                            widget.fromWhere == 'jobs.booked'.tr()
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(
                                       horizontal:
@@ -432,10 +474,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   )
                                 : Container(),
                             widget.fromWhere != 'jobs.booked'.tr() &&
-                                    widget.fromWhere !=
-                                       'jobs.active'.tr() &&
-                                    widget.fromWhere !=
-                                        'jobs.completed'.tr()
+                                    widget.fromWhere != 'jobs.active'.tr() &&
+                                    widget.fromWhere != 'jobs.completed'.tr()
                                 ? DateAndTimeWidget(
                                     dateTime: widget.data.start_date)
                                 : Container(),
@@ -449,13 +489,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             //         status: widget.data.status,
                             //       )
                             //     : Container(),
-                            widget.fromWhere !=
-                                        'jobs.requestedJobs' &&
-                                    widget.fromWhere !=
-                                       'jobs.booked'.tr() &&
-                                    widget.fromWhere !=
-                                        'jobs.completed'.tr() &&
-                                    widget.fromWhere !='jobs.active'.tr() &&
+                            widget.fromWhere != 'jobs.requestedJobs' &&
+                                    widget.fromWhere != 'jobs.booked'.tr() &&
+                                    widget.fromWhere != 'jobs.completed'.tr() &&
+                                    widget.fromWhere != 'jobs.active'.tr() &&
                                     widget.fromWhere != 'notifications'
                                 ? JobTypeWidget(
                                     job_type: widget.data.job_type,
@@ -464,12 +501,9 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   )
                                 : Container(),
 
-                            widget.fromWhere !=
-                                        'jobs.requestedJobs'.tr() &&
-                                    widget.fromWhere !=
-                                        'jobs.booked'.tr() &&
-                                    widget.fromWhere !=
-                                        'jobs.completed'.tr() &&
+                            widget.fromWhere != 'jobs.requestedJobs'.tr() &&
+                                    widget.fromWhere != 'jobs.booked'.tr() &&
+                                    widget.fromWhere != 'jobs.completed'.tr() &&
                                     widget.fromWhere != 'jobs.active'.tr() &&
                                     widget.fromWhere != 'notifications'
                                 ? JobCategorieAndServiceWidget(
@@ -479,14 +513,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   )
                                 : Container(),
 
-                            widget.fromWhere !=
-                                       'jobs.requestedJobs'.tr() &&
-                                    widget.fromWhere !=
-                                       'jobs.active'.tr() &&
-                                    widget.fromWhere !=
-                                       'jobs.completed'.tr() &&
-                                    widget.fromWhere !=
-                                       'notifications'
+                            widget.fromWhere != 'jobs.requestedJobs'.tr() &&
+                                    widget.fromWhere != 'jobs.active'.tr() &&
+                                    widget.fromWhere != 'jobs.completed'.tr() &&
+                                    widget.fromWhere != 'notifications'
                                 ? ServiceRateAndCurrnecyWidget(
                                     currency: widget.data.job_address["country"]
                                         ["currency"],
@@ -499,16 +529,11 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     userRole: Constants.customerRoleId)
                                 : Container(),
 
-                            widget.fromWhere !=
-                                        'jobs.requestedJobs'.tr() &&
-                                    widget.fromWhere !=
-                                        'jobs.booked'.tr() &&
-                                    widget.fromWhere !=
-                                        'jobs.active'.tr() &&
-                                    widget.fromWhere !=
-                                        'jobs.completed'.tr() &&
-                                    widget.fromWhere !=
-                                        'notifications'
+                            widget.fromWhere != 'jobs.requestedJobs'.tr() &&
+                                    widget.fromWhere != 'jobs.booked'.tr() &&
+                                    widget.fromWhere != 'jobs.active'.tr() &&
+                                    widget.fromWhere != 'jobs.completed'.tr() &&
+                                    widget.fromWhere != 'notifications'
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(
                                       vertical:
@@ -532,22 +557,17 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                   )
                                 : Container(),
 
-                            widget.fromWhere !=
-                                       'jobs.requestedJobs'.tr() &&
-                            widget.fromWhere !=
-                                        'notifications' &&
-                                    widget.fromWhere !=
-                                       'jobs.completed'.tr()
+                            widget.fromWhere != 'jobs.requestedJobs'.tr() &&
+                                    widget.fromWhere != 'notifications' &&
+                                    widget.fromWhere != 'jobs.completed'.tr()
                                 ? CurrentSupplierWidget(
                                     user: widget.data.supplier != null
                                         ? '${widget.data.supplier["first_name"]} ${widget.data.supplier["last_name"]}'
                                         : "")
                                 : Container(),
 
-                            widget.fromWhere !=
-                                        'jobs.requestedJobs'.tr() &&
-                            widget.fromWhere !=
-                                        'notifications' &&
+                            widget.fromWhere != 'jobs.requestedJobs'.tr() &&
+                                    widget.fromWhere != 'notifications' &&
                                     widget.fromWhere != 'jobs.booked'.tr()
                                 ? JobSizeWidget(
                                     completed_units:
@@ -559,14 +579,24 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                         widget.data.extra_fees_reason ?? '',
                                     userRole: Constants.customerRoleId,
                                     fromWhere: widget.fromWhere,
-                                    minimum_order:widget.data.service['country_rates'][0]['minimum_order']!=0 && widget.data.service['country_rates'][0]['minimum_order']!=null ?int.parse(widget.data.service['country_rates'][0]['minimum_order'].toString()) : 1,
+                                    minimum_order: widget.data.service[
+                                                        'country_rates'][0]
+                                                    ['minimum_order'] !=
+                                                0 &&
+                                            widget.data.service['country_rates']
+                                                    [0]['minimum_order'] !=
+                                                null
+                                        ? int.parse(widget
+                                            .data
+                                            .service['country_rates'][0]
+                                                ['minimum_order']
+                                            .toString())
+                                        : 1,
                                   )
                                 : Container(),
 
-                            widget.fromWhere !=
-                                        'jobs.requestedJobs'.tr() &&
-                            widget.fromWhere !=
-                                        'notifications' &&
+                            widget.fromWhere != 'jobs.requestedJobs'.tr() &&
+                                    widget.fromWhere != 'notifications' &&
                                     widget.fromWhere != 'jobs.booked'.tr()
                                 ? ActualStartTimeWidget(
                                     actual_start_date:
@@ -581,13 +611,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 : Container(),
                             widget.fromWhere == 'jobs.completed'.tr()
                                 ? RatingStarsWidget(
-                              stars: widget.data.rating_stars ?? 0.0,
-                              userRole: Constants.supplierRoleId,
-                            )
+                                    stars: widget.data.rating_stars ?? 0.0,
+                                    userRole: Constants.supplierRoleId,
+                                  )
                                 : Container(),
                             widget.fromWhere == 'jobs.active'.tr() ||
-                                    widget.fromWhere ==
-                                        'jobs.completed'.tr()
+                                    widget.fromWhere == 'jobs.completed'.tr()
                                 ? Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
@@ -609,8 +638,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                           ),
                                           Text(
                                             widget.data.total_amount != null
-                                                ? '${widget.data.total_amount} ${widget.data.service!=null?widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"] is String?widget.data.service["country_rates"][0]["country"]:widget.data.service["country_rates"][0]["country"]["currency"] : '':''}'
-                                                : '${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"] is String?widget.data.service["country_rates"][0]["country"]:widget.data.service["country_rates"][0]["country"]["curreny"] ?? ''} ${widget.data.service["country_rates"][0]["unit_type"] != null ? widget.data.service["country_rates"][0]["unit_type"] is String?'':widget.data.service["country_rates"][0]["unit_type"]["code"] : ''}',
+                                                ? '${widget.data.total_amount} ${widget.data.service != null ? widget.data.service["country_rates"].isNotEmpty ? widget.data.service["country_rates"][0]["country"] is String ? widget.data.service["country_rates"][0]["country"] : widget.data.service["country_rates"][0]["country"]["currency"] : '' : ''}'
+                                                : '${widget.data.service["country_rates"][0]["unit_rate"]}  ${widget.data.service["country_rates"][0]["country"] is String ? widget.data.service["country_rates"][0]["country"] : widget.data.service["country_rates"][0]["country"]["curreny"] ?? ''} ${widget.data.service["country_rates"][0]["unit_type"] != null ? widget.data.service["country_rates"][0]["unit_type"] is String ? '' : widget.data.service["country_rates"][0]["unit_type"]["code"] : ''}',
                                             style: getPrimarySemiBoldStyle(
                                               color: const Color(0xff4100E3),
                                               fontSize: 16,
@@ -651,18 +680,130 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                 //   color: context.resources.color.btnColorBlue,
                                 // ),
                                 child: Column(
-                                  // mainAxisAlignment:
-                                  //     MainAxisAlignment.spaceBetween,
                                   children: [
-                                    // widget.fromWhere!='completed'?
+                                    if (JobPaymentStatus.needsAnyPayment(
+                                            widget.data.payment_status) &&
+                                        !JobPaymentStatus.isCancelled(
+                                            widget.data.payment_status))
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical:
+                                              context.appValues.appPadding.p13,
+                                          horizontal:
+                                              context.appValues.appPadding.p15,
+                                        ),
+                                        child: SizedBox(
+                                          width: context
+                                              .appValues.appSizePercent.w100,
+                                          height: 44,
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  const Color(0xff4100E3),
+                                              disabledBackgroundColor:
+                                                  const Color(0xff4100E3),
+                                              disabledForegroundColor:
+                                                  Colors.white,
+                                              elevation: 0,
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(15),
+                                              ),
+                                            ),
+                                            onPressed: _isPaying
+                                                ? null
+                                                : () async {
+                                                    setState(() {
+                                                      _isPaying = true;
+                                                    });
+                                                    final extra =
+                                                        JobPaymentStatus
+                                                            .needsExtraPayment(
+                                                                widget.data
+                                                                    .payment_status);
+                                                    try {
+                                                      final success = extra
+                                                          ? await JobPaymentFlow
+                                                              .startExtraPayment(
+                                                              context,
+                                                              jobId: widget
+                                                                  .data.id,
+                                                            )
+                                                          : await JobPaymentFlow
+                                                              .startInitialPayment(
+                                                              context,
+                                                              jobId: widget
+                                                                  .data.id,
+                                                            );
+                                                      if (!mounted) return;
+                                                      final updated =
+                                                          jobsViewModel.jobById(
+                                                              widget.data.id);
+                                                      if (updated != null) {
+                                                        widget.data
+                                                                .payment_status =
+                                                            updated
+                                                                .payment_status;
+                                                        widget.data.is_paid =
+                                                            updated.is_paid;
+                                                      }
+                                                      if (success) {
+                                                        showDialog(
+                                                          context: context,
+                                                          builder: (context) =>
+                                                              simpleAlert(
+                                                            context,
+                                                            extra
+                                                                ? 'payment.extraPaid'
+                                                                    .tr()
+                                                                : 'payment.authorized'
+                                                                    .tr(),
+                                                          ),
+                                                        );
+                                                      }
+                                                    } finally {
+                                                      if (mounted) {
+                                                        setState(() {
+                                                          _isPaying = false;
+                                                        });
+                                                      }
+                                                    }
+                                                  },
+                                            child: _isPaying
+                                                ? const SizedBox(
+                                                    width: 20,
+                                                    height: 20,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color: Colors.white,
+                                                      strokeWidth: 2,
+                                                    ),
+                                                  )
+                                                : Text(
+                                                    JobPaymentStatus
+                                                            .needsExtraPayment(
+                                                                widget.data
+                                                                    .payment_status)
+                                                        ? 'payment.approveExtra'
+                                                            .tr()
+                                                        : 'payment.payAuthorize'
+                                                            .tr(),
+                                                    style:
+                                                        getPrimarySemiBoldStyle(
+                                                      fontSize: 12,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
+                                          ),
+                                        ),
+                                      ),
 
                                     widget.fromWhere !=
-
-                                                    'jobs.requestedJobs'.tr() &&
-                                    widget.fromWhere !=
+                                                'jobs.requestedJobs'.tr() &&
+                                            widget.fromWhere !=
                                                 'notifications' &&
                                             widget.fromWhere !=
-                                               'jobs.active'.tr() &&
+                                                'jobs.active'.tr() &&
                                             widget.fromWhere !=
                                                 'jobs.booked'.tr()
                                         ? Padding(
@@ -683,57 +824,85 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     _isLoading2 = true;
                                                   });
                                                   widget.fromWhere ==
-
-                                                              'jobs.completed'.tr()
-                                                      ? await jobsViewModel.downloadInvoice(widget.data.id) !=
+                                                          'jobs.completed'.tr()
+                                                      ? await jobsViewModel
+                                                                  .downloadInvoice(
+                                                                      widget
+                                                                          .data
+                                                                          .id) !=
                                                               null
-                                                          ? await Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) => Scaffold(
-                                                        appBar: AppBar(
-                                                          title: const Text('Invoice'),
-                                                          actions: [
-                                                            IconButton(
-                                                              icon: const Icon(Icons.print),
-                                                              onPressed: () async {
-                                                                await Printing.layoutPdf(
-                                                                  onLayout: (_) async => jobsViewModel.file,
-                                                                );
-                                                              },
-                                                            ),
-                                                            IconButton(
-                                                              icon: const Icon(Icons.share),
-                                                              onPressed: () async {
-                                                                final directory = await getTemporaryDirectory();
-                                                                final filePath = '${directory.path}/invoice.pdf';
-                                                                final file = File(filePath);
-                                                                await file.writeAsBytes(jobsViewModel.file);
+                                                          ? await Navigator
+                                                              .push(
+                                                              context,
+                                                              MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        Scaffold(
+                                                                  appBar:
+                                                                      AppBar(
+                                                                    title: const Text(
+                                                                        'Invoice'),
+                                                                    actions: [
+                                                                      IconButton(
+                                                                        icon: const Icon(
+                                                                            Icons.print),
+                                                                        onPressed:
+                                                                            () async {
+                                                                          await Printing
+                                                                              .layoutPdf(
+                                                                            onLayout: (_) async =>
+                                                                                jobsViewModel.file,
+                                                                          );
+                                                                        },
+                                                                      ),
+                                                                      IconButton(
+                                                                        icon: const Icon(
+                                                                            Icons.share),
+                                                                        onPressed:
+                                                                            () async {
+                                                                          final directory =
+                                                                              await getTemporaryDirectory();
+                                                                          final filePath =
+                                                                              '${directory.path}/invoice.pdf';
+                                                                          final file =
+                                                                              File(filePath);
+                                                                          await file
+                                                                              .writeAsBytes(jobsViewModel.file);
 
-                                                                Share.shareXFiles([XFile(filePath)], text: 'Here is your invoice.');
-                                                              },
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        body: SfPdfViewer.memory(jobsViewModel.file),
-                                                      ),
-                                                    ),
-                                                  )
+                                                                          Share
+                                                                              .shareXFiles([
+                                                                            XFile(filePath)
+                                                                          ], text: 'Here is your invoice.');
+                                                                        },
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  body: SfPdfViewer.memory(
+                                                                      jobsViewModel
+                                                                          .file),
+                                                                ),
+                                                              ),
+                                                            )
                                                           : showDialog(
                                                               context: context,
                                                               builder: (BuildContext context) =>
                                                                   simpleAlert(
                                                                       context,
-
-                                                                          'button.failure'.tr()))
+                                                                      'button.failure'
+                                                                          .tr()))
                                                       : await jobsViewModel.updateJob(widget.data.id) ==
                                                               true
                                                           ? showDialog(
                                                               context: context,
-                                                              builder:
-                                                                  (BuildContext context) =>
-                                                                      simpleAlert(context, 'button.success'.tr()))
-                                                          : showDialog(context: context, builder: (BuildContext context) => simpleAlert(context, 'button.failure'.tr()));
+                                                              builder: (BuildContext context) =>
+                                                                  simpleAlert(
+                                                                      context,
+                                                                      'button.success'
+                                                                          .tr()))
+                                                          : showDialog(
+                                                              context: context,
+                                                              builder: (BuildContext context) =>
+                                                                  simpleAlert(context, 'button.failure'.tr()));
                                                   setState(() {
                                                     _isLoading2 = false;
                                                   });
@@ -751,13 +920,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                   ),
                                                 ),
                                                 child: widget.fromWhere ==
-
-                                                            'jobs.completed'.tr()
+                                                        'jobs.completed'.tr()
                                                     ? _isLoading2
                                                         ? const CircularProgressIndicator()
                                                         : Text(
-
-                                                                'button.invoice'.tr(),
+                                                            'button.invoice'
+                                                                .tr(),
                                                             style:
                                                                 getPrimarySemiBoldStyle(
                                                               fontSize: 12,
@@ -770,8 +938,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     : _isLoading2
                                                         ? const CircularProgressIndicator()
                                                         : Text(
-
-                                                                'button.update'.tr(),
+                                                            'button.update'
+                                                                .tr(),
                                                             style:
                                                                 getPrimarySemiBoldStyle(
                                                               fontSize: 12,
@@ -788,10 +956,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                     const Gap(10),
                                     //     :
                                     // Container(),
-                                    widget.fromWhere !=
-                                               'jobs.active'.tr() &&
+                                    widget.fromWhere != 'jobs.active'.tr() &&
                                             widget.fromWhere !=
-                                                'jobs.completed'.tr() && widget.fromWhere!='notifications'
+                                                'jobs.completed'.tr() &&
+                                            widget.fromWhere != 'notifications'
                                         ? Consumer2<JobsViewModel,
                                                 PaymentViewModel>(
                                             builder: (context, jobsViewModel,
@@ -821,7 +989,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                         'from where ${'jobs.requestedJobs'.tr()}');
 
                                                     if (widget.fromWhere ==
-                                                            'jobs.booked'.tr() ||
+                                                            'jobs.booked'
+                                                                .tr() ||
                                                         widget.fromWhere ==
                                                             'jobs.requestedJobs'
                                                                 .tr()) {
@@ -838,7 +1007,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                           widget.fromWhere,
                                                         ),
                                                       );
-                                                    } else if (widget.fromWhere ==
+                                                    } else if (widget
+                                                            .fromWhere ==
                                                         'jobs.active'.tr()) {
                                                       showDialog(
                                                         context: context,
@@ -874,13 +1044,12 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                     ),
                                                   ),
                                                   child: widget.fromWhere ==
-
-                                                              'jobs.active'.tr()
+                                                          'jobs.active'.tr()
                                                       ? _isLoading
                                                           ? const CircularProgressIndicator()
                                                           : Text(
-
-                                                                  'button.finish'.tr(),
+                                                              'button.finish'
+                                                                  .tr(),
                                                               style:
                                                                   getPrimaryRegularStyle(
                                                                 fontSize: 16,
@@ -889,20 +1058,20 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                               ),
                                                             )
                                                       : widget.fromWhere ==
-
-                                                                  'jobs.completed'.tr()
+                                                              'jobs.completed'
+                                                                  .tr()
                                                           ? _isLoading
                                                               ? const CircularProgressIndicator()
                                                               : Text(
                                                                   widget.data.is_paid !=
                                                                           null
-                                                                      ? (widget.fromWhere =='jobs.completed'.tr() &&
+                                                                      ? (widget.fromWhere == 'jobs.completed'.tr() &&
                                                                               !widget
                                                                                   .data.is_paid)
-                                                                          ?
-                                                                              'button.payFees'.tr()
-                                                                          :
-                                                                              'button.paid'.tr()
+                                                                          ? 'button.payFees'
+                                                                              .tr()
+                                                                          : 'button.paid'
+                                                                              .tr()
                                                                       : '',
                                                                   style:
                                                                       getPrimaryRegularStyle(
@@ -913,8 +1082,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                                                                   ),
                                                                 )
                                                           : Text(
-
-                                                                  'button.cancel'.tr(),
+                                                              'button.cancel'
+                                                                  .tr(),
                                                               style:
                                                                   getPrimarySemiBoldStyle(
                                                                 fontSize: 12,
@@ -1095,26 +1264,28 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     if (tab == 'jobs.booked'.tr() ||
                         tab == 'jobs.requestedJobs'.tr()) {
                       if (tab == 'jobs.booked'.tr()) {
-                        if (await jobsViewModel.cancelJobWithPenalty(job_id,'') ==
+                        if (await jobsViewModel.cancelJobWithPenalty(
+                                job_id, '') ==
                             true) {
                           Navigator.pop(context);
 
                           Future.delayed(const Duration(seconds: 0));
                           showDialog(
                               context: context,
-                              builder: (BuildContext context) => simpleAlert(
-                                  context, 'button.success'.tr()));
+                              builder: (BuildContext context) =>
+                                  simpleAlert(context, 'button.success'.tr()));
                         } else {
                           Navigator.pop(context);
-                          if(jobsViewModel.errorMessage=='Penalty fee must be accepted by the customer.'){
-                            showPenaltyDialog(context,jobsViewModel,job_id);
-                          }else{
-
+                          if (jobsViewModel.errorMessage ==
+                              'Penalty fee must be accepted by the customer.') {
+                            showPenaltyDialog(context, jobsViewModel, job_id);
+                          } else {
                             Future.delayed(const Duration(seconds: 0));
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => simpleAlert(
-                                    context, '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}'));
+                                    context,
+                                    '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}'));
                           }
                         }
                       } else {
@@ -1127,7 +1298,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => simpleAlert(
-                                    context,'button.success'.tr()));
+                                    context, 'button.success'.tr()));
                           } else {
                             Navigator.pop(context);
 
@@ -1141,31 +1312,31 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                       }
                     } else {
                       if (tab == 'jobs.active'.tr()) {
-                        if (await jobsViewModel.cancelJobWithPenalty(job_id,'') ==
+                        if (await jobsViewModel.cancelJobWithPenalty(
+                                job_id, '') ==
                             true) {
                           Navigator.pop(context);
 
                           Future.delayed(const Duration(seconds: 0));
                           showDialog(
                               context: context,
-                              builder: (BuildContext context) => simpleAlert(
-                                  context, 'button.success'.tr()));
+                              builder: (BuildContext context) =>
+                                  simpleAlert(context, 'button.success'.tr()));
                         } else {
                           Navigator.pop(context);
 
-                          if(jobsViewModel.errorMessage=='Penalty fee must be accepted by the customer.'){
-                            showPenaltyDialog(context,jobsViewModel,job_id);
-                          }else {
+                          if (jobsViewModel.errorMessage ==
+                              'Penalty fee must be accepted by the customer.') {
+                            showPenaltyDialog(context, jobsViewModel, job_id);
+                          } else {
                             Future.delayed(const Duration(seconds: 0));
                             showDialog(
                                 context: context,
-                                builder: (BuildContext context) =>
-                                    simpleAlert(
-                                        context, '${'button.failure'
-                                        .tr()}\n${jobsViewModel
-                                        .errorMessage}'));
+                                builder: (BuildContext context) => simpleAlert(
+                                    context,
+                                    '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}'));
                           }
-                          }
+                        }
                       }
                     }
                   },
@@ -1182,7 +1353,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     ),
                   ),
                   child: Text(
-                   'button.submit'.tr(),
+                    'button.submit'.tr(),
                     style: getPrimarySemiBoldStyle(
                       fontSize: 12,
                       color: context.resources.color.colorWhite,
@@ -1465,7 +1636,7 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
 
       // Find the rate from country_rates where currency matches
       var matchingRate = widget.data.service["country_rates"].firstWhere(
-            (rate) => rate["country"]['currency'] == currency,
+        (rate) => rate["country"]['currency'] == currency,
         orElse: () => null, // If no match is found, return null
       );
 
@@ -1479,15 +1650,16 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
       } else {
         return 'Rate not found'; // Fallback if no matching currency is found
       }
-    }catch(error){
+    } catch (error) {
       return 'Rate not found';
     }
   }
+
   void showPenaltyDialog(
-      BuildContext context,
-      JobsViewModel jobsViewModel,
-      dynamic job_id,
-      ) {
+    BuildContext context,
+    JobsViewModel jobsViewModel,
+    dynamic job_id,
+  ) {
     showDialog(
       context: context,
       barrierDismissible: false,
@@ -1519,10 +1691,10 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
 
                   Text(
                     '${'popup.cancelMessage1'.tr()} '
-                        '${jobsViewModel.errorData['penalty_fee']} '
-                        '${'popup.${jobsViewModel.errorData['currency']}'.tr()} '
-                        '${'popup.cancelMessage2'.tr()}\n'
-                        '${'popup.wouldProceed'.tr()}',
+                    '${jobsViewModel.errorData['penalty_fee']} '
+                    '${'popup.${jobsViewModel.errorData['currency']}'.tr()} '
+                    '${'popup.cancelMessage2'.tr()}\n'
+                    '${'popup.wouldProceed'.tr()}',
                     textAlign: TextAlign.center,
                     style: getPrimaryRegularStyle(
                       fontSize: 15,
@@ -1537,55 +1709,53 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     onPressed: isLoading
                         ? null
                         : () async {
-                      setState(() {
-                        isLoading = true;
-                      });
+                            setState(() {
+                              isLoading = true;
+                            });
 
-                      bool? success =
-                      await jobsViewModel.cancelJobWithPenalty(
-                        job_id,
-                        'accept_penalty',
-                      );
+                            bool? success =
+                                await jobsViewModel.cancelJobWithPenalty(
+                              job_id,
+                              'accept_penalty',
+                            );
 
-                      setState(() {
-                        isLoading = false;
-                      });
+                            setState(() {
+                              isLoading = false;
+                            });
 
-                      Navigator.pop(context);
+                            Navigator.pop(context);
 
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) => simpleAlert(
-                          context,
-                          success == true
-                              ? 'button.success'.tr()
-                              : '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}',
-                        ),
-                      );
-                    },
-
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) => simpleAlert(
+                                context,
+                                success == true
+                                    ? 'button.success'.tr()
+                                    : '${'button.failure'.tr()}\n${jobsViewModel.errorMessage}',
+                              ),
+                            );
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xffFFC500),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
-
                     child: isLoading
                         ? const SizedBox(
-                      height: 22,
-                      width: 22,
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                        color: Colors.white,
-                      ),
-                    )
+                            height: 22,
+                            width: 22,
+                            child: CircularProgressIndicator(
+                              strokeWidth: 2,
+                              color: Colors.white,
+                            ),
+                          )
                         : Text(
-                      'popup.yes'.tr(),
-                      style: getPrimaryBoldStyle(
-                        color: Colors.white,
-                      ),
-                    ),
+                            'popup.yes'.tr(),
+                            style: getPrimaryBoldStyle(
+                              color: Colors.white,
+                            ),
+                          ),
                   ),
 
                   const Gap(5),
@@ -1595,8 +1765,8 @@ class _UpdateJobRequestCustomerState extends State<UpdateJobRequestCustomer> {
                     onPressed: isLoading
                         ? null
                         : () {
-                      Navigator.pop(context);
-                    },
+                            Navigator.pop(context);
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xff4100E3),
                       shape: RoundedRectangleBorder(
