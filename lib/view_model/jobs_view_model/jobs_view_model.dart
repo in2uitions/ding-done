@@ -68,13 +68,11 @@ class JobsViewModel with ChangeNotifier {
   bool lastExtraPaymentRequired = false;
   dynamic lastRemainingAmount;
   Map<String?, String?> jobsAddressError = {};
-  final _wsUrl =
-      'wss://cms.dingdone.app/websocket?access_token=TQOqIMMMKEdfHAk5TeA-dSna0TgINW55';
+  static const _wsBase = 'wss://cms.dingdone.app/websocket';
 
   // String? _language = "en-US";
   WebSocketChannel? _wsChannel;
   WebSocket? _rawSocket;
-  Timer? _keepAliveTimer;
 
   JobsViewModel() {
     debugPrint('hehehehe');
@@ -212,21 +210,34 @@ class JobsViewModel with ChangeNotifier {
     return null;
   }
 
+  Future<String?> _currentAccessToken() async {
+    final stored = await AppPreferences().get(key: userTokenKey, isModel: false);
+    if (stored == null) return null;
+    var raw = stored.toString().trim();
+    if (raw.startsWith('Bearer ')) {
+      raw = raw.substring('Bearer '.length).trim();
+    }
+    if (raw.isEmpty) return null;
+    return raw;
+  }
+
   Future<void> initWebSocket() async {
-    _keepAliveTimer?.cancel();
     await _closeSockets();
 
-    debugPrint('🛠 Connecting to $_wsUrl …');
+    final token = await _currentAccessToken();
+    if (token == null) {
+      debugPrint('WebSocket skipped: no logged-in user yet');
+      _scheduleReconnect();
+      return;
+    }
+
+    final wsUrl = '$_wsBase?access_token=${Uri.encodeComponent(token)}';
+    debugPrint('Connecting to job updates websocket');
     try {
-      _rawSocket = await WebSocket.connect(_wsUrl);
+      _rawSocket = await WebSocket.connect(wsUrl);
       debugPrint('✅ Raw socket open');
 
       _wsChannel = IOWebSocketChannel(_rawSocket!);
-
-      // JSON‐ping fallback
-      _keepAliveTimer = Timer.periodic(const Duration(seconds: 20), (_) {
-        _wsChannel?.sink.add(jsonEncode({'type': 'post'}));
-      });
 
       _wsChannel!.stream.listen(
         _onRawMessage,
@@ -234,21 +245,6 @@ class JobsViewModel with ChangeNotifier {
         onDone: _scheduleReconnect,
       );
 
-      final token = 'TQOqIMMMKEdfHAk5TeA-dSna0TgINW55';
-      // // final token = await getRawToken();
-      // debugPrint('token in auth $token');
-      if (token != null) {
-        debugPrint('📤 Sending auth');
-        // _wsChannel!.sink.add(jsonEncode({
-        //   'type':'auth',
-        //   'access_token':token,
-        // }));
-        final authMsg = {
-          "type": "get",
-          "collection": "jobs",
-        };
-        _wsChannel!.sink.add(jsonEncode(authMsg));
-      }
       _subscribe();
     } catch (e) {
       debugPrint('🚨 Socket connect failed: $e');
@@ -273,11 +269,6 @@ class JobsViewModel with ChangeNotifier {
         break;
 
       case 'ping':
-        _wsChannel?.sink.add(jsonEncode({'type': 'pong'}));
-        break;
-
-      case 'post':
-        _subscribe();
         break;
 
       case 'subscription':
@@ -334,7 +325,6 @@ class JobsViewModel with ChangeNotifier {
   }
 
   void _scheduleReconnect() {
-    _keepAliveTimer?.cancel();
     Future.delayed(const Duration(seconds: 5), () {
       debugPrint('🔄 Reconnecting WebSocket…');
       initWebSocket();
