@@ -42,6 +42,14 @@ target 'Runner' do
 end
 
 post_install do |installer|
+  # iOS 27 already has PublicKey in MessageProtection. SwiftyRSA registers the
+  # same ObjC name and the duplicate kills the app on launch.
+  swifty_objc = File.join(installer.sandbox.root.to_s, 'SwiftyRSA/Source/SwiftyRSA+ObjC.swift')
+  if File.exist?(swifty_objc)
+    source = File.read(swifty_objc)
+    patched = source.gsub('@objc(PublicKey)', '@objc(DingDoneSwiftyRSAPublicKey)')
+    File.write(swifty_objc, patched) if patched != source
+  end
 
   installer.pods_project.targets.each do |target|
     flutter_additional_ios_build_settings(target)

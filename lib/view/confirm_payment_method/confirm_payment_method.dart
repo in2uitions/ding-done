@@ -8,6 +8,7 @@ import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
@@ -73,14 +74,8 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
         bundleId: Platform.isAndroid
             ? "com.in2uitions.dingdone"
             : "com.in2uitions.dingdone",
-        productionSecretKey: Platform.isAndroid
-            ? "sk_live_9Bm4nIQScOXlGrAZtMveEgLz"
-            : "sk_live_9Bm4nIQScOXlGrAZtMveEgLz",
-            // : "sk_live_y1TzabNF6M5pCW3mGPwDVr4L",
-        sandBoxSecretKey:"",
-        // Platform.isAndroid
-        //     ? "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn"
-        //     : "sk_test_z3V2Wvgo9AiH1qxOUKaZ4mXn",
+        productionSecretKey: dotenv.env['TAP_SECRET'] ?? '',
+        sandBoxSecretKey: '',
         lang: "en",
       );
     } catch (error) {

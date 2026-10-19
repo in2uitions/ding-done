@@ -30,6 +30,7 @@ class LoginViewModel with ChangeNotifier {
   String? _userEmail = "";
   String? _userPass = "";
   String? _language="";
+  String _pendingResetEmail = '';
 
 
   LoginViewModel() {
@@ -241,42 +242,17 @@ class LoginViewModel with ChangeNotifier {
     }
   }
 
-  Future<bool> sendResetEmail() async {
-    try {
-      final response = _loginRepository
-          .sendResetEmail({'email': _loginCredentials["reset-email"]});
-      debugPrint('response sending email $response');
-      // final response = await http.post(
-      //   Uri.parse('https://your-server-url/send-email'),
-      //   headers: {'Content-Type': 'application/json'},
-      //   body: jsonEncode({'email': _loginCredentials["reset-email"]}),
-      // );
+  String get pendingResetEmail => _pendingResetEmail;
 
-      // if (response.statusCode == 200) {
-      //   // Email sent successfully
-      //   print('Email sent successfully');
-      // } else {
-      //   // Error handling
-      //   print('Error sending email: ${response.body}');
-      // }
+  Future<bool> requestPasswordReset() async {
+    try {
+      final email = _loginCredentials['reset-email']?.toString().trim() ?? '';
+      if (email.isEmpty) return false;
+      await _loginRepository.requestPasswordReset(email);
+      _pendingResetEmail = email;
       return true;
     } catch (error) {
-      debugPrint('error sending email $error');
-      setLoginResponseData(ApiResponse.error(error.toString()));
-      return false;
-    }
-  }
-
-  Future<bool> sendResetSMS() async {
-    try {
-      debugPrint('reset sms ${_loginCredentials["reset-phone"]}');
-      final response = _loginRepository
-          .sendResetSMS({'recipients': _loginCredentials["reset-phone"]});
-      debugPrint('response sending sms ${response}');
-
-      return true;
-    } catch (error) {
-      debugPrint('error sending sms $error');
+      debugPrint('error requesting password reset $error');
       setLoginResponseData(ApiResponse.error(error.toString()));
       return false;
     }

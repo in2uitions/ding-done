@@ -154,7 +154,7 @@ class _AddressWidgetState extends State<AddressWidget> {
             //         //         builder: (context) {
             //         //           return
             //         //               //   MapLocationPicker(
-            //         //               //   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+            //         //               //   apiKey: Constants.googleApiKey,
             //         //               //   popOnNextButtonTaped: true,
             //         //               //   currentLatLng: LatLng(
             //         //               //       widget.address['latitude'],widget.address['longitude']

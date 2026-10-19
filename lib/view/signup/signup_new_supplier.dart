@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/agreement/supplier_agreement.dart';
 import 'package:dingdone/view/login/login.dart';
@@ -143,8 +144,7 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   // OPEN MAP LOCATION PICKER (Preserves supplier's map functionality)
   // ─────────────────────────────────────────────
   Future<void> _openMapPicker(SignUpViewModel signupViewModel) async {
-    const String googleApiKey =
-        'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I'; // Replace with your API key.
+    final googleApiKey = Constants.googleApiKey;
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -401,7 +401,15 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   Future<void> _verifyPhoneOtp(SignUpViewModel vm) async {
     if (_phoneOtpController.text.trim().length != 4) return;
 
-    final success = await vm.getOtp==_phoneOtpController.text.trim();
+    final stored = vm.getOtp.toString();
+    if (stored.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('signUp.otpCheckUnavailable'.tr())),
+      );
+      return;
+    }
+
+    final success = stored == _phoneOtpController.text.trim();
 
     if (!mounted) return;
 
@@ -421,7 +429,15 @@ class _SignUpNewSupplierState extends State<SignUpNewSupplier> {
   Future<void> _verifyEmailOtp(SignUpViewModel vm) async {
     if (_emailOtpController.text.trim().length != 4) return;
 
-    final success = await vm.getEmailOtp==_emailOtpController.text.trim();
+    final stored = vm.getEmailOtp.toString();
+    if (stored.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('signUp.otpCheckUnavailable'.tr())),
+      );
+      return;
+    }
+
+    final success = stored == _emailOtpController.text.trim();
 
     if (!mounted) return;
 

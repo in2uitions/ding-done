@@ -51,8 +51,8 @@ class ApiEndPoints {
   // final String  customerInvoice= '/invoices/customerInvoice';
   // final String  supplierInvoice= '/invoices/supplierInvoice';
   final String invoices = '/invoices/download';
-  // final String apiSendReset = '/email/reset-test';
-  final String apiSendReset = '/email/reset-email';
+  final String requestPasswordReset = '/authentication/request-password-reset';
+  final String resetPassword = '/authentication/reset-password';
   final String notifications = '/i18/notifications';
   final String deleteNotification = '/notifications/delete-one';
   final String deleteNotifications = '/notifications/delete-all';

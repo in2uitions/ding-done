@@ -8,6 +8,7 @@ import 'package:dingdone/view/bottom_bar/bottom_bar.dart';
 import 'package:dingdone/view/confirm_payment_method/confirm_payment_method.dart';
 import 'package:dingdone/view/job_details_supplier/job_details_supplier.dart';
 import 'package:dingdone/view/job_payment/pending_job_payments_screen.dart';
+import 'package:dingdone/view/new_password/new_password.dart';
 import 'package:dingdone/view/on_boarding/on_boarding.dart';
 import 'package:dingdone/view/update_job_request_customer/update_job_request_customer.dart';
 import 'package:dingdone/services/app_update_service.dart';
@@ -237,6 +238,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
             ),
           ),
         );
+      } else if (uri.path.contains('reset-password')) {
+        final token = uri.queryParameters['token'];
+        if (token != null && token.isNotEmpty) {
+          _openResetPassword(token);
+        }
       } else if (uri.toString().contains('job_payment')) {
         navigatorKey.currentState?.push(
           MaterialPageRoute(
@@ -251,6 +257,22 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     } catch (e) {
       debugPrint('Deep link error: $e');
     }
+  }
+
+  void _openResetPassword(String token, {int attempt = 0}) {
+    final navigator = navigatorKey.currentState;
+    if (navigator == null) {
+      if (attempt > 20) return;
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _openResetPassword(token, attempt: attempt + 1);
+      });
+      return;
+    }
+    navigator.push(
+      MaterialPageRoute(
+        builder: (_) => NewPasswordScreen(resetToken: token),
+      ),
+    );
   }
 
   void checkUserIsLogged() async {
@@ -282,10 +304,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //   await Firebase.initializeApp();
   //   await dotenv.load(fileName: "assets/.env");
   //
-  //   Stripe.publishableKey =
-  //   "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
+  //   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
   //
-  //   OneSignal.initialize("357d957a-ed36-4ab5-a29e-cfbe93536a64");
+  //   OneSignal.initialize(dotenv.env['ONESIGNAL_APP_ID'] ?? '');
   //   await OneSignal.Notifications.requestPermission(true);
   //
   //   if (defaultTargetPlatform == TargetPlatform.android) {
@@ -299,7 +320,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     await dotenv.load(fileName: "assets/.env");
 
     /// ---------------- ADJUST INITIALIZATION ----------------
-    const String adjustAppToken = "uncurdcnlq0w";
+    final adjustAppToken = dotenv.env['ADJUST_APP_TOKEN'] ?? '';
 
     final adjustConfig = AdjustConfig(
       adjustAppToken,
@@ -318,8 +339,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
     /// ------------------------------------------------------
 
-    Stripe.publishableKey =
-        "pk_test_51O0fFdB7xypJLNmfiUJe4QudE7LEN3LwadQP5PQJLLPXFDzX201eWVxZXxWxv7hYdidpLtoB2lblfcqtSkaKpKeG00yto1YAKe";
+    Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
 
     await OneSignalService.initialize();
 

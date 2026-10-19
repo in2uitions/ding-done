@@ -1,4 +1,5 @@
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/custom/custom_text_feild.dart';
 import 'package:dingdone/view_model/jobs_view_model/jobs_view_model.dart';
@@ -81,7 +82,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                         MaterialPageRoute(
                           builder: (context) {
                             return MapLocationPicker(
-                              apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                              apiKey: Constants.googleApiKey,
                               popOnNextButtonTaped: true,
                               currentLatLng: LatLng(
                                   jobsViewModel.getjobsBody["latitude"] != null
@@ -173,7 +174,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                       MaterialPageRoute(
                         builder: (context) {
                           return MapLocationPicker(
-                            apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                            apiKey: Constants.googleApiKey,
                             popOnNextButtonTaped: true,
                             currentLatLng: LatLng(
                                 jobsViewModel.getjobsBody["latitude"] != null
@@ -337,7 +338,7 @@ class _AddNewAddressWidgetState extends State<AddNewAddressWidget> {
                                   builder: (context) {
                                     return MapLocationPicker(
                                       apiKey:
-                                          'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                          Constants.googleApiKey,
                                       popOnNextButtonTaped: true,
                                       currentLatLng: LatLng(
                                           jobsViewModel.getjobsBody["latitude"] !=

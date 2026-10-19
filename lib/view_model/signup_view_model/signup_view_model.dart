@@ -87,19 +87,48 @@ class SignUpViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  String? _readOtp(dynamic response) {
+    debugPrint('ooooooo ttttt ${response}');
+    if (response is! Map) return null;
+    final direct = response['otp'];
+    if (direct != null && direct.toString().trim().isNotEmpty) {
+      return direct.toString();
+    }
+    final data = response['data'];
+    if (data is Map && data['otp'] != null) {
+      final nested = data['otp'].toString();
+      if (nested.trim().isNotEmpty) return nested;
+    }
+    return null;
+  }
+
+  bool _otpSendSucceeded(dynamic response) {
+    if (response is! Map) return false;
+    if (response['errors'] != null || response['error'] != null) return false;
+    final message = (response['message'] ?? '').toString().toLowerCase();
+    return message.contains('sent') || message.contains('success');
+  }
+
   Future<bool?> requestOtp() async {
     try {
       dynamic response =
           await _signUpRepository.requestOtp(signUpBody);
       debugPrint('response getting otp $response');
-      _otp=response['otp'];
-      return true;
-
+      final otp = _readOtp(response);
+      if (otp != null) {
+        _otp = otp;
+        return true;
+      }
+      if (_otpSendSucceeded(response)) {
+        _otp = '';
+        return true;
+      }
+      _errorMessage = 'The server did not send a verification code.';
+      return false;
     } catch (error) {
       debugPrint('error getting otp $error');
       _apiRegisterResponse = ApiResponse<UserModel>.error(error.toString());
       _errorMessage = error.toString();
-      signUpBody = {};
       return false;
     }
   }
@@ -109,14 +138,21 @@ class SignUpViewModel with ChangeNotifier {
       dynamic response =
           await _signUpRepository.requesEmailtOtp(signUpBody);
       debugPrint('response getting otp email $response');
-      _otpEmail=response['otp'];
-      return true;
-
+      final otp = _readOtp(response);
+      if (otp != null) {
+        _otpEmail = otp;
+        return true;
+      }
+      if (_otpSendSucceeded(response)) {
+        _otpEmail = '';
+        return true;
+      }
+      _errorMessage = 'The server did not send a verification code.';
+      return false;
     } catch (error) {
       debugPrint('error getting otp $error');
       _apiRegisterResponse = ApiResponse<UserModel>.error(error.toString());
       _errorMessage = error.toString();
-      signUpBody = {};
       return false;
     }
   }
@@ -770,7 +806,14 @@ class SignUpViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  bool _countriesLoading = false;
+
   Future<List<dynamic>?> countries() async {
+    if (_listCountries != null && _listCountries!.isNotEmpty) {
+      return _listCountries;
+    }
+    if (_countriesLoading) return _listCountries;
+    _countriesLoading = true;
     try {
       dynamic response = await _signUpRepository.getCountries();
       debugPrint('response getting countries $response');
@@ -790,6 +833,8 @@ class SignUpViewModel with ChangeNotifier {
       debugPrint('error getting countries $error');
       notifyListeners();
       return null;
+    } finally {
+      _countriesLoading = false;
     }
   }
 

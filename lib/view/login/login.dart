@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //   //Remove this method to stop OneSignal Debugging
   //   OneSignal.shared.setLogLevel(OSLogLevel.verbose, OSLogLevel.none);
   //
-  //   OneSignal.shared.setAppId("f7fd77d5-793e-4884-8710-b2570d298cf0");
+  //   OneSignal.shared.setAppId(dotenv.env['ONESIGNAL_APP_ID'] ?? '');
   //
   //   // The promptForPushNotificationsWithUserResponse function will show the iOS or Android push notification prompt. We recommend removing the following code and instead using an In-App Message to prompt for notification permission
   //   OneSignal.shared.promptUserForPushNotificationPermission().then((accepted) {

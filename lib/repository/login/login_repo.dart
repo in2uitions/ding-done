@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:dingdone/res/constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:dingdone/data/remote/network/api_end_points.dart';
 import 'package:dingdone/data/remote/network/base_api_service.dart';
@@ -8,8 +5,6 @@ import 'package:dingdone/data/remote/network/network_api_service.dart';
 import 'package:dingdone/models/login_model.dart';
 import 'package:dingdone/models/user_model.dart';
 import 'package:dingdone/res/app_prefs.dart';
-import 'package:http/http.dart' as http;
-import 'dart:math';
 
 class LoginRepository {
   final BaseApiService _apiService =
@@ -20,11 +15,10 @@ class LoginRepository {
       NetworkApiService(url: ApiEndPoints().userData);
   final BaseApiService _refreshToken =
       NetworkApiService(url: ApiEndPoints().refreshToken);
-  final BaseApiService _apisendSMS =
-      NetworkApiService(url: ApiEndPoints().sendSMS);
-
-  final BaseApiService _apiSendReset =
-      NetworkApiService(url: ApiEndPoints().apiSendReset);
+  final BaseApiService _requestPasswordReset =
+      NetworkApiService(url: ApiEndPoints().requestPasswordReset);
+  final BaseApiService _resetPassword =
+      NetworkApiService(url: ApiEndPoints().resetPassword);
 
   Future<LoginModel?> postLoginCredentials(dynamic body) async {
     try {
@@ -67,145 +61,44 @@ class LoginRepository {
     }
   }
 
-  Future<dynamic> sendResetEmail(dynamic body) async {
-    try {
-      // debugPrint('body is ${body}');
-      // // await sdk.auth.forgottenPassword.request(usreml);
-      // dynamic response=_apiSendReset.postResponse(data: body);
-      // debugPrint('Request Sent ${response}');
-      String apiCredentials = base64Encode(utf8.encode(
-          "${Constants.MJ_APIKEY_PUBLIC}:${Constants.MJ_APIKEY_PRIVATE}"));
-      var rndnumber = "";
-      var rnd = new Random();
-      for (var i = 0; i < 4; i++) {
-        rndnumber = rndnumber + rnd.nextInt(9).toString();
-      }
-      await AppPreferences()
-          .save(key: otpNumber, value: rndnumber, isModel: false);
-      http.Response res = await http
-          .post(Uri.parse("https://cms.dingdone.app/authentication/send-email"), body: {
-      "to": body['email'].toString(),
-      "subject": "OTP",
-      "body": "${rndnumber} is you one time password\n(OTP) for Ding Done app. Do not\nshare this passcode with anyone.\nIf you have not raised this request,\nplease ignore."
-
-      }).catchError((value) async {
-        debugPrint('error is ${value.body}');
-
-        throw ('Error message ${value.body}');
-      });
-      final body1 = jsonDecode(res.body) as Map<String, dynamic>;
-      await AppPreferences()
-          .save(key: userIdTochangePassword, value: body1["user"]["id"], isModel: false);
-      debugPrint('res.body is ${res.body}');
-      // sendResetEmail1(jsonDecode(res.body));
-      debugPrint('Request Sent');
-      return res.body;
-    } catch (e) {
-      debugPrint('error $e');
+  void _rejectIfError(dynamic response) {
+    if (response is! Map) return;
+    if (response['status']?.toString() == 'NOT_OK') {
+      throw Exception(
+        response['message']?.toString() ?? 'Reset failed',
+      );
+    }
+    final errors = response['errors'];
+    if (errors != null || response['error'] != null) {
+      final message = response['message'] ?? response['error'] ?? errors;
+      throw Exception(message.toString());
     }
   }
 
-  Future<dynamic> sendResetSMS(dynamic body) async {
-    try {
-      // Encode your Mailjet API key and secret in Base64
-      String apiCredentials = base64Encode(utf8.encode(
-          "${Constants.MJ_APIKEY_PUBLIC}:${Constants.MJ_APIKEY_PRIVATE}"));
-      var rndnumber = "";
-      var rnd = new Random();
-      for (var i = 0; i < 4; i++) {
-        rndnumber = rndnumber + rnd.nextInt(9).toString();
-      }
-      await AppPreferences()
-          .save(key: otpNumber, value: rndnumber, isModel: false);
-      // await AppPreferences()
-      //     .save(key: userIdTochangePassword, value: body["id"], isModel: false);
-      dynamic response = await _apisendSMS.postResponse(data: {
-        'recipients': [body['recipients'].toString()],
-        'text': '$rndnumber is you one time password (OTP) for Ding Done app. Do not share this passcode with anyone. If you have not raised this request, please ignore.',
-      'sender': 'Optica'
-      },sendToken: false);
-      debugPrint('response sending otp is ${response}');
-
-      await AppPreferences()
-          .save(key: userIdTochangePassword, value: response["user"]["id"], isModel: false);
-      // http.Response res = await http.post(
-      //     Uri.parse("https://cms.dingdone.app/registerUser/sendOTP"),
-      //     body: {
-      //       'recipientPhone': body['recipientPhone'].toString(),
-      //       'smsText': 'Hi,\n this is your OTP $rndnumber'
-      //     }).catchError((value) async {
-      //   debugPrint('error is ${value.body}');
-      //
-      //   throw ('Error message ${value.body}');
-      // });
-      debugPrint('res.body is ${response}');
-      // sendResetEmail1(jsonDecode(response));
-      debugPrint('Request Sent');
-      return response;
-    } catch (e) {
-      debugPrint('error $e');
-    }
+  Future<void> requestPasswordReset(String email) async {
+    final response = await _requestPasswordReset.postResponse(
+      data: {'email': email},
+      sendToken: false,
+    );
+    _rejectIfError(response);
   }
 
-  Future<String?> sendResetEmail1(Map<String, dynamic> body) async {
-    try {
-      debugPrint('body is ${body}');
-      // Encode your Mailjet API key and secret in Base64
-      String apiCredentials = base64Encode(utf8.encode(
-          "${Constants.MJ_APIKEY_PUBLIC}:${Constants.MJ_APIKEY_PRIVATE}"));
-      var rndnumber = "";
-      var rnd = new Random();
-      for (var i = 0; i < 4; i++) {
-        rndnumber = rndnumber + rnd.nextInt(9).toString();
-      }
-      await AppPreferences()
-          .save(key: otpNumber, value: rndnumber, isModel: false);
-      await AppPreferences()
-          .save(key: userIdTochangePassword, value: body["id"], isModel: false);
-      http.Response res = await http
-          .post(
-        Uri.parse("https://api.mailjet.com/v3.1/send"),
-        headers: {
-          'Authorization': 'Basic $apiCredentials',
-          'Content-Type': 'application/json',
-        },
-        body: jsonEncode({
-          "Messages": [
-            {
-              "From": {
-                "Email": "rim.zakhour@in2uitions.com",
-                "Name": "DingDone"
-              },
-              "To": [
-                {
-                  "Email": body["email"],
-                  "Name": body["first_name"] + " " + body["last_name"]
-                }
-              ],
-              "TemplateID": 5532729,
-              "TemplateLanguage": true,
-              "Subject": "Reset Password",
-              "Variables": {
-                "reset_link": "com.in2uitions.dingdone://new_password/",
-                "email": body["email"],
-                "name": body["first_name"] + " " + body["last_name"],
-                "otp": rndnumber
-              }
-            }
-          ]
-        }),
-      )
-          .catchError((value) async {
-        debugPrint('error is ${value.body}');
-        throw ('Error message ${value.body}');
-      });
-
-      debugPrint('res.body is ${res.body}');
-      debugPrint('Request Sent');
-      return res.body;
-    } catch (e) {
-      debugPrint('error $e');
-    }
+  Future<void> resetPassword({
+    required String email,
+    required String token,
+    required String smsCode,
+    required String password,
+  }) async {
+    final response = await _resetPassword.postResponse(
+      data: {
+        'email': email,
+        'token': token,
+        'sms_code': smsCode,
+        'password': password,
+      },
+      sendToken: false,
+    );
+    _rejectIfError(response);
   }
 
   Future<UserModel?> getUserDetails() async {

@@ -1,6 +1,7 @@
 import 'package:dingdone/data/remote/response/ApiResponse.dart';
 import 'package:dingdone/models/profile_model.dart';
 import 'package:dingdone/models/user_model.dart';
+import 'package:dingdone/repository/login/login_repo.dart';
 import 'package:dingdone/repository/profile/profile_repository.dart';
 import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/view_model/dispose_view_model/dispose_view_model.dart';
@@ -17,6 +18,7 @@ class ProfileViewModel extends DisposableViewModel {
   ApiResponse<UserModel> _apiUserResponse = ApiResponse.loading();
   Map<String, dynamic> profileBody = {};
   Map<String?, String?> verifyPassword = {};
+  String resetError = '';
   List<dynamic>? _selectedServices = List.empty();
   String? lang;
 
@@ -356,27 +358,24 @@ class ProfileViewModel extends DisposableViewModel {
     }
   }
 
-  Future<bool?> patchPassword() async {
+  Future<bool> resetPassword({
+    required String email,
+    required String token,
+    required String smsCode,
+  }) async {
     try {
-      String userId = await AppPreferences()
-          .get(key: userIdTochangePassword, isModel: false);
-      // Create a new address
-      Map<String, dynamic> newUser = {};
-      debugPrint('user id ${userId}');
-
-      // Add the new address to the existing list
-      debugPrint('new password in patch ${profileBody}');
-      debugPrint('user id ${userId}');
-
-      dynamic response = await _homeRepository.patchPassword(
-          id: userId, body: {"status":"active","password": profileBody["new_password"]});
-      debugPrint('response $response');
-      // _apiUserResponse = ApiResponse<UserModel>.completed(response);
-
+      resetError = '';
+      await LoginRepository().resetPassword(
+        email: email.trim(),
+        token: token,
+        smsCode: smsCode.trim(),
+        password: profileBody['new_password']?.toString() ?? '',
+      );
       notifyListeners();
       return true;
     } catch (error) {
-      debugPrint('error is  patching password $error');
+      debugPrint('error resetting password $error');
+      resetError = error.toString().replaceFirst('Exception: ', '');
       notifyListeners();
       return false;
     }

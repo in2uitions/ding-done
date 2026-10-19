@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/services.dart';
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
@@ -46,12 +47,8 @@ class _TapPaymentExampleState extends State<TapPaymentExample> {
         bundleId: Platform.isAndroid
             ? "com.in2uitions.dingdone"
             : "com.in2uitions.dingdone",
-        productionSecretKey:
-        Platform.isAndroid ? "sk_live_y1TzabNF6M5pCW3mGPwDVr4L" : "sk_live_y1TzabNF6M5pCW3mGPwDVr4L",
-        sandBoxSecretKey:
-        Platform.isAndroid
-            ? "sk_test_MsZe1YiJK3qFgGLdfQxvTUIh"
-            : "sk_test_MsZe1YiJK3qFgGLdfQxvTUIh",
+        productionSecretKey: dotenv.env['TAP_EXAMPLE_LIVE_SECRET'] ?? '',
+        sandBoxSecretKey: dotenv.env['TAP_EXAMPLE_SANDBOX_SECRET'] ?? '',
         lang: "en",
         // bundleId: '23e85@tap',
       );

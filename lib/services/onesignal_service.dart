@@ -1,9 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 class OneSignalService {
-  static const String _appId = '357d957a-ed36-4ab5-a29e-cfbe93536a64';
+  static String get _appId => dotenv.env['ONESIGNAL_APP_ID'] ?? '';
   static bool _initialized = false;
 
   static Future<void> initialize() async {

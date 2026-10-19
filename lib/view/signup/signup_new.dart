@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dingdone/res/app_context_extension.dart';
+import 'package:dingdone/res/constants.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/agreement/user_agreement.dart';
 import 'package:dingdone/view/widgets/custom/custom_date_picker.dart';
@@ -117,7 +118,7 @@ class _SignUpNewState extends State<SignUpNew> {
   // OPEN MAP LOCATION PICKER (AS IN OLD UI)
   // ─────────────────────────────────────────────
   Future<void> _openMapPicker(SignUpViewModel signupViewModel) async {
-    const String googleApiKey = 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I';
+    final googleApiKey = Constants.googleApiKey;
     await Navigator.push(
       context,
       MaterialPageRoute(
@@ -289,7 +290,15 @@ class _SignUpNewState extends State<SignUpNew> {
   Future<void> _verifyPhoneOtp(SignUpViewModel vm) async {
     if (_phoneOtpController.text.trim().length != 4) return;
 
-    final success = vm.getOtp.toString() == _phoneOtpController.text.trim();
+    final stored = vm.getOtp.toString();
+    if (stored.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('signUp.otpCheckUnavailable'.tr())),
+      );
+      return;
+    }
+
+    final success = stored == _phoneOtpController.text.trim();
 
     if (!mounted) return;
 
@@ -309,7 +318,15 @@ class _SignUpNewState extends State<SignUpNew> {
   Future<void> _verifyEmailOtp(SignUpViewModel vm) async {
     if (_emailOtpController.text.trim().length != 4) return;
 
-    final success = vm.getEmailOtp.toString() == _emailOtpController.text.trim();
+    final stored = vm.getEmailOtp.toString();
+    if (stored.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('signUp.otpCheckUnavailable'.tr())),
+      );
+      return;
+    }
+
+    final success = stored == _emailOtpController.text.trim();
 
     if (!mounted) return;
 

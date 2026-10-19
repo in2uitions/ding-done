@@ -7,18 +7,18 @@ import GoogleSignIn
 import FBSDKCoreKit
 
 @main
-@objc class AppDelegate: FlutterAppDelegate {
+@objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
 
   override func application(
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]?
   ) -> Bool {
 
-    // Google Maps
-    GMSServices.provideAPIKey("AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I")
-
-    // Register Flutter plugins
-    GeneratedPluginRegistrant.register(with: self)
+    // Google Maps key comes from assets/.env via Secrets.xcconfig.
+    if let apiKey = Bundle.main.object(forInfoDictionaryKey: "GMSApiKey") as? String,
+       !apiKey.isEmpty {
+      GMSServices.provideAPIKey(apiKey)
+    }
 
     // Firebase initialization
     if FirebaseApp.app() == nil {
@@ -32,6 +32,10 @@ import FBSDKCoreKit
 //    )
 
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
+
+  func didInitializeImplicitFlutterEngine(_ engineBridge: FlutterImplicitEngineBridge) {
+    GeneratedPluginRegistrant.register(with: engineBridge.pluginRegistry)
   }
 
   // REQUIRED for Facebook + Google Sign-In + UniLinks to work

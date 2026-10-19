@@ -1,9 +1,7 @@
 // ignore_for_file: non_constant_identifier_names, use_build_context_synchronously
 
 import 'package:dingdone/res/app_context_extension.dart';
-import 'package:dingdone/res/app_prefs.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
-import 'package:dingdone/view/new_password/new_password.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -24,8 +22,6 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
   final TextEditingController _fieldTwo = TextEditingController();
   final TextEditingController _fieldThree = TextEditingController();
   final TextEditingController _fieldFour = TextEditingController();
-
-  String? _otp;
 
   bool isLoading = false;
   @override
@@ -128,32 +124,15 @@ class _OTPVerificationScreenState extends State<OTPVerificationScreen> {
                               ),
                             ),
                           ),
-                          onPressed: () async {
-                            setState(() {
-                              isLoading = true;
-                            });
-                            setState(() {
-                              _otp = _fieldOne.text +
-                                  _fieldTwo.text +
-                                  _fieldThree.text +
-                                  _fieldFour.text;
-                            });
-                            String? otp_number = await AppPreferences()
-                                .get(key: otpNumber, isModel: false);
-                            if (otp_number == _otp) {
-                              Navigator.of(context).push(
-                                  _createRoute(const NewPasswordScreen()));
-                            } else {
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) =>
-                                    _buildPopupDialog(
-                                        context, 'Wrong OTP number'),
-                              );
-                            }
-                            setState(() {
-                              isLoading = false;
-                            });
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) =>
+                                  _buildPopupDialog(
+                                context,
+                                'forgotPassword.linkSent'.tr(),
+                              ),
+                            );
                           },
                           child: (isLoading)
                               ? const SizedBox(

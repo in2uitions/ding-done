@@ -518,7 +518,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                             //         builder: (context) {
                             //           return MapLocationPicker(
                             //             apiKey:
-                            //                 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                            //                 Constants.googleApiKey,
                             //             popOnNextButtonTaped: true,
                             //             currentLatLng: LatLng(
                             //                 signupViewModel.getSignUpBody[
@@ -744,7 +744,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                           ),
 
                                           // child:MapLocationPicker(
-                                          //   apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                          //   apiKey: Constants.googleApiKey,
                                           //   popOnNextButtonTaped: false,
                                           //   hideMoreOptions:true,
                                           //   hideBackButton: true,
@@ -833,7 +833,7 @@ class _SignUpOnBoardingScreenState extends State<SignUpOnBoardingScreen> {
                                         builder: (context) {
                                           return MapLocationPicker(
                                             apiKey:
-                                                'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                                Constants.googleApiKey,
                                             popOnNextButtonTaped: true,
                                             currentLatLng: LatLng(
                                                 signupViewModel.getSignUpBody["latitude"] !=

@@ -524,7 +524,7 @@ class _CompleteProfileScreenState extends State<CompleteProfileScreen> {
                                         builder: (context) {
                                           return MapLocationPicker(
                                             apiKey:
-                                            'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+                                            Constants.googleApiKey,
                                             popOnNextButtonTaped: true,
                                             currentLatLng: LatLng(
                                                 profileViewModel.profileBody["latitude"] !=

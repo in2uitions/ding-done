@@ -43,3 +43,7 @@ app.*.map.json
 /android/app/release
 # Ignore APK files
 *.apk
+
+# Secrets. Copy assets/.env.example to assets/.env and fill it in.
+assets/.env
+ios/Flutter/Secrets.xcconfig

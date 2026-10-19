@@ -91,7 +91,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
   Widget build(BuildContext context) {
     return Consumer<SignUpViewModel>(builder: (context, signupViewModel, _) {
       return MapLocationPicker(
-        apiKey: 'AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I',
+        apiKey: Constants.googleApiKey,
         popOnNextButtonTaped: true,
         currentLatLng: LatLng(
           signupViewModel.getSignUpBody['latitude'] != null &&

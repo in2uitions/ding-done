@@ -13,7 +13,10 @@
 
 - (BOOL)application:(UIApplication *)application
 didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  [GMSServices provideAPIKey:@"AIzaSyC0LlzC9LKEbyDDgM2pLnBZe-39Ovu2Z7I"];
+  NSString *apiKey = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"GMSApiKey"];
+  if (apiKey.length > 0) {
+    [GMSServices provideAPIKey:apiKey];
+  }
   [GeneratedPluginRegistrant registerWithRegistry:self];
   FlutterViewController* controller =
   (FlutterViewController*)self.window.rootViewController;

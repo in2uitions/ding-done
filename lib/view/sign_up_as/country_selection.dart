@@ -21,6 +21,15 @@ class CountrySelectionScreen extends StatefulWidget {
 }
 
 class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
+  Future<List<dynamic>?>? _countriesFuture;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _countriesFuture ??=
+        Provider.of<SignUpViewModel>(context, listen: false).countries();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,9 +82,7 @@ class _CountrySelectionScreenState extends State<CountrySelectionScreen> {
                         padding:
                             EdgeInsets.all(context.appValues.appPadding.p20),
                         child: FutureBuilder(
-                          future: Provider.of<SignUpViewModel>(context,
-                                  listen: false)
-                              .countries(),
+                          future: _countriesFuture,
                           builder: (context, AsyncSnapshot data) {
                             return Padding(
                               padding: const EdgeInsets.fromLTRB(20, 0, 20, 20),
