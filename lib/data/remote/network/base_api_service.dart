@@ -4,7 +4,7 @@ abstract class BaseApiService {
 
   Future<dynamic> getResponse({params = '', bool sendToken});
   Future<dynamic> getResponseFile({params = '', bool sendToken});
-  Future<dynamic> postResponse({required dynamic data, bool sendToken, String params = ''});
+  Future<dynamic> postResponse({required dynamic data, bool sendToken, String params = '', bool logBody = true});
   Future<dynamic> postResponseFile({required dynamic data, bool sendToken, String params = ''});
   Future<dynamic> patchResponse({required dynamic id, dynamic data, String params =''});
   Future<dynamic> deleteResponse({params = ''});

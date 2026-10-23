@@ -222,6 +222,8 @@
     "addPaymentMethod": "إضافة وسيلة دفع جديدة",
     "visaCard": "بطاقة فيزا",
     "cardName": "اللقب (اختياري)",
+    "cardHolder": "الاسم على البطاقة",
+    "cardDetailsRequired": "الاسم ورقم البطاقة وتاريخ الانتهاء ورمز التحقق مطلوبة.",
     "cardNumber": "رقم البطاقة",
     "expiryYear": "سنة الانتهاء",
     "expiryMonth": "شهر الانتهاء",

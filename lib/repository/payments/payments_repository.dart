@@ -101,11 +101,11 @@ class PaymentsRepository {
     }
   }
 
-  Future<dynamic> initiateCardSave() async {
+  Future<dynamic> initiateCardSave(Map<String, dynamic> card) async {
     try {
-      return await _initiateCardSave.postResponse(data: {});
+      return await _initiateCardSave.postResponse(data: card, logBody: false);
     } catch (error) {
-      debugPrint('error in initiating card save $error');
+      debugPrint('error in initiating card save');
       rethrow;
     }
   }

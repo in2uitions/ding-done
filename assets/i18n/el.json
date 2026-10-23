@@ -223,6 +223,8 @@
     "addPaymentMethod": "Προσθήκη Νέου Τρόπου Πληρωμής",
     "visaCard": "Κάρτα Visa",
     "cardName": "ψευδώνυμο (προαιρετικό)",
+    "cardHolder": "Όνομα στην κάρτα",
+    "cardDetailsRequired": "Απαιτούνται το όνομα, ο αριθμός κάρτας, η λήξη και ο CVC.",
     "cardNumber": "Αριθμός Κάρτας",
     "expiryYear": "Έτος Λήξης",
     "expiryMonth": "Μήνας Λήξης",

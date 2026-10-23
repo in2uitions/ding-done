@@ -215,6 +215,8 @@
     "addPaymentMethod": "Add new Payment Method",
     "visaCard": "Visa Card",
     "cardName": "Nickname (optional)",
+    "cardHolder": "Name on card",
+    "cardDetailsRequired": "Name, card number, expiry and CVC are required.",
     "cardNumber": "Card Number",
     "expiryYear": "Expiry Year",
     "expiryMonth": "Expiry Month",

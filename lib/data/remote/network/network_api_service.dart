@@ -86,7 +86,8 @@ class NetworkApiService extends BaseApiService {
   Future postResponse(
       {required dynamic data,
       bool sendToken = true,
-      String params = ''}) async {
+      String params = '',
+      bool logBody = true}) async {
     dynamic responseJson;
     if (sendToken) {
       await _applyAuthHeader();
@@ -106,7 +107,13 @@ class NetworkApiService extends BaseApiService {
       finalUrl = '$finalUrl$params';
     }
     debugPrint('final ${finalUrl}');
-    debugPrint('data ${data}');
+    if (logBody) {
+      debugPrint('data $data');
+    } else if (data is Map) {
+      debugPrint('data keys ${data.keys.toList()}');
+    } else {
+      debugPrint('data [not logged]');
+    }
     debugPrint('token ${headers[HttpHeaders.authorizationHeader]}');
     try {
       final response;
@@ -289,6 +296,7 @@ class NetworkApiService extends BaseApiService {
         return responseJson;
       case 400:
       case 422:
+      case 502:
         final decoded = _decodeBody(response);
         if (decoded is Map) return decoded;
         throw BadRequestException(_messageFromBody(decoded, response));

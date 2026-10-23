@@ -223,6 +223,8 @@
     "addPaymentMethod": "Добавить новый способ оплаты",
     "visaCard": "Карта Visa",
     "cardName": "псевдоним (необязательно)",
+    "cardHolder": "Имя на карте",
+    "cardDetailsRequired": "Укажите имя, номер карты, срок действия и CVC.",
     "cardNumber": "Номер карты",
     "expiryYear": "Год истечения срока действия",
     "expiryMonth": "Месяц истечения срока действия",

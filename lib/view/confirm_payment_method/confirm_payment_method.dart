@@ -8,6 +8,7 @@ import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
@@ -61,6 +62,28 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
     if (!mounted) return;
     await Provider.of<PaymentViewModel>(context, listen: false)
         .getPaymentMethodsTap();
+  }
+
+  String _cardholderName() {
+    final user = widget.profileViewModel.profileBody['user'];
+    if (user is! Map) return '';
+    final first = user['first_name']?.toString().trim() ?? '';
+    final last = user['last_name']?.toString().trim() ?? '';
+    return [first, last].where((part) => part.isNotEmpty).join(' ');
+  }
+
+  Future<Map<String, dynamic>?> _askForCard() {
+    return showModalBottomSheet<Map<String, dynamic>>(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+      ),
+      builder: (sheetContext) => _CardSaveSheet(
+        initialName: _cardholderName(),
+      ),
+    );
   }
 
   Future<void> _openCardSave(String url) async {
@@ -223,17 +246,28 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                   child: InkWell(
                                     onTap: () async {
                                       final dialogContext = context;
+                                      final card = await _askForCard();
+                                      if (card == null || !dialogContext.mounted) {
+                                        return;
+                                      }
                                       await payVM.setLoading(true);
                                       try {
-                                        final url = await payVM.initiateCardSave();
+                                        final url =
+                                            await payVM.initiateCardSave(card);
                                         if (!dialogContext.mounted) return;
                                         await payVM.setLoading(false);
-                                        await _openCardSave(url);
+                                        if (url != null && url.isNotEmpty) {
+                                          await _openCardSave(url);
+                                        }
                                       } catch (error) {
                                         if (!dialogContext.mounted) return;
                                         final message = error
                                             .toString()
-                                            .replaceFirst('Exception: ', '');
+                                            .replaceFirst('Exception: ', '')
+                                            .replaceFirst(
+                                              'Error During Communication: ',
+                                              '',
+                                            );
                                         showDialog(
                                           context: dialogContext,
                                           builder: (_) => simpleAlert(
@@ -284,6 +318,262 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
           ),
         );
       },
+    );
+  }
+}
+
+class _CardNumberInputFormatter extends TextInputFormatter {
+  const _CardNumberInputFormatter();
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    final digits = newValue.text.replaceAll(RegExp(r'\D'), '');
+    final isAmex = digits.startsWith('34') || digits.startsWith('37');
+    final maxDigits = isAmex ? 15 : 19;
+    final trimmed =
+        digits.length > maxDigits ? digits.substring(0, maxDigits) : digits;
+    final text = _groupCardDigits(trimmed, isAmex);
+    final digitOffset = _digitCount(newValue.text, newValue.selection.end);
+    return TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(
+        offset: _offsetForDigits(text, digitOffset),
+      ),
+    );
+  }
+
+  static String _groupCardDigits(String digits, bool isAmex) {
+    final buffer = StringBuffer();
+    for (var i = 0; i < digits.length; i++) {
+      final breakHere = isAmex ? (i == 4 || i == 10) : i % 4 == 0;
+      if (i > 0 && breakHere) buffer.write(' ');
+      buffer.write(digits[i]);
+    }
+    return buffer.toString();
+  }
+
+  static int _digitCount(String text, int offset) {
+    final end = offset.clamp(0, text.length);
+    return text.substring(0, end).replaceAll(RegExp(r'\D'), '').length;
+  }
+
+  static int _offsetForDigits(String text, int digits) {
+    if (digits <= 0) return 0;
+    var seen = 0;
+    for (var i = 0; i < text.length; i++) {
+      if (RegExp(r'\d').hasMatch(text[i])) seen++;
+      if (seen >= digits) return i + 1;
+    }
+    return text.length;
+  }
+}
+
+class _CardSaveSheet extends StatefulWidget {
+  const _CardSaveSheet({required this.initialName});
+
+  final String initialName;
+
+  @override
+  State<_CardSaveSheet> createState() => _CardSaveSheetState();
+}
+
+class _CardSaveSheetState extends State<_CardSaveSheet> {
+  late final TextEditingController _nameController;
+  final TextEditingController _numberController = TextEditingController();
+  final TextEditingController _expiryController = TextEditingController();
+  final TextEditingController _cvcController = TextEditingController();
+  String? _errorText;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameController = TextEditingController(text: widget.initialName);
+  }
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _numberController.dispose();
+    _expiryController.dispose();
+    _cvcController.dispose();
+    super.dispose();
+  }
+
+  InputDecoration _decoration(String hint) {
+    return InputDecoration(
+      hintText: hint,
+      filled: true,
+      fillColor: const Color(0xffF6F6F8),
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
+      ),
+    );
+  }
+
+  void _submit() {
+    final name = _nameController.text.trim();
+    final number = _numberController.text.replaceAll(RegExp(r'\D'), '');
+    final expiryDigits = _expiryController.text.replaceAll(RegExp(r'\D'), '');
+    final month = expiryDigits.length >= 2
+        ? int.tryParse(expiryDigits.substring(0, 2))
+        : null;
+    final yearText =
+        expiryDigits.length > 2 ? expiryDigits.substring(2) : '';
+    final year = int.tryParse(yearText);
+    final cvc = _cvcController.text.trim();
+    final isAmex = number.startsWith('34') || number.startsWith('37');
+    final valid = name.isNotEmpty &&
+        number.length >= 13 &&
+        number.length <= 19 &&
+        (isAmex ? number.length == 15 : true) &&
+        month != null &&
+        month >= 1 &&
+        month <= 12 &&
+        year != null &&
+        (yearText.length == 2 || yearText.length == 4) &&
+        cvc.length >= 3 &&
+        cvc.length <= 4;
+    if (!valid) {
+      setState(() {
+        _errorText = 'paymentMethod.cardDetailsRequired'.tr();
+      });
+      return;
+    }
+    Navigator.of(context).pop({
+      'card_number': number,
+      'exp_month': month,
+      'exp_year': year,
+      'cvc': cvc,
+      'name': name,
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: 16,
+        bottom: MediaQuery.of(context).viewInsets.bottom + 20,
+      ),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Text(
+              'paymentMethod.addPaymentMethod'.tr(),
+              style: getPrimarySemiBoldStyle(
+                fontSize: 16,
+                color: const Color(0xff4100E3),
+              ),
+            ),
+            const Gap(16),
+            TextField(
+              controller: _nameController,
+              textCapitalization: TextCapitalization.words,
+              decoration: _decoration('paymentMethod.cardHolder'.tr()),
+            ),
+            const Gap(12),
+            TextField(
+              controller: _numberController,
+              keyboardType: TextInputType.number,
+              inputFormatters: const [_CardNumberInputFormatter()],
+              decoration: _decoration('1234 5678 9012 3456').copyWith(
+                labelText: 'paymentMethod.cardNumber'.tr(),
+              ),
+            ),
+            const Gap(12),
+            Row(
+              children: [
+                Expanded(
+                  flex: 3,
+                  child: TextField(
+                    controller: _expiryController,
+                    keyboardType: TextInputType.number,
+                    inputFormatters: const [_ExpiryInputFormatter()],
+                    decoration: _decoration('MM/YY').copyWith(
+                      labelText: 'paymentMethod.expiryMonth'.tr(),
+                    ),
+                  ),
+                ),
+                const Gap(8),
+                Expanded(
+                  flex: 2,
+                  child: TextField(
+                    controller: _cvcController,
+                    keyboardType: TextInputType.number,
+                    obscureText: true,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      LengthLimitingTextInputFormatter(4),
+                    ],
+                    decoration: _decoration('123').copyWith(
+                      labelText: 'paymentMethod.CVC'.tr(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            if (_errorText != null) ...[
+              const Gap(12),
+              Text(
+                _errorText!,
+                style: getPrimaryRegularStyle(
+                  fontSize: 13,
+                  color: Colors.red,
+                ),
+              ),
+            ],
+            const Gap(16),
+            SizedBox(
+              height: 48,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xff4100E3),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                onPressed: _submit,
+                child: Text(
+                  'paymentMethod.addPaymentMethod'.tr(),
+                  style: getPrimaryBoldStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _ExpiryInputFormatter extends TextInputFormatter {
+  const _ExpiryInputFormatter();
+
+  @override
+  TextEditingValue formatEditUpdate(
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
+    var digits = newValue.text.replaceAll(RegExp(r'\D'), '');
+    if (digits.length > 6) digits = digits.substring(0, 6);
+    if (digits.length == 1 && int.parse(digits) > 1) {
+      digits = '0$digits';
+    }
+    final text = digits.length <= 2 ? digits : '${digits.substring(0, 2)}/${digits.substring(2)}';
+    return TextEditingValue(
+      text: text,
+      selection: TextSelection.collapsed(offset: text.length),
     );
   }
 }

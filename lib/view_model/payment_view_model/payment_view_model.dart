@@ -125,7 +125,7 @@ class PaymentViewModel extends DisposableViewModel {
     _isloading=value;
     notifyListeners();
   }
-  Future<String> initiateCardSave() async {
+  Future<String?> initiateCardSave(Map<String, dynamic> card) async {
     final customer = await _paymentsRepository.addOrUpdateTapCustomer();
     final customerFailure = _serverMessage(customer);
     if (customerFailure != null) {
@@ -137,14 +137,16 @@ class PaymentViewModel extends DisposableViewModel {
     }
     _profileViewModel.profileBody['tap_id'] = tapId;
 
-    final response = await _paymentsRepository.initiateCardSave();
+    final response = await _paymentsRepository.initiateCardSave(card);
     final failure = _serverMessage(response);
     if (failure != null) {
-      throw Exception(failure);
+      final tap = response is Map ? response['tap'] : null;
+      throw Exception(tap == null ? failure : '$failure\n$tap');
     }
     final url = response is Map ? response['redirect_url']?.toString() : null;
     if (url == null || url.isEmpty) {
-      throw Exception('Card save did not return a page to open.');
+      await getPaymentMethodsTap();
+      return null;
     }
     return url;
   }
