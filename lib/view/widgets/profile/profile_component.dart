@@ -22,6 +22,8 @@ class ProfileComponent extends StatefulWidget {
 }
 
 class _ProfileComponentState extends State<ProfileComponent> {
+  bool _openingPaymentMethods = false;
+
   @override
   Widget build(BuildContext context) {
     // return FutureBuilder(
@@ -147,22 +149,30 @@ class _ProfileComponentState extends State<ProfileComponent> {
               ),
             ),
             onTap: () async {
-              await Provider.of<PaymentViewModel>(context, listen: false)
-                  .getPaymentMethodsTap();
-              Navigator.of(context).push(
-                _createRoute(
-                  Consumer<ProfileViewModel>(
-                      builder: (context, profileViewModel, _) {
-                    return ConfirmPaymentMethod(
-                      profileViewModel: profileViewModel,
-                      payment_method:
-                          paymentViewModel.getPaymentBody['tap_payments_card'],
-                      paymentViewModel: paymentViewModel,
-                      role: widget.role,
-                    );
-                  }),
-                ),
-              );
+              if (_openingPaymentMethods) return;
+              _openingPaymentMethods = true;
+              final navigator = Navigator.of(context);
+              try {
+                await Provider.of<PaymentViewModel>(context, listen: false)
+                    .getPaymentMethodsTap();
+                if (!mounted) return;
+                await navigator.push(
+                  _createRoute(
+                    Consumer<ProfileViewModel>(
+                        builder: (context, profileViewModel, _) {
+                      return ConfirmPaymentMethod(
+                        profileViewModel: profileViewModel,
+                        payment_method: paymentViewModel
+                            .getPaymentBody['tap_payments_card'],
+                        paymentViewModel: paymentViewModel,
+                        role: widget.role,
+                      );
+                    }),
+                  ),
+                );
+              } finally {
+                _openingPaymentMethods = false;
+              }
             },
           );
         }),
