@@ -32,7 +32,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
@@ -304,8 +303,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   //   await Firebase.initializeApp();
   //   await dotenv.load(fileName: "assets/.env");
   //
-  //   Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
-  //
   //   OneSignal.initialize(dotenv.env['ONESIGNAL_APP_ID'] ?? '');
   //   await OneSignal.Notifications.requestPermission(true);
   //
@@ -338,8 +335,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     Adjust.initSdk(adjustConfig);
 
     /// ------------------------------------------------------
-
-    Stripe.publishableKey = dotenv.env['STRIPE_PUBLISHABLE_KEY'] ?? '';
 
     await OneSignalService.initialize();
 

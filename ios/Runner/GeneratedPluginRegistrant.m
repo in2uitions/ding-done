@@ -120,12 +120,6 @@
 @import geolocator_apple;
 #endif
 
-#if __has_include(<go_sell_sdk_flutter/GoSellSdkFlutterPlugin.h>)
-#import <go_sell_sdk_flutter/GoSellSdkFlutterPlugin.h>
-#else
-@import go_sell_sdk_flutter;
-#endif
-
 #if __has_include(<google_maps_flutter_ios/FGMGoogleMapsPlugin.h>)
 #import <google_maps_flutter_ios/FGMGoogleMapsPlugin.h>
 #else
@@ -204,12 +198,6 @@
 @import sign_in_with_apple;
 #endif
 
-#if __has_include(<stripe_ios/StripeIosPlugin.h>)
-#import <stripe_ios/StripeIosPlugin.h>
-#else
-@import stripe_ios;
-#endif
-
 #if __has_include(<syncfusion_flutter_pdfviewer/SyncfusionFlutterPdfViewerPlugin.h>)
 #import <syncfusion_flutter_pdfviewer/SyncfusionFlutterPdfViewerPlugin.h>
 #else
@@ -256,7 +244,6 @@
   [FlutterWebBrowserPlugin registerWithRegistrar:[registry registrarForPlugin:@"FlutterWebBrowserPlugin"]];
   [GeocodingPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeocodingPlugin"]];
   [GeolocatorPlugin registerWithRegistrar:[registry registrarForPlugin:@"GeolocatorPlugin"]];
-  [GoSellSdkFlutterPlugin registerWithRegistrar:[registry registrarForPlugin:@"GoSellSdkFlutterPlugin"]];
   [FGMGoogleMapsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FGMGoogleMapsPlugin"]];
   [FLTGoogleSignInPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTGoogleSignInPlugin"]];
   [FLTImageCropperPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImageCropperPlugin"]];
@@ -270,7 +257,6 @@
   [FPPSharePlusPlugin registerWithRegistrar:[registry registrarForPlugin:@"FPPSharePlusPlugin"]];
   [SharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"SharedPreferencesPlugin"]];
   [SignInWithApplePlugin registerWithRegistrar:[registry registrarForPlugin:@"SignInWithApplePlugin"]];
-  [StripeIosPlugin registerWithRegistrar:[registry registrarForPlugin:@"StripeIosPlugin"]];
   [SyncfusionFlutterPdfViewerPlugin registerWithRegistrar:[registry registrarForPlugin:@"SyncfusionFlutterPdfViewerPlugin"]];
   [URLLauncherPlugin registerWithRegistrar:[registry registrarForPlugin:@"URLLauncherPlugin"]];
   [VideoPlayerPlugin registerWithRegistrar:[registry registrarForPlugin:@"VideoPlayerPlugin"]];

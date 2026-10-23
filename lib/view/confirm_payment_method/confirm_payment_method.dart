@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:dingdone/res/app_context_extension.dart';
 import 'package:dingdone/res/fonts/styles_manager.dart';
 import 'package:dingdone/view/widgets/confirm_payment_method/card_info.dart';
@@ -8,14 +7,10 @@ import 'package:dingdone/view_model/payment_view_model/payment_view_model.dart';
 import 'package:dingdone/view_model/profile_view_model/profile_view_model.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
-import 'package:go_sell_sdk_flutter/model/models.dart';
 import 'package:provider/provider.dart';
 import 'package:gap/gap.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:webview_flutter_android/webview_flutter_android.dart';
 import 'package:webview_flutter_wkwebview/webview_flutter_wkwebview.dart';
@@ -39,14 +34,7 @@ class ConfirmPaymentMethod extends StatefulWidget {
 }
 
 class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
-  Map<dynamic, dynamic>? tapSDKResult;
-  String responseID = "";
-  String sdkStatus = "";
-  String sdkErrorCode = "";
-  String sdkErrorMessage = "";
-  String sdkErrorDescription = "";
-  late final WebViewController _controller;
-  bool sdkLoading = false;
+  bool _cardSaveClosed = false;
   Future<void> _handleRefresh() async {
     try {
 
@@ -61,331 +49,76 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
       );
     }
   }
-  @override
-  void initState() {
-    super.initState();
-    configureApp();
-    setupSDKSession();
+  bool _isCardSaveReturn(String url) {
+    return url.contains('dingdone://com.in2uitions.dingdone');
   }
 
-  Future<void> configureApp() async {
-    try {
-      GoSellSdkFlutter.configureApp(
-        bundleId: Platform.isAndroid
-            ? "com.in2uitions.dingdone"
-            : "com.in2uitions.dingdone",
-        productionSecretKey: dotenv.env['TAP_SECRET'] ?? '',
-        sandBoxSecretKey: '',
-        lang: "en",
+  Future<void> _completeCardSave() async {
+    if (_cardSaveClosed || !mounted) return;
+    _cardSaveClosed = true;
+    Navigator.of(context).pop();
+    await Future<void>.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
+    await Provider.of<PaymentViewModel>(context, listen: false)
+        .getPaymentMethodsTap();
+  }
+
+  Future<void> _openCardSave(String url) async {
+    _cardSaveClosed = false;
+    late final PlatformWebViewControllerCreationParams params;
+    if (WebViewPlatform.instance is WebKitWebViewPlatform) {
+      params = WebKitWebViewControllerCreationParams(
+        allowsInlineMediaPlayback: true,
+        mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
       );
-    } catch (error) {
-      debugPrint('error configuring app $error');
+    } else {
+      params = const PlatformWebViewControllerCreationParams();
     }
-  }
 
-  Future<void> setupSDKSession() async {
-    try {
-      GoSellSdkFlutter.sessionConfigurations(
-        trxMode: TransactionMode.TOKENIZE_CARD,
-        transactionCurrency: "QAR",
-        amount: 1,
-        customer: Customer(
-          customerId: widget.profileViewModel.getProfileBody['tap_id'] ?? "",
-          email: '${widget.profileViewModel.getProfileBody['user']['email']}',
-          isdNumber: "961",
-          number:
-              '${widget.profileViewModel.getProfileBody['user']['phone_number']}',
-          firstName:
-              '${widget.profileViewModel.getProfileBody['user']['first_name']}',
-          middleName: "",
-          lastName:
-              '${widget.profileViewModel.getProfileBody['user']['last_name']}',
-        ),
-        paymentItems: <PaymentItem>[],
-        taxes: [],
-        shippings: [],
-        postURL: "https://tap.company",
-        paymentDescription: "Save Card",
-        paymentMetaData: {"a": "a meta", "b": "b meta"},
-        paymentReference: Reference(
-          acquirer: "acquirer",
-          gateway: "gateway",
-          payment: "payment",
-          track: "track",
-          transaction: "trans_910101",
-          order: "order_262625",
-        ),
-        paymentStatementDescriptor: "paymentStatementDescriptor",
-        isUserAllowedToSaveCard: true,
-        isRequires3DSecure: true,
-        receipt: Receipt(true, false),
-        authorizeAction: AuthorizeAction(
-          type: AuthorizeActionType.CAPTURE,
-          timeInHours: 10,
-        ),
-        merchantID: "49941248",
-        allowedCadTypes: CardType.ALL,
-        applePayMerchantID: "merchant.applePayMerchantID",
-        allowsToSaveSameCardMoreThanOnce: true,
-        cardHolderName:
-            "${widget.profileViewModel.getProfileBody['user']['first_name']} ${widget.profileViewModel.getProfileBody['user']['last_name']}",
-        allowsToEditCardHolderName: true,
-        paymentType: PaymentType.ALL,
-        supportedPaymentMethods: [
-          "VISA",
-          "MASTERCARD",
-          "AMERICAN_EXPRESS",
-          "GOOGLE_PAY",
-        ],
-        sdkMode: SDKMode.Production,
-        appearanceMode: SDKAppearanceMode.fullscreen,
-        googlePayWalletMode: GooglePayWalletMode.ENVIRONMENT_PRODUCTION,
-      );
-    } catch (error) {
-      debugPrint('error setting up sdk $error');
-    }
-    if (mounted) setState(() => tapSDKResult = {});
-  }
-
-  Future<void> startSDK() async {
-    try {
-      widget.paymentViewModel.setLoading(true);
-      setState(() => sdkLoading = true);
-
-      tapSDKResult = await GoSellSdkFlutter.startPaymentSDK;
-      debugPrint('SDK Result: ${tapSDKResult?['sdk_result']}');
-
-      // Handle SDK result synchronously here.
-      String resultStatus = tapSDKResult?['sdk_result'];
-      if (resultStatus == "SUCCESS" || resultStatus == "FAILED") {
-        handleSDKResult();
-      } else if (resultStatus == "SDK_ERROR") {
-        sdkErrorCode = tapSDKResult!['sdk_error_code'].toString();
-        sdkErrorMessage = tapSDKResult!['sdk_error_message'] ?? "";
-        sdkErrorDescription = tapSDKResult!['sdk_error_description'] ?? "";
-      }
-
-      // Perform asynchronous operations outside setState.
-      await widget.paymentViewModel.getPaymentMethodsTap();
-      dynamic result =
-      await widget.paymentViewModel.authorizeCard(tapSDKResult);
-
-      // Now update state synchronously.
-      setState(() {
-        // Update any state variables if needed.
-      });
-
-      if (result["transaction"] != null) {
-        // Launch the WebView.
-        // Make sure _createRoute is defined and returns a valid Route.
-        late final PlatformWebViewControllerCreationParams params;
-        if (WebViewPlatform.instance is WebKitWebViewPlatform) {
-          params = WebKitWebViewControllerCreationParams(
-            allowsInlineMediaPlayback: true,
-            mediaTypesRequiringUserAction: const <PlaybackMediaTypes>{},
-          );
-        } else {
-          params = const PlatformWebViewControllerCreationParams();
-        }
-
-        final WebViewController controller =
+    final WebViewController controller =
         WebViewController.fromPlatformCreationParams(params);
-        controller
-          ..setJavaScriptMode(JavaScriptMode.unrestricted)
-          ..setNavigationDelegate(NavigationDelegate(
-            onProgress: (int progress) {
-              debugPrint('WebView loading: $progress%');
-            },
-            onPageStarted: (String url) async {
-              debugPrint('Page started: $url');
-              if (url.contains('dingdone://com.in2uitions.dingdone')) {
-                await Future.delayed(const Duration(seconds: 6));
-                Navigator.pop(context);
-                Provider.of<PaymentViewModel>(context, listen: false)
-                    .getPaymentMethodsTap();
+    controller
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setNavigationDelegate(NavigationDelegate(
+        onNavigationRequest: (NavigationRequest request) {
+          if (_isCardSaveReturn(request.url)) {
+            _completeCardSave();
+            return NavigationDecision.prevent;
+          }
+          return NavigationDecision.navigate;
+        },
+        onPageStarted: (String pageUrl) {
+          if (_isCardSaveReturn(pageUrl)) {
+            _completeCardSave();
+          }
+        },
+        onWebResourceError: (WebResourceError error) {
+          final failedUrl = error.url ?? '';
+          if (_isCardSaveReturn(failedUrl)) {
+            _completeCardSave();
+          } else {
+            debugPrint('WebView error: ${error.description}');
+          }
+        },
+      ))
+      ..loadRequest(Uri.parse(url));
 
-                // Consumer2<ProfileViewModel, PaymentViewModel>(
-                //   builder: (context, profileViewModel, paymentViewModel, _) {
-                //     // Ensure the payment methods are retrieved.
-                //     paymentViewModel.getPaymentMethods();
-                //
-                //     // Schedule the navigation after the current frame is built.
-                //     WidgetsBinding.instance.addPostFrameCallback((_) {
-                //       Navigator.of(context).push(_createRoute(
-                //         ConfirmPaymentMethod(
-                //           payment_method: paymentViewModel.getPaymentBody['tap_payments_card'],
-                //           paymentViewModel: paymentViewModel,
-                //           profileViewModel: profileViewModel,
-                //           role: userRole,
-                //         ),
-                //       ));
-                //     });
-                //
-                //     // Return an empty widget since nothing needs to be displayed here.
-                //     return Container();
-                //   },
-                // );
-              }
-            },
-            onPageFinished: (String url) {
-              debugPrint('Page finished: $url');
-            },
-            // onNavigationRequest: (NavigationRequest request) {
-            //   if (request.url.startsWith('https://www.youtube.com/')) {
-            //     return NavigationDecision.prevent;
-            //   }
-            //   return NavigationDecision.navigate;
-            // },
-            onWebResourceError: (WebResourceError error) {
-              debugPrint('WebView error: ${error.description}');
-            },
-          ))
-          ..addJavaScriptChannel('Toaster',
-              onMessageReceived: (JavaScriptMessage message) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text(message.message)),
-                );
-              })
-          ..loadRequest(Uri.parse('${result["transaction"]["url"]}'));
-
-        // If using Android-specific features.
-        if (controller.platform is AndroidWebViewController) {
-          AndroidWebViewController.enableDebugging(true);
-          (controller.platform as AndroidWebViewController)
-              .setMediaPlaybackRequiresUserGesture(false);
-        }
-
-        _controller = controller;
-        Navigator.of(context).push(_createRoute(Scaffold(
-          backgroundColor: Colors.green,
-          appBar: AppBar(
-            title: const Text('DingDone Payment'),
-            // This drop down menu demonstrates that Flutter widgets can be shown over the web view.
-            actions: <Widget>[
-              NavigationControls(webViewController: _controller),
-              SampleMenu(webViewController: _controller),
-            ],
-          ),
-          body: WebViewWidget(controller: _controller),
-          // floatingActionButton: favoriteButton(),
-        )));
-      } else {
-        showDialog(
-            context: context,
-            builder: (BuildContext context) => simpleAlert(
-                context,
-                'button.failure'.tr(),
-                '${result['errors'] != null ? result['errors'][0]['description'] : result['error']}'));
-      }
-      await widget.paymentViewModel.setLoading(false);
-    } catch (error) {
-      debugPrint('Error starting SDK: $error');
+    if (controller.platform is AndroidWebViewController) {
+      AndroidWebViewController.enableDebugging(true);
+      (controller.platform as AndroidWebViewController)
+          .setMediaPlaybackRequiresUserGesture(false);
     }
+
+    if (!mounted) return;
+    await Navigator.of(context).push(_createRoute(Scaffold(
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text('paymentMethod.addPaymentMethod'.tr()),
+      ),
+      body: WebViewWidget(controller: controller),
+    )));
   }
 
-  Future<void> _launchUrl(String url) async {
-    if (Uri.tryParse(url)?.hasAbsolutePath != true) {
-      debugPrint('Invalid URL: $url');
-      return;
-    }
-
-    final Uri uri = Uri.parse(url);
-    if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $url');
-    }
-  }
-
-  void handleSDKResult() {
-    debugPrint('SDK Result>>>> $tapSDKResult');
-    debugPrint('SDK Result TOKEN>>>> ${tapSDKResult?['token']}');
-
-    debugPrint('Transaction mode>>>> ${tapSDKResult!['trx_mode']}');
-
-    switch (tapSDKResult!['trx_mode']) {
-      case "CHARGE":
-        printSDKResult('Charge');
-        break;
-
-      case "AUTHORIZE":
-        printSDKResult('Authorize');
-        break;
-
-      case "SAVE_CARD":
-        printSDKResult('Save Card');
-        debugPrint('Save Card : ${tapSDKResult!['token']}');
-        break;
-
-      case "TOKENIZE":
-        debugPrint('TOKENIZE token : ${tapSDKResult!['token']}');
-        debugPrint(
-            'TOKENIZE token_currency  : ${tapSDKResult!['token_currency']}');
-        debugPrint(
-            'TOKENIZE card_first_six : ${tapSDKResult!['card_first_six']}');
-        debugPrint(
-            'TOKENIZE card_last_four : ${tapSDKResult!['card_last_four']}');
-        debugPrint('TOKENIZE card_object  : ${tapSDKResult!['card_object']}');
-        debugPrint(
-            'TOKENIZE card_holder_name  : ${tapSDKResult!['card_holder_name']}');
-        debugPrint(
-            'TOKENIZE card_exp_month : ${tapSDKResult!['card_exp_month']}');
-        debugPrint(
-            'TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
-        debugPrint(
-            'TOKENIZE card_exp_year    : ${tapSDKResult!['card_exp_year']}');
-        debugPrint('TOKENIZE issuer_id    : ${tapSDKResult!['issuer_id']}');
-        debugPrint('TOKENIZE issuer_bank    : ${tapSDKResult!['issuer_bank']}');
-        debugPrint(
-            'TOKENIZE issuer_country    : ${tapSDKResult!['issuer_country']}');
-        responseID = tapSDKResult!['token'] ?? "";
-        break;
-    }
-  }
-
-  void printSDKResult(String trxMode) {
-    debugPrint('$trxMode status                : ${tapSDKResult!['status']}');
-    if (trxMode == "Authorize") {
-      debugPrint('$trxMode id              : ${tapSDKResult!['authorize_id']}');
-    } else {
-      debugPrint('$trxMode id               : ${tapSDKResult!['charge_id']}');
-    }
-    debugPrint(
-        '$trxMode  description        : ${tapSDKResult!['description']}');
-    debugPrint('$trxMode  message           : ${tapSDKResult!['message']}');
-    debugPrint('$trxMode  card_first_six : ${tapSDKResult!['card_first_six']}');
-    debugPrint(
-        '$trxMode  card_last_four   : ${tapSDKResult!['card_last_four']}');
-    debugPrint(
-        '$trxMode  card_object         : ${tapSDKResult!['card_object']}');
-    debugPrint('$trxMode  card_id         : ${tapSDKResult!['card_id']}');
-    debugPrint(
-        '$trxMode  card_brand          : ${tapSDKResult!['card_brand']}');
-    debugPrint(
-        '$trxMode  card_exp_month  : ${tapSDKResult!['card_exp_month']}');
-    debugPrint('$trxMode  card_exp_year: ${tapSDKResult!['card_exp_year']}');
-    debugPrint('$trxMode  acquirer_id  : ${tapSDKResult!['acquirer_id']}');
-    debugPrint(
-        "$trxMode payment agreement : ${tapSDKResult!['payment_agreement']}");
-    debugPrint(
-        '$trxMode  acquirer_response_code : ${tapSDKResult!['acquirer_response_code']}');
-    debugPrint(
-        '$trxMode  acquirer_response_message: ${tapSDKResult!['acquirer_response_message']}');
-    debugPrint('$trxMode  source_id: ${tapSDKResult!['source_id']}');
-    debugPrint(
-        '$trxMode  source_channel     : ${tapSDKResult!['source_channel']}');
-    debugPrint(
-        '$trxMode  source_object      : ${tapSDKResult!['source_object']}');
-    debugPrint(
-        '$trxMode source_payment_type : ${tapSDKResult!['source_payment_type']}');
-
-    if (trxMode == "Authorize") {
-      responseID = tapSDKResult!['authorize_id'] ?? "";
-    } else {
-      responseID = tapSDKResult!['charge_id'] ?? "";
-    }
-
-    setState(() => sdkLoading = false);
-    // handle navigation or errors...
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -489,26 +222,29 @@ class _ConfirmPaymentMethodState extends State<ConfirmPaymentMethod> {
                                   ),
                                   child: InkWell(
                                     onTap: () async {
+                                      final dialogContext = context;
                                       await payVM.setLoading(true);
-                                      dynamic methods =
-                                          await payVM.getPaymentMethodsTap();
-                                      var exists = payVM.paymentList.any((c) =>
-                                          c['card_number'] ==
-                                          payVM.getPaymentBody['card_number']);
-                                      if (!exists) {
-                                        await payVM.createPaymentMethodTap();
-                                        await startSDK();
-                                      } else {
+                                      try {
+                                        final url = await payVM.initiateCardSave();
+                                        if (!dialogContext.mounted) return;
+                                        await payVM.setLoading(false);
+                                        await _openCardSave(url);
+                                      } catch (error) {
+                                        if (!dialogContext.mounted) return;
+                                        final message = error
+                                            .toString()
+                                            .replaceFirst('Exception: ', '');
                                         showDialog(
-                                          context: context,
+                                          context: dialogContext,
                                           builder: (_) => simpleAlert(
-                                            context,
+                                            dialogContext,
                                             'button.failure'.tr(),
-                                            'Card Number is already chosen',
+                                            message,
                                           ),
                                         );
+                                      } finally {
+                                        await payVM.setLoading(false);
                                       }
-                                      await payVM.setLoading(false);
                                     },
                                     child: Center(
                                       child: payVM.isLoading

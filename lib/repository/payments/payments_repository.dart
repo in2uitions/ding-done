@@ -13,6 +13,14 @@ class PaymentsRepository {
       NetworkApiService(url: ApiEndPoints().authorizeCard);
   final BaseApiService _deletePaymentCard =
       NetworkApiService(url: ApiEndPoints().deletePaymentCard);
+  final BaseApiService _customerCards =
+      NetworkApiService(url: ApiEndPoints().customerCards);
+  final BaseApiService _deleteCard =
+      NetworkApiService(url: ApiEndPoints().deleteCard);
+  final BaseApiService _initiateCardSave =
+      NetworkApiService(url: ApiEndPoints().initiateCardSave);
+  final BaseApiService _addOrUpdateTapCustomer =
+      NetworkApiService(url: ApiEndPoints().addOrUpdateTapCustomer);
   final BaseApiService _getAllPayments =
       NetworkApiService(url: ApiEndPoints().getAllPayments);
   final BaseApiService _apiCustomerProfile =
@@ -75,6 +83,42 @@ class PaymentsRepository {
       rethrow;
     }
   }
+  Future<dynamic> getCustomerCards() async {
+    try {
+      return await _customerCards.getResponse();
+    } catch (error) {
+      debugPrint('error in listing cards $error');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> deleteTapCard(String cardId) async {
+    try {
+      return await _deleteCard.postResponse(data: {'card_id': cardId});
+    } catch (error) {
+      debugPrint('error in deleting tap card $error');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> initiateCardSave() async {
+    try {
+      return await _initiateCardSave.postResponse(data: {});
+    } catch (error) {
+      debugPrint('error in initiating card save $error');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> addOrUpdateTapCustomer() async {
+    try {
+      return await _addOrUpdateTapCustomer.postResponse(data: {});
+    } catch (error) {
+      debugPrint('error in creating tap customer $error');
+      rethrow;
+    }
+  }
+
   Future<dynamic> deletePaymentCard(dynamic body) async {
     try {
       dynamic response = await _deletePaymentCard.postResponse(data: body);
