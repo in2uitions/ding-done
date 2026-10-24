@@ -42,6 +42,7 @@ class ApiEndPoints {
   final String customerCards = '/customers/cards';
   final String deleteCard = '/customers/deleteCard';
   final String initiateCardSave = '/customers/initiateCardSave';
+  final String verifyCard = '/customers/verifyCard';
   final String addOrUpdateTapCustomer = '/customers/addOrUpdateTapCustomer';
   final String payJob = '/customers/payJob';
   final String addJob = '/customers/addJob';

@@ -1,5 +1,9 @@
 platform :ios, '17.0'
 
+# Tap's card catalog and the app icon catalog both compile to Assets.car.
+# CocoaPods must not declare that file as a script output, or Xcode stops the build.
+install! 'cocoapods', :disable_input_output_paths => true
+
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
 
 project 'Runner', {

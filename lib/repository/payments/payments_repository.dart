@@ -19,6 +19,8 @@ class PaymentsRepository {
       NetworkApiService(url: ApiEndPoints().deleteCard);
   final BaseApiService _initiateCardSave =
       NetworkApiService(url: ApiEndPoints().initiateCardSave);
+  final BaseApiService _verifyCard =
+      NetworkApiService(url: ApiEndPoints().verifyCard);
   final BaseApiService _addOrUpdateTapCustomer =
       NetworkApiService(url: ApiEndPoints().addOrUpdateTapCustomer);
   final BaseApiService _getAllPayments =
@@ -74,7 +76,8 @@ class PaymentsRepository {
   }
   Future<dynamic> authorizeCard({required  body}) async {
     try {
-      dynamic response = await _apiAuthorizeCard.postResponse(data: body);
+      dynamic response =
+          await _apiAuthorizeCard.postResponse(data: body, logBody: false);
       debugPrint('response in authorizing customer card $response');
 
       return response;
@@ -97,6 +100,18 @@ class PaymentsRepository {
       return await _deleteCard.postResponse(data: {'card_id': cardId});
     } catch (error) {
       debugPrint('error in deleting tap card $error');
+      rethrow;
+    }
+  }
+
+  Future<dynamic> verifyCard(String token) async {
+    try {
+      return await _verifyCard.postResponse(
+        data: {'token': token},
+        logBody: false,
+      );
+    } catch (error) {
+      debugPrint('error in verifying card');
       rethrow;
     }
   }

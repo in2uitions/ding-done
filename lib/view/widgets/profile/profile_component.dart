@@ -150,29 +150,52 @@ class _ProfileComponentState extends State<ProfileComponent> {
             ),
             onTap: () async {
               if (_openingPaymentMethods) return;
-              _openingPaymentMethods = true;
+              setState(() => _openingPaymentMethods = true);
               final navigator = Navigator.of(context);
-              try {
-                await Provider.of<PaymentViewModel>(context, listen: false)
-                    .getPaymentMethodsTap();
-                if (!mounted) return;
-                await navigator.push(
-                  _createRoute(
-                    Consumer<ProfileViewModel>(
-                        builder: (context, profileViewModel, _) {
-                      return ConfirmPaymentMethod(
-                        profileViewModel: profileViewModel,
-                        payment_method: paymentViewModel
-                            .getPaymentBody['tap_payments_card'],
-                        paymentViewModel: paymentViewModel,
-                        role: widget.role,
+              await showDialog<void>(
+                context: context,
+                barrierDismissible: false,
+                builder: (dialogContext) {
+                  var loaderClosed = false;
+                  void closeLoader() {
+                    if (loaderClosed || !dialogContext.mounted) return;
+                    loaderClosed = true;
+                    Navigator.of(dialogContext).pop();
+                  }
+                  WidgetsBinding.instance.addPostFrameCallback((_) async {
+                    try {
+                      await paymentViewModel.getPaymentMethodsTap();
+                      closeLoader();
+                      if (!mounted) return;
+                      await navigator.push(
+                        _createRoute(
+                          Consumer<ProfileViewModel>(
+                            builder: (context, profileViewModel, _) {
+                              return ConfirmPaymentMethod(
+                                profileViewModel: profileViewModel,
+                                payment_method: paymentViewModel
+                                    .getPaymentBody['tap_payments_card'],
+                                paymentViewModel: paymentViewModel,
+                                role: widget.role,
+                              );
+                            },
+                          ),
+                        ),
                       );
-                    }),
-                  ),
-                );
-              } finally {
-                _openingPaymentMethods = false;
-              }
+                    } finally {
+                      closeLoader();
+                      if (mounted) {
+                        setState(() => _openingPaymentMethods = false);
+                      }
+                    }
+                  });
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: Color(0xff4100E3),
+                    ),
+                  );
+                },
+              );
             },
           );
         }),

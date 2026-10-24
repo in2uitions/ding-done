@@ -125,6 +125,49 @@ class PaymentViewModel extends DisposableViewModel {
     _isloading=value;
     notifyListeners();
   }
+  Future<String> ensureTapCustomer() async {
+    final customer = await _paymentsRepository.addOrUpdateTapCustomer();
+    final customerFailure = _serverMessage(customer);
+    if (customerFailure != null) {
+      throw Exception(customerFailure);
+    }
+    final tapId = customer is Map ? customer['tap_id']?.toString() : null;
+    if (tapId == null || tapId.isEmpty) {
+      throw Exception('Could not start card setup.');
+    }
+    _profileViewModel.profileBody['tap_id'] = tapId;
+    return tapId;
+  }
+
+  Future<String?> verifyCardToken(String token) async {
+    final response = await _paymentsRepository.verifyCard(token);
+    final failure = _serverMessage(response);
+    if (failure != null) {
+      throw Exception(failure);
+    }
+    if (response is Map && response['errors'] is List) {
+      final errors = response['errors'] as List;
+      if (errors.isNotEmpty) {
+        final first = errors.first;
+        final message = first is Map
+            ? (first['description'] ?? first['message'] ?? first['code'])
+            : first;
+        throw Exception(message ?? 'Card verification failed.');
+      }
+    }
+    final transaction = response is Map ? response['transaction'] : null;
+    final url = response is Map
+        ? (response['redirect_url']?.toString().trim().isNotEmpty == true
+            ? response['redirect_url']?.toString()
+            : (transaction is Map ? transaction['url']?.toString() : null))
+        : null;
+    if (url == null || url.isEmpty) {
+      await getPaymentMethodsTap();
+      return null;
+    }
+    return url;
+  }
+
   Future<String?> initiateCardSave(Map<String, dynamic> card) async {
     final customer = await _paymentsRepository.addOrUpdateTapCustomer();
     final customerFailure = _serverMessage(customer);
